@@ -1,0 +1,12 @@
+Package: bookdown
+Type: Package
+Title: Authoring Books with R Markdown
+Version: 0.0.1
+Author: Yihui Xie
+Maintainer: Yihui Xie <xie@yihui.name>
+Description: Utilities to facilitate authoring books with R Markdown.
+License: GPL
+Imports: rmarkdown
+Suggests: testit
+LazyData: TRUE
+RoxygenNote: 5.0.0

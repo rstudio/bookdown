@@ -1,0 +1,38 @@
+language: c
+
+sudo: false
+
+env:
+  matrix:
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$HOME/texlive/bin/x86_64-linux:$PATH
+  global:
+    secure: KqW6R9EZ1LdPsvVRwaVZrmzaovGDEP+2Ik7PFpvEgEjq89ZkPNMyrNSG7uSmqdVJ/H1VqV/oDarvGf16F8/c/wX81kXoFNhgFYd6Vek5lDIhiKfvz7E2VvDhTojRAAS43+6GCV+IxC3TcmbjIxeRk1/zoOGRgxleub2sjTegvF/l+4B6J/Z4D9xlyvtWtw+bhUT9p2G0Yp/lj14SxdNNp07TKBGu9NVqkGyjkW/q5foCRWSwRWq8EoHW4T8LlkIsCwLDpgtgIkAiyyYSsy8uWq5422Vonmgn5gZki6m8G2Vgitt4iW8JsEg3YgIIF72Y382MRNG/liQLhcKPb7cdbHvpI1URvF4lt+3aM1uXAC7dU+i+rTRY6TaRJQiNDommNVeiSlUIM7G1cVeU13Klah0rbwEW50Mxov29eT0tDpYEkEHajWDaX05+6sPYD8TRXBiojKvutTBeeFDiJqe3K8xKUimDSlLHhZq9bBwUVVguT5XvPZWVWVia0BtSaW+DsQAAoNqs014NIYZbFZM/eJKk9pzTdK6NqFZQOFi2+Xp0oFq6nePwuaJAq9DkwsuOZl09HTBfmPfjr8Mkfa7MPo+bxOl4stE30Jpgx/uuMazaLd7K5/2vXfo8KYY598lc40XSskh4x/22L3hbB31fkhdEi134MPlAjyErz8k+Ub8=
+
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - r-base-dev
+    - r-recommended
+
+install:
+  - "[ ! -d ~/bin ] && mkdir ~/bin || true"
+  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-texlive | bash"
+  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
+  - "wget -q -O - http://yihui.name/xran/r-config | bash"
+  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
+  - Rscript -e "devtools::install_deps(dep = TRUE)"
+
+cache:
+  directories:
+  - $HOME/R
+
+script:
+  - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
+  - R CMD check $R_PKG*.tar.gz --no-manual
+  - cd $R_PKG
+
+# deploy to XRAN
+after_success:
+  - "(wget -q -O - http://yihui.name/xran/r-xran | bash)"
