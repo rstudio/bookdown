@@ -1,5 +1,8 @@
 merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
   files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
+  index = match('index', with_ext(files, ''))
+  # if there is a index.Rmd, put it in the beginning
+  if (!is.na(index)) files = c(files[index], files[-index])
   content = unlist(lapply(files, function(f) {
     x = readLines(f, warn = FALSE, encoding = 'UTF-8')
     id = with_ext(f, '')  # base filename (without extension)
