@@ -2,7 +2,7 @@ merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
   files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
   content = unlist(lapply(files, function(f) {
     x = readLines(f, warn = FALSE, encoding = 'UTF-8')
-    id = sub('[.][[:alnum:]]+$', '', f)  # base filename (without extension)
+    id = with_ext(f, '')  # base filename (without extension)
     c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
   }))
   main = '_full_book.Rmd'

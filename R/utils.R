@@ -15,3 +15,8 @@ next_nearest = function(x, y) {
   }
   z
 }
+
+# change the filename extension
+with_ext = function(x, ext) {
+  sub('[.][[:alnum:]]+$', ext, x)
+}
