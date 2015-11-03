@@ -19,27 +19,29 @@ merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
 #' into one main document, render it into HTML, and split it into chapters while
 #' updating relative links (e.g. links in TOC, footnotes, citations,
 #' figure/table cross-references, and so on).
-#' @param main The main R Markdown document (by default, a document that is the
-#'   combination of all R Markdown documents under the current working
-#'   directory).
 #' @param toc,number_sections,lib_dir See
 #'   \code{rmarkdown::\link[rmarkdown]{html_document}}.
 #' @export
-build_html_chapters = function(
-  main = merge_rmd(), toc = TRUE, number_sections = TRUE, lib_dir = 'libs'
+html_chapters = function(
+  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs', ...
 ) {
-  # TODO: do we really want to support duplicate chunk labels?
-  opts = options(knitr.duplicate.label = 'allow')
-  on.exit(options(opts), add = TRUE)
-  out = rmarkdown::render(
-    main, rmarkdown::html_document(
-      toc = toc, number_sections = number_sections, self_contained = FALSE,
-      lib_dir = lib_dir, template = bookdown_file('templates/default.html')
-    ),
-    encoding = 'UTF-8', envir = globalenv()
+  config = rmarkdown::html_document(
+    toc = toc, number_sections = number_sections, fig_caption = fig_caption,
+    self_contained = FALSE, lib_dir = lib_dir,
+    template = bookdown_file('templates/default.html'), ...
   )
+  post = config$post_processor  # in case a post processor have been defined
+  config$post_processor = function(metadata, input, output, clean, verbose) {
+    if (is.function(post)) output = post(metadata, input, output, clean, verbose)
+    split_chapters(output)
+  }
+  # use labels of the form (\#label) in knitr
+  config$knitr$opts_knit$bookdown.internal.label = TRUE
+  config
+}
 
-  x = readLines(out, encoding = 'UTF-8')
+split_chapters = function(output) {
+  x = readLines(output, warn = FALSE, encoding = 'UTF-8')
 
   i1 = find_token(x, '<!--token:title:start-->')
   i2 = find_token(x, '<!--token:title:end-->')
@@ -106,6 +108,9 @@ build_html_chapters = function(
   for (i in names(chapters)) {
     writeLines(enc2utf8(chapters[[i]]), paste0(i, '.html'), useBytes = TRUE)
   }
+
+  # return the first chapter (TODO: in theory should return the current chapter)
+  paste0(names(chapters)[1], '.html')
 }
 
 find_token = function(x, token) {
