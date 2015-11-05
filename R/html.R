@@ -131,7 +131,7 @@ resolve_refs_html = function(content, lines, filenames) {
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
   m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
   labs = regmatches(content, m)
-  arry = character()
+  arry = character()  # an array of the form c(label = number, ...)
   cntr = new_counters(c('Figure', 'Table'), length(lines))  # chapter counters
   figs = grep('^<div class="figure"', content)
 
