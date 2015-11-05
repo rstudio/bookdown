@@ -161,18 +161,30 @@ resolve_refs_html = function(content, lines, filenames) {
 
   regmatches(content, m) = labs
 
-  # look for @ref((fig|tab):label) and resolve to actual figure/table numbers
-  m = gregexpr('@ref\\(((fig|tab):[-[:alnum:]]+)\\)', content)
+  # parse section numbers and labels (id's)
+  sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
+  sec_ids = '^<div id="([^"]+)" class="section .+$'
+  for (i in grep(sec_num, content)) {
+    if (!grepl(sec_ids, content[i - 1])) next  # no section id
+    # extract section number and id, store in the array
+    arry = c(arry, setNames(
+      sub(sec_num, '\\1', content[i]),
+      sub(sec_ids, '\\1', content[i - 1])
+    ))
+  }
+
+  # look for @ref(label) and resolve to actual figure/table/section numbers
+  m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, function(ref) {
     if (length(ref) == 0) return(ref)
-    ref = gsub('@ref\\(|\\)', '', ref)
+    ref = gsub('^ @ref\\(|\\)$', '', ref)
     num = arry[ref]
     if (any(i <- is.na(num))) {
       warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
-      num[i] = '??'
+      num[i] = '<strong>??</strong>'
     }
-    sprintf('<a href="#%s">%s</a>', ref, num)
+    sprintf(' <a href="#%s">%s</a>', ref, num)
   })
 
   content
