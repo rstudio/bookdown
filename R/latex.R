@@ -18,7 +18,7 @@ pdf_book = function(..., toc = TRUE, number_sections = TRUE, fig_caption = TRUE)
 }
 
 resolve_refs_latex = function(x) {
-  x = gsub('@ref\\(((fig|tab):[-[:alnum:]]+)\\)', '\\\\ref{\\1}', x)
+  x = gsub('(^| )@ref\\(([-:[:alnum:]]+)\\)', '\\1\\\\ref{\\2}', x)
   x = gsub('\\(\\\\#((fig|tab):[-[:alnum:]]+)\\)', '\\\\label{\\1}', x)
   x
 }
