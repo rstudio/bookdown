@@ -85,6 +85,7 @@ split_chapters = function(output) {
   idx = next_nearest(idx, grep('^<div', html_body))
   idx = c(1, idx[-n])
 
+  html_body = resolve_refs_html(html_body, idx, nms)
   html_toc = restore_links(html_toc, html_body, idx, nms)
 
   build_chapters = function() {
@@ -125,6 +126,57 @@ button_link = function(target, text) {
     '<a href="%s" class="btn btn-default"%s>%s</a>',
     target, if (target == '#') ' disabled' else '', text
   )
+}
+
+resolve_refs_html = function(content, lines, filenames) {
+  # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
+  m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
+  labs = regmatches(content, m)
+  arry = character()
+  cntr = new_counters(c('Figure', 'Table'), length(lines))  # chapter counters
+  figs = grep('^<div class="figure"', content)
+
+  for (i in seq_along(labs)) {
+    lab = labs[[i]]
+    if (length(lab) == 0) next
+
+    j = which.max(lines[lines <= i])
+    lab = gsub('^\\(#|\\)$', '', lab)
+    type = ifelse(grepl('^fig:', lab), 'Figure', 'Table')
+    num = paste0(j, '.', cntr$inc(type, j))
+    arry = c(arry, setNames(num, lab))
+
+    if (type == 'Figure') {
+      if (length(grep('^<p class="caption">', content[i - 0:1])) == 0) {
+        labs[[i]] = character(length(lab))  # remove these labels
+        next
+      }
+      labs[[i]] = paste0(type, ' ', num, ': ')
+      k = max(figs[figs <= i])
+      content[k] = paste0(content[k], sprintf('<span id="%s"></span>', lab))
+    } else {
+      if (length(grep('^<caption>', content[i - 0:1])) == 0) next
+      labs[[i]] = sprintf('<span id="%s">%s</span>', lab, paste0(type, ' ', num, ': '))
+    }
+  }
+
+  regmatches(content, m) = labs
+
+  # look for @ref((fig|tab):label) and resolve to actual figure/table numbers
+  m = gregexpr('@ref\\(((fig|tab):[-[:alnum:]]+)\\)', content)
+  refs = regmatches(content, m)
+  regmatches(content, m) = lapply(refs, function(ref) {
+    if (length(ref) == 0) return(ref)
+    ref = gsub('@ref\\(|\\)', '', ref)
+    num = arry[ref]
+    if (any(i <- is.na(num))) {
+      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
+      num[i] = '??'
+    }
+    sprintf('<a href="#%s">%s</a>', ref, num)
+  })
+
+  content
 }
 
 restore_links = function(segment, full, lines, filenames) {
