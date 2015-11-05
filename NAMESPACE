@@ -1,1 +1,3 @@
-export(build_html_chapters)
+export(html_chapters)
+export(pdf_book)
+export(render_book)

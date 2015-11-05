@@ -1,16 +1,12 @@
 % Please edit documentation in R/html.R
-\name{build_html_chapters}
-\alias{build_html_chapters}
+\name{html_chapters}
+\alias{html_chapters}
 \title{Build book chapters into separate HTML files}
 \usage{
-build_html_chapters(main = merge_rmd(), toc = TRUE, number_sections = TRUE, 
-    lib_dir = "libs")
+html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = "libs", 
+    ...)
 }
 \arguments{
-\item{main}{The main R Markdown document (by default, a document that is the
-combination of all R Markdown documents under the current working
-directory).}
-
 \item{toc, number_sections, lib_dir}{See
 \code{rmarkdown::\link[rmarkdown]{html_document}}.}
 }
