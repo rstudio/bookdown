@@ -1,0 +1,7 @@
+# Customization
+
+## Theming
+
+## Templates
+
+## CJK languages

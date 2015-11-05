@@ -1,0 +1,35 @@
+\setlength\belowcaptionskip{10pt}
+
+\usepackage{booktabs}
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+
+\newenvironment{rmdblock}[1]
+  {\begin{shaded*}
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.7\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=3em,keepaspectratio}\includegraphics{images/#1}}
+    }
+  }
+  \item
+  }
+  {
+  \end{itemize}
+  \end{shaded*}
+  }
+\newenvironment{rmdnote}
+  {\begin{rmdblock}{note}}
+  {\end{rmdblock}}
+\newenvironment{rmdcaution}
+  {\begin{rmdblock}{caution}}
+  {\end{rmdblock}}
+\newenvironment{rmdimportant}
+  {\begin{rmdblock}{important}}
+  {\end{rmdblock}}
+\newenvironment{rmdtip}
+  {\begin{rmdblock}{tip}}
+  {\end{rmdblock}}
+\newenvironment{rmdwarning}
+  {\begin{rmdblock}{warning}}
+  {\end{rmdblock}}

@@ -1,3 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
+inst/examples/*.html
+inst/examples/libs
+inst/examples/_full_book*

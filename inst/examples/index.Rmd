@@ -1,0 +1,42 @@
+--- 
+title: "Authoring A Book with R Markdown and bookdown"
+author: "Yihui Xie"
+date: "`r Sys.Date()`"
+knit: "bookdown::render_book"
+output:
+  bookdown::html_chapters:
+    css: style.css
+    fig_caption: yes
+    md_extensions: +markdown_in_html_blocks
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+  pdf_document:
+    includes:
+      in_header: preamble.tex
+    keep_tex: yes
+    fig_caption: yes
+  html_document:
+    css: style.css
+    fig_caption: yes
+    keep_md: yes
+    md_extensions: +markdown_in_html_blocks
+    self_contained: yes
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+---
+
+# Introduction
+
+This book is a guide to authoring books with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as
+
+- How to typeset figures and tables, and cross-reference them;
+- How to generate multiple output formats such as HTML, PDF, and E-Books for a single book;
+- How to customize the book templates and style different elements in a book;
+- The editor support (in particular, the RStudio IDE);
+- How to publish a book;
+
+It is not a comprehensive introduction to R Markdown or the **knitr** package, on top of which **bookdown** was built. To learn more about R Markdown, please check out the online documentation <http://rmarkdown.rstudio.com>. For **knitr**, please see @xie2015. You do not have to be an expert of the R language [@R-base] to read this book, but you are expected to have some basic knowledge about R Markdown and **knitr**. For beginners, you may get started with the cheetsheets at <https://www.rstudio.com/resources/cheatsheets/>. To be able to customize the book templates and themes, you should be familiar with LaTeX, HTML and CSS.
