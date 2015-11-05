@@ -12,6 +12,7 @@ output:
     includes:
       in_header: preamble.tex
     keep_tex: yes
+    latex_engine: xelatex
   pdf_document:
     includes:
       in_header: preamble.tex
