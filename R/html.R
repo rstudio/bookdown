@@ -35,8 +35,7 @@ html_chapters = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     split_chapters(output)
   }
-  # use labels of the form (\#label) in knitr
-  config$knitr$opts_knit$bookdown.internal.label = TRUE
+  config = set_opts_knit(config)
   config
 }
 

@@ -13,8 +13,7 @@ pdf_book = function(..., toc = TRUE, number_sections = TRUE, fig_caption = TRUE)
     rmarkdown:::latexmk(f, config$pandoc$latex_engine)
     with_ext(output, '.pdf')
   }
-  # use labels of the form (\#label) in knitr
-  config$knitr$opts_knit$bookdown.internal.label = TRUE
+  config = set_opts_knit(config)
   config
 }
 
