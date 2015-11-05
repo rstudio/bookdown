@@ -1,8 +1,92 @@
 # Components
 
-## General Markdown syntax
+## Markdown syntax
 
-A very brief introduction to Pandoc's Markdown.
+We give a very brief introduction to Pandoc's Markdown in this section. Readers who are familiar with Markdown can skip this section. The comphrehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
+
+You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations). Section headers can be written after a number of pound signs, e.g.,
+
+```
+# First-level header
+
+## Second-level header
+
+### Third-level header
+```
+
+Unordered list items start with `*`, `-`, or `+`, and you can nest one list within another list by indenting the sub-list by four spaces, e.g.,
+
+```
+- one item
+- one item
+- one item
+    - one item
+    - one item
+```
+
+The output is:
+
+- one item
+- one item
+- one item
+    - one item
+    - one item
+
+Ordered list items start with numbers (the rule for nested lists is the same as above), e.g.,
+
+```
+1. the first item
+2. the second item
+3. the third item
+```
+
+The output does not look too much different with the Markdown source:
+
+1. the first item
+2. the second item
+3. the third item
+
+Blockquotes are written after `>`, e.g.,
+
+```
+> "I was always taught to respect my elders and
+  I've now reached the age when I don't have anybody
+  to respect", said George Burns.
+```
+
+The actual output:
+
+> "I was always taught to respect my elders and
+  I've now reached the age when I don't have anybody
+  to respect", said George Burns.
+
+Plain code blocks can be written after three or more backticks, and you can also indent the blocks by four spaces, e.g.,
+
+````
+```
+This text is displayed verbatim / preformatted
+```
+
+Or indent by four spaces:
+
+    This text is displayed verbatim / preformatted
+````
+
+Inline LaTeX equations can be written in a pair of dollar signs using the LaTeX syntax, e.g., `$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$` (actual output: $f(k)={n \choose k}p^{k}(1-p)^{n-k}$); math expressions of the display style can be written in a pair of double dollar signs, e.g., `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`, and the output looks like this:
+
+$$f(k)={n \choose k}p^{k}(1-p)^{n-k}$$
+
+## R code
+
+There are two types of R code in R Markdown/**knitr** documents: R code chunks, and inline R code. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but has `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
+
+    `r ''````{r chunk-label, echo = FALSE, fig.cap = 'A figure caption.'}
+    1 + 1
+    rnorm(10)  # 10 random numbers
+    plot(dist ~ speed, cars)  # a scatterplot
+    ```
+
+To learn more about **knitr** chunk options, see @xie2015 or <http://yihui.name/knitr/options>.
 
 ## Figures
 
@@ -22,7 +106,7 @@ If you want to cross-reference figures or tables generated from a code chunk, pl
 
 The chunk option `fig.asp` can be used to set the aspect ratio of plots, i.e., the ratio of figure height/width. If the figure width is 6 inches (`fig.width = 6`) and `fig.asp = 0.7`, the figure height will be automatically calculated from `fig.width * fig.asp = 6 * 0.7 = 4.2`. Figure \@ref(fig:pressure-plot) is an example using the chunk options `fig.asp = 0.7`, `fig.width = 6`, and `fig.align = 'center'`, generated from the code below:
 
-```{r pressure-plot, fig.asp=.7, fig.width=6, fig.cap='A figure example with the specified aspect ratio, width, and alignment.', fig.align='center'}
+```{r pressure-plot, fig.asp=.7, fig.width=6, fig.cap='A figure example with the specified aspect ratio, width, and alignment.', fig.align='center', out.width='80%'}
 par(mar = c(4, 4, .1, .1))
 plot(pressure, pch = 19, type = 'b')
 ```
@@ -46,13 +130,13 @@ plot(cars, pch = 19)
 
 ## Tables
 
-For now, the most convenient way to generate a table is the function `knitr::kable()`, because some internal implementation details are hidden from the users. We will explain how to use other packages and functions later in this section.
+For now, the most convenient way to generate a table is the function `knitr::kable()`, because there are some internal tricks in **knitr** to make it work with **bookdown** and users do not have to know anything about these implementation details. We will explain how to use other packages and functions later in this section.
 
 Like figures, tables with captions will also be numbered and can be referenced. The `kable()` function will automatically generate a label for a table environment, which is the prefix `tab:` plus the chunk label. For example, the table label for a code chunk with the label `foo` will be `tab:foo`, and we can still use the syntax `\@ref(label)` to reference the table. Table \@ref(tab:table-single) is a simple example.
 
 ```{r table-single, tidy=FALSE}
 knitr::kable(
-  head(mtcars, 3), booktabs = TRUE,
+  head(mtcars, 10), booktabs = TRUE,
   caption = 'A table of the first 10 rows of the mtcars data.'
 )
 ```
@@ -69,7 +153,7 @@ knitr::kable(
 )
 ```
 
-If you decide to use other packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)`, where `label` must have the prefix `tab:`. You will have to be very careful about the portability of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
+If you decide to use other packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)`, where `label` must have the prefix `tab:`. You have to be very careful about the _portability_ of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice. If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
 
 ## Cross-references
 
@@ -99,7 +183,7 @@ http://www.gnu.org/licenses/.
 ```{block, note-text, type='rmdwarning'}
 ```
 
-## Citations
+## Citations {#citations}
 
 ## Interactive Shiny apps
 
