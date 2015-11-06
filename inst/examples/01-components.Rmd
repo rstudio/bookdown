@@ -163,6 +163,45 @@ When a referenced label cannot be found, you will see two question marks like \@
 
 ## Custom blocks
 
+You can generate custom blocks using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
+
+    `r ''````{block, type='FOO'}
+    Some text for this block.
+    ```
+
+will be this:
+
+    <div class="FOO">
+    Some text for this block.
+    </div>
+
+and the LaTeX output will be this:
+
+    \begin{FOO}
+    Some text for this block.
+    \end{FOO}
+
+It is up to the book author how to define the style of the block. You can define the style of the `<div>` in CSS and include it in the output via the `includes` option in the YAML metadata. Similarly, you may define the LaTeX environment via `\newenvironment` and include the definition in the LaTeX output via the `includes` option. For example, we may save the following style in a CSS file, say, `style.css`:
+
+```css
+div.FOO {
+  font-weight: bold;
+  color: red;
+}
+```
+
+And the YAML metadata of the R Markdown document can be:
+
+```yaml
+---
+output:
+  bookdown::html_chapters:
+    includes:
+      in_header: style.css
+---
+```
+
+We have defined a few types of blocks for this book to show notes, tips, and warnings, etc. Below are some examples:
 
 ```{block, note-text, type='rmdnote'}
 R is free software and comes with ABSOLUTELY NO WARRANTY.
