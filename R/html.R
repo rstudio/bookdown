@@ -78,6 +78,7 @@ split_chapters = function(output) {
   idx = grep(r_chap, html_body)
   nms = gsub(r_chap, '\\1', html_body[idx])
   n = length(idx)
+  if (n == 0) return(output)  # no chapters
 
   html_body[idx] = ''  # remove chapter tokens
 
