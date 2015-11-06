@@ -226,5 +226,43 @@ http://www.gnu.org/licenses/.
 
 ## Citations {#citations}
 
+Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors). With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
+
+A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
+
+```bibtex
+@Manual{R-base,
+  title = {R: A Language and Environment for Statistical Computing},
+  author = {{R Core Team}},
+  organization = {R Foundation for Statistical Computing},
+  address = {Vienna, Austria},
+  year = {2015},
+  url = {https://www.R-project.org/},
+}
+```
+
+A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on. Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered to @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
+
+There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
+
+There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
+
+```{r write-bib, comment=''}
+# the second argument can be a .bib file
+knitr::write_bib(c('knitr', 'stringr'), '')
+```
+
+Once you have got one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliopgraphy style via `biblio-style` (this only applies to PDF output), e.g.,
+
+```yaml
+---
+bibliography: ["one.bib", "another.bib", "yet-another.bib"]
+biblio-style: "apalike"
+link-citations: true
+---
+```
+
+The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibilography entry in the HTML output.
+
 ## Interactive Shiny apps
 
