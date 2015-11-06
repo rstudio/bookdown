@@ -10,7 +10,7 @@ pdf_book = function(..., toc = TRUE, number_sections = TRUE, fig_caption = TRUE)
     x = readLines(f, encoding = 'UTF-8', warn = FALSE)
     x = resolve_refs_latex(x)
     writeLines(enc2utf8(x), f, useBytes = TRUE)
-    rmarkdown:::latexmk(f, config$pandoc$latex_engine)
+    latexmk(f, config$pandoc$latex_engine)
     with_ext(output, '.pdf')
   }
   config = set_opts_knit(config)
@@ -22,3 +22,5 @@ resolve_refs_latex = function(x) {
   x = gsub('\\(\\\\#((fig|tab):[-[:alnum:]]+)\\)', '\\\\label{\\1}', x)
   x
 }
+
+latexmk = getFromNamespace('latexmk', 'rmarkdown')

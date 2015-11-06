@@ -6,7 +6,7 @@ Author: Yihui Xie
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Utilities to facilitate authoring books with R Markdown.
 License: GPL
-Imports: rmarkdown
+Imports: rmarkdown (>= 0.8.2)
 Suggests: testit
 LazyData: TRUE
 RoxygenNote: 5.0.0
