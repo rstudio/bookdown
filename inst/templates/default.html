@@ -16,6 +16,9 @@ $if(date-meta)$
 <meta name="date" content="$date-meta$" />
 $endif$
 
+$if(math)$
+  $math$
+$endif$
 <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
 $for(header-includes)$
@@ -142,18 +145,6 @@ $$(document).ready(function () {
   $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
 
-</script>
-$endif$
-
-$if(mathjax-url)$
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "$mathjax-url$";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
 </script>
 $endif$
 
