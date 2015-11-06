@@ -29,6 +29,9 @@
   border: none;
   margin: auto;
 }
+.kable_wrapper > tbody > tr > td {
+  vertical-align: top;
+}
 p.caption {
   color: #777;
 }
