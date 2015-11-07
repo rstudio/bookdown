@@ -1,7 +1,17 @@
+#' Convert R Markdown to a PDF book
+#'
+#' Convert R Markdown files to PDF while resolving the special tokens of
+#' \pkg{bookdown} (e.g., the tokens for references and labels) to native LaTeX
+#' commands. This function is based on
+#' \code{rmarkdown::\link[rmarkdown]{pdf_document}} with better default argument
+#' valuess for books.
+#' @param toc,number_sections,fig_caption See
+#'   \code{rmarkdown::\link[rmarkdown]{pdf_document}}.
+#' @param ... Other arguments to be passed to \code{pdf_document()}.
 #' @export
-pdf_book = function(..., toc = TRUE, number_sections = TRUE, fig_caption = TRUE) {
+pdf_book = function(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...) {
   config = rmarkdown::pdf_document(
-    ..., toc = TRUE, number_sections = number_sections, fig_caption = fig_caption
+    toc = TRUE, number_sections = number_sections, fig_caption = fig_caption, ...
   )
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
