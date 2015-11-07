@@ -13,6 +13,7 @@ pdf_book = function(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...)
   config = rmarkdown::pdf_document(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption, ...
   )
+  config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
