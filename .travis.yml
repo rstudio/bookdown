@@ -30,8 +30,11 @@ cache:
 
 script:
   - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
+  - R CMD INSTALL $R_PKG*.tar.gz
   - R CMD check $R_PKG*.tar.gz --no-manual
   - cd $R_PKG
+  - cd inst/examples; make; ./deploy_github
+  - cd ../..
 
 # deploy to XRAN
 after_success:
