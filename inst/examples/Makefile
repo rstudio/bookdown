@@ -1,4 +1,4 @@
-RMD_FILES := $(wildcard *.Rmd)
+RMD_FILES := $(filter-out _%, $(wildcard *.Rmd))
 HTML_FILES := $(patsubst %.Rmd, %.html, $(RMD_FILES))
 
 all: $(HTML_FILES)
