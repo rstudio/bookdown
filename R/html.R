@@ -19,7 +19,7 @@ merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
 #' into one main document, render it into HTML, and split it into chapters while
 #' updating relative links (e.g. links in TOC, footnotes, citations,
 #' figure/table cross-references, and so on).
-#' @param toc,number_sections,lib_dir See
+#' @param toc,number_sections,fig_caption,lib_dir See
 #'   \code{rmarkdown::\link[rmarkdown]{html_document}}.
 #' @export
 html_chapters = function(
