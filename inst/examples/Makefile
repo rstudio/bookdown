@@ -8,5 +8,5 @@ all: $(HTML_FILES)
 
 pdf: $(wildcard *.pdf)
 
-%.pdf: %.Rmd
+%.pdf: %.Rmd $(RMD_FILES)
 	Rscript -e "bookdown::render_book('$<', 'bookdown::pdf_book')"
