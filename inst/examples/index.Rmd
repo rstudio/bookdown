@@ -104,3 +104,7 @@ rmd_files: ["index.Rmd", "abstract.Rmd", "intro.Rmd"]
 ```
 
 In this case, **bookdown** will just use whatever you defined in this YAML field without any special treatments of `index.Rmd` or underscores.
+
+```{block, type='rmdimportant'}
+Because **knitr** does not allow duplicate chunk labels in a source document, you need to make sure there are no duplicate labels in your book chapters, otherwise **knitr** will signal an error when knitting the merged Rmd file. 
+```
