@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books with R Markdown
-Version: 0.0.3
+Version: 0.0.4
 Author: Yihui Xie
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Utilities to facilitate authoring books with R Markdown.
