@@ -38,3 +38,10 @@ p.caption {
 p code {
   white-space: inherit;
 }
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
