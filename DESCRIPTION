@@ -5,7 +5,7 @@ Version: 0.0.4
 Author: Yihui Xie
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Utilities to facilitate authoring books with R Markdown.
-License: GPL
+License: GPL-3
 Imports: rmarkdown (>= 0.8.2)
 Suggests: testit
 URL: https://github.com/rstudio/bookdown
