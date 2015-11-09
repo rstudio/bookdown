@@ -140,5 +140,6 @@ Then you can click the `Knit` button in RStudio to compile the Rmd files into a 
 There are more things you can configure for a book in `_config.yml`:
 
 - `main_rmd`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`
+- `chapter_name`: (for HTML output only) either a character string to be prepended to the chapter number in the chapter title (by default it is `"Chapter "`), or an R function that takes the chapter number as the input and returns a string as the new chapter number (e.g., `!expr function(i) paste('Chapter', i)`)
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter

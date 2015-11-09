@@ -111,6 +111,7 @@ split_chapters = function(output) {
   idx = c(1, idx[-n])
 
   html_body = resolve_refs_html(html_body, idx, nms)
+  html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
 
   build_chapters = function() {
@@ -213,6 +214,26 @@ resolve_refs_html = function(content, lines, filenames) {
     sprintf(' <a href="#%s">%s</a>', ref, num)
   })
 
+  content
+}
+
+add_chapter_prefix = function(content) {
+  config = load_config()
+  chapter_name = config[['chapter_name']]
+  if (is.null(chapter_name)) chapter_name = 'Chapter '
+  chapter_fun = if (is.character(chapter_name)) {
+    function(i) paste0(chapter_name, i)
+  } else if (is.function(chapter_name)) chapter_name else {
+    stop('chapter_name in _config.yml must be a character string or function')
+  }
+  r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
+  for (i in grep(r_chap, content)) {
+    h = content[i]
+    x1 = gsub(r_chap, '\\1', h)
+    x2 = gsub(r_chap, '\\2', h)
+    x3 = gsub(r_chap, '\\3', h)
+    content[i] = paste0(x1, chapter_fun(x2), x3)
+  }
   content
 }
 
