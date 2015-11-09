@@ -1,21 +1,40 @@
 merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
-  if (missing(files) && file.exists('_config.yml')) {
-    config = yaml::yaml.load_file('_config.yml')
-    if (is.character(config[['rmd_files']])) files = config[['rmd_files']]
-  } else if (missing(files)) {
+
+  config = list()
+  if (file.exists('_config.yml')) config = yaml::yaml.load_file('_config.yml')
+
+  if (is.character(config[['rmd_files']])) {
+    files = config[['rmd_files']]
+  } else {
     files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
     index = match('index', with_ext(files, ''))
     # if there is a index.Rmd, put it in the beginning
     if (!is.na(index)) files = c(files[index], files[-index])
   }
+
+  main = if (is.character(config[['main_rmd']])) {
+    config[['main_rmd']][1]
+  } else '_main.Rmd'
+  files = setdiff(files, main)
+
+  before_chapter = insert_chapter_script(config, 'before')
+  after_chapter = insert_chapter_script(config, 'after')
+
   content = unlist(lapply(files, function(f) {
     x = readLines(f, warn = FALSE, encoding = 'UTF-8')
+    x = c(before_chapter, x, after_chapter)
     id = with_ext(f, '')  # base filename (without extension)
     c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
   }))
-  main = '_full_book.Rmd'
   writeLines(enc2utf8(content), main, useBytes = TRUE)
   main
+}
+
+insert_chapter_script = function(config, where = 'before') {
+  script = config[[sprintf('%s_chapter_script', where)]]
+  if (is.character(script)) {
+    c('```{r include=FALSE}', unlist(lapply(script, readUTF8)), '```')
+  }
 }
 
 #' Build book chapters into separate HTML files

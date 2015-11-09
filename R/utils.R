@@ -40,3 +40,7 @@ set_opts_knit = function(config) {
   config$knitr$opts_knit$bookdown.table.latex = TRUE
   config
 }
+
+readUTF8 = function(input) {
+  readLines(input, encoding = 'UTF-8', warn = FALSE)
+}
