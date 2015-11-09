@@ -188,6 +188,9 @@ resolve_refs_html = function(content, lines, filenames) {
 
   regmatches(content, m) = labs
 
+  # remove labels in figure alt text (it will contain \ like (\#fig:label))
+  content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
+
   # parse section numbers and labels (id's)
   sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
   sec_ids = '^<div id="([^"]+)" class="section .+$'
