@@ -44,3 +44,7 @@ set_opts_knit = function(config) {
 readUTF8 = function(input) {
   readLines(input, encoding = 'UTF-8', warn = FALSE)
 }
+
+load_config = function() {
+  if (file.exists('_config.yml')) yaml::yaml.load_file('_config.yml') else list()
+}

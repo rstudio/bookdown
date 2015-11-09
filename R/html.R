@@ -1,7 +1,6 @@
 merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
 
-  config = list()
-  if (file.exists('_config.yml')) config = yaml::yaml.load_file('_config.yml')
+  config = load_config()
 
   if (is.character(config[['rmd_files']])) {
     files = config[['rmd_files']]
