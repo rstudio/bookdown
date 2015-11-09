@@ -21,8 +21,7 @@ merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
   after_chapter = insert_chapter_script(config, 'after')
 
   content = unlist(lapply(files, function(f) {
-    x = readLines(f, warn = FALSE, encoding = 'UTF-8')
-    x = c(before_chapter, x, after_chapter)
+    x = c(before_chapter, readUTF8(f), after_chapter)
     id = with_ext(f, '')  # base filename (without extension)
     c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
   }))
@@ -67,7 +66,7 @@ html_chapters = function(
 }
 
 split_chapters = function(output) {
-  x = readLines(output, warn = FALSE, encoding = 'UTF-8')
+  x = readUTF8(output)
 
   i1 = find_token(x, '<!--token:title:start-->')
   i2 = find_token(x, '<!--token:title:end-->')
