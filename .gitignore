@@ -3,4 +3,4 @@
 .RData
 inst/examples/*.html
 inst/examples/libs
-inst/examples/_full_book*
+inst/examples/_main*

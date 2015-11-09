@@ -6,7 +6,7 @@ all: $(HTML_FILES)
 %.html: %.Rmd
 	Rscript -e "bookdown::render_book('$<', 'bookdown::html_chapters')"
 
-pdf: $(wildcard *.pdf)
+pdf: _main.pdf
 
 %.pdf: %.Rmd $(RMD_FILES)
 	Rscript -e "bookdown::render_book('$<', 'bookdown::pdf_book')"
