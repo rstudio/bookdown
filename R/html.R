@@ -165,6 +165,8 @@ resolve_refs_html = function(content, lines, filenames) {
   for (i in seq_along(labs)) {
     lab = labs[[i]]
     if (length(lab) == 0) next
+    if (length(lab) > 1)
+      stop('There are multiple labels on one line: ', paste(lab, collapse = ', '))
 
     j = which.max(lines[lines <= i])
     lab = gsub('^\\(#|\\)$', '', lab)
