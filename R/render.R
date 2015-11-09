@@ -6,11 +6,11 @@
 #' @param input Ignored. All R Markdown files under the current working
 #'   directory are merged as the actual input to
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}.
-#' @param ... Other arguments to be passed to \code{render()}, such as
+#' @param ...,envir Arguments to be passed to \code{render()}, such as
 #'   \code{encoding}.
 #' @note The R Markdown files that start with an underscore \code{_} are ignored
 #'   when merging all \file{.Rmd }files.
 #' @export
-render_book = function(input, ...) {
-  rmarkdown::render(merge_rmd(), ...)
+render_book = function(input, ..., envir = parent.frame()) {
+  rmarkdown::render(merge_rmd(), ..., envir = envir)
 }
