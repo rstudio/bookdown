@@ -143,3 +143,12 @@ There are more things you can configure for a book in `_config.yml`:
 - `chapter_name`: (for HTML output only) either a character string to be prepended to the chapter number in the chapter title (by default it is `"Chapter "`), or an R function that takes the chapter number as the input and returns a string as the new chapter number (e.g., `!expr function(i) paste('Chapter', i)`)
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter
+
+Here is a sample `_config.yml`:
+
+```yaml
+main_rmd: "my-book.Rmd"
+chapter_name: "CHAPTER "
+before_chapter_script: ["script1.R", "script2.R"]
+after_chapter_script: "script3.R"
+```
