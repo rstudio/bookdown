@@ -179,3 +179,9 @@ chapter_name: "CHAPTER "
 before_chapter_script: ["script1.R", "script2.R"]
 after_chapter_script: "script3.R"
 ```
+
+## Some advice
+
+Typesetting under the paging constraint (e.g., for LaTeX/PDF output) can be an extremely tedious and time-consuming job. I'd recommend you not to look at your PDF output frequently, since most of the time you are very unlikely to be satisfied: text may overflow into the page margin, figures may float too far away, and so on. Do not try to make things look right _immediately_, because you may be disappointed over and over again as you keep on revising the book, and things may be messed up again even if you only did some minor changes (see <http://bit.ly/tbrLtx> for a nice illustration).
+
+If you want to preview the book, preview the HTML output. Work on the PDF book after you have finished the content of the book, and are very sure no major revisions will be required.
