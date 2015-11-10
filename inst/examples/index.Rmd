@@ -47,7 +47,34 @@ It is not a comprehensive introduction to R Markdown or the **knitr** package [@
 
 ## Motivation
 
+Markdown is a wonderful language to write relatively simple documents that contain elements like sections, paragraphs, lists, links, and images, etc. Pandoc (<http://pandoc.org>) has greatly extended the original Markdown syntax, and added quite a few useful new features, such as footnotes, citations, and tables. More importantly, Pandoc makes it possible to generate output documents of a large variety of formats from Markdown, including HTML, LaTeX/PDF, Word, and slides.
 
+To write a relatively complicated document like a book, there are still a few useful features missing in Pandoc's Markdown at the moment, such as automatic numbering of figures and tables in the HTML output, cross-references of figures and tables, and fine control of the appearance of figures (e.g., currently it is impossible to specify the width of images using the Markdown syntax). These are some of the problems that we have addressed in the **bookdown** package.
+
+Under the constraint that we want to produce the book in multiple output formats, it is nearly impossible to cover all possible features specific to these output formats. For example, it may be difficult to reinvent a certain complicated LaTeX environment in the HTML output using the (R) Markdown syntax. Our main goal is not to replace _everything_ with Markdown, but to cover _most_ common functionalities required to write a relatively complicated document, and make the syntax of such functionalities consistent across all output formats.
+
+Another goal of this project is to make it easy to produce books that look visually pleasant. Some nice existing examples include Gitbook (<https://www.gitbook.com>), Tufte CSS (<http://edwardtufte.github.io/tufte-css/>), and Tufte-LaTeX (<https://tufte-latex.github.io/tufte-latex/>). We hope to integrate these themes and styles into **bookdown**, so authors do not have to dive into the details of how to use a certain LaTeX class or how to configure CSS for HTML output.
+
+## Get started
+
+The easiest way for beginners to get started with writing a book with R Markdown and **bookdown** is through the demo `bookdown-demo` on GitHub:
+
+1. Fork or clone the GitHub repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and GitHub, or just download it as a Zip file then unzip it locally;
+1. Install the RStudio IDE (<http://www.rstudio.com>) if you have not done so;
+1. Open the `bookdown-demo` repository you cloned or downloaded in RStudio by clicking `bookdown-demo.Rproj`;
+1. Install the R package **bookdown**:
+
+    ```{r eval=FALSE}
+    # TODO: remove yihui.name/xran here after bookdown is on CRAN
+    install.packages(
+      'bookdown',
+      repos = c("http://yihui.name/xran", "http://cran.rstudio.com")
+    )
+    ```
+
+1. Open the R Markdown `index.Rmd` and click the button `Knit` on the toolbar of RStudio;
+
+Now you should see the index page of this book demo in the RStudio Viewer. You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. See the next section for details.
 
 ## Usage
 
