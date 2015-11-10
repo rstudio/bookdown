@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 inst/examples/Makefile
+^CONTRIBUTING\.md$
