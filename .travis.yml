@@ -27,6 +27,8 @@ install:
 cache:
   directories:
   - $HOME/R
+  - $HOME/texlive
+  - $HOME/bin
 
 script:
   - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
