@@ -118,7 +118,7 @@ par(mar = c(4, 4, .1, .1))
 plot(cars, pch = 19)
 ```
 
-Sometimes you may want to put multiple plots in one figure environment. In this case, you must use the chunk option `fig.show = 'hold'` to hold multiple plots from a code chunk and include them in one environment. You can also place plots side by side if the sum of the width of all plots is smaller than or equal to the current line width. For example, if two plots have the same width `50%`, they will be placed side by side. Similarly, you can specify `out.width = '33%'` to arrange three plots on one line. Figure \@ref(fig:multi-plots) is an example of two plots, each with a width `50%`.
+If you want to put multiple plots in one figure environment, you must use the chunk option `fig.show = 'hold'` to hold multiple plots from a code chunk and include them in one environment. You can also place plots side by side if the sum of the width of all plots is smaller than or equal to the current line width. For example, if two plots have the same width `50%`, they will be placed side by side. Similarly, you can specify `out.width = '33%'` to arrange three plots on one line. Figure \@ref(fig:multi-plots) is an example of two plots, each with a width `50%`.
 
 ```{r multi-plots, out.width='50%', fig.show='hold', fig.cap='Two plots placed side by side.'}
 par(mar = c(4, 4, .1, .1))
