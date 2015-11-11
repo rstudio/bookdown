@@ -49,16 +49,20 @@ The output does not look too much different with the Markdown source:
 Blockquotes are written after `>`, e.g.,
 
 ```
-> "I was always taught to respect my elders and
-  I've now reached the age when I don't have anybody
-  to respect", said George Burns.
+> "I thoroughly disapprove of duels. If a man should challenge me,
+  I would take him kindly and forgivingly by the hand and lead him
+  to a quiet place and kill him."
+>
+> --- Mark Twain
 ```
 
 The actual output:
 
-> "I was always taught to respect my elders and
-  I've now reached the age when I don't have anybody
-  to respect", said George Burns.
+> "I thoroughly disapprove of duels. If a man should challenge me,
+  I would take him kindly and forgivingly by the hand and lead him
+  to a quiet place and kill him."
+>
+> --- Mark Twain
 
 Plain code blocks can be written after three or more backticks, and you can also indent the blocks by four spaces, e.g.,
 
