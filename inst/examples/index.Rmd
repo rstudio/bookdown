@@ -6,7 +6,6 @@ knit: "bookdown::render_book"
 output:
   bookdown::html_chapters:
     css: style.css
-    md_extensions: +markdown_in_html_blocks
   bookdown::pdf_book:
     includes:
       in_header: preamble.tex
