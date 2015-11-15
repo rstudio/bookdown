@@ -2,6 +2,43 @@
 
 ## GitHub
 
+A sketch of steps to publish to GitHub automatically:
+
+1. Create a personal access token: https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+1. Encrypt it in the environment variable `GH_TOKEN` via command line `travis encrypt` and store it in `.travis.yml`, or simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
+1. Create a `gh-pages` branch in your repo, and push the branch to the remote repository, e.g.,
+
+    ```bash
+    git checkout --orphan gh-pages
+    git rm -rf .
+    touch .nojekyll
+    git add .nojekyll
+    git commit -m"Initial commit"
+    git push origin gh-pages
+    ```
+
+1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository, e.g.,
+
+    ```bash
+    git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+    cd gh-pages
+    # cp ../*.html .... ./
+    # git add *
+    # git commit -m"...."
+    # git push origin gh-pages
+    ```
+
+If you use the container-based infrastructure on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two directories: the figure directory `_main_files` and the cache directory `_main_cache`. If you have specified a different filename of the main Rmd file (Section \@ref(usage)), replace `_main` with the base name of the filename you specified. These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may look like this:
+
+```yaml
+sudo: false
+
+cache:
+  directories:
+  - $PWD/_main_files
+  - $PWD/_main_cache
+```
+
 ## Publishers
 
 ## Licensing
