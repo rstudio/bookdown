@@ -1,5 +1,9 @@
 # Customization
 
+## YAML options {#yaml-options}
+
+includes
+
 ## Theming
 
 ## Templates
