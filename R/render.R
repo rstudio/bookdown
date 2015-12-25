@@ -12,5 +12,7 @@
 #'   when merging all \file{.Rmd }files.
 #' @export
 render_book = function(input, ..., envir = parent.frame()) {
-  rmarkdown::render(merge_rmd(), ..., envir = envir)
+  main = merge_rmd()
+  on.exit(unlink(main), add = TRUE)
+  rmarkdown::render(main, ..., envir = envir)
 }
