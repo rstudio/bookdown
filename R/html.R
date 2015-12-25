@@ -48,12 +48,13 @@ insert_chapter_script = function(config, where = 'before') {
 #' @param ... Other arguments to be passed to \code{html_document()}.
 #' @export
 html_chapters = function(
-  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs', ...
+  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
+  template = bookdown_file('templates/default.html'), ...
 ) {
   config = rmarkdown::html_document(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
-    template = bookdown_file('templates/default.html'), ...
+    template = template, ...
   )
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
