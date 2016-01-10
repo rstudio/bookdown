@@ -176,7 +176,7 @@ resolve_refs_html = function(content, lines, filenames) {
     arry = c(arry, setNames(num, lab))
 
     if (type == 'Figure') {
-      if (length(grep('^<p class="caption">', content[i - 0:1])) == 0) {
+      if (length(grep('^<p class="caption', content[i - 0:1])) == 0) {
         # remove these labels, because there must be a caption on this or
         # previous line (possible negative case: the label appears in the alt
         # text of <img>)
