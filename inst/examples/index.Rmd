@@ -11,6 +11,7 @@ output:
       in_header: preamble.tex
     keep_tex: yes
     latex_engine: xelatex
+    citation_package: natbib
   pdf_document:
     includes:
       in_header: preamble.tex
