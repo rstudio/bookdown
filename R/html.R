@@ -161,7 +161,7 @@ resolve_refs_html = function(content, lines, filenames) {
   labs = regmatches(content, m)
   arry = character()  # an array of the form c(label = number, ...)
   cntr = new_counters(c('Figure', 'Table'), length(lines))  # chapter counters
-  figs = grep('^<div class="figure"', content)
+  figs = grep('^<div class="figure', content)
 
   for (i in seq_along(labs)) {
     lab = labs[[i]]
