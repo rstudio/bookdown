@@ -149,8 +149,8 @@ Because **knitr** does not allow duplicate chunk labels in a source document, yo
 At the moment, there are two output formats that you may use: `bookdown::pdf_book` and `bookdown::html_chapters`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()` that renders multiple Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
 
 ```{r eval=FALSE}
-bookdown::render_book('foo.Rmd', 'bookdown::html_chapters')
-bookdown::render_book('foo.Rmd', 'bookdown::pdf_book')
+bookdown::render_book('foo.Rmd', bookdown::html_chapters())
+bookdown::render_book('foo.Rmd', bookdown::pdf_book())
 bookdown::render_book('foo.Rmd', bookdown::html_chapters(lib_dir = 'book_assets'))
 bookdown::render_book('foo.Rmd', bookdown::pdf_book(keep_tex = TRUE))
 ```
