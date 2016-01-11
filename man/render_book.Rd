@@ -3,15 +3,14 @@
 \alias{render_book}
 \title{Render multiple R Markdown documents into a single output file}
 \usage{
-render_book(input, ..., envir = parent.frame())
+render_book(input, output_format, ..., envir = parent.frame())
 }
 \arguments{
 \item{input}{Ignored. All R Markdown files under the current working
 directory are merged as the actual input to
 \code{rmarkdown::\link[rmarkdown]{render}()}.}
 
-\item{..., envir}{Arguments to be passed to \code{render()}, such as
-\code{encoding}.}
+\item{output_format, ..., envir}{Arguments to be passed to \code{render()}.}
 }
 \description{
 A wrapper function to merge all R Markdown files under the current working

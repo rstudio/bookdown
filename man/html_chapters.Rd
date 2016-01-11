@@ -4,7 +4,7 @@
 \title{Build book chapters into separate HTML files}
 \usage{
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = "libs", 
-    ...)
+    template = bookdown_file("templates/default.html"), ...)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir}{See
