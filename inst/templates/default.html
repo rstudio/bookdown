@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 $for(author-meta)$
 <meta name="author" content="$author-meta$" />
@@ -31,11 +32,13 @@ $if(highlightjs)$
       href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
       $if(html5)$$else$type="text/css" $endif$/>
 <script src="$highlightjs$/highlight.js"></script>
+$if(theme)$
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
+$endif$
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
    window.setTimeout(function() {
@@ -50,12 +53,13 @@ $if(highlighting-css)$
 <style type="text/css">
 $highlighting-css$
 </style>
+$if(theme)$
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-
+$endif$
 $endif$
 
 $for(css)$
