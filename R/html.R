@@ -1,9 +1,13 @@
-merge_rmd = function(files = list.files('.', '[.]Rmd$', ignore.case = TRUE)) {
+merge_rmd = function(
+  files = list.files('.', '[.]Rmd$', ignore.case = TRUE),
+  format = c('html', 'latex')
+) {
 
   config = load_config()
 
   if (is.character(config[['rmd_files']])) {
     files = config[['rmd_files']]
+    if (!missing(format) && is.list(files)) files = files[[format]]
   } else {
     files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
     index = match('index', with_ext(files, ''))
@@ -61,6 +65,7 @@ html_chapters = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     split_chapters(output)
   }
+  config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
   config
 }

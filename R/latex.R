@@ -23,6 +23,7 @@ pdf_book = function(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...)
     latexmk(f, config$pandoc$latex_engine)
     with_ext(output, '.pdf')
   }
+  config$bookdown_output_format = 'latex'
   config = set_opts_knit(config)
   config
 }
