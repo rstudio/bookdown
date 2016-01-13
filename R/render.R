@@ -10,7 +10,7 @@
 #' @note The R Markdown files that start with an underscore \code{_} are ignored
 #'   when merging all \file{.Rmd }files.
 #' @export
-render_book = function(input, output_format, ..., envir = parent.frame()) {
+render_book = function(input, output_format = NULL, ..., envir = parent.frame()) {
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
     if (is.character(format) && (format %in% c('latex', 'html'))) {
