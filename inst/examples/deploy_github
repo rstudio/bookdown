@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -z "${GH_TOKEN}" ] && exit 0
+
 rm -rf gh-pages
 git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
 cp -r *.html _main_files images libs style.css gh-pages
