@@ -48,3 +48,28 @@ readUTF8 = function(input) {
 load_config = function() {
   if (file.exists('_config.yml')) yaml::yaml.load_file('_config.yml') else list()
 }
+
+check_special_chars = function(filename) {
+  reg = getFromNamespace('.shell_chars_regex', 'rmarkdown')
+  for (i in grep(reg, filename)) warning(
+    'The filename "', filename[i], '" contains special characters. ',
+    'You may rename it to, e.g., "', gsub(reg, '-', filename[i]), '".'
+  )
+  if (!is.null(i)) stop('Filenames must not contain special characters')
+}
+
+Rscript = function(args) {
+  system2(file.path(R.home('bin'), 'Rscript'), args)
+}
+
+Rscript_render_one = function(file, ...) {
+  args = shQuote(c(bookdown_file('scripts', 'render_one.R'), file, ...))
+  if (Rscript(args) != 0) stop('Failed to compile ', file)
+}
+
+clean_meta = function(meta_file, files) {
+  meta = readRDS(meta_file)
+  for (i in setdiff(names(meta), files)) meta[[i]] = NULL
+  saveRDS(meta, meta_file)
+  meta
+}

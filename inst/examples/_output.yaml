@@ -1,0 +1,19 @@
+bookdown::html_chapters:
+  css: style.css
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  keep_tex: yes
+  latex_engine: xelatex
+  citation_package: natbib
+pdf_document:
+  includes:
+    in_header: preamble.tex
+  keep_tex: yes
+  fig_caption: yes
+html_document:
+  css: style.css
+  fig_caption: yes
+  keep_md: yes
+  md_extensions: +markdown_in_html_blocks
+  self_contained: yes

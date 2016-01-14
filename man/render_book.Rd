@@ -3,7 +3,8 @@
 \alias{render_book}
 \title{Render multiple R Markdown documents into a single output file}
 \usage{
-render_book(input, output_format, ..., envir = parent.frame())
+render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
+    force_rerun = FALSE)
 }
 \arguments{
 \item{input}{Ignored. All R Markdown files under the current working
