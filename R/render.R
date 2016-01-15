@@ -18,8 +18,6 @@
 #' @param new_session Whether to use new R sessions to compile individual Rmd
 #'   files.
 #' @param force_knit Whether to force knitting all Rmd files.
-#' @note The R Markdown files that start with an underscore \code{_} are ignored
-#'   when merging all \file{.Rmd }files.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
