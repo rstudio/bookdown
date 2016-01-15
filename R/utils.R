@@ -58,6 +58,13 @@ merge_chapters = function(files, to, before = NULL, after = NULL) {
   writeLines(enc2utf8(content), to, useBytes = TRUE)
 }
 
+insert_chapter_script = function(config, where = 'before') {
+  script = config[[sprintf('%s_chapter_script', where)]]
+  if (is.character(script)) {
+    c('```{r include=FALSE}', unlist(lapply(script, readUTF8)), '```')
+  }
+}
+
 check_special_chars = function(filename) {
   reg = getFromNamespace('.shell_chars_regex', 'rmarkdown')
   for (i in grep(reg, filename)) warning(
