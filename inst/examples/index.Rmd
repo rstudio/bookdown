@@ -129,8 +129,8 @@ Because **knitr** does not allow duplicate chunk labels in a source document, yo
 At the moment, there are two output formats that you may use: `bookdown::pdf_book` and `bookdown::html_chapters`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()` that renders multiple Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
 
 ```{r eval=FALSE}
-bookdown::render_book('foo.Rmd', bookdown::html_chapters())
-bookdown::render_book('foo.Rmd', bookdown::pdf_book())
+bookdown::render_book('foo.Rmd', 'bookdown::html_chapters')
+bookdown::render_book('foo.Rmd', 'bookdown::pdf_book')
 bookdown::render_book('foo.Rmd', bookdown::html_chapters(lib_dir = 'book_assets'))
 bookdown::render_book('foo.Rmd', bookdown::pdf_book(keep_tex = TRUE))
 ```
@@ -152,7 +152,7 @@ Then you can click the `Knit` button in RStudio to compile the Rmd files into a 
 
 There are more things you can configure for a book in `_config.yml`:
 
-- `main_rmd`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`
+- `book_filename`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`
 - `chapter_name`: (for HTML output only) either a character string to be prepended to the chapter number in the chapter title (by default it is `"Chapter "`), or an R function that takes the chapter number as the input and returns a string as the new chapter number (e.g., `!expr function(i) paste('Chapter', i)`)
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter
@@ -160,11 +160,24 @@ There are more things you can configure for a book in `_config.yml`:
 Here is a sample `_config.yml`:
 
 ```yaml
-main_rmd: "my-book.Rmd"
+book_filename: "my-book.Rmd"
 chapter_name: "CHAPTER "
 before_chapter_script: ["script1.R", "script2.R"]
 after_chapter_script: "script3.R"
 ```
+
+## Separate R sessions for individual chapters
+
+Merging all chapters into one Rmd file and knitting it is one way to render the book in **bookdown**. There is actually another way: you may knit each chapter in a _separate_ R session, and **bookdown** will merge the Markdown output of all chapters to render the book. We call these two approaches "Merge and Knit" (MK) and "Knit and Merge" (KM), respectively. The differences between them may seem subtle, but can be fairly important depending on your use cases.
+
+- The most significant difference is that MK runs _all_ code chunks in all chapters in the same R session, whereas KM uses separate R sessions for individual chapters. For MK, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for KM, all chapters are isolated from each other^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter.]. If you want each chapter to compile from a clean state, use the KM approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the MK approach. For example, even you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
+- One advantage of KM is that Rmd files that have not been updated since the last time the book was rendered will not be recompiled by default, unless you force all chapters to be recompiled via `render_book(force_knit = TRUE)`. This may save some time, but the speedup may not be very significant, since the major time is normally consumed by running code chunks. If time-consumed chunks are cached, the compilation time for MK and KM may be about the same.
+- The KM approach will generate more files under the directory of Rmd files: each Rmd file will generate a Markdown output file (`.md`), and possibly a figure directory and a cache directory. The MK approach only renders one Rmd file, so it only has one set of output files.
+- For KM, whenever you change the output format (e.g., from HTML to PDF), you must recompile all chapters (`render_book(force_knit = TRUE)`), because the Markdown output files for one format may not work for another format. There is no such issue with the MK approach.
+
+The default approach in **bookdown** is MK. To switch to KM, you either use the argument `new_session = TRUE` when calling `render_book()`, or set `new_session: yes` in the configuration file `_config.yml`.
+
+Note the configurations `before_chapter_script` and `after_chapter_script` are ignored by KM. You can still configure `book_filename`, but it should be a Markdown filename, e.g., `_main.md`. All other configurations work for both MK and KM.
 
 ## Some tips
 
