@@ -1,8 +1,8 @@
-#' Render multiple R Markdown documents into a single output file
+#' Render multiple R Markdown documents into a book
 #'
 #' A wrapper function to render all R Markdown files under the current working
-#' directory into a book. It was mainly designed to be used in the RStudio IDE
-#' (specifically, the \code{knit} field in YAML).
+#' directory into a book. It can be used in the RStudio IDE (specifically, the
+#' \code{knit} field in YAML).
 #'
 #' There are two ways to render a book from Rmd files. The default way
 #' (\code{new_session = FALSE}) is to merge Rmd files into a single file and
