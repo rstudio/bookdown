@@ -2,15 +2,23 @@
 #'
 #' Convert R Markdown files to PDF while resolving the special tokens of
 #' \pkg{bookdown} (e.g., the tokens for references and labels) to native LaTeX
-#' commands. This function is based on
-#' \code{rmarkdown::\link[rmarkdown]{pdf_document}} with better default argument
-#' valuess for books.
+#' commands.
+#'
+#' This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
+#' with better default arguments. You can also change the default format to
+#' other LaTeX/PDF format functions using the \code{base_format} argument.
 #' @param toc,number_sections,fig_caption See
-#'   \code{rmarkdown::\link[rmarkdown]{pdf_document}}.
-#' @param ... Other arguments to be passed to \code{pdf_document()}.
+#'   \code{rmarkdown::\link{pdf_document}}, or the documentation of the
+#'   \code{base_format} function.
+#' @param ... Other arguments to be passed to \code{base_format}.
+#' @param base_format An output format function to be used as the base format.
 #' @export
-pdf_book = function(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...) {
-  config = rmarkdown::pdf_document(
+pdf_book = function(
+  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
+  base_format = rmarkdown::pdf_document
+) {
+  base_format = get_base_format(base_format)
+  config = base_format(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption, ...
   )
   config$pandoc$ext = '.tex'

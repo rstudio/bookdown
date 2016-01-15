@@ -45,6 +45,14 @@ readUTF8 = function(input) {
   readLines(input, encoding = 'UTF-8', warn = FALSE)
 }
 
+get_base_format = function(format) {
+  if (is.character(format)) {
+    format = eval(parse(text = format))
+  }
+  if (!is.function(format)) stop('The output format must be a function')
+  format
+}
+
 load_config = function() {
   if (file.exists('_config.yml')) yaml::yaml.load_file('_config.yml') else list()
 }

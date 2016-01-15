@@ -1,14 +1,14 @@
 #' Build book chapters into separate HTML files
 #'
-#' Merge individual R Markdown documents (assuming each document is one chapter)
-#' into one main document, render it into HTML, and split it into chapters while
-#' updating relative links (e.g. links in TOC, footnotes, citations,
-#' figure/table cross-references, and so on). This function is expected to be
-#' used in conjunction with \code{\link{render_book}()}. It is almost
-#' meaningless if it is used with \code{rmarkdown::render()}.
+#' Split the HTML output into chapters while updating relative links (e.g. links
+#' in TOC, footnotes, citations, figure/table cross-references, and so on). This
+#' function is expected to be used in conjunction with
+#' \code{\link{render_book}()}. It is almost meaningless if it is used with
+#' \code{rmarkdown::render()}.
 #' @param toc,number_sections,fig_caption,lib_dir,template See
-#'   \code{rmarkdown::\link[rmarkdown]{html_document}}.
-#' @param ... Other arguments to be passed to \code{html_document()}.
+#'   \code{rmarkdown::\link{html_document}}, or the documentation of the
+#'   \code{base_format} function.
+#' @inheritParams pdf_book
 #' @note If you want to use a different template, the template must contain
 #'   three pairs of HTML comments: \samp{<!--token:title:start-->} and
 #'   \samp{<!--token:title:end-->} to mark the title section of the book (this
@@ -23,9 +23,11 @@
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
-  template = bookdown_file('templates/default.html'), ...
+  template = bookdown_file('templates/default.html'), ...,
+  base_format = rmarkdown::html_document
 ) {
-  config = rmarkdown::html_document(
+  base_format = get_base_format(base_format)
+  config = base_format(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, ...
