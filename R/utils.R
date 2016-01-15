@@ -49,6 +49,15 @@ load_config = function() {
   if (file.exists('_config.yml')) yaml::yaml.load_file('_config.yml') else list()
 }
 
+merge_chapters = function(files, to, before = NULL, after = NULL) {
+  content = unlist(lapply(files, function(f) {
+    x = c(before, readUTF8(f), after)
+    id = with_ext(f, '')  # base filename (without extension)
+    c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
+  }))
+  writeLines(enc2utf8(content), to, useBytes = TRUE)
+}
+
 check_special_chars = function(filename) {
   reg = getFromNamespace('.shell_chars_regex', 'rmarkdown')
   for (i in grep(reg, filename)) warning(

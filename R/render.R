@@ -60,12 +60,7 @@ render_book = function(
 
   meta = clean_meta(render_meta, files)
 
-  content = unlist(lapply(meta, function(f) {
-    x = readUTF8(f)
-    id = with_ext(f, '')  # base filename (without extension)
-    c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
-  }))
-  writeLines(enc2utf8(content), main, useBytes = TRUE)
+  merge_chapters(meta, main)
   on.exit(unlink(main), add = TRUE)
 
   knit_meta = unlist(lapply(meta, attr, 'knit_meta', exact = TRUE), recursive = FALSE)
