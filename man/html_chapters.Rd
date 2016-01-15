@@ -3,22 +3,25 @@
 \alias{html_chapters}
 \title{Build book chapters into separate HTML files}
 \usage{
-html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = "libs", 
-    template = bookdown_file("templates/default.html"), ...)
+html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
+    lib_dir = "libs", template = bookdown_file("templates/default.html"), 
+    ..., base_format = rmarkdown::html_document)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir, template}{See
-\code{rmarkdown::\link[rmarkdown]{html_document}}.}
+\code{rmarkdown::\link{html_document}}, or the documentation of the
+\code{base_format} function.}
 
-\item{...}{Other arguments to be passed to \code{html_document()}.}
+\item{...}{Other arguments to be passed to \code{base_format}.}
+
+\item{base_format}{An output format function to be used as the base format.}
 }
 \description{
-Merge individual R Markdown documents (assuming each document is one chapter)
-into one main document, render it into HTML, and split it into chapters while
-updating relative links (e.g. links in TOC, footnotes, citations,
-figure/table cross-references, and so on). This function is expected to be
-used in conjunction with \code{\link{render_book}()}. It is almost
-meaningless if it is used with \code{rmarkdown::render()}.
+Split the HTML output into chapters while updating relative links (e.g. links
+in TOC, footnotes, citations, figure/table cross-references, and so on). This
+function is expected to be used in conjunction with
+\code{\link{render_book}()}. It is almost meaningless if it is used with
+\code{rmarkdown::render()}.
 }
 \note{
 If you want to use a different template, the template must contain
