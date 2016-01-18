@@ -5,7 +5,7 @@
 \usage{
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
     lib_dir = "libs", template = bookdown_file("templates/default.html"), 
-    ..., base_format = rmarkdown::html_document)
+    ..., base_format = rmarkdown::html_document, page_builder)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir, template}{See
@@ -15,6 +15,13 @@ html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
 \item{...}{Other arguments to be passed to \code{base_format}.}
 
 \item{base_format}{An output format function to be used as the base format.}
+
+\item{page_builder}{A function to combine different parts of a chapter into a
+page (an HTML character string); it has arguments \code{head} (page
+header), \code{toc} (table of contents), \code{chapter} (the chapter body),
+\code{link_prev}/ \code{link_next}, (the HTML filename of the previous/next
+chapter), \code{rmd_cur} (the current Rmd filename), and \code{foot} (page
+footer). See \code{bookdown:::build_chapter} for an example.}
 }
 \description{
 Split the HTML output into chapters while updating relative links (e.g. links
