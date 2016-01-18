@@ -61,6 +61,7 @@ render_book = function(
   main = if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
   } else if (new_session) '_main.md' else '_main.Rmd'
+  on.exit(unlink(main), add = TRUE)
 
   if (new_session) {
     render_new_session(files, main, force_knit, output_format, clean, envir, ...)
@@ -101,7 +102,6 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   meta = clean_meta(render_meta, files)
 
   merge_chapters(meta, main)
-  on.exit(unlink(main), add = TRUE)
 
   knit_meta = unlist(lapply(meta, attr, 'knit_meta', exact = TRUE), recursive = FALSE)
   intermediates = unlist(lapply(meta, attr, 'intermediates', exact = TRUE))
