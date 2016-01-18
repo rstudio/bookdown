@@ -9,6 +9,12 @@
 #'   \code{rmarkdown::\link{html_document}}, or the documentation of the
 #'   \code{base_format} function.
 #' @inheritParams pdf_book
+#' @param page_builder A function to combine different parts of a chapter into a
+#'   page (an HTML character string); it has arguments \code{head} (page
+#'   header), \code{toc} (table of contents), \code{chapter} (the chapter body),
+#'   \code{link_prev}/ \code{link_next}, (the HTML filename of the previous/next
+#'   chapter), \code{rmd_cur} (the current Rmd filename), and \code{foot} (page
+#'   footer). See \code{bookdown:::build_chapter} for an example.
 #' @note If you want to use a different template, the template must contain
 #'   three pairs of HTML comments: \samp{<!--token:title:start-->} and
 #'   \samp{<!--token:title:end-->} to mark the title section of the book (this
@@ -24,9 +30,10 @@
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), ...,
-  base_format = rmarkdown::html_document
+  base_format = rmarkdown::html_document, page_builder
 ) {
   base_format = get_base_format(base_format)
+  if (missing(page_builder)) page_builder = build_chapter
   config = base_format(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
@@ -40,6 +47,30 @@ html_chapters = function(
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
   config
+}
+
+build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, foot) {
+  # add a has-sub class to the <li> items that has sub lists
+  toc = gsub('^(<li>)(.+<ul>)$', '<li class="has-sub">\\2', toc)
+  paste(c(
+    head,
+    '<div class="row">',
+    '<div class="col-sm-12">',
+    toc,
+    '</div>',
+    '</div>',
+    '<div class="row">',
+    '<div class="col-sm-12">',
+    chapter,
+    '<p style="text-align: center;">',
+    button_link(link_prev, 'Previous'),
+    edit_link(rmd_cur),
+    button_link(link_next, 'Next'),
+    '</p>',
+    '</div>',
+    '</div>',
+    foot
+  ), collapse = '\n')
 }
 
 split_chapters = function(output) {
@@ -58,24 +89,6 @@ split_chapters = function(output) {
   html_body  = x[(i5 + 1):(i6 - 1)]  # body
   html_foot  = x[(i6 + 1):length(x)]  # HTML footer
 
-  one_chapter = function(chapter, chap_prev, chap_next) {
-    paste(c(
-      html_head,
-      '<div class="row">',
-      '<div class="col-sm-4 well">',
-      html_toc,
-      '</div>',
-      '<div class="col-sm-8">',
-      chapter,
-      '<div style="text-align: center;">',
-      button_link(chap_prev, 'Previous'),
-      button_link(chap_next, 'Next'),
-      '</div>',
-      '</div>',
-      '</div>',
-      html_foot
-    ), collapse = '\n')
-  }
 
   r_chap = '^<!--chapter:end:(.+)-->$'
   idx = grep(r_chap, html_body)
@@ -88,7 +101,7 @@ split_chapters = function(output) {
   idx = next_nearest(idx, grep('^<div', html_body))
   idx = c(1, idx[-n])
 
-  html_body = resolve_refs_html(html_body, idx, nms)
+  html_body = resolve_refs_html(html_body, idx)
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
 
@@ -101,9 +114,11 @@ split_chapters = function(output) {
       i2 = if (i == n) length(html_body) else idx[i + 1] - 1
       html = c(if (i == 1) html_title, html_body[i1:i2])
       html = restore_links(html, html_body, idx, nms)
-      res[[length(res) + 1]] = one_chapter(
-        html,
-        if (i > 1) nms[i - 1], if (i < n) nms[i + 1]
+      res[[length(res) + 1]] = build_chapter(
+        html_head, html_toc, html,
+        sprintf('%s.html', if (i > 1) nms[i - 1]),
+        sprintf('%s.html', if (i < n) nms[i + 1]),
+        paste0(nms[i], '.Rmd'), html_foot
       )
     }
     setNames(res, nms)
@@ -125,14 +140,22 @@ find_token = function(x, token) {
 }
 
 button_link = function(target, text) {
-  target = if (is.null(target)) '#' else paste0(target, '.html')
+  if (length(target) == 0) target = '#'
   sprintf(
-    '<a href="%s" class="btn btn-default"%s>%s</a>',
-    target, if (target == '#') ' disabled' else '', text
+    '<button class="btn btn-default"%s><a href="%s">%s</a></button>',
+    if (target == '#') ' disabled' else '', target, text
   )
 }
 
-resolve_refs_html = function(content, lines, filenames) {
+edit_link = function(target) {
+  config = load_config()[['edit']]
+  if (!is.character(link <- config[['link']])) return()
+  if (!grepl('%s', link)) stop('The edit link must contain %s')
+  if (!is.character(text <- config[['text']])) text = 'Edit'
+  button_link(sprintf(link, target), text)
+}
+
+resolve_refs_html = function(content, lines) {
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
   m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
   labs = regmatches(content, m)

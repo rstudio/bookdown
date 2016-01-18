@@ -1,1 +1,5 @@
 chapter_name: "Chapter "
+repo: https://github.com/rstudio/bookdown/
+edit:
+  link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
+  text: "Edit"
