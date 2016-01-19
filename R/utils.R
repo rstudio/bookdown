@@ -86,7 +86,7 @@ Rscript = function(args) {
   system2(file.path(R.home('bin'), 'Rscript'), args)
 }
 
-Rscript_render_one = function(file, ...) {
+Rscript_render = function(file, ...) {
   args = shQuote(c(bookdown_file('scripts', 'render_one.R'), file, ...))
   if (Rscript(args) != 0) stop('Failed to compile ', file)
 }

@@ -97,7 +97,7 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
     !utils::file_test('-ot', files, files_md)  # Rmd not older than md
   }
   # compile chapters in separate R sessions
-  for (f in files[rerun]) Rscript_render_one(f, render_args, render_meta)
+  for (f in files[rerun]) Rscript_render(f, render_args, render_meta)
 
   meta = clean_meta(render_meta, files)
 
@@ -107,7 +107,7 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   intermediates = unlist(lapply(meta, attr, 'intermediates', exact = TRUE))
   if (clean) on.exit(unlink(intermediates, recursive = TRUE), add = TRUE)
 
-  rmarkdown:::render_one(
+  rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
     run_pandoc = TRUE, knit_meta = knit_meta
   )
