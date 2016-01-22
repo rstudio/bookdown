@@ -83,12 +83,19 @@ split_chapters = function(output, build = build_chapter) {
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
+  # no (or not enough) tokens found in the template
+  if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
+    x = resolve_refs_html(x)
+    x = add_chapter_prefix(x)
+    writeUTF8(x, output)
+    return(output)
+  }
+
   html_head  = x[1:(i1 - 1)]  # HTML header + includes
   html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date
   html_toc   = x[(i3 + 1):(i4 - 1)]  # TOC
   html_body  = x[(i5 + 1):(i6 - 1)]  # body
   html_foot  = x[(i6 + 1):length(x)]  # HTML footer
-
 
   r_chap = '^<!--chapter:end:(.+)-->$'
   idx = grep(r_chap, html_body)
@@ -135,8 +142,10 @@ split_chapters = function(output, build = build_chapter) {
 
 find_token = function(x, token) {
   i = which(x == token)
-  if (length(i) != 1) stop("Cannot find the unique token '", token, "'")
-  i
+  n = length(i)
+  if (n == 1) return(i)
+  if (n == 0) return(0)
+  stop("Cannot find the unique token '", token, "'")
 }
 
 button_link = function(target, text) {
