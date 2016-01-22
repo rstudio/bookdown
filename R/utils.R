@@ -22,8 +22,11 @@ with_ext = function(x, ext) {
 }
 
 # counters for figures/tables
-new_counters = function(type, len) {
-  base = matrix(0L, nrow = len, ncol = length(type), dimnames = list(NULL, type))
+new_counters = function(type, rownames) {
+  base = matrix(
+    0L, nrow = length(rownames), ncol = length(type),
+    dimnames = list(rownames, type)
+  )
   list(
     inc = function(type, which) {
       base[which, type] <<- base[which, type] + 1L

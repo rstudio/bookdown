@@ -101,7 +101,7 @@ split_chapters = function(output, build = build_chapter) {
   idx = next_nearest(idx, grep('^<div', html_body))
   idx = c(1, idx[-n])
 
-  html_body = resolve_refs_html(html_body, idx)
+  html_body = resolve_refs_html(html_body)
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
 
@@ -155,12 +155,39 @@ edit_link = function(target) {
   button_link(sprintf(link, target), text)
 }
 
-resolve_refs_html = function(content, lines) {
+resolve_refs_html = function(content) {
+  res = parse_fig_labels(content)
+  content = res$content
+  ref_table = c(res$ref_table, parse_section_labels(content))
+
+  # look for @ref(label) and resolve to actual figure/table/section numbers
+  m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
+  refs = regmatches(content, m)
+  regmatches(content, m) = lapply(refs, function(ref) {
+    if (length(ref) == 0) return(ref)
+    ref = gsub('^ @ref\\(|\\)$', '', ref)
+    num = ref_table[ref]
+    if (any(i <- is.na(num))) {
+      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
+      num[i] = '<strong>??</strong>'
+    }
+    sprintf(' <a href="#%s">%s</a>', ref, num)
+  })
+  content
+}
+
+reg_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
+
+parse_fig_labels = function(content) {
+  lines = grep(reg_chap, content)
+  chaps = gsub(reg_chap, '\\2', content[lines])  # chapter numbers
+  if (length(chaps) == 0) return(list(content = content, ref_table = arry))
+
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
   m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
   labs = regmatches(content, m)
   arry = character()  # an array of the form c(label = number, ...)
-  cntr = new_counters(c('Figure', 'Table'), length(lines))  # chapter counters
+  cntr = new_counters(c('Figure', 'Table'), chaps)  # chapter counters
   figs = grep('^<div class="figure', content)
 
   for (i in seq_along(labs)) {
@@ -169,7 +196,7 @@ resolve_refs_html = function(content, lines) {
     if (length(lab) > 1)
       stop('There are multiple labels on one line: ', paste(lab, collapse = ', '))
 
-    j = which.max(lines[lines <= i])
+    j = tail(chaps[lines <= i], 1)
     lab = gsub('^\\(#|\\)$', '', lab)
     type = ifelse(grepl('^fig:', lab), 'Figure', 'Table')
     num = paste0(j, '.', cntr$inc(type, j))
@@ -197,7 +224,12 @@ resolve_refs_html = function(content, lines) {
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
   content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
 
-  # parse section numbers and labels (id's)
+  list(content = content, ref_table = arry)
+}
+
+# parse section numbers and labels (id's)
+parse_section_labels = function(content) {
+  arry = character()
   sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
   sec_ids = '^<div id="([^"]+)" class="section .+$'
   for (i in grep(sec_num, content)) {
@@ -208,22 +240,7 @@ resolve_refs_html = function(content, lines) {
       sub(sec_ids, '\\1', content[i - 1])
     ))
   }
-
-  # look for @ref(label) and resolve to actual figure/table/section numbers
-  m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
-  refs = regmatches(content, m)
-  regmatches(content, m) = lapply(refs, function(ref) {
-    if (length(ref) == 0) return(ref)
-    ref = gsub('^ @ref\\(|\\)$', '', ref)
-    num = arry[ref]
-    if (any(i <- is.na(num))) {
-      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
-      num[i] = '<strong>??</strong>'
-    }
-    sprintf(' <a href="#%s">%s</a>', ref, num)
-  })
-
-  content
+  arry
 }
 
 add_chapter_prefix = function(content) {
