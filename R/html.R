@@ -42,7 +42,7 @@ html_chapters = function(
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
-    split_chapters(output)
+    split_chapters(output, page_builder)
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
@@ -73,7 +73,7 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, foot
   ), collapse = '\n')
 }
 
-split_chapters = function(output) {
+split_chapters = function(output, build = build_chapter) {
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -114,7 +114,7 @@ split_chapters = function(output) {
       i2 = if (i == n) length(html_body) else idx[i + 1] - 1
       html = c(if (i == 1) html_title, html_body[i1:i2])
       html = restore_links(html, html_body, idx, nms)
-      res[[length(res) + 1]] = build_chapter(
+      res[[length(res) + 1]] = build(
         html_head, html_toc, html,
         sprintf('%s.html', if (i > 1) nms[i - 1]),
         sprintf('%s.html', if (i < n) nms[i + 1]),
