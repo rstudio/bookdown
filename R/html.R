@@ -16,14 +16,14 @@
 #'   chapter), \code{rmd_cur} (the current Rmd filename), and \code{foot} (page
 #'   footer). See \code{bookdown:::build_chapter} for an example.
 #' @note If you want to use a different template, the template must contain
-#'   three pairs of HTML comments: \samp{<!--token:title:start-->} and
-#'   \samp{<!--token:title:end-->} to mark the title section of the book (this
-#'   section will be placed only on the first page of the rendered book);
-#'   \samp{<!--token:toc:start-->} and \samp{<!--token:toc:end-->} to mar the
-#'   table of contents section (it will be placed on all chapter pages);
-#'   \samp{<!--token:body:start-->} and \samp{<!--token:body:end-->} to mark the
-#'   HTML body of the book (the HTML body will be split into separate pages for
-#'   chapters). You may open the default HTML template
+#'   three pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
+#'   \samp{<!--bookdown:title:end-->} to mark the title section of the book
+#'   (this section will be placed only on the first page of the rendered book);
+#'   \samp{<!--bookdown:toc:start-->} and \samp{<!--bookdown:toc:end-->} to mar
+#'   the table of contents section (it will be placed on all chapter pages);
+#'   \samp{<!--bookdown:body:start-->} and \samp{<!--bookdown:body:end-->} to
+#'   mark the HTML body of the book (the HTML body will be split into separate
+#'   pages for chapters). You may open the default HTML template
 #'   (\code{bookdown:::bookdown_file('templates/default.html')}) to see where
 #'   these comments were inserted.
 #' @export
@@ -76,12 +76,12 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, foot
 split_chapters = function(output) {
   x = readUTF8(output)
 
-  i1 = find_token(x, '<!--token:title:start-->')
-  i2 = find_token(x, '<!--token:title:end-->')
-  i3 = find_token(x, '<!--token:toc:start-->')
-  i4 = find_token(x, '<!--token:toc:end-->')
-  i5 = find_token(x, '<!--token:body:start-->')
-  i6 = find_token(x, '<!--token:body:end-->')
+  i1 = find_token(x, '<!--bookdown:title:start-->')
+  i2 = find_token(x, '<!--bookdown:title:end-->')
+  i3 = find_token(x, '<!--bookdown:toc:start-->')
+  i4 = find_token(x, '<!--bookdown:toc:end-->')
+  i5 = find_token(x, '<!--bookdown:body:start-->')
+  i6 = find_token(x, '<!--bookdown:body:end-->')
 
   html_head  = x[1:(i1 - 1)]  # HTML header + includes
   html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date

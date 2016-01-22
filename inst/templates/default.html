@@ -95,7 +95,7 @@ $for(include-before)$
 $include-before$
 $endfor$
 
-<!--token:title:start-->
+<!--bookdown:title:start-->
 $if(title)$
 <div id="$idprefix$header">
 <h1 class="title">$title$</h1>
@@ -121,19 +121,19 @@ $if(date)$
 $endif$
 </div>
 $endif$
-<!--token:title:end-->
+<!--bookdown:title:end-->
 
-<!--token:toc:start-->
+<!--bookdown:toc:start-->
 $if(toc)$
 <div id="$idprefix$TOC">
 $toc$
 </div>
 $endif$
-<!--token:toc:end-->
+<!--bookdown:toc:end-->
 
-<!--token:body:start-->
+<!--bookdown:body:start-->
 $body$
-<!--token:body:end-->
+<!--bookdown:body:end-->
 
 $for(include-after)$
 $include-after$
