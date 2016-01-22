@@ -126,7 +126,7 @@ split_chapters = function(output) {
 
   chapters = build_chapters()
   for (i in names(chapters)) {
-    writeLines(enc2utf8(chapters[[i]]), paste0(i, '.html'), useBytes = TRUE)
+    writeUTF8(chapters[[i]], paste0(i, '.html'))
   }
 
   # return the first chapter (TODO: in theory should return the current chapter)

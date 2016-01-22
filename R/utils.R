@@ -45,6 +45,10 @@ readUTF8 = function(input) {
   readLines(input, encoding = 'UTF-8', warn = FALSE)
 }
 
+writeUTF8 = function(text, ...) {
+  writeLines(enc2utf8(text), ..., useBytes = TRUE)
+}
+
 get_base_format = function(format) {
   if (is.character(format)) {
     format = eval(parse(text = format))

@@ -27,7 +27,7 @@ pdf_book = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
     x = resolve_refs_latex(readUTF8(f))
-    writeLines(enc2utf8(x), f, useBytes = TRUE)
+    writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     with_ext(output, '.pdf')
   }
