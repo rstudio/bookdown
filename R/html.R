@@ -273,6 +273,8 @@ add_chapter_prefix = function(content) {
 }
 
 restore_links = function(segment, full, lines, filenames) {
+  # if there is only one chapter in the HTML in total, no need to restore links
+  if (length(lines) <= 1) return(segment)
   r = '<a href="#([^"]+)"'
   m = gregexpr(r, segment)
   regmatches(segment, m) = lapply(regmatches(segment, m), function(x) {
