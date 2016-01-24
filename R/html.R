@@ -149,14 +149,14 @@ find_token = function(x, token) {
 }
 
 button_link = function(target, text) {
-  if (length(target) == 0) target = '#'
+  if (length(target) == 0) return()
   sprintf(
-    '<button class="btn btn-default"%s><a href="%s">%s</a></button>',
-    if (target == '#') ' disabled' else '', target, text
+    '<button class="btn btn-default"><a href="%s">%s</a></button>', target, text
   )
 }
 
 edit_link = function(target) {
+  if (length(target) == 0) return()
   config = load_config()[['edit']]
   if (!is.character(link <- config[['link']])) return()
   if (!grepl('%s', link)) stop('The edit link must contain %s')
