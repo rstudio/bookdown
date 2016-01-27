@@ -9,12 +9,19 @@
 #'   \code{rmarkdown::\link{html_document}}, or the documentation of the
 #'   \code{base_format} function.
 #' @inheritParams pdf_book
+#' @param use_rmd_names Whether to use the base filenames of the input Rmd files
+#'   to create the HTML filenames, e.g. generate \file{chapter1.html} for
+#'   \file{chapter1.html}. Note this argument only works when this output format
+#'   is used by \code{\link{render_book}()}.
+#' @param split_level When \code{use_rmd_names = FALSE}, the level by which the
+#'   HTML output file is split. \code{0} means do not split the file; \code{1}
+#'   means split the file by the first level headers; \code{2} means the second
+#'   level headers. The HTML filenames will be determined by the header numbers
+#'   and ID's, e.g. the filename for the first chapter with a chapter title
+#'   \code{# Introduction} will be \file{1-introduction.html} by default.
 #' @param page_builder A function to combine different parts of a chapter into a
-#'   page (an HTML character string); it has arguments \code{head} (page
-#'   header), \code{toc} (table of contents), \code{chapter} (the chapter body),
-#'   \code{link_prev}/ \code{link_next}, (the HTML filename of the previous/next
-#'   chapter), \code{rmd_cur} (the current Rmd filename), and \code{foot} (page
-#'   footer). See \code{bookdown:::build_chapter} for an example.
+#'   page (an HTML character vector). See \code{\link{build_chapter}} for the
+#'   specification of this function.
 #' @note If you want to use a different template, the template must contain
 #'   three pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
 #'   \samp{<!--bookdown:title:end-->} to mark the title section of the book
@@ -30,10 +37,10 @@
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), ...,
-  base_format = rmarkdown::html_document, page_builder
+  base_format = rmarkdown::html_document, page_builder = build_chapter,
+  use_rmd_names = TRUE, split_level = 1
 ) {
   base_format = get_base_format(base_format)
-  if (missing(page_builder)) page_builder = build_chapter
   config = base_format(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
@@ -42,14 +49,31 @@ html_chapters = function(
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
-    split_chapters(output, page_builder)
+    split_chapters(output, page_builder, split_level, use_rmd_names)
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
   config
 }
 
-build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, foot) {
+#' Combine different parts of an HTML page
+#'
+#' Given the HTML header, body, and footer, etc, build an HTML page.
+#'
+#' This function is for expert use only. The \code{head} and \code{foot}
+#' arguments may not be strictly the HTML header and footer. It depends on the
+#' HTML comment tokens in the template (see \code{\link{html_chapters}}).
+#' @param head A character vector of the HTML code before the document title.
+#' @param toc A character vector of the table of contents.
+#' @param chapter The body of a chapter.
+#' @param link_prev,link_next The URL of the previous/next chapter (may be
+#'   \code{NULL}).
+#' @param rmd_cur The Rmd filename of the current chapter (may be \code{NULL}).
+#' @param html_cur The HTML filename of the current chapter (may be
+#'   \code{NULL}).
+#' @param foot A character vector of the HTML code after the chapter body.
+#' @export
+build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot) {
   # add a has-sub class to the <li> items that has sub lists
   toc = gsub('^(<li>)(.+<ul>)$', '<li class="has-sub">\\2', toc)
   paste(c(
@@ -73,7 +97,9 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, foot
   ), collapse = '\n')
 }
 
-split_chapters = function(output, build = build_chapter) {
+split_chapters = function(
+  output, build = build_chapter, use_rmd_names = TRUE, split_level = 1
+) {
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -99,21 +125,90 @@ split_chapters = function(output, build = build_chapter) {
 
   r_chap = '^<!--chapter:end:(.+)-->$'
   idx = grep(r_chap, html_body)
-  nms = gsub(r_chap, '\\1', html_body[idx])
+  nms = gsub(r_chap, '\\1', html_body[idx])  # to be used in HTML filenames
   n = length(idx)
-  if (n == 0) return(output)  # no chapters
-
-  html_body[idx] = ''  # remove chapter tokens
-
-  idx = next_nearest(idx, grep('^<div', html_body))
-  idx = c(1, idx[-n])
 
   html_body = resolve_refs_html(html_body)
+
+  if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
+  # do not split the HTML file
+  if (split_level == 0) {
+    html_body[idx] = ''  # remove chapter tokens
+    html_body = add_chapter_prefix(html_body)
+    writeUTF8(build(
+      html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, html_foot
+    ), output)
+    return(output)
+  }
+  if (use_rmd_names) {
+    html_body[idx] = ''
+    nms_chaps = nms  # Rmd filenames
+    if (n >= 1) {
+      idx = next_nearest(idx, grep('^<div', html_body))
+      idx = c(1, idx[-n])
+    }
+  } else {
+    h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', html_body)
+    h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', html_body)
+    idx2 = if (split_level == 1) h1 else if (split_level == 2) {
+      h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
+      if (length(h12) > 0 && h12[1] != 1) stop(
+        'The document must start with a first (#) or second level (##) heading'
+      )
+      h12 = sort(h12)
+      if (length(h12) > 1) {
+        n12 = names(h12)
+        # h2 that immediately follows h1
+        i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
+        # close the h1 section early with </div>
+        if (length(i)) html_body[i] = paste(html_body[i], '\n</div>')
+        # h1 that immediately follows h2 but not the first h1
+        i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
+        if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
+        i = h12[i] - 1
+        if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(html_body))
+        for (j in i) {
+          if (html_body[j] != '</div>') warning(
+            'Something wrong with the HTML output. The line ', html_body[j],
+            ' is supposed to be </div>'
+          )
+        }
+        html_body[i] = paste('<!--', html_body[i], '-->')  # remove the extra </div> of h1
+      }
+      unname(h12)
+    }
+    n = length(idx2)
+    nms_chaps = if (length(idx)) {
+      vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
+    }
+    reg_id = '^<div id="([^"]+)".*$'
+    reg_num = '^(<h[12]><span class="header-section-number">)([0-9.]+)(</span>.+</h[12]>)$'
+    nms = vapply(idx2, character(1), FUN = function(i) {
+      x1 = html_body[i]; x2 = html_body[i + 1]
+      id = if (grepl(reg_id, x1)) gsub(reg_id, '\\1', x1)
+      num = if (grepl(reg_num, x2)) gsub(reg_num, '\\2', x2)
+      if (is.null(id) && is.null(num)) stop(
+        'The heading ', x2, ' must have at least an id or a number'
+      )
+      nm = paste(c(num, id), collapse = '-')
+      gsub('[^[:alnum:]]+', '-', nm)
+    })
+    if (anyDuplicated(nms)) stop(
+      'Automatically generated filenames contain duplicated ones: ',
+      paste(nms[duplicated(nms)], collapse = ', ')
+    )
+    # generate index.html if the first Rmd filename is index.Rmd
+    if (identical(head(nms_chaps, 1), 'index')) nms[1] = 'index'
+    html_body[idx] = ''
+    idx = idx2
+  }
+  if (n == 0) {
+    idx = 1; nms = with_ext(output, ''); n = 1
+  }
+
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
-
   build_chapters = function() {
-    if (n == 1) return(setNames(list(html_body), nms))
 
     res = list()
     for (i in seq_len(n)) {
@@ -125,7 +220,8 @@ split_chapters = function(output, build = build_chapter) {
         html_head, html_toc, html,
         sprintf('%s.html', if (i > 1) nms[i - 1]),
         sprintf('%s.html', if (i < n) nms[i + 1]),
-        paste0(nms[i], '.Rmd'), html_foot
+        if (length(nms_chaps)) paste0(nms_chaps[i], '.Rmd'),
+        paste0(nms[i], '.html'), html_foot
       )
     }
     setNames(res, nms)
