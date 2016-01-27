@@ -1,5 +1,7 @@
 bookdown::html_chapters:
   css: style.css
+bookdown::gitbook:
+  css: style.css
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
