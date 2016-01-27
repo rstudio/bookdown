@@ -46,7 +46,7 @@ render_book = function(
   }
 
   # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  files = list.files('.', '[.]Rmd$')
   if (is.character(config[['rmd_files']])) {
     files = config[['rmd_files']]
     if (!is.null(format) && is.list(files)) files = files[[format]]
@@ -57,6 +57,10 @@ render_book = function(
     if (!is.na(index)) files = c(files[index], files[-index])
   }
   check_special_chars(files)
+  i = grep('[.]Rmd$', files, invert = TRUE)
+  if (length(i)) warning(
+    "Some input files do not have the '.Rmd' extension: ", paste(files[i], collapse = ', ')
+  )
 
   main = if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
