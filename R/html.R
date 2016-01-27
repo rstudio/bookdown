@@ -157,11 +157,17 @@ button_link = function(target, text) {
 
 edit_link = function(target) {
   if (length(target) == 0) return()
+  setting = edit_setting()
+  if (is.null(setting)) return()
+  button_link(sprintf(setting$link, target), setting$text)
+}
+
+edit_setting = function() {
   config = load_config()[['edit']]
   if (!is.character(link <- config[['link']])) return()
   if (!grepl('%s', link)) stop('The edit link must contain %s')
   if (!is.character(text <- config[['text']])) text = 'Edit'
-  button_link(sprintf(link, target), text)
+  list(link = link, text = text)
 }
 
 resolve_refs_html = function(content) {
