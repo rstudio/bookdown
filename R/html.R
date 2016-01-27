@@ -182,7 +182,7 @@ split_chapters = function(
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
     }
     reg_id = '^<div id="([^"]+)".*$'
-    reg_num = '^(<h[12]><span class="header-section-number">)([0-9.]+)(</span>.+</h[12]>)$'
+    reg_num = '^(<h[12]><span class="header-section-number">)([0-9.]+)(</span>.+</h[12]>).*$'
     nms = vapply(idx2, character(1), FUN = function(i) {
       x1 = html_body[i]; x2 = html_body[i + 1]
       id = if (grepl(reg_id, x1)) gsub(reg_id, '\\1', x1)
@@ -363,7 +363,7 @@ add_chapter_prefix = function(content) {
   } else if (is.function(chapter_name)) chapter_name else {
     stop('chapter_name in _config.yml must be a character string or function')
   }
-  r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
+  r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>.*)$'
   for (i in grep(r_chap, content)) {
     h = content[i]
     x1 = gsub(r_chap, '\\1', h)

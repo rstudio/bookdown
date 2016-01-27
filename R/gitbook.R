@@ -95,7 +95,7 @@ gitbook_page = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_
   j = grep('^\\s*<script>\\s*$', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
 
-  titles = paste(grep('^<(h[12])(>| ).+</\\1>$', chapter, value = TRUE), collapse = ' ')
+  titles = paste(grep('^<(h[12])(>| ).+</\\1>.*$', chapter, value = TRUE), collapse = ' ')
   gitbook_search$collect(html_cur, titles, paste(chapter, collapse = ' '))
 
   e_link = '/[*] bookdown:edit:link [*]/'
