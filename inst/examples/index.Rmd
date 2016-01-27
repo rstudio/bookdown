@@ -23,7 +23,7 @@ This book is a guide to authoring books with R Markdown [@R-rmarkdown] and the R
 - The editor support (in particular, the RStudio IDE);
 - How to publish a book;
 
-It is not a comprehensive introduction to R Markdown or the **knitr** package [@R-knitr], on top of which **bookdown** was built. To learn more about R Markdown, please check out the online documentation <http://rmarkdown.rstudio.com>. For **knitr**, please see @xie2015. You do not have to be an expert of the R language [@R-base] to read this book, but you are expected to have some basic knowledge about R Markdown and **knitr**. For beginners, you may get started with the cheetsheets at <https://www.rstudio.com/resources/cheatsheets/>. To be able to customize the book templates and themes, you should be familiar with LaTeX, HTML and CSS.
+It is not a comprehensive introduction to R Markdown or the **knitr** package [@R-knitr], on top of which **bookdown** was built. To learn more about R Markdown, please check out the online documentation <http://rmarkdown.rstudio.com>. For **knitr**, please see @xie2015. You do not have to be an expert of the R language [@R-base] to read this book, but you are expected to have some basic knowledge about R Markdown and **knitr**. For beginners, you may get started with the cheatsheets at <https://www.rstudio.com/resources/cheatsheets/>. To be able to customize the book templates and themes, you should be familiar with LaTeX, HTML and CSS.
 
 ## Motivation
 
