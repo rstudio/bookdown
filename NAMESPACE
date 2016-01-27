@@ -1,3 +1,5 @@
+export(build_chapter)
+export(gitbook)
 export(html_chapters)
 export(pdf_book)
 export(render_book)
