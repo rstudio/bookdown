@@ -136,7 +136,7 @@ split_chapters = function(
     html_body[idx] = ''  # remove chapter tokens
     html_body = add_chapter_prefix(html_body)
     writeUTF8(build(
-      html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, html_foot
+      html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, output, html_foot
     ), output)
     return(output)
   }
