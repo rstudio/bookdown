@@ -255,7 +255,7 @@ parse_section_labels = function(content) {
 add_chapter_prefix = function(content) {
   config = load_config()
   chapter_name = config[['chapter_name']]
-  if (is.null(chapter_name)) chapter_name = 'Chapter '
+  if (is.null(chapter_name)) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) paste0(chapter_name, i)
   } else if (is.function(chapter_name)) chapter_name else {
