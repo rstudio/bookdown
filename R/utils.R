@@ -104,3 +104,13 @@ clean_meta = function(meta_file, files) {
   saveRDS(meta, meta_file)
   meta
 }
+
+# remove HTML tags
+strip_html = function(x) gsub('<[^>]+>', '', x)
+
+# quote a string and escape backslashes/double quotes
+json_string = function(x) {
+  x = gsub('(["\\])', "\\\\\\1", x)
+  x = gsub('[[:space:]]', " ", x)
+  paste0('"', x, '"')
+}

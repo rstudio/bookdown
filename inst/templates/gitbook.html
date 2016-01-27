@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html $if(lang)$ lang="$lang$"$endif$>
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Documentation for using GitBook and gitbook.com">
+  <meta name="generator" content="GitBook 2.6.5">
+
+$for(author-meta)$
+<meta name="author" content="$author-meta$">
+$endfor$
+
+$if(date-meta)$
+<meta name="date" content="$date-meta$">
+$endif$
+
+$if(math)$
+  $math$
+$endif$
+
+  <meta name="HandheldFriendly" content="true">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  $if(apple-touch-icon)$<link rel="apple-touch-icon-precomposed" sizes="$if(apple-touch-icon-size)$$apple-touch-icon-size$x$apple-touch-icon-size$$else$152x152$endif$" href="$apple-touch-icon$">$endif$
+  $if(favicon)$<link rel="shortcut icon" href="$favicon$" type="image/x-icon">$endif$
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(highlightjs)$
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
+      $if(html5)$$else$type="text/css" $endif$/>
+<script src="$highlightjs$/highlight.js"></script>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+$endif$
+
+$if(highlighting-css)$
+<style type="text/css">
+$highlighting-css$
+</style>
+$endif$
+
+$for(css)$
+<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+</head>
+
+<body>
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+<!--bookdown:title:start-->
+$if(title)$
+<div id="$idprefix$header">
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<h3 class="subtitle"><em>$subtitle$</em></h3>
+$endif$
+$for(author)$
+$if(author.name)$
+<h4 class="author"><em>$author.name$</em></h4>
+$if(author.affiliation)$
+<address class="author_afil">
+$author.affiliation$<br>$endif$
+$if(author.email)$
+<a class="author_email" href="mailto:#">$author.email$</a>
+</address>
+$endif$
+$else$
+<h4 class="author"><em>$author$</em></h4>
+$endif$
+$endfor$
+$if(date)$
+<h4 class="date"><em>$date$</em></h4>
+$endif$
+</div>
+$endif$
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+$if(toc)$
+$toc$
+$endif$
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="$if(book-url)$$book-url$$else$./$endif$">$if(title)$$title$$endif$</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+$body$
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+
+<script>
+(function() {
+  var href = window.location.pathname;
+  href = href.substr(href.lastIndexOf('/') + 1);
+  if (href === '') href = 'index.html';
+  $$('a[href^="' + href + location.hash + '"]').parent('li.chapter').first().addClass('active');
+  var chaps = $$('ul.summary').find('li.chapter');
+  chaps.on('click', function(e) {
+    e.stopPropagation();
+    chaps.removeClass('active');
+    $$(this).addClass('active');
+  });
+})();
+
+require(["gitbook"], function(gitbook) {
+  var config = {
+    "autocover": {},
+    "highlight": {},
+    "search": {
+      "maxIndexSize": 1000000
+    },
+    "sharing": {
+      "facebook": true,
+      "twitter": true,
+      "google": false,
+      "weibo": false,
+      "instapaper": false,
+      "vk": false,
+      "all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+    },
+    "fontsettings": {
+      "theme": "white",
+      "family": "sans",
+      "size": 2
+    },
+    "edit": {
+      "link": /* bookdown:edit:link */,
+      "text": /* bookdown:edit:text */
+    }
+  };
+  gitbook.start(config);
+});
+</script>
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+</body>
+
+</html>
