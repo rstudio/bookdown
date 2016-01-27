@@ -6,7 +6,7 @@
 #' @inheritParams html_chapters
 #' @param ... Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (not including \code{toc}, \code{number_sections}, \code{self_contained},
-#'   and \code{template}).
+#'   \code{theme}, and \code{template}).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ..., use_rmd_names = FALSE, split_level = 2
@@ -18,7 +18,7 @@ gitbook = function(
   }
   config = html_document2(
     toc = TRUE, number_sections = TRUE, fig_caption = fig_caption,
-    self_contained = FALSE, lib_dir = lib_dir,
+    self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
   post = config$post_processor  # in case a post processor have been defined

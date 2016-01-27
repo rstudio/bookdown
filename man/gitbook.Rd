@@ -15,7 +15,7 @@ with \code{_files} appended to it.}
 
 \item{...}{Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (not including \code{toc}, \code{number_sections}, \code{self_contained},
-and \code{template}).}
+\code{theme}, and \code{template}).}
 
 \item{use_rmd_names}{Whether to use the base filenames of the input Rmd files
 to create the HTML filenames, e.g. generate \file{chapter1.html} for
