@@ -37,6 +37,7 @@ render_book = function(
     )
   }
 
+  on.exit(opts$restore(), add = TRUE)
   config = load_config()  # _config.yml
 
   # you may set, e.g., new_session: yes in _config.yml

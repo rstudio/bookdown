@@ -61,7 +61,11 @@ get_base_format = function(format) {
 }
 
 load_config = function() {
-  if (file.exists('_config.yml')) yaml::yaml.load_file('_config.yml') else list()
+  if (length(opts$get('config')) == 0 && file.exists('_config.yml')) {
+    # store the book config
+    opts$set(config = yaml::yaml.load_file(('_config.yml')))
+  }
+  opts$get('config')
 }
 
 merge_chapters = function(files, to, before = NULL, after = NULL) {
@@ -114,3 +118,6 @@ json_string = function(x) {
   x = gsub('[[:space:]]', " ", x)
   paste0('"', x, '"')
 }
+
+# manipulate internal options
+opts = knitr:::new_defaults(list(config = list()))
