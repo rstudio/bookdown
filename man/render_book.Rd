@@ -4,7 +4,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    new_session = FALSE, force_knit = FALSE)
+    output_dir = NULL, new_session = FALSE, force_knit = FALSE)
 }
 \arguments{
 \item{input}{Ignored. All R Markdown files under the current working
@@ -13,6 +13,11 @@ directory are merged as the actual input to
 
 \item{output_format, ..., clean, envir}{Arguments to be passed to
 \code{render()}.}
+
+\item{output_dir}{The output directory. If not specified, a field named
+\code{output_dir} in the configuration file \file{_config.yml} will be used
+(possiblely not specified, either). If not \code{NULL}, the output files
+will be moved to this directory.}
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
 files.}

@@ -7,15 +7,10 @@ gitbook(fig_caption = TRUE, lib_dir = "libs", ..., use_rmd_names = FALSE,
     split_level = 2)
 }
 \arguments{
-\item{fig_caption}{\code{TRUE} to render figures with captions}
-
-\item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
-bootstrap, etc.) into. By default this will be the name of the document
-with \code{_files} appended to it.}
-
-\item{...}{Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-(not including \code{toc}, \code{number_sections}, \code{self_contained},
-\code{theme}, and \code{template}).}
+\item{fig_caption, lib_dir, ...}{Arguments to be passed to
+\code{rmarkdown::\link{html_document}()} (\code{...} not including
+\code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
+and \code{template}).}
 
 \item{use_rmd_names}{Whether to use the base filenames of the input Rmd files
 to create the HTML filenames, e.g. generate \file{chapter1.html} for
