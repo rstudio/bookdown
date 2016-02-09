@@ -74,7 +74,7 @@ merge_chapters = function(files, to, before = NULL, after = NULL) {
     id = with_ext(f, '')  # base filename (without extension)
     c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
   }))
-  writeLines(enc2utf8(content), to, useBytes = TRUE)
+  writeUTF8(content, to)
 }
 
 insert_chapter_script = function(config, where = 'before') {
