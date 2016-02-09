@@ -1,3 +1,7 @@
+---
+knit: "bookdown::render_book"
+---
+
 `r if (knitr:::is_html_output()) '# References {-}'`
 
 ```{r include=FALSE}

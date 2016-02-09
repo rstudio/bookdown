@@ -70,7 +70,12 @@ load_config = function() {
 
 merge_chapters = function(files, to, before = NULL, after = NULL) {
   content = unlist(lapply(files, function(f) {
-    x = c(before, readUTF8(f), after)
+    x = readUTF8(f)
+    # add the knit field to the YAML frontmatter of the Rmd document
+    if (length(x) && x[1] != '---' && length(grep('^knit: ', x)) == 0) {
+      writeUTF8(c('---', 'knit: "bookdown::render_book"', '---\n', x), f)
+    }
+    x = c(before, x, after)
     id = with_ext(f, '')  # base filename (without extension)
     c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
   }))

@@ -1,3 +1,7 @@
+---
+knit: "bookdown::render_book"
+---
+
 # Customization
 
 ## YAML options {#yaml-options}
