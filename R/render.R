@@ -50,7 +50,7 @@ render_book = function(
     if (normalizePath(output_dir) == normalizePath(getwd())) output_dir = NULL
   }
   # store output directory and the initial input Rmd name
-  opts$set(output_dir = output_dir, input_rmd = input)
+  opts$set(output_dir = output_dir, input_rmd = basename(input))
 
   # you may set, e.g., new_session: yes in _config.yml
   if (missing(new_session)) {
