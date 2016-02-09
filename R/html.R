@@ -210,14 +210,13 @@ split_chapters = function(
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
   build_chapters = function() {
-
     res = list()
     for (i in seq_len(n)) {
       i1 = idx[i]
       i2 = if (i == n) length(html_body) else idx[i + 1] - 1
       html = c(if (i == 1) html_title, html_body[i1:i2])
       html = restore_links(html, html_body, idx, nms)
-      res[[length(res) + 1]] = build(
+      res[[i]] = build(
         html_head, html_toc, html,
         sprintf('%s.html', if (i > 1) nms[i - 1]),
         sprintf('%s.html', if (i < n) nms[i + 1]),
