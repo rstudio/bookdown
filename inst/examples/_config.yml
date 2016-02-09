@@ -6,3 +6,4 @@ edit:
 gitbook_toc_before: null
 gitbook_toc_after: |
   <li><a href="https://www.rstudio.com" target="blank">Published with RStudio Press</a></li>
+output_dir: _book

@@ -4,3 +4,4 @@
 inst/examples/*.html
 inst/examples/libs
 inst/examples/_main*
+inst/examples/_book
