@@ -66,7 +66,7 @@ gitbook_dependency = function() {
     )),
     script = file.path('js', c(
       'app.js', 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
-      'plugin-fontsettings.js', 'plugin-edit.js'
+      'plugin-fontsettings.js', 'plugin-bookdown.js'
     ))
   ))
 }
