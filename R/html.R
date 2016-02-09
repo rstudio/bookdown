@@ -49,6 +49,7 @@ html_chapters = function(
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
+    move_files_html(output, lib_dir)
     split_chapters(output, page_builder, split_level, use_rmd_names)
   }
   config$bookdown_output_format = 'html'
@@ -228,12 +229,20 @@ split_chapters = function(
   }
 
   chapters = build_chapters()
-  for (i in names(chapters)) {
+  for (i in nms) {
     writeUTF8(chapters[[i]], paste0(i, '.html'))
   }
 
-  # return the first chapter (TODO: in theory should return the current chapter)
-  paste0(names(chapters)[1], '.html')
+  html_files = paste0(nms, '.html')
+  if (!is.null(o <- opts$get('output_dir'))) {
+    file.rename(html_files, html_files2 <- file.path(o, html_files))
+    html_files = html_files2
+  }
+  # find the HTML output file corresponding to the Rmd file passed to render_book()
+  if (is.null(i <- opts$get('input_rmd')) || length(nms_chaps) == 0) j = 1 else {
+    if (is.na(j <- match(i, paste0(nms_chaps, '.Rmd')))) j = 1
+  }
+  html_files[j]
 }
 
 find_token = function(x, token) {
@@ -393,4 +402,37 @@ restore_links = function(segment, full, lines, filenames) {
     x
   })
   segment
+}
+
+# detect and move files to the output directory (if specified)
+move_files_html = function(output, lib_dir) {
+  if (is.null(o <- opts$get('output_dir'))) return()
+  x = readUTF8(output)
+  # detect local resources used in HTML
+  r = ' (src|href)="([^"]+)"'
+  m = gregexpr(r, x)
+  f = unlist(lapply(regmatches(x, m), function(z) {
+    if (length(z) == 0) z else gsub(r, '\\2', z)
+  }))
+  f = local_resources(unique(f[file.exists(f)]))
+  # detect resources in CSS
+  css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
+    d = dirname(z)
+    z = readUTF8(z)
+    r = 'url\\("?([^")]+)"?\\)'
+    lapply(regmatches(z, gregexpr(r, z)), function(s) {
+      s = local_resources(gsub(r, '\\1', s))
+      file.path(d, s)
+    })
+  })
+  f = c(f, unlist(css))
+  f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
+  f = f[f != '']
+  f = f[!knitr:::is_abs_path(f)]
+  f = unique(f[file.exists(f)])
+  lapply(file.path(o, unique(dirname(f))), dir_create)
+  file.copy(f, file.path(o, f), overwrite = TRUE)
+  # should not need the lib dir any more
+  if (length(lib_dir) == 1 && is.character(lib_dir))
+    unlink(lib_dir, recursive = TRUE)
 }

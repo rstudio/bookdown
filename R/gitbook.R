@@ -25,6 +25,7 @@ gitbook = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
+    move_files_html(output, lib_dir)
     split_chapters(output, gitbook_page, use_rmd_names, split_level)
   }
   config$bookdown_output_format = 'html'
@@ -48,7 +49,10 @@ write_search_data = function(x) {
   x = matrix(json_string(strip_html(x)), nrow = 3)
   x = apply(x, 2, paste, collapse = ',')
   x = paste0('[\n', paste0('[', x, ']', collapse = ',\n'), '\n]')
-  writeUTF8(x, 'search_index.json')
+  json_file = 'search_index.json'
+  writeUTF8(x, json_file)
+  if (!is.null(o <- opts$get('output_dir')))
+    file.rename(json_file, file.path(o, json_file))
 }
 
 gitbook_dependency = function() {

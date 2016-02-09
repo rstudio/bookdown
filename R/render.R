@@ -15,13 +15,17 @@
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}.
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{render()}.
+#' @param output_dir The output directory. If not specified, a field named
+#'   \code{output_dir} in the configuration file \file{_config.yml} will be used
+#'   (possiblely not specified, either). If not \code{NULL}, the output files
+#'   will be moved to this directory.
 #' @param new_session Whether to use new R sessions to compile individual Rmd
 #'   files.
 #' @param force_knit Whether to force knitting all Rmd files.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
-  new_session = FALSE, force_knit = FALSE
+  output_dir = NULL, new_session = FALSE, force_knit = FALSE
 ) {
 
   format = NULL  # latex or html
@@ -39,6 +43,10 @@ render_book = function(
 
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # _config.yml
+  if (missing(output_dir)) output_dir = config[['output_dir']]
+  if (length(output_dir)) dir_create(output_dir)
+  # store output directory and the initial input Rmd name
+  opts$set(output_dir = output_dir, input_rmd = input)
 
   # you may set, e.g., new_session: yes in _config.yml
   if (missing(new_session)) {

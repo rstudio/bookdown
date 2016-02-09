@@ -121,3 +121,11 @@ json_string = function(x) {
 
 # manipulate internal options
 opts = knitr:::new_defaults(list(config = list()))
+
+dir_create = function(path) {
+  utils::file_test('-d', path) || dir.create(path, recursive = TRUE)
+}
+
+local_resources = function(x) {
+  grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
+}
