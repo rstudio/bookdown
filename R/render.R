@@ -44,7 +44,11 @@ render_book = function(
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # _config.yml
   if (missing(output_dir)) output_dir = config[['output_dir']]
-  if (length(output_dir)) dir_create(output_dir)
+  if (length(output_dir)) {
+    dir_create(output_dir)
+    # ignore output_dir that is just the current working directory
+    if (normalizePath(output_dir) == normalizePath(getwd())) output_dir = NULL
+  }
   # store output directory and the initial input Rmd name
   opts$set(output_dir = output_dir, input_rmd = input)
 
