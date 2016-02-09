@@ -2,11 +2,11 @@
 #'
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
-#' @inheritParams rmarkdown::html_document
 #' @inheritParams html_chapters
-#' @param ... Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (not including \code{toc}, \code{number_sections}, \code{self_contained},
-#'   \code{theme}, and \code{template}).
+#' @param fig_caption,lib_dir,... Arguments to be passed to
+#'   \code{rmarkdown::\link{html_document}()} (\code{...} not including
+#'   \code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
+#'   and \code{template}).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ..., use_rmd_names = FALSE, split_level = 2
