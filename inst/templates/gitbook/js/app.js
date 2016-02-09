@@ -24524,6 +24524,7 @@ function handleNavigation(relativeUrl, push) {
     // just using the simple method here instead of pushState() below
     //if (!usePushState) {
         // Refresh the page to the new URL if pushState not supported
+        notifyPageChange();
         location.href = relativeUrl;
         return;
     //}

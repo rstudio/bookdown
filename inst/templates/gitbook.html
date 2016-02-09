@@ -133,19 +133,6 @@ $body$
 <!--bookdown:link_next-->
 
 <script>
-(function() {
-  var href = window.location.pathname;
-  href = href.substr(href.lastIndexOf('/') + 1);
-  if (href === '') href = 'index.html';
-  $$('a[href^="' + href + location.hash + '"]').parent('li.chapter').first().addClass('active');
-  var chaps = $$('ul.summary').find('li.chapter');
-  chaps.on('click', function(e) {
-    e.stopPropagation();
-    chaps.removeClass('active');
-    $$(this).addClass('active');
-  });
-})();
-
 require(["gitbook"], function(gitbook) {
   var config = {
     "autocover": {},

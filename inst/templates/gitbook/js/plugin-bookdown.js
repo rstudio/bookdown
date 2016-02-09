@@ -1,5 +1,7 @@
 require(["gitbook", "lodash"], function(gitbook, _) {
   gitbook.events.bind("start", function(e, config) {
+
+    // add the Edit button (edit on Github)
     var opts = config.edit;
     if (opts.link) gitbook.toolbar.createButton({
       icon: 'fa fa-edit',
@@ -10,5 +12,28 @@ require(["gitbook", "lodash"], function(gitbook, _) {
         window.open(opts.link);
       }
     });
+
+    // highlight the current section in TOC
+    var href = window.location.pathname;
+    href = href.substr(href.lastIndexOf('/') + 1);
+    if (href === '') href = 'index.html';
+    $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first()
+      .addClass('active');
+    var summary = $('ul.summary'), chaps = summary.find('li.chapter');
+    chaps.on('click', function(e) {
+      e.stopPropagation();
+      chaps.removeClass('active');
+      $(this).addClass('active');
+    });
+
+    // restore TOC scroll position
+    var pos = gitbook.storage.get('tocScrollTop');
+    if (typeof pos !== 'undefined') summary.scrollTop(pos);
+  });
+
+  gitbook.events.bind("page.change", function(e) {
+    // store TOC scroll position
+    var summary = $('ul.summary');
+    gitbook.storage.set('tocScrollTop', summary.scrollTop());
   });
 });
