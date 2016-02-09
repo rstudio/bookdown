@@ -78,6 +78,7 @@ render_book = function(
   main = if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
   } else if (new_session) '_main.md' else '_main.Rmd'
+  if (!grepl('[.]R?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
   on.exit(unlink(main), add = TRUE)
 
   if (new_session) {
