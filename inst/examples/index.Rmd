@@ -58,7 +58,7 @@ Now you should see the index page of this book demo in the RStudio Viewer. You m
 
 ## Usage
 
-A book normally contains multiple chapters. We assume that one chapter lives in one R Markdown file (with the filename extension `.Rmd`). You should not have multiple chapters in one R Markdown file, or one chapter split into multiple R Markdown files. Each R Markdown file must start immediately with the chapter title. Here is an example (the bullets are the filenames, followed by the file content):
+Normally, a book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title. Here is an example (the bullets are the filenames, followed by the file content):
 
 - 01-intro.Rmd
 
