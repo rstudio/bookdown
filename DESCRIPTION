@@ -7,6 +7,8 @@ Maintainer: Yihui Xie <xie@yihui.name>
 Description: Utilities to facilitate authoring books with R Markdown.
 License: GPL-3
 Imports:
+    htmltools,
+    knitr,
     rmarkdown (>= 0.8.2),
     yaml
 Suggests:
