@@ -24,6 +24,14 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       e.stopPropagation();
       chaps.removeClass('active');
       $(this).addClass('active');
+      gitbook.storage.set('tocScrollTop', summary.scrollTop());
+    });
+
+    // add tooltips to the <a>'s that are truncated
+    $('a').each(function(i, el) {
+      if (el.offsetWidth >= el.scrollWidth) return;
+      if (typeof el.title === 'undefined') return;
+      el.title = el.text;
     });
 
     // restore TOC scroll position
