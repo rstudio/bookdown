@@ -1,5 +1,5 @@
 --- 
-title: "Authoring A Book with R Markdown and bookdown"
+title: "Authoring A Book with R Markdown"
 author: "Yihui Xie"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
