@@ -1,4 +1,4 @@
-book_filename: bookdown.Rmd
+book_filename: bookdown
 chapter_name: "Chapter "
 repo: https://github.com/rstudio/bookdown/
 edit:
