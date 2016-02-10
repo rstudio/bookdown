@@ -8,6 +8,6 @@ git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-
 cd gh-pages
 rm -r *_files images libs *.html *.css
 cp -r ../_book/* ./
-git add *
-git commit -a -m"update homepage (travis build ${TRAVIS_BUILD_NUMBER})"
+git add --all *
+git commit -m"update homepage (travis build ${TRAVIS_BUILD_NUMBER})"
 git push -q -f origin gh-pages
