@@ -13,12 +13,12 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       }
     });
 
-    opts = config.download;
-    if (opts) gitbook.toolbar.createButton({
+    var down = config.download;
+    if (down) gitbook.toolbar.createButton({
       icon: 'fa fa-download',
       label: 'Download',
       position: 'left',
-      dropdown: $.map(opts, function(link, i) {
+      dropdown: $.map(down, function(link, i) {
         return {
           text: link.replace(/.*[.]/g, '').toUpperCase(),
           onClick: function(e) {
