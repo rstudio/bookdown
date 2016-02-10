@@ -369,7 +369,7 @@ add_chapter_prefix = function(content) {
   chapter_fun = if (is.character(chapter_name)) {
     function(i) paste0(chapter_name, i)
   } else if (is.function(chapter_name)) chapter_name else {
-    stop('chapter_name in _config.yml must be a character string or function')
+    stop('chapter_name in _bookdown.yml must be a character string or function')
   }
   r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>.*)$'
   for (i in grep(r_chap, content)) {

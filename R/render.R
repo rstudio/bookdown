@@ -16,9 +16,9 @@
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{render()}.
 #' @param output_dir The output directory. If not specified, a field named
-#'   \code{output_dir} in the configuration file \file{_config.yml} will be used
-#'   (possiblely not specified, either). If not \code{NULL}, the output files
-#'   will be moved to this directory.
+#'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be
+#'   used (possiblely not specified, either). If not \code{NULL}, the output
+#'   files will be moved to this directory.
 #' @param new_session Whether to use new R sessions to compile individual Rmd
 #'   files.
 #' @param force_knit Whether to force knitting all Rmd files.
@@ -42,7 +42,7 @@ render_book = function(
   }
 
   on.exit(opts$restore(), add = TRUE)
-  config = load_config()  # _config.yml
+  config = load_config()  # configurations in _bookdown.yml
   if (missing(output_dir)) output_dir = config[['output_dir']]
   if (length(output_dir)) {
     dir_create(output_dir)
@@ -52,7 +52,7 @@ render_book = function(
   # store output directory and the initial input Rmd name
   opts$set(output_dir = output_dir, input_rmd = basename(input))
 
-  # you may set, e.g., new_session: yes in _config.yml
+  # you may set, e.g., new_session: yes in _bookdown.yml
   if (missing(new_session)) {
     new_session = FALSE
     if (is.logical(config[['new_session']])) new_session = config[['new_session']]
