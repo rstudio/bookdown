@@ -118,10 +118,11 @@ clean_meta = function(meta_file, files) {
 strip_html = function(x) gsub('<[^>]+>', '', x)
 
 # quote a string and escape backslashes/double quotes
-json_string = function(x) {
+json_string = function(x, toArray = FALSE) {
   x = gsub('(["\\])', "\\\\\\1", x)
   x = gsub('[[:space:]]', " ", x)
-  paste0('"', x, '"')
+  x = paste0('"', x, '"')
+  if (toArray) paste0('[', paste(x, collapse = ','), ']') else x
 }
 
 # manipulate internal options
