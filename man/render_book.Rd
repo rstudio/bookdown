@@ -15,9 +15,9 @@ directory are merged as the actual input to
 \code{render()}.}
 
 \item{output_dir}{The output directory. If not specified, a field named
-\code{output_dir} in the configuration file \file{_config.yml} will be used
-(possiblely not specified, either). If not \code{NULL}, the output files
-will be moved to this directory.}
+\code{output_dir} in the configuration file \file{_bookdown.yml} will be
+used (possiblely not specified, either). If not \code{NULL}, the output
+files will be moved to this directory.}
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
 files.}
