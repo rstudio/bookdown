@@ -36,7 +36,7 @@ script:
   - R CMD INSTALL $R_PKG*.tar.gz
   - R CMD check $R_PKG*.tar.gz --no-manual
   - cd $R_PKG
-  - cd inst/examples; make; make pdf; ./deploy_github
+  - cd inst/examples; make && make pdf && ./deploy_github
   - cd ../..
 
 # deploy to XRAN
