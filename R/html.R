@@ -426,10 +426,11 @@ move_files_html = function(output, lib_dir) {
   })
   f = c(f, unlist(css))
   f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
+  f = gsub('^[.]/', '', f)  # strip the initial ./, e.g. ./foo.png -> foo.png
   f = f[f != '']
   f = f[!knitr:::is_abs_path(f)]
   f = unique(f[file.exists(f)])
-  lapply(file.path(o, unique(dirname(f))), dir_create)
+  lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   file.copy(f, file.path(o, f), overwrite = TRUE)
   # should not need the lib dir any more
   if (length(lib_dir) == 1 && is.character(lib_dir))
