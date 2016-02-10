@@ -13,6 +13,22 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       }
     });
 
+    opts = config.download;
+    if (opts) gitbook.toolbar.createButton({
+      icon: 'fa fa-download',
+      label: 'Download',
+      position: 'left',
+      dropdown: $.map(opts, function(link, i) {
+        return {
+          text: link.replace(/.*[.]/g, '').toUpperCase(),
+          onClick: function(e) {
+            e.preventDefault();
+            window.open(link);
+          }
+        };
+      })
+    });
+
     // highlight the current section in TOC
     var href = window.location.pathname;
     href = href.substr(href.lastIndexOf('/') + 1);

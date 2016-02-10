@@ -79,6 +79,7 @@ render_book = function(
     config[['book_filename']][1]
   } else if (new_session) '_main.md' else '_main.Rmd'
   if (!grepl('[.]R?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
+  opts$set(book_filename = main)  # store the book filename
   on.exit(unlink(main), add = TRUE)
 
   if (new_session) {

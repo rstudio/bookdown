@@ -113,6 +113,14 @@ gitbook_page = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_
     foot = sub(e_text, 'null', foot)
   }
 
+  s_down = '/[*] bookdown:download [*]/'
+  if (length(exts <- load_config()[['download']])) {
+    files = with_ext(opts$get('book_filename'), paste0('.', exts))
+    foot = sub(s_down, json_string(files, TRUE), foot)
+  } else {
+    foot = sub(s_down, 'null', foot)
+  }
+
   c(head, toc, chapter, foot)
 }
 

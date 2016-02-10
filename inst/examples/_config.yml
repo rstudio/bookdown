@@ -5,6 +5,7 @@ edit:
   link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
   text: "Edit"
 gitbook_toc_before: null
+download: [pdf]
 gitbook_toc_after: |
   <li><a href="https://www.rstudio.com" target="blank">Published with RStudio Press</a></li>
 output_dir: _book
