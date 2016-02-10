@@ -1,7 +1,3 @@
 .Rproj.user
 .Rhistory
 .RData
-inst/examples/*.html
-inst/examples/libs
-inst/examples/bookdown_files
-inst/examples/_book

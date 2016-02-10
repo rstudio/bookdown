@@ -1,0 +1,6 @@
+*.html
+libs
+bookdown_files
+bookdown.bbl
+bookdown.tex
+_book
