@@ -1,6 +1,6 @@
-bookdown::html_chapters:
-  css: style.css
 bookdown::gitbook:
+  css: style.css
+bookdown::html_chapters:
   css: style.css
 bookdown::pdf_book:
   includes:
