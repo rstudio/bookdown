@@ -9,6 +9,10 @@ biblio-style: apalike
 link-citations: yes
 ---
 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
 # Introduction
 
 ```{block, type='rmdwarning'}

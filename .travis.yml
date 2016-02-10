@@ -23,6 +23,7 @@ install:
   - "wget -q -O - http://yihui.name/xran/r-config | bash"
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
   - Rscript -e "devtools::install_deps(dep = TRUE); update.packages(.libPaths()[1], ask = FALSE)"
+  - Rscript -e "if (packageVersion('htmltools') < '0.3.2') devtools::install_github('rstudio/htmltools')"
 
 cache:
   directories:
