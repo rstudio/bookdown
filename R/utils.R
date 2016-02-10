@@ -18,7 +18,11 @@ next_nearest = function(x, y) {
 
 # change the filename extension
 with_ext = function(x, ext) {
-  sub('[.][[:alnum:]]+$', ext, x)
+  n1 = length(x); n2 = length(ext)
+  if (n2 == 1) sub('[.][[:alnum:]]+$', ext, x) else {
+    if (n1 > 1 && n1 != n2) stop("'ext' must be of the same length as 'x'")
+    mapply(sub, '[.][[:alnum:]]+$', ext, x)
+  }
 }
 
 # counters for figures/tables
