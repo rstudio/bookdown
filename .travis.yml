@@ -13,9 +13,9 @@ repos:
 before_install:
   - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
-  - Rscript -e "if (!require('htmltools') || packageVersion('htmltools') < '0.3.2') devtools::install_github('rstudio/htmltools')"
 
 before_script:
+  - Rscript -e "if (packageVersion('htmltools') < '0.3.2') devtools::install_github('rstudio/htmltools')"
   - R CMD INSTALL $R_PKG*.tar.gz
   - cd inst/examples; make && make pdf
   - cd ../..
