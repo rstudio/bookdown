@@ -7,6 +7,10 @@
 #'   \code{rmarkdown::\link{html_document}()} (\code{...} not including
 #'   \code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
 #'   and \code{template}).
+#' @note The default value of the argument \code{use_rmd_names} is set to
+#'   \code{TRUE} of this function is called in RStudio. If you want it to be
+#'   \code{FALSE}, you can use \code{use_rmd_names = FALSE} \emph{explicitly}
+#'   (or set it in the YAML frontmatter).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ..., use_rmd_names = FALSE, split_level = 2
@@ -21,6 +25,9 @@ gitbook = function(
     self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
+  # set use_rmd_names = TRUE by default if called in RStudio
+  if (missing(use_rmd_names) && !is.na(Sys.getenv('RSTUDIO', NA)))
+    use_rmd_names = TRUE
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
