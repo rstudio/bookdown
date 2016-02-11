@@ -28,3 +28,9 @@ and ID's, e.g. the filename for the first chapter with a chapter title
 This output format function ported a style provided by GitBook
 (\url{https://www.gitbook.com}) for R Markdown.
 }
+\note{
+The default value of the argument \code{use_rmd_names} is set to
+  \code{TRUE} of this function is called in RStudio. If you want it to be
+  \code{FALSE}, you can use \code{use_rmd_names = FALSE} \emph{explicitly}
+  (or set it in the YAML frontmatter).
+}
