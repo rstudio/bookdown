@@ -1,44 +1,25 @@
-language: c
-
+language: r
 sudo: false
+cache: packages
 
 env:
-  matrix:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)"
   global:
-    - PATH=$HOME/bin:$HOME/texlive/bin/x86_64-linux:$PATH
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE"
     - secure: B2gZCV0jLwvvIERxorr4R4VntZJZ6DdwLh3diC3sxNTPETCisPmmOAXvHpGVZEMRxHG4mUXv5k+k21z+X6PlqPjTsD5USaM7lI88aGs9k3RoLBUb26o+pgw4uPj40T5QxCbOTGRxy8h6enUvW+e5zV24eAsACytO1SRmctny1hOpLa2RG9NZqIthceVZSqXcXpvB6HOCAiyD4hdIO4EGmTJgJYLPu3vQMujW3jt2V1iOjLfH01NQjyqyRPtxNylMT7B6A22DZDxokRdcVNmwUAVDZfxQicuk+juUP/2MaIGWDdHtYKmR1ilLGroTFVnKGfZgpLcv55WK1ZLsanlUYQb8St2OpjgF3qzSCl1fGKgA6ZHDksu0o0fYQCwEaVlpZamjYVGODFQxrfTwDT279gA8b4eJZ3nOM9o+HHf5VTOUm9H5qbpl0aAaOovQpPbeZAZwfN54fPOqhpvtyomOUXE1dq98MMZcRHjijlmJcviBG7WXTHEFJT9195j7m7Woawa3JdAGUxbH3Uzg77uxJYaTugY9+GF2lo2JrkWIirZ4xBgowM98XGhPHl49DGPhpvwh3fZvIHshwnsbAoBF7weAwb6W+7kFpQRvuVqdGDGC8nWWoFu+iGEMuuoPk9sujVk0T7sOKsUe/TO2Ij1lWoquMVE9PDFKlaNEu0QhJT0=
 
-addons:
-  apt:
-    sources:
-    - r-packages-precise
-    packages:
-    - r-base-dev
-    - r-recommended
+repos:
+  XRAN: http://yihui.name/xran
 
-install:
-  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-texlive | bash"
-  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
-  - "wget -q -O - http://yihui.name/xran/r-config | bash"
-  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
-  - Rscript -e "devtools::install_deps(dep = TRUE); update.packages(.libPaths()[1], ask = FALSE)"
+before_install:
+  - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
+  - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - Rscript -e "if (packageVersion('htmltools') < '0.3.2') devtools::install_github('rstudio/htmltools')"
 
-cache:
-  directories:
-  - $HOME/R
-  - $HOME/texlive
-  - $HOME/bin
-
-script:
-  - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
+before_script:
   - R CMD INSTALL $R_PKG*.tar.gz
-  - R CMD check $R_PKG*.tar.gz --no-manual
-  - cd $R_PKG
-  - cd inst/examples; make && make pdf && ./deploy_github
+  - cd inst/examples; make && make pdf
   - cd ../..
 
-# deploy to XRAN
 after_success:
   - "(wget -q -O - http://yihui.name/xran/r-xran | bash)"
+  - cd inst/examples; ./deploy_github
