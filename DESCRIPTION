@@ -16,6 +16,7 @@ Imports:
     rmarkdown (>= 0.8.2),
     yaml
 Suggests:
+    servr (>= 0.2.8),
     testit
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
