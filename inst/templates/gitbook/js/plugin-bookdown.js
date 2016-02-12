@@ -72,4 +72,21 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     var summary = $('ul.summary');
     gitbook.storage.set('tocScrollTop', summary.scrollTop());
   });
+
+  var bookBody = $('.book-body'), bookInner = bookBody.find('.body-inner');
+  $(document).on('servr:reload', function(e) {
+    // save scroll position before page is reloaded via servr
+    gitbook.storage.set('bookBodyScrollTop',  bookBody.scrollTop());
+    gitbook.storage.set('bookInnerScrollTop', bookInner.scrollTop());
+  });
+
+  $(document).ready(function(e) {
+    var pos1 = gitbook.storage.get('bookBodyScrollTop');
+    var pos2 = gitbook.storage.get('bookInnerScrollTop');
+    if (pos1) bookBody.scrollTop(pos1);
+    if (pos2) bookInner.scrollTop(pos2);
+    // clear book body scroll position
+    gitbook.storage.remove('bookBodyScrollTop');
+    gitbook.storage.remove('bookInnerScrollTop');
+  });
 });
