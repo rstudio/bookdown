@@ -4,3 +4,4 @@ bookdown_files
 bookdown.bbl
 bookdown.tex
 _book
+packages.bib
