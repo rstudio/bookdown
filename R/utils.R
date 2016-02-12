@@ -19,6 +19,7 @@ next_nearest = function(x, y) {
 # change the filename extension
 with_ext = function(x, ext) {
   n1 = length(x); n2 = length(ext)
+  if (n1 == 0) return(x)
   if (n2 == 1) sub('[.][[:alnum:]]+$', ext, x) else {
     if (n1 > 1 && n1 != n2) stop("'ext' must be of the same length as 'x'")
     mapply(sub, '[.][[:alnum:]]+$', ext, x)
@@ -80,8 +81,7 @@ merge_chapters = function(files, to, before = NULL, after = NULL) {
       writeUTF8(c('---', 'knit: "bookdown::render_book"', '---\n', x), f)
     }
     x = c(before, x, after)
-    id = with_ext(f, '')  # base filename (without extension)
-    c(x, '', paste0('<!--chapter:end:', id, '-->'), '')
+    c(x, '', paste0('<!--chapter:end:', f, '-->'), '')
   }))
   writeUTF8(content, to)
 }

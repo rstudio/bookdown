@@ -199,14 +199,15 @@ split_chapters = function(
       paste(nms[duplicated(nms)], collapse = ', ')
     )
     # generate index.html if the first Rmd filename is index.Rmd
-    if (identical(head(nms_chaps, 1), 'index')) nms[1] = 'index'
+    if (identical(with_ext(head(nms_chaps, 1), ''), 'index')) nms[1] = 'index'
     html_body[idx] = ''
     idx = idx2
   }
   if (n == 0) {
-    idx = 1; nms = with_ext(output, ''); n = 1
+    idx = 1; nms = output; n = 1
   }
 
+  nms = basename(paste0(with_ext(nms, ''), '.html'))  # the HTML filenames to be generated
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
   build_chapters = function() {
@@ -218,30 +219,27 @@ split_chapters = function(
       html = restore_links(html, html_body, idx, nms)
       res[[i]] = build(
         html_head, html_toc, html,
-        sprintf('%s.html', if (i > 1) nms[i - 1]),
-        sprintf('%s.html', if (i < n) nms[i + 1]),
-        if (length(nms_chaps)) paste0(nms_chaps[i], '.Rmd'),
-        paste0(nms[i], '.html'), html_foot
+        if (i > 1) nms[i - 1],
+        if (i < n) nms[i + 1],
+        if (length(nms_chaps)) nms_chaps[i],
+        nms[i], html_foot
       )
     }
     setNames(res, nms)
   }
 
   chapters = build_chapters()
-  for (i in nms) {
-    writeUTF8(chapters[[i]], paste0(i, '.html'))
-  }
+  for (i in nms) writeUTF8(chapters[[i]], i)
 
-  html_files = paste0(nms, '.html')
   if (!is.null(o <- opts$get('output_dir'))) {
-    file.rename(html_files, html_files2 <- file.path(o, html_files))
-    html_files = html_files2
+    file.rename(nms, html_files2 <- file.path(o, nms))
+    nms = html_files2
   }
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(i <- opts$get('input_rmd')) || length(nms_chaps) == 0) j = 1 else {
-    if (is.na(j <- match(i, paste0(nms_chaps, '.Rmd')))) j = 1
+    if (is.na(j <- match(i, nms_chaps))) j = 1
   }
-  html_files[j]
+  nms[j]
 }
 
 find_token = function(x, token) {
@@ -395,7 +393,7 @@ restore_links = function(segment, full, lines, filenames) {
       if (length(a) == 0) next
       a = a[1]
       x[i] = sprintf(
-        '<a href="%s.html#%s"', filenames[which.max(lines[lines <= a])], links[i]
+        '<a href="%s#%s"', filenames[which.max(lines[lines <= a])], links[i]
       )
     }
     x

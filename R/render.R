@@ -59,7 +59,7 @@ render_book = function(
   }
 
   # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$')
+  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
   if (is.character(config[['rmd_files']])) {
     files = config[['rmd_files']]
     if (!is.null(format) && is.list(files)) files = files[[format]]
@@ -70,15 +70,14 @@ render_book = function(
     if (!is.na(index)) files = c(files[index], files[-index])
   }
   check_special_chars(files)
-  i = grep('[.]Rmd$', files, invert = TRUE)
-  if (length(i)) warning(
-    "Some input files do not have the '.Rmd' extension: ", paste(files[i], collapse = ', ')
+  if (new_session && any(dirname(files)) != '.') stop(
+    'All input files must be under the current working directory'
   )
 
   main = if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
   } else if (new_session) '_main.md' else '_main.Rmd'
-  if (!grepl('[.]R?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
+  if (!grepl('[.][a-zA-Z]+$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
   opts$set(book_filename = main)  # store the book filename
   on.exit(unlink(main), add = TRUE)
 
