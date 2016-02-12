@@ -1,4 +1,7 @@
 require(["gitbook", "lodash"], function(gitbook, _) {
+
+  var gs = gitbook.storage;
+
   gitbook.events.bind("start", function(e, config) {
 
     // add the Edit button (edit on Github)
@@ -52,7 +55,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       e.stopPropagation();
       chaps.removeClass('active');
       $(this).addClass('active');
-      gitbook.storage.set('tocScrollTop', summary.scrollTop());
+      gs.set('tocScrollTop', summary.scrollTop());
     });
 
     // add tooltips to the <a>'s that are truncated
@@ -63,30 +66,30 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     });
 
     // restore TOC scroll position
-    var pos = gitbook.storage.get('tocScrollTop');
+    var pos = gs.get('tocScrollTop');
     if (typeof pos !== 'undefined') summary.scrollTop(pos);
   });
 
   gitbook.events.bind("page.change", function(e) {
     // store TOC scroll position
     var summary = $('ul.summary');
-    gitbook.storage.set('tocScrollTop', summary.scrollTop());
+    gs.set('tocScrollTop', summary.scrollTop());
   });
 
   var bookBody = $('.book-body'), bookInner = bookBody.find('.body-inner');
   $(document).on('servr:reload', function(e) {
     // save scroll position before page is reloaded via servr
-    gitbook.storage.set('bookBodyScrollTop',  bookBody.scrollTop());
-    gitbook.storage.set('bookInnerScrollTop', bookInner.scrollTop());
+    gs.set('bookBodyScrollTop',  bookBody.scrollTop());
+    gs.set('bookInnerScrollTop', bookInner.scrollTop());
   });
 
   $(document).ready(function(e) {
-    var pos1 = gitbook.storage.get('bookBodyScrollTop');
-    var pos2 = gitbook.storage.get('bookInnerScrollTop');
+    var pos1 = gs.get('bookBodyScrollTop');
+    var pos2 = gs.get('bookInnerScrollTop');
     if (pos1) bookBody.scrollTop(pos1);
     if (pos2) bookInner.scrollTop(pos2);
     // clear book body scroll position
-    gitbook.storage.remove('bookBodyScrollTop');
-    gitbook.storage.remove('bookInnerScrollTop');
+    gs.remove('bookBodyScrollTop');
+    gs.remove('bookInnerScrollTop');
   });
 });
