@@ -160,7 +160,8 @@ serve_book = function(dir = '.', output_dir = NULL, ...) {
   }
   if (is.null(output_dir)) output_dir = '.'
   servr::httw('.', ..., site.dir = output_dir, handler = function(...) {
-    files = grep('[.]Rmd$', c(...), value = TRUE)
+    files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
+    files = files[dirname(files) == '.']
     if (length(files) == 0) return()
     args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, files))
     if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
