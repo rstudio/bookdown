@@ -14,20 +14,32 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     });
 
     var down = config.download;
-    if (down) gitbook.toolbar.createButton({
-      icon: 'fa fa-download',
-      label: 'Download',
-      position: 'left',
-      dropdown: $.map(down, function(link, i) {
-        return {
-          text: link.replace(/.*[.]/g, '').toUpperCase(),
-          onClick: function(e) {
-            e.preventDefault();
-            window.open(link);
-          }
-        };
-      })
-    });
+    if (down) if (down.length === 1 && /[.]pdf$/.test(down[0])) {
+      gitbook.toolbar.createButton({
+        icon: 'fa fa-file-pdf-o',
+        label: 'PDF',
+        position: 'left',
+        onClick: function(e) {
+          e.preventDefault();
+          window.open(down[0]);
+        }
+      });
+    } else {
+      gitbook.toolbar.createButton({
+        icon: 'fa fa-download',
+        label: 'Download',
+        position: 'left',
+        dropdown: $.map(down, function(link, i) {
+          return {
+            text: link.replace(/.*[.]/g, '').toUpperCase(),
+            onClick: function(e) {
+              e.preventDefault();
+              window.open(link);
+            }
+          };
+        })
+      });
+    };
 
     // highlight the current section in TOC
     var href = window.location.pathname;
