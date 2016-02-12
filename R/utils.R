@@ -139,3 +139,30 @@ dir_create = function(path) {
 local_resources = function(x) {
   grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
 }
+
+#' Continously preview the HTML output of a book
+#'
+#' When any files are modified or added to the book directory, the book will be
+#' automatically recompiled, and the current HTML page in the browser will be
+#' refreshed. This function is based on \code{servr::\link[servr]{httw}()} to
+#' continuously watch a directory.
+#' @param dir The root directory of the book (containing the Rmd source files).
+#' @param output_dir The directory for output files; see
+#'   \code{\link{render_book}()}.
+#' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
+#'   including the \code{handler} argument, which has been set internally).
+#' @export
+serve_book = function(dir = '.', output_dir = NULL, ...) {
+  owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
+  if (is.null(output_dir)) {
+    on.exit(opts$restore(), add = TRUE)
+    output_dir = load_config()[['output_dir']]
+  }
+  if (is.null(output_dir)) output_dir = '.'
+  servr::httw('.', ..., site.dir = output_dir, handler = function(...) {
+    files = grep('[.]Rmd$', c(...), value = TRUE)
+    if (length(files) == 0) return()
+    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, files))
+    if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
+  })
+}

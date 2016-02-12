@@ -50,7 +50,7 @@ render_book = function(
     if (normalizePath(output_dir) == normalizePath(getwd())) output_dir = NULL
   }
   # store output directory and the initial input Rmd name
-  opts$set(output_dir = output_dir, input_rmd = basename(input))
+  opts$set(output_dir = output_dir, input_rmd = basename(input[1]))
 
   # you may set, e.g., new_session: yes in _bookdown.yml
   if (missing(new_session)) {
