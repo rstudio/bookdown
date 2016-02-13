@@ -1,5 +1,5 @@
 ---
-knit: "bookdown::render_book"
+knit: "bookdown::preview_chapter"
 ---
 
 # Output Formats
