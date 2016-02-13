@@ -1,15 +1,18 @@
 % Please edit documentation in R/utils.R
 \name{serve_book}
 \alias{serve_book}
-\title{Continously preview the HTML output of a book}
+\title{Continously preview the HTML output of a book using the \pkg{servr} package}
 \usage{
-serve_book(dir = ".", output_dir = NULL, ...)
+serve_book(dir = ".", output_dir = NULL, preview = TRUE, ...)
 }
 \arguments{
 \item{dir}{The root directory of the book (containing the Rmd source files).}
 
 \item{output_dir}{The directory for output files; see
 \code{\link{render_book}()}.}
+
+\item{preview}{Whether to render the modified/added chapters only, or the
+whole book; see \code{\link{render_book}()}.}
 
 \item{...}{Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 including the \code{handler} argument, which has been set internally).}
