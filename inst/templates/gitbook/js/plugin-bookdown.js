@@ -5,14 +5,14 @@ require(["gitbook", "lodash"], function(gitbook, _) {
   gitbook.events.bind("start", function(e, config) {
 
     // add the Edit button (edit on Github)
-    var opts = config.edit;
-    if (opts && opts.link) gitbook.toolbar.createButton({
+    var edit = config.edit;
+    if (edit && edit.link) gitbook.toolbar.createButton({
       icon: 'fa fa-edit',
-      label: opts.text || 'Edit',
+      label: edit.text || 'Edit',
       position: 'left',
       onClick: function(e) {
         e.preventDefault();
-        window.open(opts.link);
+        window.open(edit.link);
       }
     });
 
