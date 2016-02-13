@@ -230,11 +230,9 @@ split_chapters = function(
 
   chapters = build_chapters()
   for (i in nms) writeUTF8(chapters[[i]], i)
+  # move HTML files to output dir
+  file.rename(nms, nms <- file_path(opts$get('output_dir'), nms))
 
-  if (!is.null(o <- opts$get('output_dir'))) {
-    file.rename(nms, html_files2 <- file.path(o, nms))
-    nms = html_files2
-  }
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(i <- opts$get('input_rmd')) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(i, nms_chaps))) j = 1

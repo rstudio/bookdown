@@ -136,6 +136,11 @@ dir_create = function(path) {
   utils::file_test('-d', path) || dir.create(path, recursive = TRUE)
 }
 
+# a wrapper of file.path to ignore `dir` if it is NULL
+file_path = function(dir, ...) {
+  if (is.null(dir)) file.path(...) else file.path(dir, ...)
+}
+
 local_resources = function(x) {
   grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
 }
