@@ -113,13 +113,14 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   # an RDS file to save all the metadata after compiling each Rmd
   render_meta = with_ext(main, '.rds')
 
+  files_md = output_path(with_ext(files, '.md'))
   # which Rmd's should be recompiled?
   rerun = if (force_) TRUE else {
-    files_md = output_path(with_ext(files, '.md'))
     !utils::file_test('-ot', files, files_md)  # Rmd not older than md
   }
   # compile chapters in separate R sessions
   for (f in files[rerun]) Rscript_render(f, render_args, render_meta)
+  file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 
   meta = clean_meta(render_meta, files)
   on.exit(file.rename(meta, output_path(meta)), add = TRUE)
