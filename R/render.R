@@ -70,7 +70,7 @@ render_book = function(
     if (!is.na(index)) files = c(files[index], files[-index])
   }
   check_special_chars(files)
-  if (new_session && any(dirname(files)) != '.') stop(
+  if (new_session && any(dirname(files) != '.')) stop(
     'All input files must be under the current working directory'
   )
 
