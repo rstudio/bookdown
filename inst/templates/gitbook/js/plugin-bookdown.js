@@ -6,7 +6,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
 
     // add the Edit button (edit on Github)
     var opts = config.edit;
-    if (opts.link) gitbook.toolbar.createButton({
+    if (opts && opts.link) gitbook.toolbar.createButton({
       icon: 'fa fa-edit',
       label: opts.text || 'Edit',
       position: 'left',
