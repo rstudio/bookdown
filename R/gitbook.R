@@ -56,7 +56,7 @@ write_search_data = function(x) {
   x = matrix(strip_html(x), nrow = 3)
   x = apply(x, 2, json_string, toArray = TRUE)
   x = paste0('[\n', paste0(x, collapse = ',\n'), '\n]')
-  writeUTF8(x, file_path(opts$get('output_dir'), 'search_index.json'))
+  writeUTF8(x, output_path('search_index.json'))
 }
 
 gitbook_dependency = function() {

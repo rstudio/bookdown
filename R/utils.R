@@ -136,8 +136,9 @@ dir_create = function(path) {
   utils::file_test('-d', path) || dir.create(path, recursive = TRUE)
 }
 
-# a wrapper of file.path to ignore `dir` if it is NULL
-file_path = function(dir, ...) {
+# a wrapper of file.path to ignore `output_dir` if it is NULL
+output_path = function(...) {
+  dir = opts$get('output_dir')
   if (is.null(dir)) file.path(...) else file.path(dir, ...)
 }
 

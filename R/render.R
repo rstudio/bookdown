@@ -122,6 +122,7 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   for (f in files[rerun]) Rscript_render(f, render_args, render_meta)
 
   meta = clean_meta(render_meta, files)
+  on.exit(file.rename(meta, output_path(meta)), add = TRUE)
 
   merge_chapters(meta, main)
 
