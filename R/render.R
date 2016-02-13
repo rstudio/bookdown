@@ -135,7 +135,8 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   }
   # compile chapters in separate R sessions
   for (f in files[rerun]) Rscript_render(f, render_args, render_meta)
-  file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
+  if (!all(dirname(files_md) == '.'))
+    file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 
   meta = clean_meta(render_meta, files)
   on.exit(file.rename(unlist(meta), files_md), add = TRUE)
