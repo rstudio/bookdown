@@ -159,7 +159,7 @@ local_resources = function(x) {
   grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
 }
 
-#' Continously preview the HTML output of a book
+#' Continously preview the HTML output of a book using the \pkg{servr} package
 #'
 #' When any files are modified or added to the book directory, the book will be
 #' automatically recompiled, and the current HTML page in the browser will be
@@ -168,10 +168,12 @@ local_resources = function(x) {
 #' @param dir The root directory of the book (containing the Rmd source files).
 #' @param output_dir The directory for output files; see
 #'   \code{\link{render_book}()}.
+#' @param preview Whether to render the modified/added chapters only, or the
+#'   whole book; see \code{\link{render_book}()}.
 #' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
-serve_book = function(dir = '.', output_dir = NULL, ...) {
+serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
   owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
   if (is.null(output_dir)) {
     on.exit(opts$restore(), add = TRUE)
@@ -182,7 +184,7 @@ serve_book = function(dir = '.', output_dir = NULL, ...) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
     if (length(files) == 0) return()
-    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, files))
+    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview, files))
     if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
   })
 }
