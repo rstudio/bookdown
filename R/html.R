@@ -99,7 +99,7 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, html
 }
 
 split_chapters = function(
-  output, build = build_chapter, use_rmd_names = TRUE, split_level = 1
+  output, build = build_chapter, use_rmd_names = TRUE, split_level = 1, ...
 ) {
   x = readUTF8(output)
 
@@ -137,7 +137,7 @@ split_chapters = function(
     html_body[idx] = ''  # remove chapter tokens
     html_body = add_chapter_prefix(html_body)
     writeUTF8(build(
-      html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, output, html_foot
+      html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, output, html_foot, ...
     ), output)
     return(output)
   }
@@ -228,7 +228,7 @@ split_chapters = function(
       if (i > 1) nms[i - 1],
       if (i < n) nms[i + 1],
       if (length(nms_chaps)) nms_chaps[i],
-      nms[i], html_foot
+      nms[i], html_foot, ...
     )
     writeUTF8(html, nms[i])
   }

@@ -136,10 +136,16 @@ strip_html = function(x) gsub('<[^>]+>', '', x)
 
 # quote a string and escape backslashes/double quotes
 json_string = function(x, toArray = FALSE) {
-  x = gsub('(["\\])', "\\\\\\1", x)
-  x = gsub('[[:space:]]', " ", x)
-  x = paste0('"', x, '"')
-  if (toArray) paste0('[', paste(x, collapse = ','), ']') else x
+  json_vector(x, toArray)
+}
+
+json_vector = function(x, toArray = FALSE, quote = TRUE) {
+  if (quote) {
+    x = gsub('(["\\])', "\\\\\\1", x)
+    x = gsub('[[:space:]]', " ", x)
+    if (length(x)) x = paste0('"', x, '"')
+  }
+  if (toArray) paste0('[', paste(x, collapse = ', '), ']') else x
 }
 
 # manipulate internal options
@@ -187,4 +193,27 @@ serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
     args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview, files))
     if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
   })
+}
+
+# a simple JSON serializer
+tojson = function(x) {
+  if (is.null(x)) return('null')
+  if (is.logical(x)) {
+    if (length(x) != 1 || any(is.na(x)))
+      stop('Logical values of length > 1 and NA are not supported')
+    return(tolower(as.character(x)))
+  }
+  if (is.character(x) || is.numeric(x)) {
+    return(json_vector(x, length(x) != 1 || inherits(x, 'AsIs'), is.character(x)))
+  }
+  if (is.list(x)) {
+    if (length(x) == 0) return('{}')
+    return(if (is.null(names(x))) {
+      json_vector(unlist(lapply(x, tojson)), TRUE, quote = FALSE)
+    } else {
+      nms = paste0('"', names(x), '"')
+      paste0('{\n', paste(nms, unlist(lapply(x, tojson)), sep = ': ', collapse = ',\n'), '\n}')
+    })
+  }
+  stop('The class of x is not supported: ', paste(class(x), collapse = ', '))
 }

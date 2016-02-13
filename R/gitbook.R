@@ -13,13 +13,15 @@
 #'   (or set it in the YAML frontmatter).
 #' @export
 gitbook = function(
-  fig_caption = TRUE, lib_dir = 'libs', ..., use_rmd_names = FALSE, split_level = 2
+  fig_caption = TRUE, lib_dir = 'libs', ...,
+  use_rmd_names = FALSE, split_level = 2, config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
       ..., extra_dependencies = c(extra_dependencies, gitbook_dependency())
     )
   }
+  gb_config = config
   config = html_document2(
     toc = TRUE, number_sections = TRUE, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
@@ -33,7 +35,7 @@ gitbook = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
-    split_chapters(output, gitbook_page, use_rmd_names, split_level)
+    split_chapters(output, gitbook_page, use_rmd_names, split_level, gb_config)
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
@@ -75,8 +77,10 @@ gitbook_dependency = function() {
   ))
 }
 
-gitbook_page = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot) {
-  toc = gitbook_toc(toc, rmd_cur)
+gitbook_page = function(
+  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot, config
+) {
+  toc = gitbook_toc(toc, rmd_cur, config[['toc']])
 
   has_prev = length(link_prev) > 0
   has_next = length(link_next) > 0
@@ -100,35 +104,24 @@ gitbook_page = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_
   # from head to foot
   i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[a-z-]+[.]js"></script>\\s*$', head)
   s = head[i]; head[i] = ''
-  j = grep('^\\s*<script>\\s*$', foot)[1]
+  j = grep('<!--bookdown:config-->', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
 
   titles = paste(grep('^<(h[12])(>| ).+</\\1>.*$', chapter, value = TRUE), collapse = ' ')
   gitbook_search$collect(html_cur, titles, paste(chapter, collapse = ' '))
 
-  e_link = '/[*] bookdown:edit:link [*]/'
-  e_text = '/[*] bookdown:edit:text [*]/'
+  # you can set the edit setting in either _bookdown.yml or _output.yml
+  if (is.list(setting <- edit_setting())) config$edit = setting
+  if (length(rmd_cur)) config$edit$link = sprintf(config$edit$link, rmd_cur)
 
-  if (length(rmd_cur) && is.list(setting <- edit_setting())) {
-    foot = sub(e_link, json_string(sprintf(setting$link, rmd_cur)), foot)
-    foot = sub(e_text, json_string(setting$text), foot)
-  } else {
-    foot = sub(e_link, 'null', foot)
-    foot = sub(e_text, 'null', foot)
-  }
-
-  s_down = '/[*] bookdown:download [*]/'
-  if (length(exts <- load_config()[['download']])) {
-    files = with_ext(opts$get('book_filename'), paste0('.', exts))
-    foot = sub(s_down, json_string(files, TRUE), foot)
-  } else {
-    foot = sub(s_down, 'null', foot)
-  }
+  if (length(exts <- load_config()[['download']]) == 0) exts = config$download
+  if (length(exts)) config$download = I(with_ext(opts$get('book_filename'), paste0('.', exts)))
+  foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
   c(head, toc, chapter, foot)
 }
 
-gitbook_toc = function(x, cur) {
+gitbook_toc = function(x, cur, config) {
   i1 = find_token(x, '<!--bookdown:toc2:start-->')
   i2 = find_token(x, '<!--bookdown:toc2:end-->')
   x[i1] = ''; x[i2] = ''
@@ -136,13 +129,13 @@ gitbook_toc = function(x, cur) {
   toc = x[(i1 + 1):(i2 - 1)]
   if (toc[1] == '<ul>') {
     toc[1] = '<ul class="summary">'
-    if (!is.null(extra <- gitbook_toc_extra('before'))) {
+    if (!is.null(extra <- config[['before']])) {
       toc[1] = paste(c(toc[1], extra, '<li class="divider"></li>'), collapse = '\n')
     }
   }
   n = length(toc)
   if (toc[n] == '</ul>') {
-    if (!is.null(extra <- gitbook_toc_extra('after'))) {
+    if (!is.null(extra <- config[['after']])) {
       toc[n] = paste(c('<li class="divider"></li>', extra, toc[n]), collapse = '\n')
     }
   }
@@ -162,4 +155,26 @@ gitbook_toc_extra = function(which = c('before', 'after')) {
   which = match.arg(which)
   config = load_config()
   config[[sprintf('gitbook_toc_%s', which)]]
+}
+
+gitbook_config = function(config = list()) {
+  default = list(
+    sharing = list(
+      facebook = TRUE, twitter = TRUE, google = FALSE, weibo = FALSE,
+      instapper = FALSE, vk = FALSE,
+      all = c('facebook', 'google', 'twitter', 'weibo', 'instapaper')
+    ),
+    fontsettings = list(theme = 'white', family = 'sans', size = 2),
+    edit = list(link = NULL, text = NULL),
+    download = NULL,
+    toc = list(collapse = FALSE)
+  )
+  config = utils::modifyList(default, config, keep.null = TRUE)
+  # remove these TOC config items since we don't need them in JavaScript
+  config$toc$before = NULL; config$toc$after = NULL
+  config = sprintf('gitbook.start(%s);', tojson(config))
+  paste(
+    '<script>', 'require(["gitbook"], function(gitbook) {', config, '});',
+    '</script>', sep = '\n'
+  )
 }
