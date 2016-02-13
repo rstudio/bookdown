@@ -115,7 +115,7 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
 
   # which Rmd's should be recompiled?
   rerun = if (force_) TRUE else {
-    files_md = with_ext(files, '.md')
+    files_md = output_path(with_ext(files, '.md'))
     !utils::file_test('-ot', files, files_md)  # Rmd not older than md
   }
   # compile chapters in separate R sessions
