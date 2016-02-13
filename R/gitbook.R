@@ -7,6 +7,8 @@
 #'   \code{rmarkdown::\link{html_document}()} (\code{...} not including
 #'   \code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
 #'   and \code{template}).
+#' @param config A list of configuration options for the gitbook style, such as
+#'   the font/theme settings.
 #' @note The default value of the argument \code{use_rmd_names} is set to
 #'   \code{TRUE} of this function is called in RStudio. If you want it to be
 #'   \code{FALSE}, you can use \code{use_rmd_names = FALSE} \emph{explicitly}

@@ -4,7 +4,7 @@
 \title{The GitBook output format}
 \usage{
 gitbook(fig_caption = TRUE, lib_dir = "libs", ..., use_rmd_names = FALSE, 
-    split_level = 2)
+    split_level = 2, config = list())
 }
 \arguments{
 \item{fig_caption, lib_dir, ...}{Arguments to be passed to
@@ -23,6 +23,9 @@ means split the file by the first level headers; \code{2} means the second
 level headers. The HTML filenames will be determined by the header numbers
 and ID's, e.g. the filename for the first chapter with a chapter title
 \code{# Introduction} will be \file{1-introduction.html} by default.}
+
+\item{config}{A list of configuration options for the gitbook style, such as
+the font/theme settings.}
 }
 \description{
 This output format function ported a style provided by GitBook
