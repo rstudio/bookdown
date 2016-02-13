@@ -73,17 +73,28 @@ load_config = function() {
   opts$get('config')
 }
 
-merge_chapters = function(files, to, before = NULL, after = NULL) {
-  content = unlist(lapply(files, function(f) {
+merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
+  # in the preview mode, only use some placeholder text instead of the full Rmd
+  preview = opts$get('preview'); input = opts$get('input_rmd')
+  content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = readUTF8(f)
     # add the knit field to the YAML frontmatter of the Rmd document
     if (length(x) && x[1] != '---' && length(grep('^knit: ', x)) == 0) {
       writeUTF8(c('---', 'knit: "bookdown::render_book"', '---\n', x), f)
     }
+    if (preview && !(o %in% input)) x = create_placeholder(x)
     x = c(before, x, after)
-    c(x, '', paste0('<!--chapter:end:', f, '-->'), '')
+    c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
   }))
+  if (preview) content = c(create_placeholder(readUTF8(files[1]), FALSE), content)
   writeUTF8(content, to)
+}
+
+create_placeholder = function(x, header = TRUE) {
+  h = grep('^# ', x, value = TRUE)  # chapter title
+  h = c('', if (length(h)) h[1] else '# Placeholder')
+  i = grep('^---\\s*$', x)
+  c(if (length(i) >= 2) x[(i[1]):(i[2])], if (header) h)
 }
 
 insert_chapter_script = function(config, where = 'before') {
@@ -114,7 +125,8 @@ Rscript_render = function(file, ...) {
 clean_meta = function(meta_file, files) {
   meta = readRDS(meta_file)
   for (i in setdiff(names(meta), files)) meta[[i]] = NULL
-  meta = meta[files]  # order by input filenames
+  meta = setNames(meta[files], files)  # order by input filenames
+  for (i in files) if (is.null(meta[[i]])) meta[[i]] = basename(with_ext(i, '.md'))
   saveRDS(meta, meta_file)
   meta
 }

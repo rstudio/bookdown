@@ -207,35 +207,40 @@ split_chapters = function(
     idx = 1; nms = output; n = 1
   }
 
-  nms = basename(paste0(with_ext(nms, ''), '.html'))  # the HTML filenames to be generated
+  nms = basename(with_ext(nms, '.html'))  # the HTML filenames to be generated
+  input = opts$get('input_rmd')
   html_body = add_chapter_prefix(html_body)
   html_toc = restore_links(html_toc, html_body, idx, nms)
-  build_chapters = function() {
-    res = list()
-    for (i in seq_len(n)) {
-      i1 = idx[i]
-      i2 = if (i == n) length(html_body) else idx[i + 1] - 1
-      html = c(if (i == 1) html_title, html_body[i1:i2])
-      html = restore_links(html, html_body, idx, nms)
-      res[[i]] = build(
-        html_head, html_toc, html,
-        if (i > 1) nms[i - 1],
-        if (i < n) nms[i + 1],
-        if (length(nms_chaps)) nms_chaps[i],
-        nms[i], html_foot
-      )
+  for (i in seq_len(n)) {
+    # skip writing the chapter.html if the current Rmd name is not in the vector
+    # of Rmd names passed to render_book() (only this vector of Rmd's should be
+    # rendered for preview purposes)
+    if (isTRUE(opts$get('preview')) && !(nms_chaps[i] %in% input)) {
+      if (!file.exists(output_path(nms[i]))) file.create(nms[i])
+      next
     }
-    setNames(res, nms)
+    i1 = idx[i]
+    i2 = if (i == n) length(html_body) else idx[i + 1] - 1
+    html = c(if (i == 1) html_title, html_body[i1:i2])
+    html = restore_links(html, html_body, idx, nms)
+    html = build(
+      html_head, html_toc, html,
+      if (i > 1) nms[i - 1],
+      if (i < n) nms[i + 1],
+      if (length(nms_chaps)) nms_chaps[i],
+      nms[i], html_foot
+    )
+    writeUTF8(html, nms[i])
   }
-
-  chapters = build_chapters()
-  for (i in nms) writeUTF8(chapters[[i]], i)
   # move HTML files to output dir
-  file.rename(nms, nms <- output_path(nms))
+  nms2 = output_path(nms)
+  i = file.exists(nms) & (nms != nms2)
+  file.rename(nms[i], nms2[i])
+  nms = nms2
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
-  if (is.null(i <- opts$get('input_rmd')) || length(nms_chaps) == 0) j = 1 else {
-    if (is.na(j <- match(i, nms_chaps))) j = 1
+  if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
+    if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
 }
