@@ -1,5 +1,16 @@
 bookdown::gitbook:
   css: style.css
+  config:
+    download: ['pdf']
+    toc:
+      collapse: no
+      before: |
+        <li><a href="./">Authoring A Book with R Markdown</a></li>
+      after: |
+        <li><a href="https://www.rstudio.com" target="blank">Published with RStudio Press</a></li>
+    edit:
+      link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
+      text: "Edit"
 bookdown::html_chapters:
   css: style.css
 bookdown::pdf_book:

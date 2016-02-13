@@ -1,12 +1,4 @@
 book_filename: bookdown
 chapter_name: "Chapter "
 repo: https://github.com/rstudio/bookdown/
-edit:
-  link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
-  text: "Edit"
-download: [pdf]
-gitbook_toc_before: |
-  <li><a href="./">Authoring A Book with R Markdown</a></li>
-gitbook_toc_after: |
-  <li><a href="https://www.rstudio.com" target="blank">Published with RStudio Press</a></li>
 output_dir: _book
