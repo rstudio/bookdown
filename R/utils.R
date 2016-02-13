@@ -114,6 +114,7 @@ Rscript_render = function(file, ...) {
 clean_meta = function(meta_file, files) {
   meta = readRDS(meta_file)
   for (i in setdiff(names(meta), files)) meta[[i]] = NULL
+  meta = meta[files]  # order by input filenames
   saveRDS(meta, meta_file)
   meta
 }
