@@ -108,6 +108,17 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       });
     })();
 
+    var toolbar = config.toolbar;
+    if (toolbar && toolbar.position === 'fixed') {
+      var bookHeader = $('.book-header');
+      bookHeader.addClass('fixed')
+      .css('background-color', bookBody.css('background-color'))
+      .on('click.bookdown', function(e) {
+        // the theme may have changed after user clicks the theme button
+        bookHeader.css('background-color', bookBody.css('background-color'));
+      });
+    }
+
   });
 
   gitbook.events.bind("page.change", function(e) {

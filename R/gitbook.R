@@ -187,8 +187,9 @@ gitbook_config = function(config = list()) {
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
-    download = NULL,
-    toc = list(collapse = FALSE)
+    download = NULL
+    # toolbar = list(position = 'fixed'),
+    # toc = list(collapse = TRUE)
   )
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript

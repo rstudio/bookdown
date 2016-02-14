@@ -40,6 +40,22 @@ $endfor$
   padding-left: 20px;
   padding-right: 20px;
 }
+.book .book-header.fixed {
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
+}
+@media (max-width: 600px) {
+  .book.with-summary .book-header.fixed {
+    left: 60px;
+  }
+}
+@media (min-width: 600px) {
+  .book.with-summary .book-header.fixed {
+    left: 300px;
+  }
+}
 </style>
 
 $if(highlightjs)$
