@@ -149,6 +149,18 @@ gitbook_toc = function(x, cur, config) {
     toc[i]
   )
   toc[i] = sub(' data-path="">', paste0(' data-path="', with_ext(cur, '.html'), '">'), toc[i])
+  r = '^<li><a href="([^#]*)(#[^"]+)">([^<]+</a>.*)$'
+  i = grep(r, toc)
+  toc[i] = gsub(
+    r,
+    '<li class="chapter" data-level="" data-path="\\1"><a href="\\1\\2"><i class="fa fa-check"></i>\\3',
+    toc[i]
+  )
+  if (isTRUE(config[['collapse']])) {
+    r = '^<li .+ data-level="([^.]+)?" .+>.+</a><ul>$'
+    i = grep(r, toc)
+    toc[i] = gsub('<ul>$', '<ul style="display:none;">', toc[i])
+  }
   x[(i1 + 1):(i2 - 1)] = toc
   x
 }
