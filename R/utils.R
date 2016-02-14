@@ -192,13 +192,15 @@ serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
     output_dir = load_config()[['output_dir']]
   }
   if (is.null(output_dir)) output_dir = '.'
-  servr::httw('.', ..., site.dir = output_dir, handler = function(...) {
+  rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
     if (length(files) == 0) return()
-    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview, files))
+    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview_, files))
     if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
-  })
+  }
+  rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
+  servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
 }
 
 # a simple JSON serializer
