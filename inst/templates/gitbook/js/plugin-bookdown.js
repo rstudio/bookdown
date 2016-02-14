@@ -42,14 +42,14 @@ require(["gitbook", "lodash"], function(gitbook, _) {
           };
         })
       });
-    };
+    }
 
     // highlight the current section in TOC
     var href = window.location.pathname;
     href = href.substr(href.lastIndexOf('/') + 1);
     if (href === '') href = 'index.html';
-    $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first()
-      .addClass('active');
+    var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
+    li.addClass('active');
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
     chaps.on('click', function(e) {
       e.stopPropagation();
@@ -57,6 +57,14 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       $(this).addClass('active');
       gs.set('tocScrollTop', summary.scrollTop());
     });
+
+    var toc = config.toc;
+    // collapse TOC items that are not for the current chapter
+    if (toc && toc.collapse) {
+      $('ul.summary').children('li[data-level]').children('ul').hide()
+        .parent().has(li).children('ul').show();
+      li.children('ul').show();
+    }
 
     // add tooltips to the <a>'s that are truncated
     $('a').each(function(i, el) {
