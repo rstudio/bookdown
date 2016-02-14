@@ -37,7 +37,10 @@ gitbook = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
-    split_chapters(output, gitbook_page, use_rmd_names, split_level, gb_config)
+    split_chapters(
+      output, gitbook_page, use_rmd_names, split_level, gb_config,
+      use_rmd_names, split_level
+    )
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
@@ -80,7 +83,8 @@ gitbook_dependency = function() {
 }
 
 gitbook_page = function(
-  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot, config
+  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot, config,
+  use_rmd_names, split_level
 ) {
   toc = gitbook_toc(toc, rmd_cur, config[['toc']])
 
@@ -118,6 +122,9 @@ gitbook_page = function(
 
   if (length(exts <- load_config()[['download']]) == 0) exts = config$download
   if (length(exts)) config$download = I(with_ext(opts$get('book_filename'), paste0('.', exts)))
+
+  if (!use_rmd_names && split_level == 2) config$toc$scroll_highlight = FALSE
+
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
   c(head, toc, chapter, foot)
