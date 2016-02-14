@@ -1,0 +1,4 @@
+Name: Preview Book
+Description: Run bookdown::serve_book() to live preview a book.
+Binding: serve_book
+Interactive: true

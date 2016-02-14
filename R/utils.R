@@ -180,6 +180,12 @@ local_resources = function(x) {
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
 serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
+  # when this function is called via the RStudio addin, use the dir of the
+  # current active document
+  if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE)) {
+    path = rstudioapi::getActiveDocumentContext()[['path']]
+    if (!(is.null(path) || path == '')) dir = dirname(path)
+  }
   owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
   if (is.null(output_dir)) {
     on.exit(opts$restore(), add = TRUE)
