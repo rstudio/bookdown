@@ -76,6 +76,38 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     // restore TOC scroll position
     var pos = gs.get('tocScrollTop');
     if (typeof pos !== 'undefined') summary.scrollTop(pos);
+
+    // highlight the TOC item that has same text as the heading in view as scrolling
+    if (toc && toc.scroll_highlight !== false) (function() {
+       // current chapter TOC items
+      var items = $('a[href^="' + href + '"]').parent('li.chapter'),
+          m = items.length;
+      if (m === 0) return;
+      // all section titles on current page
+      var hs = $('h1,h2,h3'), n = hs.length, ts = hs.map(function(i, el) {
+        return el.innerText;
+      });
+      if (n === 0) return;
+      bookInner.on('scroll.bookdown', function(e) {
+        var ht = $(window).height();
+        clearTimeout($.data(this, 'scrollTimer'));
+        $.data(this, 'scrollTimer', setTimeout(function() {
+          // find the first visible title in the viewport
+          for (var i = 0; i < n; i++) {
+            var rect = hs[i].getBoundingClientRect();
+            if (rect.top >= 0 && rect.bottom <= ht) break;
+          }
+          if (i === n) return;
+          items.removeClass('active');
+          for (var j = 0; j < m; j++) {
+            if (items.eq(j).children('a').first().text() === ts[i]) break;
+          }
+          if (j === m) j = 0;  // highlight the chapter title
+          items.eq(j).addClass('active');
+        }, 250));
+      });
+    })();
+
   });
 
   gitbook.events.bind("page.change", function(e) {
@@ -100,4 +132,5 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     gs.remove('bookBodyScrollTop');
     gs.remove('bookInnerScrollTop');
   });
+
 });
