@@ -9,14 +9,16 @@
 #'   and \code{template}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
-#' @note The default value of the argument \code{use_rmd_names} is set to
-#'   \code{TRUE} of this function is called in RStudio. If you want it to be
-#'   \code{FALSE}, you can use \code{use_rmd_names = FALSE} \emph{explicitly}
-#'   (or set it in the YAML frontmatter).
+#' @note The default value of the argument \code{html_names} is
+#'   \code{'section+number'}, but it is set to \code{'rmd'} of this function is
+#'   called in the RStudio IDE. If you want it to be other values, you can
+#'   specify this argument \emph{explicitly}, e.g. \code{gitbook(html_names =
+#'   'section+number')} (or set it in the YAML frontmatter).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ...,
-  use_rmd_names = FALSE, split_level = 2, config = list()
+  html_names = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none'),
+  config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
@@ -29,17 +31,16 @@ gitbook = function(
     self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
-  # set use_rmd_names = TRUE by default if called in RStudio
-  if (missing(use_rmd_names) && !is.na(Sys.getenv('RSTUDIO', NA)))
-    use_rmd_names = TRUE
+  # use Rmd filenames = TRUE by default if called in RStudio
+  html_names = if (missing(html_names) && !is.na(Sys.getenv('RSTUDIO', NA)))
+    'rmd' else match.arg(html_names)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
     split_chapters(
-      output, gitbook_page, use_rmd_names, split_level, gb_config,
-      use_rmd_names, split_level
+      output, gitbook_page, html_names, gb_config, html_names
     )
   }
   config$bookdown_output_format = 'html'
@@ -83,8 +84,8 @@ gitbook_dependency = function() {
 }
 
 gitbook_page = function(
-  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot, config,
-  use_rmd_names, split_level
+  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot,
+  config, html_names
 ) {
   toc = gitbook_toc(toc, rmd_cur, config[['toc']])
 
@@ -123,7 +124,7 @@ gitbook_page = function(
   if (length(exts <- load_config()[['download']]) == 0) exts = config$download
   if (length(exts)) config$download = I(with_ext(opts$get('book_filename'), paste0('.', exts)))
 
-  if (!use_rmd_names && split_level == 2) config$toc$scroll_highlight = FALSE
+  if (grepl('^section', html_names)) config$toc$scroll_highlight = FALSE
 
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 

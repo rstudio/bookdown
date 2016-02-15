@@ -9,16 +9,18 @@
 #'   \code{rmarkdown::\link{html_document}}, or the documentation of the
 #'   \code{base_format} function.
 #' @inheritParams pdf_book
-#' @param use_rmd_names Whether to use the base filenames of the input Rmd files
-#'   to create the HTML filenames, e.g. generate \file{chapter1.html} for
-#'   \file{chapter1.html}. Note this argument only works when this output format
-#'   is used by \code{\link{render_book}()}.
-#' @param split_level When \code{use_rmd_names = FALSE}, the level by which the
-#'   HTML output file is split. \code{0} means do not split the file; \code{1}
-#'   means split the file by the first level headers; \code{2} means the second
-#'   level headers. The HTML filenames will be determined by the header numbers
-#'   and ID's, e.g. the filename for the first chapter with a chapter title
-#'   \code{# Introduction} will be \file{1-introduction.html} by default.
+#' @param html_names How to name the HTML output files from the book: \code{rmd}
+#'   uses the base filenames of the input Rmd files to create the HTML
+#'   filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
+#'   \code{none} means do not split the HTML file (the book will be a single
+#'   HTML file); \code{chapter} means split the file by the first-level headers;
+#'   \code{section} means the second-level headers. For \code{chapter} and
+#'   \code{section}, the HTML filenames will be determined by the header ID's,
+#'   e.g. the filename for the first chapter with a chapter title \code{#
+#'   Introduction} will be \file{introduction.html}; for \code{chapter+number}
+#'   and \code{section+number}, the chapter/section numbers will be prepended to
+#'   the HTML filenames, e.g. \file{1-introduction.html} and
+#'   \file{2-1-literature.html}.
 #' @param page_builder A function to combine different parts of a chapter into a
 #'   page (an HTML character vector). See \code{\link{build_chapter}} for the
 #'   specification of this function.
@@ -38,7 +40,7 @@ html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), ...,
   base_format = rmarkdown::html_document, page_builder = build_chapter,
-  use_rmd_names = TRUE, split_level = 1
+  html_names = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -46,11 +48,12 @@ html_chapters = function(
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, ...
   )
+  html_names = match.arg(html_names)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    split_chapters(output, page_builder, split_level, use_rmd_names)
+    split_chapters(output, page_builder, split_level, html_names)
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
@@ -98,9 +101,7 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, html
   ), collapse = '\n')
 }
 
-split_chapters = function(
-  output, build = build_chapter, use_rmd_names = TRUE, split_level = 1, ...
-) {
+split_chapters = function(output, build = build_chapter, html_names, ...) {
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -117,6 +118,12 @@ split_chapters = function(
     writeUTF8(x, output)
     return(output)
   }
+
+  use_rmd_names = html_names == 'rmd'
+  split_level = switch(
+    html_names, none = 0, chapter = 1, `chapter+number` = 1,
+    section = 2, `section+number` = 2, rmd = 1
+  )
 
   html_head  = x[1:(i1 - 1)]  # HTML header + includes
   html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date
@@ -191,7 +198,10 @@ split_chapters = function(
       if (is.null(id) && is.null(num)) stop(
         'The heading ', x2, ' must have at least an id or a number'
       )
-      nm = paste(c(num, id), collapse = '-')
+      nm = if (grepl('[+]number$', html_names)) {
+        paste(c(num, id), collapse = '-')
+      } else id
+      if (is.null(nm)) stop('The heading ', x2, ' must have an id')
       gsub('[^[:alnum:]]+', '-', nm)
     })
     if (anyDuplicated(nms)) stop(
