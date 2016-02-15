@@ -20,7 +20,7 @@ before_script:
   - R CMD INSTALL .
   - cd inst/examples
   - make
-  - "[ ! -z $BUILD_PDF ] && make pdf || true"
+  - "[ ! -z \"$BUILD_PDF\" ] && make pdf || true"
   - cd ../..
 
 after_success:
