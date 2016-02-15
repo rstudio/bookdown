@@ -90,7 +90,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       if (m === 0) return;
       // all section titles on current page
       var hs = bookInner.find('.page-inner').find('h1,h2,h3'), n = hs.length,
-          ts = hs.map(function(i, el) { return el.innerText; });
+          ts = hs.map(function(i, el) { return $(el).text(); });
       if (n === 0) return;
       bookInner.on('scroll.bookdown', function(e) {
         var ht = $(window).height();
