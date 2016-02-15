@@ -2,6 +2,8 @@ bookdown::gitbook:
   css: style.css
   config:
     download: ['pdf']
+    toolbar:
+      position: fixed
     toc:
       collapse: no
       before: |
