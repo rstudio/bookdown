@@ -61,7 +61,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
     var toc = config.toc;
     // collapse TOC items that are not for the current chapter
     if (toc && toc.collapse) {
-      $('ul.summary').children('li[data-level]').children('ul').hide()
+      summary.children('li[data-level]').children('ul').hide()
         .parent().has(li).children('ul').show();
       li.children('ul').show();
     }
