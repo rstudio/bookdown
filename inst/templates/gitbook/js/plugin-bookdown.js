@@ -116,6 +116,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
         // the theme may have changed after user clicks the theme button
         bookHeader.css('background-color', bookBody.css('background-color'));
       });
+      bookBody.css('top', '50px');
     }
 
   });
