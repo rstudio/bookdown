@@ -31,8 +31,8 @@ require([
 
     // Fetch the search index
     function fetchIndex() {
-        $.getJSON(gitbook.state.basePath+"/search_index.json")
-        .then(loadIndex);
+        return $.getJSON(gitbook.state.basePath+"/search_index.json")
+                .then(loadIndex);  // [Yihui] we need to use this object later
     }
 
     // Search for a term and return results
@@ -103,7 +103,7 @@ require([
 
         if (keyword.length > 0) {
             if(!isSearchOpen()) {
-                toggleSearch();
+                toggleSearch(true); // [Yihui] open the search box
             }
             gitbook.sidebar.filter(_.pluck(search(keyword), "path"));
         }
@@ -112,8 +112,10 @@ require([
 
     gitbook.events.bind("start", function(config) {
         // Pre-fetch search index and create the form
-        fetchIndex();
-        createForm();
+        fetchIndex()
+        // [Yihui] recover search after the page is loaded
+        .then(recoverSearch);
+
 
         // Type in search bar
         $(document).on("keyup", ".book-search input", function(e) {
