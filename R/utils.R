@@ -196,6 +196,8 @@ serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
     if (length(files) == 0) return()
+    # if the output dir has been deleted, rebuild the whole book
+    if (!utils::file_test('-d', output_dir)) preview_ = FALSE
     args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview_, files))
     if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
   }
