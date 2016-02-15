@@ -49,11 +49,7 @@ The easiest way for beginners to get started with writing a book with R Markdown
 1. Install the R package **bookdown**:
 
     ```{r eval=FALSE}
-    # TODO: remove yihui.name/xran here after bookdown is on CRAN
-    install.packages(
-      'bookdown',
-      repos = c("http://yihui.name/xran", "http://cran.rstudio.com")
-    )
+    devtools::install_github('rstudio/bookdown')
     ```
 
 1. Open the R Markdown `index.Rmd` and click the button `Knit` on the toolbar of RStudio;
