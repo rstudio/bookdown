@@ -124,8 +124,6 @@ gitbook_page = function(
   if (length(exts <- load_config()[['download']]) == 0) exts = config$download
   if (length(exts)) config$download = I(with_ext(opts$get('book_filename'), paste0('.', exts)))
 
-  if (grepl('^section', html_names)) config$toc$scroll_highlight = FALSE
-
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
   c(head, toc, chapter, foot)
