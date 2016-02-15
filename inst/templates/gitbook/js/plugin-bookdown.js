@@ -107,6 +107,9 @@ require(["gitbook", "lodash"], function(gitbook, _) {
             if (items.eq(j).children('a').first().text() === ts[i]) break;
           }
           if (j === m) j = 0;  // highlight the chapter title
+          // search bottom-up for a visible TOC item to highlight; if an item is
+          // hidden, we check if its parent is visible, and so on
+          while (j > 0 && items.eq(j).is(':hidden')) j--;
           items.eq(j).addClass('active');
         }, 250));
       });
