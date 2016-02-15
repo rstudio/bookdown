@@ -53,7 +53,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    split_chapters(output, page_builder, split_level, html_names)
+    split_chapters(output, page_builder, html_names)
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
