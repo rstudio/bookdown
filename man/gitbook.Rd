@@ -3,8 +3,8 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, lib_dir = "libs", ..., use_rmd_names = FALSE, 
-    split_level = 2, config = list())
+gitbook(fig_caption = TRUE, lib_dir = "libs", ..., html_names = c("section+number", 
+    "section", "chapter+number", "chapter", "rmd", "none"), config = list())
 }
 \arguments{
 \item{fig_caption, lib_dir, ...}{Arguments to be passed to
@@ -12,17 +12,18 @@ gitbook(fig_caption = TRUE, lib_dir = "libs", ..., use_rmd_names = FALSE,
 \code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
 and \code{template}).}
 
-\item{use_rmd_names}{Whether to use the base filenames of the input Rmd files
-to create the HTML filenames, e.g. generate \file{chapter1.html} for
-\file{chapter1.html}. Note this argument only works when this output format
-is used by \code{\link{render_book}()}.}
-
-\item{split_level}{When \code{use_rmd_names = FALSE}, the level by which the
-HTML output file is split. \code{0} means do not split the file; \code{1}
-means split the file by the first level headers; \code{2} means the second
-level headers. The HTML filenames will be determined by the header numbers
-and ID's, e.g. the filename for the first chapter with a chapter title
-\code{# Introduction} will be \file{1-introduction.html} by default.}
+\item{html_names}{How to name the HTML output files from the book: \code{rmd}
+uses the base filenames of the input Rmd files to create the HTML
+filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
+\code{none} means do not split the HTML file (the book will be a single
+HTML file); \code{chapter} means split the file by the first-level headers;
+\code{section} means the second-level headers. For \code{chapter} and
+\code{section}, the HTML filenames will be determined by the header ID's,
+e.g. the filename for the first chapter with a chapter title \code{#
+Introduction} will be \file{introduction.html}; for \code{chapter+number}
+and \code{section+number}, the chapter/section numbers will be prepended to
+the HTML filenames, e.g. \file{1-introduction.html} and
+\file{2-1-literature.html}.}
 
 \item{config}{A list of configuration options for the gitbook style, such as
 the font/theme settings.}
@@ -32,8 +33,9 @@ This output format function ported a style provided by GitBook
 (\url{https://www.gitbook.com}) for R Markdown.
 }
 \note{
-The default value of the argument \code{use_rmd_names} is set to
-  \code{TRUE} of this function is called in RStudio. If you want it to be
-  \code{FALSE}, you can use \code{use_rmd_names = FALSE} \emph{explicitly}
-  (or set it in the YAML frontmatter).
+The default value of the argument \code{html_names} is
+  \code{'section+number'}, but it is set to \code{'rmd'} of this function is
+  called in the RStudio IDE. If you want it to be other values, you can
+  specify this argument \emph{explicitly}, e.g. \code{gitbook(html_names =
+  'section+number')} (or set it in the YAML frontmatter).
 }
