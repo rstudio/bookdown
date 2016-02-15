@@ -60,7 +60,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
 
     var toc = config.toc;
     // collapse TOC items that are not for the current chapter
-    if (toc && toc.collapse) {
+    if (toc && toc.collapse) (function() {
       var toc_sub = summary.children('li[data-level]').children('ul');
       toc_sub.hide().parent().has(li).children('ul').show();
       li.children('ul').show();
@@ -69,7 +69,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
       toc_sub2.on('click.bookdown', function(e) {
         $(this).children('ul').toggle();
       });
-    }
+    })();
 
     // add tooltips to the <a>'s that are truncated
     $('a').each(function(i, el) {
