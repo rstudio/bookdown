@@ -18,19 +18,16 @@ next_nearest = function(x, y) {
 
 # change the filename extension
 with_ext = function(x, ext) {
-  n1 = length(x); n2 = length(ext); r = '[.][[:alnum:]]+$'
+  n1 = length(x); n2 = length(ext); r = '([.][[:alnum:]]+)?$'
   if (n1 * n2 == 0) return(x)
-  i = grep('^[.]', ext, invert = TRUE) & ext != ''
+  i = !(grepl('^[.]', ext) | ext == '')
   ext[i] = paste0('.', ext[i])
 
   if (all(ext == '')) ext = ''
   if (length(ext) == 1) return(sub(r, ext, x))
 
   if (n1 > 1 && n1 != n2) stop("'ext' must be of the same length as 'x'")
-  x = mapply(sub, r, ext, x, USE.NAMES = FALSE)
-  i = !(grepl(r, x) | ext == '')
-  x[i] = paste0(x[i], ext[i])
-  x
+  mapply(sub, r, ext, x, USE.NAMES = FALSE)
 }
 
 # counters for figures/tables
