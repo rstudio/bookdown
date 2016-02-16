@@ -32,7 +32,7 @@
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
-  output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE
+  output_dir = '_book', new_session = FALSE, force_knit = FALSE, preview = FALSE
 ) {
 
   format = NULL  # latex or html
