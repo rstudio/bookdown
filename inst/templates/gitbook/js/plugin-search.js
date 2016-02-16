@@ -130,6 +130,7 @@ require([
         } else {
             $searchInput.blur();
             $searchInput.val("");
+            gitbook.storage.remove("keyword");
             gitbook.sidebar.filter(null);
             $('.body-inner').unhighlight(hiOpts);
             toggleTOC(false);
