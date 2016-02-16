@@ -5,7 +5,7 @@
 
 BOOK_DIR=$(pwd)/_book
 rm -rf ~/_book
-cd ~/_book
+mkdir ~/_book && cd ~/_book
 git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git .
 find . ! -name 'bookdown.pdf' ! -name '.nojekyll' -exec rm -rf {} +
 cp -r ${BOOK_DIR}/* ./
