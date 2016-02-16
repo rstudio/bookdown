@@ -1,10 +1,11 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books with R Markdown
-Version: 0.0.23
+Version: 0.0.24
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
     person(family = "RStudio Inc", role = "cph"),
+    person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person(family = "FriendCode Inc", role = c("cph", "ctb"), comment = "The gitbook style, with modifications")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
