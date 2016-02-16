@@ -29,6 +29,7 @@ pdf_book = function(
     x = resolve_refs_latex(readUTF8(f))
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
+    unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
     output = with_ext(output, '.pdf')
     if (is.null(o <- opts$get('output_dir'))) output else {
       output2 = file.path(o, output)

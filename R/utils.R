@@ -271,3 +271,7 @@ tojson = function(x) {
   }
   stop('The class of x is not supported: ', paste(class(x), collapse = ', '))
 }
+
+same_file = function(f1, f2, ...) {
+  normalizePath(f1, ...) == normalizePath(f2, ...)
+}

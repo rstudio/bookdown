@@ -53,7 +53,9 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    split_chapters(output, page_builder, split_by)
+    output2 = split_chapters(output, page_builder, split_by)
+    if (!same_file(output, output2)) file.remove(output)
+    output2
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
