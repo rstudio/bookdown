@@ -9,15 +9,15 @@
 #'   and \code{template}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
-#' @note The default value of the argument \code{html_names} is
+#' @note The default value of the argument \code{split_by} is
 #'   \code{'section+number'}, but it is set to \code{'rmd'} of this function is
 #'   called in the RStudio IDE. If you want it to be other values, you can
-#'   specify this argument \emph{explicitly}, e.g. \code{gitbook(html_names =
+#'   specify this argument \emph{explicitly}, e.g. \code{gitbook(split_by =
 #'   'section+number')} (or set it in the YAML frontmatter).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ...,
-  html_names = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none'),
+  split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none'),
   config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
@@ -32,15 +32,15 @@ gitbook = function(
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
   # use Rmd filenames = TRUE by default if called in RStudio
-  html_names = if (missing(html_names) && !is.na(Sys.getenv('RSTUDIO', NA)))
-    'rmd' else match.arg(html_names)
+  split_by = if (missing(split_by) && !is.na(Sys.getenv('RSTUDIO', NA)))
+    'rmd' else match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
     split_chapters(
-      output, gitbook_page, html_names, gb_config, html_names
+      output, gitbook_page, split_by, gb_config, split_by
     )
   }
   config$bookdown_output_format = 'html'
@@ -85,7 +85,7 @@ gitbook_dependency = function() {
 
 gitbook_page = function(
   head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot,
-  config, html_names
+  config, split_by
 ) {
   toc = gitbook_toc(toc, rmd_cur, config[['toc']])
 
