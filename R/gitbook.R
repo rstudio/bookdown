@@ -78,7 +78,7 @@ gitbook_dependency = function() {
     )),
     script = file.path('js', c(
       'app.js', 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
-      'plugin-fontsettings.js', 'plugin-bookdown.js'
+      'plugin-fontsettings.js', 'plugin-bookdown.js', 'jquery.highlight.js'
     ))
   ))
 }
@@ -109,7 +109,7 @@ gitbook_page = function(
 
   # gitbook JS scripts only work after the DOM has been loaded, so move them
   # from head to foot
-  i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[a-z-]+[.]js"></script>\\s*$', head)
+  i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[.a-z-]+[.]js"></script>\\s*$', head)
   s = head[i]; head[i] = ''
   j = grep('<!--bookdown:config-->', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')

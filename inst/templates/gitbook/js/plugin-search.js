@@ -4,6 +4,8 @@ require([
 ], function(gitbook, _) {
     var index = null;
     var $searchInput, $searchForm;
+    var $highlighted, hi = 0, hiOpts = { className: 'search-highlight' };
+    var collapse = false;
 
     // Use a specific index
     function loadIndex(data) {
@@ -49,7 +51,44 @@ require([
         })
         .value();
 
+        // [Yihui] Highlight the search keyword on current page
+        hi = 0;
+        $highlighted = results.length === 0 ? undefined : $('.body-inner')
+          .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
+        scrollToHighlighted();
+        toggleTOC(results.length > 0);
+
         return results;
+    }
+
+    // [Yihui] Scroll the chapter body to the i-th highlighted string
+    function scrollToHighlighted() {
+      if (!$highlighted) return;
+      var n = $highlighted.length;
+      if (n === 0) return;
+      var $p = $highlighted.eq(hi), p = $p[0], rect = p.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > $(window).height()) {
+        $('.body-inner').scrollTop(p.offsetTop - 100);
+      }
+      $highlighted.css('background-color', '');
+      // an orange background color on the current item and removed later
+      $p.css('background-color', 'orange');
+      setTimeout(function() {
+        $p.css('background-color', '');
+      }, 2000);
+    }
+
+    // [Yihui] Expand/collapse TOC
+    function toggleTOC(show) {
+      if (!collapse) return;
+      var toc_sub = $('ul.summary').children('li[data-level]').children('ul');
+      if (show) return toc_sub.show();
+      var href = window.location.pathname;
+      href = href.substr(href.lastIndexOf('/') + 1);
+      if (href === '') href = 'index.html';
+      var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
+      toc_sub.hide().parent().has(li).children('ul').show();
+      li.children('ul').show();
     }
 
     // Create search form
@@ -92,6 +131,8 @@ require([
             $searchInput.blur();
             $searchInput.val("");
             gitbook.sidebar.filter(null);
+            $('.body-inner').unhighlight(hiOpts);
+            toggleTOC(false);
         }
     }
 
@@ -110,7 +151,9 @@ require([
     }
 
 
-    gitbook.events.bind("start", function(config) {
+    gitbook.events.bind("start", function(e, config) {
+        collapse = config.toc && config.toc.collapse;
+
         // Pre-fetch search index and create the form
         fetchIndex()
         // [Yihui] recover search after the page is loaded
@@ -122,14 +165,25 @@ require([
             var key = (e.keyCode ? e.keyCode : e.which);
             var q = $(this).val();
 
+            // [Yihui] Escape -> close search box; Up/Down: previous/next highlighted
             if (key == 27) {
                 e.preventDefault();
                 toggleSearch(false);
                 return;
+            } else if (key == 38) {
+              if (hi <= 0 && $highlighted) hi = $highlighted.length;
+              hi--;
+              return scrollToHighlighted();
+            } else if (key == 40) {
+              hi++;
+              if ($highlighted && hi >= $highlighted.length) hi = 0;
+              return scrollToHighlighted();
             }
             if (q.length === 0) {
                 gitbook.sidebar.filter(null);
                 gitbook.storage.remove("keyword");
+                $('.body-inner').unhighlight(hiOpts);
+                toggleTOC(false);
             } else {
                 var results = search(q);
                 gitbook.sidebar.filter(
