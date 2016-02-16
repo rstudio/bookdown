@@ -111,7 +111,7 @@ output_dirname = function(dir, config = load_config(), use_default = TRUE, creat
   if (length(dir)) {
     if (create) dir_create(dir)
     # ignore dir that is just the current working directory
-    if (same_file(dir, getwd(), mustWork = FALSE)) dir = NULL
+    if (same_path(dir, getwd(), mustWork = FALSE)) dir = NULL
   }
   dir
 }
@@ -272,6 +272,6 @@ tojson = function(x) {
   stop('The class of x is not supported: ', paste(class(x), collapse = ', '))
 }
 
-same_file = function(f1, f2, ...) {
+same_path = function(f1, f2, ...) {
   normalizePath(f1, ...) == normalizePath(f2, ...)
 }

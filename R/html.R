@@ -54,7 +54,7 @@ html_chapters = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
     output2 = split_chapters(output, page_builder, split_by)
-    if (!same_file(output, output2)) file.remove(output)
+    if (!same_path(output, output2)) file.remove(output)
     output2
   }
   config$bookdown_output_format = 'html'
