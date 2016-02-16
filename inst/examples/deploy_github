@@ -3,11 +3,11 @@
 [ -z "${GH_TOKEN}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
 
-rm -rf gh-pages
-git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
-cd gh-pages
-find . ! -name 'bookdown.pdf' ! -name '.nojekyll' -exec rm -rf {} +
-cp -r ../_book/* ./
+rm -rf ~/_book
+git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git ~/_book
+find ~/_book ! -name 'bookdown.pdf' ! -name '.nojekyll' -exec rm -rf {} +
+cp -r _book/* ~/_book/
+cd ~/_book
 git add --all *
 git commit -m"update homepage (travis build ${TRAVIS_BUILD_NUMBER})"
 git push -q -f origin gh-pages
