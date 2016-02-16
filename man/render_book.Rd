@@ -5,7 +5,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE)
+    output_dir = "_book", new_session = FALSE, force_knit = FALSE, preview = FALSE)
 
 preview_chapter(..., envir = parent.frame())
 }

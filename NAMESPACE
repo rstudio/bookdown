@@ -1,4 +1,5 @@
 export(build_chapter)
+export(clean_book)
 export(gitbook)
 export(html_chapters)
 export(pdf_book)

@@ -6,7 +6,7 @@
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
     lib_dir = "libs", template = bookdown_file("templates/default.html"), 
     ..., base_format = rmarkdown::html_document, page_builder = build_chapter, 
-    html_names = c("section+number", "section", "chapter+number", "chapter", 
+    split_by = c("section+number", "section", "chapter+number", "chapter", 
         "rmd", "none"))
 }
 \arguments{
@@ -22,7 +22,7 @@ html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
 page (an HTML character vector). See \code{\link{build_chapter}} for the
 specification of this function.}
 
-\item{html_names}{How to name the HTML output files from the book: \code{rmd}
+\item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML
 filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
 \code{none} means do not split the HTML file (the book will be a single

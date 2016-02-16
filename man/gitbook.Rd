@@ -3,7 +3,7 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, lib_dir = "libs", ..., html_names = c("section+number", 
+gitbook(fig_caption = TRUE, lib_dir = "libs", ..., split_by = c("section+number", 
     "section", "chapter+number", "chapter", "rmd", "none"), config = list())
 }
 \arguments{
@@ -12,7 +12,7 @@ gitbook(fig_caption = TRUE, lib_dir = "libs", ..., html_names = c("section+numbe
 \code{toc}, \code{number_sections}, \code{self_contained}, \code{theme},
 and \code{template}).}
 
-\item{html_names}{How to name the HTML output files from the book: \code{rmd}
+\item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML
 filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
 \code{none} means do not split the HTML file (the book will be a single
@@ -33,9 +33,9 @@ This output format function ported a style provided by GitBook
 (\url{https://www.gitbook.com}) for R Markdown.
 }
 \note{
-The default value of the argument \code{html_names} is
+The default value of the argument \code{split_by} is
   \code{'section+number'}, but it is set to \code{'rmd'} of this function is
   called in the RStudio IDE. If you want it to be other values, you can
-  specify this argument \emph{explicitly}, e.g. \code{gitbook(html_names =
+  specify this argument \emph{explicitly}, e.g. \code{gitbook(split_by =
   'section+number')} (or set it in the YAML frontmatter).
 }
