@@ -1,4 +1,4 @@
-require(["gitbook", "lodash"], function(gitbook, _) {
+require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
   var gs = gitbook.storage;
 
