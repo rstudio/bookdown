@@ -2,3 +2,4 @@ book_filename: bookdown
 chapter_name: "Chapter "
 repo: https://github.com/rstudio/bookdown/
 output_dir: _book
+clean: [packages.bib, bookdown.bbl]

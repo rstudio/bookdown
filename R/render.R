@@ -50,12 +50,7 @@ render_book = function(
 
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
-  if (missing(output_dir)) output_dir = config[['output_dir']]
-  if (length(output_dir)) {
-    dir_create(output_dir)
-    # ignore output_dir that is just the current working directory
-    if (normalizePath(output_dir) == normalizePath(getwd())) output_dir = NULL
-  }
+  output_dir = output_dirname(output_dir, config, missing(output_dir))
   # store output directory and the initial input Rmd name
   opts$set(
     output_dir = output_dir, input_rmd = basename(input), preview = preview
@@ -67,25 +62,12 @@ render_book = function(
     if (is.logical(config[['new_session']])) new_session = config[['new_session']]
   }
 
-  # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
-  if (is.character(config[['rmd_files']])) {
-    files = config[['rmd_files']]
-    if (!is.null(format) && is.list(files)) files = files[[format]]
-  } else {
-    files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
-    index = match('index', with_ext(files, ''))
-    # if there is a index.Rmd, put it in the beginning
-    if (!is.na(index)) files = c(files[index], files[-index])
-  }
-  check_special_chars(files)
+  files = source_files(format, config)
   if (new_session && any(dirname(files) != '.')) stop(
     'All input files must be under the current working directory'
   )
 
-  main = if (is.character(config[['book_filename']])) {
-    config[['book_filename']][1]
-  } else if (new_session) '_main.md' else '_main.Rmd'
+  main = book_filename()
   if (!grepl('[.][a-zA-Z]+$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
   opts$set(book_filename = main)  # store the book filename
   on.exit(unlink(main), add = TRUE)
@@ -152,4 +134,43 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
     run_pandoc = TRUE, knit_meta = knit_meta
   )
 
+}
+
+#' Clean up the output files and directories from the book
+#'
+#' After a book is rendered, there will be a series of output files and
+#' directories created in the book root directory, typically including
+#' \file{*_files/}, \file{*_cache/}, \file{_book/}, and some HTML/LaTeX
+#' auxiliary files. These filenames depend on the book configurations. This
+#' function identifies these files and directories, and delete them if desired,
+#' so you can rebuild the book with a clean source.
+#' @param clean Whether to delete the possible output files. If \code{FALSE},
+#'   simply print out a list of files/directories that should probably be
+#'   deleted. You can set the global option \code{bookdown.clean_book = TRUE} to
+#'   force this function to delete files. You are recommended to take a look at
+#'   the list of files at least once before actually deleting them, i.e. run
+#'   \code{clean_book(FALSE)} before \code{clean_book(TRUE)}.
+#' @export
+clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
+  r = '_(files|cache)$'
+  one = with_ext(book_filename(), '')  # the main book file
+  src = with_ext(source_files(all = TRUE), '')  # input documents
+  out = list.files('.', r)
+  out = out[utils::file_test('-d', out)]
+  out = out[gsub(r, '', out) %in% c(src, one)]  # output dirs generated from src names
+  out = c(out, output_dirname('_book', create = FALSE))  # output directory
+  out = c(out, with_ext(one, c('bbl', 'html', 'tex')))  # aux files for main file
+  out = c(out, load_config()[['clean']])  # extra files specified in _bookdown.yml
+  out = sort(unique(out))
+  if (length(out) == 0) return(invisible())
+  if (clean) unlink(out, recursive = TRUE) else {
+    out = out[file.access(out) == 0]
+    if (length(out) == 0) return(invisible())
+    i = utils::file_test('-d', out)
+    out[i] = paste0(out[i], '/')  # mark directories
+    message(
+      'These files/dirs can probably be removed: \n\n', paste(out, collapse = '\n'),
+      '\n\nYou can set options(bookdown.clean_book = TRUE) to allow this function to always clean up the book directory for you.'
+    )
+  }
 }

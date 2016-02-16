@@ -80,6 +80,42 @@ load_config = function() {
   opts$get('config')
 }
 
+book_filename = function(config = load_config()) {
+  if (is.character(config[['book_filename']])) {
+    config[['book_filename']][1]
+  } else '_main'
+}
+
+source_files = function(format = NULL, config = load_config(), all = FALSE) {
+  # a list of Rmd chapters
+  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  if (is.character(config[['rmd_files']])) {
+    files = config[['rmd_files']]
+    if (is.list(files)) {
+      files = if (all && is.null(format)) unlist(files) else files[[format]]
+    }
+  } else {
+    files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
+    index = match('index', with_ext(files, ''))
+    # if there is a index.Rmd, put it in the beginning
+    if (!is.na(index)) files = c(files[index], files[-index])
+  }
+  check_special_chars(files)
+}
+
+output_dirname = function(dir, config = load_config(), use_default = TRUE, create = TRUE) {
+  if (use_default) {
+    dir2 = config[['output_dir']]
+    if (!is.null(dir2)) dir = dir2
+  }
+  if (length(dir)) {
+    if (create) dir_create(dir)
+    # ignore dir that is just the current working directory
+    if (normalizePath(dir, mustWork = FALSE) == normalizePath(getwd())) dir = NULL
+  }
+  dir
+}
+
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
   # in the preview mode, only use some placeholder text instead of the full Rmd
   preview = opts$get('preview'); input = opts$get('input_rmd')
@@ -118,6 +154,7 @@ check_special_chars = function(filename) {
     'You may rename it to, e.g., "', gsub(reg, '-', filename[i]), '".'
   )
   if (!is.null(i)) stop('Filenames must not contain special characters')
+  filename
 }
 
 Rscript = function(args) {
