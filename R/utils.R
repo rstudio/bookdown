@@ -242,7 +242,7 @@ local_resources = function(x) {
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
 serve_book = function(
-  dir = '.', output_dir = NULL, preview = TRUE, in_session = TRUE, ...
+  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, ...
 ) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
@@ -255,7 +255,7 @@ serve_book = function(
     on.exit(opts$restore(), add = TRUE)
     output_dir = load_config()[['output_dir']]
   }
-  if (is.null(output_dir)) output_dir = '.'
+  if (!in_session && is.null(output_dir)) output_dir = '.'
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
