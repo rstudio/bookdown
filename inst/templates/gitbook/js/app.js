@@ -25011,3 +25011,8 @@ module.exports = {
 };
 
 },{"./events":12,"jquery":1,"lodash":2}]},{},[13]);
+
+// [Yihui] restore the previous jQuery object; we are in a self-contained world
+// in gitbook thanks to the AMD loader, so we should not need jQuery to be a
+// global object
+jQuery.noConflict(true);
