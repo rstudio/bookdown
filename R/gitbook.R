@@ -9,15 +9,10 @@
 #'   and \code{template}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
-#' @note The default value of the argument \code{split_by} is
-#'   \code{'section+number'}, but it is set to \code{'rmd'} of this function is
-#'   called in the RStudio IDE. If you want it to be other values, you can
-#'   specify this argument \emph{explicitly}, e.g. \code{gitbook(split_by =
-#'   'section+number')} (or set it in the YAML frontmatter).
 #' @export
 gitbook = function(
   fig_caption = TRUE, lib_dir = 'libs', ...,
-  split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none'),
+  split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
@@ -31,9 +26,7 @@ gitbook = function(
     self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
-  # use Rmd filenames = TRUE by default if called in RStudio
-  split_by = if (missing(split_by) && !is.na(Sys.getenv('RSTUDIO', NA)))
-    'rmd' else match.arg(split_by)
+  split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
