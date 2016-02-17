@@ -126,7 +126,7 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
     x = c(before, x, after)
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
   }))
-  if (preview) content = c(create_placeholder(readUTF8(orig[1]), FALSE), content)
+  if (preview) content = c(create_placeholder(readUTF8(files[1]), FALSE), content)
   writeUTF8(content, to)
 }
 
