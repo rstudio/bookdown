@@ -1,3 +1,5 @@
+require(["jQuery"], function(jQuery) {
+
 /*
  * jQuery Highlight plugin
  *
@@ -79,3 +81,4 @@ jQuery.fn.highlight = function (words, options) {
     });
 };
 
+});
