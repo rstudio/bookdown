@@ -159,7 +159,7 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   out = out[utils::file_test('-d', out)]
   out = out[gsub(r, '', out) %in% c(src, one)]  # output dirs generated from src names
   out = c(out, output_dirname('_book', create = FALSE))  # output directory
-  out = c(out, with_ext(one, c('bbl', 'html', 'tex')))  # aux files for main file
+  out = c(out, with_ext(one, c('bbl', 'html', 'tex', 'rds')))  # aux files for main file
   out = c(out, load_config()[['clean']])  # extra files specified in _bookdown.yml
   out = sort(unique(out))
   if (length(out) == 0) return(invisible())
