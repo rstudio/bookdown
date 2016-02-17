@@ -123,7 +123,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         // the theme may have changed after user clicks the theme button
         bookHeader.css('background-color', bookBody.css('background-color'));
       });
-      bookInner.children('page-wrapper').first().css('top', '50px');
+      bookInner.children('.page-wrapper').first().css('top', '50px');
     }
 
   });
