@@ -52,7 +52,6 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     li.addClass('active');
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
     chaps.on('click', function(e) {
-      e.stopPropagation();
       chaps.removeClass('active');
       $(this).addClass('active');
       gs.set('tocScrollTop', summary.scrollTop());
