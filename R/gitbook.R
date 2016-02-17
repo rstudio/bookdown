@@ -63,6 +63,7 @@ write_search_data = function(x) {
 gitbook_dependency = function() {
   assets = bookdown_file('templates', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
+  app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
   list(htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
@@ -70,7 +71,7 @@ gitbook_dependency = function() {
       'plugin-fontsettings.css'
     )),
     script = file.path('js', c(
-      'app.js', 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
+      app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
       'plugin-fontsettings.js', 'plugin-bookdown.js', 'jquery.highlight.js'
     ))
   ))
