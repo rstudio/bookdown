@@ -212,15 +212,38 @@ local_resources = function(x) {
 #' automatically recompiled, and the current HTML page in the browser will be
 #' refreshed. This function is based on \code{servr::\link[servr]{httw}()} to
 #' continuously watch a directory.
+#'
+#' For \code{in_session = TRUE}, you will have access to all objects created in
+#' the book in the current R session: if you use a daemonized server (via the
+#' argument \code{daemon = TRUE}), you can check the objects at any time when
+#' the current R session is not busy; otherwise you will have to stop the server
+#' before you can check the objects. This can be useful when you need to
+#' interactively explore the R objects in the book. The downside of
+#' \code{in_session = TRUE} is that the output may be different with the book
+#' compiled from a fresh R session, because the state of the current R session
+#' may not be clean.
+#'
+#' For \code{in_sesion = FALSE}, you do not have access to objects in the book
+#' from the current R session, but the output is more likely to be reproducible
+#' since everything is created from new R sessions. Since this function is only
+#' for previewing purposes, the cleanness of the R session may not be a big
+#' concern. You may choose \code{in_session = TRUE} or \code{FALSE} depending on
+#' your specific applications. Eventually, you should run \code{render_book()}
+#' from a fresh R session to generate a reliable copy of the book output.
 #' @param dir The root directory of the book (containing the Rmd source files).
 #' @param output_dir The directory for output files; see
 #'   \code{\link{render_book}()}.
 #' @param preview Whether to render the modified/added chapters only, or the
 #'   whole book; see \code{\link{render_book}()}.
+#' @param in_session Whether to compile the book using the current R session, or
+#'   always open a new R session to compile the book whenever changes occur in
+#'   the book directory.
 #' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
-serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
+serve_book = function(
+  dir = '.', output_dir = NULL, preview = TRUE, in_session = TRUE, ...
+) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
   if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE)) {
@@ -239,8 +262,12 @@ serve_book = function(dir = '.', output_dir = NULL, preview = TRUE, ...) {
     if (length(files) == 0) return()
     # if the output dir has been deleted, rebuild the whole book
     if (!utils::file_test('-d', output_dir)) preview_ = FALSE
-    args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview_, files))
-    if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
+    if (in_session) {
+      render_book(files, output_dir = output_dir, preview = preview_, envir = globalenv())
+    } else {
+      args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview_, files))
+      if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
+    }
   }
   rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
