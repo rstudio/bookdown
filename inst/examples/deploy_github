@@ -10,8 +10,8 @@ rm -rf ~/_book
 mkdir ~/_book && cd ~/_book
 git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git .
 ls | grep -v bookdown.pdf | xargs rm -rf
-cp -r ${BOOK_DIR}/* ./
 git ls-files --deleted -z | xargs -0 git rm
+cp -r ${BOOK_DIR}/* ./
 git add --all *
 git commit -m"update homepage (travis build ${TRAVIS_BUILD_NUMBER})"
 git push -q -f origin gh-pages
