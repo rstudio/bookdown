@@ -50,7 +50,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
         // [Yihui] Highlight the search keyword on current page
         hi = 0;
-        $highlighted = results.length === 0 ? undefined : $('.body-inner')
+        $highlighted = results.length === 0 ? undefined : $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
         scrollToHighlighted();
         toggleTOC(results.length > 0);
@@ -129,7 +129,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             $searchInput.val("");
             gitbook.storage.remove("keyword");
             gitbook.sidebar.filter(null);
-            $('.body-inner').unhighlight(hiOpts);
+            $('.page-inner').unhighlight(hiOpts);
             toggleTOC(false);
         }
     }
@@ -179,7 +179,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             if (q.length === 0) {
                 gitbook.sidebar.filter(null);
                 gitbook.storage.remove("keyword");
-                $('.body-inner').unhighlight(hiOpts);
+                $('.page-inner').unhighlight(hiOpts);
                 toggleTOC(false);
             } else {
                 var results = search(q);
