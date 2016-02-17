@@ -24683,7 +24683,8 @@ module.exports = {
 },{"./events":12,"./loading":15,"./state":19,"jquery":1,"url":10}],17:[function(require,module,exports){
 module.exports = {
     isMobile: function() {
-        return (document.width <= 600);
+        // [Yihui] document.width has been deprecated
+        return (document.body.clientWidth <= 600);
     }
 };
 
@@ -24715,7 +24716,9 @@ function isOpen() {
 // Prepare sidebar: state and toggle button
 function init() {
     // Init last state if not mobile
-    if (!platform.isMobile()) {
+    if (platform.isMobile()) {
+      toggleSidebar(false, false); // [Yihui] hide the sidebar initially on mobile
+    } else {
         toggleSidebar(storage.get('sidebar', true), false);
     }
 
