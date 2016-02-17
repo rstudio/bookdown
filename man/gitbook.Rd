@@ -3,8 +3,8 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, lib_dir = "libs", ..., split_by = c("section+number", 
-    "section", "chapter+number", "chapter", "rmd", "none"), config = list())
+gitbook(fig_caption = TRUE, lib_dir = "libs", ..., split_by = c("chapter", 
+    "chapter+number", "section", "section+number", "rmd", "none"), config = list())
 }
 \arguments{
 \item{fig_caption, lib_dir, ...}{Arguments to be passed to
@@ -31,11 +31,4 @@ the font/theme settings.}
 \description{
 This output format function ported a style provided by GitBook
 (\url{https://www.gitbook.com}) for R Markdown.
-}
-\note{
-The default value of the argument \code{split_by} is
-  \code{'section+number'}, but it is set to \code{'rmd'} of this function is
-  called in the RStudio IDE. If you want it to be other values, you can
-  specify this argument \emph{explicitly}, e.g. \code{gitbook(split_by =
-  'section+number')} (or set it in the YAML frontmatter).
 }
