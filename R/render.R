@@ -63,6 +63,10 @@ render_book = function(
   }
 
   files = source_files(format, config)
+  if (length(files) == 0) stop(
+    'No input R Markdown files found from the current directory ', getwd(),
+    ' or in the rmd_files field of _bookdown.yml'
+  )
   if (new_session && any(dirname(files) != '.')) stop(
     'All input files must be under the current working directory'
   )
