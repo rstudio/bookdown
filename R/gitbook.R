@@ -129,18 +129,6 @@ gitbook_toc = function(x, cur, config) {
   x[i1] = ''; x[i2] = ''
   if (i2 - i1 < 2) return(x)
   toc = x[(i1 + 1):(i2 - 1)]
-  if (toc[1] == '<ul>') {
-    toc[1] = '<ul class="summary">'
-    if (!is.null(extra <- config[['before']])) {
-      toc[1] = paste(c(toc[1], extra, '<li class="divider"></li>'), collapse = '\n')
-    }
-  }
-  n = length(toc)
-  if (toc[n] == '</ul>') {
-    if (!is.null(extra <- config[['after']])) {
-      toc[n] = paste(c('<li class="divider"></li>', extra, toc[n]), collapse = '\n')
-    }
-  }
   r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([0-9.]+)</span>([^<]+)(</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
@@ -160,6 +148,18 @@ gitbook_toc = function(x, cur, config) {
     r = '^<li .+ data-level="([^.]+)?" .+>.+</a><ul>$'
     i = grep(r, toc)
     toc[i] = gsub('<ul>$', '<ul style="display:none;">', toc[i])
+  }
+  if (toc[1] == '<ul>') {
+    toc[1] = '<ul class="summary">'
+    if (!is.null(extra <- config[['before']])) {
+      toc[1] = paste(c(toc[1], extra, '<li class="divider"></li>'), collapse = '\n')
+    }
+  }
+  n = length(toc)
+  if (toc[n] == '</ul>') {
+    if (!is.null(extra <- config[['after']])) {
+      toc[n] = paste(c('<li class="divider"></li>', extra, toc[n]), collapse = '\n')
+    }
   }
   x[(i1 + 1):(i2 - 1)] = toc
   x
