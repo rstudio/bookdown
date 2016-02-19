@@ -129,6 +129,8 @@ gitbook_toc = function(x, cur, config) {
   x[i1] = ''; x[i2] = ''
   if (i2 - i1 < 2) return(x)
   toc = x[(i1 + 1):(i2 - 1)]
+
+  # numbered sections
   r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([0-9.]+)</span>([^<]+)(</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
@@ -137,6 +139,8 @@ gitbook_toc = function(x, cur, config) {
     toc[i]
   )
   toc[i] = sub(' data-path="">', paste0(' data-path="', with_ext(cur, '.html'), '">'), toc[i])
+
+  # unnumbered sections
   r = '^<li><a href="([^#]*)(#[^"]+)">([^<]+</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
@@ -144,11 +148,14 @@ gitbook_toc = function(x, cur, config) {
     '<li class="chapter" data-level="" data-path="\\1"><a href="\\1\\2"><i class="fa fa-check"></i>\\3',
     toc[i]
   )
+
+  # collapse sections under chapters
   if (isTRUE(config[['collapse']])) {
     r = '^<li .+ data-level="([^.]+)?" .+>.+</a><ul>$'
     i = grep(r, toc)
     toc[i] = gsub('<ul>$', '<ul style="display:none;">', toc[i])
   }
+
   if (toc[1] == '<ul>') {
     toc[1] = '<ul class="summary">'
     if (!is.null(extra <- config[['before']])) {
