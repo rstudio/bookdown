@@ -149,6 +149,14 @@ gitbook_toc = function(x, cur, config) {
     toc[i]
   )
 
+  # remove the hash from the first TOC item if it has following items that share
+  # the same base pathname, e.g. [index.html#foo, index.html#bar] ->
+  # [index.html, index.html#bar]
+  r = '^(<li class="chapter" data-level="[0-9.]*" data-path="[^"]+"><a href=")([^#]+)(#[^"]+)(">.+)$'
+  i = grep(r, toc)
+  i = i[!duplicated(gsub(r, '\\2', toc[i]))]
+  toc[i] = gsub(r, '\\1\\2\\4', toc[i])
+
   # collapse sections under chapters
   if (isTRUE(config[['collapse']])) {
     r = '^<li .+ data-level="([^.]+)?" .+>.+</a><ul>$'
