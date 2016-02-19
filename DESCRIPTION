@@ -19,7 +19,7 @@ Imports:
 Suggests:
     rstudioapi,
     servr (>= 0.2.8),
-    testit
+    testit (>= 0.5)
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
