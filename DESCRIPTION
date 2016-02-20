@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books with R Markdown
-Version: 0.0.31
+Version: 0.0.32
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
     person(family = "RStudio Inc", role = "cph"),
@@ -17,11 +17,13 @@ License: GPL-3
 Imports:
     htmltools,
     knitr,
+    miniUI,
     rmarkdown (>= 0.8.2),
     yaml
 Suggests:
     rstudioapi,
     servr (>= 0.2.8),
+    shiny,
     testit (>= 0.5)
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
