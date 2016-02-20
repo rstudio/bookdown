@@ -126,12 +126,12 @@ rmd_files:
 Because **knitr** does not allow duplicate chunk labels in a source document, you need to make sure there are no duplicate labels in your book chapters, otherwise **knitr** will signal an error when knitting the merged Rmd file. 
 ```
 
-At the moment, there are two output formats that you may use: `bookdown::pdf_book` and `bookdown::html_chapters`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()` that renders multiple Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
+At the moment, there are three output formats that you may use: `bookdown::pdf_book`, `bookdown::gitbook`, and `bookdown::html_chapters`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()` that renders multiple Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
 
 ```{r eval=FALSE}
-bookdown::render_book('foo.Rmd', 'bookdown::html_chapters')
+bookdown::render_book('foo.Rmd', 'bookdown::gitbook')
 bookdown::render_book('foo.Rmd', 'bookdown::pdf_book')
-bookdown::render_book('foo.Rmd', bookdown::html_chapters(lib_dir = 'book_assets'))
+bookdown::render_book('foo.Rmd', bookdown::gitbook(lib_dir = 'book_assets'))
 bookdown::render_book('foo.Rmd', bookdown::pdf_book(keep_tex = TRUE))
 ```
 
@@ -141,7 +141,7 @@ To use `render_book` and the output format functions in the RStudio IDE, you can
 ---
 knit: "bookdown::render_book"
 output:
-  bookdown::html_chapters:
+  bookdown::gitbook:
     lib_dir: "book_assets"
   bookdown::pdf_book:
     keep_tex: yes
