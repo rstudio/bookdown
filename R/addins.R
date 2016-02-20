@@ -7,7 +7,7 @@ jquery_dependency = function() {
 
 mathquill_dependency = function() {
   htmltools::htmlDependency(
-    'mathquill', '0.9.4', bookdown_file('resources', 'mathquill'),
+    'mathquill', '0.10.0', bookdown_file('resources', 'mathquill'),
     script = c('mathquill.min.js', 'init.js'), stylesheet = 'mathquill.css'
   )
 }
@@ -21,7 +21,7 @@ mathquill = function() {
       gadgetTitleBar('Input LaTeX Math Expressions'),
       attachDependencies(
         tags$span(
-          id = 'latex_input', class = 'mathquill-editable', style = 'line-height: 2em;',
+          id = 'latex_input',
           context$selection[[1]]$text
         ),
         list(jquery_dependency(), mathquill_dependency())
