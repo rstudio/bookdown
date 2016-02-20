@@ -61,7 +61,7 @@ write_search_data = function(x) {
 }
 
 gitbook_dependency = function() {
-  assets = bookdown_file('templates', 'gitbook')
+  assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
   list(htmltools::htmlDependency(
