@@ -113,6 +113,8 @@ output_dirname = function(dir, config = load_config(), use_default = TRUE, creat
   dir
 }
 
+dir_exists = function(x) utils::file_test('-d', x)
+
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
   # in the preview mode, only use some placeholder text instead of the full Rmd
   preview = opts$get('preview'); input = opts$get('input_rmd')
@@ -193,7 +195,7 @@ json_vector = function(x, toArray = FALSE, quote = TRUE) {
 opts = knitr:::new_defaults(list(config = list()))
 
 dir_create = function(path) {
-  utils::file_test('-d', path) || dir.create(path, recursive = TRUE)
+  dir_exists(path) || dir.create(path, recursive = TRUE)
 }
 
 # a wrapper of file.path to ignore `output_dir` if it is NULL
@@ -261,7 +263,7 @@ serve_book = function(
     files = files[dirname(files) == '.']
     if (length(files) == 0) return()
     # if the output dir has been deleted, rebuild the whole book
-    if (!utils::file_test('-d', output_dir)) preview_ = FALSE
+    if (!dir_exists(output_dir)) preview_ = FALSE
     if (in_session) {
       render_book(files, output_dir = output_dir, preview = preview_, envir = globalenv())
     } else {

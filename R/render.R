@@ -160,7 +160,7 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   one = with_ext(book_filename(), '')  # the main book file
   src = with_ext(source_files(all = TRUE), '')  # input documents
   out = list.files('.', r)
-  out = out[utils::file_test('-d', out)]
+  out = out[dir_exists(out)]
   out = out[gsub(r, '', out) %in% c(src, one)]  # output dirs generated from src names
   out = c(out, output_dirname('_book', create = FALSE))  # output directory
   out = c(out, with_ext(one, c('bbl', 'html', 'tex', 'rds')))  # aux files for main file
@@ -170,7 +170,7 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   if (clean) unlink(out, recursive = TRUE) else {
     out = out[file.access(out) == 0]
     if (length(out) == 0) return(invisible())
-    i = utils::file_test('-d', out)
+    i = dir_exists(out)
     out[i] = paste0(out[i], '/')  # mark directories
     message(
       'These files/dirs can probably be removed: \n\n', paste(out, collapse = '\n'),
