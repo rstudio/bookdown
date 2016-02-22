@@ -2,7 +2,6 @@ bookdown::gitbook:
   css: css/style.css
   split_by: section
   config:
-    download: ['pdf', 'epub', 'mobi']
     toolbar:
       position: fixed
     toc:

@@ -117,7 +117,18 @@ gitbook_page = function(
     config$edit$link = sprintf(config$edit$link, rmd_cur)
 
   if (length(exts <- load_config()[['download']]) == 0) exts = config$download
-  if (length(exts)) config$download = I(with_ext(opts$get('book_filename'), paste0('.', exts)))
+  if (identical(exts, FALSE)) {
+    downloads = NULL
+  } else if (isTRUE(exts) || length(exts) == 0) {
+    exts = c('pdf', 'epub', 'mobi')
+    downloads = with_ext(opts$get('book_filename'), exts)
+    in_dir(output_path('.'), {
+      downloads = downloads[file.exists(downloads)]
+    })
+  } else {
+    downloads = with_ext(opts$get('book_filename'), exts)
+  }
+  config$download = if (length(downloads)) I(downloads) else NULL
 
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
