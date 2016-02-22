@@ -1,27 +1,27 @@
 .rmdcaution {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
-  background: #f5f5f5 url("images/caution.png") left center/3em no-repeat;
+  background: #f5f5f5 url("../images/caution.png") left center/3em no-repeat;
 }
 .rmdimportant {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
-  background: #f5f5f5 url("images/important.png") left center/3em no-repeat;
+  background: #f5f5f5 url("../images/important.png") left center/3em no-repeat;
 }
 .rmdnote {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
-  background: #f5f5f5 url("images/note.png") left center/3em no-repeat;
+  background: #f5f5f5 url("../images/note.png") left center/3em no-repeat;
 }
 .rmdtip {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
-  background: #f5f5f5 url("images/tip.png") left center/3em no-repeat;
+  background: #f5f5f5 url("../images/tip.png") left center/3em no-repeat;
 }
 .rmdwarning {
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
-  background: #f5f5f5 url("images/warning.png") left center/3em no-repeat;
+  background: #f5f5f5 url("../images/warning.png") left center/3em no-repeat;
 }
 .kable_wrapper {
   border-spacing: 20px 0;
