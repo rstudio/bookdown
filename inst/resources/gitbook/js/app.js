@@ -25015,4 +25015,8 @@ module.exports = {
 // [Yihui] restore the previous jQuery object; we are in a self-contained world
 // in gitbook thanks to the AMD loader, so we should not need jQuery to be a
 // global object
-jQuery.noConflict(true);
+(function() {
+  var jQuery = jQuery.noConflict(true);
+  // if no jQuery was loaded before, still use gitbook's jQuery
+  if (typeof window.jQuery === 'undefined') window.jQuery = window.$ = jQuery;
+})();
