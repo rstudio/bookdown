@@ -115,7 +115,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     })();
 
     var toolbar = config.toolbar;
-    if (toolbar && toolbar.position === 'fixed') {
+    if (toolbar && toolbar.position !== 'static') {
       var bookHeader = $('.book-header');
       bookHeader.addClass('fixed')
       .css('background-color', bookBody.css('background-color'))

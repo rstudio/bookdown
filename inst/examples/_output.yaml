@@ -2,8 +2,6 @@ bookdown::gitbook:
   css: css/style.css
   split_by: section
   config:
-    toolbar:
-      position: fixed
     toc:
       collapse: no
       before: |

@@ -208,7 +208,7 @@ gitbook_config = function(config = list()) {
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
     download = NULL
-    # toolbar = list(position = 'fixed'),
+    # toolbar = list(position = 'static'),
     # toc = list(collapse = TRUE)
   )
   config = utils::modifyList(default, config, keep.null = TRUE)
