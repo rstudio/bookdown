@@ -1,10 +1,13 @@
 language: r
 sudo: false
-cache: packages
+cache:
+  packages: yes
+  directories:
+    - $HOME/bin
 
 env:
   global:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE"
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE" PATH=$HOME/bin:$PATH
     - secure: B2gZCV0jLwvvIERxorr4R4VntZJZ6DdwLh3diC3sxNTPETCisPmmOAXvHpGVZEMRxHG4mUXv5k+k21z+X6PlqPjTsD5USaM7lI88aGs9k3RoLBUb26o+pgw4uPj40T5QxCbOTGRxy8h6enUvW+e5zV24eAsACytO1SRmctny1hOpLa2RG9NZqIthceVZSqXcXpvB6HOCAiyD4hdIO4EGmTJgJYLPu3vQMujW3jt2V1iOjLfH01NQjyqyRPtxNylMT7B6A22DZDxokRdcVNmwUAVDZfxQicuk+juUP/2MaIGWDdHtYKmR1ilLGroTFVnKGfZgpLcv55WK1ZLsanlUYQb8St2OpjgF3qzSCl1fGKgA6ZHDksu0o0fYQCwEaVlpZamjYVGODFQxrfTwDT279gA8b4eJZ3nOM9o+HHf5VTOUm9H5qbpl0aAaOovQpPbeZAZwfN54fPOqhpvtyomOUXE1dq98MMZcRHjijlmJcviBG7WXTHEFJT9195j7m7Woawa3JdAGUxbH3Uzg77uxJYaTugY9+GF2lo2JrkWIirZ4xBgowM98XGhPHl49DGPhpvwh3fZvIHshwnsbAoBF7weAwb6W+7kFpQRvuVqdGDGC8nWWoFu+iGEMuuoPk9sujVk0T7sOKsUe/TO2Ij1lWoquMVE9PDFKlaNEu0QhJT0=
 
 repos:
@@ -13,14 +16,14 @@ repos:
 before_install:
   - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
-  - export BUILD_PDF="$(git log --format=%B --no-merges -n 1 | grep -E "\[build pdf\]")"
+  - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
 
 before_script:
   - Rscript -e "if (packageVersion('htmltools') < '0.3.2') devtools::install_github('rstudio/htmltools')"
   - R CMD INSTALL .
   - cd inst/examples
-  - make
-  - "[ ! -z \"$BUILD_PDF\" ] && make pdf || true"
+  - make gitbook
+  - "[ ! -z \"$BUILD_ALL\" ] && make all || true"
   - cd ../..
 
 after_success:

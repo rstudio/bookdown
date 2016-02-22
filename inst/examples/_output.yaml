@@ -2,7 +2,7 @@ bookdown::gitbook:
   css: css/style.css
   split_by: section
   config:
-    download: ['pdf']
+    download: ['pdf', 'epub', 'mobi']
     toolbar:
       position: fixed
     toc:
@@ -22,3 +22,5 @@ bookdown::pdf_book:
   keep_tex: yes
   latex_engine: xelatex
   citation_package: natbib
+bookdown::epub_book:
+  stylesheet: css/style.css
