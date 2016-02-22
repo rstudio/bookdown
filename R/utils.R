@@ -301,3 +301,20 @@ tojson = function(x) {
 same_path = function(f1, f2, ...) {
   normalizePath(f1, ...) == normalizePath(f2, ...)
 }
+
+in_dir = knitr:::in_dir
+
+# base64 encode resources in url("")
+base64_css = function(css, exts = 'png', overwrite = FALSE) {
+  x = readUTF8(css)
+  r = sprintf('[.](%s)$', paste(exts, collapse = '|'))
+  m = gregexpr('url\\("[^"]+"\\)', x)
+  regmatches(x, m) = lapply(regmatches(x, m), function(ps) {
+    if (length(ps) == 0) return(ps)
+    ps = gsub('^url\\("|"\\)$', '', ps)
+    sprintf('url("%s")', sapply(ps, function(p) {
+      if (grepl(r, p) && file.exists(p)) knitr::image_uri(p) else p
+    }))
+  })
+  if (overwrite) writeUTF8(x, css) else x
+}
