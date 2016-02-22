@@ -4,4 +4,4 @@ gitbook: $(RMD_FILES)
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 
 all: $(RMD_FILES)
-	Rscript -e build-all.R
+	Rscript build-all.R
