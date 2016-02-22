@@ -123,7 +123,8 @@ epub_css = function(files, output = tempfile('epub', fileext = '.css')) {
 #' This function simply calls the command line tool \command{kindlegen} provided
 #' by Amazon to convert EPUB e-books to the Mobipocket format (\file{.mobi}).
 #' @param epub The path to a \code{.epub} file (e.g. created from the
-#'   \code{\link{epub_book}()} format).
+#'   \code{\link{epub_book}()} format). If missing, it is automatically guessed
+#'   from the book configurations.
 #' @param exec The path to the executable \command{kindlegen}, which can be
 #'   downloaded from
 #'   \url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.
@@ -134,6 +135,11 @@ kindlegen = function(epub, exec = Sys.which('kindlegen')) {
     'Cannot find the executable KindleGen. You may download it from ',
     'http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211'
   )
+  if (missing(epub)) {
+    on.exit(opts$restore(), add = TRUE)
+    epub = output_path(with_ext(book_filename(), 'epub'))
+  }
+  if (!file.exists(epub)) stop('The EPUB file ', epub, ' does not exist')
   mobi = with_ext(epub, 'mobi')
   if (system2(exec, shQuote(epub)) != 0 || !file.exists(mobi))
     stop('Failed to convert epub to mobi')
