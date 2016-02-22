@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  css: style.css
+  css: css/style.css
   split_by: section
   config:
     download: ['pdf']
@@ -15,7 +15,7 @@ bookdown::gitbook:
       link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
       text: "Edit"
 bookdown::html_chapters:
-  css: style.css
+  css: [css/style.css, css/toc.css]
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
