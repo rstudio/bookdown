@@ -1,7 +1,7 @@
 # render the book to PDF and EPUB
 for (fmt in c('bookdown::pdf_book', 'bookdown::epub_book')) {
   res = bookdown:::Rscript(c(
-    '-e', shQuote(sprintf("bookdown::render_book('index.Rmd', '%s')", fmt))
+    '-e', shQuote(sprintf("bookdown::render_book('index.Rmd', '%s', quiet = TRUE)", fmt))
   ))
   if (res != 0) stop('Failed to compile the book to ', fmt)
 }
