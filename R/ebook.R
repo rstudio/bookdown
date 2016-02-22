@@ -137,11 +137,14 @@ kindlegen = function(epub, exec = Sys.which('kindlegen')) {
   )
   if (missing(epub)) {
     on.exit(opts$restore(), add = TRUE)
-    epub = output_path(with_ext(book_filename(), 'epub'))
+    config = load_config()
+    main = with_ext(book_filename(config), 'epub')
+    epub = file.path(output_dirname('_book', config), main)
   }
   if (!file.exists(epub)) stop('The EPUB file ', epub, ' does not exist')
   mobi = with_ext(epub, 'mobi')
-  if (system2(exec, shQuote(epub)) != 0 || !file.exists(mobi))
-    stop('Failed to convert epub to mobi')
+  unlink(mobi)
+  system2(exec, shQuote(epub))
+  if (!file.exists(mobi)) stop('Failed to convert epub to mobi')
   mobi
 }
