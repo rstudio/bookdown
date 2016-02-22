@@ -1,0 +1,23 @@
+% Please edit documentation in R/ebook.R
+\name{kindlegen}
+\alias{kindlegen}
+\title{A wrapper function to convert EPUB to the Mobipocket format}
+\usage{
+kindlegen(epub, exec = Sys.which("kindlegen"))
+}
+\arguments{
+\item{epub}{The path to a \code{.epub} file (e.g. created from the
+\code{\link{epub_book}()} format). If missing, it is automatically guessed
+from the book configurations.}
+
+\item{exec}{The path to the executable \command{kindlegen}, which can be
+downloaded from
+\url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.}
+}
+\value{
+The path of the \file{.mobi} file if the conversion is successful.
+}
+\description{
+This function simply calls the command line tool \command{kindlegen} provided
+by Amazon to convert EPUB e-books to the Mobipocket format (\file{.mobi}).
+}
