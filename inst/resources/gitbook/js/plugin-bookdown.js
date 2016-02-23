@@ -95,7 +95,12 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
     // highlight the TOC item that has same text as the heading in view as scrolling
     if (toc && toc.scroll_highlight !== false) (function() {
-       // current chapter TOC items
+      // scroll the current TOC item into viewport
+      var ht = $(window).height(), rect = li[0].getBoundingClientRect();
+      if (rect.top >= ht || rect.top <= 0 || rect.bottom <= 0) {
+        summary.scrollTop(li[0].offsetTop);
+      }
+      // current chapter TOC items
       var items = $('a[href^="' + href + '"]').parent('li.chapter'),
           m = items.length;
       if (m === 0) return;
