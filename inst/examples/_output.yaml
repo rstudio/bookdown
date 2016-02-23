@@ -3,7 +3,7 @@ bookdown::gitbook:
   split_by: section
   config:
     toc:
-      collapse: no
+      collapse: subsection
       before: |
         <li><a href="./">Authoring A Book with R Markdown</a></li>
       after: |
