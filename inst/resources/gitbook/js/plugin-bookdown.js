@@ -103,7 +103,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       var hs = bookInner.find('.page-inner').find('h1,h2,h3'), n = hs.length,
           ts = hs.map(function(i, el) { return $(el).text(); });
       if (n === 0) return;
-      bookInner.on('scroll.bookdown', function(e) {
+      var scrollHandler = function(e) {
         var ht = $(window).height();
         clearTimeout($.data(this, 'scrollTimer'));
         $.data(this, 'scrollTimer', setTimeout(function() {
@@ -123,7 +123,9 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
           while (j > 0 && items.eq(j).is(':hidden')) j--;
           items.eq(j).addClass('active');
         }, 250));
-      });
+      };
+      bookInner.on('scroll.bookdown', scrollHandler);
+      bookBody.on('scroll.bookdown', scrollHandler);
     })();
 
     // do not refresh the page if the TOC item points to the current page
