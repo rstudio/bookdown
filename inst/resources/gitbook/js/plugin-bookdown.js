@@ -60,14 +60,26 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var toc = config.toc;
     // collapse TOC items that are not for the current chapter
     if (toc && toc.collapse) (function() {
+      var type = toc.collapse;
+      if (type === 'none') return;
+      if (type !== 'section' && type !== 'subsection') return;
+      // sections under chapters
       var toc_sub = summary.children('li[data-level]').children('ul');
-      toc_sub.hide().parent().has(li).children('ul').show();
+      if (type === 'section') {
+        toc_sub.hide()
+          .parent().has(li).children('ul').show();
+      } else {
+        toc_sub.children('li').children('ul').hide()
+          .parent().has(li).children('ul').show();
+      }
       li.children('ul').show();
       var toc_sub2 = toc_sub.children('li');
-      toc_sub2.children('ul').hide();
-      toc_sub2.on('click.bookdown', function(e) {
-        $(this).children('ul').toggle();
-      });
+      if (type === 'section') toc_sub2.children('ul').hide();
+      summary.children('li[data-level]').find('a')
+        .on('click.bookdown', function(e) {
+          if (href === $(this).attr('href').replace(/#.*/, ''))
+            $(this).parent('li').children('ul').toggle();
+        });
     })();
 
     // add tooltips to the <a>'s that are truncated
