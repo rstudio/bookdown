@@ -117,6 +117,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     // Toggle the search
     function toggleSearch(_state) {
         if (isSearchOpen() === _state) return;
+        if (!$searchInput) return;
 
         gitbook.state.$book.toggleClass("with-search", _state);
 
