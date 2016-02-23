@@ -150,7 +150,8 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
 
     gitbook.events.bind("start", function(e, config) {
-        collapse = config.toc && config.toc.collapse;
+        collapse = !config.toc || config.toc.collapse === 'section' ||
+          config.toc.collapse === 'subsection';
 
         // Pre-fetch search index and create the form
         fetchIndex()
