@@ -136,13 +136,13 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var toolbar = config.toolbar;
     if (!toolbar || toolbar.position !== 'static') {
       var bookHeader = $('.book-header');
+      bookBody.addClass('fixed');
       bookHeader.addClass('fixed')
       .css('background-color', bookBody.css('background-color'))
       .on('click.bookdown', function(e) {
         // the theme may have changed after user clicks the theme button
         bookHeader.css('background-color', bookBody.css('background-color'));
       });
-      bookInner.css('top', '50px');
     }
 
   });
