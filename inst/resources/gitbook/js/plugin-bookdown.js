@@ -114,6 +114,13 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       });
     })();
 
+    // do not refresh the page if the TOC item points to the current page
+    $('a[href="' + href + '"]').parent('li.chapter').children('a')
+      .on('click', function(e) {
+        bookInner.scrollTop(0);
+        return false;
+      });
+
     var toolbar = config.toolbar;
     if (!toolbar || toolbar.position !== 'static') {
       var bookHeader = $('.book-header');
