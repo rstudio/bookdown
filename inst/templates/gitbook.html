@@ -55,6 +55,22 @@ span.search-highlight {
     left: 300px;
   }
 }
+@media (max-width: 600px) {
+  .book.with-summary .book-header.fixed {
+    left: calc(100% - 60px);
+    min-width: 300px;
+  }
+  .book.with-summary .book-body {
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+    left: calc(100% - 60px);
+    min-width: 300px;
+  }
+}
+
 .book .book-body.fixed .body-inner {
   top: 50px;
 }
