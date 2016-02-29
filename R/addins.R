@@ -12,7 +12,7 @@ mathquill_dependency = function() {
   )
 }
 
-#' @import miniUI
+#' @importFrom miniUI miniPage gadgetTitleBar
 #' @importFrom htmltools attachDependencies tags
 mathquill = function() {
   context = rstudioapi::getActiveDocumentContext()
