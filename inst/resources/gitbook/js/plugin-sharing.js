@@ -54,6 +54,7 @@ require(["gitbook", "lodash"], function(gitbook, _) {
 
     gitbook.events.bind("start", function(e, config) {
         var opts = config.sharing;
+        if (!opts) return;
 
         // Create dropdown menu
         var menu = _.chain(opts.all)
