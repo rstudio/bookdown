@@ -67,8 +67,8 @@ gitbook_dependency = function() {
   list(htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
-      'style.css', 'plugin-highlight.css', 'plugin-search.css',
-      'plugin-fontsettings.css'
+      'style.css', 'plugin-bookdown.css', 'plugin-highlight.css',
+      'plugin-search.css', 'plugin-fontsettings.css'
     )),
     script = file.path('js', c(
       app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
