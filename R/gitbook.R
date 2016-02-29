@@ -100,6 +100,7 @@ gitbook_page = function(
   l_next = if (has_next) sprintf('<link rel="next" href="%s">', link_next) else ''
   head = sub('<!--bookdown:link_prev-->', l_prev, head)
   head = sub('<!--bookdown:link_next-->', l_next, head)
+  head = sub('<!--bookdown:version-->', packageVersion('bookdown'), head)
 
   # gitbook JS scripts only work after the DOM has been loaded, so move them
   # from head to foot
