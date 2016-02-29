@@ -22,7 +22,7 @@ Imports:
     yaml
 Suggests:
     rstudioapi,
-    servr (>= 0.2.8),
+    servr (>= 0.3),
     shiny,
     testit (>= 0.5)
 URL: https://github.com/rstudio/bookdown
