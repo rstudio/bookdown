@@ -18,7 +18,7 @@ Imports:
     htmltools,
     knitr,
     miniUI,
-    rmarkdown (>= 0.8.2),
+    rmarkdown (>= 0.9.5),
     yaml
 Suggests:
     rstudioapi,
@@ -29,4 +29,4 @@ URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Remotes: rstudio/rmarkdown, rstudio/htmltools, ramnathv/htmlwidgets
+Remotes: rstudio/htmltools
