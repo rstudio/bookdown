@@ -268,7 +268,7 @@ find_token = function(x, token) {
 button_link = function(target, text) {
   if (length(target) == 0) return()
   sprintf(
-    '<button class="btn btn-default"><a href="%s">%s</a></button>', target, text
+    '<a href="%s"><button class="btn btn-default">%s</button></a>', target, text
   )
 }
 
