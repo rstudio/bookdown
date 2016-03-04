@@ -119,8 +119,26 @@ render_new_session = function(files, main, force_, output_format, clean, envir, 
   rerun = if (force_) TRUE else {
     !utils::file_test('-ot', files, files_md)  # Rmd not older than md
   }
+  add1 = insert_chapter_script(config, 'before')
+  add2 = insert_chapter_script(config, 'after')
   # compile chapters in separate R sessions
-  for (f in files[rerun]) Rscript_render(f, render_args, render_meta)
+  for (f in files[rerun]) {
+    if (length(add1) && length(add2) == 0) {
+      Rscript_render(f, render_args, render_meta)
+      next
+    }
+    # first backup the original Rmd to a tempfile
+    f2 = tempfile('bookdown', '.')
+    file.copy(f, f2, overwrite = TRUE)
+    # write add1/add2 to the original Rmd, compile it, and restore it
+    tryCatch({
+      txt = c(add1, readUTF8(f), add2)
+      writeUTF8(txt, f)
+      Rscript_render(f, render_args, render_meta)
+    }, finally = {
+      if (file.copy(f2, f, overwrite = TRUE)) unlink(f2)
+    })
+  }
   if (!all(dirname(files_md) == '.'))
     file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 

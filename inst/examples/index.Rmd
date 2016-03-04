@@ -181,7 +181,7 @@ Merging all chapters into one Rmd file and knitting it is one way to render the 
 
 The default approach in **bookdown** is MK. To switch to KM, you either use the argument `new_session = TRUE` when calling `render_book()`, or set `new_session: yes` in the configuration file `_bookdown.yml`.
 
-Note the configurations `before_chapter_script` and `after_chapter_script` are ignored by KM. You can still configure `book_filename`, but it should be a Markdown filename, e.g., `_main.md`. All other configurations work for both MK and KM.
+You can still configure `book_filename`, but it should be a Markdown filename, e.g., `_main.md`, although the filename extension does not really matter, and you can even leave out the extension, e.g., just set `book_filename: _main`. All other configurations work for both MK and KM.
 
 ## Some tips
 
