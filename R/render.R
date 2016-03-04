@@ -100,10 +100,6 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
 
 render_new_session = function(files, main, config, force_, output_format, clean, envir, ...) {
 
-  if (packageVersion('rmarkdown') < '0.9.5') stop(
-    'Rendering R Markdown in new R sessions requires rmarkdown >= 0.9.5'
-  )
-
   # save a copy of render arguments in a temp file
   render_args = tempfile('render', '.', '.rds')
   on.exit(unlink(render_args), add = TRUE)
