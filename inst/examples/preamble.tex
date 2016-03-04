@@ -3,6 +3,20 @@
 \usepackage{framed,color}
 \definecolor{shadecolor}{RGB}{248,248,248}
 
+\ifxetex
+  \usepackage{letltxmacro}
+  \setlength{\XeTeXLinkMargin}{1pt}
+  \LetLtxMacro\SavedIncludeGraphics\includegraphics
+  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+    \IncludeGraphicsAux{#1}%
+  }%
+  \newcommand*{\IncludeGraphicsAux}[2]{%
+    \XeTeXLinkBox{%
+      \SavedIncludeGraphics#1{#2}%
+    }%
+  }%
+\fi
+
 \newenvironment{rmdblock}[1]
   {\begin{shaded*}
   \begin{itemize}
