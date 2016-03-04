@@ -21,10 +21,12 @@ Imports:
     rmarkdown (>= 0.9.5),
     yaml
 Suggests:
+    htmlwidgets,
     rstudioapi,
     servr (>= 0.3),
     shiny,
-    testit (>= 0.5)
+    testit (>= 0.5),
+    webshot
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
