@@ -2,4 +2,8 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 inst/examples/Makefile
+inst/examples/_book
+inst/examples/bookdown_files
+inst/examples/bookdown_cache
 ^CONTRIBUTING\.md$
+.*/rsconnect
