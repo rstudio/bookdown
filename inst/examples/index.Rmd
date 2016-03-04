@@ -14,6 +14,7 @@ options(htmltools.dir.version = FALSE)
 lapply(c('DT'), function(pkg) {
   if (!requireNamespace(pkg)) install.packages(pkg)
 })
+if (packageVersion('DT') < '0.1.45') devtools::install_github('rstudio/DT')
 ```
 
 # Introduction
