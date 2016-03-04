@@ -77,7 +77,7 @@ render_book = function(
   on.exit(unlink(main), add = TRUE)
 
   if (new_session) {
-    render_new_session(files, main, force_knit, output_format, clean, envir, ...)
+    render_new_session(files, main, config, force_knit, output_format, clean, envir, ...)
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
@@ -98,7 +98,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
   rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
 }
 
-render_new_session = function(files, main, force_, output_format, clean, envir, ...) {
+render_new_session = function(files, main, config, force_, output_format, clean, envir, ...) {
 
   if (packageVersion('rmarkdown') < '0.9.5') stop(
     'Rendering R Markdown in new R sessions requires rmarkdown >= 0.9.5'
