@@ -6,7 +6,7 @@ knit: "bookdown::preview_chapter"
 
 ```{r include=FALSE}
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'htmlwidgets', 'webshot', 'DT', 'miniUI'
 ), 'packages.bib')
 ```
 
