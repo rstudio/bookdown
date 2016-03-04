@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books with R Markdown
-Version: 0.0.41
+Version: 0.0.42
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
     person(family = "RStudio Inc", role = "cph"),
