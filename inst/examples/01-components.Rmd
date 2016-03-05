@@ -82,7 +82,7 @@ Or indent by four spaces:
 
 Inline LaTeX equations can be written in a pair of dollar signs using the LaTeX syntax, e.g., `$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$` (actual output: $f(k)={n \choose k}p^{k}(1-p)^{n-k}$); math expressions of the display style can be written in a pair of double dollar signs, e.g., `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`, and the output looks like this:
 
-$$f(k)={n \choose k}p^{k}(1-p)^{n-k}$$
+$$f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k}$$
 
 ## R code
 
