@@ -32,42 +32,86 @@ The output directory of the book can be specified via the `output_dir` argument.
 
 ## GitHub
 
-A sketch of steps to publish to GitHub automatically:
+You can host your book on GitHub for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. To publish to your book to GitHub Pages, you need to create a `gh-pages` branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository.
 
-1. Create a personal access token: https://help.github.com/articles/creating-an-access-token-for-command-line-use/
-1. Encrypt it in the environment variable `GH_TOKEN` via command line `travis encrypt` and store it in `.travis.yml`, or simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
-1. Create a `gh-pages` branch in your repo, and push the branch to the remote repository, e.g.,
+If your book repository does not have the `gh-pages` branch, you may use the following commands to create one:
 
-    ```bash
-    git checkout --orphan gh-pages
-    git rm -rf .
-    touch .nojekyll
-    git add .nojekyll
-    git commit -m"Initial commit"
-    git push origin gh-pages
-    ```
+```bash
+# assume you have initialized the git repository,
+# and are under the directory of the book repository now
 
-1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository, e.g.,
+# create a branch named gh-pages and clean up everything
+git checkout --orphan gh-pages
+git rm -rf .
 
-    ```bash
-    git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
-    cd gh-pages
-    # cp ../*.html .... ./
-    # git add *
-    # git commit -m"...."
-    # git push origin gh-pages
-    ```
+# create a hidden file .nojekyll
+touch .nojekyll
+git add .nojekyll
 
-If you use the container-based infrastructure on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two directories: the figure directory `_main_files` and the cache directory `_main_cache`. If you have specified a different filename of the main Rmd file (Section \@ref(usage)), replace `_main` with the base name of the filename you specified. These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may look like this:
+git commit -m"Initial commit"
+git push origin gh-pages
+```
+
+The hidden file `.nojekyll` tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. If you are on Windows, you may not have the `touch` command, and you can just create the file in R using `file.create('.nojekyll')`.
+
+After you have set up GIT, the rest of work can be automated via a script (Shell, R, or Makefile, depending on your preference). Basically, you compile the book to HTML, then run git commands to push the files to GitHub, but you probably do not want to do this over and over again manually and locally. It can be very handy to automate the publishing process completely on the cloud, so once it is set up correctly, all you have to do next is write the book and push the Rmd source files to GitHub, and your book will always be automatically built and published from the server side.
+
+One service that you can utilize is Travis CI (https://travis-ci.org). It is free for public repositories on GitHub, and was designed for continuous integration (CI) of software packages. Travis CI can be connected to GitHub in the sense that whenever you push to GitHub, Travis can be triggered to run certain commands/scripts on the latest version of your repository^[You need to authorize the Travis CI service for your repository on GitHub first. See https://docs.travis-ci.com/user/getting-started/ for how to get started with Travis CI.]. These commands are specified in a YAML file named `.travis.yml` in the root directory of your repository, and they are usually for the purpose of testing software, but in fact they are quite open-ended, meaning that you can run arbitrary commands on a Travis (virtual) machine. That means you can certainly run your own scripts to build your book on Travis. Note Travis only supports Ubuntu and Mac OS X at the moment, so you should have some basic knowledge about Linux/Unix commands.
+
+The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done via several ways, and the easiest one to beginners may be a personal access token. Below are a few steps you may follow:
+
+1. Create a personal access token for your account on GitHub: https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+1. Encrypt it in the environment variable `GH_TOKEN` via command line `travis encrypt` and store it in `.travis.yml`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
+1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
+
+Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
+
+```bash
+# clone the repository to the book-output directory
+git clone -b gh-pages \
+  https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git \
+  book-output
+cd book-output
+cp -r ../_book/* ./
+git add *
+git commit -m"Update the book"
+git push origin gh-pages
+```
+
+The variable name `GH_TOKEN` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in the previous section, can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
+
+```yaml
+language: r
+
+env:
+  global:
+    - secure: A_LONG_ENCRYPTED_STRING
+
+r_github_packages:
+  - rstudio/bookdown
+
+script:
+  - ./build.sh
+  - ./deploy.sh
+```
+
+The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GH_TOKEN` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
+
+If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). If you have specified a different filename for the book (Section \@ref(usage)), replace `_main` with the base name of the filename you specified, or simply use the wildcard `*`. These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
 
 ```yaml
 sudo: false
 
 cache:
+  packages: yes
   directories:
-  - $PWD/_main_files
-  - $PWD/_main_cache
+    - $TRAVIS_BUILD_DIR/_book/*_cache
+    - $TRAVIS_BUILD_DIR/_book/*_files
 ```
+
+If your book is very time-consuming to build, you may use the above configurations on Travis to save time. Note `packages: yes` means the R packages installed on Travis are also cached.
+
+GitHub and Travis CI are certainly not the only choices to build and publish your book. You are free to store and publish the book on your own server.
 
 ## Publishers
 
