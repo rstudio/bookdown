@@ -4,6 +4,44 @@ knit: "bookdown::preview_chapter"
 
 # Output Formats
 
+The **bookdown** package primarily supports three types of output formats: HTML, LaTeX/PDF, and e-books. In this chapter, we introduce the possible options for these formats. Output formats can be specified either in the YAML metadata of the first Rmd file of the book, or in a separate YAML file named `_output.yml` under the root directory of the book. A brief example of the former:
+
+```yaml
+---
+title: "An Impressive Book"
+author: "Li Lei and Han Meimei"
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    split_by: section
+    config:
+      toolbar:
+        position: static
+  bookdown::pdf_book:
+    keep_tex: yes
+  bookdown::html_chapters:
+    css: toc.css
+documentclass: book
+---
+```
+
+Output formats are specified in the `output` field of the YAML metadata. An example of `_output.yml`:
+
+```yaml
+bookdown::gitbook:
+  lib_dir: assets
+  split_by: section
+  config:
+    toolbar:
+      position: static
+bookdown::pdf_book:
+  keep_tex: yes
+bookdown::html_chapters:
+  css: toc.css
+```
+
+In this case, all formats should be at the top level, instead of under an `output` field. You do not need the three dashes `---` in `_output.yml`.
+
 ## HTML
 
 multi-page HTML
