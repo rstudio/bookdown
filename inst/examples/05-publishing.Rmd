@@ -4,6 +4,32 @@ knit: "bookdown::preview_chapter"
 
 # Publishing
 
+As you develop the book, you may put the draft book in the public to get early feedback from readers, e.g., publish it to a website. After you finish writing the book, you need to think about options to formally publish it as either printed copies or e-books.
+
+## Build the book
+
+To build all Rmd files into a book, you can call the `render_book()` function in **bookdown**. Below are the arguments of `render_book()`:
+
+```{r eval=FALSE, code=formatR::usage(bookdown::render_book)}
+```
+
+The most important argument is `output_format`, which can take a character string (e.g., `'bookdown::gitbook'`), or an object returned by an output format function (e.g., `bookdown::gitbook(lib_dir = 'assets')`). You can leave this argument empty, and the default output format will be the first output format specified in the YAML metadata of the first Rmd file or a separate YAML file `_output.yml`, as mentioned in Section \@ref(configuration). If you plan to generate multiple output formats for a book, you are recommended to specify all formats in `_output.yml`.
+
+Once all formats are specified in `_output.yml`, it is easy to write an R or Shell script or Makefile to compile the book. Below is a simple example of using a Shell script to compile a book to HTML (with the GitBook style) and PDF:
+
+```bash
+#!/usr/bin/env Rscript
+
+bookdown::render_book("index.Rmd", "bookdown::gitbook")
+bookdown::render_book("index.Rmd", "bookdown::pdf_book")
+```
+
+The Shell script does not work on Windows (not strictly true, though), but hopefully you get the idea.
+
+The argument `...` is passed to the output format function. Arguments `clean` and `envir` are passed to `rmarkdown::render()`, to decide whether to clean up the intermediate files, and specify the environment to evaluate R code, respectively.
+
+The output directory of the book can be specified via the `output_dir` argument. By default, the book is generated to the `_book` directory. This can also be changed via the `output_dir` field in the configuration file `_bookdown.yml`, so that you do not have to specify it multiple times for rendering a book to multiple output formats. The `new_session` argument has been explained in Section \@ref(new-session); `force_knit` applies to `new_session = TRUE` only, and it determines whether to knit all Rmd files even if their output Markdown files are newer than the Rmd source files. When you set `preview = TRUE`, only the Rmd files specified in the `input` argument are rendered, which can be convenient when previewing a certain chapter, since you do not recompile the whole book, but when publishing a book, this argument should certainly be set to `FALSE`.
+
 ## GitHub
 
 A sketch of steps to publish to GitHub automatically:

@@ -200,7 +200,7 @@ link-citations: yes
 ---
 ```
 
-## Two rendering approaches
+## Two rendering approaches {#new-session}
 
 Merging all chapters into one Rmd file and knitting it is one way to render the book in **bookdown**. There is actually another way: you may knit each chapter in a _separate_ R session, and **bookdown** will merge the Markdown output of all chapters to render the book. We call these two approaches "Merge and Knit" (MK) and "Knit and Merge" (KM), respectively. The differences between them may seem subtle, but can be fairly important depending on your use cases.
 
