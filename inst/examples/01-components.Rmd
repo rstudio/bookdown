@@ -94,7 +94,7 @@ There are two types of R code in R Markdown/**knitr** documents: R code chunks, 
     plot(dist ~ speed, cars)  # a scatterplot
     ```
 
-To learn more about **knitr** chunk options, see @xie2015 or <http://yihui.name/knitr/options>.
+To learn more about **knitr** chunk options, see @xie2015 or <http://yihui.name/knitr/options>. For books, additional R code can be executed before/after each chapter; see `before_chapter_script` and `after_chapter_script` in Section \@ref(configuration).
 
 ## Figures {#figures}
 
