@@ -193,12 +193,6 @@ gitbook_toc = function(x, cur, config) {
   x
 }
 
-gitbook_toc_extra = function(which = c('before', 'after')) {
-  which = match.arg(which)
-  config = load_config()
-  config[[sprintf('gitbook_toc_%s', which)]]
-}
-
 gitbook_config = function(config = list()) {
   default = list(
     sharing = list(
