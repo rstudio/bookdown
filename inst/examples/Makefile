@@ -1,7 +1,5 @@
-RMD_FILES := $(filter-out _%, $(wildcard *.Rmd))
-
-gitbook: $(RMD_FILES)
+gitbook:
 	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 
-all: $(RMD_FILES)
+all:
 	Rscript build-all.R
