@@ -164,12 +164,16 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   $(document).on('servr:reload', function(e) {
     // save scroll position before page is reloaded via servr
     gs.set('bookInnerScrollTop', bookInner.scrollTop());
+    gs.set('bookBodyScrollTop', bookBody.scrollTop());
   });
 
   $(document).ready(function(e) {
-    var pos = gs.get('bookInnerScrollTop');
+    var pos = gs.get('bookBodyScrollTop');
+    if (pos) bookBody.scrollTop(pos);
+    pos = gs.get('bookInnerScrollTop');
     if (pos) bookInner.scrollTop(pos);
     // clear book body scroll position
+    gs.remove('bookBodyScrollTop');
     gs.remove('bookInnerScrollTop');
   });
 
