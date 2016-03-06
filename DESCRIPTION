@@ -26,6 +26,7 @@ Suggests:
     servr (>= 0.3),
     shiny,
     testit (>= 0.5),
+    tufte,
     webshot
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
