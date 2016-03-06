@@ -10,7 +10,7 @@ As you develop the book, you may put the draft book in the public to get early f
 
 To build all Rmd files into a book, you can call the `render_book()` function in **bookdown**. Below are the arguments of `render_book()`:
 
-```{r eval=FALSE, code=formatR::usage(bookdown::render_book)}
+```{r eval=FALSE, code=formatR::usage(bookdown::render_book, output=FALSE)}
 ```
 
 The most important argument is `output_format`, which can take a character string (e.g., `'bookdown::gitbook'`), or an object returned by an output format function (e.g., `bookdown::gitbook(lib_dir = 'assets')`). You can leave this argument empty, and the default output format will be the first output format specified in the YAML metadata of the first Rmd file or a separate YAML file `_output.yml`, as mentioned in Section \@ref(configuration). If you plan to generate multiple output formats for a book, you are recommended to specify all formats in `_output.yml`.
