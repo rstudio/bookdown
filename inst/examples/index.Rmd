@@ -223,4 +223,4 @@ If certain code chunks in your R Markdown docuemnts are time-consuming to run, y
 
     `r ''````{r important-computing, cache=TRUE}
 
-We will talk about how to quickly preview books as you keep on editing it in Chapter \@ref(editors). In short, you can use the `preview_chapter()` function to render a single chapter instead of the whole book. The function `serve_book()` makes it easy to live-preview HTML book pages: whenever you modify an Rmd file, the book can be recompiled and the browser can be automatically refreshed accordingly.
+We will talk about how to quickly preview books as you keep on editing it in Chapter \@ref(editing). In short, you can use the `preview_chapter()` function to render a single chapter instead of the whole book. The function `serve_book()` makes it easy to live-preview HTML book pages: whenever you modify an Rmd file, the book can be recompiled and the browser can be automatically refreshed accordingly.

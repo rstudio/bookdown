@@ -2,6 +2,6 @@
 knit: "bookdown::preview_chapter"
 ---
 
-# Editors
+# Editing
 
 ## RStudio
