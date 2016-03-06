@@ -62,6 +62,61 @@ html_chapters = function(
   config
 }
 
+#' Output formats that allow numbering and cross-referencing figures/tables
+#'
+#' These are simple wrappers of the output format functions like
+#' \code{rmarkdown::\link{html_document}()}, and they added the capability of
+#' numbering figures/tables and cross-referencing them. See References for the
+#' syntax. Note you can also cross-reference sections by their ID's using the
+#' same syntax as figures/tables.
+#' @param ... Arguments to be passed to a specific output format function. For a
+#'   function \code{foo2()}, its arguments are passed to \code{foo()}, e.g.
+#'   \code{...} of \code{html_document2()} are passed to \code{html_document()}.
+#' @param number_sections Whether to number section headers: if \code{TRUE},
+#'   figure/table numbers will be of the form \code{X.i}, where \code{X} is the
+#'   current first-level section number, and \code{i} is an incremental number
+#'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
+#'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
+#'   section headers in this case.
+#' @return An R Markdown output format object to be passed to
+#'   \code{rmarkdown::\link{render}()}.
+#' @note These function are expected to work with a single R Markdown document
+#'   instead of multiple documents of a book, so they are to be passed to
+#'   \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
+#'   functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
+#'   package.
+#' @references \url{http://rstudio.github.io/bookdown/figures.html}
+#' @export
+html_document2 = function(..., number_sections = TRUE) {
+  html_document_alt(
+    ..., number_sections = number_sections, base_format = rmarkdown::html_document
+  )
+}
+
+#' @rdname html_document2
+#' @export
+tufte_html2 = function(..., number_sections = FALSE) {
+  html_document_alt(
+    ..., number_sections = number_sections, base_format = tufte::tufte_html
+  )
+}
+
+html_document_alt = function(
+  ..., number_sections = TRUE, base_format = rmarkdown::html_document
+) {
+  config = base_format(..., number_sections = number_sections)
+  post = config$post_processor  # in case a post processor have been defined
+  config$post_processor = function(metadata, input, output, clean, verbose) {
+    if (is.function(post)) output = post(metadata, input, output, clean, verbose)
+    x = readUTF8(output)
+    writeUTF8(resolve_refs_html(x, global = !number_sections), output)
+    output
+  }
+  config$bookdown_output_format = 'html'
+  config = set_opts_knit(config)
+  config
+}
+
 #' Combine different parts of an HTML page
 #'
 #' Given the HTML header, body, and footer, etc, build an HTML page.
@@ -287,8 +342,8 @@ edit_setting = function() {
   list(link = link, text = text)
 }
 
-resolve_refs_html = function(content) {
-  res = parse_fig_labels(content)
+resolve_refs_html = function(content, global = FALSE) {
+  res = parse_fig_labels(content, global)
   content = res$content
   ref_table = c(res$ref_table, parse_section_labels(content))
 
@@ -310,10 +365,13 @@ resolve_refs_html = function(content) {
 
 reg_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
 
-parse_fig_labels = function(content) {
+# parse figure/table labels, and number them either by section numbers (Figure
+# 1.1, 1.2, ..., 2.1, ...), or globally (Figure 1, 2, ...)
+parse_fig_labels = function(content, global = FALSE) {
   lines = grep(reg_chap, content)
   chaps = gsub(reg_chap, '\\2', content[lines])  # chapter numbers
   arry = character()  # an array of the form c(label = number, ...)
+  if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
   if (length(chaps) == 0) return(list(content = content, ref_table = arry))
 
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
@@ -328,10 +386,11 @@ parse_fig_labels = function(content) {
     if (length(lab) > 1)
       stop('There are multiple labels on one line: ', paste(lab, collapse = ', '))
 
-    j = tail(chaps[lines <= i], 1)
+    j = if (global) chaps else tail(chaps[lines <= i], 1)
     lab = gsub('^\\(#|\\)$', '', lab)
     type = ifelse(grepl('^fig:', lab), 'Figure', 'Table')
-    num = paste0(j, '.', cntr$inc(type, j))
+    num = cntr$inc(type, j)
+    if (!global) num = paste0(j, '.', num)  # Figure X.x
     arry = c(arry, setNames(num, lab))
 
     if (type == 'Figure') {

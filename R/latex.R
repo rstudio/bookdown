@@ -44,6 +44,24 @@ pdf_book = function(
   config
 }
 
+#' @rdname html_document2
+#' @export
+pdf_document2 = function(...) {
+  pdf_book(..., base_format = rmarkdown::pdf_document)
+}
+
+#' @rdname html_document2
+#' @export
+tufte_handout2 = function(...) {
+  pdf_book(..., base_format = tufte::tufte_handout)
+}
+
+#' @rdname html_document2
+#' @export
+tufte_book2 = function(...) {
+  pdf_book(..., base_format = tufte::tufte_book)
+}
+
 resolve_refs_latex = function(x) {
   x = gsub('(^| )@ref\\(([-:[:alnum:]]+)\\)', '\\1\\\\ref{\\2}', x)
   x = gsub('\\(\\\\#((fig|tab):[-[:alnum:]]+)\\)', '\\\\label{\\1}', x)
