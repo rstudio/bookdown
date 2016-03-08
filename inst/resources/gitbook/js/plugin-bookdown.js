@@ -137,6 +137,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     $('a[href="' + href + '"]').parent('li.chapter').children('a')
       .on('click', function(e) {
         bookInner.scrollTop(0);
+        bookBody.scrollTop(0);
         return false;
       });
 
