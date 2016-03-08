@@ -40,3 +40,6 @@ span.search-highlight {
     top: auto;
   }
 }
+.book .book-body .page-wrapper .page-inner section.normal sub, .book .book-body .page-wrapper .page-inner section.normal sup {
+  font-size: 85%;
+}
