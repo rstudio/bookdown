@@ -117,19 +117,7 @@ gitbook_page = function(
   if (length(rmd_cur) && is.list(config$edit))
     config$edit$link = sprintf(config$edit$link, rmd_cur)
 
-  if (length(exts <- load_config()[['download']]) == 0) exts = config$download
-  if (identical(exts, FALSE)) {
-    downloads = NULL
-  } else if (isTRUE(exts) || length(exts) == 0) {
-    exts = c('pdf', 'epub', 'mobi')
-    downloads = with_ext(opts$get('book_filename'), exts)
-    in_dir(output_path('.'), {
-      downloads = downloads[file.exists(downloads)]
-    })
-  } else {
-    downloads = with_ext(opts$get('book_filename'), exts)
-  }
-  config$download = if (length(downloads)) I(downloads) else NULL
+  config$download = download_filenames(config)
 
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
@@ -214,4 +202,18 @@ gitbook_config = function(config = list()) {
     '<script>', 'require(["gitbook"], function(gitbook) {', config, '});',
     '</script>', sep = '\n'
   )
+}
+
+# infer pdf/epub/mobi filenames from the book filename
+download_filenames = function(config) {
+  if (length(exts <- load_config()[['download']]) == 0) exts = config$download
+  if (identical(exts, FALSE)) return()
+  # no downloads if not rendering with render_book() but render()
+  if (is.null(book_name <- opts$get('book_filename'))) return()
+  if (isTRUE(exts) || length(exts) == 0) exts = c('pdf', 'epub', 'mobi')
+  downloads = with_ext(book_name, exts)
+  in_dir(output_path('.'), {
+    downloads = downloads[file.exists(downloads)]
+  })
+  if (length(downloads)) I(downloads)
 }
