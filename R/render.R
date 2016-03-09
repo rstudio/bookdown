@@ -119,7 +119,7 @@ render_new_session = function(files, main, config, force_, output_format, clean,
   add2 = insert_chapter_script(config, 'after')
   # compile chapters in separate R sessions
   for (f in files[rerun]) {
-    if (length(add1) && length(add2) == 0) {
+    if (length(add1) + length(add2) == 0) {
       Rscript_render(f, render_args, render_meta)
       next
     }
