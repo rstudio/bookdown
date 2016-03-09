@@ -30,3 +30,4 @@ This function is for expert use only. The \code{head} and \code{foot}
 arguments may not be strictly the HTML header and footer. It depends on the
 HTML comment tokens in the template (see \code{\link{html_chapters}}).
 }
+\keyword{internal}

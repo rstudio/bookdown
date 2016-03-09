@@ -1,6 +1,8 @@
 % Please edit documentation in R/html.R
 \name{html_chapters}
+\alias{html_book}
 \alias{html_chapters}
+\alias{tufte_html_book}
 \title{Build book chapters into separate HTML files}
 \usage{
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
@@ -8,15 +10,19 @@ html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
     ..., base_format = rmarkdown::html_document, page_builder = build_chapter, 
     split_by = c("section+number", "section", "chapter+number", "chapter", 
         "rmd", "none"))
+
+html_book(...)
+
+tufte_html_book(...)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir, template}{See
-\code{rmarkdown::\link{html_document}}, or the documentation of the
-\code{base_format} function.}
+\code{rmarkdown::\link{html_document}}, \code{tufte::\link{tufte_html}}, or
+the documentation of the \code{base_format} function.}
 
-\item{...}{Other arguments to be passed to \code{base_format}.}
-
-\item{base_format}{An output format function to be used as the base format.}
+\item{...}{Other arguments to be passed to \code{base_format}. For
+\code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
+\code{html_chapters()}.}
 
 \item{page_builder}{A function to combine different parts of a chapter into a
 page (an HTML character vector). See \code{\link{build_chapter}} for the
@@ -35,16 +41,24 @@ and \code{section+number}, the chapter/section numbers will be prepended to
 the HTML filenames, e.g. \file{1-introduction.html} and
 \file{2-1-literature.html}.}
 }
+\value{
+An R Markdown output format object to be passed to
+  \code{bookdown::render_book()}.
+}
 \description{
 Split the HTML output into chapters while updating relative links (e.g. links
-in TOC, footnotes, citations, figure/table cross-references, and so on). This
-function is expected to be used in conjunction with
-\code{\link{render_book}()}. It is almost meaningless if it is used with
-\code{rmarkdown::render()}.
+in TOC, footnotes, citations, figure/table cross-references, and so on).
+Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
+functions of \code{html_chapter()} using a specific base output format.
 }
 \note{
-If you want to use a different template, the template must contain
-  three pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
+These functions are expected to be used in conjunction with
+  \code{\link{render_book}()}. It is almost meaningless if they are used with
+  \code{rmarkdown::render()}. Functions like \code{\link{html_document2}} are
+  designed to work with the latter.
+
+  If you want to use a different template, the template must contain three
+  pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
   \samp{<!--bookdown:title:end-->} to mark the title section of the book
   (this section will be placed only on the first page of the rendered book);
   \samp{<!--bookdown:toc:start-->} and \samp{<!--bookdown:toc:end-->} to mar
