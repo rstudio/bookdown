@@ -17,14 +17,22 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     });
 
     var down = config.download;
-    if (down) if (down.length === 1 && /[.]pdf$/.test(down[0])) {
+    var normalizeDownload = function() {
+      if (!down || !(down instanceof Array) || down.length === 0) return;
+      if (down[0] instanceof Array) return down;
+      return $.map(down, function(file, i) {
+        return [[file, file.replace(/.*[.]/g, '').toUpperCase()]];
+      });
+    };
+    down = normalizeDownload(down);
+    if (down) if (down.length === 1 && /[.]pdf$/.test(down[0][0])) {
       gitbook.toolbar.createButton({
         icon: 'fa fa-file-pdf-o',
-        label: 'PDF',
+        label: down[0][1],
         position: 'left',
         onClick: function(e) {
           e.preventDefault();
-          window.open(down[0]);
+          window.open(down[0][0]);
         }
       });
     } else {
@@ -32,12 +40,12 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         icon: 'fa fa-download',
         label: 'Download',
         position: 'left',
-        dropdown: $.map(down, function(link, i) {
+        dropdown: $.map(down, function(item, i) {
           return {
-            text: link.replace(/.*[.]/g, '').toUpperCase(),
+            text: item[1],
             onClick: function(e) {
               e.preventDefault();
-              window.open(link);
+              window.open(item[0]);
             }
           };
         })

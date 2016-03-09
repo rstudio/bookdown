@@ -208,6 +208,13 @@ gitbook_config = function(config = list()) {
 download_filenames = function(config) {
   if (length(exts <- load_config()[['download']]) == 0) exts = config$download
   if (identical(exts, FALSE)) return()
+  if (is.list(exts)) return(exts)  # I assume you are doing it correctly
+  if ((n <- length(grep('[.]', exts))) > 0) {
+    if (length(exts) != n) stop(
+      'You must provide either pure file extensions or full filenames'
+    )
+    return(exts)
+  }
   # no downloads if not rendering with render_book() but render()
   if (is.null(book_name <- opts$get('book_filename'))) return()
   if (isTRUE(exts) || length(exts) == 0) exts = c('pdf', 'epub', 'mobi')
