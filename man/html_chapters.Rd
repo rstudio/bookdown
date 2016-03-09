@@ -17,12 +17,15 @@ tufte_html_book(...)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir, template}{See
-\code{rmarkdown::\link{html_document}}, \code{tufte::\link{tufte_html}}, or
-the documentation of the \code{base_format} function.}
+\code{rmarkdown::\link{html_document}},
+\code{tufte::\link[tufte]{tufte_html}}, or the documentation of the
+\code{base_format} function.}
 
 \item{...}{Other arguments to be passed to \code{base_format}. For
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
 \code{html_chapters()}.}
+
+\item{base_format}{An output format function to be used as the base format.}
 
 \item{page_builder}{A function to combine different parts of a chapter into a
 page (an HTML character vector). See \code{\link{build_chapter}} for the

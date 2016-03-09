@@ -4,9 +4,11 @@
 #' in TOC, footnotes, citations, figure/table cross-references, and so on).
 #' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
 #' functions of \code{html_chapter()} using a specific base output format.
+#' @inheritParams pdf_book
 #' @param toc,number_sections,fig_caption,lib_dir,template See
-#'   \code{rmarkdown::\link{html_document}}, \code{tufte::\link{tufte_html}}, or
-#'   the documentation of the \code{base_format} function.
+#'   \code{rmarkdown::\link{html_document}},
+#'   \code{tufte::\link[tufte]{tufte_html}}, or the documentation of the
+#'   \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}. For
 #'   \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
 #'   \code{html_chapters()}.
