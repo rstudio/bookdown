@@ -1,14 +1,15 @@
 #' Build book chapters into separate HTML files
 #'
 #' Split the HTML output into chapters while updating relative links (e.g. links
-#' in TOC, footnotes, citations, figure/table cross-references, and so on). This
-#' function is expected to be used in conjunction with
-#' \code{\link{render_book}()}. It is almost meaningless if it is used with
-#' \code{rmarkdown::render()}.
+#' in TOC, footnotes, citations, figure/table cross-references, and so on).
+#' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
+#' functions of \code{html_chapter()} using a specific base output format.
 #' @param toc,number_sections,fig_caption,lib_dir,template See
-#'   \code{rmarkdown::\link{html_document}}, or the documentation of the
-#'   \code{base_format} function.
-#' @inheritParams pdf_book
+#'   \code{rmarkdown::\link{html_document}}, \code{tufte::\link{tufte_html}}, or
+#'   the documentation of the \code{base_format} function.
+#' @param ... Other arguments to be passed to \code{base_format}. For
+#'   \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
+#'   \code{html_chapters()}.
 #' @param split_by How to name the HTML output files from the book: \code{rmd}
 #'   uses the base filenames of the input Rmd files to create the HTML
 #'   filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
@@ -24,8 +25,13 @@
 #' @param page_builder A function to combine different parts of a chapter into a
 #'   page (an HTML character vector). See \code{\link{build_chapter}} for the
 #'   specification of this function.
-#' @note If you want to use a different template, the template must contain
-#'   three pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
+#' @note These functions are expected to be used in conjunction with
+#'   \code{\link{render_book}()}. It is almost meaningless if they are used with
+#'   \code{rmarkdown::render()}. Functions like \code{\link{html_document2}} are
+#'   designed to work with the latter.
+#'
+#'   If you want to use a different template, the template must contain three
+#'   pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
 #'   \samp{<!--bookdown:title:end-->} to mark the title section of the book
 #'   (this section will be placed only on the first page of the rendered book);
 #'   \samp{<!--bookdown:toc:start-->} and \samp{<!--bookdown:toc:end-->} to mar
@@ -35,6 +41,8 @@
 #'   pages for chapters). You may open the default HTML template
 #'   (\code{bookdown:::bookdown_file('templates/default.html')}) to see where
 #'   these comments were inserted.
+#' @return An R Markdown output format object to be passed to
+#'   \code{bookdown::render_book()}.
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
@@ -60,6 +68,18 @@ html_chapters = function(
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
   config
+}
+
+#' @rdname html_chapters
+#' @export
+html_book = function(...) {
+  html_chapters(..., base_format = rmarkdown::html_document)
+}
+
+#' @rdname html_chapters
+#' @export
+tufte_html_book = function(...) {
+  html_chapters(..., base_format = tufte::tufte_html)
 }
 
 #' Output formats that allow numbering and cross-referencing figures/tables
