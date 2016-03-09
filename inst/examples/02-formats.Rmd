@@ -44,10 +44,153 @@ In this case, all formats should be at the top level, instead of under an `outpu
 
 ## HTML
 
-multi-page HTML
+The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML is that a book will generate multiple HTML pages by default --- normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: the GitBook style, the Bootstrap style, and the Tufte style.
+
+### GitBook style
+
+The GitBook style was borrowed GitBook, a project launched by Friendcode, Inc (https://www.gitbook.com) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.
+
+We have made several improvements over the original GitBook project. The most significant one is that we replaced the Markdown engine with R Markdown v2 based on Pandoc, so that there are a lot more features for you to use when writing a book. For instance,
+
+- You can embed R code chunks and inline R expressions in Markdown, and this makes it easy to create reproducible documents and frees you from synchronizing your computation with its actual output (**knitr** will take care of it automatically);
+- The Markdown syntax is much richer: you can write anything that Pandoc's Markdown supports, such as LaTeX math expressions and citations;
+- You can embed interactive content in the book (for HTML output only), such as HTML widgets and Shiny apps;
+
+We have also added some useful features in the user interface that we will introduce in detail soon. The output format function for the GitBook style in **bookdown** is `gitbook()`. Below are its arguments:
+
+```{r gitbook-args, code=formatR::usage(bookdown::gitbook, output=FALSE), eval=FALSE}
+```
+
+Most arguments are passed to `rmarkdown::html_document()`, including `fig_caption`, `lib_dir`, and `...`. You can check out the help page of `rmarkdown::html_document()` for the full list of possible options. We strongly recommend you to use `fig_caption = TRUE` for two reasons: 1) it is important to explain your figures with captions; 2) enabling figure captions means figures will be placed in floating environments when the output is LaTeX, otherwise you may end up with a lot of white space on certain pages. Among all possible arguments in `...`, you are most likely to use the `css` argument to provide one or more custom CSS files to tweak the default CSS style. There are a few arguments of `html_document()` that have been hard-coded in `gitbook()` and you cannot change them: `toc = TRUE` (there must be a table of contents), `number_sections = TRUE` (sections must be numbered), `self_contained = FALSE` (self-contained HTML pages are not allowed^[Allowing self-contained pages will significantly increase the total size of all HTML files since there are many JS and CSS files tha have to be embedded in every single HTML file.]), `template` (there will be an internal GitBook template).
+
+Besides these `html_document()` options, `gitbook()` has two other arguments: `split_by` and `config`. The `split_by` argument specifies how you want to split the HTML output into multiple pages, and its possible values are:
+
+- `rmd`: use the base filenames of the input Rmd files to create the HTML filenames, e.g., generate `chapter3.html` for `chapter3.Rmd`;
+- `none`: do not split the HTML file (the book will be a single HTML file);
+- `chapter`: split the file by the first-level headers;
+- `section`: split the file by the second-level headers;
+- `chapter+number` and `section+number`: similar to `chapter` and `section`, but the files will be numbered;
+
+For `chapter` and `section`, the HTML filenames will be determined by the header identifiers, e.g., the filename for the first chapter with a chapter title `# Introduction` will be `introduction.html` by default. For `chapter+number` and `section+number`, the chapter/section numbers will be prepended to the HTML filenames, e.g., `1-introduction.html` and `2-1-literature.html`. The header identifier is automatically generated from the header text by default^[To see more details on how an identifier is automatically generated, see the `auto_identifiers` extension in Pandoc's documentation http://pandoc.org/README.html#header-identifiers], and you can manually specify an identifier using the syntax `{#your-custom-id}` after the header text, e.g.,
+
+```markdown
+# An Introduction {#introduction}
+
+The default identifier is `an-introduction` but we changed
+it to `introduction`.
+```
+
+There are several sub-options in the `config` option for you to tweak some details in the user interface. Recall that all output format options (not only for `bookdown::gitbook`) can be either passed to the format function if you use the command-line interface `bookdown::render_book()`, or written in the YAML metadata. We display the default sub-options of `config` in the `gitbook` format as YAML metadata below (note they are indented under the `config` option):
+
+```yaml
+bookdown::gitbook:
+  config:
+    toc:
+      collapse: subsection
+      scroll_highlight: true
+      before: null
+      after: null
+    toolbar:
+      position: fixed
+    edit:
+      link: null
+      text: null
+    download: null
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    sharing:
+      facebook: yes
+      twitter: yes
+      google: no
+      weibo: no
+      instapper: no
+      vk: no
+      all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
+```
+
+The `toc` option controls the behavior of the table of contents (TOC). You can collapse some items initially when a page is loaded via the `collapse` option. Its possible values are `subsection`, `section`, `none` (or `null`). This option can be helpful if your TOC is very long and has more than three levels of headings: `subsection` means collapsing all TOC items for subsections (X.X.X), `section` means those items for sections (X.X) so only the top-level headings are displayed initially, and `none` means not collapsing any items in TOC. For those collapsed TOC items, you can toggle their visibility by clicking their parent TOC items. For example, you can click a chapter title in the TOC to show/hide its sections.
+
+The `scroll_highlight` option in `toc` means whether to enable highlighting of TOC items as you scroll the book body (by default this feature is enabled). Whenever a new header comes into the current viewport as you scroll down/up, the corresponding item in TOC on the left will be highlighted.
+
+Since the sidebar has a fixed width, when an item in TOC is truncated because the heeading text is too wide, you can hover the cursor over it to see a tooltip showing the full text.
+
+You may add more items before and after the TOC using the HTML tag `<li>`. These items will be separated from TOC using a horizontal divider. You can use the pipe character `|` so that you do not need to escape any characters in these items following the YAML syntax, e.g.,
+
+```
+    toc:
+      before: |
+        <li><a href="...">My Awesome Book</a></li>
+        <li><a href="...">John Smith</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown">
+        Proudly published with bookdown</a></li>
+```
+
+As you navigate through different HTML pages, we will try to preserve the scroll position of TOC. Normally you will see the scrollbar in TOC at a fixed position even if you navigate to the next page. However, if the TOC item for the current chapter/section is not visible when the page is loaded, we will automatically scroll TOC to make it visible to you.
+
+The GitBook style has a toolbar at the top of each page that allows you to dynamically change the book settings. The `toolbar` option has a sub-option `position`, which can take values `fixed` or `static`. The default is that the toolbar will be fixed at the top of the page, so even if you scroll down the page, the toolbar is still visible there. If it is `static`, the toolbar will not scroll with the page, i.e., once you scroll away, you will no longer see it.
+
+The first button on the toolbar can toggle the visibility of the sidebar. You can also hit the `S` key on your keyboard to do the same thing. The GitBook style can remember the visibility status of the sidebar, e.g., if you closed the sidebar, it will remain closed the next time you open the book. In fact, the GitBook style remembers many other settings as well, such as the search keyword and the font settings.
+
+The second button on the toolbar is the search button. Its keyboard shortcut is `F` (Find). When the button is clicked, you will see a search box at the top of the sidebar. As you type in the box, the TOC will be filtered to display the sections that match the search keyword. Now you can use the arrow keys `Up`/`Down` to highlight the next keyword on the current page. When you click the search button again (or hit `F` outside the search box), the search keyword will be emptied and the search box will be hidden.
+
+The third button is for font/theme settings. You can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (`White`, `Sepia`, or `Night`). These settings can be changed via the `fontsettings` option.
+
+The `edit` option is the same as the option that we mentioned in Section \@ref(configuration). If it is not empty, an edit button will be added to the toolbar. This was designed for potential contributors of the book to contribute to the book by editing the book on GitHub after clicking the button and send pull requests.
+
+If your book has other output formats for readers to download, you may provide the `download` option so that a download button can be added to the toolbar. This option takes either a character vector, or a list of character vectors with the length of each vector being 2. When it is a character vector, it should be either a vector of filenames, or filename extensions, e.g., both of the following settings are okay:
+
+```yaml
+    download: ["book.pdf", "book.epub"]
+    download: ["pdf", "epub", "mobi"]
+```
+
+When you only provide the filename extensions, the filename is derived from the book filename of the configuration file `_bookdown.yml` (Section \@ref(configuration)). When `download` is `null`, `gitbook()` will look for PDF, EPUB, and MOBI files in the book output directory, and automatically add them to the `download` option. If you just want to suppress the download button, use `download: no`. All files for readers to download will be displayed in a dropdown menu, and the filename extensions are used as the menu text. When the only available format for readers to download is PDF, the download button will be a single PDF button instead of a drop-down menu.
+
+An alternative form for the value of the `download` option is a list of length-2 vectors, e.g.,
+
+```yaml
+    download: [["book.pdf", "PDF"], ["book.epub", "EPUB"]]
+```
+
+You can also write it as:
+
+```yaml
+    download:
+      - ["book.pdf", "PDF"]
+      - ["book.epub", "EPUB"]
+```
+
+Each vector in the list consists of the filename and the text to be displayed in the menu. Compared to the first form, this form allows you to customize the menu text, e.g., you may have two different copies of PDF for readers to download and you will need to make the menu items different.
+
+On the right of the toolbar, there are some buttons to share the link on social network websites such as Twitter, Facebook, and Google+. You can use the `sharing` option to decide which buttons to enable. If you want to get rid of these buttons entirely, just use `sharing: null` (or `no`).
+
+Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
+
+- `description`: A character string to be written to the `content` attribute of the tag `<meta name="description" content="">` in the HTML head (if missing, the title of the book will be used). This can be useful for the purpose of search engine optimization (SEO);
+- `apple-touch-icon`: A path to an icon (e.g., a PNG image). This is for iOS only: when the website is added to the Home screen, the link is represented by this icon.
+- `apple-touch-icon-size`: The size of the icon (by default, 152 x 152 pixels).
+- `favicon`: A path to the "favorite icon". Typically this icon is displayed in the browser's address bar, or in front of the page title on the tab if the browser support tabs.
+
+Below we show some sample YAML metadata (again, please note these are _top-level_ options):
+
+```yaml
+---
+title: "An Awesome Book"
+author: "John Smith"
+description: "This book introduces the ABC theory, and ..."
+apple-touch-icon: "touch-icon.png"
+apple-touch-icon-size: 120
+favicon: "favicon.ico"
+---
+```
+
 
 ## LaTeX
 
 ## E-Books
 
 ePub, MOBI
+
