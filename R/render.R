@@ -111,9 +111,9 @@ render_new_session = function(files, main, config, force_, output_format, clean,
   render_meta = with_ext(main, '.rds')
 
   files_md = output_path(with_ext(files, '.md'))
-  # which Rmd's should be recompiled?
+  # which Rmd's should be recompiled? Rmd newer than md, or md does not exist
   rerun = if (force_) TRUE else {
-    !utils::file_test('-ot', files, files_md)  # Rmd not older than md
+    utils::file_test('-nt', files, files_md) | !file.exists(files_md)
   }
   add1 = insert_chapter_script(config, 'before')
   add2 = insert_chapter_script(config, 'after')
