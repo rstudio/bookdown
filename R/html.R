@@ -63,7 +63,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    output2 = split_chapters(output, page_builder, split_by)
+    output2 = split_chapters(output, page_builder, number_sections, split_by)
     if (!same_path(output, output2)) file.remove(output)
     output2
   }
@@ -181,7 +181,7 @@ build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, html
   ), collapse = '\n')
 }
 
-split_chapters = function(output, build = build_chapter, split_by, ...) {
+split_chapters = function(output, build = build_chapter, number_sections, split_by, ...) {
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -193,7 +193,7 @@ split_chapters = function(output, build = build_chapter, split_by, ...) {
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
-    x = resolve_refs_html(x)
+    x = resolve_refs_html(x, !number_sections)
     x = add_chapter_prefix(x)
     writeUTF8(x, output)
     return(output)
@@ -216,7 +216,7 @@ split_chapters = function(output, build = build_chapter, split_by, ...) {
   nms = gsub(r_chap, '\\1', html_body[idx])  # to be used in HTML filenames
   n = length(idx)
 
-  html_body = resolve_refs_html(html_body)
+  html_body = resolve_refs_html(html_body, !number_sections)
 
   if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
   # do not split the HTML file
