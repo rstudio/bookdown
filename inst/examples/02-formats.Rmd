@@ -4,7 +4,7 @@ knit: "bookdown::preview_chapter"
 
 # Output Formats
 
-The **bookdown** package primarily supports three types of output formats: HTML, LaTeX/PDF, and e-books. In this chapter, we introduce the possible options for these formats. Output formats can be specified either in the YAML metadata of the first Rmd file of the book, or in a separate YAML file named `_output.yml` under the root directory of the book. A brief example of the former:
+The **bookdown** package primarily supports three types of output formats: HTML, LaTeX/PDF, and e-books. In this chapter, we introduce the possible options for these formats. Output formats can be specified either in the YAML metadata of the first Rmd file of the book, or in a separate YAML file named `_output.yml` under the root directory of the book. A brief example of the former (output formats are specified in the `output` field of the YAML metadata):
 
 ```yaml
 ---
@@ -25,7 +25,7 @@ documentclass: book
 ---
 ```
 
-Output formats are specified in the `output` field of the YAML metadata. An example of `_output.yml`:
+An example of `_output.yml`:
 
 ```yaml
 bookdown::gitbook:
@@ -187,10 +187,153 @@ favicon: "favicon.ico"
 ---
 ```
 
+### Bootstrap style
 
-## LaTeX
+If you have used R Markdown before, you should be familiar with the Bootstrap style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
+
+```{r html-chapters-usage, eval=FALSE, code=formatR::usage(bookdown::html_chapters, output=FALSE)}
+```
+
+Note it has a `base_format` argument that takes a base output format function, and `html_book()` is basically `html_chapters(base_format = rmarkdown::html_document)`. All arguments of `html_book()` are passed to `html_chapters()`:
+
+```{r html-book-usage, eval=FALSE, code=formatR::usage(bookdown::html_book, output=FALSE)}
+```
+
+
+That means you can use most arguments of `rmarkdown::html_document`, such as `toc` (whether to show the table of contents), `number_sections` (whether to number section headings), and so on. Again, check the help page of `rmarkdown::html_document` to see the full list of possible options. Note the argument `self_contained` is hard-coded to `FALSE` internally, so you cannot change the value of this argument. We have explained the argument `split_by` in the previous section.
+
+The arguments `template` and `page_builder` are for advanced users, and you do not need to understand them unless you have strong need to customize the HTML output, and those many options provided by `rmarkdown::html_document()` still do not give you what you want.
+
+If you want to pass a different HTML template to the `template` argument, the template must contain three pairs of HTML comments, and each comment must be on a separate line:
+
+- `<!--bookdown:title:start-->` and `<!--bookdown:title:end-->` to mark the title section of the book. This section will be placed only on the first page of the rendered book;
+- `<!--bookdown:toc:start-->` and `<!--bookdown:toc:end-->` to mark the table of contents section, which will be placed on all HTML pages;
+- `<!--bookdown:body:start-->` and `<!--bookdown:body:end-->` to mark the HTML body of the book, and the HTML body will be split into multiple separate pages. Recall that we merge all R Markdown or Markdown files, render them into a single HTML file, and split it;
+
+You may open the default HTML template to see where these comments were inserted:
+
+```{r results='hide'}
+bookdown:::bookdown_file('templates/default.html')
+# you may use file.edit() to open this file
+```
+
+Once you know how **bookdown** works internally to generate multiple-page HTML output, it will be easier to understand the argument `page_builder`, which is a function to compose each individual HTML page using the HTML fragments extracted from the above comment tokens. The default value of `page_builder` is a function `build_chapter` in **bookdown**, and its source code is relatively simple (ignore those internal functions like `button_link()`):
+
+```{r include=FALSE}
+extract_fun = function(name, script) {
+  x = readLines(script)
+  def = paste(name, '= ')
+  i = which(substr(x, 1, nchar(def)) == def)
+  if (length(i) == 0) stop('Cannot find ', def, ' from ', script)
+  i = i[1]
+  j = which(x == '}')
+  j = min(j[j > i])
+  x[i:j]
+}
+```
+```{r eval=FALSE, tidy=FALSE, code=extract_fun('build_chapter', '../../R/html.R')}
+```
+
+Basically, this function takes a number of compoents like the HTML head, the table of contents, the chapter body, and so on, and it is expected to return a character string which is the HTML source of a complete HTML page. You may manipulate all components in this function using text-processing functions like `gsub()` and `paste()`.
+
+
+What the default page builder does is to put TOC in the first row, the body in the second row, navigation buttons at the bottom of the body, and concatenate them with the HTML head and foot. Here is a sketch of the HTML source code that may help you understand the output of `build_chapter()`:
+
+```html
+<html>
+  <head>
+    <title>A Nice Book</title>
+  </head>
+  <body>
+  
+    <div class="row">TOC</div>
+    
+    <div class="row">
+      CHAPTER BODY
+      <p>
+        <button>PREVIOUS</button>
+        <button>NEXT</button>
+      </p>
+    </div>
+  
+  </body>
+</html>
+```
+
+For all HTML pages, the main difference is the chapter body, and most of the rest of elements are the same. The default output from `html_book()` will include the Bootstrap CSS and JavaScript files in the `<head>` tag.
+
+The TOC is often used for navigation purposes. In the GitBook style, the TOC is displayed in the sidebar. For the Bootstrap style, we did not apply a special style to it, so it is shown as a plain unordered list (in the HTML tag `<ul>`). It is easy to turn this list into a navigation bar with some CSS techniques. We have provided a CSS file `toc.css` in this package that you can use, and you can find it here:
+
+```{r results='hide'}
+bookdown:::bookdown_file('examples/css/toc.css')
+```
+
+You may copy this file to the root directory of your book, and apply it to the HTML output via the `css` option, e.g.,
+
+```yaml
+---
+output:
+  bookdown::html_book:
+    toc: yes
+    css: toc.css
+---
+```
+
+There are many possible ways to turn `<ul>` lists to navigation menus if you do a little bit searching on the web, and you can choose a menu style that you like. The `toc.css` we just mentioned is a style with white menu texts on a black background, and supports sub-menus (e.g., section titles are displayed as dropdown menus under chapter titles).
+
+As a matter of fact, you can get rid of the Bootstrap style in `html_document()` if you set the `theme` option to `null`, and you are free to apply arbitrary styles to the HTML output using the `css` option (and possibly the `includes` option if you want to include arbitrary content in the HTML head/foot).
+
+### Tufte style
+
+Like the Bootstrap style, the Tufte style is provided by an output format `tufte_html_book()`, which is also a special case of `html_chapters()` using `tufte::tufte_html()` as the base format. Please see the **tufte** package [@R-tufte] if you are not familiar with the Tufte style. Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.
+
+All arguments of `tufte_html_book()` have exactly the same meanings as `html_book()`, e.g., you can also customize the CSS via the `css` option. There are a few elements that are specific to the Tufte style, though, such as margin notes, margin figures, and fullwidth figures. These elements require special syntax to generate, and please see the documentation of the **tufte** package. Note you do not need to do anything special to footnotes and references (just use the normal Markdown syntax `^[footnote]` and `[@citation]`), since they will be automatically put in the margin. A brief YAML example of the `tufte_html_book` format:
+
+```yaml
+---
+output:
+  bookdown::tufte_html_book:
+    toc: yes
+    css: toc.css
+---
+```
+
+## LaTeX/PDF
+
+We strongly recommend you to use an HTML output format instead of LaTeX when you develop a book, since you will not be too distracted by the typesetting details, which can bother you a lot if you constantly look at the PDF output of a book. Leave the job of careful typesetting to the very end (ideally after you have really finished the content of the book).
+
+The LaTeX/PDF output format is provided by `pdf_book()` in **bookdown**. There is not a significant difference between `pdf_book()` and the `pdf_document()` format in **rmarkdown**. The main purpose of `pdf_book()` is to resolve the labels and cross-references written using the syntax described in Sections \@ref(figures), \@ref(tables), and \@ref(cross-references). If the only output format that you want for a book is LaTeX/PDF, you may use the syntax specific to LaTeX, such as `\label{}` to label figures/tables/sections, and `\ref{}` to cross-reference them via their labels, because Pandoc supports LaTeX commands in Markdown. However, the LaTeX syntax is not portable to other output formats, such as HTML and e-books. That is why we introduced the syntax `(\#label)` for labels and `\@ref(label)` for cross-references.
+
+There are some top-level YAML options that will be applied to the LaTeX output. For a book, you may change the default document class to `book` (the default is `article`), and specify a bibliography style required by your publisher. A brief YAML example:
+
+```yaml
+---
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+---
+```
+
+The `pdf_book()` format is a general format like `html_chapters`, and it also has a `base_format` argument:
+
+```{r pdf-book-usage, eval=FALSE, code=formatR::usage(bookdown::pdf_book, output=FALSE)}
+```
+
+You can change the `base_format` function to other output format functions, and **bookdown** has provided a simple wrapper function `tufte_book2()`, which is basically `pdf_book(base_format = tufte::tufte_book)`, to produce a PDF book using the Tufte PDF style (again, see the **tufte** package).
 
 ## E-Books
 
-ePub, MOBI
+
+
+### EPub
+
+`epub_book()`
+
+### MOBI
+
+`kindlegen()`
+
+## A single document
+
+`html_document2()`
 
