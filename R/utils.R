@@ -142,7 +142,7 @@ create_placeholder = function(x, header = TRUE) {
 insert_chapter_script = function(config, where = 'before') {
   script = config[[sprintf('%s_chapter_script', where)]]
   if (is.character(script)) {
-    c('```{r include=FALSE}', unlist(lapply(script, readUTF8)), '```')
+    c('```{r include=FALSE, cache=FALSE}', unlist(lapply(script, readUTF8)), '```')
   }
 }
 
