@@ -10,7 +10,7 @@ link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
+options(htmltools.dir.version = FALSE, formatR.indent = 2)
 lapply(c('DT'), function(pkg) {
   if (!requireNamespace(pkg)) install.packages(pkg)
 })
