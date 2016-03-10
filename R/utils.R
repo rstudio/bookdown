@@ -125,7 +125,7 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
       writeUTF8(c('---', 'knit: bookdown::preview_chapter', '---\n', x), f)
     }
     if (preview && !(o %in% input)) x = create_placeholder(x)
-    x = c(before, x, after)
+    x = insert_code_chunk(x, before, after)
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
   }))
   if (preview) content = c(create_placeholder(readUTF8(files[1]), FALSE), content)
@@ -137,6 +137,18 @@ create_placeholder = function(x, header = TRUE) {
   h = c('', if (length(h)) h[1] else '# Placeholder')
   i = grep('^---\\s*$', x)
   c(if (length(i) >= 2) x[(i[1]):(i[2])], if (header) h)
+}
+
+insert_code_chunk = function(x, before, after) {
+  if (length(before) + length(after) == 0) return(x)
+  if (length(x) == 0 || x[1] != '---') return(c(before, x, after))
+  i = which(x == '---')
+  if (length(i) < 2) {
+    warning('There may be something wrong with your YAML frontmatter (no closing ---)')
+    return(c(before, x, after))
+  }
+  # insert `before` after the line i[2], i.e. the second ---
+  c(append(x, before, i[2]), after)
 }
 
 insert_chapter_script = function(config, where = 'before') {
