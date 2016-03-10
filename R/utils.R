@@ -1,5 +1,5 @@
 bookdown_file = function(...) {
-  system.file(..., package = 'bookdown')
+  system.file(..., package = 'bookdown', mustWork = TRUE)
 }
 
 # find the y[j] closest to x[i] with y[j] > x[i]
