@@ -157,7 +157,9 @@ html_document_alt = function(
 #' @param foot A character vector of the HTML code after the chapter body.
 #' @export
 #' @keywords internal
-build_chapter = function(head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot) {
+build_chapter = function(
+  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot
+) {
   # add a has-sub class to the <li> items that has sub lists
   toc = gsub('^(<li>)(.+<ul>)$', '<li class="has-sub">\\2', toc)
   paste(c(
