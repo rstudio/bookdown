@@ -109,7 +109,13 @@ gitbook_page = function(
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
 
   titles = paste(grep('^<(h[12])(>| ).+</\\1>.*$', chapter, value = TRUE), collapse = ' ')
-  gitbook_search$collect(html_cur, titles, paste(chapter, collapse = ' '))
+  # when not rendering via render_book()  (but e.g. rmarkdown::render()), do not
+  # collect search data because the output will be a single page: Ctrl + F!
+  if (is.null(opts$get('book_filename'))) {
+    config$search = FALSE
+  } else {
+    gitbook_search$collect(html_cur, titles, paste(chapter, collapse = ' '))
+  }
 
   # you can set the edit setting in either _bookdown.yml or _output.yml
   if (is.list(setting <- edit_setting())) config$edit = setting
