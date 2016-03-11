@@ -323,17 +323,34 @@ You can change the `base_format` function to other output format functions, and 
 
 ## E-Books
 
+Currently **bookdown** provides two e-book formats, EPUB and MOBI. Books of these formats can be read on devices like smartphones, tablets, or special e-readers such as Kindle.
 
+### EPUB
 
-### EPub
+To create an EPUB book, you can use the `epub_book()` format. It has some options in common with `rmarkdown::html_document()`:
 
-`epub_book()`
+```{r epub-book, eval=FALSE, code=formatR::usage(bookdown::epub_book, output=FALSE)}
+```
+
+The option `toc` is turned off because the e-book reader can often figure out a TOC automatically from the book, so it is not necessary to add a few pages for the TOC. There are a few options specific to EPUB:
+
+- `stylesheet`: It is similar to the `css` option in HTML output formats, and you can customize the appearance of elements using CSS;
+- `cover_image`: The path to the cover image of the book;
+- `metadata`: The path to an XML file for the metadata of the book (see Pandoc documentation for more details);
+- `chapter_level`: Internally an EPUB book is a series of "chapter" files, and this option determines the level by which the book is split into these files. This is similar to the `split_by` argument of HTML output formats we mentioned in Section \@ref(html), but an EPUB book is a single file, and you will not see these "chapter" files directly. The default level is the first level, and if you set it to 2, it means the book will be organized by section files internally, which may make the reader faster to load the book;
+- `epub_version`: Version 3 or 2 of EPUB;
+
+An EPUB book is essentially a collection of HTML pages, e.g., you can apply CSS rules to its elements, embed images, insert math expressions (because MathML is partially supported), and so on. Figure/table captions, cross-references, custom blocks, and citations mentioned in Chapter \@ref(components) also work for EPUB. You may compare the EPUB output of this book to the HTML output, and you will see the only major difference is the visual appearance.
+
+There are several EPUB readers available, including Calibre (https://www.calibre-ebook.com), Apple's iBooks, and Google Play Books.
 
 ### MOBI
 
-`kindlegen()`
+MOBI e-books can be read on Amazon's Kindle devices. Pandoc does not support MOBI output natively, but Amazon has provided a tool named KindleGen (https://www.amazon.com/gp/feature.html?docId=1000765211) to create MOBI books from other formats, including EPUB and HTML. We have provided a simple wrapper function `kindlegen()` in **bookdown** to call KindleGen to convert an EPUB book to MOBI. This requires you to download KindleGen first, and make sure the KindleGen executable can be found via the system environment variable `PATH`.
 
 ## A single document
 
-`html_document2()`
+Sometimes you may not want to write a book, but just a single long-form article or report instead. Usually what you do is call `rmarkdown::render()` with a certain output format. The main features missing there are the automatic numbering of figure/table captions, and cross-referencing figures/tables/sections. We have factored out these features from **bookdown**, so that you can use them without having to prepare a book of multiple Rmd files.
+
+The functions `html_document2()`, `tufte_html2()`, `pdf_document2()`, `tufte_handout2()`, and `tufte_book2()` are designed for this purpose. If you render an R Markdown document with the output format, say, `bookdown::html_document2`, you will get figure/table numbers and be able to cross-reference them in the single HTML page using the syntax described in Chapter \@ref(components).
 
