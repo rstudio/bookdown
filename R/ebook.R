@@ -53,7 +53,7 @@ epub_book = function(
         input_file, 'html', from, intermediate_html, TRUE, c(args, '--section-divs')
       )
       x = readUTF8(intermediate_html)
-      figs = parse_fig_labels(x)
+      figs = parse_fig_labels(x, !number_sections)
       # resolve cross-references and update the Markdown input file
       content = resolve_refs_md(
         readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
