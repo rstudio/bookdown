@@ -57,8 +57,9 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     href = href.substr(href.lastIndexOf('/') + 1);
     if (href === '') href = 'index.html';
     var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
-    li.addClass('active');
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
+    if (li.length === 0) li = chaps.first();
+    li.addClass('active');
     chaps.on('click', function(e) {
       chaps.removeClass('active');
       $(this).addClass('active');
@@ -111,6 +112,10 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       // current chapter TOC items
       var items = $('a[href^="' + href + '"]').parent('li.chapter'),
           m = items.length;
+      if (m === 0) {
+        items = summary.find('li.chapter');
+        m = items.length;
+      }
       if (m === 0) return;
       // all section titles on current page
       var hs = bookInner.find('.page-inner').find('h1,h2,h3'), n = hs.length,
