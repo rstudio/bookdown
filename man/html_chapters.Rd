@@ -64,7 +64,7 @@ These functions are expected to be used in conjunction with
   pairs of HTML comments: \samp{<!--bookdown:title:start-->} and
   \samp{<!--bookdown:title:end-->} to mark the title section of the book
   (this section will be placed only on the first page of the rendered book);
-  \samp{<!--bookdown:toc:start-->} and \samp{<!--bookdown:toc:end-->} to mar
+  \samp{<!--bookdown:toc:start-->} and \samp{<!--bookdown:toc:end-->} to mark
   the table of contents section (it will be placed on all chapter pages);
   \samp{<!--bookdown:body:start-->} and \samp{<!--bookdown:body:end-->} to
   mark the HTML body of the book (the HTML body will be split into separate
