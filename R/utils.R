@@ -121,7 +121,7 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = readUTF8(f)
     # add the knit field to the YAML frontmatter of the Rmd document
-    if (length(x) && x[1] != '---' && length(grep('^knit: ', x)) == 0) {
+    if (length(x) && length(match_dashes(x[1])) && length(grep('^knit: ', x)) == 0) {
       writeUTF8(c('---', 'knit: bookdown::preview_chapter', '---\n', x), f)
     }
     if (preview && !(o %in% input)) x = create_placeholder(x)
@@ -132,17 +132,19 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   writeUTF8(content, to)
 }
 
+match_dashes = function(x) grep('^---\\s*$', x)
+
 create_placeholder = function(x, header = TRUE) {
   h = grep('^# ', x, value = TRUE)  # chapter title
   h = c('', if (length(h)) h[1] else '# Placeholder')
-  i = grep('^---\\s*$', x)
+  i = match_dashes(x)
   c(if (length(i) >= 2) x[(i[1]):(i[2])], if (header) h)
 }
 
 insert_code_chunk = function(x, before, after) {
   if (length(before) + length(after) == 0) return(x)
-  if (length(x) == 0 || x[1] != '---') return(c(before, x, after))
-  i = which(x == '---')
+  if (length(x) == 0 || length(match_dashes(x[1])) == 0) return(c(before, x, after))
+  i = match_dashes(x)
   if (length(i) < 2) {
     warning('There may be something wrong with your YAML frontmatter (no closing ---)')
     return(c(before, x, after))
