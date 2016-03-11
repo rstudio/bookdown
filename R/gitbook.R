@@ -3,14 +3,14 @@
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,lib_dir,... Arguments to be passed to
-#'   \code{rmarkdown::\link{html_document}()} (\code{...} not including
-#'   \code{toc}, \code{self_contained}, \code{theme}, and \code{template}).
+#' @param fig_caption,number_sections,self_contained,lib_dir,... Arguments to be
+#'   passed to \code{rmarkdown::\link{html_document}()} (\code{...} not
+#'   including \code{toc}, \code{theme}, and \code{template}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
 gitbook = function(
-  fig_caption = TRUE, number_sections = TRUE, lib_dir = 'libs', ...,
+  fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, lib_dir = 'libs', ...,
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   config = list()
 ) {
@@ -22,7 +22,7 @@ gitbook = function(
   gb_config = config
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
-    self_contained = FALSE, lib_dir = lib_dir, theme = NULL,
+    self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
   split_by = match.arg(split_by)
@@ -104,6 +104,10 @@ gitbook_page = function(
   # gitbook JS scripts only work after the DOM has been loaded, so move them
   # from head to foot
   i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[.a-z-]+[.]js"></script>\\s*$', head)
+  # it is probably a self-contained page, so look for base64 encoded scripts
+  if (length(i) == 0) i = grep(
+    '^\\s*<script src="data:application/x-javascript;base64,[^"]+"></script>\\s*$', head
+  )
   s = head[i]; head[i] = ''
   j = grep('<!--bookdown:config-->', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
