@@ -32,7 +32,7 @@ gitbook = function(
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
     split_chapters(
-      output, gitbook_page, !number_sections, split_by, gb_config, split_by
+      output, gitbook_page, number_sections, split_by, gb_config, split_by
     )
   }
   config$bookdown_output_format = 'html'
