@@ -379,11 +379,18 @@ resolve_refs_html = function(content, global = FALSE) {
     if (length(ref) == 0) return(ref)
     ref = gsub('^ @ref\\(|\\)$', '', ref)
     num = ref_table[ref]
-    if (any(i <- is.na(num))) {
+    i = is.na(num)
+    j = i & grepl('^eq:', ref)
+    # equation labels will be replaced by \ref{eq:label}; the reason that we
+    # cannot directly use \ref{} for HTML even MathJax supports it is that
+    # Pandoc will remove the LaTeX command \ref{} for HTML output, and MathJax
+    # needs the literal command \ref{} on the page
+    i[j] = FALSE
+    if (any(i)) {
       warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
       num[i] = '<strong>??</strong>'
     }
-    sprintf(' <a href="#%s">%s</a>', ref, num)
+    ifelse(j, sprintf(' \\ref{%s}', ref), sprintf(' <a href="#%s">%s</a>', ref, num))
   })
   content
 }
