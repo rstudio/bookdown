@@ -86,6 +86,23 @@ Inline LaTeX equations can be written in a pair of dollar signs using the LaTeX 
 
 $$f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k}$$
 
+To number and refer to equations, put them in the equation environments and assign labels to them, e.g.,
+
+```latex
+\begin{equation}
+  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+  \label{eq:binom}
+\end{equation}
+```
+
+It renders the equation below:
+
+\begin{equation}
+f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k} \label{eq:binom}
+\end{equation}
+
+You may refer to it using `\@ref(eq:binom)`, e.g., see Equation \@ref(eq:binom). Due to some technical constraints, you must label your equations with the prefix `eq:` in **bookdown**.
+
 ## R code
 
 There are two types of R code in R Markdown/**knitr** documents: R code chunks, and inline R code. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but has `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,

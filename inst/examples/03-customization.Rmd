@@ -53,7 +53,7 @@ A LaTeX source document has a similar structure:
 \end{document}
 ```
 
-The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax library in the HTML output, and want to number the equations, you can create a text file that contains the following code:
+The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax library in the HTML output, and want to number the equations in the `equation` environment, you can create a text file that contains the following code:
 
 ```html
 <script type="text/x-mathjax-config">
@@ -73,6 +73,8 @@ output:
       in_header: mathjax-number.html
 ---
 ```
+
+If you use the HTML output format `html_book` or `gitbook` in **bookdown**, this has already been set up in the HTML templates, so you do not really need to insert such a file in the HTML head. You only need to do it for other HTML output formats.
 
 Similarly, if you are familiar with LaTeX, you can add arbitrary LaTeX code to the preamble. That means you can use any LaTeX packages and set up any package options for your book. For example, this book used the `in_header` option to use a few more LaTeX packages like **booktabs** (for better-looking tables) and **longtable** (for tables that span across multiple pages), and apply a fix to an XeLaTeX problem that links on graphics do not work:
 
