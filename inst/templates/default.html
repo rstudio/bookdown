@@ -18,6 +18,11 @@ $if(date-meta)$
 $endif$
 
 $if(math)$
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
   $math$
 $endif$
 <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
