@@ -3,14 +3,14 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, number_sections = TRUE, lib_dir = "libs", ..., 
-    split_by = c("chapter", "chapter+number", "section", "section+number", 
-        "rmd", "none"), config = list())
+gitbook(fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, 
+    lib_dir = "libs", ..., split_by = c("chapter", "chapter+number", "section", 
+        "section+number", "rmd", "none"), config = list())
 }
 \arguments{
-\item{fig_caption, number_sections, lib_dir, ...}{Arguments to be passed to
-\code{rmarkdown::\link{html_document}()} (\code{...} not including
-\code{toc}, \code{self_contained}, \code{theme}, and \code{template}).}
+\item{fig_caption, number_sections, self_contained, lib_dir, ...}{Arguments to be
+passed to \code{rmarkdown::\link{html_document}()} (\code{...} not
+including \code{toc}, \code{theme}, and \code{template}).}
 
 \item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML
