@@ -267,7 +267,7 @@ serve_book = function(
     if (!(is.null(path) || path == '')) dir = dirname(path)
   }
   owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
-  if (is.null(output_dir)) {
+  if (missing(output_dir) || is.null(output_dir)) {
     on.exit(opts$restore(), add = TRUE)
     output_dir = load_config()[['output_dir']]
   }
