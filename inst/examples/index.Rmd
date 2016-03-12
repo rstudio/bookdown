@@ -219,7 +219,7 @@ Typesetting under the paging constraint (e.g., for LaTeX/PDF output) can be an e
 
 If you want to preview the book, preview the HTML output. Work on the PDF book after you have finished the content of the book, and are very sure no major revisions will be required.
 
-If certain code chunks in your R Markdown docuemnts are time-consuming to run, you may cache them by adding the chunk option `cache = TRUE` in the chunk header, and you are recommended to label such code chunks as well, e.g.,
+If certain code chunks in your R Markdown documents are time-consuming to run, you may cache them by adding the chunk option `cache = TRUE` in the chunk header, and you are recommended to label such code chunks as well, e.g.,
 
     `r ''````{r important-computing, cache=TRUE}
 

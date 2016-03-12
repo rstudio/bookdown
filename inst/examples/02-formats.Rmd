@@ -238,7 +238,7 @@ extract_fun = function(name, script) {
 ```{r eval=FALSE, tidy=FALSE, code=extract_fun('build_chapter', '../../R/html.R')}
 ```
 
-Basically, this function takes a number of compoents like the HTML head, the table of contents, the chapter body, and so on, and it is expected to return a character string which is the HTML source of a complete HTML page. You may manipulate all components in this function using text-processing functions like `gsub()` and `paste()`.
+Basically, this function takes a number of components like the HTML head, the table of contents, the chapter body, and so on, and it is expected to return a character string which is the HTML source of a complete HTML page. You may manipulate all components in this function using text-processing functions like `gsub()` and `paste()`.
 
 
 What the default page builder does is to put TOC in the first row, the body in the second row, navigation buttons at the bottom of the body, and concatenate them with the HTML head and foot. Here is a sketch of the HTML source code that may help you understand the output of `build_chapter()`:
