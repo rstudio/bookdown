@@ -4,12 +4,191 @@ knit: "bookdown::preview_chapter"
 
 # Customization
 
+As we mentioned in the very beginning of this book, you are expected to have some basic knowledge about R Markdown, and we have been focusing on introducing the **bookdown** features instead of **rmarkdown**. In fact, R Markdown is highly customizable, and there are many options that you can use to customize the output document. Depending on how much you want to customize the output, you may use some simple options in the YAML metadata, or just replace the entire Pandoc template.
+
 ## YAML options {#yaml-options}
 
-includes
+For most types of output formats, you can customize the syntax highlighting styles using the `highlight` option of the specific format. Currently, the possible styles are `r knitr::combine_words(rmarkdown:::highlighters(), before = '\x60')`. For example, you can choose the `tango` style for the `gitbook` format:
+
+```yaml
+---
+output:
+  bookdown::gitbook:
+    highlight: tango
+---
+```
+
+For HTML output formats, you are most likely to use the `css` option to provide your own CSS stylesheets to customize the appearance of HTML elements. There is an option `includes` that applies to more formats, including HTML and LaTeX. The `includes` option allows your to insert arbitrary custom content before and/or after the body of the output. It has three sub options: `in_header`, `before_body`, and `after_body`. You need to know the basic structure of an HTML or LaTeX document to understand these options. The source of an HTML document looks like this:
+
+```html
+<html>
+  
+  <head>
+  <!-- head content here, e.g. CSS and JS -->
+  </head>
+  
+  <body>
+  <!-- body content here -->
+  </body>
+
+</html>
+```
+
+The `in_header` option takes a file path and inserts it into the `<head>` tag. The `before_body` file will be inserted right below the opening `<body>` tag, and `after_body` is inserted before the closing tag `</body>`.
+
+A LaTeX source document has a similar structure:
+
+```latex
+\documentclass{book}
+
+% LaTeX preamble
+% insert in_header here
+
+\begin{document}
+% insert before_body here
+
+% body content here
+
+% insert after_body here
+\end{document}
+```
+
+The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax library in the HTML output, and want to number the equations, you can create a text file that contains the following code:
+
+```html
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+```
+
+Let's assume the file is named `mathjax-number.html`, and it is in the root directory of your book (the directory that contains all your Rmd files). You can insert this file into the HTML head via the `in_header` option, e.g.,
+
+```yaml
+---
+output:
+  bookdown::gitbook:
+    includes:
+      in_header: mathjax-number.html
+---
+```
+
+Similarly, if you are familiar with LaTeX, you can add arbitrary LaTeX code to the preamble. That means you can use any LaTeX packages and set up any package options for your book. For example, this book used the `in_header` option to use a few more LaTeX packages like **booktabs** (for better-looking tables) and **longtable** (for tables that span across multiple pages), and apply a fix to an XeLaTeX problem that links on graphics do not work:
+
+```latex
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\ifxetex
+  \usepackage{letltxmacro}
+  \setlength{\XeTeXLinkMargin}{1pt}
+  \LetLtxMacro\SavedIncludeGraphics\includegraphics
+  \def\includegraphics#1#{% #1 catches optional stuff (star/opt. arg.)
+    \IncludeGraphicsAux{#1}%
+  }%
+  \newcommand*{\IncludeGraphicsAux}[2]{%
+    \XeTeXLinkBox{%
+      \SavedIncludeGraphics#1{#2}%
+    }%
+  }%
+\fi
+```
+
+The above LaTeX code is saved in a file `preamble.tex`, and the YAML metadata looks like this:
+
+```yaml
+---
+output:
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+---
+```
 
 ## Theming
 
+Sometimes you may want to change the overall theme of the output, and usually this can be done through the `in_header` option described in the previous section, or the `css` option if the output is HTML. Some output formats have their unique themes, such as `gitbook`, `tufte_html_book`, and `tufte_book2`, and you may not want to customize these themes too much. By comparison, the output formats `html_book()` and `pdf_book()` are not tied to particular themes and more customizable.
+
+As mentioned in Section \@ref(bootstrap-style), the default style for `html_book()` is the Bootstrap style. The Bootstrap style actually has several built-in themes that you can use, including `r knitr::combine_words(rmarkdown:::themes(), before='\x60')`. You can set the theme via the `theme` option, e.g.,
+
+```yaml
+---
+output:
+  bookdown::html_book:
+    theme: united
+---
+```
+
+If you do not like any of these Bootstrap styles, you can set `theme` to `null`, and apply your own CSS through the `css` or `includes` option.
+
+For `pdf_book()`, besides the `in_header` option mentioned in the previous section, another possibility is to change the document class. There are many possible LaTeX classes for books, such as **memoir** (https://www.ctan.org/pkg/memoir), **amsbook** (https://www.ctan.org/pkg/amsbook), KOMA-Script (https://www.ctan.org/pkg/koma-script) and so on. A brief sample of the YAML metadata specifying the `scrbook` class from the KOMA-Script package:
+
+```yaml
+---
+documentclass: scrbook
+output:
+  bookdown::pdf_book:
+    template: null
+---
+```
+
+Some publishers (e.g., Springer and Chapman & Hall/CRC) have their own LaTeX style or class files. You may try to change the `documentclass` option to use their document classes, although typically it is not as simple as that. You may end up with using `in_header`, or even design a custom Pandoc LaTeX template to accommodate these document classes.
+
 ## Templates
 
-## CJK languages
+When Pandoc converts Markdown to another output format, it uses a template under the hood. The template is a plain text file that contains some variables of the form `$variable$`. These variables will be replaced by their values generated by Pandoc. Below is a very brief template for HTML output:
+
+```html
+<html>
+  <head>
+    <title>$title$</title>
+  </head>
+  
+  <body>
+  $body$
+  </body>
+</html>
+```
+
+It has two variables `title` and `body`. The value of `title` comes from the `title` field of the YAML metadata, and `body` is the HTML code generated from the body of the Markdown input document. For example, suppose we have a Markdown document:
+
+```markdown
+---
+title: A Nice Book
+---
+
+# Introduction
+
+This is a **nice** book!
+```
+
+If we use the above template to generate an HTML document, its source code will be like this:
+
+```html
+<html>
+  <head>
+    <title>A Nice Book</title>
+  </head>
+  
+  <body>
+  
+  <h1>Introduction</h1>
+  
+  <p>This is a <strong>nice</strong> book!</p>
+  
+  </body>
+</html>
+```
+
+The actual HTML, LaTeX, and EPUB templates are more complicated, but the idea is the same. You just need to know what variables are available: some variables are built-in Pandoc variables, and some can be either defined by users in the YAML metadata, or passed from the command line option `-V` or `--variable`. Some variables only make sense to specific output formats, e.g., the `documentclass` variable is only used in LaTeX output. Please see the documentation of Pandoc to learn more about these variables, and you can find all default Pandoc templates from the GitHub repository https://github.com/jgm/pandoc-templates.
+
+Note that for HTML output, **bookdown** requires some additional comment tokens in the template, and we have explained them in Section \@ref(bootstrap-style).
+
+## Internationalization
+
+If the language of your book is not English, you will need to translate certain English words and phrases into your language, such as the words "Figure" and "Table" when figures/tables are automatically numbered in the HTML output. Internationalization may not be an issue for LaTeX output, since some LaTeX packages can automatically translate these terms into the local language, such as the **ctexcap** package for Chinese.
+
+TODO...
+
+There is one caveat when you write in a language that uses multibyte characters, such as Chinese, Japanese, and Korean (CJK): Pandoc cannot generate identifiers from section headings that are pure CJK characters, so you will not be able to cross-reference sections (they do not have labels), unless you manually assign identifiers to them by appending `{#identifier}` to the section heading, where `identifier` is an arbitrary identifier you choose.
