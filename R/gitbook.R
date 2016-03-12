@@ -228,8 +228,5 @@ download_filenames = function(config) {
   if (is.null(book_name <- opts$get('book_filename'))) return()
   if (isTRUE(exts) || length(exts) == 0) exts = c('pdf', 'epub', 'mobi')
   downloads = with_ext(book_name, exts)
-  in_dir(output_path('.'), {
-    downloads = downloads[file.exists(downloads)]
-  })
   if (length(downloads)) I(downloads)
 }
