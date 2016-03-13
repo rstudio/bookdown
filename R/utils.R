@@ -271,7 +271,7 @@ serve_book = function(
     on.exit(opts$restore(), add = TRUE)
     output_dir = load_config()[['output_dir']]
   }
-  if (!in_session && is.null(output_dir)) output_dir = '.'
+  if (is.null(output_dir)) output_dir = '_book'
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
