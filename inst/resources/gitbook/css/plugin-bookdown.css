@@ -17,6 +17,14 @@ span.search-highlight {
     left: 300px;
   }
 }
+@media (max-width: 1240px) {
+  .book .book-body.fixed {
+    top: 50px;
+  }
+  .book .book-body.fixed .body-inner {
+    top: auto;
+  }
+}
 @media (max-width: 600px) {
   .book.with-summary .book-header.fixed {
     left: calc(100% - 60px);
@@ -27,18 +35,13 @@ span.search-highlight {
     left: calc(100% - 60px);
     min-width: 300px;
   }
+  .book .book-body.fixed {
+    top: 0;
+  }
 }
 
 .book .book-body.fixed .body-inner {
   top: 50px;
-}
-@media (max-width: 1240px) {
-  .book .book-body.fixed {
-    top: 50px;
-  }
-  .book .book-body.fixed .body-inner {
-    top: auto;
-  }
 }
 .book .book-body .page-wrapper .page-inner section.normal sub, .book .book-body .page-wrapper .page-inner section.normal sup {
   font-size: 85%;
