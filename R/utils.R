@@ -332,3 +332,10 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
   })
   if (overwrite) writeUTF8(x, css) else x
 }
+
+files_cache_dirs = function(dir = '.') {
+  if (!dir_exists(dir)) return(character())
+  out = list.files(dir, '_(files|cache)$', full.names = TRUE)
+  out = out[dir_exists(out)]
+  out
+}

@@ -55,6 +55,19 @@ render_book = function(
   opts$set(
     output_dir = output_dir, input_rmd = basename(input), preview = preview
   )
+  # move _files and _cache from output dir to ./, then from ./ to output dir
+  if (!is.null(output_dir)) {
+    aux_dirs = files_cache_dirs(file.path(output_dir, '_bookdown_files'))
+    file.rename(aux_dirs, basename(aux_dirs))
+    on.exit({
+      aux_dirs = files_cache_dirs('.')
+      aux_diro = file.path(output_dir, '_bookdown_files')
+      if (length(aux_dirs)) {
+        dir_create(aux_diro)
+        file.rename(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+      }
+    }, add = TRUE)
+  }
 
   # you may set, e.g., new_session: yes in _bookdown.yml
   if (missing(new_session)) {
