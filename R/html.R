@@ -375,13 +375,13 @@ resolve_refs_html = function(content, global = FALSE) {
   # look for @ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
   refs = regmatches(content, m)
-  regmatches(content, m) = lapply(refs, ref_to_number, ref_table)
+  regmatches(content, m) = lapply(refs, ref_to_number, ref_table, FALSE)
   content
 }
 
-ref_to_number = function(ref, ref_table) {
+ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
-  ref = gsub('^ @ref\\(|\\)$', '', ref)
+  ref = gsub(if (backslash) '^ \\\\@ref\\(|\\)$' else '^ @ref\\(|\\)$', '', ref)
   num = ref_table[ref]
   i = is.na(num)
   j = i & grepl('^eq:', ref)
@@ -394,7 +394,10 @@ ref_to_number = function(ref, ref_table) {
     warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
-  ifelse(j, sprintf(' \\ref{%s}', ref), sprintf(' <a href="#%s">%s</a>', ref, num))
+  ifelse(
+    j, sprintf(if (backslash) ' \\\\ref{%s}' else ' \\ref{%s}', ref),
+    sprintf(' <a href="#%s">%s</a>', ref, num)
+  )
 }
 
 reg_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
