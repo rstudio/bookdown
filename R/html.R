@@ -375,24 +375,26 @@ resolve_refs_html = function(content, global = FALSE) {
   # look for @ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
   refs = regmatches(content, m)
-  regmatches(content, m) = lapply(refs, function(ref) {
-    if (length(ref) == 0) return(ref)
-    ref = gsub('^ @ref\\(|\\)$', '', ref)
-    num = ref_table[ref]
-    i = is.na(num)
-    j = i & grepl('^eq:', ref)
-    # equation labels will be replaced by \ref{eq:label}; the reason that we
-    # cannot directly use \ref{} for HTML even MathJax supports it is that
-    # Pandoc will remove the LaTeX command \ref{} for HTML output, and MathJax
-    # needs the literal command \ref{} on the page
-    i[j] = FALSE
-    if (any(i)) {
-      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
-      num[i] = '<strong>??</strong>'
-    }
-    ifelse(j, sprintf(' \\ref{%s}', ref), sprintf(' <a href="#%s">%s</a>', ref, num))
-  })
+  regmatches(content, m) = lapply(refs, ref_to_number, ref_table)
   content
+}
+
+ref_to_number = function(ref, ref_table) {
+  if (length(ref) == 0) return(ref)
+  ref = gsub('^ @ref\\(|\\)$', '', ref)
+  num = ref_table[ref]
+  i = is.na(num)
+  j = i & grepl('^eq:', ref)
+  # equation labels will be replaced by \ref{eq:label}; the reason that we
+  # cannot directly use \ref{} for HTML even MathJax supports it is that
+  # Pandoc will remove the LaTeX command \ref{} for HTML output, and MathJax
+  # needs the literal command \ref{} on the page
+  i[j] = FALSE
+  if (any(i)) {
+    warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
+    num[i] = '<strong>??</strong>'
+  }
+  ifelse(j, sprintf(' \\ref{%s}', ref), sprintf(' <a href="#%s">%s</a>', ref, num))
 }
 
 reg_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'

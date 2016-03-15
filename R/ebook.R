@@ -96,16 +96,7 @@ resolve_refs_md = function(content, ref_table) {
   # look for \@ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr(' \\\\@ref\\(([-:[:alnum:]]+)\\)', content)
   refs = regmatches(content, m)
-  regmatches(content, m) = lapply(refs, function(ref) {
-    if (length(ref) == 0) return(ref)
-    ref = gsub('^ \\\\@ref\\(|\\)$', '', ref)
-    num = ref_table[ref]
-    if (any(i <- is.na(num))) {
-      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
-      num[i] = '<strong>??</strong>'
-    }
-    sprintf(' <a href="#%s">%s</a>', ref, num)
-  })
+  regmatches(content, m) = lapply(refs, ref_to_number, ref_table)
   content
 }
 
