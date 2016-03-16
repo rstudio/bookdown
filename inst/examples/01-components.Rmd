@@ -323,7 +323,7 @@ The function `install_phantomjs()` works for Windows, OS X, and Linux. You may a
 
 When **knitr** detects an HTML widget object in a code chunk, it either renders the widget normally when the current output format is HTML, or save the widget as an HTML page and calls **webshot** to capture the screen of the HTML page when the output format is not HTML. Here is an example of a table created from the **DT** package [@R-DT]:
 
-```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE}
+```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE, cache.extra=packageVersion('DT')}
 DT::datatable(iris)
 ```
 
