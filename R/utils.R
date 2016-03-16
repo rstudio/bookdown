@@ -77,10 +77,10 @@ load_config = function() {
   opts$get('config')
 }
 
-book_filename = function(config = load_config()) {
+book_filename = function(config = load_config(), fallback = TRUE) {
   if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
-  } else '_main'
+  } else if (fallback) '_main'
 }
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
