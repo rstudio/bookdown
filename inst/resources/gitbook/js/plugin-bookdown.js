@@ -176,9 +176,12 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
   var bookBody = $('.book-body'), bookInner = bookBody.find('.body-inner');
   var saveScrollPos = function(e) {
-    // save scroll position before page is reloaded via servr
-    gs.set('bookInnerScrollTop', bookInner.scrollTop());
-    gs.set('bookBodyScrollTop', bookBody.scrollTop());
+    // save scroll position before page is reloaded
+    gs.set('bodyScrollTop', {
+      body: bookBody.scrollTop(),
+      inner: bookInner.scrollTop(),
+      title: bookInner.find('.page-inner').find('h1,h2').first().text()
+    });
   };
   $(document).on('servr:reload', saveScrollPos);
 
@@ -192,13 +195,13 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   if (inRStudio()) $(window).on('unload', saveScrollPos);
 
   $(document).ready(function(e) {
-    var pos = gs.get('bookBodyScrollTop');
-    if (pos) bookBody.scrollTop(pos);
-    pos = gs.get('bookInnerScrollTop');
-    if (pos) bookInner.scrollTop(pos);
+    var pos = gs.get('bodyScrollTop');
+    if (pos && pos.title === bookInner.find('.page-inner').find('h1,h2').first().text()) {
+      bookBody.scrollTop(pos.body);
+      bookInner.scrollTop(pos.inner);
+    }
     // clear book body scroll position
-    gs.remove('bookBodyScrollTop');
-    gs.remove('bookInnerScrollTop');
+    gs.remove('bodyScrollTop');
   });
 
 });
