@@ -1,0 +1,25 @@
+% Please edit documentation in R/publish.R
+\name{publish_book}
+\alias{publish_book}
+\title{Publish a book to the web}
+\usage{
+publish_book(name = NULL, book_dir = NULL, account = NULL, 
+    server = "beta.rstudioconnect.com")
+}
+\arguments{
+\item{name}{Name of the book (this will be used in the URL path of the published book).
+Defaults to the \code{book_filename} in \code{_bookdown.yml} if not specified.}
+
+\item{book_dir}{Directory where the book's contents are located. Defaults to
+\code{output_dir} in \code{_bookdown.yml} if not specified.}
+
+\item{account}{Account name to publish to. Will default to any previously published
+to account or any single account already associated with \code{server}.}
+
+\item{server}{Server to publish to (by default beta.rstudioconnect.com
+but any RStudio Connect server can be published to).}
+}
+\description{
+Publish a book to the web. Note that you should be sure to render all versions
+of the book using \code{\link{render_book}} before publishing.
+}

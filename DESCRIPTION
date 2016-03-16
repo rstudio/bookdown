@@ -19,7 +19,8 @@ Imports:
     knitr,
     miniUI,
     rmarkdown (>= 0.9.5),
-    yaml
+    yaml,
+    rsconnect
 Suggests:
     htmlwidgets,
     rstudioapi,
