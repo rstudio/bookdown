@@ -175,11 +175,21 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   });
 
   var bookBody = $('.book-body'), bookInner = bookBody.find('.body-inner');
-  $(document).on('servr:reload', function(e) {
+  var saveScrollPos = function(e) {
     // save scroll position before page is reloaded via servr
     gs.set('bookInnerScrollTop', bookInner.scrollTop());
     gs.set('bookBodyScrollTop', bookBody.scrollTop());
-  });
+  };
+  $(document).on('servr:reload', saveScrollPos);
+
+  // check if the page is loaded in the RStudio preview window
+  var inRStudio = function() {
+    var inIframe = true;
+    try { inIframe = window.self !== window.top; } catch (e) {}
+    if (!inIframe) return false;
+    return /^\/rmd_output\/[0-9]+\/$/.test(window.location.pathname);
+  };
+  if (inRStudio()) $(window).on('unload', saveScrollPos);
 
   $(document).ready(function(e) {
     var pos = gs.get('bookBodyScrollTop');
