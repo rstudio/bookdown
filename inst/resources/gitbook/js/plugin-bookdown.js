@@ -197,8 +197,8 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   $(document).ready(function(e) {
     var pos = gs.get('bodyScrollTop');
     if (pos && pos.title === bookInner.find('.page-inner').find('h1,h2').first().text()) {
-      bookBody.scrollTop(pos.body);
-      bookInner.scrollTop(pos.inner);
+      if (pos.body !== 0) bookBody.scrollTop(pos.body);
+      if (pos.inner !== 0) bookInner.scrollTop(pos.inner);
     }
     // clear book body scroll position
     gs.remove('bodyScrollTop');
