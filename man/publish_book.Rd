@@ -3,15 +3,11 @@
 \alias{publish_book}
 \title{Publish a book to the web}
 \usage{
-publish_book(name = NULL, book_dir = NULL, account = NULL, 
-    server = "beta.rstudioconnect.com")
+publish_book(name = NULL, account = NULL, server = "beta.rstudioconnect.com")
 }
 \arguments{
 \item{name}{Name of the book (this will be used in the URL path of the published book).
 Defaults to the \code{book_filename} in \code{_bookdown.yml} if not specified.}
-
-\item{book_dir}{Directory where the book's contents are located. Defaults to
-\code{output_dir} in \code{_bookdown.yml} if not specified.}
 
 \item{account}{Account name to publish to. Will default to any previously published
 to account or any single account already associated with \code{server}.}

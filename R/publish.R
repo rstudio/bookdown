@@ -5,8 +5,6 @@
 #'
 #' @param name Name of the book (this will be used in the URL path of the published book).
 #'  Defaults to the \code{book_filename} in \code{_bookdown.yml} if not specified.
-#' @param book_dir Directory where the book's contents are located. Defaults to
-#'  \code{output_dir} in \code{_bookdown.yml} if not specified.
 #' @param account Account name to publish to. Will default to any previously published
 #'  to account or any single account already associated with \code{server}.
 #' @param server Server to publish to (by default beta.rstudioconnect.com
@@ -14,7 +12,7 @@
 #'
 #' @export
 publish_book <- function(
-  name = NULL, book_dir = NULL, account = NULL, server = 'beta.rstudioconnect.com'
+  name = NULL, account = NULL, server = 'beta.rstudioconnect.com'
 ) {
 
   on.exit(opts$restore(), add = TRUE)
@@ -28,10 +26,8 @@ publish_book <- function(
   )
 
   # get the book dir from the config
-  if (is.null(book_dir)) {
-    book_dir = output_dirname('_book', config, create = FALSE)
-    if (is.null(book_dir)) book_dir = '.'
-  }
+  book_dir = output_dirname('_book', config, create = FALSE)
+  if (is.null(book_dir)) book_dir = '.'
 
   # check whether we already have an account registered on the bookdown
   # server (if we don't then offer to create one)
