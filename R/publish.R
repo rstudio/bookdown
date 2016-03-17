@@ -28,6 +28,9 @@ publish_book <- function(
   # get the book dir from the config
   book_dir = output_dirname('_book', config, create = FALSE)
   if (is.null(book_dir)) book_dir = '.'
+  if (!file.exists(file.path(book_dir, 'index.html'))) warning(
+    'There is not an index.html in ', book_dir, '.'
+  )
 
   # check whether we already have an account registered on the bookdown
   # server (if we don't then offer to create one)
