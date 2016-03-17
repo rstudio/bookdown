@@ -20,7 +20,7 @@ publish_book <- function(
   config <- load_config()
 
   # get the name from the config if necessary
-  if (is.null(name)) name = book_filename(config, fallback = FALSE)
+  if (is.null(name)) name = with_ext(book_filename(config, fallback = FALSE), '')
   if (is.null(name)) stop(
     'You must specify a name for the book or set book_filename in _bookdown.yml'
   )
