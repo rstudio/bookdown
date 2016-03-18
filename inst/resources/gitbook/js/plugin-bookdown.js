@@ -192,7 +192,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     if (!inIframe) return false;
     return /^\/rmd_output\/[0-9]+\/$/.test(window.location.pathname);
   };
-  if (inRStudio()) $(window).on('unload', saveScrollPos);
+  if (inRStudio()) $(window).on('blur', saveScrollPos);
 
   $(document).ready(function(e) {
     var pos = gs.get('bodyScrollTop');
