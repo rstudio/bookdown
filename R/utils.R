@@ -339,3 +339,13 @@ files_cache_dirs = function(dir = '.') {
   out = out[dir_exists(out)]
   out
 }
+
+existing_files = function(x, first = FALSE) {
+  x = x[file.exists(x)]
+  if (first) head(x, 1) else x
+}
+
+existing_r = function(base, first = FALSE) {
+  x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
+  existing_files(x, first)
+}
