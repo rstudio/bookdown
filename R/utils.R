@@ -349,3 +349,9 @@ existing_r = function(base, first = FALSE) {
   x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
   existing_files(x, first)
 }
+
+html_or_latex = function(format) {
+  if (grepl('(html|gitbook|epub)', format)) return('html')
+  if (grepl('pdf', format)) return('latex')
+  switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
+}

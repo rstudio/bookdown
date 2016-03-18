@@ -41,11 +41,7 @@ render_book = function(
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.character(output_format)) {
     if (length(output_format) != 1) stop('output_format must be of length one')
-    format = switch(
-      output_format,
-      `html_chapters` = 'html', `bookdown::html_chapters` = 'html',
-      `pdf_book` = 'latex', `bookdown::pdf_book` = 'latex'
-    )
+    format = html_or_latex(output_format)
   }
 
   on.exit(opts$restore(), add = TRUE)
