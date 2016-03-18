@@ -15,8 +15,9 @@
 #' @param render \code{TRUE} to render all formats prior to publishing (defaults
 #'   to \code{FALSE}, however, this can be modified via the
 #'   \code{bookdown.render_on_publish} option). Note that this requires the use
-#'   of either a \file{Makefile} or an R script \file{_render.R} to provide the
-#'   implementaiton of rendering all formats that you want to publish.
+#'   of either an R script \file{_render.R} (or a \file{Makefile} if
+#'   \file{_render.R} is not found) to provide the implementaiton of rendering
+#'   all formats that you want to publish.
 #'
 #' @export
 publish_book = function(
@@ -28,11 +29,11 @@ publish_book = function(
 
   # render if requested
   if (isTRUE(render)) {
-    if (file.exists('Makefile')) {
-      result = system2('make')
-    } else if (length(script <- existing_r('_render', TRUE))) {
+    if (length(script <- existing_r('_render', TRUE))) {
       result = Rscript(script)
-    } else stop('Rendering before publishing requires a Makefile or _bookdown.R')
+    } else if (file.exists('Makefile')) {
+      result = system2('make')
+    } else stop('Rendering before publishing requires a _render.R or Makefile')
     if (result != 0) stop('Error ', result, ' attempting to render book')
   }
 
