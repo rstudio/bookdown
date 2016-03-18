@@ -21,8 +21,8 @@ any RStudio Connect server can be published to).}
 \item{render}{\code{TRUE} to render all formats prior to publishing (defaults
 to \code{FALSE}, however, this can be modified via the
 \code{bookdown.render_on_publish} option). Note that this requires the use
-of either a \file{Makefile} or an R script \file{_bookdown.R} to provide
-the implementaiton of rendering all formats that you want to publish.}
+of either a \file{Makefile} or an R script \file{_render.R} to provide the
+implementaiton of rendering all formats that you want to publish.}
 }
 \description{
 Publish a book to the web. Note that you should be sure to render all
