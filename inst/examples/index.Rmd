@@ -62,7 +62,7 @@ Now you should see the index page of this book demo in the RStudio Viewer. You m
 
 ## Usage
 
-Normally, a book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title. All R Markdown files must be encoded in UTF-8. Here is an example (the bullets are the filenames, followed by the file content):
+Normally, a book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title using the first-level heading, e.g., `# Chapter Title`. All R Markdown files must be encoded in UTF-8. Here is an example (the bullets are the filenames, followed by the file content):
 
 - 01-intro.Rmd
 

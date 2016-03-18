@@ -6,6 +6,9 @@ knit: "bookdown::preview_chapter"
 
 As you develop the book, you may put the draft book in the public to get early feedback from readers, e.g., publish it to a website. After you finish writing the book, you need to think about options to formally publish it as either printed copies or e-books.
 
+## RStudio Connect
+
+A much easier publishing method is coming... Before that, you may try the method in the next section if you are brave enough.
 
 ## GitHub
 
@@ -44,12 +47,17 @@ The next question is, how to publish the book built on Travis to GitHub? Basical
 Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
 
 ```bash
+# configure your name and email if you have not done so
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+
 # clone the repository to the book-output directory
 git clone -b gh-pages \
   https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git \
   book-output
 cd book-output
 cp -r ../_book/* ./
+rm -rf _bookdown_files
 git add *
 git commit -m"Update the book"
 git push origin gh-pages
@@ -67,12 +75,25 @@ env:
 r_github_packages:
   - rstudio/bookdown
 
+install: true
+
+before_script:
+  - chmod +x ./_build.sh
+  - chmod +x ./_deploy.sh
+
 script:
   - ./build.sh
   - ./deploy.sh
 ```
 
 The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GH_TOKEN` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
+
+In the `install` step, the above example did not do anything, but you may want to install some dependencies for your book there, e.g.,
+
+```yaml
+install:
+  - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
+```
 
 If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two types of directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. The figure and cache directories are stored under the `_bookdown_files` directory of the book output directory (e.g., `_book/`). A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
 
