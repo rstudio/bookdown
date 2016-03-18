@@ -1,5 +1,5 @@
 gitbook:
-	Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
+	Rscript _render.R "bookdown::gitbook"
 
 all:
-	Rscript build-all.R
+	Rscript _render.R

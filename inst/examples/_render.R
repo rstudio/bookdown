@@ -1,11 +1,3 @@
-# render the book to PDF and EPUB
-for (fmt in c('bookdown::pdf_book', 'bookdown::epub_book')) {
-  res = bookdown:::Rscript(c(
-    '-e', shQuote(sprintf("bookdown::render_book('index.Rmd', '%s', quiet = TRUE)", fmt))
-  ))
-  if (res != 0) stop('Failed to compile the book to ', fmt)
-}
-
 if (Sys.which('kindlegen') == '') {
   if (.Platform$OS.type == 'windows' || Sys.info()[['sysname']] == 'Darwin')
     stop('This script does not support Windows or Mac OS X')
@@ -19,4 +11,16 @@ if (Sys.which('kindlegen') == '') {
   })
 }
 
-bookdown::kindlegen()
+formats = commandArgs(TRUE)
+if (length(formats) == 0) formats = c(
+  'bookdown::pdf_book', 'bookdown::epub_book', 'bookdown::gitbook'
+)
+# render the book to all formats unless they are specified via command-line args
+for (fmt in formats) {
+  res = bookdown:::Rscript(c(
+    '-e', shQuote(sprintf("bookdown::render_book('index.Rmd', '%s', quiet = TRUE)", fmt))
+  ))
+  if (res != 0) stop('Failed to compile the book to ', fmt)
+  if (fmt == 'bookdown::epub_book') bookdown::kindlegen()
+}
+
