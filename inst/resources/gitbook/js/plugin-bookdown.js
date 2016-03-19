@@ -192,12 +192,11 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     if (!inIframe) return false;
     return /^\/rmd_output\/[0-9]+\/$/.test(window.location.pathname);
   };
-  if (inRStudio()) $(window).on('blur', saveScrollPos);
+  if (inRStudio()) $(window).on('unload', saveScrollPos);
 
   $(document).ready(function(e) {
     var pos = gs.get('bodyScrollTop');
     if (pos && pos.title === bookInner.find('.page-inner').find('h1,h2').first().text()) {
-      window.location.hash = '';
       if (pos.body !== 0) bookBody.scrollTop(pos.body);
       if (pos.inner !== 0) bookInner.scrollTop(pos.inner);
     }
