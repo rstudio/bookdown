@@ -190,8 +190,9 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var inIframe = true;
     try { inIframe = window.self !== window.top; } catch (e) {}
     if (!inIframe) return false;
-    return /^\/rmd_output\/[0-9]+\/$/.test(window.location.pathname);
+    return /^\/rmd_output\/[0-9]+\/.*$/.test(window.location.pathname);
   };
+  if (inRStudio()) $(window).on('blur', saveScrollPos);
   if (inRStudio()) $(window).on('unload', saveScrollPos);
 
   $(document).ready(function(e) {
