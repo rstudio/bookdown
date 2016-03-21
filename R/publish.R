@@ -66,21 +66,33 @@ publish_book = function(
     'You must specify a name for the book or set book_filename in _bookdown.yml'
   )
 
-  # if the server is null then default to beta.rstudioconnect.com
-  # (note: change this to bookdown.org when it's up and running)
-  if (is.null(server)) server = 'beta.rstudioconnect.com'
+  # if the server is null then default to bookdown.org
+  if (is.null(server)) {
 
-  # check whether we already have an account registered on the bookdown
-  # server (if we don't then offer to create one)
-  if (!length(rsconnect::accounts(server))) {
+    # alias for bookdown server
+    bookdown_server = 'bookdown.org'
 
-    # see if they want to configure an account
-    message('You do not currently have a publishing account configured on this system.')
-    result = readline('Would you like to configure one now? [Y/n]: ')
-    if (tolower(result) == 'n') return(invisible())
+    # add the server if we need to
+    servers = rsconnect::servers()
+    if (nrow(subset(servers, name == 'bookdown.org')) == 0)
+      rsconnect::addServer("https://bookdown.org/__api__", bookdown_server)
 
-    # configure the account
-    rsconnect::connectUser(server = server)
+    # check whether we already have an account registered on the bookdown
+    # server (if we don't then offer to create one)
+    if (!length(rsconnect::accounts(bookdown_server))) {
+
+      # see if they want to configure an account (bail if they don't)
+      message('You do not currently have a bookdown.org publishing account ',
+              'configured on this system.')
+      result = readline('Would you like to configure one now? [Y/n]: ')
+      if (tolower(result) == 'n') return(invisible())
+
+      # configure the account
+      rsconnect::connectUser(server = bookdown_server)
+    }
+
+    # use the bookdown server for publishing
+    server = bookdown_server
   }
 
   # publish
