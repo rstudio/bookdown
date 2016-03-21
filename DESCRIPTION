@@ -20,7 +20,7 @@ Imports:
     miniUI,
     rmarkdown (>= 0.9.5),
     yaml,
-    rsconnect
+    rsconnect (>= 0.4.2)
 Suggests:
     htmlwidgets,
     rstudioapi,
@@ -33,4 +33,4 @@ URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Remotes: rstudio/htmltools, rstudio/rsconnect
+Remotes: rstudio/htmltools
