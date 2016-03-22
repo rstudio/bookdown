@@ -15,7 +15,7 @@ Maintainer: Yihui Xie <xie@yihui.name>
 Description: Utilities to facilitate authoring books with R Markdown.
 License: GPL-3
 Imports:
-    htmltools,
+    htmltools (>= 0.3.5),
     knitr,
     miniUI,
     rmarkdown (>= 0.9.5),
@@ -33,4 +33,3 @@ URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Remotes: rstudio/htmltools
