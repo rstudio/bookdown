@@ -6,7 +6,7 @@
 #' @inheritParams rmarkdown::render_site
 #'
 #' @export
-bookdown_site <- function(input, ...) {
+bookdown_site = function(input, ...) {
 
   on.exit(opts$restore(), add = TRUE)
 
@@ -34,13 +34,13 @@ bookdown_site <- function(input, ...) {
   render = function(output_format, envir, quiet, encoding, ...) {
 
     # switch to the input dir for the duration of render
-    oldwd <- setwd(input)
+    oldwd = setwd(input)
     on.exit(setwd(oldwd), add = TRUE)
 
     # perform the render
     result = 0
     if (length(script <- existing_r('_render', TRUE))) {
-      result = Rscript(c(script, ifelse(quiet, "--quiet", "")))
+      result = Rscript(c(script, if (quiet) '--quiet'))
     } else if (file.exists('Makefile')) {
       result = system2('make')
     } else {

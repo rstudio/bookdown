@@ -11,12 +11,8 @@ if (Sys.which('kindlegen') == '') {
   })
 }
 
-# get command line arguments
-args = commandArgs(TRUE)
-
-# remove flags
-quiet = ifelse("--quiet" %in% args, "TRUE", "FALSE")
-formats <- args[!grepl("--.*", args)]
+quiet = "--quiet" %in% commandArgs(FALSE)
+formats = commandArgs(TRUE)
 
 # provide default formats if necessary
 if (length(formats) == 0) formats = c(
@@ -24,10 +20,8 @@ if (length(formats) == 0) formats = c(
 )
 # render the book to all formats unless they are specified via command-line args
 for (fmt in formats) {
-  res = bookdown:::Rscript(c(
-    '-e', shQuote(sprintf("bookdown::render_book('index.Rmd', '%s', quiet = %s)",
-                          fmt, quiet))
-  ))
+  cmd = sprintf("bookdown::render_book('index.Rmd', '%s', quiet = %s)", fmt, quiet)
+  res = bookdown:::Rscript(c('-e', shQuote(cmd)))
   if (res != 0) stop('Failed to compile the book to ', fmt)
   if (fmt == 'bookdown::epub_book') bookdown::kindlegen()
 }
