@@ -24,9 +24,7 @@ bookdown_site = function(input, ...) {
     name = basename(normalizePath(input))
 
   # get the book dir from the config
-  book_dir = output_dirname('_book', config, create = FALSE)
-  if (is.null(book_dir))
-    book_dir = '.'
+  book_dir = find_book_dir(config)
 
   # Custom render function. bookdown rendering is more complex than
   # for most formats and as a result uses a custom R script (_render.R)
@@ -54,4 +52,9 @@ render_book_script = function(output_format = NULL, envir = globalenv(), quiet =
     render_book('index.Rmd', output_format = output_format, envir = envir)
   }
   if (result != 0) stop('Error ', result, ' attempting to render book')
+}
+
+find_book_dir = function(config) {
+  d = output_dirname('_book', config, create = FALSE)
+  if (is.null(d)) '.' else d
 }
