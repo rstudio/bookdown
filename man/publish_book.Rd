@@ -23,7 +23,8 @@ to \code{FALSE}, however, this can be modified via the
 \code{bookdown.render_on_publish} option). Note that this requires the use
 of either an R script \file{_render.R} (or a \file{Makefile} if
 \file{_render.R} is not found) to provide the implementaiton of rendering
-all formats that you want to publish.}
+all formats that you want to publish. If neither \code{_render.R} nor
+\code{Makefile} exists, it falls back to \code{render_book()}.}
 }
 \description{
 Publish a book to the web. Note that you should be sure to render all
