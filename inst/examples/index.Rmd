@@ -7,6 +7,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
+site: true
 ---
 
 ```{r setup, include=FALSE}
