@@ -1,5 +1,5 @@
 gitbook:
-	Rscript _render.R "bookdown::gitbook"
+	Rscript --quiet _render.R "bookdown::gitbook"
 
 all:
-	Rscript _render.R
+	Rscript --quiet _render.R
