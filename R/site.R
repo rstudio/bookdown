@@ -1,5 +1,11 @@
 
-# Generic site generation function for all bookdown HTML formats
+#' R Markdown site generator for bookdown
+#'
+#' Implementation of custom R Markdown site generator for bookdown.
+#'
+#' @inheritParams rmarkdown::render_site
+#'
+#' @export
 bookdown_site <- function(input, ...) {
 
   on.exit(opts$restore(), add = TRUE)
@@ -32,11 +38,14 @@ bookdown_site <- function(input, ...) {
     on.exit(setwd(oldwd), add = TRUE)
 
     # perform the render
+    result = 0
     if (length(script <- existing_r('_render', TRUE))) {
       result = Rscript(c(script, ifelse(quiet, "--quiet", "")))
     } else if (file.exists('Makefile')) {
       result = system2('make')
-    } else stop('Site rendering requires a _render.R or Makefile')
+    } else {
+      render_book('index.Rmd', output_format = output_format, envir = envir)
+    }
     if (result != 0) stop('Error ', result, ' attempting to render book')
   }
 
@@ -47,22 +56,3 @@ bookdown_site <- function(input, ...) {
     render = render
   )
 }
-
-#' R Markdown site generators for bookdown
-#'
-#' Implementation of custom R Markdown site generators for bookdown.
-#'
-#' @inheritParams rmarkdown::render_site
-#'
-#' @name site_generators
-#' @export
-gitbook_site <- bookdown_site
-
-#' @rdname site_generators
-#' @export
-html_book_site <- bookdown_site
-
-#' @rdname site_generators
-#' @export
-tufte_html_book_site <- bookdown_site
-
