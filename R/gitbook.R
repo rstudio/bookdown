@@ -31,9 +31,11 @@ gitbook = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
-    split_chapters(
+    output2 = split_chapters(
       output, gitbook_page, number_sections, split_by, gb_config, split_by
     )
+    if (!same_path(output, output2)) file.remove(output)
+    output2
   }
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
