@@ -1,3 +1,4 @@
+export(bookdown_site)
 export(build_chapter)
 export(clean_book)
 export(epub_book)
