@@ -54,10 +54,9 @@ publish_book = function(
   )
 
   # get the name from the config if necessary
-  if (is.null(name)) name = with_ext(book_filename(config, fallback = FALSE), '')
-  if (is.null(name)) stop(
+  if (is.null(name)) name = find_book_name(config, stop(
     'You must specify a name for the book or set book_filename in _bookdown.yml'
-  )
+  ))
 
   # if the server is null then default to bookdown.org
   if (is.null(server)) {

@@ -19,9 +19,7 @@ bookdown_site = function(input, ...) {
 
   # get the name from the config (default to the directory name
   # if there is no name in the config)
-  name = with_ext(book_filename(config, fallback = FALSE), '')
-  if (is.null(name))
-    name = basename(normalizePath(input))
+  name = find_book_name(config, basename(normalizePath(input)))
 
   # get the book dir from the config
   book_dir = find_book_dir(config)
@@ -57,4 +55,9 @@ render_book_script = function(output_format = NULL, envir = globalenv(), quiet =
 find_book_dir = function(config) {
   d = output_dirname('_book', config, create = FALSE)
   if (is.null(d)) '.' else d
+}
+
+find_book_name = function(config, default) {
+  name = with_ext(book_filename(config, fallback = FALSE), '')
+  if (is.null(name)) default else name
 }
