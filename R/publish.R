@@ -17,7 +17,8 @@
 #'   \code{bookdown.render_on_publish} option). Note that this requires the use
 #'   of either an R script \file{_render.R} (or a \file{Makefile} if
 #'   \file{_render.R} is not found) to provide the implementaiton of rendering
-#'   all formats that you want to publish.
+#'   all formats that you want to publish. If neither \code{_render.R} nor
+#'   \code{Makefile} exists, it falls back to \code{render_book()}.
 #'
 #' @export
 publish_book = function(
@@ -28,14 +29,7 @@ publish_book = function(
   on.exit(opts$restore(), add = TRUE)
 
   # render if requested
-  if (isTRUE(render)) {
-    if (length(script <- existing_r('_render', TRUE))) {
-      result = Rscript(script)
-    } else if (file.exists('Makefile')) {
-      result = system2('make')
-    } else stop('Rendering before publishing requires a _render.R or Makefile')
-    if (result != 0) stop('Error ', result, ' attempting to render book')
-  }
+  if (isTRUE(render)) render_book_script()
 
   # see if we have a single existing deployment that matches the values
   # passed. if we do then use that deployment's name, account, and server.

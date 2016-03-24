@@ -32,21 +32,7 @@ bookdown_site = function(input, ...) {
   # for most formats and as a result uses a custom R script (_render.R)
   # or Makefile to define what's required to render the book.
   render = function(output_format, envir, quiet, encoding, ...) {
-
-    # switch to the input dir for the duration of render
-    oldwd = setwd(input)
-    on.exit(setwd(oldwd), add = TRUE)
-
-    # perform the render
-    result = 0
-    if (length(script <- existing_r('_render', TRUE))) {
-      result = Rscript(c(if (quiet) '--quiet', script))
-    } else if (file.exists('Makefile')) {
-      result = system2('make')
-    } else {
-      render_book('index.Rmd', output_format = output_format, envir = envir)
-    }
-    if (result != 0) stop('Error ', result, ' attempting to render book')
+    in_dir(input, render_book_script(output_format, envir, quiet))
   }
 
   # return site generator
@@ -55,4 +41,17 @@ bookdown_site = function(input, ...) {
     output_dir = book_dir,
     render = render
   )
+}
+
+# render the book via _render.R or Makefile, or fallback to render_book()
+render_book_script = function(output_format = NULL, envir = globalenv(), quiet = TRUE) {
+  result = 0
+  if (length(script <- existing_r('_render', TRUE))) {
+    result = Rscript(c(if (quiet) '--quiet', script))
+  } else if (file.exists('Makefile')) {
+    result = system2('make')
+  } else {
+    render_book('index.Rmd', output_format = output_format, envir = envir)
+  }
+  if (result != 0) stop('Error ', result, ' attempting to render book')
 }
