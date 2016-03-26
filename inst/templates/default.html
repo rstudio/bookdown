@@ -13,6 +13,7 @@
 $if(url)$<meta property="og:url" content="$url$" />$endif$
 $if(cover-image)$<meta property="og:image" content="$url$$cover-image$" />$endif$
 $if(description)$<meta property="og:description" content="$description$" />$endif$
+$if(github-repo)$<meta name="github-repo" content="$github-repo$" />$endif$
 
 $for(author-meta)$
 <meta name="author" content="$author-meta$" />
@@ -30,6 +31,9 @@ MathJax.Hub.Config({
 </script>
   $math$
 $endif$
+
+<meta name="description" content="$if(description)$$description$$else$$pagetitle$$endif$">
+
 <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
 $for(header-includes)$
