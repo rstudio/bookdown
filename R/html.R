@@ -193,6 +193,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
+  x = add_section_ids(x)
+
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
     x = resolve_refs_html(x, !number_sections)
@@ -212,6 +214,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   html_toc   = x[(i3 + 1):(i4 - 1)]  # TOC
   html_body  = x[(i5 + 1):(i6 - 1)]  # body
   html_foot  = x[(i6 + 1):length(x)]  # HTML footer
+
+  html_toc = add_toc_ids(html_toc)
 
   r_chap = '^<!--chapter:end:(.+)-->$'
   idx = grep(r_chap, html_body)
@@ -455,10 +459,11 @@ parse_fig_labels = function(content, global = FALSE) {
   list(content = content, ref_table = arry)
 }
 
+sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
+
 # parse section numbers and labels (id's)
 parse_section_labels = function(content) {
   arry = character()
-  sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
   sec_ids = '^<div id="([^"]+)" class="section .+$'
   for (i in grep(sec_num, content)) {
     if (!grepl(sec_ids, content[i - 1])) next  # no section id
@@ -469,6 +474,40 @@ parse_section_labels = function(content) {
     ))
   }
   arry
+}
+
+# add automatic identifiers to those section headings without ID's
+add_section_ids = function(content) {
+  r = '^(<div)( class="section level[1-6].+)$'
+  for (i in grep(r, content)) {
+    if (grepl('id=".+"', content[i])) next  # the id exists
+    h = content[i + 1]
+    # use section number as ID if section is numbered, otherwise use the raw
+    # values of the heading text
+    if (grepl(sec_num, h)) {
+      id = gsub(sec_num, 'section-\\1', h)
+    } else {
+      id = as.character(charToRaw(gsub('^<h[1-6]>|</h[1-6]>$', '', h)))
+      id = paste(id, collapse = '')
+    }
+    content[i] = gsub(r, paste0('\\1 id="', id, '"\\2'), content[i])
+  }
+  content
+}
+
+# add identifiers to TOC
+add_toc_ids = function(toc) {
+  r = '^(<li><a)(><span class="toc-section-number">)([.0-9]+)(</span>.+</a>.*)$'
+  for (i in grep(r, toc)) {
+    toc[i] = gsub(r, '\\1 href="#section-\\3"\\2\\3\\4', toc[i])
+  }
+  r = '^(<li><a)(>)(.+)(</a>.*)$'
+  for (i in grep(r, toc)) {
+    id = as.character(charToRaw(gsub(r, '\\3', toc[i])))
+    id = paste(id, collapse = '')
+    toc[i] = gsub(r, paste0('\\1 href="#', id, '"\\2\\3\\4'), toc[i])
+  }
+  toc
 }
 
 add_chapter_prefix = function(content) {
