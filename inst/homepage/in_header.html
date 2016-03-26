@@ -1,0 +1,48 @@
+<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-mvYjhBJXQ9VlNETV/xXShy849GsBHnKzVVudnMOcWUVM/6Nd2ksj8VNng5f8ylyX" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {padding-top: 54px; padding-bottom: 40px;}
+.main-container {max-width: 940px; margin-left: auto; margin-right: auto;}
+h1.title {display: none;}
+.tab-content {margin-top: 20px;}
+.panel-heading {text-align: center;}
+@media (min-width: 768px) {
+  .panel-body {max-height: 250px; overflow-y: auto;}
+}
+</style>
+<script type="text/javascript">
+// equal heights for heading, body, and footer of panels
+$(function() {
+  var setMaxHeight = function($elems) {
+    $elems.css('height', '');
+    if ($(window).width() <= 750) return;
+    var h, hmax = 0;
+    $elems.each(function(i, el) {
+      h = $(el).height();
+      if (h > hmax) hmax = h;
+    });
+    $elems.height(hmax);
+  };
+  var adjustHeight = function() {
+    if (!$('#home').is(':visible')) return;
+    $('#home').find('div.row').each(function(i, row) {
+      var elems = ['.panel-heading', '.panel-body', '.panel-footer'];
+      elems.map(function(v, i) {
+        setMaxHeight($(row).find(v));
+      });
+    });
+  };
+  adjustHeight();
+  $(window).on('resize', adjustHeight);
+});
+</script>
