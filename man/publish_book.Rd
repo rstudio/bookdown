@@ -3,7 +3,7 @@
 \alias{publish_book}
 \title{Publish a book to the web}
 \usage{
-publish_book(name = NULL, account = NULL, server = NULL, 
+publish_book(name = NULL, account = NULL, server = NULL, sourceCode = FALSE, 
     render = getOption("bookdown.render_on_publish", FALSE))
 }
 \arguments{
@@ -17,6 +17,9 @@ published to account or any single account already associated with
 
 \item{server}{Server to publish to (by default beta.rstudioconnect.com but
 any RStudio Connect server can be published to).}
+
+\item{sourceCode}{Should the book's source code be included in the
+upload?}
 
 \item{render}{\code{TRUE} to render all formats prior to publishing (defaults
 to \code{FALSE}, however, this can be modified via the
