@@ -72,8 +72,13 @@ book_panel = function(url, date) {
   title = xml_text(title)
   if (title == '') return()
 
-  description = xml_find(html, './/meta[@name="description"]')
-  if (!is.null(description)) description = xml_attr(description, 'content')
+  cover = xml_find(html, './/meta[@property="og:image"]')
+  if (is.null(cover)) {
+    description = xml_find(html, './/meta[@name="description"]')
+    if (!is.null(description)) description = xml_attr(description, 'content')
+  } else {
+    description = img(src = xml_attr(cover, 'content'))
+  }
 
   repo = xml_find(html, './/meta[@name="github-repo"]')
   if (!is.null(repo)) repo = xml_attr(repo, 'content')
