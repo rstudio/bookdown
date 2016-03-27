@@ -23,6 +23,7 @@ book_panels = function(ncol = 3) {
   books = mapply(meta$url, meta$lastmod, FUN = function(url, date) {
 
     if (url %in% exclude_urls) return()
+    if (grepl('/bookdown-demo/$', url) && !grepl('/yihui/', url)) return()
 
     # cache the scraped data
     if (file.exists('_book_meta.rds')) {
