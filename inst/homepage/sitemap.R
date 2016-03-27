@@ -89,7 +89,7 @@ book_panel = function(url, date) {
     author = author[length(author) - 1]
   } else {
     author = xml_attr(author, 'content')
-    author = knitr::combine_words(author)
+    author = paste(author, collapse = ', ')
   }
 
   div(
