@@ -293,7 +293,7 @@ There are a number of fields in a bibliography entry, such as `title`, `author`,
 
 There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
 
-```{r write-bib, comment=''}
+```{r write-bib, comment='', warning=FALSE}
 # the second argument can be a .bib file
 knitr::write_bib(c('knitr', 'stringr'), '')
 ```
