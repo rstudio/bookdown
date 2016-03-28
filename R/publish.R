@@ -4,6 +4,8 @@
 #' versions of the book before publishing, unless you have specified
 #' \code{render = TRUE}.
 #'
+#' @inheritParams rsconnect::deploySite
+#'
 #' @param name Name of the book (this will be used in the URL path of the
 #'   published book). Defaults to the \code{book_filename} in
 #'   \code{_bookdown.yml} if not specified.
@@ -12,20 +14,10 @@
 #'   \code{server}.
 #' @param server Server to publish to (by default beta.rstudioconnect.com but
 #'   any RStudio Connect server can be published to).
-#' @param sourceCode Should the book's source code be included in the
-#'   upload?
-#' @param render \code{TRUE} to render all formats prior to publishing (defaults
-#'   to \code{FALSE}, however, this can be modified via the
-#'   \code{bookdown.render_on_publish} option). Note that this requires the use
-#'   of either an R script \file{_render.R} (or a \file{Makefile} if
-#'   \file{_render.R} is not found) to provide the implementaiton of rendering
-#'   all formats that you want to publish. If neither \code{_render.R} nor
-#'   \code{Makefile} exists, it falls back to \code{render_book()}.
 #'
 #' @export
 publish_book = function(
-  name = NULL, account = NULL, server = NULL, sourceCode = FALSE,
-  render = getOption('bookdown.render_on_publish', FALSE)
+  name = NULL, account = NULL, server = NULL, render = c("none", "local", "server")
 ) {
 
   # if there are no RS Connect accounts setup on this machine
@@ -54,6 +46,5 @@ publish_book = function(
                         siteName = name,
                         account = account,
                         server = server,
-                        sourceCode = sourceCode,
                         render = render)
 }

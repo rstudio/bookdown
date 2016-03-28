@@ -20,7 +20,7 @@ Imports:
     miniUI,
     rmarkdown (>= 0.9.5.3),
     yaml,
-    rsconnect (>= 0.4.2.1)
+    rsconnect (>= 0.4.2.2)
 Suggests:
     htmlwidgets,
     rstudioapi,
