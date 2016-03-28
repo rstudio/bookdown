@@ -94,7 +94,7 @@ resolve_refs_md = function(content, ref_table) {
   content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
 
   # look for \@ref(label) and resolve to actual figure/table/section numbers
-  m = gregexpr(' \\\\@ref\\(([-:[:alnum:]]+)\\)', content)
+  m = gregexpr('(?<!`)\\\\@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, ref_to_number, ref_table, TRUE)
   content

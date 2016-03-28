@@ -377,7 +377,7 @@ resolve_refs_html = function(content, global = FALSE) {
   ref_table = c(res$ref_table, parse_section_labels(content))
 
   # look for @ref(label) and resolve to actual figure/table/section numbers
-  m = gregexpr(' @ref\\(([-:[:alnum:]]+)\\)', content)
+  m = gregexpr('(?<!\\\\)@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, ref_to_number, ref_table, FALSE)
   content
@@ -385,7 +385,7 @@ resolve_refs_html = function(content, global = FALSE) {
 
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
-  ref = gsub(if (backslash) '^ \\\\@ref\\(|\\)$' else '^ @ref\\(|\\)$', '', ref)
+  ref = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
   num = ref_table[ref]
   i = is.na(num)
   j = i & grepl('^eq:', ref)
@@ -399,8 +399,8 @@ ref_to_number = function(ref, ref_table, backslash) {
     num[i] = '<strong>??</strong>'
   }
   ifelse(
-    j, sprintf(if (backslash) ' \\\\ref{%s}' else ' \\ref{%s}', ref),
-    sprintf(' <a href="#%s">%s</a>', ref, num)
+    j, sprintf(if (backslash) '\\\\ref{%s}' else '\\ref{%s}', ref),
+    sprintf('<a href="#%s">%s</a>', ref, num)
   )
 }
 
