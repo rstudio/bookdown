@@ -34,4 +34,3 @@ BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
 Remotes: rstudio/rmarkdown, rstudio/rsconnect
-
