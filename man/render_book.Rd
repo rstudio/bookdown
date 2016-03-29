@@ -5,7 +5,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    output_dir = "_book", new_session = FALSE, force_knit = FALSE, preview = FALSE)
+    output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE)
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -18,10 +18,10 @@ Markdown files specified by the book are rendered.}
 \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 \code{...} is passed to \code{render_book()}.}
 
-\item{output_dir}{The output directory. If not specified, a field named
+\item{output_dir}{The output directory. If \code{NULL}, a field named
 \code{output_dir} in the configuration file \file{_bookdown.yml} will be
-used (possiblely not specified, either). If not \code{NULL}, the output
-files will be moved to this directory.}
+used (possiblely not specified, either, in which case a directory name
+\file{_book} will be used).}
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
 files.}
