@@ -24,7 +24,7 @@ publish_book = function(
   # then offer to add one for bookdown.org
   accounts <- rsconnect::accounts()
   accounts <- subset(accounts, server != "shinyapps.io")
-  if (nrow(accounts) == 0) {
+  if (is.null(account) || nrow(accounts) == 0) {
 
     # add the server if we need to
     servers = rsconnect::servers()
