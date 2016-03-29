@@ -40,7 +40,15 @@ render_book = function(
     format = output_format$bookdown_output_format
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.character(output_format)) {
-    if (length(output_format) != 1) stop('output_format must be of length one')
+    if (identical(output_format, 'all')) {
+      output_format = rmarkdown::all_output_formats(input, 'UTF-8')
+    }
+    if (length(output_format) > 1) {
+      return(unlist(lapply(output_format, function(fmt) render_book(
+        input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
+        new_session = new_session, force_knit = force_knit, preview = preview
+      ))))
+    }
     format = html_or_latex(output_format)
   }
 
