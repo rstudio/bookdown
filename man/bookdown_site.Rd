@@ -1,9 +1,9 @@
 % Please edit documentation in R/site.R
-\name{site}
-\alias{site}
+\name{bookdown_site}
+\alias{bookdown_site}
 \title{R Markdown site generator for bookdown}
 \usage{
-site(input, ...)
+bookdown_site(input, ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory)}

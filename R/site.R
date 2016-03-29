@@ -6,7 +6,7 @@
 #' @inheritParams rmarkdown::render_site
 #'
 #' @export
-site = function(input, ...) {
+bookdown_site = function(input, ...) {
 
   on.exit(opts$restore(), add = TRUE)
 
