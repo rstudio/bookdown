@@ -30,14 +30,17 @@ pdf_book = function(
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
+
     output = with_ext(output, '.pdf')
-    if (is.null(o <- opts$get('output_dir'))) output else {
-      output2 = file.path(o, output)
-      file.rename(output, output2)
-      # we should also move .tex if necessary, but this is a little complicated
-      # if (isTRUE(config$pandoc$keep_tex)) file.rename(f, file.path(o, f))
-      output2
-    }
+    o = opts$get('output_dir')
+    keep_tex = isTRUE(config$pandoc$keep_tex)
+    if (!keep_tex) file.remove(f)
+    if (is.null(o)) return(output)
+
+    output2 = file.path(o, output)
+    file.rename(output, output2)
+    if (keep_tex) file.rename(f, file.path(o, f))
+    output2
   }
   config$bookdown_output_format = 'latex'
   config = set_opts_knit(config)
