@@ -105,11 +105,12 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
     dir2 = config[['output_dir']]
     if (!is.null(dir2)) dir = dir2
   }
+  if (is.null(dir)) dir = '_book'
   if (length(dir)) {
     if (create) dir_create(dir)
     # ignore dir that is just the current working directory
     if (same_path(dir, getwd(), mustWork = FALSE)) dir = NULL
-  } else dir = '_book'
+  }
   dir
 }
 
