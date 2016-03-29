@@ -48,7 +48,7 @@ bookdown_site = function(input, ...) {
 render_book_script = function(output_format = NULL, envir = globalenv(), quiet = TRUE) {
   result = 0
   if (length(script <- existing_r('_render', TRUE))) {
-    result = Rscript(c(if (quiet) '--quiet', script))
+    result = Rscript(c(if (quiet) '--quiet', script, shQuote(output_format)))
   } else if (file.exists('Makefile')) {
     result = system2('make')
   } else {
