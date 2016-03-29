@@ -130,7 +130,7 @@ kindlegen = function(epub, exec = Sys.which('kindlegen')) {
     on.exit(opts$restore(), add = TRUE)
     config = load_config()
     main = with_ext(book_filename(config), 'epub')
-    epub = file.path(output_dirname('_book', config), main)
+    epub = file.path(output_dirname(NULL, config), main)
   }
   if (!file.exists(epub)) stop('The EPUB file ', epub, ' does not exist')
   mobi = with_ext(epub, 'mobi')

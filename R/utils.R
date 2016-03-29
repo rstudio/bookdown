@@ -100,8 +100,8 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   check_special_chars(files)
 }
 
-output_dirname = function(dir, config = load_config(), use_default = TRUE, create = TRUE) {
-  if (use_default) {
+output_dirname = function(dir, config = load_config(), create = TRUE) {
+  if (is.null(dir)) {
     dir2 = config[['output_dir']]
     if (!is.null(dir2)) dir = dir2
   }
@@ -109,7 +109,7 @@ output_dirname = function(dir, config = load_config(), use_default = TRUE, creat
     if (create) dir_create(dir)
     # ignore dir that is just the current working directory
     if (same_path(dir, getwd(), mustWork = FALSE)) dir = NULL
-  }
+  } else dir = '_book'
   dir
 }
 

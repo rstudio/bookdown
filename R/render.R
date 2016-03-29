@@ -17,10 +17,10 @@
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 #'   \code{...} is passed to \code{render_book()}.
-#' @param output_dir The output directory. If not specified, a field named
+#' @param output_dir The output directory. If \code{NULL}, a field named
 #'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be
-#'   used (possiblely not specified, either). If not \code{NULL}, the output
-#'   files will be moved to this directory.
+#'   used (possiblely not specified, either, in which case a directory name
+#'   \file{_book} will be used).
 #' @param new_session Whether to use new R sessions to compile individual Rmd
 #'   files.
 #' @param force_knit Whether to force knitting all Rmd files (this argument is
@@ -32,7 +32,7 @@
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
-  output_dir = '_book', new_session = FALSE, force_knit = FALSE, preview = FALSE
+  output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE
 ) {
 
   format = NULL  # latex or html
@@ -46,7 +46,7 @@ render_book = function(
 
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
-  output_dir = output_dirname(output_dir, config, missing(output_dir))
+  output_dir = output_dirname(output_dir, config)
   # store output directory and the initial input Rmd name
   opts$set(
     output_dir = output_dir, input_rmd = basename(input), preview = preview
@@ -185,7 +185,7 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   out = list.files('.', r)
   out = out[dir_exists(out)]
   out = out[gsub(r, '', out) %in% c(src, one)]  # output dirs generated from src names
-  out = c(out, output_dirname('_book', create = FALSE))  # output directory
+  out = c(out, output_dirname(NULL, create = FALSE))  # output directory
   out = c(out, with_ext(one, c('bbl', 'html', 'tex', 'rds')))  # aux files for main file
   out = c(out, load_config()[['clean']])  # extra files specified in _bookdown.yml
   out = sort(unique(out))

@@ -58,7 +58,7 @@ render_book_script = function(output_format = NULL, envir = globalenv(), quiet =
 }
 
 find_book_dir = function(config) {
-  d = output_dirname('_book', config, create = FALSE)
+  d = output_dirname(NULL, config, create = FALSE)
   if (is.null(d)) '.' else d
 }
 
