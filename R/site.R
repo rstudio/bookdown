@@ -27,8 +27,13 @@ site = function(input, ...) {
   # Custom render function. bookdown rendering is more complex than
   # for most formats and as a result uses a custom R script (_render.R)
   # or Makefile to define what's required to render the book.
-  render = function(output_format, envir, quiet, encoding, ...) {
-    in_dir(input, render_book_script(output_format, envir, quiet))
+  render = function(input_file, output_format, envir, quiet, encoding, ...) {
+    # input_file indicates that caller (likely the IDE) would like to
+    # build a single file of the website only
+    if (!is.null(input_file))
+      render_book(input_file, envir = envir, preview = TRUE)
+    else
+      in_dir(input, render_book_script(output_format, envir, quiet))
   }
 
   # return site generator
