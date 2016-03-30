@@ -4,17 +4,17 @@ As you develop the book, you may put the draft book in the public to get early f
 
 ## RStudio Connect
 
-In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to [https://bookdown.org](https://bookdown.org/yihui/homepage), which is a website provided by RStudio to host your books for free. This website is built on top of "RStudio Connect", an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
+In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free. This website is built on top of "RStudio Connect", an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
 
 You do not have to know much about RStudio Connect to publish your book to bookdown.org. Basically you just sign up at https://bookdown.org/connect/, and the first time you try to run `bookdown::publish_book()`, you will be asked to authorize **bookdown** to publish to your bookdown.org account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
 
 ```{r publish-book-usage, eval=FALSE, code=formatR::usage(bookdown::publish_book, output=FALSE)}
 ```
 
-The only argument of `publish_book()` that you may want to touch is `render`. It determines whether you want to render the book before publishing. If you have run `render_book()` before, you do not need to change this argument, otherwise you may set it to `TRUE`, or set global option in your R session (or in `.Rprofile` if you understand what it means):
+The only argument of `publish_book()` that you may want to touch is `render`. It determines whether you want to render the book before publishing. If you have run `render_book()` before, you do not need to change this argument, otherwise you may set it to `'local'`:
 
 ```{r eval=FALSE}
-options(bookdown.render_on_publish = TRUE)
+options(bookdown.render_on_publish = 'local')
 ````
 
 If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
