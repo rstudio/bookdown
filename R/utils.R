@@ -116,6 +116,13 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
 
 dir_exists = function(x) utils::file_test('-d', x)
 
+# mark directories with trailing slashes
+mark_dirs = function(x) {
+  i = dir_exists(x)
+  x[i] = paste0(x[i], '/')
+  x
+}
+
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
   # in the preview mode, only use some placeholder text instead of the full Rmd
   preview = opts$get('preview'); input = opts$get('input_rmd')

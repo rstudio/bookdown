@@ -201,10 +201,8 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   if (clean) unlink(out, recursive = TRUE) else {
     out = out[file.access(out) == 0]
     if (length(out) == 0) return(invisible())
-    i = dir_exists(out)
-    out[i] = paste0(out[i], '/')  # mark directories
     message(
-      'These files/dirs can probably be removed: \n\n', paste(out, collapse = '\n'),
+      'These files/dirs can probably be removed: \n\n', paste(mark_dirs(out), collapse = '\n'),
       '\n\nYou can set options(bookdown.clean_book = TRUE) to allow this function to always clean up the book directory for you.'
     )
     invisible(out)
