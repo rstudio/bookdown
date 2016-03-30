@@ -30,10 +30,11 @@ bookdown_site = function(input, ...) {
   render = function(input_file, output_format, envir, quiet, encoding, ...) {
     # input_file indicates that caller (likely the IDE) would like to
     # build a single file of the website only
-    if (!is.null(input_file))
-      render_book(input_file, output_format, envir = envir, preview = TRUE)
-    else
+    if (is.null(input_file)) {
       in_dir(input, render_book_script(output_format, envir, quiet))
+    } else {
+      render_book(input_file, output_format, envir = envir, preview = TRUE)
+    }
   }
 
   clean = function() {
