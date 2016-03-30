@@ -29,7 +29,6 @@ book_panels = function(ncol = 3) {
     if (file.exists('_book_meta.rds')) {
       panels = readRDS('_book_meta.rds')
       if (identical(panels[[url]][['date']], date)) {
-        message(url)
         return(panels[[url]][['panel']])
       }
     } else panels = list()
