@@ -1,7 +1,3 @@
---- 
-knit: "bookdown::preview_chapter"
----
-
 # Components
 
 In this chapter, we show the syntax of some basic components of a book, including R code, figures, tables, citations, and so on. First we start with the syntax of Pandoc's Markdown.

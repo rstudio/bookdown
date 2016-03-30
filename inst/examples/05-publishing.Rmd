@@ -1,7 +1,3 @@
----
-knit: "bookdown::preview_chapter"
----
-
 # Publishing
 
 As you develop the book, you may put the draft book in the public to get early feedback from readers, e.g., publish it to a website. After you finish writing the book, you need to think about options to formally publish it as either printed copies or e-books.

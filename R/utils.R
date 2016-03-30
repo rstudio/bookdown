@@ -128,10 +128,6 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   preview = opts$get('preview'); input = opts$get('input_rmd')
   content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = readUTF8(f)
-    # add the knit field to the YAML frontmatter of the Rmd document
-    if (length(x) && length(match_dashes(x[1])) && length(grep('^knit: ', x)) == 0) {
-      writeUTF8(c('---', 'knit: bookdown::preview_chapter', '---\n', x), f)
-    }
     if (preview && !(o %in% input)) x = create_placeholder(x)
     x = insert_code_chunk(x, before, after)
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
