@@ -36,11 +36,16 @@ bookdown_site = function(input, ...) {
       in_dir(input, render_book_script(output_format, envir, quiet))
   }
 
+  clean = function() {
+    suppressMessages(clean_book(clean = FALSE))
+  }
+
   # return site generator
   list(
     name = name,
     output_dir = book_dir,
-    render = render
+    render = render,
+    clean = clean
   )
 }
 

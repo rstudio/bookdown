@@ -207,5 +207,6 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
       'These files/dirs can probably be removed: \n\n', paste(out, collapse = '\n'),
       '\n\nYou can set options(bookdown.clean_book = TRUE) to allow this function to always clean up the book directory for you.'
     )
+    out
   }
 }
