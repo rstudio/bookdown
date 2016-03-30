@@ -33,7 +33,7 @@ book_panels()
 If this is the first time that you have ever heard of **bookdown**, you may get started with the minimal example [bookdown-demo](https://github.com/rstudio/bookdown-demo) on Github. Here are some simples steps to go through:
 
 1. Fork or clone the repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and Github, or just download it as a Zip file then unzip it locally;
-1. Install the RStudio IDE (<http://www.rstudio.com>) if you have not done so;
+1. Install the [Preview version](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (>= v0.99.1120);
 1. Open the `bookdown-demo` repository you cloned or downloaded in RStudio by clicking `bookdown-demo.Rproj`;
 1. Install the R package **bookdown**:
 
@@ -42,14 +42,14 @@ If this is the first time that you have ever heard of **bookdown**, you may get 
     devtools::install_github('rstudio/bookdown')
     ```
 
-1. Open the R Markdown file `index.Rmd` and click the button `Knit` on the toolbar of RStudio;
+1. Open the R Markdown file `index.Rmd` and click the button `Knit` on the toolbar of RStudio, or click the `Build Book` button in the `Build` tab if you want to render the book to a specific format or all formats;
 
 Now you should see the index page of this book demo in the RStudio Viewer (or the preview window). You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. For the comprehensive documentation of **bookdown**, please see https://bookdown.org/yihui/bookdown.
 
 To publish your books to bookdown.org, you need to first create an account by [signing in](/connect/) with your Google account, and then call the function `publish_book()` in R:
 
 ```{r eval=FALSE}
-bookdown::publish_book(render = TRUE)
+bookdown::publish_book(render = 'local')
 ```
 
 If it is the first time you have tried to publish the book, you will be asked to authorize **bookdown** to publish to your bookdown.org account.
