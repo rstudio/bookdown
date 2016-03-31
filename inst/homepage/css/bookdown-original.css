@@ -168,6 +168,8 @@ body {
   font-size:12px;
   line-height:18px;
   color:#666;
+
+  margin-left:170px;
 }
 
 .book .bookMeta iframe {
@@ -259,6 +261,7 @@ body {
 
   .book .bookMeta {
     display:inline;
+    margin-left:0px;
   }
 
   .book .bookMeta .date {
