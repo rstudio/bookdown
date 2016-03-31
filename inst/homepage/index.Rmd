@@ -1,6 +1,6 @@
 
 
-> Easy book authoring with bookdown - write books and long-form articles in R Markdown.
+> Write HTML, PDF, ePub, and Kindle books with R Markdown
 
 ```{r, echo=FALSE}
 source("sitemap.R")
