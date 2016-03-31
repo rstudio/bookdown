@@ -1,0 +1,337 @@
+body {
+  font-family: "Helvetica Neue", Helvetica Neue, Helvetica, Arial, sans-serif;
+  background-color:#fff;
+}
+
+#header {
+  position:fixed;
+  width:100%;
+  top:0px;
+  z-index:100;
+  height:60px;
+  line-height:60px;
+
+/*  background-color:#f8f8f8; */
+  background-color:#f1f0e8;
+
+
+  -webkit-box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+  box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+}
+
+#header #content {
+  margin:0 auto;
+  max-width:980px;
+  padding:0 20px;
+}
+
+#header #content #logo {
+  display:inline-block;
+  font-size:24px;
+  color:#72776d;
+}
+
+#header #content #navLeft {
+  display:inline-block;
+  font-size:14px;
+  margin-left:50px;
+
+  color:#878c82;
+}
+
+#header #content #nav .navItem {
+  display:inline-block;
+  padding:0px 20px;
+}
+
+#header #content #nav .navItem.current {
+  color:#000;
+}
+
+#header #content #nav a {
+  text-decoration: none;
+  color:inherit;
+}
+
+#header #content #nav a:hover {
+  color:#000;
+}
+
+#header #content #navRight {
+  float:right;
+}
+
+#header #content #navRight .gitHub {
+  display:inline-block;
+  width:36px;
+  height:36px;
+  background-image: url(../images/gitHubLogo.svg);
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+
+  vertical-align: middle;
+  opacity:.5;
+}
+
+#header #content #navRight .gitHub:hover {
+  opacity:1;
+}
+
+
+#main #content {
+  margin:100px auto;
+  max-width:980px;
+  padding:0 20px;
+}
+
+.book {
+  margin-top:20px;
+  min-height:175px;
+  clear:both;
+}
+
+.book a {
+  text-decoration: none;
+/*  color:#1e849a; */
+  color:#de6048;
+}
+
+.book a:hover {
+  text-decoration: underline;
+}
+
+.book .bookImage {
+  box-sizing: border-box;
+  position:relative;
+
+  display:inline-block;
+  float:left;
+  width:150px;
+  height:175px;
+  padding:15px;
+
+  margin-right:20px;
+
+  background-position: center center;
+  background-size:cover;
+
+  font-weight:300;
+
+  -webkit-box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+  box-shadow: 1px 1px 15px 0px rgba(0,0,0,0.2);
+}
+
+.color1 {
+/*  background-color:#608db1; */
+  background-color: #9d8c8a;
+  color:#fff;
+}
+
+.color2 {
+/*  background-color: #bcbc9d; */
+  background-color: #72776d;
+  color:#fff;
+}
+
+.color3 {
+/*  background-color: #b16d60; */
+  background-color: #de6048;
+  color:#fff;
+}
+
+.book .bookImage .title {
+  font-size:13px;
+  line-height:18px;
+}
+
+.book .bookImage .author {
+  font-size:11px;
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  left:10px;
+  text-align:right;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.book .bookMeta {
+  box-sizing: border-box;
+
+  vertical-align:top;
+  padding-top:10px;
+
+  font-size:12px;
+  line-height:18px;
+  color:#666;
+}
+
+.book .bookMeta iframe {
+  float:right;
+}
+
+.book .bookMeta .title {
+  font-size:16px;
+  line-height:24px;
+}
+
+.book .bookMeta .author {
+  color: #72776d;
+}
+
+.book .bookMeta .date {
+  margin-bottom:18px;
+  color: #72776d;
+}
+
+.book .bookMeta .overview {
+  font-size:13px;
+  line-height:20px;
+  max-height:60px;
+  overflow:hidden;
+  position:relative;
+
+  text-align: justify;
+  /* for clever multi-line ellipsis */
+  margin-right: -1em;
+  padding-right: 1em;
+}
+
+/* for clever multi-line ellipsis */
+.book .bookMeta .overview:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/* for clever multi-line ellipsis */
+.book .bookMeta .overview:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: white;
+}
+
+#main #content {
+  color:#666;
+  font-size:14px;
+  line-height:20px;
+}
+
+#main #content .intro {
+  padding-bottom:15px;
+  border-bottom: 1px dotted #72776d;
+  font-style: italic;
+}
+
+#content.getStarted h1 {
+    line-height:66px;
+    font-size:36px;
+    margin:35px 0 5px 0;
+    font-weight:300;
+}
+
+#content.getStarted h1 .bigNumber {
+  display:inline-block;
+  font-size:36px;
+
+  width:66px;
+  text-align:center;
+  margin-right:20px;
+
+  border-radius:100px;
+}
+
+#content.getStarted .detail {
+  margin-left:86px;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+  .book .bookMeta {
+    display:inline;
+  }
+
+  .book .bookMeta .date {
+    margin-bottom:10px;
+  }
+
+  .book .bookMeta .date:after {
+    content:'';
+    clear:both;
+    display:block;
+    height:1px;
+    line-height:1px;
+  }
+
+  .book .bookMeta .overview {
+    display:block;
+    margin-bottom:50px;
+    max-height:100px;
+  }
+
+
+  .book .bookMeta iframe {
+    float:none;
+  }
+
+  #header {
+    height:40px;
+    line-height:40px;
+  }
+
+  #header #content #logo {
+    display:inline-block;
+    font-size:18px;
+  }
+
+  #header #content #navLeft {
+    font-size:12px;
+    margin-left:15px;
+  }
+
+  #header #content #nav .navItem {
+    display:inline-block;
+    padding:0px 5px;
+  }
+
+  #header #content #nav .gitHub {
+    width:24px;
+    height:24px;
+  }
+
+  #main #content {
+    margin:60px auto;
+  }
+
+  #content.getStarted {
+    font-size:12px;
+  }
+
+  #content.getStarted h1 {
+      line-height:44px;
+      font-size:24px;
+      margin:40px 0 5px 0;
+      font-weight:300;
+  }
+
+  #content.getStarted h1 .bigNumber {
+    font-size:24px;
+    width:44px;
+    margin-right:10px;
+  }
+
+  #content.getStarted .detail {
+    margin-left:54px;
+  }
+
+}
