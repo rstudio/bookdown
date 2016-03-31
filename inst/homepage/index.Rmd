@@ -1,7 +1,5 @@
 
 
-<div id="content">
-
 <div class="intro">Easy book authoring with bookdown - write books and long-form articles in R Markdown.</div>
 
 <!--  example where we do not have an image -->
@@ -128,5 +126,4 @@
 </div>
 </div>
 
-</div>
 

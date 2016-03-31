@@ -1,0 +1,6 @@
+
+
+The [**bookdown**](https://github.com/rstudio/bookdown) package is a free and open-source R package built on top of [R Markdown](http://rmarkdown.rstudio.com) to make it really easy to write books and long-form articles/reports. Markdown is a very simple language but made powerful thanks to [Pandoc](http://pandoc.org), and **bookdown** has added a few important missing features related to writing books, such as figure/table caption numbering and cross-references, and embedding [HTML widgets](https://htmlwidgets.org) or [Shiny apps](https://shiny.rstudio.com). We have tried hard to make everything work for all output formats (PDF, HTML, and EPUB, etc), so your readers can choose their favorite file format to read. Although the **bookdown** package was developed using R, it does not mean your book have to be related to R at all. You can certainly write poems or novels with **bookdown**!
+
+The website bookdown.org is a service provided by [RStudio Inc.](https://www.rstudio.com) to host books. It is free for you to publish the static output files of your book, and you hold the full copyright of your own books.
+

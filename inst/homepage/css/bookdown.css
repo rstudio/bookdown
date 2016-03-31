@@ -3,6 +3,15 @@ body {
   background-color:#fff;
 }
 
+/* We use H1 + pandoc section divs to apply per-page classes */
+h1 {
+  display: none;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
 #header {
   position:fixed;
   width:100%;
@@ -232,14 +241,14 @@ body {
   font-style: italic;
 }
 
-#content.getStarted h1 {
+#content .getStarted h2 {
     line-height:66px;
     font-size:36px;
     margin:35px 0 5px 0;
     font-weight:300;
 }
 
-#content.getStarted h1 .bigNumber {
+#content .getStarted h2 .bigNumber {
   display:inline-block;
   font-size:36px;
 
@@ -250,7 +259,7 @@ body {
   border-radius:100px;
 }
 
-#content.getStarted .detail {
+#content .getStarted .detail {
   margin-left:86px;
 }
 
@@ -313,24 +322,24 @@ body {
     margin:60px auto;
   }
 
-  #content.getStarted {
+  #content .getStarted {
     font-size:12px;
   }
 
-  #content.getStarted h1 {
+  #content .getStarted h2 {
       line-height:44px;
       font-size:24px;
       margin:40px 0 5px 0;
       font-weight:300;
   }
 
-  #content.getStarted h1 .bigNumber {
+  #content .getStarted h2 .bigNumber {
     font-size:24px;
     width:44px;
     margin-right:10px;
   }
 
-  #content.getStarted .detail {
+  #content .getStarted .detail {
     margin-left:54px;
   }
 
