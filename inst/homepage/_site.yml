@@ -1,0 +1,7 @@
+output:
+  html_document:
+    highlight: null
+    theme: null
+    mathjax: null
+    css: ["css/reset.css", "css/bookdown.css"]
+

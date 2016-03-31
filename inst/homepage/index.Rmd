@@ -1,81 +1,155 @@
----
-title: "bookdown: Writing Books with R Markdown"
-output:
-  html_document:
-    self_contained: no
-    mathjax: null
-    theme: null
-    highlight: null
-    includes:
-      in_header: in_header.html
-      before_body: _navbar.html
----
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-sys.source('sitemap.R', globalenv())
-```
 
-<div class="container-fluid main-container">
+<div id="header">
+<div id="content">
+<div id="nav">
+<div id="logo"><a href="./">bookdown</a></div>
 
-<div class="tab-content">
+<ul id="navLeft">
+<li class="navItem current">Books</li>
+<li class="navItem"><a href="gettingStarted.html">Getting Started</a></li>
+<li class="navItem"><a href="#">About</a></li>
+</ul>
 
-<div id="home" class="tab-pane active">
-
-```{r, echo=FALSE, message=FALSE}
-book_panels()
-```
-
+<ul id="navRight">
+<a href="https://github.com/rstudio/bookdown"><li class="gitHub"></li></a>
 </div>
 
-<div id="get-started" class="tab-pane">
-
-If this is the first time that you have ever heard of **bookdown**, you may get started with the minimal example [bookdown-demo](https://github.com/rstudio/bookdown-demo) on Github. Here are some simples steps to go through:
-
-1. Fork or clone the repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and Github, or just download it as a Zip file then unzip it locally;
-1. Install the [Preview version](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (>= v0.99.1120);
-1. Open the `bookdown-demo` repository you cloned or downloaded in RStudio by clicking `bookdown-demo.Rproj`;
-1. Install the R package **bookdown**:
-
-    ```{r eval=FALSE}
-    if (!requireNamespace('devtools')) install.packages('devtools')
-    devtools::install_github('rstudio/bookdown')
-    ```
-
-1. Open the R Markdown file `index.Rmd` and click the button `Knit` on the toolbar of RStudio, or click the `Build Book` button in the `Build` tab if you want to render the book to a specific format or all formats;
-
-Now you should see the index page of this book demo in the RStudio Viewer (or the preview window). You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. For the comprehensive documentation of **bookdown**, please see https://bookdown.org/yihui/bookdown.
-
-To publish your books to bookdown.org, you need to first create an account by [signing in](/connect/) with your Google account, and then call the function `publish_book()` in R:
-
-```{r eval=FALSE}
-bookdown::publish_book(render = 'local')
-```
-
-If it is the first time you have tried to publish the book, you will be asked to authorize **bookdown** to publish to your bookdown.org account.
-
-You are welcome to report any issues you encounter during writing your book (https://github.com/rstudio/bookdown/issues), and we hope you will enjoy **bookdown**.
-
-</div> 
-
-<div id="about" class="tab-pane">
-
-The [**bookdown**](https://github.com/rstudio/bookdown) package is a free and open-source R package built on top of [R Markdown](http://rmarkdown.rstudio.com) to make it really easy to write books and long-form articles/reports. Markdown is a very simple language but made powerful thanks to [Pandoc](http://pandoc.org), and **bookdown** has added a few important missing features related to writing books, such as figure/table caption numbering and cross-references, and embedding [HTML widgets](https://htmlwidgets.org) or [Shiny apps](https://shiny.rstudio.com). We have tried hard to make everything work for all output formats (PDF, HTML, and EPUB, etc), so your readers can choose their favorite file format to read. Although the **bookdown** package was developed using R, it does not mean your book have to be related to R at all. You can certainly write poems or novels with **bookdown**!
-
-The website bookdown.org is a service provided by [RStudio Inc.](https://www.rstudio.com) to host books. It is free for you to publish the static output files of your book, and you hold the full copyright of your own books.
-
-</div> 
-
----
-
-<footer class="footer text-center">
-&copy; Copyright 2016 [RStudio Inc.](https://www.rstudio.com) | All Rights Reserved |
-[<i class="fa fa-twitter"></i>](https://twitter.com/rstudio)
-[<i class="fa fa-github"></i>](https://github.com/rstudio)
-[<i class="fa fa-linkedin"></i>](https://www.linkedin.com/company/rstudio-inc)
-[<i class="fa fa-facebook"></i>](https://www.facebook.com/pages/RStudio-Inc/267733656584415)
-</footer>
-
+</ul>
+</div>
 </div>
 
+<div id="main">
+<div id="content">
+
+<div class="intro">Easy book authoring with bookdown - write books and long-form articles in R Markdown.</div>
+
+<!--  example where we do not have an image -->
+<div class="book">
+<a href="#">
+<div class="bookImage color1">
+<div class="title">The Art of R Programming: A Tour of Statistical Software Design</div>
+<div class="author">Norman Matloff</div>
 </div>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=rstudio&amp;repo=bookdown-demo&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">The Art of R Programming: A Tour of Statistical Software Design</a></div>
+<div class="author">by Norman Matloff</div>
+<div class="date">Oct 15, 2011</div>
+<div class="overview">The Art of R Programming takes you on a guided tour of software development with R, from basic types and data structures to advanced topics like closures, recursion, and anonymous functions. No statistical knowledge is required, and your programming skills can range from hobbyist to pro.</div>
+</div>
+</a>
+</div>
+
+<!-- example where we do have a book image -->
+<div class="book">
+<a href="#">
+<div class="bookImage" style="background-image:url(content/cover.jpg)"></div>
+</a>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=rstudio&amp;repo=bookdown&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">Learn R in a Day</a></div>
+<div class="author">by Steven Murray</div>
+<div class="date">Oct 30, 2013</div>
+<div class="overview">'Learn R in a Day' provides the reader with key programming skills through an examples-oriented approach and is ideally suited for academics, scientists, mathematicians and engineers. The book assumes no prior knowledge of computer programming and progressively covers all the essential steps needed to become confident and proficient in using R within a day. Topics include how to input, manipulate, format, iterate (loop), query, perform basic statistics on, and plot data, via a step-by-step technique and demonstrations using in-built datasets which the reader is encouraged to replicate on their computer. Each chapter also includes exercises (with solutions) to practice key skills and empower the reader to build on the essentials gained during this introductory course. </div>
+</div>
+</div>
+
+<!-- example where we do not have an image -->
+<div class="book">
+<a href="#">
+<div class="bookImage color2">
+<div class="title">R Cookbook</div>
+<div class="author">Paul Teetor</div>
+</div>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=rstudio&amp;repo=bookdown-demo&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">R Cookbook</a></div>
+<div class="author">by Paul Teetor</div>
+<div class="date">Mar 22, 2011</div>
+<div class="overview">With more than 200 practical recipes, this book helps you perform data analysis with R quickly and efficiently. The R language provides everything you need to do statistical work, but its structure can be difficult to master. This collection of concise, task-oriented recipes makes you productive with R immediately, with solutions ranging from basic tasks to input and output, general statistics, graphics, and linear regression.</div>
+</div>
+</a>
+</div>
+
+<!--  example where we do not have an image -->
+<div class="book">
+<a href="#">
+<div class="bookImage color3">
+<div class="title">An Introduction to Statistical Learning: with Applications in R</div>
+<div class="author">Gareth James and Daniela Witten</div>
+</div>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=rstudio&amp;repo=bookdown-demo&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">An Introduction to Statistical Learning: with Applications in R</a></div>
+<div class="author">by Gareth James and Daniela Witten</div>
+<div class="date">Aug 12, 2013</div>
+<div class="overview">An Introduction to Statistical Learning provides an accessible overview of the field of statistical learning, an essential toolset for making sense of the vast and complex data sets that have emerged in fields ranging from biology to finance to marketing to astrophysics in the past twenty years. This book presents some of the most important modeling and prediction techniques, along with relevant applications.</div>
+</div>
+</a>
+</div>
+
+<!-- example where we do have a book image -->
+<div class="book">
+<a href="#">
+<div class="bookImage" style="background-image:url(content/coverRInAction.jpg)"></div>
+</a>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=yihui&amp;repo=r-ninja&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">R in Action: Data Analysis and Graphics with R</a></div>
+<div class="author">by Robert Kabacoff</div>
+<div class="date">Jun 6, 2015</div>
+<div class="overview">R in Action, Second Edition presents both the R language and the examples that make it so useful for business developers. Focusing on practical solutions, the book offers a crash course in statistics and covers elegant methods for dealing with messy and incomplete data that are difficult to analyze using traditional methods. You'll also master R's extensive graphical capabilities for exploring and presenting data visually. And this expanded second edition includes new chapters on time series analysis, cluster analysis, and classification methodologies, including decision trees, random forests, and support vector machines.</div>
+</div>
+</div>
+
+<!-- another example where we do not have an image -->
+<div class="book">
+<a href="#">
+<div class="bookImage color1">
+<div class="title">Learning R</div>
+<div class="author">Richard Cotton</div>
+</div>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=rstudio&amp;repo=bookdown-demo&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">Learning R</a></div>
+<div class="author">by Richard Cotton</div>
+<div class="date">Sep 26, 2013</div>
+<div class="overview">Learn how to perform data analysis with the R language and software environment, even if you have little or no programming experience. With the tutorials in this hands-on guide, you’ll learn how to use the essential R tools you need to know to analyze data, including data types and programming concepts.</div>
+</div>
+</a>
+</div>
+
+<!-- example where we do have a book image -->
+<div class="book">
+<a href="#">
+<div class="bookImage" style="background-image:url(content/coverRForEveryone.jpg)"></div>
+</a>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=yihui&amp;repo=r-ninja&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">R for Everyone: Advanced Analytics and Graphics</a></div>
+<div class="author">by Jared Lander</div>
+<div class="date">Dec 29, 2013</div>
+<div class="overview">Using the open source R language, you can build powerful statistical models to answer many of your most challenging questions. R has traditionally been difficult for non-statisticians to learn, and most R books assume far too much knowledge to be of help. R for Everyone is the solution.</div>
+</div>
+</div>
+
+<!-- example where we do have a book image -->
+<div class="book">
+<a href="#">
+<div class="bookImage" style="background-image:url(content/cover451.png)"></div>
+</a>
+<div class="bookMeta">
+<iframe src="https://ghbtns.com/github-btn.html?user=yihui&amp;repo=r-ninja&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+<div class="title"><a href="#">Farenheit 451</a></div>
+<div class="author">by Ray Bradbury</div>
+<div class="date">Mar 23, 1953</div>
+<div class="overview">Fahrenheit 451 is a dystopian novel by Ray Bradbury published in 1953. It is regarded as one of his best works. The novel presents a future American society where books are outlawed and "firemen" burn any that are found. The title refers to the temperature that Bradbury asserted to be the autoignition temperature of paper.</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
