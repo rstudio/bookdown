@@ -4,14 +4,18 @@ Getting Started {.getStarted}
 
 > Follow these simple steps to get started writing your own book with bookdown.
 
-<h2><div class="bigNumber color1">1</div>Jump Down</h2>
-<div class="detail">A few details would be handy ...</div>
+## <span class="bigNumber color1">1</span>Jump Down
 
-<h2><div class="bigNumber color2">2</div>Turn Around</h2>
-<div class="detail">The fine print (if there is any).</div>
+A few details would be handy ...
 
-<h2><div class="bigNumber color3">3</div>Pick a Bale of Cotton</h2>
-<div class="detail">Pick a bale a day.</div>
+## <span class="bigNumber color2">2</span>Turn Around
+
+The fine print (if there is any).
+
+## <span class="bigNumber color3">3</span>Pick a Bale of Cotton
+
+Pick a bale a day.
+
 
 
 
