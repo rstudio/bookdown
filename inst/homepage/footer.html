@@ -2,3 +2,19 @@
 
 </div>
 </div>
+
+<script src="js/jquery-1.12.2.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+  menuAnchor.parent().addClass('current');
+}); 
+
+</script>
