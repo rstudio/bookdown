@@ -8,7 +8,7 @@ exclude_urls = c(
   'https://bookdown.org/yihui/homepage/'
 )
 
-book_panels = function(ncol = 3) {
+book_listing = function() {
   sitemap = as_list(read_xml('https://bookdown.org/sitemap.xml'))
   meta = lapply(sitemap, function(site) {
     if (length(site) < 2) return()
@@ -20,6 +20,68 @@ book_panels = function(ncol = 3) {
   meta = do.call(rbind, meta)
   meta = meta[order(meta$lastmod, decreasing = TRUE), ]
 
+  # function to yield the next color class (we rotate among 3 colors)
+  next_color <- 1
+  next_color_class <- function() {
+    class <- paste0("color", next_color)
+    next_color <<- next_color + 1
+    if (next_color > 3) next_color <<- 1
+    class
+  }
+  
+  # function to produce book html
+  book_html = function(url, date) {
+    html = read_html(url, encoding = 'UTF-8')
+    title = xml_find(html, './/title')
+    if (is.null(title)) return()
+    title = xml_text(title)
+    if (title == '') return()
+    
+    description = xml_find(html, './/meta[@name="description"]')
+    if (!is.null(description)) description = xml_attr(description, 'content')
+    cover = xml_find(html, './/meta[@property="og:image"]')
+    if (!is.null(cover)) 
+      cover = xml_attr(cover, 'content')
+    
+    repo = xml_find(html, './/meta[@name="github-repo"]')
+    if (!is.null(repo)) repo = xml_attr(repo, 'content')
+    
+    author = xml_find(html, './/meta[@name="author"]', all = TRUE)
+    if (is.null(author) || length(author) == 0) {
+      author = unlist(strsplit(url, '/'))  # https://bookdown.org/user/book
+      author = author[length(author) - 1]
+    } else {
+      author = xml_attr(author, 'content')
+      author = paste(author, collapse = ', ')
+    }
+    
+    # build the cover
+    if (!is.null(cover)) {
+      # <div class="bookImage" style="background-image:url(content/cover.jpg)"></div>
+      coverDiv <- div(class = "bookImage", 
+                      style = paste0("background-image:url(", cover ,")"))
+    } else {
+      coverDiv <- div(class=paste("bookImage", next_color_class()),
+                      div(class = "title", title),
+                      div(class = "author", author))
+    }
+    
+    div(class = "book",
+        a(href = url,
+          coverDiv,
+          div(class = "bookMeta",
+              github_buttons(repo),
+              div(class = "title", a(href = url, title)),
+              div(class = "author", author),
+              div(class = "date", as.Date(date)),
+              div(class = "overview", description)
+          )
+        )    
+    )
+  } 
+  
+  
+  
   books = mapply(meta$url, meta$lastmod, FUN = function(url, date) {
 
     if (url %in% exclude_urls) return()
@@ -32,80 +94,21 @@ book_panels = function(ncol = 3) {
         return(panels[[url]][['panel']])
       }
     } else panels = list()
-
-    panel = book_panel(url, date)
-
-    res = list(div(class = paste0('col-sm-', 12 / ncol), panel))
-    panels[[url]] = list(date = date, panel = res)
+    
+    panel = book_html(url, date)
+    
+    panels[[url]] = list(date = date, panel = panel)
     saveRDS(panels, '_book_meta.rds')
-    res
-
+    panel
+    
   }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-
-  books = unlist(books, recursive = FALSE)
-  arrange_panels(books, ncol)
-}
-
-# arrange elements in rows
-arrange_panels = function(elements, ncol = 3) {
-  n = length(elements)
-  nrow = ceiling(n / ncol)
-  elements = append(elements, rep(list(NULL), nrow * ncol - n))
-  rows = list()
-  for (i in seq_len(nrow)) {
-    rows[[i]] = div(class = 'row row-eq-height', elements[(i -1) * ncol + 1:3])
-  }
-  tagList(rows)
+  
+  tagList(books)
 }
 
 xml_find = function(x, xpath, all = FALSE) {
   FUN = if (all) xml_find_all else xml_find_one
   tryCatch(FUN(x, xpath), error = function(e) NULL)
-}
-
-# a single book panel
-book_panel = function(url, date) {
-
-  html = read_html(url, encoding = 'UTF-8')
-  title = xml_find(html, './/title')
-  if (is.null(title)) return()
-  title = xml_text(title)
-  if (title == '') return()
-
-  cover = xml_find(html, './/meta[@property="og:image"]')
-  if (is.null(cover)) {
-    description = xml_find(html, './/meta[@name="description"]')
-    if (!is.null(description)) description = xml_attr(description, 'content')
-  } else {
-    description = img(src = xml_attr(cover, 'content'))
-  }
-
-  repo = xml_find(html, './/meta[@name="github-repo"]')
-  if (!is.null(repo)) repo = xml_attr(repo, 'content')
-
-  author = xml_find(html, './/meta[@name="author"]', all = TRUE)
-  if (is.null(author) || length(author) == 0) {
-    author = unlist(strsplit(url, '/'))  # https://bookdown.org/user/book
-    author = author[length(author) - 1]
-  } else {
-    author = xml_attr(author, 'content')
-    author = paste(author, collapse = ', ')
-  }
-
-  div(
-    class = 'panel panel-default',
-    div(class = 'panel-heading', a(href = url, title)),
-    div(
-      class = 'panel-body',
-      p(github_buttons(repo)),
-      p(description)
-    ),
-    div(
-      class = 'panel-footer',
-      tags$i(class = 'fa fa-user'), author,
-      tags$i(class="fa fa-calendar"), as.Date(date)
-    )
-  )
 }
 
 github_buttons = function(repo = NULL) {
