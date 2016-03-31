@@ -2,19 +2,37 @@
 Getting Started
 =================================
 
-> Follow these simple steps to get started writing your own book with bookdown.
+## <span class="bigNumber color1">1</span>Install
 
-## <span class="bigNumber color1">1</span>Jump Down
+Install the [Preview version](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (>= v0.99.1121);
 
-A few details would be handy ...
+Install the R package **bookdown**:
 
-## <span class="bigNumber color2">2</span>Turn Around
+```{r eval=FALSE}
+install.packages('devtools')
+devtools::install_github('rstudio/bookdown')
+```
 
-The fine print (if there is any).
 
-## <span class="bigNumber color3">3</span>Pick a Bale of Cotton
+## <span class="bigNumber color2">2</span>Edit 
 
-Pick a bale a day.
+Fork or clone the repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and Github, or just download it as a Zip file then unzip it locally;
+
+Open the R Markdown file `index.Rmd` and click the button `Knit` on the toolbar of RStudio, or click the `Build Book` button in the `Build` tab if you want to render the book to a specific format or all formats;
+
+Now you should see the index page of this book demo in the RStudio Viewer (or the preview window). You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. For the comprehensive documentation of **bookdown**, please see https://bookdown.org/yihui/bookdown.
+
+
+## <span class="bigNumber color3">3</span>Publish
+
+To publish your books to bookdown.org, you need to first create an account by [signing in](/connect/) with your Google account, and then call the function `publish_book()` in R:
+
+```{r eval=FALSE}
+bookdown::publish_book(render = 'local')
+```
+
+If it is the first time you have tried to publish the book, you will be asked to authorize **bookdown** to publish to your bookdown.org account.
+
 
 
 

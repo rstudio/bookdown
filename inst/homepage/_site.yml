@@ -1,6 +1,6 @@
 output:
   html_document:
-    highlight: null
+    highlight: tango
     theme: null
     mathjax: null
     include:

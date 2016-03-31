@@ -9,6 +9,7 @@ h1 {
 }
 
 p {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -260,7 +261,8 @@ p {
   border-radius:100px;
 }
 
-#getting-started .level2 p {
+#getting-started .level2 p,
+#getting-started .level2 pre {
   margin-left:86px;
 }
 
