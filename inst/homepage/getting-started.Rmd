@@ -2,7 +2,7 @@
 Getting Started
 =================================
 
-## <span class="bigNumber color1">1</span>Install
+## Install {.bigNumber .color1}
 
 Install the [Preview version](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (>= v0.99.1121);
 
@@ -13,8 +13,7 @@ install.packages('devtools')
 devtools::install_github('rstudio/bookdown')
 ```
 
-
-## <span class="bigNumber color2">2</span>Edit 
+## Edit {.bigNumber .color2}
 
 Fork or clone the repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and Github, or just download it as a Zip file then unzip it locally;
 
@@ -22,8 +21,7 @@ Open the R Markdown file `index.Rmd` and click the button `Knit` on the toolbar 
 
 Now you should see the index page of this book demo in the RStudio Viewer (or the preview window). You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. For the comprehensive documentation of **bookdown**, please see https://bookdown.org/yihui/bookdown.
 
-
-## <span class="bigNumber color3">3</span>Publish
+## Publish {.bigNumber .color2}
 
 To publish your books to bookdown.org, you need to first create an account by [signing in](/connect/) with your Google account, and then call the function `publish_book()` in R:
 

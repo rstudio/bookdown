@@ -15,6 +15,25 @@ $(document).ready(function() {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
   menuAnchor.parent().addClass('current');
-}); 
+  
+  // bigNumber
+  var numberClasses = ["color1", "color2", "color3"];
+  var bigNumber = $('.section.bigNumber');
+  bigNumber.each(function(index) {
+    $(this).removeClass('bigNumber');
+    var span = $('<span class="bigNumber"></span>');
+    span.text(index + 1);
+    for (var i = 0; i<numberClasses.length; i++) {
+      var numberClass = numberClasses[i];
+      if ($(this).hasClass(numberClass)) {
+        $(this).removeClass(numberClass);
+        span.addClass(numberClass);
+        break;
+      }
+    }
+    var h2 = $(this).children('h2');
+    h2.prepend(span);
+  }); 
+});
 
 </script>
