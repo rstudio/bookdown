@@ -1,27 +1,4 @@
 
-
-<div id="header">
-<div id="content">
-<div id="nav">
-<div id="logo"><a href="./">bookdown</a></div>
-
-<ul id="navLeft">
-<li class="navItem"><a href="index.html">Books</a></li>
-<li class="navItem current">Getting Started</li>
-<li class="navItem"><a href="#">About</a></li>
-</ul>
-
-<ul id="navRight">
-<a href="https://github.com/rstudio/bookdown"<li class="gitHub"></li></a>
-</div>
-
-</ul>
-</div>
-</div>
-
-<div id="main">
-
-
 <div id="content" class="getStarted">
 
 <div class="intro">Follow these simple steps to get started writing your own book with bookdown.</div>
@@ -37,5 +14,5 @@
 
 
 </div>
-</div>
+
 

@@ -3,5 +3,10 @@ output:
     highlight: null
     theme: null
     mathjax: null
-    css: ["css/reset.css", "css/bookdown.css"]
+    include:
+      before_body: header.html
+      after_body: footer.html
+    css:
+      - "css/reset.css"
+      - "css/bookdown.css"
 
