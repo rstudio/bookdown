@@ -80,7 +80,7 @@ output:
 ---
 ```
 
-If an Rmd file does not have YAML metadata in the beginning, **bookdown** will automatically add `knit: bookdown::preview_chapter` to it the first time you compile the whole book through `bookdown::render_book()`.
+If you are using a version of the RStudio IDE that is higher than 0.99.1120 (currently it is the [preview version](https://www.rstudio.com/products/rstudio/download/preview/)), you do not really have to set `knit: bookdown::preview_chapter` in YAML, since RStudio will automatically detect if an Rmd file is a part of a book, and call `preview_chapter()` if it is.
 
 The **bookdown** package comes with a few addins for RStudio. If you are not familiar with RStudio addins, you may check out the documentation at http://rstudio.github.io/rstudioaddins/. After you have installed the **bookdown** package and use RStudio v0.99.878 or later, you will see a dropdown menu on the toolbar named "Addins" and menu items like "Preview Book" and "Input LaTeX Math" after you open the menu.
 
