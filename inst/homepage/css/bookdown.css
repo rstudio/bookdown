@@ -241,14 +241,14 @@ p {
   font-style: italic;
 }
 
-#content .getStarted h2 {
+#getting-started h2 {
     line-height:66px;
     font-size:36px;
     margin:35px 0 5px 0;
     font-weight:300;
 }
 
-#content .getStarted h2 .bigNumber {
+#getting-started h2 .bigNumber {
   display:inline-block;
   font-size:36px;
 
@@ -259,7 +259,7 @@ p {
   border-radius:100px;
 }
 
-#content .getStarted .level2 p {
+#getting-started .level2 p {
   margin-left:86px;
 }
 
@@ -322,24 +322,24 @@ p {
     margin:60px auto;
   }
 
-  #content .getStarted {
+  #getting-started {
     font-size:12px;
   }
 
-  #content .getStarted h2 {
+  #getting-started h2 {
       line-height:44px;
       font-size:24px;
       margin:40px 0 5px 0;
       font-weight:300;
   }
 
-  #content .getStarted h2 .bigNumber {
+  #getting-started h2 .bigNumber {
     font-size:24px;
     width:44px;
     margin-right:10px;
   }
 
-  #content .getStarted .detail {
+  #getting-started .detail {
     margin-left:54px;
   }
 

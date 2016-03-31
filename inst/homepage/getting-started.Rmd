@@ -1,5 +1,5 @@
 
-Getting Started {.getStarted}
+Getting Started
 =================================
 
 > Follow these simple steps to get started writing your own book with bookdown.
