@@ -2,7 +2,7 @@
 Getting Started {.getStarted}
 =================================
 
-<div class="intro">Follow these simple steps to get started writing your own book with bookdown.</div>
+> Follow these simple steps to get started writing your own book with bookdown.
 
 <h2><div class="bigNumber color1">1</div>Jump Down</h2>
 <div class="detail">A few details would be handy ...</div>

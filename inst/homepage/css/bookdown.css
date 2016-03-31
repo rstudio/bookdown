@@ -235,7 +235,7 @@ p {
   line-height:20px;
 }
 
-#main #content .intro {
+#main #content blockquote {
   padding-bottom:15px;
   border-bottom: 1px dotted #72776d;
   font-style: italic;

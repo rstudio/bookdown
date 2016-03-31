@@ -1,6 +1,7 @@
 
 
-<div class="intro">Easy book authoring with bookdown - write books and long-form articles in R Markdown.</div>
+> Easy book authoring with bookdown - write books and long-form articles in R Markdown.
+
 
 <!--  example where we do not have an image -->
 <div class="book">
