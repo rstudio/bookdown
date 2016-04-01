@@ -28,6 +28,16 @@ $(document).ready(function() {
   var menuAnchor = $('a[href="' + href + '"]');
   menuAnchor.parent().addClass('current');
   
+  // now transform anchor urls so they work on bookdown.org
+  if (window.location.hostname == "bookdown.org") {
+    var pageAnchors = $('li.navItem a');
+    pageAnchors.each(function() {
+      var href = $(this).attr('href');
+      href = "/yihui/homepage/" + href;
+      $(this).attr('href', href);
+    });
+  }
+  
   // bigNumber
   var numberClasses = ["color1", "color2", "color3"];
   var bigNumber = $('.section.bigNumber');
