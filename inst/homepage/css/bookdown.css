@@ -270,6 +270,65 @@ p {
   border: 1px solid #ccc;
 }
 
+#footer {
+}
+
+#footer #content {
+  margin:0 auto;
+  max-width:980px;
+  padding:20px;
+
+  line-height:40px;
+}
+
+#footer #content #finePrint {
+  font-size:11px;
+}
+
+#footer #content #social {
+  float:right;
+}
+
+#footer .socialIcon {
+  display:inline-block;
+  width:32px;
+  height:32px;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+
+  vertical-align: middle;
+  opacity:.50;
+}
+
+#footer .socialIcon:hover {
+  opacity:1;
+}
+
+#footer .socialIcon.twitter {
+  background-image: url(../images/twitterLogo.svg);
+}
+
+#footer .socialIcon.gitHub {
+  background-image: url(../images/gitHubLogo.svg);
+}
+
+#footer .socialIcon.linkedIn {
+  background-image: url(../images/linkedIn.svg);
+}
+
+#footer .socialIcon.facebook {
+  background-image: url(../images/facebookLogo.svg);
+}
+
+#footer #finePrint a {
+  text-decoration: none;
+  color:#de6048;
+}
+
+#footer #finePrint a:hover {
+  text-decoration: underline;
+}
+
 
 @media only screen and (max-width: 600px) {
 
@@ -351,9 +410,7 @@ p {
     margin-left:54px;
   }
 
-}
-
-
-footer {
-  display: none;
+  #footer #content #social {
+    float:none;
+  }
 }
