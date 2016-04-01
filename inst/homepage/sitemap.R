@@ -10,6 +10,11 @@ exclude_urls = c(
   'https://bookdown.org/yihui/homepage/'
 )
 
+pinned_urls = c(
+  "https://bookdown.org/yihui/bookdown/",
+  "http://r4ds.had.co.nz/"
+)
+
 book_listing = function() {
   
   read_meta = function(xml) {
@@ -26,6 +31,11 @@ book_listing = function() {
   meta = rbind(read_meta('https://bookdown.org/sitemap.xml'),
                read_meta('external.xml'))
   meta = meta[order(meta$lastmod, decreasing = TRUE), ]
+  
+  # elevate pinned urls to the top
+  pinned = subset(meta, meta$url %in% pinned_urls)
+  other = subset(meta, ! meta$url %in% pinned_urls)
+  meta = rbind(pinned, other)
 
   # function to yield the next color class (we rotate among 3 colors)
   next_color <- 1
