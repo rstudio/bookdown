@@ -24,7 +24,7 @@ if (packageVersion('DT') < '0.1.45') devtools::install_github('rstudio/DT')
 # Introduction
 
 ```{block, type='rmdwarning'}
-This book and the package **bookdown** are still under active development, and should not be considered stable at the moment. You are welcome to experiment with this package, and feedback may be sent to https://github.com/rstudio/bookdown/issues or yihui@rstudio.com.
+This book and the package **bookdown** are for beta testers, and should not be considered stable at the moment. You are welcome to experiment with this package, and feedback may be sent to https://github.com/rstudio/bookdown/issues or yihui@rstudio.com.
 ```
 
 This book is a guide to authoring books with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as
