@@ -38,6 +38,13 @@ $(document).ready(function() {
     var h2 = $(this).children('h2');
     h2.prepend(span);
   }); 
+  
+  // munge url
+  (function() {
+  var loc = window.top.location, his = window.top.history;
+  if (loc.protocol === 'https:' && loc.pathname !== '/' && his.pushState)
+    his.pushState({}, '', '/');
+  })();
 });
 
 </script>
