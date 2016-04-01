@@ -9,4 +9,5 @@ output:
     css:
       - "css/reset.css"
       - "css/bookdown.css"
+      - "css/font-awesome/css/font-awesome.min.css"
 

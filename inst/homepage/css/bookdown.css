@@ -352,3 +352,8 @@ p {
   }
 
 }
+
+
+footer {
+  display: none;
+}
