@@ -266,6 +266,10 @@ p {
   margin-left:86px;
 }
 
+#getting-started .level2 img {
+  border: 1px solid #ccc;
+}
+
 
 @media only screen and (max-width: 600px) {
 
