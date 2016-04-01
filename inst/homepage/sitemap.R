@@ -11,15 +11,20 @@ exclude_urls = c(
 )
 
 book_listing = function() {
-  sitemap = as_list(read_xml('https://bookdown.org/sitemap.xml'))
-  meta = lapply(sitemap, function(site) {
-    if (length(site) < 2) return()
-    loc = unlist(site$loc)
-    lastmod = unlist(site$lastmod)
-    if (length(loc) * length(lastmod) != 1) return()
-    data.frame(url = loc, lastmod = as.POSIXct(strptime(lastmod, '%Y-%m-%dT%H:%M:%SZ', 'UTC')))
-  })
-  meta = do.call(rbind, meta)
+  
+  read_meta = function(xml) {
+    xmldoc = as_list(read_xml(xml))
+    meta = lapply(xmldoc, function(site) {
+      if (length(site) < 2) return()
+      loc = unlist(site$loc)
+      lastmod = unlist(site$lastmod)
+      if (length(loc) * length(lastmod) != 1) return()
+      data.frame(url = loc, lastmod = as.POSIXct(strptime(lastmod, '%Y-%m-%dT%H:%M:%SZ', 'UTC')))
+    })
+    do.call(rbind, meta)
+  }
+  meta = rbind(read_meta('https://bookdown.org/sitemap.xml'),
+               read_meta('external.xml'))
   meta = meta[order(meta$lastmod, decreasing = TRUE), ]
 
   # function to yield the next color class (we rotate among 3 colors)

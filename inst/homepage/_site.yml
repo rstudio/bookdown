@@ -1,3 +1,4 @@
+exclude: ["external.xml"]
 output:
   html_document:
     highlight: tango
