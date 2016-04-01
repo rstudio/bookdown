@@ -2,4 +2,6 @@
 .Rhistory
 .RData
 **/rsconnect/
-.*.Rnb.cached
+.DS_Store
+
+
