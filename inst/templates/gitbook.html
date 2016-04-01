@@ -17,6 +17,12 @@
   $if(description)$<meta property="og:description" content="$description$" />$endif$
   $if(github-repo)$<meta name="github-repo" content="$github-repo$" />$endif$
 
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="$pagetitle$" />
+  $if(twitter-handle)$<meta name="twitter:site" content="@$twitter-handle$" />$endif$
+  $if(description)$<meta name="twitter:description" content="$description$" />$endif$
+  $if(cover-image)$<meta name="twitter:image" content="$url$$cover-image$" />$endif$
+
 $for(author-meta)$
 <meta name="author" content="$author-meta$">
 $endfor$
