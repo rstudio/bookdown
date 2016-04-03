@@ -1,4 +1,6 @@
-
+---
+title: "bookdown: Easy Book Publishing with R Markdown"
+---
 
 > Write HTML, PDF, ePub, and Kindle books with R Markdown
 

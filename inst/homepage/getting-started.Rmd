@@ -1,3 +1,6 @@
+---
+title: "bookdown: Easy Book Publishing with R Markdown"
+---
 
 Getting Started
 =================================
