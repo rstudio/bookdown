@@ -60,8 +60,8 @@ $(document).ready(function() {
   // munge url
   (function() {
   var loc = window.top.location, his = window.top.history;
-  if (loc.protocol === 'https:' && loc.pathname !== '/' && his.pushState)
-    his.pushState({}, '', '/');
+  if (loc.protocol === 'https:' && loc.pathname !== '/' && his.replaceState)
+    his.replaceState({}, '', '/');
   })();
 });
 
