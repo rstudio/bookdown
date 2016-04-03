@@ -7,14 +7,14 @@ Getting Started
 
 ## Install {.bigNumber .color1}
 
-First install the R package **bookdown** as follows:
+First install the **bookdown** R package as follows:
 
 ```{r eval=FALSE}
 install.packages('devtools')
 devtools::install_github('rstudio/bookdown')
 ```
 
-Note that it's important to install **devtools** first to ensure you are running a recent version of it (>= 1.10).
+It's important to install **devtools** first since bookdown's installation requires it's very latest version (v1.10).
 
 Next, install the latest [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (this release is required for the build and preview features described below).
 
@@ -23,7 +23,7 @@ Next, install the latest [Preview Release](https://www.rstudio.com/products/rstu
 
 The best way to get started is to fork or clone the the repository <https://github.com/rstudio/bookdown-demo> (if you aren't familiar with Git and GitHub you can alternatively you can download it as a [zip file](https://github.com/rstudio/bookdown-demo/archive/master.zip)).
 
-After you have the demo book, you should open it as a project within RStudio, open the `index.Rmd` file and click the **Knit** button:
+Open the demo book as a project within RStudio, open the `index.Rmd` file, and click the **Knit** button:
 
 <img src="images/knit-book.png" width=575 height=448>
 
@@ -32,19 +32,11 @@ Now you should see the index page of this book demo in the preview window:
 
 <img src="images/preview-book.png" width=575 height=355>
 
-Kniting the `index.Rmd` file will build all of the chapters of the book using the default output format. Kniting other chapters (e.g. `01-intro.Rmd`) will build and preview just that chapter.
-
-You may add or change the R Markdown files and hit the **Knit** button again to preview the book or individual chapters. If you prefer not to use RStudio, you may also compile the book through command line as follows:
-
-```{r eval=FALSE}
-bookdown::render_book("index.Rmd")
-```
-
-To build all chapters and all formats of the book you can use the **Build Book** button within the RStudio Build pane:
+The **Knit** button renders just the chapter you are currently editing (e.g. `index.Rmd`, `01-intro.Rmd`, etc.) using the default output format for the book. To build all chapters and all formats of the book you can use the **Build Book** button within the RStudio Build pane:
 
 <img src="images/build-book.png" width=575 height=54>
 
-By default the HTML, PDF, and ePub formats of the book will be compiled into the `_book` sub-directory of the project (you can also build a single format at a time using the Build Book menu).
+By default the HTML, PDF, and ePub formats of the book will be compiled into the `_book` sub-directory of the project (you can also build a single format at a time using the **Build Book** menu).
 
 For the comprehensive documentation of **bookdown**, please see <https://bookdown.org/yihui/bookdown>.
 
