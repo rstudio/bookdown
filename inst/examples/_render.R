@@ -26,3 +26,13 @@ for (fmt in formats) {
   if (fmt == 'bookdown::epub_book') bookdown::kindlegen()
 }
 
+# patch HTML files in gh-pages if built on Travis
+if (!is.na(Sys.getenv('CI', NA))) {
+  r = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
+  for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
+    x = readLines(f)
+    if (length(i <- grep('^\\s*<body>\\s*$', x)) == 0) next
+    x[i[1]] = r
+    writeLines(x, f)
+  }
+}
