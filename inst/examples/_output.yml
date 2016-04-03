@@ -5,7 +5,7 @@ bookdown::gitbook:
     toc:
       collapse: subsection
       before: |
-        <li><a href="./">Authoring A Book with R Markdown</a></li>
+        <li><a href="./">Authoring Books with R Markdown</a></li>
       after: |
         <li><a href="https://www.rstudio.com" target="blank">Published with RStudio Press</a></li>
     download: [pdf, epub, mobi]
