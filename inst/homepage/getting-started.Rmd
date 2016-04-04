@@ -14,14 +14,14 @@ install.packages('devtools')
 devtools::install_github('rstudio/bookdown')
 ```
 
-It's important to install **devtools** first since bookdown's installation requires it's very latest version (v1.10).
+It is important to install **devtools** first since bookdown's installation requires its very latest version (v1.10).
 
 Next, install the latest [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio IDE (this release is required for the build and preview features described below).
 
 
 ## Edit {.bigNumber .color2}
 
-The best way to get started is to fork or clone the the repository <https://github.com/rstudio/bookdown-demo> (if you aren't familiar with Git and GitHub you can alternatively you can download it as a [zip file](https://github.com/rstudio/bookdown-demo/archive/master.zip)).
+The best way to get started is to fork or clone the the repository <https://github.com/rstudio/bookdown-demo> (if you are not familiar with Git and GitHub, you can alternatively download it as a [zip file](https://github.com/rstudio/bookdown-demo/archive/master.zip) and unzip it).
 
 Open the demo book as a project within RStudio, open the `index.Rmd` file, and click the **Knit** button:
 
