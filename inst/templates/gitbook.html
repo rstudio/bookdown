@@ -37,7 +37,6 @@ MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  $math$
 $endif$
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,7 +153,19 @@ $body$
 $for(include-after)$
 $include-after$
 $endfor$
-
+$if(math)$
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "$if(mathjax)$$mathjax$$else$https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML$endif$";
+    if (script.src === "" && location.protocol !== "file:")
+      script.src  = "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+$endif$
 </body>
 
 </html>
