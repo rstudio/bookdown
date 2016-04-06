@@ -65,7 +65,7 @@ gitbook_dependency = function() {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  list(htmltools::htmlDependency(
+  list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
       'style.css', 'plugin-bookdown.css', 'plugin-highlight.css',
