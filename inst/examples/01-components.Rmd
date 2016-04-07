@@ -294,7 +294,7 @@ There is a helper function `write_bib()` in **knitr** to generate BibTeX entries
 knitr::write_bib(c('knitr', 'stringr'), '')
 ```
 
-Once you have got one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliopgraphy style via `biblio-style` (this only applies to PDF output), e.g.,
+Once you have got one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliography style via `biblio-style` (this only applies to PDF output), e.g.,
 
 ```yaml
 ---
