@@ -16,7 +16,7 @@ pinned_urls = c(
 )
 
 book_listing = function() {
-  
+
   read_meta = function(xml) {
     xmldoc = as_list(read_xml(xml))
     meta = lapply(xmldoc, function(site) {
@@ -31,11 +31,10 @@ book_listing = function() {
   meta = rbind(read_meta('https://bookdown.org/sitemap.xml'),
                read_meta('external.xml'))
   meta = meta[order(meta$lastmod, decreasing = TRUE), ]
-  
+
   # elevate pinned urls to the top
-  pinned = subset(meta, meta$url %in% pinned_urls)
-  other = subset(meta, ! meta$url %in% pinned_urls)
-  meta = rbind(pinned, other)
+  pinned = match(pinned_urls, meta$url)
+  meta = rbind(meta[pinned, ], meta[-pinned, ])
 
   # function to yield the next color class (we rotate among 3 colors)
   next_color <- 1
@@ -45,7 +44,7 @@ book_listing = function() {
     if (next_color > 3) next_color <<- 1
     class
   }
-  
+
   # function to produce book html
   book_html = function(url, date) {
     html = read_html(url, encoding = 'UTF-8')
@@ -53,16 +52,16 @@ book_listing = function() {
     if (is.null(title)) return()
     title = xml_text(title)
     if (title == '') return()
-    
+
     description = xml_find(html, './/meta[@name="description"]')
     if (!is.null(description)) description = xml_attr(description, 'content')
     cover = xml_find(html, './/meta[@property="og:image"]')
-    if (!is.null(cover)) 
+    if (!is.null(cover))
       cover = xml_attr(cover, 'content')
-    
+
     repo = xml_find(html, './/meta[@name="github-repo"]')
     if (!is.null(repo)) repo = xml_attr(repo, 'content')
-    
+
     author = xml_find(html, './/meta[@name="author"]', all = TRUE)
     if (is.null(author) || length(author) == 0) {
       author = unlist(strsplit(url, '/'))  # https://bookdown.org/user/book
@@ -71,18 +70,18 @@ book_listing = function() {
       author = xml_attr(author, 'content')
       author = paste(author, collapse = ', ')
     }
-    
+
     # build the cover
     if (!is.null(cover)) {
       # <div class="bookImage" style="background-image:url(content/cover.jpg)"></div>
-      coverDiv <- div(class = "bookImage", 
+      coverDiv <- div(class = "bookImage",
                       style = paste0("background-image:url(", cover ,")"))
     } else {
       coverDiv <- div(class=paste("bookImage", next_color_class()),
                       div(class = "title", title),
                       div(class = "author", author))
     }
-    
+
     div(class = "book",
         a(href = url,
           coverDiv,
@@ -93,12 +92,12 @@ book_listing = function() {
               div(class = "date", as.Date(date)),
               div(class = "overview", description)
           )
-        )    
+        )
     )
-  } 
-  
-  
-  
+  }
+
+
+
   books = mapply(meta$url, meta$lastmod, FUN = function(url, date) {
 
     if (url %in% exclude_urls) return()
@@ -111,15 +110,15 @@ book_listing = function() {
         return(panels[[url]][['panel']])
       }
     } else panels = list()
-    
+
     panel = book_html(url, date)
-    
+
     panels[[url]] = list(date = date, panel = panel)
     saveRDS(panels, '_book_meta.rds')
     panel
-    
+
   }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-  
+
   tagList(books)
 }
 
