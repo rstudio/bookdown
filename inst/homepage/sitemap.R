@@ -69,6 +69,8 @@ book_listing = function() {
     } else {
       author = xml_attr(author, 'content')
       author = paste(author, collapse = ', ')
+      if (title == 'A Minimal Book Example' && author == 'Yihui Xie' && !grepl('/yihui/', url))
+        return()
     }
 
     # build the cover
