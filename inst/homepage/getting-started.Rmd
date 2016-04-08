@@ -49,9 +49,3 @@ bookdown::publish_book(render = 'local')
 ```
 
 If it is the first time you have tried to publish the book, you will be asked to authorize **bookdown** to publish to your bookdown.org account.
-
-
-
-
-
-
