@@ -561,6 +561,7 @@ move_files_html = function(output, lib_dir) {
   f = unlist(lapply(regmatches(x, m), function(z) {
     if (length(z) == 0) z else gsub(r, '\\2', z)
   }))
+  f = c(f, parse_cover_image(x))
   f = local_resources(unique(f[file.exists(f)]))
   # detect resources in CSS
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
@@ -583,4 +584,17 @@ move_files_html = function(output, lib_dir) {
   # should not need the lib dir any more
   if (length(lib_dir) == 1 && is.character(lib_dir))
     unlink(lib_dir, recursive = TRUE)
+}
+
+parse_cover_image = function(x) {
+  r = '^\\s*<meta property="og:url" content="([^"]+)" />\\s*$'
+  i = grep(r, x)
+  if (length(i) == 0) return()
+  u = gsub(r, '\\1', x[i[1]])  # URL
+  r = '^\\s*<meta property="og:image" content="([^"]+)" />\\s*$'
+  i = grep(r, x)
+  if (length(i) == 0) return()
+  m = gsub(r, '\\1', x[i[1]])  # cover image
+  m = gsub(u, '', m, fixed = TRUE)
+  m
 }
