@@ -56,8 +56,13 @@ book_listing = function() {
     description = xml_find(html, './/meta[@name="description"]')
     if (!is.null(description)) description = xml_attr(description, 'content')
     cover = xml_find(html, './/meta[@property="og:image"]')
-    if (!is.null(cover))
+    if (!is.null(cover)) {
       cover = xml_attr(cover, 'content')
+      # relative URL to absolute
+      if (!grepl('^https?://', cover)) cover = paste0(url, cover)
+      # is the cover image URL accessible?
+      if (tryCatch(httr::http_error(cover), error = function(e) TRUE)) cover = NULL
+    }
 
     repo = xml_find(html, './/meta[@name="github-repo"]')
     if (!is.null(repo)) repo = xml_attr(repo, 'content')
