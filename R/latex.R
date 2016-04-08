@@ -74,4 +74,7 @@ resolve_refs_latex = function(x) {
   x
 }
 
-latexmk = getFromNamespace('latexmk', 'rmarkdown')
+latexmk = function(...) {
+  FUN = getFromNamespace('latexmk', 'rmarkdown')
+  FUN(...)
+}
