@@ -27,7 +27,10 @@ mathquill = function() {
         list(jquery_dependency(), mathquill_dependency())
       ),
       tags$p('LaTeX source:', style = 'margin: 1em auto 1em auto;'),
-      tags$textarea(id = 'latex_source', style = 'height: 40px; min-height: 40px;')
+      tags$textarea(
+        id = 'latex_source', readonly = 'readonly',
+        style = 'height: 40px; min-height: 40px;'
+      )
     ),
     server = function(input, output) {
       shiny::observeEvent(input$done, {
