@@ -109,6 +109,28 @@ epub_css = function(files, output = tempfile('epub', fileext = '.css')) {
   output
 }
 
+#' A wrapper function to convert e-books using Calibre
+#'
+#' This function calls the command \command{ebook-convert} in Calibre
+#' (\url{http://calibre-ebook.com}) to convert e-books.
+#' @param input The input filename.
+#' @param output The output filename or extension (if only an extenion is
+#'   provided, the output filename will be the input filename with its extension
+#'   replaced by \code{output}; for example, \code{calibre('foo.epub', 'mobi')}
+#'   generates \file{foo.mobi}).
+#' @param options A character vector of additional options to be passed to
+#'   \command{ebook-convert}.
+#' @export
+#' @return The output filename.
+calibre = function(input, output, options = '') {
+  if (!grepl('[.]', output)) output = with_ext(input, output)
+  if (input == output) stop('input and output filenames are the same')
+  unlink(output)
+  system2('ebook-convert', c(shQuote(input), shQuote(output), options))
+  if (!file.exists(output)) stop('Failed to convert ', input, ' to ', output)
+  invisible(output)
+}
+
 #' A wrapper function to convert EPUB to the Mobipocket format
 #'
 #' This function simply calls the command line tool \command{kindlegen} provided
