@@ -578,6 +578,7 @@ move_files_html = function(output, lib_dir) {
   f = gsub('^[.]/', '', f)  # strip the initial ./, e.g. ./foo.png -> foo.png
   f = f[f != '']
   f = f[!knitr:::is_abs_path(f)]
+  if (getOption('bookdown.js.debug', FALSE)) f = c(f, js_min_sources(f))
   f = unique(f[file.exists(f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   file.copy(f, file.path(o, f), overwrite = TRUE)
@@ -586,6 +587,7 @@ move_files_html = function(output, lib_dir) {
     unlink(lib_dir, recursive = TRUE)
 }
 
+# parse the cover image from HTML meta
 parse_cover_image = function(x) {
   r = '^\\s*<meta property="og:url" content="([^"]+)" />\\s*$'
   i = grep(r, x)
@@ -597,4 +599,11 @@ parse_cover_image = function(x) {
   m = gsub(r, '\\1', x[i[1]])  # cover image
   m = gsub(u, '', m, fixed = TRUE)
   m
+}
+
+# source js files and map files
+js_min_sources = function(x) {
+  r = '[.]min[.]js$'
+  x = grep(r, x, value = TRUE)
+  c(gsub(r, '.js', x), gsub(r, '.min.map', x))
 }
