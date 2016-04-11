@@ -15800,28 +15800,8 @@ function updateButton(opts) {
     }
 }
 
-// Update all buttons
-function updateAllButtons() {
-    $('.js-toolbar-action').remove();
-    _.each(buttons, updateButton);
-}
-
-// When page changed, reset buttons
-events.bind('page.change', function() {
-    updateAllButtons();
-});
-
 module.exports = {
     createButton: createButton
 };
 
 },{"./events":12,"jquery":1,"lodash":2}]},{},[13]);
-
-// [Yihui] restore the previous jQuery object; we are in a self-contained world
-// in gitbook thanks to the AMD loader, so we should not need jQuery to be a
-// global object
-(function() {
-  var jQuery = window.jQuery.noConflict(true);
-  // if no jQuery was loaded before, still use gitbook's jQuery
-  if (typeof window.jQuery === 'undefined') window.jQuery = window.$ = jQuery;
-})();
