@@ -1,7 +1,4 @@
-in_dir = function(dir, expr) {
-  owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
-  expr
-}
+in_dir = knitr:::in_dir
 
 uglifyjs = function(file, args = NULL) {
   if (Sys.which('uglifyjs') == '') return(1)
@@ -11,4 +8,4 @@ uglifyjs = function(file, args = NULL) {
   system2('uglifyjs', c(shQuote(file), '-o', out[1], '--source-map', out[2], args))
 }
 
-in_dir('inst/templates/gitbook/js', uglifyjs('app.js'))
+in_dir('inst/resources/gitbook/js', uglifyjs('app.js'))
