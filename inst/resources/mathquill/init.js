@@ -8,7 +8,6 @@ $(function() {
   function update_latex() {
     var code = answer.latex();
     $('textarea#latex_source').val(code).trigger('input');
-    Shiny.onInputChange('latex_source', code);
   }
   update_latex();
   $('textarea#latex_source').on('input', function (e) {
