@@ -1,5 +1,5 @@
 /*
- * MathQuill v0.10.0               http://mathquill.com
+ * MathQuill v0.10.1               http://mathquill.com
  * by Han, Jeanine, and Mary  maintainers@mathquill.com
  *
  * This Source Code Form is subject to the terms of the
@@ -147,7 +147,7 @@
   font-style: italic;
 }
 .mq-math-mode var.mq-f {
-  margin-right: 0.1em;
+  margin-right: 0.2em;
   margin-left: 0.1em;
 }
 .mq-math-mode .mq-roman var.mq-f {
@@ -331,6 +331,28 @@
   cursor: text;
   font-family: Symbola, "Times New Roman", serif;
 }
+.mq-math-mode .mq-overarrow {
+  border-top: 1px solid black;
+  margin-top: 1px;
+  padding-top: 0.2em;
+}
+.mq-math-mode .mq-overarrow:before {
+  display: block;
+  position: relative;
+  top: -0.34em;
+  font-size: 0.5em;
+  line-height: 0em;
+  content: '\27A4';
+  text-align: right;
+}
+.mq-math-mode .mq-overarrow.mq-arrow-left:before {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
 .mq-math-mode .mq-selection,
 .mq-editable-field .mq-selection,
 .mq-math-mode .mq-selection .mq-non-leaf,
@@ -382,7 +404,11 @@
   user-select: text;
   position: absolute;
   clip: rect(1em 1em 1em 1em);
-  font-size: 0;
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
   resize: none;
   width: 1px;
   height: 1px;

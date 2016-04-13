@@ -7,7 +7,7 @@ jquery_dependency = function() {
 
 mathquill_dependency = function() {
   htmltools::htmlDependency(
-    'mathquill', '0.10.0', bookdown_file('resources', 'mathquill'),
+    'mathquill', '0.10.1', bookdown_file('resources', 'mathquill'),
     script = c('mathquill.min.js', 'init.js'), stylesheet = 'mathquill.css'
   )
 }
