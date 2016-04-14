@@ -91,8 +91,8 @@ before_script:
   - chmod +x ./_deploy.sh
 
 script:
-  - ./build.sh
-  - ./deploy.sh
+  - ./_build.sh
+  - ./_deploy.sh
 ```
 
 The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GH_TOKEN` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
