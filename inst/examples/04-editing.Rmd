@@ -34,7 +34,7 @@ Building the whole book can be slow when the size of the book is big. Two things
 
 Previewing the current chapter is helpful when you are only focusing on this chapter, since you can quickly see the actual output as you add more content or revise the chapter. Although the preview works for all output formats, we recommend you to preview the HTML output.
 
-One downside of previewing a chapter is that the cross-references to other chapters will not work, since **bookdown** knows nothing about other chapters in this case. That is a reasonably small price to pay for the gain in speed.
+One downside of previewing a chapter is that the cross-references to other chapters will not work, since **bookdown** knows nothing about other chapters in this case. That is a reasonably small price to pay for the gain in speed. Since previewing a chapter only renders the output for this specific chapter, you should not expect the content of other chapters is correctly rendered as well. For example, when you navigation to a different chapter, you are actually viewing the old output of that chapter (which may not even exist).
 
 ## Serve the book
 
