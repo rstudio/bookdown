@@ -66,7 +66,6 @@ git clone -b gh-pages \
   book-output
 cd book-output
 cp -r ../_book/* ./
-rm -rf _bookdown_files
 git add *
 git commit -m"Update the book"
 git push origin gh-pages
@@ -104,7 +103,7 @@ install:
   - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
 ```
 
-If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two types of directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. The figure and cache directories are stored under the `_bookdown_files` directory of the book output directory (e.g., `_book/`). A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
+If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two types of directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. The figure and cache directories are stored under the `_bookdown_files` directory of the book root directory. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
 
 ```yaml
 sudo: false
@@ -112,7 +111,7 @@ sudo: false
 cache:
   packages: yes
   directories:
-    - $TRAVIS_BUILD_DIR/_book/_bookdown_files
+    - $TRAVIS_BUILD_DIR/_bookdown_files
 ```
 
 If your book is very time-consuming to build, you may use the above configurations on Travis to save time. Note `packages: yes` means the R packages installed on Travis are also cached.

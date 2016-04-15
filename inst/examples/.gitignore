@@ -1,8 +1,3 @@
-*.html
-libs
-bookdown_files
-bookdown_cache
-bookdown.bbl
-bookdown.tex
+_bookdown_files
 _book
 packages.bib
