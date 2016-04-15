@@ -12,6 +12,7 @@ git clone -b gh-pages https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git .
 ls | grep -v ^bookdown[.].* | xargs rm -rf
 git ls-files --deleted -z | xargs -0 git rm
 cp -r ${BOOK_DIR}/* ./
+rm -rf _bookdown_files
 git add --all *
 git commit -m"update homepage (travis build ${TRAVIS_BUILD_NUMBER})"
 git push -q -f origin gh-pages

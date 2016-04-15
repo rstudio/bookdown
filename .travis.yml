@@ -5,7 +5,6 @@ cache:
   directories:
     - $HOME/bin
     - $TRAVIS_BUILD_DIR/inst/examples/_bookdown_files
-    - $TRAVIS_BUILD_DIR/inst/examples/_book/_bookdown_files
 
 env:
   global:
