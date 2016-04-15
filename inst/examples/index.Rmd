@@ -198,7 +198,7 @@ Besides the configurations in `_bookdown.yml`, you can also specify some Pandoc-
 --- 
 title: "Authoring A Book with R Markdown"
 author: "Yihui Xie"
-date: "`r Sys.Date()`"
+date: "`r '\x60r Sys.Date()'``"
 knit: "bookdown::render_book"
 output:
   bookdown::gitbook: default
