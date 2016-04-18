@@ -4,6 +4,7 @@ Title: Authoring Books with R Markdown
 Version: 0.0.65
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
+    person("JJ", "Allaire", role = "ctb"),
     person(family = "RStudio Inc", role = "cph"),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"),
