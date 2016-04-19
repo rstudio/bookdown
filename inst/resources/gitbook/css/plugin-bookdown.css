@@ -46,3 +46,15 @@ span.search-highlight {
 .book .book-body .page-wrapper .page-inner section.normal sub, .book .book-body .page-wrapper .page-inner section.normal sup {
   font-size: 85%;
 }
+
+@media print {
+  .book .book-summary, .book .book-body .book-header, .fa {
+    display: none !important;
+  }
+  .book .book-body.fixed {
+    left: 0px;
+  }
+  .book .book-body,.book .book-body .body-inner, .book.with-summary {
+    overflow: visible !important;
+  }
+}
