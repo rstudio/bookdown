@@ -58,6 +58,7 @@ epub_book = function(
       content = resolve_refs_md(
         readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
       )
+      content = restore_part_epub(content)
       writeUTF8(content, input_file)
       NULL
     },
@@ -98,6 +99,13 @@ resolve_refs_md = function(content, ref_table) {
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, ref_to_number, ref_table, TRUE)
   content
+}
+
+# simply remove parts in epub
+restore_part_epub = function(x) {
+  r = '^# \\(PART\\) .+ \\{-\\}\\s*$'
+  x[grep(r, x)] = ''
+  x
 }
 
 # manually base64 encode images in css: https://github.com/jgm/pandoc/issues/2733

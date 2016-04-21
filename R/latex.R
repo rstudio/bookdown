@@ -27,6 +27,7 @@ pdf_book = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
     x = resolve_refs_latex(readUTF8(f))
+    x = restore_part_latex(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -71,6 +72,17 @@ resolve_refs_latex = function(x) {
     perl = TRUE
   )
   x = gsub('\\(\\\\#((fig|tab):[-[:alnum:]]+)\\)', '\\\\label{\\1}', x)
+  x
+}
+
+restore_part_latex = function(x) {
+  r = '^\\\\chapter\\*\\{\\(PART\\) '
+  i = grep(r, x)
+  if (length(i) == 0) return(x)
+  x[i] = gsub(r, '\\\\part{', x[i])
+  # remove the line \addcontentsline since it is not really a chapter title
+  j = grep('\\addcontentsline{toc}{chapter}{(PART) ', x[i + 1], fixed = TRUE)
+  x[(i + 1)[j]] = ''
   x
 }
 

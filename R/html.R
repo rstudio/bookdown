@@ -194,6 +194,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
   x = add_section_ids(x)
+  x = restore_part_html(x)
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
@@ -549,6 +550,18 @@ restore_links = function(segment, full, lines, filenames) {
     x
   })
   segment
+}
+
+restore_part_html = function(x) {
+  i = grep('^<h1>\\(PART\\) .+</h1>$', x)
+  if (length(i) == 0) return(x)
+  i = i[grep('^<div .*class=".*unnumbered.*">$', x[i - 1])]
+  x[i] = x[i - 1] = x[i + 1] = ''
+  r = '^<li><a href=".*">\\(PART\\) (.+)</a>(.+)$'
+  i = grep(r, x)
+  if (length(i) == 0) return(x)
+  x[i] = gsub(r, '<li class="part"><b><a href="#">\\1</a></b>\\2', x[i])
+  x
 }
 
 # detect and move files to the output directory (if specified)
