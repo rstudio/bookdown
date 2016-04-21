@@ -25,13 +25,13 @@ If you do not want a certain heading to be numbered, you can add `{-}` after the
 There is a special type of first-level headers that will be processed differently in **bookdown**, which is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
 
 ```
-# (PART) Part I {-}
+# (PART) Part I {-} 
 
 # Chapter One
 
 # Chapter Two
 
-# (PART) Part II {-}
+# (PART) Part II {-} 
 
 # Chapter Three
 ```
