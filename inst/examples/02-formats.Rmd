@@ -171,6 +171,9 @@ On the right of the toolbar, there are some buttons to share the link on social 
 Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
 
 - `description`: A character string to be written to the `content` attribute of the tag `<meta name="description" content="">` in the HTML head (if missing, the title of the book will be used). This can be useful for the purpose of search engine optimization (SEO);
+- `url`: The URL of book website, e.g., `https\://bookdown.org/yihui/bookdown/`^[The backslash before `:` is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code `<a href="..."></a>`.];
+- `github-repo`: The GitHub repository of the book of the form `user/repo`;
+- `cover-image`: The path to the cover image of the book;
 - `apple-touch-icon`: A path to an icon (e.g., a PNG image). This is for iOS only: when the website is added to the Home screen, the link is represented by this icon.
 - `apple-touch-icon-size`: The size of the icon (by default, 152 x 152 pixels).
 - `favicon`: A path to the "favorite icon". Typically this icon is displayed in the browser's address bar, or in front of the page title on the tab if the browser support tabs.
@@ -182,11 +185,16 @@ Below we show some sample YAML metadata (again, please note these are _top-level
 title: "An Awesome Book"
 author: "John Smith"
 description: "This book introduces the ABC theory, and ..."
+url: "https\://bookdown.org/john/awesome/"
+github-repo: "john/awesome"
+cover-image: "images/cover.png"
 apple-touch-icon: "touch-icon.png"
 apple-touch-icon-size: 120
 favicon: "favicon.ico"
 ---
 ```
+
+A nice effect of setting `description` and `cover-image` is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.
 
 ### Bootstrap style
 
