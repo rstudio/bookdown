@@ -560,7 +560,7 @@ restore_part_html = function(x) {
   r = '^<li><a href=".*">\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
-  x[i] = gsub(r, '<li class="part"><b><a href="#">\\1</a></b>\\2', x[i])
+  x[i] = gsub(r, '<li class="part"><span><b>\\1</b></span>\\2', x[i])
   x
 }
 
