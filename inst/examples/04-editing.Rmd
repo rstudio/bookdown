@@ -9,7 +9,7 @@ To build all Rmd files into a book, you can call the `render_book()` function in
 ```{r eval=FALSE, code=formatR::usage(bookdown::render_book, output=FALSE)}
 ```
 
-The most important argument is `output_format`, which can take a character string (e.g., `'bookdown::gitbook'`), or an object returned by an output format function (e.g., `bookdown::gitbook(lib_dir = 'assets')`). You can leave this argument empty, and the default output format will be the first output format specified in the YAML metadata of the first Rmd file or a separate YAML file `_output.yml`, as mentioned in Section \@ref(configuration). If you plan to generate multiple output formats for a book, you are recommended to specify all formats in `_output.yml`.
+The most important argument is `output_format`, which can take a character string of the output format (e.g., `'bookdown::gitbook'`). You can leave this argument empty, and the default output format will be the first output format specified in the YAML metadata of the first Rmd file or a separate YAML file `_output.yml`, as mentioned in Section \@ref(configuration). If you plan to generate multiple output formats for a book, you are recommended to specify all formats in `_output.yml`.
 
 Once all formats are specified in `_output.yml`, it is easy to write an R or Shell script or Makefile to compile the book. Below is a simple example of using a Shell script to compile a book to HTML (with the GitBook style) and PDF:
 
@@ -80,7 +80,7 @@ output:
 ---
 ```
 
-If you are using a version of the RStudio IDE that is higher than 0.99.1120 (currently it is the [preview version](https://www.rstudio.com/products/rstudio/download/preview/)), you do not really have to set `knit: bookdown::preview_chapter` in YAML, since RStudio will automatically detect if an Rmd file is a part of a book, and call `preview_chapter()` if it is.
+If you are using a version of the RStudio IDE that is higher than 0.99.1120 (currently it is the [preview version](https://www.rstudio.com/products/rstudio/download/preview/)), you may not set `knit: bookdown::render_book` or `knit: bookdown::preview_chapter` in YAML. You can just set `site: bookdown::bookdown_site` in `index.Rmd` instead, then RStudio will be able to discover the directory as a book source directory, and you will see a button `Build Book` in the `Build` pane. You can click the button to build the whole book to different formats, and if you click the `Knit` button on the toolbar, RStudio will automatically preview the current chapter, and you do not need to use `preview_chapter()` explicitly.
 
 The **bookdown** package comes with a few addins for RStudio. If you are not familiar with RStudio addins, you may check out the documentation at http://rstudio.github.io/rstudioaddins/. After you have installed the **bookdown** package and use RStudio v0.99.878 or later, you will see a dropdown menu on the toolbar named "Addins" and menu items like "Preview Book" and "Input LaTeX Math" after you open the menu.
 
