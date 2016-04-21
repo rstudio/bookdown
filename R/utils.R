@@ -341,6 +341,7 @@ files_cache_dirs = function(dir = '.') {
   if (!dir_exists(dir)) return(character())
   out = list.files(dir, '_(files|cache)$', full.names = TRUE)
   out = out[dir_exists(out)]
+  out = out[basename(out) != '_bookdown_files']
   out
 }
 
