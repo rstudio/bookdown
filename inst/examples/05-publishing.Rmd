@@ -14,7 +14,7 @@ You do not have to know much about RStudio Connect to publish your book to bookd
 The only argument of `publish_book()` that you may want to touch is `render`. It determines whether you want to render the book before publishing. If you have run `render_book()` before, you do not need to change this argument, otherwise you may set it to `'local'`:
 
 ```{r eval=FALSE}
-options(bookdown.render_on_publish = 'local')
+bookdown::publish_book(render = 'local')
 ````
 
 If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
