@@ -49,7 +49,7 @@ set_opts_knit = function(config) {
   config$knitr$opts_knit$bookdown.internal.label = TRUE
   # when the output is LaTeX, force LaTeX tables instead of default Pandoc tables
   # http://tex.stackexchange.com/q/276699/9128
-  config$knitr$opts_knit$bookdown.table.latex = TRUE
+  config$knitr$opts_knit$kable.force.latex = TRUE
   config
 }
 
