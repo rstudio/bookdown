@@ -397,7 +397,8 @@ ref_to_number = function(ref, ref_table, backslash) {
   # needs the literal command \ref{} on the page
   i[j] = FALSE
   if (any(i)) {
-    warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
+    if (!isTRUE(opts$get('preview')))
+      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
   ifelse(
