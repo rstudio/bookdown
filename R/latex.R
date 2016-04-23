@@ -28,6 +28,7 @@ pdf_book = function(
     f = with_ext(output, '.tex')
     x = resolve_refs_latex(readUTF8(f))
     x = restore_part_latex(x)
+    x = restore_appendix_latex(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -84,6 +85,21 @@ restore_part_latex = function(x) {
   j = grep('\\addcontentsline{toc}{chapter}{(PART) ', x[i + 1], fixed = TRUE)
   x[(i + 1)[j]] = ''
   x
+}
+
+restore_appendix_latex = function(x) {
+  r = '^\\\\chapter\\*\\{\\(APPENDIX\\) '
+  i = find_appendix_line(r, x)
+  if (length(i) == 0) return(x)
+  x[i] = '\\appendix'
+  if (grepl('^\\\\addcontentsline', x[i + 1])) x[i + 1] = ''
+  x
+}
+
+find_appendix_line = function(r, x) {
+  i = grep(r, x)
+  if (length(i) > 1) stop('You must not have more than one appendix title')
+  i
 }
 
 latexmk = function(...) {

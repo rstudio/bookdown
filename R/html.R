@@ -195,6 +195,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   x = add_section_ids(x)
   x = restore_part_html(x)
+  x = restore_appendix_html(x)
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
@@ -557,10 +558,25 @@ restore_part_html = function(x) {
   if (length(i) == 0) return(x)
   i = i[grep('^<div .*class=".*unnumbered.*">$', x[i - 1])]
   x[i] = x[i - 1] = x[i + 1] = ''
-  r = '^<li><a href=".*">\\(PART\\) (.+)</a>(.+)$'
+  r = '^<li><a href="[^"]*">\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
   x[i] = gsub(r, '<li class="part"><span><b>\\1</b></span>\\2', x[i])
+  x
+}
+
+# TODO: ideally we should change the numbering style in the appendices, e.g.
+# A.1, A.2, B.1, ..., and I'm just being lazy for the moment
+restore_appendix_html = function(x) {
+  r = '^(<h1>)\\(APPENDIX\\) (.+</h1>)$'
+  i = find_appendix_line(r, x)
+  if (length(i) == 0) return(x)
+  x[i] = x[i - 1] = x[i + 1] = ''  # no need to show appendix in body
+  r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
+  i = find_appendix_line(r, x)
+  if (length(i) == 0) return(x)
+  # remove link on (APPENDIX) in the TOC item
+  x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
   x
 }
 
