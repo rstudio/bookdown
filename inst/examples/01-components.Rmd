@@ -22,7 +22,7 @@ If you do not want a certain heading to be numbered, you can add `{-}` after the
 # Preface {-}
 ```
 
-There is a special type of first-level headers that will be processed differently in **bookdown**, which is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
+There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
 
 ```
 # (PART) Part I {-} 
@@ -35,6 +35,22 @@ There is a special type of first-level headers that will be processed differentl
 
 # Chapter Three
 ```
+
+The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices, e.g.,
+
+```
+# Chapter One 
+
+# Chapter Two
+
+# (APPENDIX) Appendix {-} 
+
+# Appendix A
+
+# Appendix B
+```
+
+The numbering style of appendices will be automatically changed in LaTeX/PDF and HTML output (usually in the form A, A.1, A.2, B, B.1, ...). This feature is not available to e-books.
 
 Unordered list items start with `*`, `-`, or `+`, and you can nest one list within another list by indenting the sub-list by four spaces, e.g.,
 
