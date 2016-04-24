@@ -302,6 +302,8 @@ http://www.gnu.org/licenses/.
 ```{block, note-text, type='rmdwarning'}
 ```
 
+Custom blocks are designed to display simple content (typically a paragraph of plain text). You can use simple formatting syntax such as making certain words bold or italic, but more advanced syntax such as citations and cross-references will not work.
+
 ## Citations {#citations}
 
 Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors). With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
