@@ -143,7 +143,7 @@ gitbook_toc = function(x, cur, config) {
   toc = x[(i1 + 1):(i2 - 1)]
 
   # numbered sections
-  r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([0-9.]+)</span>(.+)(</a>.*)$'
+  r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([.A-Z0-9]+)</span>(.+)(</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
     r,
@@ -164,7 +164,7 @@ gitbook_toc = function(x, cur, config) {
   # remove the hash from the first TOC item if it has following items that share
   # the same base pathname, e.g. [index.html#foo, index.html#bar] ->
   # [index.html, index.html#bar]
-  r = '^(<li class="chapter" data-level="[0-9.]*" data-path="[^"]+"><a href=")([^#]+)(#[^"]+)(">.+)$'
+  r = '^(<li class="chapter" data-level="[.A-Z0-9]*" data-path="[^"]+"><a href=")([^#]+)(#[^"]+)(">.+)$'
   i = grep(r, toc)
   i = i[!duplicated(gsub(r, '\\2', toc[i]))]
   toc[i] = gsub(r, '\\1\\2\\4', toc[i])

@@ -278,7 +278,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
     }
     reg_id = '^<div id="([^"]+)".*$'
-    reg_num = '^(<h[12]><span class="header-section-number">)([0-9.]+)(</span>.+</h[12]>).*$'
+    reg_num = '^(<h[12]><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[12]>).*$'
     nms = vapply(idx2, character(1), FUN = function(i) {
       x1 = html_body[i]; x2 = html_body[i + 1]
       id = if (grepl(reg_id, x1)) gsub(reg_id, '\\1', x1)
@@ -407,7 +407,7 @@ ref_to_number = function(ref, ref_table, backslash) {
   )
 }
 
-reg_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>)$'
+reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
 
 # parse figure/table labels, and number them either by section numbers (Figure
 # 1.1, 1.2, ..., 2.1, ...), or globally (Figure 1, 2, ...)
@@ -462,7 +462,7 @@ parse_fig_labels = function(content, global = FALSE) {
   list(content = content, ref_table = arry)
 }
 
-sec_num = '^<h[1-6]><span class="header-section-number">([.0-9]+)</span>.+</h[1-6]>$'
+sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
 
 # parse section numbers and labels (id's)
 parse_section_labels = function(content) {
@@ -500,10 +500,12 @@ add_section_ids = function(content) {
 
 # add identifiers to TOC
 add_toc_ids = function(toc) {
-  r = '^(<li><a)(><span class="toc-section-number">)([.0-9]+)(</span>.+</a>.*)$'
+  # use section numbers as ID's
+  r = '^(<li><a)(><span class="toc-section-number">)([.A-Z0-9]+)(</span>.+</a>.*)$'
   for (i in grep(r, toc)) {
     toc[i] = gsub(r, '\\1 href="#section-\\3"\\2\\3\\4', toc[i])
   }
+  # use raw vectors as ID's
   r = '^(<li><a)(>)(.+)(</a>.*)$'
   for (i in grep(r, toc)) {
     id = as.character(charToRaw(gsub(r, '\\3', toc[i])))
