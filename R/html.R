@@ -566,18 +566,40 @@ restore_part_html = function(x) {
   x
 }
 
-# TODO: ideally we should change the numbering style in the appendices, e.g.
-# A.1, A.2, B.1, ..., and I'm just being lazy for the moment
+# remove the appendix chapter (only a placeholder) in the body, and change the
+# numbering style in the appendices (also change in TOC), e.g. A.1, A.2, B.1, ...
 restore_appendix_html = function(x) {
   r = '^(<h1>)\\(APPENDIX\\) (.+</h1>)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   x[i] = x[i - 1] = x[i + 1] = ''  # no need to show appendix in body
+  x = number_appendix(x, i + 1, length(x), 'header')
   r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   # remove link on (APPENDIX) in the TOC item
   x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
+  x = number_appendix(x, i + 1, next_nearest(i, which(x == '</div>')), 'toc')
+  x
+}
+
+number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
+  r = sprintf(
+    '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
+    if (type == 'toc') 'li' else 'h[1-6]', type
+  )
+  d = list()  # a dictionary e.g. list(12 = 'A', 13 = 'B', ...)
+  i = i1:i2
+  for (j in i[grep(r, x[i])]) {
+    s1 = gsub(r, '\\1', x[j])
+    s2 = gsub(r, '\\2', x[j])
+    s3 = gsub(r, '\\3', x[j])
+    s = strsplit(s2, '[.]')[[1]]  # section numbers
+    if (is.null(d[[s[1]]])) d[[s[1]]] = LETTERS[length(d) + 1]
+    s[1] = d[[s[1]]]
+    if (is.na(s[1])) stop('Too many chapters in the appendix (more than 26)')
+    x[j] = paste0(s1, paste(s, collapse = '.'), s3)
+  }
   x
 }
 
