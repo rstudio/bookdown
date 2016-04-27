@@ -55,7 +55,7 @@ write_search_data = function(x) {
   x = gitbook_search$get()
   if (length(x) == 0) return()
   gitbook_search$empty()
-  x = matrix(strip_html(x), nrow = 3)
+  x = matrix(strip_html(strip_script(x)), nrow = 3)
   x = apply(x, 2, json_string, toArray = TRUE)
   x = paste0('[\n', paste0(x, collapse = ',\n'), '\n]')
   writeUTF8(x, output_path('search_index.json'))
