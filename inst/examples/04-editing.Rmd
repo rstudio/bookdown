@@ -89,6 +89,6 @@ The addin "Preview Book" calls `bookdown::serve_book()` to compile and serve the
 The addin "Input LaTeX Math" is essentially a small Shiny application that provides a text box to help you type LaTeX math expressions (Figure \@ref(fig:mathquill)). As you type, you will see the preview of the math expression and its LaTeX source code. This will make it much less error-prone to type math expressions --- when you type a long LaTeX math expression without preview, it is easy to make mistakes such as `X_ij` when you meant `X_{ij}`, or omitting a closing bracket. If you have selected a LaTeX math expression in the RStudio editor before clicking the addin, the expression will be automatically loaded and rendered in the text box. This addin was built on top of the MathQuill library (http://mathquill.com). It is not meant to provide full support to all LaTeX commands for math expressions, but should help you type some common math expressions.
 
 ```{r mathquill, echo=FALSE, fig.align='center', fig.cap='The RStudio addin to help input LaTeX math.'}
-knitr::include_graphics('images/mathquill.png')
+knitr::include_graphics('images/mathquill.png', dpi = NA)
 ```
 
