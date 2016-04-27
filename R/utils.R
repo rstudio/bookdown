@@ -192,8 +192,12 @@ clean_meta = function(meta_file, files) {
   meta
 }
 
-# remove HTML tags
-strip_html = function(x) gsub('<[^>]+>', '', x)
+# remove HTML tags and remove extra spaces
+strip_html = function(x) {
+  x = gsub('<[^>]+>', '', x)
+  x = gsub('\\s{2,}', ' ', x)
+  x
+}
 
 # quote a string and escape backslashes/double quotes
 json_string = function(x, toArray = FALSE) {
