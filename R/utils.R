@@ -199,8 +199,13 @@ strip_html = function(x) {
   x
 }
 
-# remove the <script><script> content
-strip_script = function(x) gsub('<script[^>]*>(.*?)</script>', '', x)
+# remove the <script><script> content and references
+strip_search_text = function(x) {
+  x = gsub('<script[^>]*>(.*?)</script>', '', x)
+  x = gsub('<div id="refs" class="references">.*', '', x)
+  x = strip_html(x)
+  x
+}
 
 # quote a string and escape backslashes/double quotes
 json_string = function(x, toArray = FALSE) {
