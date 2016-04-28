@@ -236,6 +236,11 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     ), output)
     return(output)
   }
+
+  # parse and remove the references chapter
+  res = parse_references(html_body)
+  refs = res$refs; html_body = res$html; ref_title = res$title
+
   if (use_rmd_names) {
     html_body[idx] = ''
     nms_chaps = nms  # Rmd filenames
@@ -320,6 +325,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     i1 = idx[i]
     i2 = if (i == n) length(html_body) else idx[i + 1] - 1
     html = c(if (i == 1) html_title, html_body[i1:i2])
+    html = relocate_references(html, refs, ref_title)
     html = restore_links(html, html_body, idx, nms)
     html = build(
       html_head, html_toc, html,
@@ -583,6 +589,44 @@ restore_appendix_html = function(x) {
   x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
   x = number_appendix(x, i + 1, next_nearest(i, which(x == '</div>')), 'toc')
   x
+}
+
+# parse reference items so we can move them back to the chapter where they were used
+parse_references = function(x) {
+  i = which(x == '<div id="refs" class="references">')
+  if (length(i) != 1) return(x)
+  r = '^<div id="(ref-[^"]+)">$'
+  k = grep(r, x)
+  k = k[k > i]
+  n = length(k)
+  if (n == 0) return(list(refs = character(), html = x))
+
+  ids = gsub(r, '\\1', x[k])
+  ref = x[k + 1]
+  # replace 3 em-dashes with author names
+  dashes = paste0('^<p>', intToUtf8(rep(8212, 3)), '[.]')
+  for (j in grep(dashes, ref)) {
+    ref[j] = sub(dashes, sub('^([^.]+[.])( .+)$', '\\1', ref[j - 1]), ref[j])
+  }
+  ref = paste(x[k], ref, x[k + 2], sep = '\n')  # add <div id=ref-...></div>
+  title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3])) x[i - 2]
+  x[k] = '<div>'  # remove the div id's
+
+  list(refs = setNames(ref, ids), html = x, title = title)
+}
+
+# move references back to the relevant chapter
+relocate_references = function(x, refs, title) {
+  if (length(refs) == 0) return(x)
+  r = '<a href="#([^"]+)"'
+  ids = unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
+    if (length(target) == 0) return()
+    gsub(r, '\\1', target)
+  }))
+  ids = intersect(ids, names(refs))
+  if (length(ids) == 0) return(x)
+  title = if (is.null(title)) '<h3>References</h3>' else gsub('h1>', 'h3>', title)
+  c(x, title, '<div id="refs" class="references">', refs[ids], '</div>')
 }
 
 number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
