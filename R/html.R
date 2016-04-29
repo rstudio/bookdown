@@ -240,6 +240,10 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   # parse and remove the references chapter
   res = parse_references(html_body)
   refs = res$refs; html_body = res$html; ref_title = res$title
+  # parse and remove footnotes (will reassign them to relevant pages later)
+  res = parse_footnotes(html_body)
+  fnts = res$items
+  if (length(fnts)) html_body[res$range] = ''
 
   if (use_rmd_names) {
     html_body[idx] = ''
@@ -325,7 +329,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     i1 = idx[i]
     i2 = if (i == n) length(html_body) else idx[i + 1] - 1
     html = c(if (i == 1) html_title, html_body[i1:i2])
-    html = relocate_references(html, refs, ref_title)
+    a_targets = parse_a_targets(html)
+    html = relocate_references(html, refs, ref_title, a_targets)
+    html = relocate_footnotes(html, fnts, a_targets)
     html = restore_links(html, html_body, idx, nms)
     html = build(
       html_head, html_toc, html,
@@ -616,17 +622,46 @@ parse_references = function(x) {
 }
 
 # move references back to the relevant chapter
-relocate_references = function(x, refs, title) {
+relocate_references = function(x, refs, title, ids) {
   if (length(refs) == 0) return(x)
-  r = '<a href="#([^"]+)"'
-  ids = unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
-    if (length(target) == 0) return()
-    gsub(r, '\\1', target)
-  }))
   ids = intersect(ids, names(refs))
   if (length(ids) == 0) return(x)
   title = if (is.null(title)) '<h3>References</h3>' else gsub('h1>', 'h3>', title)
   c(x, title, '<div id="refs" class="references">', refs[ids], '</div>')
+}
+
+# extract relative links from text
+parse_a_targets = function(x) {
+  r = '<a href="#([^"]+)"'
+  unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
+    if (length(target) == 0) return()
+    gsub(r, '\\1', target)
+  }))
+}
+
+# we assume one footnote only contains one paragraph here, although it is
+# possible to write multiple paragraphs in a footnote with Pandoc's Markdown
+parse_footnotes = function(x) {
+  i = which(x == '<div class="footnotes">')
+  if (length(i) == 0) return(list(items = character(), range = integer()))
+  j = which(x == '</div>')
+  j = min(j[j > i])
+  n = length(x)
+  r = '<li id="fn([0-9]+)"><p>(.+)<a href="#fnref\\1">.</a></p></li>'
+  items = grep(r, x[i:n], value = TRUE)
+  list(items = setNames(items, gsub(r, 'fn\\1', items)), range = i:j)
+}
+
+# move footnotes to the relevant page
+relocate_footnotes = function(x, notes, ids) {
+  if (length(notes) == 0) return(x)
+  ids = intersect(ids, names(notes))
+  if (length(ids) == 0) return(x)
+  c(
+    x, '<div class="footnotes">', '<hr />',
+    sprintf('<ol start="%s">', gsub('^fn', '', ids[1])), notes[ids],
+    '</ol>', '</div>'
+  )
 }
 
 number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
