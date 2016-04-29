@@ -5,7 +5,8 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE)
+    clean_envir = !interactive(), output_dir = NULL, new_session = FALSE, 
+    force_knit = FALSE, preview = FALSE)
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -17,6 +18,10 @@ Markdown files specified by the book are rendered.}
 \item{output_format, ..., clean, envir}{Arguments to be passed to
 \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 \code{...} is passed to \code{render_book()}.}
+
+\item{clean_envir}{Whether to clean up the environment \code{envir} before
+rendering the book. By default, the environment is cleaned when rendering
+the book in a non-interactive R session.}
 
 \item{output_dir}{The output directory. If \code{NULL}, a field named
 \code{output_dir} in the configuration file \file{_bookdown.yml} will be

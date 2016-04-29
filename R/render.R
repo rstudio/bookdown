@@ -17,6 +17,9 @@
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 #'   \code{...} is passed to \code{render_book()}.
+#' @param clean_envir Whether to clean up the environment \code{envir} before
+#'   rendering the book. By default, the environment is cleaned when rendering
+#'   the book in a non-interactive R session.
 #' @param output_dir The output directory. If \code{NULL}, a field named
 #'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be
 #'   used (possiblely not specified, either, in which case a directory name
@@ -32,7 +35,8 @@
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
-  output_dir = NULL, new_session = FALSE, force_knit = FALSE, preview = FALSE
+  clean_envir = !interactive(), output_dir = NULL, new_session = FALSE,
+  force_knit = FALSE, preview = FALSE
 ) {
 
   format = NULL  # latex or html
@@ -51,6 +55,8 @@ render_book = function(
     }
     format = html_or_latex(output_format)
   }
+
+  if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
 
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
