@@ -60,6 +60,7 @@ epub_book = function(
       )
       content = restore_part_epub(content)
       content = restore_appendix_epub(content)
+      content = protect_math_env(content)
       writeUTF8(content, input_file)
       NULL
     },
@@ -117,6 +118,23 @@ restore_appendix_epub = function(x) {
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   x[i] = gsub(r, '\\1\\2', x[i])
+  x
+}
+
+# wrap math environments in $$, otherwise they are discarded by Pandoc
+# https://github.com/jgm/pandoc/issues/2758
+protect_math_env = function(x) {
+  env = 'equation'  # may add more LaTeX environments later
+  s1 = sprintf('\\begin{%s}', env)
+  s2 = sprintf('\\end{%s}', env)
+  for (s in s1) {
+    i = x == s
+    x[i] = paste0('$$', x[i])
+  }
+  for (s in s2) {
+    i = x == s
+    x[i] = paste0(x[i], '$$')
+  }
   x
 }
 
