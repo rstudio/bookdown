@@ -52,6 +52,10 @@ book_listing = function() {
     if (is.null(title)) return()
     title = xml_text(title)
     if (title == '') return()
+    if (is.na(date)) {
+      date = xml_find(html, './/meta[@name="date"]')
+      if (is.null(date)) date = NA else date = xml_attr(date, 'content')
+    }
 
     description = xml_find(html, './/meta[@name="description"]')
     if (!is.null(description)) description = xml_attr(description, 'content')
@@ -96,7 +100,7 @@ book_listing = function() {
               github_buttons(repo),
               div(class = "title", a(href = url, title)),
               div(class = "author", author),
-              div(class = "date", as.Date(date)),
+              div(class = "date", if (!is.na(date)) as.Date(date)),
               div(class = "overview", description)
           )
         )
@@ -113,7 +117,7 @@ book_listing = function() {
     # cache the scraped data
     if (file.exists('_book_meta.rds')) {
       panels = readRDS('_book_meta.rds')
-      if (identical(panels[[url]][['date']], date)) {
+      if (!is.na(date) && identical(panels[[url]][['date']], date)) {
         return(panels[[url]][['panel']])
       }
     } else panels = list()
