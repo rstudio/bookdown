@@ -19,7 +19,7 @@ pdf_book = function(
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
-    toc = TRUE, number_sections = number_sections, fig_caption = fig_caption, ...
+    toc = toc, number_sections = number_sections, fig_caption = fig_caption, ...
   )
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
