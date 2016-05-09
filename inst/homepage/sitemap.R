@@ -3,6 +3,8 @@ library(xml2)
 options(stringsAsFactors = FALSE)
 
 exclude_urls = c(
+  'https://bookdown.org/ChaitaTest/NewShinyApp/',
+  'https://bookdown.org/jjallaire/new-homepage/',
   'https://bookdown.org/jjallaire/bookdown/',
   'https://bookdown.org/jjallaire/site/',
   'https://bookdown.org/yihui/bookdown-demo2/',
