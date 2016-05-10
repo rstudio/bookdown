@@ -615,7 +615,8 @@ parse_references = function(x) {
     ref[j] = sub(dashes, sub('^([^.]+[.])( .+)$', '\\1', ref[j - 1]), ref[j])
   }
   ref = paste(x[k], ref, x[k + 2], sep = '\n')  # add <div id=ref-...></div>
-  title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3])) x[i - 2]
+  title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3]))
+    gsub('<span class="header-section-number">[.0-9]+</span>', '', x[i - 2])
   x[k] = '<div>'  # remove the div id's
 
   list(refs = setNames(ref, ids), html = x, title = title)
