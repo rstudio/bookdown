@@ -72,7 +72,9 @@ get_base_format = function(format) {
 load_config = function() {
   if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
     # store the book config
-    opts$set(config = yaml::yaml.load_file(('_bookdown.yml')))
+    opts$set(config = yaml::yaml.load(
+      paste(readUTF8('_bookdown.yml'), collapse = '\n')
+    ))
   }
   opts$get('config')
 }
