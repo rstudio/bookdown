@@ -713,6 +713,11 @@ move_files_html = function(output, lib_dir) {
   f = f[f != '']
   f = f[!knitr:::is_abs_path(f)]
   if (getOption('bookdown.js.debug', FALSE)) f = c(f, js_min_sources(f))
+  # add leaflet images if any used
+  f = c(f, grep('png$', list.files(
+    list.files(lib_dir, '^leaflet', full.names = TRUE),
+    full.names = TRUE, recursive = TRUE
+  ), value = TRUE))
   f = unique(f[file.exists(f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   file.copy(f, file.path(o, f), overwrite = TRUE)
