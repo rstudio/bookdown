@@ -4,6 +4,15 @@ options(stringsAsFactors = FALSE)
 
 exclude_urls = c(
   'https://bookdown.org/ChaitaTest/NewShinyApp/',
+  'https://bookdown.org/ChaitaTest/newappafterpackageinstalled/',
+  'https://bookdown.org/nowosad/modele_clay_podsumowanie/',
+  'https://bookdown.org/nowosad/obrona_doktorska/',
+  'https://bookdown.org/nowosad/01_lucas_topsoil/',
+  'https://bookdown.org/nowosad/02_lucas_topsoil/',
+  'https://bookdown.org/alizaidi/mrs-spark-ml/',
+  'https://bookdown.org/hagutierrezro/TRI/',
+  'https://bookdown.org/csgillespie/components/',
+  'https://bookdown.org/weicheng/shinyTutorial/',
   'https://bookdown.org/jjallaire/new-homepage/',
   'https://bookdown.org/jjallaire/bookdown/',
   'https://bookdown.org/jjallaire/site/',
