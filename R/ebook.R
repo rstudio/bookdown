@@ -103,10 +103,11 @@ resolve_refs_md = function(content, ref_table) {
   content
 }
 
+reg_part = '^# \\(PART\\) .+ \\{-\\}$'
+
 # simply remove parts in epub
 restore_part_epub = function(x) {
-  r = '^# \\(PART\\) .+ \\{-\\}$'
-  x[grep(r, x)] = ''
+  x[grep(reg_part, x)] = ''
   x
 }
 

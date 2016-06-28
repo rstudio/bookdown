@@ -144,7 +144,9 @@ match_dashes = function(x) grep('^---\\s*$', x)
 
 create_placeholder = function(x, header = TRUE) {
   h = grep('^# ', x, value = TRUE)  # chapter title
-  h = c('', if (length(h)) h[1] else '# Placeholder')
+  h1 = grep(reg_part, h, value = TRUE)
+  h2 = setdiff(h, h1)
+  h = c('', if (length(h1)) h1[1], if (length(h2)) h2[1] else '# Placeholder')
   i = match_dashes(x)
   c(if (length(i) >= 2) x[(i[1]):(i[2])], if (header) h)
 }
