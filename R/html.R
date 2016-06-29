@@ -532,7 +532,11 @@ add_chapter_prefix = function(content) {
   chapter_name = config[['chapter_name']]
   if (is.null(chapter_name)) return(content)
   chapter_fun = if (is.character(chapter_name)) {
-    function(i) paste0(chapter_name, i)
+    function(i) switch(
+      length(chapter_name), paste0(chapter_name, i),
+      paste0(chapter_name[1], i, chapter_name[2]),
+      stop('chapter_name must be of length 1 or 2')
+    )
   } else if (is.function(chapter_name)) chapter_name else {
     stop('chapter_name in _bookdown.yml must be a character string or function')
   }
