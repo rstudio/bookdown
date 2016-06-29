@@ -121,7 +121,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'before'),
     insert_chapter_script(config, 'after')
   )
-  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
 }
 
 render_new_session = function(files, main, config, force_, output_format, clean, envir, ...) {
@@ -175,7 +175,7 @@ render_new_session = function(files, main, config, force_, output_format, clean,
 
   rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
-    run_pandoc = TRUE, knit_meta = knit_meta
+    run_pandoc = TRUE, knit_meta = knit_meta, encoding = 'UTF-8'
   )
 
 }

@@ -4,7 +4,7 @@
 local({
   args = commandArgs(TRUE)
   out = do.call(
-    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE))
+    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE, encoding = 'UTF-8'))
   )
   out_expected = bookdown:::with_ext(args[1], '.md')
   if (out != out_expected) {
