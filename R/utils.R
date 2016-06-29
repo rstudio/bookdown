@@ -77,9 +77,11 @@ load_config = function() {
   opts$get('config')
 }
 
-yaml_utf8 = function(x) yaml::yaml.load(
+mark_utf8 = getFromNamespace('mark_utf8', 'rmarkdown')
+
+yaml_utf8 = function(x) mark_utf8(yaml::yaml.load(
   enc2utf8(paste(readUTF8(x), collapse = '\n'))
-)
+))
 
 book_filename = function(config = load_config(), fallback = TRUE) {
   if (is.character(config[['book_filename']])) {
