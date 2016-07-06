@@ -59,7 +59,7 @@ book_listing = function() {
   book_html = function(url, date) {
     html = read_html(url, encoding = 'UTF-8')
     title = xml_find(html, './/title')
-    if (is.null(title)) return()
+    if (length(title) == 0) return()
     title = xml_text(title)
     if (title == '') return()
     if (is.na(date)) {
@@ -145,7 +145,7 @@ book_listing = function() {
 }
 
 xml_find = function(x, xpath, all = FALSE) {
-  FUN = if (all) xml_find_all else xml_find_one
+  FUN = if (all) xml_find_all else xml_find_first
   tryCatch(FUN(x, xpath), error = function(e) NULL)
 }
 
