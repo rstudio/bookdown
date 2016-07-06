@@ -8,9 +8,14 @@ exclude_urls = c(
   'https://bookdown.org/nowosad/obrona_doktorska/',
   'https://bookdown.org/nowosad/01_lucas_topsoil/',
   'https://bookdown.org/nowosad/02_lucas_topsoil/',
+  'https://bookdown.org/nowosad/erum2016_map/',
+  'https://bookdown.org/nowosad/eRum2016_map/',
+  'https://bookdown.org/nowosad/modele_soc_podsumowanie/',
+  'https://bookdown.org/nowosad/modele_liczba_probek_podsumowanie/',
   'https://bookdown.org/hagutierrezro/TRI/',
   'https://bookdown.org/csgillespie/components/',
   'https://bookdown.org/csgillespie/diagnostics/',
+  'https://bookdown.org/csgillespie/useR2016/',
   'https://bookdown.org/weicheng/shinyTutorial/',
   'https://bookdown.org/jjallaire/new-homepage/',
   'https://bookdown.org/jjallaire/bookdown/',
@@ -124,6 +129,7 @@ book_listing = function() {
     if (url %in% exclude_urls) return()
     if (grepl('/bookdown-demo/$', url) && !grepl('/yihui/', url)) return()
     if (grepl('^https://bookdown.org/ChaitaTest/', url)) return()
+    message('Processing ', url)
 
     # cache the scraped data
     if (file.exists('_book_meta.rds')) {
