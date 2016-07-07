@@ -426,9 +426,9 @@ reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1
 parse_fig_labels = function(content, global = FALSE) {
   lines = grep(reg_chap, content)
   chaps = gsub(reg_chap, '\\2', content[lines])  # chapter numbers
+  if (length(chaps) == 0) global = TRUE  # no chapter titles or no numbered chapters
   arry = character()  # an array of the form c(label = number, ...)
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
-  if (length(chaps) == 0) return(list(content = content, ref_table = arry))
 
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
   m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
