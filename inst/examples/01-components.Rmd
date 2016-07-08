@@ -240,6 +240,17 @@ We have explained how cross-references work for figures (Section \@ref(figures))
 
 When a referenced label cannot be found, you will see two question marks like \@ref(fig:does-not-exist), as well as a warning message in the R console when rendering the book.
 
+You can also create text-based links using explicit or automatic section IDs or even the actual section header text.
+
+  * If you're happy with the section header as the link text, use it inside a single set of square brackets:
+    - `[Section header text]`: example [A single document]
+  * There are three ways to specify custom link text:
+    - `[link text][Section header text]`: example [non-English books][Internationalization]
+    - `[link text](#explicitID)`: example [Table stuff](#tables)
+    - `[link text](#autoID)`: example [How to build your book](#build-the-book)
+
+The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/README.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/README.html#extension-implicit_header_references).
+
 ## Custom blocks
 
 You can generate custom blocks using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
