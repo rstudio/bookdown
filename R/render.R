@@ -32,11 +32,13 @@
 #'   \code{input} argument. Previewing a certain chapter may save compilation
 #'   time as you actively work on this chapter, but the output may not be
 #'   accurate (e.g. cross-references to other chapters will not work).
+#' @param encoding Ignored. The character encoding of all input files is
+#'   supposed to be UTF-8.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = FALSE,
-  force_knit = FALSE, preview = FALSE
+  force_knit = FALSE, preview = FALSE, encoding = 'UTF-8'
 ) {
 
   format = NULL  # latex or html

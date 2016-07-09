@@ -6,7 +6,7 @@
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
     clean_envir = !interactive(), output_dir = NULL, new_session = FALSE, 
-    force_knit = FALSE, preview = FALSE)
+    force_knit = FALSE, preview = FALSE, encoding = "UTF-8")
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -38,6 +38,9 @@ only for \code{new_session = TRUE}).}
 \code{input} argument. Previewing a certain chapter may save compilation
 time as you actively work on this chapter, but the output may not be
 accurate (e.g. cross-references to other chapters will not work).}
+
+\item{encoding}{Ignored. The character encoding of all input files is
+supposed to be UTF-8.}
 }
 \description{
 Render mulitple R Markdown files under the current working directory into a
