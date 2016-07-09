@@ -44,6 +44,11 @@ pdf_book = function(
     if (keep_tex) file.rename(f, file.path(o, f))
     output2
   }
+  # always enable tables (use packages booktabs, longtable, ...)
+  pre = config$pre_processor
+  config$pre_processor = function(...) {
+    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes')
+  }
   config$bookdown_output_format = 'latex'
   config = set_opts_knit(config)
   config
