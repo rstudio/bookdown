@@ -137,6 +137,9 @@ render_new_session = function(files, main, config, force_, output_format, clean,
   render_meta = with_ext(main, '.rds')
 
   files_md = output_path(with_ext(files, '.md'))
+  # copy pure Markdown input files to output directory; no need to render() them
+  for (i in which(grepl('[.]md$', files) & files != files_md))
+    file.copy(files[i], files_md[i], overwrite = TRUE)
   # which Rmd's should be recompiled? Rmd newer than md, or md does not exist
   rerun = if (force_) TRUE else {
     utils::file_test('-nt', files, files_md) | !file.exists(files_md)
@@ -165,7 +168,8 @@ render_new_session = function(files, main, config, force_, output_format, clean,
     file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 
   meta = clean_meta(render_meta, files)
-  on.exit(file.rename(unlist(meta), files_md), add = TRUE)
+  move = !(unlist(meta) %in% files)  # do not move input files to output dir
+  on.exit(file.rename(unlist(meta)[move], files_md[move]), add = TRUE)
 
   merge_chapters(unlist(meta), main, orig = files)
 
