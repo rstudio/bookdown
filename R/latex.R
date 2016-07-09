@@ -47,7 +47,7 @@ pdf_book = function(
   # always enable tables (use packages booktabs, longtable, ...)
   pre = config$pre_processor
   config$pre_processor = function(...) {
-    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes')
+    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone')
   }
   config$bookdown_output_format = 'latex'
   config = set_opts_knit(config)
