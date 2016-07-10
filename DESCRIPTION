@@ -17,7 +17,7 @@ Description: Utilities to facilitate authoring books with R Markdown.
 License: GPL-3
 Imports:
     htmltools (>= 0.3.5),
-    knitr,
+    knitr (>= 1.13),
     miniUI,
     rmarkdown (>= 0.9.6),
     yaml,
@@ -34,4 +34,3 @@ URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Remotes: yihui/knitr
