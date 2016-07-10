@@ -5,7 +5,7 @@
 \usage{
 gitbook(fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, 
     lib_dir = "libs", ..., split_by = c("chapter", "chapter+number", "section", 
-        "section+number", "rmd", "none"), config = list())
+        "section+number", "rmd", "none"), split_bib = TRUE, config = list())
 }
 \arguments{
 \item{fig_caption, number_sections, self_contained, lib_dir, ...}{Arguments to be
@@ -24,6 +24,9 @@ Introduction} will be \file{introduction.html}; for \code{chapter+number}
 and \code{section+number}, the chapter/section numbers will be prepended to
 the HTML filenames, e.g. \file{1-introduction.html} and
 \file{2-1-literature.html}.}
+
+\item{split_bib}{Whether to split the bibliography onto separate pages where
+the citations are actually used.}
 
 \item{config}{A list of configuration options for the gitbook style, such as
 the font/theme settings.}

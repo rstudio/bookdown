@@ -7,9 +7,9 @@
 \usage{
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
     lib_dir = "libs", template = bookdown_file("templates/default.html"), 
-    ..., base_format = rmarkdown::html_document, page_builder = build_chapter, 
-    split_by = c("section+number", "section", "chapter+number", "chapter", 
-        "rmd", "none"))
+    ..., base_format = rmarkdown::html_document, split_bib = TRUE, 
+    page_builder = build_chapter, split_by = c("section+number", "section", 
+        "chapter+number", "chapter", "rmd", "none"))
 
 html_book(...)
 
@@ -26,6 +26,9 @@ tufte_html_book(...)
 \code{html_chapters()}.}
 
 \item{base_format}{An output format function to be used as the base format.}
+
+\item{split_bib}{Whether to split the bibliography onto separate pages where
+the citations are actually used.}
 
 \item{page_builder}{A function to combine different parts of a chapter into a
 page (an HTML character vector). See \code{\link{build_chapter}} for the
