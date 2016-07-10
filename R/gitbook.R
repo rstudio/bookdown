@@ -12,7 +12,7 @@
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, lib_dir = 'libs', ...,
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  config = list()
+  split_bib = TRUE, config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
@@ -32,7 +32,7 @@ gitbook = function(
     on.exit(write_search_data(), add = TRUE)
     move_files_html(output, lib_dir)
     output2 = split_chapters(
-      output, gitbook_page, number_sections, split_by, gb_config, split_by
+      output, gitbook_page, number_sections, split_by, split_bib, gb_config, split_by
     )
     if (!same_path(output, output2)) file.remove(output)
     output2

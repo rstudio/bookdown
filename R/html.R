@@ -24,6 +24,8 @@
 #'   and \code{section+number}, the chapter/section numbers will be prepended to
 #'   the HTML filenames, e.g. \file{1-introduction.html} and
 #'   \file{2-1-literature.html}.
+#' @param split_bib Whether to split the bibliography onto separate pages where
+#'   the citations are actually used.
 #' @param page_builder A function to combine different parts of a chapter into a
 #'   page (an HTML character vector). See \code{\link{build_chapter}} for the
 #'   specification of this function.
@@ -49,7 +51,7 @@
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), ...,
-  base_format = rmarkdown::html_document, page_builder = build_chapter,
+  base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
   base_format = get_base_format(base_format)
@@ -63,7 +65,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    output2 = split_chapters(output, page_builder, number_sections, split_by)
+    output2 = split_chapters(output, page_builder, number_sections, split_by, split_bib)
     if (!same_path(output, output2)) file.remove(output)
     output2
   }
@@ -184,7 +186,7 @@ build_chapter = function(
   ), collapse = '\n')
 }
 
-split_chapters = function(output, build = build_chapter, number_sections, split_by, ...) {
+split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -238,9 +240,11 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     return(output)
   }
 
-  # parse and remove the references chapter
-  res = parse_references(html_body)
-  refs = res$refs; html_body = res$html; ref_title = res$title
+  if (split_bib) {
+    # parse and remove the references chapter
+    res = parse_references(html_body)
+    refs = res$refs; html_body = res$html; ref_title = res$title
+  }
   # parse and remove footnotes (will reassign them to relevant pages later)
   res = parse_footnotes(html_body)
   fnts = res$items
@@ -331,7 +335,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     i2 = if (i == n) length(html_body) else idx[i + 1] - 1
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
-    html = relocate_references(html, refs, ref_title, a_targets)
+    if (split_bib) {
+      html = relocate_references(html, refs, ref_title, a_targets)
+    }
     html = relocate_footnotes(html, fnts, a_targets)
     html = restore_links(html, html_body, idx, nms)
     html = build(
