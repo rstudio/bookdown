@@ -47,21 +47,7 @@ epub_book = function(
     knitr = rmarkdown::knitr_options_html(fig_width, fig_height, NULL, FALSE, dev),
     pandoc = rmarkdown::pandoc_options(epub_version, from, args, ext = '.epub'),
     pre_processor = function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
-      intermediate_html = with_ext(input_file, 'tmp.html')
-      on.exit(unlink(intermediate_html), add = TRUE)
-      rmarkdown::pandoc_convert(
-        input_file, 'html', from, intermediate_html, TRUE, c(args, '--section-divs')
-      )
-      x = readUTF8(intermediate_html)
-      figs = parse_fig_labels(x, !number_sections)
-      # resolve cross-references and update the Markdown input file
-      content = resolve_refs_md(
-        readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
-      )
-      content = restore_part_epub(content)
-      content = restore_appendix_epub(content)
-      content = protect_math_env(content)
-      writeUTF8(content, input_file)
+      process_markdown(input_file, from, args, !number_sections)
       NULL
     },
     post_processor = function(metadata, input, output, clean, verbose) {
@@ -75,6 +61,24 @@ epub_book = function(
   config$bookdown_output_format = 'epub'
   config = set_opts_knit(config)
   config
+}
+
+process_markdown = function(input_file, from, pandoc_args, global) {
+  intermediate_html = with_ext(input_file, 'tmp.html')
+  on.exit(unlink(intermediate_html), add = TRUE)
+  rmarkdown::pandoc_convert(
+    input_file, 'html', from, intermediate_html, TRUE, c(pandoc_args, '--section-divs')
+  )
+  x = readUTF8(intermediate_html)
+  figs = parse_fig_labels(x, global)
+  # resolve cross-references and update the Markdown input file
+  content = resolve_refs_md(
+    readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
+  )
+  content = restore_part_epub(content)
+  content = restore_appendix_epub(content)
+  content = protect_math_env(content)
+  writeUTF8(content, input_file)
 }
 
 resolve_refs_md = function(content, ref_table) {
