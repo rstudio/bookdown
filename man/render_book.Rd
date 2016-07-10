@@ -5,7 +5,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    clean_envir = !interactive(), output_dir = NULL, new_session = FALSE, 
+    clean_envir = !interactive(), output_dir = NULL, new_session = NA, 
     force_knit = FALSE, preview = FALSE, encoding = "UTF-8")
 
 preview_chapter(..., envir = parent.frame())
@@ -29,7 +29,9 @@ used (possiblely not specified, either, in which case a directory name
 \file{_book} will be used).}
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
-files.}
+files (if not provided, the value of the \code{new_session} option in
+\file{_bookdown.yml} is used; if this is also not provided,
+\code{new_session = FALSE}).}
 
 \item{force_knit}{Whether to force knitting all Rmd files (this argument is
 only for \code{new_session = TRUE}).}
