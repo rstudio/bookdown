@@ -80,7 +80,7 @@ epub_book = function(
 resolve_refs_md = function(content, ref_table) {
   ids = names(ref_table)
   # replace (\#fig:label) with Figure x.x:
-  for (i in grep('^(<p class="caption|<caption>|Table:)', content)) {
+  for (i in grep('^(<p class="caption|<caption>|Table:)|(!\\[.*?\\]\\(.+?\\))', content)) {
     for (j in ids) {
       if (grepl(j, content[i], fixed = TRUE)) {
         type = ifelse(grepl('^fig:', j), 'Figure', 'Table')
