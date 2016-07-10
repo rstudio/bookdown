@@ -1,3 +1,5 @@
+#' @import stats utils
+
 bookdown_file = function(...) {
   system.file(..., package = 'bookdown', mustWork = TRUE)
 }
