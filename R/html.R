@@ -91,9 +91,10 @@ tufte_html_book = function(...) {
 #' numbering figures/tables and cross-referencing them. See References for the
 #' syntax. Note you can also cross-reference sections by their ID's using the
 #' same syntax as figures/tables.
-#' @param ... Arguments to be passed to a specific output format function. For a
-#'   function \code{foo2()}, its arguments are passed to \code{foo()}, e.g.
-#'   \code{...} of \code{html_document2()} are passed to \code{html_document()}.
+#' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
+#'   specific output format function. For a function \code{foo2()}, its
+#'   arguments are passed to \code{foo()}, e.g. \code{...} of
+#'   \code{html_document2()} are passed to \code{rmarkdown::html_document()}.
 #' @param number_sections Whether to number section headers: if \code{TRUE},
 #'   figure/table numbers will be of the form \code{X.i}, where \code{X} is the
 #'   current first-level section number, and \code{i} is an incremental number
