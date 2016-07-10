@@ -1,10 +1,11 @@
-% Please edit documentation in R/html.R, R/latex.R
+% Please edit documentation in R/html.R, R/latex.R, R/word.R
 \name{html_document2}
 \alias{html_document2}
 \alias{pdf_document2}
 \alias{tufte_book2}
 \alias{tufte_handout2}
 \alias{tufte_html2}
+\alias{word_document2}
 \title{Output formats that allow numbering and cross-referencing figures/tables}
 \usage{
 html_document2(..., number_sections = TRUE)
@@ -16,11 +17,14 @@ pdf_document2(...)
 tufte_handout2(...)
 
 tufte_book2(...)
+
+word_document2(fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
-\item{...}{Arguments to be passed to a specific output format function. For a
-function \code{foo2()}, its arguments are passed to \code{foo()}, e.g.
-\code{...} of \code{html_document2()} are passed to \code{html_document()}.}
+\item{..., fig_caption, md_extensions, pandoc_args}{Arguments to be passed to a
+specific output format function. For a function \code{foo2()}, its
+arguments are passed to \code{foo()}, e.g. \code{...} of
+\code{html_document2()} are passed to \code{rmarkdown::html_document()}.}
 
 \item{number_sections}{Whether to number section headers: if \code{TRUE},
 figure/table numbers will be of the form \code{X.i}, where \code{X} is the
