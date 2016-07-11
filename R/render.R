@@ -43,6 +43,13 @@ render_book = function(
   force_knit = FALSE, preview = FALSE, encoding = 'UTF-8'
 ) {
 
+  if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable() &&
+      !rstudioapi::isAvailable('0.99.1000')) {
+    message(
+      'You are recommended to use a newer version of RStudio IDE to compile the book: ',
+      'https://www.rstudio.com/products/rstudio/download/preview/'
+    )
+  }
   format = NULL  # latex or html
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
