@@ -50,7 +50,7 @@ One service that you can utilize is Travis CI (https://travis-ci.org). It is fre
 The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done via several ways, and the easiest one to beginners may be a personal access token. Below are a few steps you may follow:
 
 1. Create a personal access token for your account on GitHub: https://help.github.com/articles/creating-an-access-token-for-command-line-use/ (make sure to enable the "repo" scope so that using this token will enable writing to your GitHub repos)
-1. Encrypt it in the environment variable `GH_TOKEN` via command line `travis encrypt` and store it in `.travis.yml`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
+1. Encrypt it in the environment variable `GITHUB_PAT` via command line `travis encrypt` and store it in `.travis.yml`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
 1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
 
 Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
@@ -62,16 +62,16 @@ git config --global user.name "Your Name"
 
 # clone the repository to the book-output directory
 git clone -b gh-pages \
-  https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git \
+  https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git \
   book-output
 cd book-output
 cp -r ../_book/* ./
-git add *
+git add --all *
 git commit -m"Update the book"
 git push origin gh-pages
 ```
 
-The variable name `GH_TOKEN` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
+The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
 
 ```yaml
 language: r
@@ -79,11 +79,6 @@ language: r
 env:
   global:
     - secure: A_LONG_ENCRYPTED_STRING
-
-r_github_packages:
-  - rstudio/bookdown
-
-install: true
 
 before_script:
   - chmod +x ./_build.sh
@@ -94,13 +89,16 @@ script:
   - ./_deploy.sh
 ```
 
-The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GH_TOKEN` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
+The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GITHUB_PAT` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
 
-In the `install` step, the above example did not do anything, but you may want to install some dependencies for your book there, e.g.,
+Since this Travis service is primarily for checking R packages, you will also need a (fake) `DESCRIPTION` file as if the book repository were an R package. The only thing in this file that really matters is the specification of dependencies. All dependencies will be installed via the **devtools** package. If a dependency is on CRAN or BioConductor, you can simply list it in the `Imports` field of the `DESCRIPTION` file. If it is on GitHub, you may use the `Remotes` field to list its repository name. Below is an example:
 
-```yaml
-install:
-  - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
+```dcf
+Package: placeholder
+Title: Does not matter.
+Version: 0.0.1
+Imports: bookdown, ggplot2
+Remotes: rstudio/bookdown
 ```
 
 If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two types of directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. The figure and cache directories are stored under the `_bookdown_files` directory of the book root directory. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
