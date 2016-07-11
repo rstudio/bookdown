@@ -1,9 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-inst/examples/Makefile
-inst/examples/_book
-inst/examples/bookdown_files
-inst/examples/bookdown_cache
+^tools$
+inst/examples$
+inst/homepage$
+inst/resources/gitbook/js/app.js
+inst/resources/gitbook/js/app.min.map
 ^CONTRIBUTING\.md$
 .*/rsconnect
