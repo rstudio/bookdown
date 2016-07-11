@@ -273,11 +273,7 @@ What the default page builder does is to put TOC in the first row, the body in t
 
 For all HTML pages, the main difference is the chapter body, and most of the rest of elements are the same. The default output from `html_book()` will include the Bootstrap CSS and JavaScript files in the `<head>` tag.
 
-The TOC is often used for navigation purposes. In the GitBook style, the TOC is displayed in the sidebar. For the Bootstrap style, we did not apply a special style to it, so it is shown as a plain unordered list (in the HTML tag `<ul>`). It is easy to turn this list into a navigation bar with some CSS techniques. We have provided a CSS file `toc.css` in this package that you can use, and you can find it here:
-
-```{r results='hide'}
-bookdown:::bookdown_file('examples/css/toc.css')
-```
+The TOC is often used for navigation purposes. In the GitBook style, the TOC is displayed in the sidebar. For the Bootstrap style, we did not apply a special style to it, so it is shown as a plain unordered list (in the HTML tag `<ul>`). It is easy to turn this list into a navigation bar with some CSS techniques. We have provided a CSS file `toc.css` in this package that you can use, and you can find it here: https://github.com/rstudio/bookdown/blob/master/inst/examples/css/toc.css
 
 You may copy this file to the root directory of your book, and apply it to the HTML output via the `css` option, e.g.,
 
