@@ -44,7 +44,7 @@ render_book = function(
 ) {
 
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable() &&
-      !rstudioapi::isAvailable('0.99.1000')) {
+      !rstudioapi::isAvailable('0.99.1200')) {
     message(
       'You are recommended to use a newer version of RStudio IDE to compile the book: ',
       'https://www.rstudio.com/products/rstudio/download/preview/'
