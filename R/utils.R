@@ -56,11 +56,23 @@ set_opts_knit = function(config) {
 }
 
 readUTF8 = function(input) {
-  readLines(input, encoding = 'UTF-8', warn = FALSE)
+  x = readLines(input, encoding = 'UTF-8', warn = FALSE)
+  i = invalidUTF8(x)
+  n = length(i)
+  if (n > 0) warning(
+    'The file ', input, ' is not encoded in UTF-8. These lines contain invalid ',
+    'UTF-8 characters: ', paste(c(head(i), if (n > 6) '...'), collapse = ', ')
+  )
+  x
 }
 
 writeUTF8 = function(text, ...) {
   writeLines(enc2utf8(text), ..., useBytes = TRUE)
+}
+
+# which lines are invalid UTF-8
+invalidUTF8 = function(x) {
+  which(is.na(iconv(x, 'UTF-8', 'UTF-8')))
 }
 
 get_base_format = function(format) {
