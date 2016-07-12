@@ -20,6 +20,7 @@ exclude_urls = c(
   'https://bookdown.org/jjallaire/new-homepage/',
   'https://bookdown.org/jjallaire/bookdown/',
   'https://bookdown.org/jjallaire/site/',
+  'https://bookdown.org/Cardinal_Daniel/R_Reporting_Book_-_Kinduct_Data/',
   'https://bookdown.org/yihui/bookdown-demo2/',
   'https://bookdown.org/yihui/bookdown-demo3/',
   'https://bookdown.org/yihui/homepage/'
