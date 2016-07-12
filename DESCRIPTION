@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books with R Markdown
-Version: 0.0.80
+Version: 0.1
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
     person("JJ", "Allaire", role = "ctb"),
@@ -13,7 +13,7 @@ Authors@R: c(
     person(family = "FriendCode Inc", role = c("cph", "ctb"), comment = "The gitbook style, with modifications")
     )
 Maintainer: Yihui Xie <xie@yihui.name>
-Description: Utilities to facilitate authoring books with R Markdown.
+Description: Output formats and utilities for authoring books with R Markdown.
 License: GPL-3
 Imports:
     htmltools (>= 0.3.5),
