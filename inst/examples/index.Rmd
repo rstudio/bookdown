@@ -24,10 +24,6 @@ if (packageVersion('DT') < '0.1.45') devtools::install_github('rstudio/DT')
 
 # Introduction
 
-```{block, type='rmdwarning'}
-This book and the package **bookdown** are for beta testers, and should not be considered stable at the moment. You are welcome to experiment with this package, and feedback may be sent to https://github.com/rstudio/bookdown/issues
-```
-
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
 knitr::include_graphics('images/cover.png')
 ```
