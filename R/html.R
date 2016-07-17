@@ -452,8 +452,11 @@ parse_fig_labels = function(content, global = FALSE) {
     j = if (global) chaps else tail(chaps[lines <= i], 1)
     lab = gsub('^\\(#|\\)$', '', lab)
     type = ifelse(grepl('^fig:', lab), 'Figure', 'Table')
-    num = cntr$inc(type, j)
-    if (!global) num = paste0(j, '.', num)  # Figure X.x
+    num = arry[lab]
+    if (is.na(num)) {
+      num = cntr$inc(type, j)  # increment number only if the label has not been used
+      if (!global) num = paste0(j, '.', num)  # Figure X.x
+    }
     arry = c(arry, setNames(num, lab))
 
     if (type == 'Figure') {
