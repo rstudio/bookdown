@@ -148,8 +148,9 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   preview = opts$get('preview'); input = opts$get('input_rmd')
   content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = readUTF8(f)
-    if (preview && !(o %in% input)) x = create_placeholder(x)
-    x = insert_code_chunk(x, before, after)
+    x = if (preview && !(o %in% input)) create_placeholder(x) else {
+      insert_code_chunk(x, before, after)
+    }
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
   }))
   if (preview) content = c(create_placeholder(readUTF8(files[1]), FALSE), content)
