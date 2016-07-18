@@ -1,4 +1,4 @@
-We welcome contributions to the **bookkdown** package. To submit a contribution:
+We welcome contributions to the **bookdown** package. To submit a contribution:
 
 1. [Fork](https://github.com/rstudio/bookdown/fork) the repository and make your changes, or just edit a file in this repository using the `Edit` button on Github if the change is simple enough.
 
