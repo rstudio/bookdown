@@ -3,6 +3,7 @@ library(xml2)
 options(stringsAsFactors = FALSE)
 
 exclude_urls = c(
+  'https://bookdown.org/aclark/useR2016videos/',
   'https://bookdown.org/daattali/happy-git-with-r/',
   'https://bookdown.org/nowosad/modele_clay_podsumowanie/',
   'https://bookdown.org/nowosad/obrona_doktorska/',
@@ -21,14 +22,19 @@ exclude_urls = c(
   'https://bookdown.org/jjallaire/bookdown/',
   'https://bookdown.org/jjallaire/site/',
   'https://bookdown.org/Cardinal_Daniel/R_Reporting_Book_-_Kinduct_Data/',
+  'https://bookdown.org/Cardinal_Daniel/Mechanical_Intensity_Book/',
+  'https://bookdown.org/pranayaryal/test-book/',
+  'https://bookdown.org/nanx/rphbook/',
   'https://bookdown.org/yihui/bookdown-demo2/',
   'https://bookdown.org/yihui/bookdown-demo3/',
-  'https://bookdown.org/yihui/homepage/'
+  'https://bookdown.org/home/'
 )
 
 pinned_urls = c(
   "https://bookdown.org/yihui/bookdown/",
-  "http://r4ds.had.co.nz/"
+  "http://r4ds.had.co.nz/",
+  "https://bookdown.org/rdpeng/rprogdatascience/",
+  "https://bookdown.org/csgillespie/efficientR/"
 )
 
 book_listing = function() {
