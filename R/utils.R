@@ -388,6 +388,8 @@ move_dir = function(from, to) {
     unlink(from, recursive = TRUE)
 }
 
+move_dirs = function(from, to) mapply(move_dir, from, to)
+
 existing_files = function(x, first = FALSE) {
   x = x[file.exists(x)]
   if (first) head(x, 1) else x
