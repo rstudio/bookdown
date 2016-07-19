@@ -8,9 +8,7 @@
 #' There are two ways to render a book from Rmd files. The default way
 #' (\code{new_session = FALSE}) is to merge Rmd files into a single file and
 #' render this file. You can also choose to render each individual Rmd file in a
-#' new R session (\code{new_session = TRUE}). In this case, Rmd files that have
-#' not been updated from the previous run will not be recompiled the next time
-#' by default, and you can force compiling them by \code{force_knit = TRUE}.
+#' new R session (\code{new_session = TRUE}).
 #' @param input An input filename (or multiple filenames). If \code{preview =
 #'   TRUE}, only files specified in this argument are rendered, otherwise all R
 #'   Markdown files specified by the book are rendered.
@@ -28,8 +26,6 @@
 #'   files (if not provided, the value of the \code{new_session} option in
 #'   \file{_bookdown.yml} is used; if this is also not provided,
 #'   \code{new_session = FALSE}).
-#' @param force_knit Whether to force knitting all Rmd files (this argument is
-#'   only for \code{new_session = TRUE}).
 #' @param preview Whether to render and preview the input files specified by the
 #'   \code{input} argument. Previewing a certain chapter may save compilation
 #'   time as you actively work on this chapter, but the output may not be
@@ -40,7 +36,7 @@
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
-  force_knit = FALSE, preview = FALSE, encoding = 'UTF-8'
+  preview = FALSE, encoding = 'UTF-8'
 ) {
 
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable() &&
@@ -61,7 +57,7 @@ render_book = function(
     if (length(output_format) > 1) {
       return(unlist(lapply(output_format, function(fmt) render_book(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
-        new_session = new_session, force_knit = force_knit, preview = preview
+        new_session = new_session, preview = preview
       ))))
     }
     format = html_or_latex(output_format)
@@ -114,7 +110,7 @@ render_book = function(
   on.exit(unlink(main), add = TRUE)
 
   if (new_session) {
-    render_new_session(files, main, config, force_knit, output_format, clean, envir, ...)
+    render_new_session(files, main, config, output_format, clean, envir, ...)
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
@@ -135,7 +131,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
   rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
 }
 
-render_new_session = function(files, main, config, force_, output_format, clean, envir, ...) {
+render_new_session = function(files, main, config, output_format, clean, envir, ...) {
 
   # save a copy of render arguments in a temp file
   render_args = tempfile('render', '.', '.rds')
@@ -151,10 +147,9 @@ render_new_session = function(files, main, config, force_, output_format, clean,
   # copy pure Markdown input files to output directory; no need to render() them
   for (i in which(grepl('[.]md$', files) & files != files_md))
     file.copy(files[i], files_md[i], overwrite = TRUE)
-  # which Rmd's should be recompiled? Rmd newer than md, or md does not exist
-  rerun = if (force_) TRUE else {
-    utils::file_test('-nt', files, files_md) | !file.exists(files_md)
-  }
+  # if input is index.Rmd or not preview mode, compile all Rmd's
+  rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
+  if (!rerun) rerun = files %in% opts$get('input_rmd')
   add1 = insert_chapter_script(config, 'before')
   add2 = insert_chapter_script(config, 'after')
   # compile chapters in separate R sessions
