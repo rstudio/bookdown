@@ -5,8 +5,8 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    clean_envir = !interactive(), output_dir = NULL, new_session = NA, 
-    force_knit = FALSE, preview = FALSE, encoding = "UTF-8")
+    clean_envir = !interactive(), output_dir = NULL, new_session = NA, preview = FALSE, 
+    encoding = "UTF-8")
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -33,9 +33,6 @@ files (if not provided, the value of the \code{new_session} option in
 \file{_bookdown.yml} is used; if this is also not provided,
 \code{new_session = FALSE}).}
 
-\item{force_knit}{Whether to force knitting all Rmd files (this argument is
-only for \code{new_session = TRUE}).}
-
 \item{preview}{Whether to render and preview the input files specified by the
 \code{input} argument. Previewing a certain chapter may save compilation
 time as you actively work on this chapter, but the output may not be
@@ -54,7 +51,5 @@ in YAML). The \code{preview_chapter()} function is a wrapper of
 There are two ways to render a book from Rmd files. The default way
 (\code{new_session = FALSE}) is to merge Rmd files into a single file and
 render this file. You can also choose to render each individual Rmd file in a
-new R session (\code{new_session = TRUE}). In this case, Rmd files that have
-not been updated from the previous run will not be recompiled the next time
-by default, and you can force compiling them by \code{force_knit = TRUE}.
+new R session (\code{new_session = TRUE}).
 }

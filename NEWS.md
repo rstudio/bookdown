@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.2 (unreleased)
 
+## MAJOR CHANGES
+
+- The `force_knit` argument of `render_book()` was removed (to avoid confusion when switching output formats).
+
 ## BUG FIXES
 
 - Figures are not correctly numbered in Word output using the `bookdown::word_document2()` format (thanks, @byzheng, #158).
