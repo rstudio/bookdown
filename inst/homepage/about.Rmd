@@ -17,7 +17,7 @@ Here is an example:
 description: "This is a minimal bookdown demo."
 github-repo: "rstudio/bookdown-demo"
 cover-image: "images/cover.png"
-url: "https\://bookdown.org/yihui/bookdown-demo/"
+url: 'https\://bookdown.org/yihui/bookdown-demo/'
 ```
 
 If your book is written with **bookdown** but not published to bookdown.org, please feel free to [let us know](https://github.com/rstudio/bookdown/issues) the URL, and we can also list it on the homepage.
