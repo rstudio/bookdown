@@ -380,6 +380,14 @@ files_cache_dirs = function(dir = '.') {
   out
 }
 
+# file.rename() does not work if target directory is not empty, so we just copy
+# everything from `from` to `to`, and delete `from`
+move_dir = function(from, to) {
+  if (!dir_exists(to)) return(file.rename(from, to))
+  if (file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
+    unlink(from, recursive = TRUE)
+}
+
 existing_files = function(x, first = FALSE) {
   x = x[file.exists(x)]
   if (first) head(x, 1) else x

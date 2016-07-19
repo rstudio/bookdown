@@ -80,12 +80,12 @@ render_book = function(
   }
   # move _files and _cache from _bookdown_files to ./, then from ./ to _bookdown_files
   aux_dirs = files_cache_dirs(aux_diro)
-  file.rename(aux_dirs, basename(aux_dirs))
+  move_dir(aux_dirs, basename(aux_dirs))
   on.exit({
     aux_dirs = files_cache_dirs('.')
     if (length(aux_dirs)) {
       dir_create(aux_diro)
-      file.rename(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+      move_dir(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
     }
   }, add = TRUE)
 
