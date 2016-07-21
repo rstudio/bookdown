@@ -52,15 +52,19 @@ epub_book = function(
     },
     post_processor = function(metadata, input, output, clean, verbose) {
       unlink(css)
-      if (is.null(opts$get('output_dir'))) return(output)
-      output2 = output_path(output)
-      file.rename(output, output2)
-      output2
+      move_output(output)
     }
   )
   config$bookdown_output_format = 'epub'
   config = set_opts_knit(config)
   config
+}
+
+move_output = function(output) {
+  if (is.null(opts$get('output_dir'))) return(output)
+  output2 = output_path(output)
+  file.rename(output, output2)
+  output2
 }
 
 process_markdown = function(input_file, from, pandoc_args, global) {
