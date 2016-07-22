@@ -15405,7 +15405,7 @@ function preparePage(notify) {
     updateNavigationPosition();
 
     // Focus on content
-    $pageWrapper.focus();
+    // $pageWrapper.focus();
 
     // Reset scroll
     $bookInner.scrollTop(0);
