@@ -27,17 +27,18 @@ $(document).ready(function() {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
   menuAnchor.parent().addClass('current');
-  
+
   // now transform anchor urls so they work on bookdown.org
   if (window.location.hostname == "bookdown.org") {
     var pageAnchors = $('li.navItem a');
     pageAnchors.each(function() {
       var href = $(this).attr('href');
-      href = "/yihui/homepage/" + href;
+      if (/^https?:\/\//.test(href)) return;
+      href = "/home/" + href;
       $(this).attr('href', href);
     });
   }
-  
+
   // bigNumber
   var numberClasses = ["color1", "color2", "color3"];
   var bigNumber = $('.section.bigNumber');
@@ -55,8 +56,8 @@ $(document).ready(function() {
     }
     var h2 = $(this).children('h2');
     h2.prepend(span);
-  }); 
-  
+  });
+
   // munge url
   (function() {
   var loc = window.top.location, his = window.top.history;
