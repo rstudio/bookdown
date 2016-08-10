@@ -15,7 +15,7 @@ output:
         position: static
   bookdown::pdf_book:
     keep_tex: yes
-  bookdown::html_chapters:
+  bookdown::html_book:
     css: toc.css
 documentclass: book
 ---
@@ -32,7 +32,7 @@ bookdown::gitbook:
       position: static
 bookdown::pdf_book:
   keep_tex: yes
-bookdown::html_chapters:
+bookdown::html_book:
   css: toc.css
 ```
 

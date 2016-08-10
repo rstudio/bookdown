@@ -285,7 +285,7 @@ And the YAML metadata of the R Markdown document can be:
 ```yaml
 ---
 output:
-  bookdown::html_chapters:
+  bookdown::html_book:
     includes:
       in_header: style.css
 ---

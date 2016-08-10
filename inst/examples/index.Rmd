@@ -137,7 +137,7 @@ Because **knitr** does not allow duplicate chunk labels in a source document, yo
 
 Although we have been talking about R Markdown files, the chapter files do not actually have to be R Markdown. They can be plain Markdown files (`.md`), and do not have to contain R code chunks at all. You can certainly use **bookdown** to compose novels or poems!
 
-At the moment, there are three output formats that you may use: `bookdown::pdf_book`, `bookdown::gitbook`, and `bookdown::html_chapters`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()`, but it was designed to render _multiple_ Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
+At the moment, there are three output formats that you may use: `bookdown::pdf_book`, `bookdown::gitbook`, and `bookdown::html_book`. There is a `bookdown::render_book()` function similar to `rmarkdown::render()`, but it was designed to render _multiple_ Rmd documents into a book using the output format functions. You may either call this function from command line, or use it in the RStudio IDE. Here are some command line examples:
 
 ```{r eval=FALSE}
 bookdown::render_book('foo.Rmd', 'bookdown::gitbook')
