@@ -95,7 +95,8 @@ render_book = function(
     if (is.logical(config[['new_session']])) new_session = config[['new_session']]
   }
 
-  files = source_files(format, config)
+  main = book_filename()
+  files = setdiff(source_files(format, config), main)
   if (length(files) == 0) stop(
     'No input R Markdown files found from the current directory ', getwd(),
     ' or in the rmd_files field of _bookdown.yml'
@@ -104,16 +105,16 @@ render_book = function(
     'All input files must be under the current working directory'
   )
 
-  main = book_filename()
   if (!grepl('[.][a-zA-Z]+$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
   opts$set(book_filename = main)  # store the book filename
-  on.exit(unlink(main), add = TRUE)
 
-  if (new_session) {
+  res = if (new_session) {
     render_new_session(files, main, config, output_format, clean, envir, ...)
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
+  unlink(main)
+  res
 }
 
 #' @rdname render_book
