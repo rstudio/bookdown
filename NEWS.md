@@ -14,6 +14,8 @@
 
 - For the "Knit and Merge" approach (`new_session: yes` in `_bookdown.yml`), certain parts like figures may not show up when switching from one output format to another (e.g. from HTML to LaTeX).
 
+- The `rmd_files` option in `_bookdown.yml` does not work when it is a list of `html` and `latex` options (thanks, @ismayc, #177).
+
 # CHANGES IN bookdown VERSION 0.1
 
 ## NEW FEATURES

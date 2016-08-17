@@ -106,7 +106,7 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   # a list of Rmd chapters
   files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
-  if (is.character(config[['rmd_files']])) {
+  if (length(config[['rmd_files']]) > 0) {
     files = config[['rmd_files']]
     if (is.list(files)) {
       files = if (all && is.null(format)) unlist(files) else files[[format]]
