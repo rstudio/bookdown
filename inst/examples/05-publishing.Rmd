@@ -50,7 +50,8 @@ One service that you can utilize is Travis CI (https://travis-ci.org). It is fre
 The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done via several ways, and the easiest one to beginners may be a personal access token. Below are a few steps you may follow:
 
 1. Create a personal access token for your account on GitHub: https://help.github.com/articles/creating-an-access-token-for-command-line-use/ (make sure to enable the "repo" scope so that using this token will enable writing to your GitHub repos)
-1. Encrypt it in the environment variable `GITHUB_PAT` via command line `travis encrypt` and store it in `.travis.yml`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via `https://travis-ci.org/user/repo/settings` where `user` is your GitHub ID, and `repo` is the name of the repository;
+1. Encrypt it in the environment variable `GITHUB_PAT` via command line `travis encrypt` and store it in `.travis.yml`, 
+e.g `travis encrypt GITHUB_PAT=TOKEN`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via https://travis-ci.org/user/repo/settings where `user` is your GitHub ID, and `repo` is the name of the repository;
 1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
 
 Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
