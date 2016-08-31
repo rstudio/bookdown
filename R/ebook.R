@@ -90,12 +90,11 @@ resolve_refs_md = function(content, ref_table) {
   # replace (\#fig:label) with Figure x.x:
   for (i in grep('^(<p class="caption|<caption>|Table:)|(!\\[.*?\\]\\(.+?\\))', content)) {
     for (j in ids) {
-      if (grepl(j, content[i], fixed = TRUE)) {
+      m = sprintf('\\(\\\\#%s\\)', j)
+      if (grepl(m, content[i])) {
         type = ifelse(grepl('^fig:', j), 'Figure', 'Table')
         content[i] = sub(
-          sprintf('\\(\\\\#%s\\)', j),
-          sprintf('<span id="%s"></span>%s %s: ', j, type, ref_table[j]),
-          content[i]
+          m, sprintf('<span id="%s"></span>%s %s: ', j, type, ref_table[j]), content[i]
         )
         break
       }
