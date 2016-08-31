@@ -63,7 +63,7 @@ Among all possible arguments in `...`, you are most likely to use the `css` argu
 
 Please note if you change `self_contained = TRUE` to make self-contained HTML pages, the total size of all HTML files can be significantly increased since there are many JS and CSS files tha have to be embedded in every single HTML file.
 
-Besides these `html_document()` options, `gitbook()` has two other arguments: `split_by` and `config`. The `split_by` argument specifies how you want to split the HTML output into multiple pages, and its possible values are:
+Besides these `html_document()` options, `gitbook()` has three other arguments: `split_by`, `split_bib`, and `config`. The `split_by` argument specifies how you want to split the HTML output into multiple pages, and its possible values are:
 
 - `rmd`: use the base filenames of the input Rmd files to create the HTML filenames, e.g., generate `chapter3.html` for `chapter3.Rmd`;
 - `none`: do not split the HTML file (the book will be a single HTML file);
