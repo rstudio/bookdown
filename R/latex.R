@@ -74,10 +74,10 @@ tufte_book2 = function(...) {
 
 resolve_refs_latex = function(x) {
   x = gsub(
-    '(?<!\\\\textbackslash{})@ref\\(([-:[:alnum:]]+)\\)', '\\\\ref{\\1}', x,
+    '(?<!\\\\textbackslash{})@ref\\(([-/:[:alnum:]]+)\\)', '\\\\ref{\\1}', x,
     perl = TRUE
   )
-  x = gsub('\\(\\\\#((fig|tab):[-[:alnum:]]+)\\)', '\\\\label{\\1}', x)
+  x = gsub('\\(\\\\#((fig|tab):[-/[:alnum:]]+)\\)', '\\\\label{\\1}', x)
   x
 }
 

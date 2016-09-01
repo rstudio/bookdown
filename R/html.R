@@ -438,7 +438,7 @@ parse_fig_labels = function(content, global = FALSE) {
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
 
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
-  m = gregexpr('\\(#((fig|tab):[-[:alnum:]]+)\\)', content)
+  m = gregexpr('\\(#((fig|tab):[-/[:alnum:]]+)\\)', content)
   labs = regmatches(content, m)
   cntr = new_counters(c('Figure', 'Table'), chaps)  # chapter counters
   figs = grep('^<div class="figure', content)
@@ -479,7 +479,7 @@ parse_fig_labels = function(content, global = FALSE) {
   regmatches(content, m) = labs
 
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
-  content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
+  content = gsub('"\\(\\\\#(fig:[-/[:alnum:]]+)\\)', '"', content)
 
   list(content = content, ref_table = arry)
 }

@@ -161,7 +161,7 @@ The disadvantage of typesetting figures in this way is that when there is not en
 If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure, use the syntax `\@ref(label)`^[Do not forget the leading backslash!], where `label` is the figure label, e.g., `fig:foo`.
 
 ```{block, type='rmdimportant'}
-If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains alphanumeric characters (a-z, A-Z, 0-9) and dashes (-). Other characters do not qualify.
+If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains alphanumeric characters (a-z, A-Z, 0-9), slashes (/), or dashes (-). Other characters do not qualify.
 ```
 
 
