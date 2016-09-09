@@ -189,7 +189,7 @@ plot(cars, pch = 19)
 
 Sometimes you may have certain images that are not generated from R code, and you can include them them in R Markdown via the function `knitr::include_graphics()`. Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. You may pass one or multiple image paths to the `include_graphics()` function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use `out.width = '33%'` to set the widths of these images in the output document.
 
-```{r knitr-logo, out.width='33%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
+```{r knitr-logo, out.width='32.8%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
 knitr::include_graphics(rep('images/knit-logo.png', 3))
 ```
 
