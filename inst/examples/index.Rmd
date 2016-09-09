@@ -3,7 +3,7 @@ title: "Bookdown: Authoring Books with R Markdown"
 author: "Yihui Xie"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
-documentclass: book
+documentclass: krantz
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes

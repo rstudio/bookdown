@@ -20,5 +20,7 @@ bookdown::pdf_book:
   keep_tex: yes
   latex_engine: xelatex
   citation_package: natbib
+  template: null
+  pandoc_args: --chapters
 bookdown::epub_book:
   stylesheet: css/style.css
