@@ -61,6 +61,7 @@ The easiest way for beginners to get started with writing a book with R Markdown
     devtools::install_github('rstudio/bookdown')
     ```
 
+1. Bring up the `Build` tab of RStudio IDE. Follow the `More` menu and click to `Configure Build Tools`. Set `Project build tools` to `Website`. 
 1. Open the R Markdown file `index.Rmd` and click the button `Build Book` on the `Build` tab of RStudio;
 
 Now you should see the index page of this book demo in the RStudio Viewer. You may add or change the R Markdown files, come back to `index.Rmd`, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through command line. See the next section for details.
