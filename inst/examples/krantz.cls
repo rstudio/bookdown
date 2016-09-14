@@ -239,7 +239,7 @@
 \newdimen\tempdimen
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Parameter Initializaton %%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
+%
 \newdimen\htrim
 \newdimen\vtrimtop
 \newdimen\vtrimbot
@@ -719,7 +719,7 @@
                    \markboth{#1}{#1}
                    \@afterheading
                  \fi}
-                 
+
 \def\@makeschapterhead#1{%
   {\parindent \z@ \raggedright \baselineskip 6\p@ \lineskip \z@ \parskip \z@
     \vbox{
@@ -1062,8 +1062,8 @@
     }
     \if@restonecol\twocolumn\fi
     }
-    
-  
+
+
 \def\draw@part#1#2{%
   \addpenalty{-\@highpenalty}%
   \vskip1em plus\p@
@@ -1085,7 +1085,7 @@
 
 \let\toc@draw\relax
 %
-\def\l@part#1#2{% 
+\def\l@part#1#2{%
 \toc@draw
  \gdef\toc@draw{\draw@part{\large #1}{\large #2}}}
 
@@ -1111,7 +1111,7 @@
 \fi
     \par
     \penalty\@highpenalty\endgroup}
-    
+
 
 
   \def\l@chapter#1#2{%
@@ -1240,15 +1240,15 @@
         \hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor #5}%
 \fi
       \par}\fi}
-      
+
 \newcommand\chapterauthors{%
   \def\break{\string\break\ }%
   \def\protect##1{\string ##1 }}
 \def\end@cas{}
 \def\end@casplusone{\vskip4pt\@doendpe}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\def\make@chaptoc{% chapter author 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\make@chaptoc{% chapter author
   {\parindent\z@
   \newcommand\FolioBoldFont{}%
   \let\@b\bullet
@@ -1345,10 +1345,10 @@
 
 \ifnum\c@numauthors>4
     \resetcounter{numauthors}
-\fi 
+\fi
 \stepcounter{numauthors}
 %%\the\c@numauthors
-\ifnum\c@numauthors=1 % 
+\ifnum\c@numauthors=1 %
     \sbox\@AUonebox{\CAPlusOneFont#1}
     \sbox\@AUaffonebox{\vbox{\hsize\textwidth\CAAPlusOneFont\noindent #2\par}}
     \sbox\@finalAUboxfromone{\copy\@AUonebox}
@@ -1428,14 +1428,14 @@
 %      \advance\hsize-\secnumwidth
 %      \hskip-\secnumwidth
 \if@sevenbyten
-\hangindent\secnumwidth\hsize372pt\else\hangindent\secnumwidth\hsize312pt\fi 
+\hangindent\secnumwidth\hsize372pt\else\hangindent\secnumwidth\hsize312pt\fi
 #4
         \if@pdf
           \hfill
         \else
           \nobreak\leaders\hbox{$\m@th\mkern\@dotsep mu.\mkern\@dotsep mu$}\hfill\nobreak
           \hbox to24\p@{\hfil #5}\fi
-      \par}\fi}      
+      \par}\fi}
 
 \newcommand\listoffigures{%
     \if@twocolumn
@@ -1726,15 +1726,15 @@
 
 
 \def\grayink{\special{color cmyk 0 0 0 0.2}}
-\def\blackink{\special{color cmyk 0 0 0 1.0}} %  
+\def\blackink{\special{color cmyk 0 0 0 1.0}} %
 \def\whiteink{\special{color cmyk 0 0 0 0}} % 0%
 
 \newenvironment{shadebox}{%
 \setbox\tempbox\hbox\bgroup\vbox\bgroup\leftskip12pt\rightskip\leftskip\vspace*{12pt}}{\par\addvspace{-6pt}
-\egroup\egroup\par\addvspace{15pt} 
+\egroup\egroup\par\addvspace{15pt}
 \tempdimen\ht\tempbox
 \advance\tempdimen by 1pc
-\noindent{\hbox to \wd\tempbox{\vbox to \ht\tempbox{\hsize\textwidth{\special{color push}\grayink\noindent\vrule height\tempdimen width\textwidth 
+\noindent{\hbox to \wd\tempbox{\vbox to \ht\tempbox{\hsize\textwidth{\special{color push}\grayink\noindent\vrule height\tempdimen width\textwidth
 \special{color pop}\blackink}}}}%
 \llap{\unhbox\tempbox}\par\addvspace{20pt}}
 
@@ -1868,25 +1868,25 @@
      \leftmargini\listtextleftmargin
      \ifdim\listlabelleftskip>\z@
         \advance\leftmargini-\listlabelleftskip
-     \fi  
+     \fi
   \fi
   \ifdim\listtextleftmarginii>\z@
      \leftmarginii\listtextleftmarginii
      \ifdim\listlabelleftskipii>\z@
         \advance\leftmarginii-\listlabelleftskipii
-     \fi  
+     \fi
   \fi
   \ifdim\listtextleftmarginiii>\z@
      \leftmarginiii\listtextleftmarginiii
      \ifdim\listlabelleftskipiii>\z@
         \advance\leftmarginiii-\listlabelleftskipiii
-     \fi  
+     \fi
   \fi
 }
 %
 \enummax{1.}
 %
-\def\enumerate{\@ifnextchar[{\@enumerate}{\@enumerate[\csname label\@enumctr\endcsname]}}%% 
+\def\enumerate{\@ifnextchar[{\@enumerate}{\@enumerate[\csname label\@enumctr\endcsname]}}%%
 %
 
 \def\@enumerate[#1]{\par
@@ -1906,13 +1906,13 @@
             \advance\leftmargin\leftskip
             \tempdimen\leftmargini
             \advance\tempdimen-\labelsep
-           %%%%%%%%%%% 
-           \iffnalpha 
+           %%%%%%%%%%%
+           \iffnalpha
             \def\makelabel##1{{\hskip\listlabelleftskip{\csname listdevicefont\romannumeral\the\@enumdepth\endcsname{\iflabelrightalign\hss\fi\textlistlabel##1}}}}%
             \global\fnalphafalse
            \else
             \def\makelabel##1{\hbox to \tempdimen{\hskip\listlabelleftskip{\csname listdevicefont\romannumeral\the\@enumdepth\endcsname\hbox to \enumdimwd{\iflabelrightalign\hss\fi\textlistlabel##1}}\blackink}}%
-           \fi 
+           \fi
            %%%%%%%%%%%%%%%%%%%%%%%%%%%
          \else
             \ifnum \@enumdepth=2
@@ -1926,8 +1926,8 @@
                   \def\makelabel##1{\hbox to \tempdimen{\hskip\listlabelleftskipiii{\csname listdevicefont\romannumeral\the\@enumdepth\endcsname\hbox to \enumdimwd{\iflabelrightalign\hss\fi##1}\blackink}}}%
               \else
                                        \def\makelabel##1{\hss\llap{\csname listdevicefont\romannumeral\the\@enumdepth\endcsname##1}}%
-                                    \fi   
-                                 \fi   
+                                    \fi
+                                 \fi
          \fi}
       \fi}
 %
@@ -1960,9 +1960,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
     \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
-    
+
 \frenchspacing
-\tolerance=5000    
+\tolerance=5000
 \raggedbottom
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
