@@ -1488,6 +1488,7 @@
       \endlist}
 \newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
 \let\@openbib@code\@empty
+\newcommand\indexname{Index}
 \newenvironment{theindex}
                {\cleardoublepage\if@twocolumn
                   \@restonecolfalse
@@ -1522,7 +1523,6 @@
 \newcommand\listfigurename{List of Figures}
 \newcommand\listtablename{List of Tables}
 \newcommand\bibname{Bibliography}
-\newcommand\indexname{Index}
 \newcommand\figurename{FIGURE}
 \newcommand\tablename{TABLE}
 \newcommand\partname{Part}
