@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.2 (unreleased)
 
+## NEW FEATURES
+
+- Added two arguemnts `toc_unnumberred` and `toc_bib` to `pdf_book()`.
+
 ## MAJOR CHANGES
 
 - The `force_knit` argument of `render_book()` was removed (to avoid confusion when switching output formats).

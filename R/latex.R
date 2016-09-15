@@ -12,10 +12,14 @@
 #'   \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
 #' @param base_format An output format function to be used as the base format.
+#' @param toc_unnumbered Whether to add unnumberred headers to the table of
+#'   contents.
+#' @param toc_bib Whether to add the bibliography section to the table of
+#'   contents.
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
-  base_format = rmarkdown::pdf_document
+  base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_bib = FALSE
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -29,6 +33,8 @@ pdf_book = function(
     x = resolve_refs_latex(readUTF8(f))
     x = restore_part_latex(x)
     x = restore_appendix_latex(x)
+    if (!toc_unnumbered) x = remove_toc_items(x)
+    if (toc_bib) x = add_toc_bib(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -105,6 +111,21 @@ find_appendix_line = function(r, x) {
   i = grep(r, x)
   if (length(i) > 1) stop('You must not have more than one appendix title')
   i
+}
+
+remove_toc_items = function(x) {
+  r = '^\\\\addcontentsline\\{toc\\}\\{(part|chapter|section|subsection|subsubsection)\\}\\{.+\\}$'
+  x[grep(r, x)] = ''
+  x
+}
+
+add_toc_bib = function(x) {
+  r = '^\\\\bibliography\\{.+\\}$'
+  i = grep(r, x)
+  if (length(i) == 0) return(x)
+  i = i[1]
+  x[i] = paste0(x[i], '\n\\addcontentsline{toc}{chapter}{\\bibname}')
+  x
 }
 
 latexmk = function(...) {
