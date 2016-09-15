@@ -4,7 +4,7 @@
 \title{Convert R Markdown to a PDF book}
 \usage{
 pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ..., 
-    base_format = rmarkdown::pdf_document)
+    base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_bib = FALSE)
 }
 \arguments{
 \item{toc, number_sections, fig_caption}{See
@@ -14,6 +14,12 @@ pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
 \item{...}{Other arguments to be passed to \code{base_format}.}
 
 \item{base_format}{An output format function to be used as the base format.}
+
+\item{toc_unnumbered}{Whether to add unnumberred headers to the table of
+contents.}
+
+\item{toc_bib}{Whether to add the bibliography section to the table of
+contents.}
 }
 \description{
 Convert R Markdown files to PDF while resolving the special tokens of
