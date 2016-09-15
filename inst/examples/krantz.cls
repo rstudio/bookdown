@@ -1659,44 +1659,13 @@
   \long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
   \@dblfloat{table}}
 
-\def\@tabular{%
-  \leavevmode
-  \if@centertable\hfil\fi
-  \vbox\bgroup
-  \setbox\@tablebox\hbox\bgroup
-  \baselineskip11pt
-  \global\let\@fn\@empty
-  \def\footnote##1{\footnotemark\gdef\@fn{##1}}
-  \renewcommand{\arraystretch}{.916666666667}%
-  $\let\@acol\@tabacol
-  \let\@classz\@tabclassz
-  \let\@classiv\@tabclassiv
-  \let\\\@tabularcr
-  \@tabarray}
-\def\endtabular{%
-  \crcr\egroup\egroup $\egroup
-  \@tablewidth\wd\@tablebox
-  \ifnum\@tabletitlewidth>0
-    {\hsize\@tabletitlewidth\raggedright\global\setbox\@tabletitlebox\vbox{\@Tabletitle}}%
-  \else
-    \setbox\@tabletitlebox\hbox{\@Tabletitle}%
-    \ifnum\wd\@tabletitlebox>\@tablewidth
-      {\hsize\@tablewidth\raggedright\global\setbox\@tabletitlebox\vbox{\@Tabletitle}}\fi
-    \@tabletitlewidth\wd\@tabletitlebox\fi
-  \ifnum\@tabletitlewidth>0
-    \ifnum\@tabletitlewidth>\@tablewidth\@tablewidth\@tabletitlewidth\fi
-    \hbox to\@tabletitlewidth{\if@centertabletitle\hfil\fi\box\@tabletitlebox\hfil}\par\fi
-  \max@tablewidth\@tablewidth
-  \ifnum\@tabletitlewidth>\max@tablewidth\max@tablewidth\@tabletitlewidth\fi
-  \if@tablerules
-    \ifnum\@tabletitlewidth>0\vskip-6pt\fi
-    \hbox to\max@tablewidth{\if@centertable\hfil\fi\rule{\@tablewidth}{1pt}\hfil}\par\fi
-  \hbox to\max@tablewidth{\if@centertable\hfil\fi\box\@tablebox\hfil}\vskip1pt
-  \if@tablerules\hbox to\max@tablewidth{\if@centertable\hfil\fi\rule{\@tablewidth}{1pt}\hfil}\par\fi
-  \ifx\@fn\@empty\else\FootnoteFont\parindent\z@\noindent\@makefnmark\@fn\par\fi
-  \egroup\hfil
-  \vskip 0pt plus 12pt
-  \gdef\@Tabletitle{}}
+\def\endtabular{\crcr\egroup\egroup $\egroup}
+\expandafter \let \csname endtabular*\endcsname = \endtabular
+\def\tabular{\let\@halignto\@empty\@tabular}
+\@namedef{tabular*}#1{%
+ \setlength\dimen@{#1}%
+   \edef\@halignto{to\the\dimen@}\@tabular}
+
 
 \def\tch#1{\TableColHeadFont #1\llstrut\hfill}
 \def\tsh#1{\TableSubheadFont #1\hfill}
