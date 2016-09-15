@@ -17,19 +17,43 @@
   }%
 \fi
 
+\makeatletter
+\newenvironment{kframe}{%
+\medskip{}
+\setlength{\fboxsep}{.8em}
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}
+
 \newenvironment{rmdblock}[1]
-  {\begin{shaded*}
+  {
   \begin{itemize}
   \renewcommand{\labelitemi}{
     \raisebox{-.7\height}[0pt][0pt]{
       {\setkeys{Gin}{width=3em,keepaspectratio}\includegraphics{images/#1}}
     }
   }
+  \setlength{\fboxsep}{1em}
+  \begin{kframe}
   \item
   }
   {
+  \end{kframe}
   \end{itemize}
-  \end{shaded*}
   }
 \newenvironment{rmdnote}
   {\begin{rmdblock}{note}}
@@ -46,3 +70,8 @@
 \newenvironment{rmdwarning}
   {\begin{rmdblock}{warning}}
   {\end{rmdblock}}
+
+\usepackage{makeidx}
+\makeindex
+
+\urlstyle{tt}
