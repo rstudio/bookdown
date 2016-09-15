@@ -25,6 +25,7 @@ exclude_urls = c(
   'https://bookdown.org/Cardinal_Daniel/Mechanical_Intensity_Book/',
   'https://bookdown.org/pranayaryal/test-book/',
   'https://bookdown.org/nanx/rphbook/',
+  'https://bookdown.org/scottming/rns/',
   'https://bookdown.org/yihui/bookdown-demo2/',
   'https://bookdown.org/yihui/bookdown-demo3/',
   'https://bookdown.org/home/'
