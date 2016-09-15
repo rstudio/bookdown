@@ -1006,11 +1006,11 @@
   \vskip\abovecaptionskip
   \sbox\@tempboxa{#1: #2}%
   \ifdim \wd\@tempboxa >\hsize
-    {\FigCapFont #1}\par #2\par
+    {\FigCapFont #1} #2\par
   \else
     \global \@minipagefalse
 %    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
-    {\FigCapFont #1}\par #2\par
+    {\FigCapFont #1} #2\par
   \fi
   \vskip\belowcaptionskip}
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
