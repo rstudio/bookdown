@@ -1,4 +1,3 @@
-%%
 %% This is file `Krantz.cls'
 %%% Created by Shashi Kumar / ITC [August 2008]
 
@@ -1942,4 +1941,3 @@
 \endinput
 %%
 %% End of file `krantz.cls'.
-         
