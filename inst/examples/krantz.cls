@@ -1499,7 +1499,7 @@
                         {\MakeUppercase\indexname}%
                         \pagestyle{headings}
                         \addcontentsline{toc}{chapter}{\indexname}
-                \thispagestyle{folio}\parindent\z@\markboth{Index}{Index}
+                \thispagestyle{folio}\parindent\z@\markboth{\indexname}{\indexname}
                 \parskip\z@ \@plus .3\p@\relax\raggedright
                 \columnseprule \z@
                 \columnsep 35\p@
