@@ -19,7 +19,8 @@
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
-  base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_bib = FALSE
+  base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
+  toc_appendix = FALSE, toc_bib = FALSE
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -32,7 +33,7 @@ pdf_book = function(
     f = with_ext(output, '.tex')
     x = resolve_refs_latex(readUTF8(f))
     x = restore_part_latex(x)
-    x = restore_appendix_latex(x)
+    x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
     writeUTF8(x, f)
@@ -98,11 +99,12 @@ restore_part_latex = function(x) {
   x
 }
 
-restore_appendix_latex = function(x) {
+restore_appendix_latex = function(x, toc = FALSE) {
   r = '^\\\\chapter\\*\\{\\(APPENDIX\\) '
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   x[i] = '\\appendix'
+  if (toc) x[i] = paste(x[i], '\\addcontentsline{toc}{chapter}{\\appendixname}')
   if (grepl('^\\\\addcontentsline', x[i + 1])) x[i + 1] = ''
   x
 }

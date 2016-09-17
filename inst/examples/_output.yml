@@ -25,5 +25,6 @@ bookdown::pdf_book:
   template: null
   pandoc_args: --chapters
   toc_unnumbered: no
+  toc_appendix: yes
 bookdown::epub_book:
   stylesheet: css/style.css

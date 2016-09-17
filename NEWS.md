@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Added two arguemnts `toc_unnumberred` and `toc_bib` to `pdf_book()`.
+- Added arguemnts `toc_unnumberred`, `toc_appendix`, and `toc_bib` to `pdf_book()`.
 
 ## MAJOR CHANGES
 
