@@ -24,10 +24,9 @@ options(
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
 
-lapply(c('DT'), function(pkg) {
+lapply(c('DT', 'citr'), function(pkg) {
   if (!requireNamespace(pkg)) install.packages(pkg)
 })
-if (packageVersion('DT') < '0.1.45') devtools::install_github('rstudio/DT')
 ```
 
 # Preface {-}

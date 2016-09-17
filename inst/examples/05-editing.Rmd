@@ -99,3 +99,8 @@ The addin "Input LaTeX Math" is essentially a small Shiny application that provi
 knitr::include_graphics('images/mathquill.png', dpi = NA)
 ```
 
+There are also other R packages that provide addins to help you author books. The **citr** package [@R-citr] provides an addin named "Insert citations", which makes it easy to insert citations into R Markdown documents. It scans your bibliography databases, and show all citation items in a drop-down menu, so you can choose from the list without remembering which citation key corresponds to which citation item (Figure \@ref(fig:citr)).
+
+```{r citr, echo=FALSE, fig.align='center', fig.cap='The RStudio addin to help insert citations.'}
+knitr::include_graphics('images/citr.png', dpi = NA)
+```
