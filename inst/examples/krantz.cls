@@ -1499,6 +1499,9 @@
                         {\MakeUppercase\indexname}%
                         \pagestyle{headings}
                         \addcontentsline{toc}{chapter}{\indexname}
+% there seems to be a weird bug in krantz.cls that prevents the very _last_ item
+% of \addcontentsline from being added to TOC, so I have to add an empty entry
+\addcontentsline{toc}{section}{}
                 \thispagestyle{folio}\parindent\z@\markboth{\indexname}{\indexname}
                 \parskip\z@ \@plus .3\p@\relax\raggedright
                 \columnseprule \z@
