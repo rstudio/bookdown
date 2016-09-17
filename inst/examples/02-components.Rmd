@@ -320,22 +320,23 @@ Custom blocks are designed to display simple content (typically a paragraph of p
 
 ## Citations {#citations}
 
-Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors). With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
+Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
 ```bibtex
 @Manual{R-base,
-  title = {R: A Language and Environment for Statistical Computing},
+  title = {R: A Language and Environment for Statistical
+    Computing},
   author = {{R Core Team}},
   organization = {R Foundation for Statistical Computing},
   address = {Vienna, Austria},
-  year = {2015},
+  year = {2016},
   url = {https://www.R-project.org/},
 }
 ```
 
-A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on. Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered to @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
+A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on^[The type name is case-insensitive, so it does not matter if it is `manual`, `Manual`, or `MANUAL`.]. Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered as @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
 
 There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
 
@@ -343,7 +344,7 @@ There is a helper function `write_bib()` in **knitr** to generate BibTeX entries
 
 ```{r write-bib, comment='', warning=FALSE}
 # the second argument can be a .bib file
-knitr::write_bib(c('knitr', 'stringr'), '')
+knitr::write_bib(c('knitr', 'stringr'), '', width = 60)
 ```
 
 Once you have got one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliography style via `biblio-style` (this only applies to PDF output), e.g.,
