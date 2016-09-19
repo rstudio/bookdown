@@ -20,6 +20,8 @@
 
 - The `rmd_files` option in `_bookdown.yml` does not work when it is a list of `html` and `latex` options (thanks, @ismayc, #177).
 
+- Math expressions does not appear in the table of contents when the output format is `gitbook` (thanks, @philomonk, #204).
+
 # CHANGES IN bookdown VERSION 0.1
 
 ## NEW FEATURES
