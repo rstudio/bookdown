@@ -14,6 +14,7 @@
 #' @param base_format An output format function to be used as the base format.
 #' @param toc_unnumbered Whether to add unnumberred headers to the table of
 #'   contents.
+#' @param toc_appendix Whether to add the appendix to the table of contents.
 #' @param toc_bib Whether to add the bibliography section to the table of
 #'   contents.
 #' @export

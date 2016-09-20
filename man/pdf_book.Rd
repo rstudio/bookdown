@@ -19,6 +19,8 @@ pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
 \item{toc_unnumbered}{Whether to add unnumberred headers to the table of
 contents.}
 
+\item{toc_appendix}{Whether to add the appendix to the table of contents.}
+
 \item{toc_bib}{Whether to add the bibliography section to the table of
 contents.}
 }
