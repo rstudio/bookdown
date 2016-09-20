@@ -323,9 +323,22 @@ The **knitr** `block` engine was designed to display simple content (typically a
     
     - a list item
     - another item
+    
+    More text.
     ```
 
 The `block2` engine should also be faster than the `block` engine if you have a lot of custom blocks in the document, but its implementation was based on [a hack](https://github.com/jgm/pandoc/issues/2453), so we are not 100% sure if it is always going to work in the future. We have not seen problems with Pandoc v1.17.2 yet.
+
+One more caveat for the `block2` engine: if the last element in the block is not an ordinary paragraph, you must leave a blank line at the end, e.g.,
+
+    `r ''````{block2, type='FOO'}
+    Some text for this block [@citation-key].
+    
+    - a list item
+    - another item
+    - end the list with a blank line
+    
+    ```
 
 ## Citations {#citations}
 
