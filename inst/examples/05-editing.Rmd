@@ -65,7 +65,7 @@ You may choose `in_session = TRUE` or `FALSE` depending on your specific use cas
 
 ## RStudio IDE
 
-You are recommended to use [the RStudio preview version](https://www.rstudio.com/products/rstudio/download/preview/) if your RStudio version is lower than 1.0.0.
+You are recommended to use [the RStudio preview version](https://www.rstudio.com/products/rstudio/download/preview/) if your RStudio version is lower than 1.0.0. As mentioned in Section \@ref(usage), all R Markdown files must be encoded in UTF-8. This is important especially when your files contain multibyte characters. To save a file with the UTF-8 encoding, you can use the menu `File -> Save with Encoding`, and choose `UTF-8`.
 
 When you click the `Knit` button to compile an R Markdown document in the RStudio IDE, the default function called by RStudio is `rmarkdown::render()`, which is not what we want for books. To call the function `bookdown::render_book()` instead, you can set the `site` field to be `bookdown::bookdown_site` in the YAML metadata of the R Markdown document `index.Rmd`, e.g.,
 

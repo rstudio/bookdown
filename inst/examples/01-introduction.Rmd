@@ -41,7 +41,7 @@ Now you should see the index page of this book demo in the RStudio Viewer. You m
 
 Although you see quite a few files in the `bookdown-demo` example, most of them are not essential to a book. If you feel overwhelmed by the number of files, you can use this minimal example instead, which is essentially one file `index.Rmd`: https://github.com/yihui/bookdown-minimal The `bookdown-demo` example contains some advanced settings that you may want to learn later, such as how to customize the LaTeX preamble, tweak the CSS, and build the book on GitHub, etc.
 
-## Usage
+## Usage {#usage}
 
 Normally, a book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title using the first-level heading, e.g., `# Chapter Title`. All R Markdown files must be encoded in UTF-8. Here is an example (the bullets are the filenames, followed by the file content):
 
