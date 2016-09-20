@@ -37,9 +37,7 @@ pdf_book = function(
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
-    i = grep('^\\\\begin\\{document\\}', x)[1]
-    if (!is.na(i) && length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
-      x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
+    x = restore_block2(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -131,6 +129,20 @@ add_toc_bib = function(x) {
   if (length(i) == 0) return(x)
   i = i[1]
   x[i] = paste0(x[i], '\n\\addcontentsline{toc}{chapter}{\\bibname}')
+  x
+}
+
+restore_block2 = function(x) {
+  i = grep('^\\\\begin\\{document\\}', x)[1]
+  if (is.na(i)) return(x)
+  if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
+    x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
+  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})((\\\\null\\{[0-9]+\\})+)(.*)$'
+  if (length(i <- grep(r, x)) == 0) return(x)
+  opts = sapply(strsplit(gsub('\\\\null\\{', '', gsub(r, '\\2', x[i])), '\\}'), function(z) {
+    intToUtf8(as.integer(z))
+  }, USE.NAMES = FALSE)
+  x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\4', x[i]))
   x
 }
 
