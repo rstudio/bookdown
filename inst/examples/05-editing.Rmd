@@ -65,29 +65,20 @@ You may choose `in_session = TRUE` or `FALSE` depending on your specific use cas
 
 ## RStudio IDE
 
-When you compile an R Markdown document in the RStudio IDE, the default function called by RStudio is `rmarkdown::render()`, which is not what we want for books. To call the function `bookdown::render_book()` instead, you can set the `knit` field to be `bookdown::render_book` in the YAML metadata of R Markdown documents, e.g.,
+You are recommended to use [the RStudio preview version](https://www.rstudio.com/products/rstudio/download/preview/) if your RStudio version is lower than 1.0.0.
+
+When you click the `Knit` button to compile an R Markdown document in the RStudio IDE, the default function called by RStudio is `rmarkdown::render()`, which is not what we want for books. To call the function `bookdown::render_book()` instead, you can set the `site` field to be `bookdown::bookdown_site` in the YAML metadata of the R Markdown document `index.Rmd`, e.g.,
 
 ```yaml
 ---
 title: "A Nice Book"
-knit: bookdown::render_book
+site: bookdown::bookdown_site
 output:
   bookdown::gitbook: default
 ---
 ```
 
-Then when you hit the `Knit` button on the RStudio toolbar, RStudio will call `bookdown::render_book()` to render the Rmd files. If you only want to preview the current Rmd file, use `bookdown::preview_chapter` instead, e.g.,
-
-```yaml
----
-title: "A Nice Book"
-knit: bookdown::preview_chapter
-output:
-  bookdown::gitbook: default
----
-```
-
-If you are using a version of the RStudio IDE that is higher than 0.99.1120 (currently it is the [preview version](https://www.rstudio.com/products/rstudio/download/preview/)), you may not set `knit: bookdown::render_book` or `knit: bookdown::preview_chapter` in YAML. You can just set `site: bookdown::bookdown_site` in `index.Rmd` instead, then RStudio will be able to discover the directory as a book source directory, and you will see a button `Build Book` in the `Build` pane. You can click the button to build the whole book to different formats, and if you click the `Knit` button on the toolbar, RStudio will automatically preview the current chapter, and you do not need to use `preview_chapter()` explicitly.
+When you have set `site: bookdown::bookdown_site` in `index.Rmd`, RStudio will be able to discover the directory as a book source directory^[This directory has to be an RStudio project.], and you will see a button `Build Book` in the `Build` pane. You can click the button to build the whole book to different formats, and if you click the `Knit` button on the toolbar, RStudio will automatically preview the current chapter, and you do not need to use `preview_chapter()` explicitly.
 
 The **bookdown** package comes with a few addins for RStudio. If you are not familiar with RStudio addins, you may check out the documentation at http://rstudio.github.io/rstudioaddins/. After you have installed the **bookdown** package and use RStudio v0.99.878 or later, you will see a dropdown menu on the toolbar named "Addins" and menu items like "Preview Book" and "Input LaTeX Math" after you open the menu.
 
