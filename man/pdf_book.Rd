@@ -4,7 +4,8 @@
 \title{Convert R Markdown to a PDF book}
 \usage{
 pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ..., 
-    base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_bib = FALSE)
+    base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_appendix = FALSE, 
+    toc_bib = FALSE)
 }
 \arguments{
 \item{toc, number_sections, fig_caption}{See
