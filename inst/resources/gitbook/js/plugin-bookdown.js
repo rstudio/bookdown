@@ -180,6 +180,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     gs.set('bodyScrollTop', {
       body: bookBody.scrollTop(),
       inner: bookInner.scrollTop(),
+      focused: document.hasFocus(),
       title: bookInner.find('.page-inner').find('h1,h2').first().text()
     });
   };
@@ -203,6 +204,7 @@ require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         if (pos.body !== 0) bookBody.scrollTop(pos.body);
         if (pos.inner !== 0) bookInner.scrollTop(pos.inner);
       }
+      if (pos.focused) bookInner.find('.page-wrapper').focus();
     }
     // clear book body scroll position
     gs.remove('bodyScrollTop');
