@@ -153,19 +153,23 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
     }
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
   }))
-  if (preview) content = c(create_placeholder(readUTF8(files[1]), FALSE), content)
+  if (preview && !(files[1] %in% input))
+    content = c(fetch_yaml(readUTF8(files[1])), content)
   writeUTF8(content, to)
 }
 
 match_dashes = function(x) grep('^---\\s*$', x)
 
-create_placeholder = function(x, header = TRUE) {
+create_placeholder = function(x) {
   h = grep('^# ', x, value = TRUE)  # chapter title
   h1 = grep(reg_part, h, value = TRUE)
   h2 = setdiff(h, h1)
-  h = c('', if (length(h1)) h1[1], if (length(h2)) h2[1] else '# Placeholder')
+  c('', if (length(h1)) h1[1], if (length(h2)) h2[1] else '# Placeholder')
+}
+
+fetch_yaml = function(x) {
   i = match_dashes(x)
-  c(if (length(i) >= 2) x[(i[1]):(i[2])], if (header) h)
+  if (length(i) >= 2) x[(i[1]):(i[2])]
 }
 
 insert_code_chunk = function(x, before, after) {
