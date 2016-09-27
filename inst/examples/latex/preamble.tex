@@ -13,6 +13,9 @@
 \renewcommand{\floatpagefraction}{0.75}
 
 \renewenvironment{quote}{\begin{VF}}{\end{VF}}
+\let\oldhref\href
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+
 \ifxetex
   \usepackage{letltxmacro}
   \setlength{\XeTeXLinkMargin}{1pt}

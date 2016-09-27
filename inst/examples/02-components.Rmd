@@ -418,9 +418,14 @@ Similar to HTML widgets, arbitrary web pages can be embedded in the book. You ca
 
 A related function is `knitr::include_app()`, which is very similar to `include_url()`, and it was designed for embedding Shiny apps via their URLs in the output. Its only difference with `include_url()` is that it automatically adds a query parameter `?showcase=0` to the URL, if no other query parameters are present in the URL, to disable the Shiny showcase mode, which is unlikely to be useful for screenshots or iframes. If you do want the showcase mode, just use `include_url()` instead of `include_app()`. Below is a Shiny app example (Figure \@ref(fig:miniUI)):
 
-```{r miniUI, fig.cap='A Shiny app created via the miniUI package: https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=10), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
+\let\ooldhref\href
+\let\href\oldhref
+
+```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=10,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
 knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
 ```
+
+\let\href\ooldhref
 
 Again, you will see a live app if you are reading an HTML version of this book, and a static screenshot if you are reading other types of formats. The above Shiny app was created using the **miniUI** package [@R-miniUI], which provides layout functions that are particularly nice for Shiny apps on small screens. If you use normal Shiny layout functions, you are likely to see vertical and/or horizontal scrollbars in the iframes because the page size is too big to fit an iframe. When the default width of the iframe is too small, you may use the chunk option `out.width` to change it. For the height of the iframe, use the `height` argument of `include_url()`/`include_app()`.
 
