@@ -123,6 +123,94 @@ GitHub and Travis CI are certainly not the only choices to build and publish you
 
 ## Publishers
 
-## Licensing
+Besides publishing your book online, you can certainly consider publishing it with a publisher. For example, this book was published with Chapman & Hall/CRC, and there is also a free online version at https://bookdown.org/yihui/bookdown/ (with an agreement with the publisher). Another option that you can consider is self-publishing (https://en.wikipedia.org/wiki/Self-publishing) if you do not want to work with an established publisher.
 
-## Self-publishing
+It will be much easier to publish a book written with **bookdown** if the publisher you choose supports LaTeX. For example, Chapman & Hall provides a LaTeX class named `krantz.cls`, and Springer provides `svmono.cls`. To apply these LaTeX classes to your PDF book, just set `documentclass` in the YAML metadata of `index.Rmd` to the class filename (without the extension `.cls`).
+
+The LaTeX class is the most important setting in the YAML metadata. It controls the overall style of the PDF book. There are often other settings you want to tweak, and we will show some details about this book below.
+
+The YAML metadata of this book contains these settings:
+
+```yaml
+documentclass: krantz
+lot: yes
+lof: yes
+fontsize: 12pt
+monofont: "Source Code Pro"
+monofontoptions: "Scale=0.7"
+```
+
+The field `lot: yes` means we want the "List of Tables", and similarly, `lof` means "List of Figures". The base font size is `12pt`, and we used "Source Code Pro" as the monospaced (fixed-width) font, which is applied to all program code in this book.
+
+In the LaTeX preamble (Section \@ref(yaml-options)), we have a few more settings. First, we set the main font to be "Alegreya", and since this font does not have the <span style="font-variant:small-caps;">Small Capitals</span> feature, we used the "Alegreya SC" font.
+
+```latex
+\setmainfont[
+  UprightFeatures={SmallCapsFont=AlegreyaSC-Regular}
+]{Alegreya}
+```
+
+The following commands make floating environments less likely to float by allowing them to occupy larger fractions of pages without floating.
+
+```latex
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+```
+
+Since `krantz.cls` provided an environment `VF` for quotes, we just redefine the standard `quote` environment to `VF`. You can see its style in Section \@ref(markdown-syntax).
+
+```
+\renewenvironment{quote}{\begin{VF}}{\end{VF}}
+```
+
+Then we redefine hyperlinks to be footnotes, because when the book is printed on paper, readers are not able to click on links on text. Footnotes will tell them what the actual links are.
+
+```
+\let\oldhref\href
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+```
+
+We also have some settings for the `bookdown::pdf_book` format in `_output.yml`:
+
+```yaml
+bookdown::pdf_book:
+  includes:
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: yes
+  dev: "cairo_pdf"
+  latex_engine: xelatex
+  citation_package: natbib
+  template: null
+  pandoc_args: "--chapters"
+  toc_unnumbered: no
+  toc_appendix: yes
+  quote_footer: ["\\VA{", "}{}"]
+```
+
+All preamble settings we mentioned above are in the file `latex/preamble.tex`. In `latex/before_body.tex`, we inserted a few blank pages required by the publisher, wrote the dedication page, and specified that the front matter starts:
+
+```latex
+\frontmatter
+```
+
+Before the first chapter of the book, we inserted
+
+```latex
+\mainmatter
+```
+
+so that LaTeX knows to change the page numbering style from Roman numerals (for the front matter) to arabic numerals (for the book body).
+
+We printed the index in `latex/after_body.tex` (Section \@ref(index)).
+
+The graphical device (`dev`) for saving plots was set to `cairo_pdf` so that the fonts are embedded in plots, since the default device `pdf` does not embed fonts. Your copyeditor is likely to require you to embed all fonts used in the PDF, so that the book can be printed exactly like what it looks, otherwise certain fonts may be substituted and the typeface can be unpredictable.
+
+The `quote_footer` field was to make sure the quote footers were right-aligned: the LaTeX command `\VA{}` was provided by `krantz.cls` to include the quote footer.
+
+The book was compiled to PDF through `xelatex` to make it easier for us to use custom fonts.
+
+All above settings except the `VF` environment and the `\VA{}` command can be applied to any other LaTeX document classes.
