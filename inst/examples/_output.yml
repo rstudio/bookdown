@@ -26,5 +26,6 @@ bookdown::pdf_book:
   pandoc_args: --chapters
   toc_unnumbered: no
   toc_appendix: yes
+  quote_footer: ["\\VA{", "}{}"]
 bookdown::epub_book:
   stylesheet: css/style.css
