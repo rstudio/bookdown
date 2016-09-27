@@ -214,3 +214,5 @@ The `quote_footer` field was to make sure the quote footers were right-aligned: 
 The book was compiled to PDF through `xelatex` to make it easier for us to use custom fonts.
 
 All above settings except the `VF` environment and the `\VA{}` command can be applied to any other LaTeX document classes.
+
+In case you want to work with Chapman & Hall as well, you may start with the copy of `krantz.cls` in our repository (https://github.com/rstudio/bookdown/tree/master/inst/examples) instead of the copy you get from your editor. We have worked with the LaTeX help desk to fix quite a few issues with this LaTeX class, so hopefully it will work well for your book if you use **bookdown**.
