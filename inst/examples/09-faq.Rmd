@@ -1,0 +1,7 @@
+# FAQ
+
+Below is the complete list of frequently asked questions (FAQ).
+
+1. Q: Will **bookdown** have the features X, Y, and Z?
+
+    A: The short answer is no, but if you have asked yourself three times "do I really need them" and the answer is still "yes", please feel free to file a feature request to https://github.com/rstudio/bookdown/issues, and I will see if God is going to kill a kitten.
