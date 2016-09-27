@@ -205,7 +205,7 @@ Before the first chapter of the book, we inserted
 
 so that LaTeX knows to change the page numbering style from Roman numerals (for the front matter) to arabic numerals (for the book body).
 
-We printed the index in `latex/after_body.tex` (Section \@ref(index)).
+We printed the index in `latex/after_body.tex` (Section \@ref(latex-index)).
 
 The graphical device (`dev`) for saving plots was set to `cairo_pdf` so that the fonts are embedded in plots, since the default device `pdf` does not embed fonts. Your copyeditor is likely to require you to embed all fonts used in the PDF, so that the book can be printed exactly like what it looks, otherwise certain fonts may be substituted and the typeface can be unpredictable.
 

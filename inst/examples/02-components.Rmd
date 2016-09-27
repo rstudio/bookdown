@@ -383,7 +383,7 @@ link-citations: true
 
 The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibilography entry in the HTML output.
 
-## Index
+## Index {#latex-index}
 
 Currently the index is only supported for LaTeX/PDF output. To print an index after the book, you can use the LaTeX package **makeidx** in the preamble (see Section \@ref(yaml-options)):
 
