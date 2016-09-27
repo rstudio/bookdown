@@ -58,3 +58,28 @@ span.search-highlight {
     overflow: visible !important;
   }
 }
+.kable_wrapper {
+  border-spacing: 20px 0;
+  border-collapse: separate;
+  border: none;
+  margin: auto;
+}
+.kable_wrapper > tbody > tr > td {
+  vertical-align: top;
+}
+.book .book-body .page-wrapper .page-inner section.normal table tr.header {
+  border-top-width: 2px;
+}
+.book .book-body .page-wrapper .page-inner section.normal table tr:last-child td {
+  border-bottom-width: 2px;
+}
+.book .book-body .page-wrapper .page-inner section.normal table td, .book .book-body .page-wrapper .page-inner section.normal table th {
+  border-left: none;
+  border-right: none;
+}
+.book .book-body .page-wrapper .page-inner section.normal table.kable_wrapper > tbody > tr, .book .book-body .page-wrapper .page-inner section.normal table.kable_wrapper > tbody > tr > td {
+  border-top: none;
+}
+.book .book-body .page-wrapper .page-inner section.normal table.kable_wrapper > tbody > tr:last-child > td {
+    border-bottom: none;
+}

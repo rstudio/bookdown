@@ -2,7 +2,7 @@
   padding: 1em 1em 1em 4em;
   margin-bottom: 10px;
   background: #f5f5f5 5px center/3em no-repeat;
-} 
+}
 .rmdcaution {
   background-image: url("../images/caution.png");
 }
@@ -17,15 +17,6 @@
 }
 .rmdwarning {
   background-image: url("../images/warning.png");
-}
-.kable_wrapper {
-  border-spacing: 20px 0;
-  border-collapse: separate;
-  border: none;
-  margin: auto;
-}
-.kable_wrapper > tbody > tr > td {
-  vertical-align: top;
 }
 p.caption {
   color: #777;
