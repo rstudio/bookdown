@@ -17,11 +17,15 @@
 #' @param toc_appendix Whether to add the appendix to the table of contents.
 #' @param toc_bib Whether to add the bibliography section to the table of
 #'   contents.
+#' @param quote_footer If a character vector of length 2 and the quote footer
+#'   starts with three dashes (\samp{---}), \code{quote_footer[1]} will be
+#'   prepended to the footer, and \code{quote_footer[2]} will be appended; if
+#'   \code{NULL}, the quote footer will not be processed.
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
-  toc_appendix = FALSE, toc_bib = FALSE
+  toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -38,6 +42,11 @@ pdf_book = function(
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
     x = restore_block2(x)
+    if (!is.null(quote_footer)) {
+      if (length(quote_footer) != 2 || !is.character(quote_footer)) warning(
+        "The 'quote_footer' argument should be a character vector of length 2"
+      ) else x = process_quote_latex(x, quote_footer)
+    }
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -143,6 +152,14 @@ restore_block2 = function(x) {
     intToUtf8(as.integer(z))
   }, USE.NAMES = FALSE)
   x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\4', x[i]))
+  x
+}
+
+process_quote_latex = function(x, commands) {
+  for (i in grep('^\\\\end\\{quote\\}$', x)) {
+    if (!grepl('^---.+', x[i - 1])) next
+    x[i - 1] = paste0(commands[1], x[i - 1], commands[2])
+  }
   x
 }
 
