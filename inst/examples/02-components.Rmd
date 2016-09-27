@@ -6,7 +6,7 @@ In this chapter, we show the syntax of some basic components of a book, includin
 
 We give a very brief introduction to Pandoc's Markdown in this section. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
 
-You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets like `^` produces a superscript (e.g., `ClO^-^` renders ClO^-^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small caps</span>` renders <span style="font-variant:small-caps;">Small caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations). Section headers can be written after a number of pound signs, e.g.,
+You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-^` renders ClO^-^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations). Section headers can be written after a number of pound signs, e.g.,
 
 ```
 # First-level header
@@ -21,36 +21,6 @@ If you do not want a certain heading to be numbered, you can add `{-}` after the
 ```
 # Preface {-}
 ```
-
-There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
-
-```
-# (PART) Part I {-} 
-
-# Chapter One
-
-# Chapter Two
-
-# (PART) Part II {-} 
-
-# Chapter Three
-```
-
-The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices, e.g.,
-
-```
-# Chapter One 
-
-# Chapter Two
-
-# (APPENDIX) Appendix {-} 
-
-# Appendix A
-
-# Appendix B
-```
-
-The numbering style of appendices will be automatically changed in LaTeX/PDF and HTML output (usually in the form A, A.1, A.2, B, B.1, ...). This feature is not available to e-books.
 
 Unordered list items start with `*`, `-`, or `+`, and you can nest one list within another list by indenting the sub-list by four spaces, e.g.,
 
@@ -135,7 +105,39 @@ f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k} \label{eq:binom}
 
 You may refer to it using `\@ref(eq:binom)`, e.g., see Equation \@ref(eq:binom). Due to some technical constraints, you must label your equations with the prefix `eq:` in **bookdown**.
 
-Equation references work best for LaTeX/PDF output, and it partially works for HTML output in the sense that you cannot refer to equations on other pages. Currently this feature is not available to Word output or e-books.
+Equation references work best for LaTeX/PDF output, and it partially works for HTML output in the sense that you cannot refer to equations on other pages. Currently this feature is not available to Word output or e-books. It may be improved in the future versions of **bookdown**.
+
+## Markdown extensions by bookdown
+
+There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
+
+```
+# (PART) Part I {-} 
+
+# Chapter One
+
+# Chapter Two
+
+# (PART) Part II {-} 
+
+# Chapter Three
+```
+
+The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices, e.g.,
+
+```
+# Chapter One 
+
+# Chapter Two
+
+# (APPENDIX) Appendix {-} 
+
+# Appendix A
+
+# Appendix B
+```
+
+The numbering style of appendices will be automatically changed in LaTeX/PDF and HTML output (usually in the form A, A.1, A.2, B, B.1, ...). This feature is not available to e-books or Word output.
 
 ## R code
 
@@ -147,7 +149,7 @@ There are two types of R code in R Markdown/**knitr** documents: R code chunks, 
     plot(dist ~ speed, cars)  # a scatterplot
     ```
 
-To learn more about **knitr** chunk options, see @xie2015 or <http://yihui.name/knitr/options>. For books, additional R code can be executed before/after each chapter; see `before_chapter_script` and `after_chapter_script` in Section \@ref(configuration).
+To learn more about **knitr** chunk options, see @xie2015 or the web page <http://yihui.name/knitr/options>. For books, additional R code can be executed before/after each chapter; see `before_chapter_script` and `after_chapter_script` in Section \@ref(configuration).
 
 ## Figures {#figures}
 
@@ -251,7 +253,7 @@ You can also create text-based links using explicit or automatic section IDs or 
     - `[link text](#explicitID)`: example [Table stuff](#tables) via `[Table stuff](#tables)`
     - `[link text](#autoID)`: example [How to build your book](#build-the-book) via `[How to build your book](#build-the-book)`
 
-The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/README.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/README.html#extension-implicit_header_references).
+The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/MANUAL.html#extension-implicit_header_references).
 
 ## Custom blocks
 
@@ -342,7 +344,7 @@ One more caveat for the `block2` engine: if the last element in the block is not
 
 ## Citations {#citations}
 
-Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
+Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
@@ -381,6 +383,17 @@ link-citations: true
 
 The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibilography entry in the HTML output.
 
+## Index
+
+Currently the index is only supported for LaTeX/PDF output. To print an index after the book, you can use the LaTeX package **makeidx** in the preamble (see Section \@ref(yaml-options)):
+
+```latex
+\usepackage{makeidx}
+\makeindex
+```
+
+Then insert `\printindex` at the end of your book through the YAML option `includes -> after_body`. An index entry can be created via the `\index{}` command in the book body, e.g., `\index{GIT}`.
+
 ## HTML widgets
 
 Although one of R's greatest strengths is data visualization, there are a large number of JavaScript libraries for much richer data visualization. These libraries can be used to build interactive applications that can easily render in web browsers, so users do not need to install any additional software packages to view the visualizations. One way to bring these JavaScript libraries into R is through the [**htmlwidgets**](http://htmlwidgets.org) package [@R-htmlwidgets]. 
@@ -396,7 +409,7 @@ The function `install_phantomjs()` works for Windows, OS X, and Linux. You may a
 
 When **knitr** detects an HTML widget object in a code chunk, it either renders the widget normally when the current output format is HTML, or saves the widget as an HTML page and calls **webshot** to capture the screen of the HTML page when the output format is not HTML. Here is an example of a table created from the **DT** package [@R-DT]:
 
-```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE, cache.extra=packageVersion('DT')}
+```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE, cache.extra=packageVersion('DT'), screenshot.opts=list(zoom=2)}
 DT::datatable(iris)
 ```
 

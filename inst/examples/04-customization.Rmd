@@ -196,6 +196,20 @@ Note that for HTML output, **bookdown** requires some additional comment tokens 
 
 If the language of your book is not English, you will need to translate certain English words and phrases into your language, such as the words "Figure" and "Table" when figures/tables are automatically numbered in the HTML output. Internationalization may not be an issue for LaTeX output, since some LaTeX packages can automatically translate these terms into the local language, such as the **ctexcap** package for Chinese.
 
-TODO...
+For non-LaTeX output, you can set the `language` field in the configuration file `_bookdown.yml`. Currently the default settings are:
 
-There is one caveat when you write in a language that uses multibyte characters, such as Chinese, Japanese, and Korean (CJK): Pandoc cannot generate identifiers from section headings that are pure CJK characters, so you will not be able to cross-reference sections (they do not have labels), unless you manually assign identifiers to them by appending `{#identifier}` to the section heading, where `identifier` is an arbitrary identifier you choose.
+```{r echo=FALSE, comment=''}
+cat(yaml::as.yaml(
+  list(language = list(label = bookdown:::label_names))
+))
+```
+
+For example, if you want `FIGURE x.x` instead of `Figure x.x`, you can change `fig` to `"FIGURE "`:
+
+```yaml
+language:
+  label:
+    fig: "FIGURE "
+```
+
+There is one caveat when you write in a language that uses multibyte characters, such as Chinese, Japanese, and Korean (CJK): Pandoc cannot generate identifiers from section headings that are pure CJK characters, so you will not be able to cross-reference sections (they do not have labels), unless you manually assign identifiers to them by appending `{#identifier}` to the section heading, where `identifier` is an identifier of your choice.

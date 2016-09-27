@@ -4,7 +4,7 @@ As you develop the book, you may put the draft book in the public to get early f
 
 ## RStudio Connect
 
-In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free. This website is built on top of "RStudio Connect", an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
+In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free. This website is built on top of ["RStudio Connect"](https://www.rstudio.com/products/connect/), an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
 
 You do not have to know much about RStudio Connect to publish your book to bookdown.org. Basically you just sign up at https://bookdown.org/connect/, and the first time you try to run `bookdown::publish_book()`, you will be asked to authorize **bookdown** to publish to your bookdown.org account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
 
@@ -23,7 +23,7 @@ If you have set up your own RStudio Connect server, you can certainly publish th
 
 You can host your book on GitHub for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. 
 
-One approach to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/). First set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then after pushing your changes to GitHub go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder".
+One approach to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help](http://bit.ly/2cvloKV). First set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then after pushing your changes to GitHub go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder".
 
 An alternative approach is to create a `gh-pages` branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository. If your book repository does not have the `gh-pages` branch, you may use the following commands to create one:
 
@@ -51,7 +51,7 @@ One service that you can utilize is Travis CI (https://travis-ci.org). It is fre
 
 The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done via several ways, and the easiest one to beginners may be a personal access token. Below are a few steps you may follow:
 
-1. Create a personal access token for your account on GitHub: https://help.github.com/articles/creating-an-access-token-for-command-line-use/ (make sure to enable the "repo" scope so that using this token will enable writing to your GitHub repos)
+1. Create a [personal access token](http://bit.ly/2cEBYWB) for your account on GitHub (make sure to enable the "repo" scope so that using this token will enable writing to your GitHub repos);
 1. Encrypt it in the environment variable `GITHUB_PAT` via command line `travis encrypt` and store it in `.travis.yml`, 
 e.g `travis encrypt GITHUB_PAT=TOKEN`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via https://travis-ci.org/user/repo/settings where `user` is your GitHub ID, and `repo` is the name of the repository;
 1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
@@ -116,6 +116,8 @@ cache:
 ```
 
 If your book is very time-consuming to build, you may use the above configurations on Travis to save time. Note `packages: yes` means the R packages installed on Travis are also cached.
+
+All above scripts and configurations can be found in the `bookdown-demo` repository: https://github.com/rstudio/bookdown-demo/. If you copy them to your own repository, please remember to change the `secure` key in `.travis.yml` using your own encrypted variable `GITHUB_PAT`.
 
 GitHub and Travis CI are certainly not the only choices to build and publish your book. You are free to store and publish the book on your own server.
 

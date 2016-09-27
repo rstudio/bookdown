@@ -42,7 +42,7 @@ In this case, all formats should be at the top level, instead of under an `outpu
 
 The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML is that a book will generate multiple HTML pages by default --- normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: the GitBook style, the Bootstrap style, and the Tufte style.
 
-### GitBook style
+### GitBook style {#gitbook-style}
 
 The GitBook style was borrowed GitBook, a project launched by Friendcode, Inc (https://www.gitbook.com) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.
 
@@ -54,12 +54,12 @@ We have made several improvements over the original GitBook project. The most si
 
 We have also added some useful features in the user interface that we will introduce in detail soon. The output format function for the GitBook style in **bookdown** is `gitbook()`. Below are its arguments:
 
-```{r gitbook-args, code=formatR::usage(bookdown::gitbook, output=FALSE), eval=FALSE}
+```{r gitbook-args, code=formatR::usage(bookdown::gitbook, output=FALSE), eval=FALSE, R.options=list(width=50)}
 ```
 
 Most arguments are passed to `rmarkdown::html_document()`, including `fig_caption`, `lib_dir`, and `...`. You can check out the help page of `rmarkdown::html_document()` for the full list of possible options. We strongly recommend you to use `fig_caption = TRUE` for two reasons: 1) it is important to explain your figures with captions; 2) enabling figure captions means figures will be placed in floating environments when the output is LaTeX, otherwise you may end up with a lot of white space on certain pages. The format of figure/table numbers depends on if sections are numbered or not: if `number_sections = TRUE`, these numbers will be of the format `X.i`, where `X` is the chapter number, and `i` in an incremental number; if sections are not numbered, all figures/tables will be numbered sequentially through the book from 1, 2, ..., N. Note in either case, figures and tables will be numbered independently.
 
-Among all possible arguments in `...`, you are most likely to use the `css` argument to provide one or more custom CSS files to tweak the default CSS style. There are a few arguments of `html_document()` that have been hard-coded in `gitbook()` and you cannot change them: `toc = TRUE` (there must be a table of contents), `theme = NULL` (not using any Bootstrap themes), and `template` (there will be an internal GitBook template).
+Among all possible arguments in `...`, you are most likely to use the `css` argument to provide one or more custom CSS files to tweak the default CSS style. There are a few arguments of `html_document()` that have been hard-coded in `gitbook()` and you cannot change them: `toc = TRUE` (there must be a table of contents), `theme = NULL` (not using any Bootstrap themes), and `template` (there exists an internal GitBook template).
 
 Please note if you change `self_contained = TRUE` to make self-contained HTML pages, the total size of all HTML files can be significantly increased since there are many JS and CSS files tha have to be embedded in every single HTML file.
 
@@ -71,7 +71,7 @@ Besides these `html_document()` options, `gitbook()` has three other arguments: 
 - `section`: split the file by the second-level headers;
 - `chapter+number` and `section+number`: similar to `chapter` and `section`, but the files will be numbered;
 
-For `chapter` and `section`, the HTML filenames will be determined by the header identifiers, e.g., the filename for the first chapter with a chapter title `# Introduction` will be `introduction.html` by default. For `chapter+number` and `section+number`, the chapter/section numbers will be prepended to the HTML filenames, e.g., `1-introduction.html` and `2-1-literature.html`. The header identifier is automatically generated from the header text by default^[To see more details on how an identifier is automatically generated, see the `auto_identifiers` extension in Pandoc's documentation http://pandoc.org/README.html#header-identifiers], and you can manually specify an identifier using the syntax `{#your-custom-id}` after the header text, e.g.,
+For `chapter` and `section`, the HTML filenames will be determined by the header identifiers, e.g., the filename for the first chapter with a chapter title `# Introduction` will be `introduction.html` by default. For `chapter+number` and `section+number`, the chapter/section numbers will be prepended to the HTML filenames, e.g., `1-introduction.html` and `2-1-literature.html`. The header identifier is automatically generated from the header text by default^[To see more details on how an identifier is automatically generated, see the `auto_identifiers` extension in Pandoc's documentation http://pandoc.org/MANUAL.html#header-identifiers], and you can manually specify an identifier using the syntax `{#your-custom-id}` after the header text, e.g.,
 
 ```markdown
 # An Introduction {#introduction}
@@ -172,8 +172,8 @@ On the right of the toolbar, there are some buttons to share the link on social 
 
 Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
 
-- `description`: A character string to be written to the `content` attribute of the tag `<meta name="description" content="">` in the HTML head (if missing, the title of the book will be used). This can be useful for the purpose of search engine optimization (SEO);
-- `url`: The URL of book website, e.g., `https\://bookdown.org/yihui/bookdown/`^[The backslash before `:` is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code `<a href="..."></a>`.];
+- `description`: A character string to be written to the `content` attribute of the tag `<meta name="description" content="">` in the HTML head (if missing, the title of the book will be used). This can be useful for the purpose of search engine optimization (SEO). Note it should be plain text without any Markdown formatting such as `_italic_` or `**bold**`;
+- `url`: The URL of book website, e.g., `https\://bookdown.org/yihui/bookdown/`^[The backslash before `:` is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code `<a href="..."></a>`. More details at https://github.com/jgm/pandoc/issues/2139.];
 - `github-repo`: The GitHub repository of the book of the form `user/repo`;
 - `cover-image`: The path to the cover image of the book;
 - `apple-touch-icon`: A path to an icon (e.g., a PNG image). This is for iOS only: when the website is added to the Home screen, the link is represented by this icon.
@@ -321,7 +321,7 @@ biblio-style: apalike
 ---
 ```
 
-The `pdf_book()` format is a general format like `html_chapters`, and it also has a `base_format` argument:
+The `pdf_book()` format is a general format like `html_book()`, and it also has a `base_format` argument:
 
 ```{r pdf-book-usage, eval=FALSE, code=formatR::usage(bookdown::pdf_book, output=FALSE)}
 ```
@@ -336,7 +336,7 @@ Currently **bookdown** provides two e-book formats, EPUB and MOBI. Books of thes
 
 To create an EPUB book, you can use the `epub_book()` format. It has some options in common with `rmarkdown::html_document()`:
 
-```{r epub-book, eval=FALSE, code=formatR::usage(bookdown::epub_book, output=FALSE)}
+```{r epub-book, eval=FALSE, code=formatR::usage(bookdown::epub_book, output=FALSE), R.options=list(width=50)}
 ```
 
 The option `toc` is turned off because the e-book reader can often figure out a TOC automatically from the book, so it is not necessary to add a few pages for the TOC. There are a few options specific to EPUB:
