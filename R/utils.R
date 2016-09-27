@@ -321,6 +321,10 @@ serve_book = function(
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     files = files[dirname(files) == '.']
+    i = match(sans_ext(book_filename()), sans_ext(basename(files)))
+    if (!is.na(i)) files = files[-i]
+    i = grep('[.](knit|utf8)[.]md$', files)
+    if (length(i)) files = files[-i]
     if (length(files) == 0) return()
     # if the output dir has been deleted, rebuild the whole book
     if (!dir_exists(output_dir)) preview_ = FALSE
@@ -334,6 +338,8 @@ serve_book = function(
   rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild, daemon = daemon)
 }
+
+sans_ext = knitr:::sans_ext
 
 # a simple JSON serializer
 tojson = function(x) {
