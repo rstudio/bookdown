@@ -428,6 +428,12 @@ ref_to_number = function(ref, ref_table, backslash) {
 
 reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
 
+# default names for labels
+label_names = list(fig = 'Figure ', tab = 'Table ')
+# types of labels currently supported, e.g. \(#fig:foo), \(#tab:bar)
+label_types = names(label_names)
+reg_label_types = paste(label_types, collapse = '|')
+
 # parse figure/table labels, and number them either by section numbers (Figure
 # 1.1, 1.2, ..., 2.1, ...), or globally (Figure 1, 2, ...)
 parse_fig_labels = function(content, global = FALSE) {
@@ -438,9 +444,9 @@ parse_fig_labels = function(content, global = FALSE) {
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
 
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
-  m = gregexpr('\\(#((fig|tab):[-/[:alnum:]]+)\\)', content)
+  m = gregexpr(sprintf('\\(#((%s):[-/[:alnum:]]+)\\)', reg_label_types), content)
   labs = regmatches(content, m)
-  cntr = new_counters(c('Figure', 'Table'), chaps)  # chapter counters
+  cntr = new_counters(label_types, chaps)  # chapter counters
   figs = grep('^<div class="figure', content)
 
   for (i in seq_along(labs)) {
@@ -451,7 +457,7 @@ parse_fig_labels = function(content, global = FALSE) {
 
     j = if (global) chaps else tail(chaps[lines <= i], 1)
     lab = gsub('^\\(#|\\)$', '', lab)
-    type = ifelse(grepl('^fig:', lab), 'Figure', 'Table')
+    type = gsub('^([^:]+):.*', '\\1', lab)
     num = arry[lab]
     if (is.na(num)) {
       num = cntr$inc(type, j)  # increment number only if the label has not been used
@@ -459,7 +465,7 @@ parse_fig_labels = function(content, global = FALSE) {
     }
     arry = c(arry, setNames(num, lab))
 
-    if (type == 'Figure') {
+    if (type == 'fig') {
       if (length(grep('^<p class="caption', content[i - 0:1])) == 0) {
         # remove these labels, because there must be a caption on this or
         # previous line (possible negative case: the label appears in the alt
@@ -467,12 +473,12 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = paste0(type, ' ', num, ': ')
+      labs[[i]] = paste0(label_prefix(type), num, ': ')
       k = max(figs[figs <= i])
       content[k] = paste0(content[k], sprintf('<span id="%s"></span>', lab))
     } else {
       if (length(grep('^<caption>', content[i - 0:1])) == 0) next
-      labs[[i]] = sprintf('<span id="%s">%s</span>', lab, paste0(type, ' ', num, ': '))
+      labs[[i]] = sprintf('<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': '))
     }
   }
 
@@ -482,6 +488,13 @@ parse_fig_labels = function(content, global = FALSE) {
   content = gsub('"\\(\\\\#(fig:[-/[:alnum:]]+)\\)', '"', content)
 
   list(content = content, ref_table = arry)
+}
+
+
+# given a label, e.g. fig:foo, figure out the appropriate prefix
+label_prefix = function(type) {
+  labels = load_config()[['language']][['label']]
+  if (is.null(labels[[type]])) label_names[[type]] else labels[[type]]
 }
 
 sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'

@@ -92,9 +92,9 @@ resolve_refs_md = function(content, ref_table) {
     for (j in ids) {
       m = sprintf('\\(\\\\#%s\\)', j)
       if (grepl(m, content[i])) {
-        type = ifelse(grepl('^fig:', j), 'Figure', 'Table')
+        type = label_prefix(gsub('^([^:]+).*$', '\\1', j))
         content[i] = sub(
-          m, sprintf('<span id="%s"></span>%s %s: ', j, type, ref_table[j]), content[i]
+          m, sprintf('<span id="%s"></span>%s%s: ', j, type, ref_table[j]), content[i]
         )
         break
       }
