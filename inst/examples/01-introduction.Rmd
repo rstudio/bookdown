@@ -20,7 +20,7 @@ To write a relatively complicated document like a book, there are still a few us
 
 Under the constraint that we want to produce the book in multiple output formats, it is nearly impossible to cover all possible features specific to these output formats. For example, it may be difficult to reinvent a certain complicated LaTeX environment in the HTML output using the (R) Markdown syntax. Our main goal is not to replace _everything_ with Markdown, but to cover _most_ common functionalities required to write a relatively complicated document, and make the syntax of such functionalities consistent across all output formats, so that you only need to learn one thing and it works for all output formats.
 
-Another goal of this project is to make it easy to produce books that look visually pleasant. Some nice existing examples include Gitbook (<https://www.gitbook.com>), Tufte CSS (<http://edwardtufte.github.io/tufte-css/>), and Tufte-LaTeX (<https://tufte-latex.github.io/tufte-latex/>). We hope to integrate these themes and styles into **bookdown**, so authors do not have to dive into the details of how to use a certain LaTeX class or how to configure CSS for HTML output.
+Another goal of this project is to make it easy to produce books that look visually pleasant. Some nice existing examples include GitBook (<https://www.gitbook.com>), Tufte CSS (<http://edwardtufte.github.io/tufte-css/>), and Tufte-LaTeX (<https://tufte-latex.github.io/tufte-latex/>). We hope to integrate these themes and styles into **bookdown**, so authors do not have to dive into the details of how to use a certain LaTeX class or how to configure CSS for HTML output.
 
 ## Get started
 

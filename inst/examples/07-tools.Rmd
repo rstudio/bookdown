@@ -55,7 +55,7 @@ Most LaTeX distributions provide a minimal/basic package and a full package. You
 
 LaTeX error messages may be obscure to beginners, but you may find solutions by searching for the error message online (you have good chances of ending up on [StackExchange](http://tex.stackexchange.com)). In fact, the LaTeX code converted from R Markdown should be safe enough and you should not frequently run into LaTeX problems unless you introduced raw LaTeX content in your Rmd documents. The most common LaTeX problem should be missing LaTeX packages, and the error may look like this:
 
-```
+```latex
 ! LaTeX Error: File `titling.sty' not found.
 
 Type X to quit or <RETURN> to proceed,
