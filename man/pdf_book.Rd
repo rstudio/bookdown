@@ -5,7 +5,7 @@
 \usage{
 pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ..., 
     base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_appendix = FALSE, 
-    toc_bib = FALSE)
+    toc_bib = FALSE, quote_footer = NULL)
 }
 \arguments{
 \item{toc, number_sections, fig_caption}{See
@@ -23,6 +23,11 @@ contents.}
 
 \item{toc_bib}{Whether to add the bibliography section to the table of
 contents.}
+
+\item{quote_footer}{If a character vector of length 2 and the quote footer
+starts with three dashes (\samp{---}), \code{quote_footer[1]} will be
+prepended to the footer, and \code{quote_footer[2]} will be appended; if
+\code{NULL}, the quote footer will not be processed.}
 }
 \description{
 Convert R Markdown files to PDF while resolving the special tokens of
