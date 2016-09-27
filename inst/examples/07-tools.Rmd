@@ -1,0 +1,95 @@
+\cleardoublepage 
+
+# (APPENDIX) Appendix {-}
+
+# Software Tools
+
+For those who are not familiar with software packages required for using R Markdown, we give a brief introduction to the installation and maintenance of these packages.
+
+## R and R packages
+
+R can be downloaded and installed from any CRAN (the Comprehensive R Archive Network) mirorrs, e.g., https://cran.rstudio.com. Please note there will be a few new releases of R every year, and you may want to upgrade R occasionally.
+
+To install the **bookdown** package, you can type this in R:
+
+```{r eval=FALSE}
+install.packages("bookdown")
+```
+
+This installs all required R packages. You can also choose to install all optional packages as well, if you do not care too much about whether these packages will actually be used to compile your book (such as **htmlwidgets**):
+
+```{r eval=FALSE}
+install.packages("bookdown", dependencies = TRUE)
+```
+
+If you want to test the development version of **bookdown** on GitHub, you need to install **devtools** first:
+
+```{r eval=FALSE}
+if (!requireNamespace('devtools')) install.packages('devtools')
+devtools::install_github('rstudio/bookdown')
+```
+
+R packages are also often constantly updated on CRAN or GitHub, so you may want to update them once in a while:
+
+```{r eval=FALSE}
+update.packages(ask = FALSE)
+```
+
+Although it is not required, the RStudio IDE can make a lot of things much easier when you work on R-related projects. The RStudio IDE can be downloaded from https://www.rstudio.com.
+
+## Pandoc
+
+An R Markdown document (`*.Rmd`) is first compiled to Markdown (`*.md`) through the **knitr** package, and then Markdown is compiled to other output formats (such as LaTeX or HTML) through Pandoc. This process is automated by the **rmarkdown** package. You do not need to install **knitr** or **rmarkdown** separately, because they are the required packages of **bookdown** and will be automatically installed when you install **bookdown**. However, Pandoc is not an R package, so it will not be automatically installed when you install **bookdown**. You can follow the installation instructions on the Pandoc homepage (http://pandoc.org) to install Pandoc, but if you use the RStudio IDE, you do not really need to install Pandoc separately, because RStudio has included a copy of Pandoc in it. The Pandoc version number can be obtained via:
+
+```{r collapse=TRUE}
+rmarkdown::pandoc_version()
+```
+
+If you find this version too low and there are Pandoc features only in a later version, you can install the later version of Pandoc, and **rmarkdown** will call the newer version instead of its built-in version.
+
+## LaTeX
+
+LaTeX is required only if you want to convert your book to PDF. The typical choice of the LaTeX distribution depends on your operating system. Windows users may consider MiKTeX (http://miktex.org), Mac OS X users can install MacTeX (http://www.tug.org/mactex/), and Linux users can install TeXLive (http://www.tug.org/texlive). See https://www.latex-project.org/get/ for more information about LaTeX and its installation.
+
+Most LaTeX distributions provide a minimal/basic package and a full package. You can install the basic package if you have limited disk space and know how to install LaTeX packages later. The full package is often significantly larger in size, since it contains all LaTeX packages, and you are unlikely to run into the problem of missing packages in LaTeX.
+
+LaTeX error messages may be obscure to beginners, but you may find solutions by searching for the error message online (you have good chances of ending up on [StackExchange](http://tex.stackexchange.com)). In fact, the LaTeX code converted from R Markdown should be safe enough and you should not frequently run into LaTeX problems unless you introduced raw LaTeX content in your Rmd documents. The most common LaTeX problem should be missing LaTeX packages, and the error may look like this:
+
+```
+! LaTeX Error: File `titling.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.107 ^^M
+
+pandoc: Error producing PDF
+Error: pandoc document conversion failed with error 43
+Execution halted
+```
+
+This means you used a package that contains `titling.sty`, but it was not installed. LaTeX package names are often the same as the `*.sty` filenames, so in this case, you can try to install the `titling` package. Both MiKTeX and MacTeX provide a graphical user interface to manage packages. You can find the MiKTeX package manager from the start menu, and MacTeX's package manager from the application "TeX Live Utility". Type the name of the package, or the filename to search for the package and install it. TeXLive may be a little trickier: if you use the pre-built TeXLive packages of your Linux distribution, you need to search in the package repository and your keywords may match other non-LaTeX packages. Personally I find it frustrating to use the pre-built collections of packages on Linux, and much easier to just install TeXLive from source, in which case you can manage packages using the `tlmgr` command. For example, you can search for `titling.sty` from the TeXLive package repository:
+
+```bash
+tlmgr search --global --file titling.sty
+# titling:
+#	 texmf-dist/tex/latex/titling/titling.sty
+```
+
+Once you have figured out the package name, you can install it by:
+
+```bash
+tlmgr install titling  # may require sudo
+```
+
+LaTeX distributions and packages are also updated from time to time, and you may consider updating them especially when you run into LaTeX problems. You can find out the version of your LaTeX distribution by:
+
+```{r echo=1, collapse=TRUE}
+system('pdflatex --version')
+cat(system('pdflatex --version', intern = TRUE), sep = '\n')
+```
+

@@ -1,0 +1,102 @@
+# Software Usage
+
+As mentioned in Chapter \@ref(introduction), this book is not a comprehensive guide to **knitr** or **rmarkdown**. In this chapter, we briefly explain some basic concepts and syntax in **knitr** and **rmarkdown**. If you have any further questions, you may ask them on StackOverflow (https://stackoverflow.com) and tag your questions with `r`, `knitr`, `rmarkdown`, and/or `bookdown`, whichever is appropriate.
+
+## knitr
+
+The **knitr** package was designed based on the idea of "Literate Programming" [@knuth1984], which allows you to intermingle program code with text in a source document. When **knitr** compiles a document, the program code (in code chunks) will be extracted and executed, and the program output will be displayed together with the original text in the output document. We have introduced the basic syntax in Section \@ref(r-code).
+
+R Markdown is not the only source format that **knitr** supports. The basic idea can be applied to other computing and authoring languages. For example, **knitr** also supports the combination of R and LaTeX (`*.Rnw` documents), and R + HTML (`*.Rhtml`), etc. You can use other computing languages with **knitr** as well, such as C++, Python, SQL, and so on. Below is a simple example and you can see http://rmarkdown.rstudio.com/authoring_knitr_engines.html for more.
+
+    `r ''````{python}
+    x = 'Hello, Python World!'
+    print(x.split(' '))
+    ```
+
+If you want to show a literal chunk in your document, you can add an inline expression that generates an empty string (`` `r "\x60r ''\x60"` ``) before the chunk header, and indent the code chunk by four spaces^[Follow the four-space rule if the literal code chunk is to be displayed in other environments such as a list: http://pandoc.org/MANUAL.html#the-four-space-rule], e.g.,
+
+        `r "\x60r ''\x60"````{r}
+        # a literal code chunk
+        ```
+
+After the document is compiled, the inline expression will disappear and you will see:
+
+    `r ""````{r}
+    # a literal code chunk
+    ```
+
+Normally you do not need to call **knitr** functions directly when compiling a document, since **rmarkdown** will call **knitr**. If you do want to compile a source document without further converting it to other formats, you may use the `knitr::knit()` function.
+
+## R Markdown
+
+Thanks to the power of R and Pandoc, you can easily do computing in R Markdown documents, and convert them to a variety of output formats, including HTML/PDF/Word documents, HTML5/Beamer slides, dashboards, and websites, etc. An R Markdown document usually consists of the YAML metadata (optional) and the document body. We have introduced the syntax for writing various components of the document body in Chapter \@ref(components), and we explain more about the YAML metadata in this section.
+
+Metadata for R Markdown can be written in the very beginning of a document, starting and ending with three dashes `---`, respectively. YAML metadata typically consists of tag-value pairs separated by colons, e.g.,
+
+```yaml
+---
+title: "An R Markdown Document"
+author: "Yihui Xie"
+---
+```
+
+For character values, you may omit the quotes when the values do not contain special characters, but it is safer to quote them if they are expected to be character values.
+
+Besides characters, another common type of values are logical values. Both `yes` and `true` mean true, and `no`/`false` mean false, e.g.,
+
+```yaml
+link-citations: yes
+```
+
+Values can be vectors, and there are two ways of writing vectors. The following two ways are equivalent:
+
+```yaml
+output: ["html_document", "word_document"]
+```
+
+```yaml
+output:
+  - "html_document"
+  - "word_document"
+```
+
+Values can also be lists of values. You just need to indent the values by two more spaces, e.g.,
+
+```yaml
+output:
+  bookdown::gitbook:
+    split_by: "section"
+    split_bib: no
+```
+
+It is a common mistake to forget to indent the values. For example, the following data
+
+```yaml
+output:
+html_document:
+toc: yes
+```
+
+actually means
+
+```yaml
+output: null
+html_document: null
+toc: yes
+```
+
+instead of what you probably would have expected:
+
+```yaml
+output:
+  html_document:
+    toc: yes
+```
+
+The R Markdown output format is specified in the `output` field of the YAML metadata, and you need to consult the R help pages for the possible options, e.g., `?rmarkdown::html_document`, or `?bookdown::gitbook`. The meanings of most other fields in YAML can be found in the Pandoc documentation.
+
+The **rmarkdown** package has provided these R Markdown output formats:
+
+`r knitr::combine_words(grep('^[^_]+_(document|presentation)$', ls(asNamespace('rmarkdown')), value = TRUE), sep = '\n', and = '', before = '- \x60', after = '\x60')`
+
+There are many more possible output formats in other R packages, including **bookdown**, **tufte**, **rticles**, **flexdashboard**, **revealjs**, and **rmdformats**, etc.

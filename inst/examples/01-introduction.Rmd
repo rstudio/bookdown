@@ -105,7 +105,7 @@ Normally, a book contains multiple chapters, and one chapter lives in one R Mark
 
 By default, **bookdown** merges all Rmd files by the order of filenames, e.g., `01-intro.Rmd` will appear before `02-literature.Rmd`. Filenames that start with an underscore `_` are skipped. If there exists an Rmd file named `index.Rmd`, it will always be treated as the first file when merging all Rmd files. The reason for this special treatment is that the HTML file `index.html` to be generated from `index.Rmd` is usually the default index file when you view a website, e.g., you are actually browsing http://yihui.name/index.html when you open http://yihui.name/.
 
-You can override the above behavior by including a configuration file named `_bookdown.yml` in the book directory. It is a YAML file (https://en.wikipedia.org/wiki/YAML), and R Markdown users should be familiar with this format since it is also used to write the metadata in the beginning of R Markdown documents (you can learn more about YAML in Section \@ref(yaml-syntax)). You can use a field named `rmd_files` to define your own list and order of Rmd files for the book. For example,
+You can override the above behavior by including a configuration file named `_bookdown.yml` in the book directory. It is a YAML file (https://en.wikipedia.org/wiki/YAML), and R Markdown users should be familiar with this format since it is also used to write the metadata in the beginning of R Markdown documents (you can learn more about YAML in Section \@ref(r-markdown)). You can use a field named `rmd_files` to define your own list and order of Rmd files for the book. For example,
 
 ```yaml
 rmd_files: ["index.Rmd", "abstract.Rmd", "intro.Rmd"]

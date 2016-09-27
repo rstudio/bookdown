@@ -161,13 +161,13 @@ The following commands make floating environments less likely to float by allowi
 
 Since `krantz.cls` provided an environment `VF` for quotes, we just redefine the standard `quote` environment to `VF`. You can see its style in Section \@ref(markdown-syntax).
 
-```
+```latex
 \renewenvironment{quote}{\begin{VF}}{\end{VF}}
 ```
 
 Then we redefine hyperlinks to be footnotes, because when the book is printed on paper, readers are not able to click on links on text. Footnotes will tell them what the actual links are.
 
-```
+```latex
 \let\oldhref\href
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 ```
