@@ -146,12 +146,12 @@ restore_block2 = function(x) {
   if (is.na(i)) return(x)
   if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
     x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
-  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})((\\\\null\\{[0-9]+\\})+)(.*)$'
+  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi)(.*)$'
   if (length(i <- grep(r, x)) == 0) return(x)
-  opts = sapply(strsplit(gsub('\\\\null\\{', '', gsub(r, '\\2', x[i])), '\\}'), function(z) {
+  opts = sapply(strsplit(gsub(r, '\\3', x[i]), '-'), function(z) {
     intToUtf8(as.integer(z))
   }, USE.NAMES = FALSE)
-  x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\4', x[i]))
+  x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\5', x[i]))
   x
 }
 
