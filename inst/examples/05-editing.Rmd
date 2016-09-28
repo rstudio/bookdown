@@ -4,7 +4,7 @@ In this chapter, we explain how to edit, build, preview, and serve the book loca
 
 ## Build the book
 
-To build all Rmd files into a book, you can call the `render_book()` function in **bookdown**. Below are the arguments of `render_book()`:
+To build all Rmd files into a book, you can call the `render_book()`\index{bookdown::render\_book()} function in **bookdown**. Below are the arguments of `render_book()`:
 
 ```{r eval=FALSE, code=formatR::usage(bookdown::render_book, output=FALSE)}
 ```
@@ -45,7 +45,7 @@ One downside of previewing a chapter is that the cross-references to other chapt
 
 ## Serve the book
 
-Instead of running `render_book()` or `preview_chapter()` over and over again, you can actually live preview the book in the web browser, and the only thing you need to do is save the Rmd file. The function `serve_book()` in **bookdown** can start a local web server to serve the HTML output based on the **servr** package [@R-servr].
+Instead of running `render_book()` or `preview_chapter()` over and over again, you can actually live preview the book in the web browser, and the only thing you need to do is save the Rmd file. The function `serve_book()`\index{bookdown::serve\_book()} in **bookdown** can start a local web server to serve the HTML output based on the **servr** package [@R-servr].
 
 ```{r serve-book-usage, eval=FALSE, code=formatR::usage(bookdown::serve_book, output=FALSE)}
 ```
@@ -65,7 +65,7 @@ You may choose `in_session = TRUE` or `FALSE` depending on your specific use cas
 
 ## RStudio IDE
 
-You are recommended to use [the RStudio preview version](https://www.rstudio.com/products/rstudio/download/preview/) if your RStudio version is lower than 1.0.0. As mentioned in Section \@ref(usage), all R Markdown files must be encoded in UTF-8. This is important especially when your files contain multibyte characters. To save a file with the UTF-8 encoding, you can use the menu `File -> Save with Encoding`, and choose `UTF-8`.
+You are recommended to use [the RStudio preview version](https://www.rstudio.com/products/rstudio/download/preview/)\index{RStudio IDE} if your RStudio version is lower than 1.0.0. As mentioned in Section \@ref(usage), all R Markdown files must be encoded in UTF-8. This is important especially when your files contain multibyte characters. To save a file with the UTF-8 encoding, you can use the menu `File -> Save with Encoding`, and choose `UTF-8`.
 
 When you click the `Knit` button to compile an R Markdown document in the RStudio IDE, the default function called by RStudio is `rmarkdown::render()`, which is not what we want for books. To call the function `bookdown::render_book()` instead, you can set the `site` field to be `bookdown::bookdown_site` in the YAML metadata of the R Markdown document `index.Rmd`, e.g.,
 
@@ -80,17 +80,17 @@ output:
 
 When you have set `site: bookdown::bookdown_site` in `index.Rmd`, RStudio will be able to discover the directory as a book source directory^[This directory has to be an RStudio project.], and you will see a button `Build Book` in the `Build` pane. You can click the button to build the whole book to different formats, and if you click the `Knit` button on the toolbar, RStudio will automatically preview the current chapter, and you do not need to use `preview_chapter()` explicitly.
 
-The **bookdown** package comes with a few addins for RStudio. If you are not familiar with RStudio addins, you may check out the documentation at http://rstudio.github.io/rstudioaddins/. After you have installed the **bookdown** package and use RStudio v0.99.878 or later, you will see a dropdown menu on the toolbar named "Addins" and menu items like "Preview Book" and "Input LaTeX Math" after you open the menu.
+The **bookdown** package comes with a few addins for RStudio. If you are not familiar with RStudio addins, you may check out the documentation at http://rstudio.github.io/rstudioaddins/. After you have installed the **bookdown** package and use RStudio v0.99.878 or later, you will see a dropdown menu on the toolbar named "Addins"\index{RStudio addin} and menu items like "Preview Book" and "Input LaTeX Math" after you open the menu.
 
 The addin "Preview Book" calls `bookdown::serve_book()` to compile and serve the book. It will block your current R session, i.e., when `serve_book()` is running, you will not be able to do anything in the R console any more. To avoid blocking the R session, you can daemonize the server using `bookdown::serve_book(daemon = TRUE)`. Note this addin must be used when the current document opened in RStudio is under the root directory of your book, otherwise `serve_book()` may not be able to find the book source.
 
-The addin "Input LaTeX Math" is essentially a small Shiny application that provides a text box to help you type LaTeX math expressions (Figure \@ref(fig:mathquill)). As you type, you will see the preview of the math expression and its LaTeX source code. This will make it much less error-prone to type math expressions --- when you type a long LaTeX math expression without preview, it is easy to make mistakes such as `X_ij` when you meant `X_{ij}`, or omitting a closing bracket. If you have selected a LaTeX math expression in the RStudio editor before clicking the addin, the expression will be automatically loaded and rendered in the text box. This addin was built on top of the MathQuill library (http://mathquill.com). It is not meant to provide full support to all LaTeX commands for math expressions, but should help you type some common math expressions.
+The addin "Input LaTeX Math" is essentially a small Shiny application that provides a text box to help you type LaTeX math expressions\index{LaTeX math expression} (Figure \@ref(fig:mathquill)). As you type, you will see the preview of the math expression and its LaTeX source code. This will make it much less error-prone to type math expressions --- when you type a long LaTeX math expression without preview, it is easy to make mistakes such as `X_ij` when you meant `X_{ij}`, or omitting a closing bracket. If you have selected a LaTeX math expression in the RStudio editor before clicking the addin, the expression will be automatically loaded and rendered in the text box. This addin was built on top of the MathQuill library (http://mathquill.com). It is not meant to provide full support to all LaTeX commands for math expressions, but should help you type some common math expressions.
 
 ```{r mathquill, echo=FALSE, fig.align='center', fig.cap='The RStudio addin to help input LaTeX math.'}
 knitr::include_graphics('images/mathquill.png', dpi = NA)
 ```
 
-There are also other R packages that provide addins to help you author books. The **citr** package [@R-citr] provides an addin named "Insert citations", which makes it easy to insert citations into R Markdown documents. It scans your bibliography databases, and show all citation items in a drop-down menu, so you can choose from the list without remembering which citation key corresponds to which citation item (Figure \@ref(fig:citr)).
+There are also other R packages that provide addins to help you author books. The **citr** package [@R-citr] provides an addin named "Insert citations", which makes it easy to insert citations\index{citation} into R Markdown documents. It scans your bibliography databases, and show all citation items in a drop-down menu, so you can choose from the list without remembering which citation key corresponds to which citation item (Figure \@ref(fig:citr)).
 
 ```{r citr, echo=FALSE, fig.align='center', fig.cap='The RStudio addin to help insert citations.'}
 knitr::include_graphics('images/citr.png', dpi = NA)

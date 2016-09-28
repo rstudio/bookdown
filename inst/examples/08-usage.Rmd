@@ -4,7 +4,7 @@ As mentioned in Chapter \@ref(introduction), this book is not a comprehensive gu
 
 ## knitr
 
-The **knitr** package was designed based on the idea of "Literate Programming" [@knuth1984], which allows you to intermingle program code with text in a source document. When **knitr** compiles a document, the program code (in code chunks) will be extracted and executed, and the program output will be displayed together with the original text in the output document. We have introduced the basic syntax in Section \@ref(r-code).
+The **knitr** package\index{knitr} was designed based on the idea of "Literate Programming" [@knuth1984], which allows you to intermingle program code with text in a source document. When **knitr** compiles a document, the program code (in code chunks) will be extracted and executed, and the program output will be displayed together with the original text in the output document. We have introduced the basic syntax in Section \@ref(r-code).
 
 R Markdown is not the only source format that **knitr** supports. The basic idea can be applied to other computing and authoring languages. For example, **knitr** also supports the combination of R and LaTeX (`*.Rnw` documents), and R + HTML (`*.Rhtml`), etc. You can use other computing languages with **knitr** as well, such as C++, Python, SQL, and so on. Below is a simple example and you can see http://rmarkdown.rstudio.com/authoring_knitr_engines.html for more.
 
@@ -29,7 +29,7 @@ Normally you do not need to call **knitr** functions directly when compiling a d
 
 ## R Markdown
 
-Thanks to the power of R and Pandoc, you can easily do computing in R Markdown documents, and convert them to a variety of output formats, including HTML/PDF/Word documents, HTML5/Beamer slides, dashboards, and websites, etc. An R Markdown document usually consists of the YAML metadata (optional) and the document body. We have introduced the syntax for writing various components of the document body in Chapter \@ref(components), and we explain more about the YAML metadata in this section.
+Thanks to the power of R and Pandoc, you can easily do computing in R Markdown documents, and convert them to a variety of output formats, including HTML/PDF/Word documents, HTML5/Beamer slides, dashboards, and websites, etc. An R Markdown document usually consists of the YAML\index{YAML} metadata (optional) and the document body. We have introduced the syntax for writing various components of the document body in Chapter \@ref(components), and we explain more about the YAML metadata in this section.
 
 Metadata for R Markdown can be written in the very beginning of a document, starting and ending with three dashes `---`, respectively. YAML metadata typically consists of tag-value pairs separated by colons, e.g.,
 

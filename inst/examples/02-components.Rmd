@@ -4,7 +4,7 @@ In this chapter, we show the syntax of some basic components of a book, includin
 
 ## Markdown syntax
 
-We give a very brief introduction to Pandoc's Markdown in this section. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
+We give a very brief introduction to Pandoc's Markdown\index{Markdown} in this section. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
 
 You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-^` renders ClO^-^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations). Section headers can be written after a number of pound signs, e.g.,
 
@@ -84,7 +84,7 @@ Or indent by four spaces:
     This text is displayed verbatim / preformatted
 ````
 
-Inline LaTeX equations\index{math expressions} can be written in a pair of dollar signs using the LaTeX syntax, e.g., `$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$` (actual output: $f(k)={n \choose k}p^{k}(1-p)^{n-k}$); math expressions of the display style can be written in a pair of double dollar signs, e.g., `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`, and the output looks like this:
+Inline LaTeX equations\index{LaTeX math expression} can be written in a pair of dollar signs using the LaTeX syntax, e.g., `$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$` (actual output: $f(k)={n \choose k}p^{k}(1-p)^{n-k}$); math expressions of the display style can be written in a pair of double dollar signs, e.g., `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`, and the output looks like this:
 
 $$f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k}$$
 
@@ -109,7 +109,7 @@ Equation references work best for LaTeX/PDF output, and it partially works for H
 
 ## Markdown extensions by bookdown
 
-There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
+There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles\index{part}. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
 
 ```
 # (PART) Part I {-} 
@@ -123,7 +123,7 @@ There are a few special types of first-level headers that will be processed diff
 # Chapter Three
 ```
 
-The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices, e.g.,
+The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices\index{appendix}, e.g.,
 
 ```
 # Chapter One 
@@ -141,7 +141,7 @@ The numbering style of appendices will be automatically changed in LaTeX/PDF and
 
 ## R code
 
-There are two types of R code in R Markdown/**knitr** documents: R code chunks, and inline R code. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but has `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
+There are two types of R code in R Markdown/**knitr** documents: R code chunks\index{code chunk}, and inline R code\index{inline R code}. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but has `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
 
     `r ''````{r chunk-label, echo = FALSE, fig.cap = 'A figure caption.'}
     1 + 1
@@ -153,12 +153,12 @@ To learn more about **knitr** chunk options, see @xie2015 or the web page <http:
 
 ## Figures {#figures}
 
-By default, figures have no captions in the output generated by **knitr**, which means they will just be placed wherever they were generated in the R code. Below is such an example.
+By default, figures\index{figure} have no captions in the output generated by **knitr**, which means they will just be placed wherever they were generated in the R code. Below is such an example.
 
 ```{r no-caption, fig.width=6, fig.asp=.7, out.width='70%', ref.label='pressure-plot'}
 ```
 
-The disadvantage of typesetting figures in this way is that when there is not enough space on the current page to place a figure, it may either reach the bottom of the page (hence exceeds the page margin), or be pushed to the next page, leaving a large white margin at the bottom of the current page. That is basically why there are "floating environments" in LaTeX: elements that cannot be split over multiple pages (like figures) are put in floating environments, so they can float to a page that has enough space to hold them. There is also a disadvantage of floating things forward or backward, though. That is, readers may have to jump to a different page to find the figure mentioned on the current page. This is simply a natural consequence of having to typeset things on multiple pages of fixed sizes. This issue does not exist in HTML, however, since everything can be placed continuously on one single page (presumably with infinite height), and there is no need to split anything across multiple pages of the same page size.
+The disadvantage of typesetting figures in this way is that when there is not enough space on the current page to place a figure, it may either reach the bottom of the page (hence exceeds the page margin), or be pushed to the next page, leaving a large white margin at the bottom of the current page. That is basically why there are "floating environments"\index{floating environment} in LaTeX: elements that cannot be split over multiple pages (like figures) are put in floating environments, so they can float to a page that has enough space to hold them. There is also a disadvantage of floating things forward or backward, though. That is, readers may have to jump to a different page to find the figure mentioned on the current page. This is simply a natural consequence of having to typeset things on multiple pages of fixed sizes. This issue does not exist in HTML, however, since everything can be placed continuously on one single page (presumably with infinite height), and there is no need to split anything across multiple pages of the same page size.
 
 If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-references}, use the syntax `\@ref(label)`^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.], where `label` is the figure label, e.g., `fig:foo`.
 
@@ -189,7 +189,7 @@ plot(pressure, pch = 19, type = 'b')
 plot(cars, pch = 19)
 ```
 
-Sometimes you may have certain images that are not generated from R code, and you can include them them in R Markdown via the function `knitr::include_graphics()`. Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. You may pass one or multiple image paths to the `include_graphics()` function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use `out.width = '33%'` to set the widths of these images in the output document.
+Sometimes you may have certain images that are not generated from R code, and you can include them them in R Markdown via the function `knitr::include_graphics()`. Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. You may pass one or multiple image paths to the `include_graphics()`\index{knitr::include\_graphics()} function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use `out.width = '33%'` to set the widths of these images in the output document.
 
 ```{r knitr-logo, out.width='32.8%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
 knitr::include_graphics(rep('images/knit-logo.png', 3))
@@ -204,7 +204,7 @@ There are a few advantages of using `include_graphics()`:
 
 ## Tables {#tables}
 
-For now, the most convenient way to generate a table is the function `knitr::kable()`, because there are some internal tricks in **knitr** to make it work with **bookdown** and users do not have to know anything about these implementation details. We will explain how to use other packages and functions later in this section.
+For now, the most convenient way to generate a table\index{table} is the function `knitr::kable()`, because there are some internal tricks in **knitr** to make it work with **bookdown** and users do not have to know anything about these implementation details. We will explain how to use other packages and functions later in this section.
 
 Like figures, tables with captions will also be numbered and can be referenced\index{cross-references}. The `kable()` function will automatically generate a label for a table environment, which is the prefix `tab:` plus the chunk label. For example, the table label for a code chunk with the label `foo` will be `tab:foo`, and we can still use the syntax `\@ref(label)` to reference the table. Table \@ref(tab:table-single) is a simple example.
 
@@ -227,7 +227,7 @@ knitr::kable(
 )
 ```
 
-When you do not want a table to float in PDF, you may use the LaTeX package [**longtable**](https://www.ctan.org/pkg/longtable), which can break a table across multiple pages. To use **longtable**, just pass `longtable = TRUE` to `kable()`, and make sure to include `\usepackage{longtable}` in the LaTeX preamble (see Section \@ref(yaml-options) for how to customize the LaTeX preamble). Of course, this is irrelevant to HTML output, since tables in HTML do not need to float.
+When you do not want a table to float in PDF, you may use the LaTeX package [**longtable**](https://www.ctan.org/pkg/longtable)\index{longtable}, which can break a table across multiple pages. To use **longtable**, just pass `longtable = TRUE` to `kable()`, and make sure to include `\usepackage{longtable}` in the LaTeX preamble (see Section \@ref(yaml-options) for how to customize the LaTeX preamble). Of course, this is irrelevant to HTML output, since tables in HTML do not need to float.
 
 ```{r longtable, tidy=FALSE}
 knitr::kable(
@@ -247,17 +247,17 @@ When a referenced label cannot be found, you will see two question marks like \@
 You can also create text-based links using explicit or automatic section IDs or even the actual section header text.
 
   * If you're happy with the section header as the link text, use it inside a single set of square brackets:
-    - `[Section header text]`: example [A single document] via `[A single document]`
+    - `[Section header text]`: example "[A single document]" via `[A single document]`
   * There are three ways to specify custom link text:
-    - `[link text][Section header text]`: example [non-English books][Internationalization] via `[non-English books][Internationalization]`
-    - `[link text](#explicitID)`: example [Table stuff](#tables) via `[Table stuff](#tables)`
-    - `[link text](#autoID)`: example [How to build your book](#build-the-book) via `[How to build your book](#build-the-book)`
+    - `[link text][Section header text]`: example "[non-English books][Internationalization]" via `[non-English books][Internationalization]`
+    - `[link text](#explicitID)`: example "[Table stuff](#tables)" via `[Table stuff](#tables)`
+    - `[link text](#autoID)`: example "[How to build your book](#build-the-book)" via `[How to build your book](#build-the-book)`
 
 The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/MANUAL.html#extension-implicit_header_references).
 
 ## Custom blocks
 
-You can generate custom blocks using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
+You can generate custom blocks\index{custom block} using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
 
     `r ''````{block, type='FOO'}
     Some text for this block.
@@ -265,15 +265,19 @@ You can generate custom blocks using the `block` engine in **knitr**, i.e., the 
 
 will be this:
 
-    <div class="FOO">
-    Some text for this block.
-    </div>
+```html
+<div class="FOO">
+Some text for this block.
+</div>
+```
 
 and the LaTeX output will be this:
 
-    \begin{FOO}
-    Some text for this block.
-    \end{FOO}
+```latex
+\begin{FOO}
+Some text for this block.
+\end{FOO}
+```
 
 It is up to the book author how to define the style of the block. You can define the style of the `<div>` in CSS and include it in the output via the `includes` option in the YAML metadata. Similarly, you may define the LaTeX environment via `\newenvironment` and include the definition in the LaTeX output via the `includes` option. For example, we may save the following style in a CSS file, say, `style.css`:
 
@@ -344,7 +348,7 @@ One more caveat for the `block2` engine: if the last element in the block is not
 
 ## Citations {#citations}
 
-Although Pandoc supports multiple ways of writing citations, we recommend you to use BibTeX databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
+Although Pandoc supports multiple ways of writing citations\index{citation}, we recommend you to use BibTeX\index{BibTeX} databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
@@ -385,7 +389,7 @@ The field `link-citations` can be used to add internal links from the citation t
 
 ## Index {#latex-index}
 
-Currently the index is only supported for LaTeX/PDF output. To print an index after the book, you can use the LaTeX package **makeidx** in the preamble (see Section \@ref(yaml-options)):
+Currently the index\index{index} is only supported for LaTeX/PDF output. To print an index after the book, you can use the LaTeX package **makeidx** in the preamble (see Section \@ref(yaml-options)):
 
 ```latex
 \usepackage{makeidx}
@@ -396,7 +400,7 @@ Then insert `\printindex` at the end of your book through the YAML option `inclu
 
 ## HTML widgets
 
-Although one of R's greatest strengths is data visualization, there are a large number of JavaScript libraries for much richer data visualization. These libraries can be used to build interactive applications that can easily render in web browsers, so users do not need to install any additional software packages to view the visualizations. One way to bring these JavaScript libraries into R is through the [**htmlwidgets**](http://htmlwidgets.org) package [@R-htmlwidgets]. 
+Although one of R's greatest strengths is data visualization, there are a large number of JavaScript libraries for much richer data visualization. These libraries can be used to build interactive applications that can easily render in web browsers, so users do not need to install any additional software packages to view the visualizations. One way to bring these JavaScript libraries into R is through the [**htmlwidgets**](http://htmlwidgets.org) package [@R-htmlwidgets]\index{HTML widget}. 
 
 HTML widgets can be rendered as a standalone web page (just like an R plot), or embedded in R Markdown documents and Shiny applications. They were originally designed for HTML output only, and they require the availability of JavaScript, so they will not work in non-HTML output formats, such as LaTeX/PDF. Before **knitr** v1.13, you will get an error when you render HTML widgets to an output format that is not HTML. Since **knitr** v1.13, HTML widgets will be rendered automatically as screenshots taken via the **webshot** package [@R-webshot]. Of course, you need to install the **webshot** package. Additionally, you have to install PhantomJS (http://phantomjs.org), since it is what **webshot** uses to capture screenshots. Both **webshot** and PhantomJS can be installed automatically from R:
 
@@ -429,7 +433,7 @@ Screenshots behave like normal R plots in the sense that many chunk options rela
 
 Similar to HTML widgets, arbitrary web pages can be embedded in the book. You can use the function `knitr::include_url()` to include a web page through its URL. When the output format is HTML, an `iframe` is used^[An `iframe` is basically a box on one web page to embed another web page.]; in other cases, **knitr** tries to take a screenshot of the web page (or use the custom screenshot you provided). All chunk options are the same as those for HTML widgets. One option that may require your special attention is the `delay` option: HTML widgets are rendered locally, so usually they are fast to load for PhantomJS to take screenshots, but an arbitrary URL may take longer to load, so you may want to use a larger `delay` value, e.g., use the chunk option `screenshot.opts = list(delay = 5)`.
 
-A related function is `knitr::include_app()`, which is very similar to `include_url()`, and it was designed for embedding Shiny apps via their URLs in the output. Its only difference with `include_url()` is that it automatically adds a query parameter `?showcase=0` to the URL, if no other query parameters are present in the URL, to disable the Shiny showcase mode, which is unlikely to be useful for screenshots or iframes. If you do want the showcase mode, just use `include_url()` instead of `include_app()`. Below is a Shiny app example (Figure \@ref(fig:miniUI)):
+A related function is `knitr::include_app()`, which is very similar to `include_url()`, and it was designed for embedding Shiny apps\index{Shiny application} via their URLs in the output. Its only difference with `include_url()` is that it automatically adds a query parameter `?showcase=0` to the URL, if no other query parameters are present in the URL, to disable the Shiny showcase mode, which is unlikely to be useful for screenshots or iframes. If you do want the showcase mode, just use `include_url()` instead of `include_app()`. Below is a Shiny app example (Figure \@ref(fig:miniUI)):
 
 \let\ooldhref\href
 \let\href\oldhref
