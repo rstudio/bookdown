@@ -36,8 +36,8 @@ p.flushright {
   text-align: right;
 }
 blockquote > p:last-child {
-    text-align: right;
+  text-align: right;
 }
 blockquote > p:first-child {
-    text-align: inherit;
+  text-align: inherit;
 }
