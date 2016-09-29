@@ -98,14 +98,16 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  files = list.files(
+    '.', '[.]Rmd$', ignore.case = TRUE, recursive = isTRUE(config[['rmd_subdir']])
+  )
   if (length(config[['rmd_files']]) > 0) {
     files = config[['rmd_files']]
     if (is.list(files)) {
       files = if (all && is.null(format)) unlist(files) else files[[format]]
     }
   } else {
-    files = grep('^[^_]', files, value = TRUE)  # exclude those start with _
+    files = files[grep('^[^_]', basename(files))]  # exclude those start with _
     index = match('index', with_ext(files, ''))
     # if there is a index.Rmd, put it in the beginning
     if (!is.na(index)) files = c(files[index], files[-index])
@@ -313,7 +315,6 @@ serve_book = function(
   if (missing(daemon)) daemon = getOption('bookdown.serve.daemon', FALSE)
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
-    files = files[dirname(files) == '.']
     i = match(sans_ext(book_filename()), sans_ext(basename(files)))
     if (!is.na(i)) files = files[-i]
     i = grep('[.](knit|utf8)[.]md$', files)
@@ -420,3 +421,4 @@ verify_rstudio_version = function() {
       'https://www.rstudio.com/products/rstudio/download/preview/'
     )
   }
+}

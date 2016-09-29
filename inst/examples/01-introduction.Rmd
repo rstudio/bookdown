@@ -155,6 +155,7 @@ We have mentioned `rmd_files`, and there are more (optional) settings you can co
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter.
 - `edit`: a link that collaborators can click to edit the Rmd source document of the current page; this was designed primarily for GitHub repositories, since it is easy to edit arbitrary plain-text files on GitHub even in other people's repositories (if you do not have write access to the repository, GitHub will automatically fork it and let you submit a pull request after you finish editing the file). This link should have `%s` in it, which will be substituted by the actual Rmd filename for each page.
     - Optionally, you can have a `text` field under the `edit` field to specify the text to which the link is attached.
+- `rmd_subdir`: whether to search for book source Rmd files in subdirectories (by default, only the root directory is searched).
 - `output_dir`: the output directory of the book; this setting is read and used by `render_book()`.
 - `clean`: a vector of files and directories to be cleaned by the `clean_book()` function.
 
@@ -195,6 +196,7 @@ Merging all chapters into one Rmd file and knitting it is one way to render the 
 
 - The most significant difference is that M-K runs _all_ code chunks in all chapters in the same R session, whereas K-M uses separate R sessions for individual chapters. For M-K, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for K-M, all chapters are isolated from each other^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter. It is hard to isolate this kind of side-effects.]. If you want each chapter to compile from a clean state, use the K-M approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the M-K approach. For example, even you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
 - Because **knitr** does not allow duplicate chunk labels in a source document, you need to make sure there are no duplicate labels in your book chapters when you use the M-K approach, otherwise **knitr** will signal an error when knitting the merged Rmd file. Note this means there must not be duplicate labels throughout the whole book. The K-M approach only requires no duplicate labels within any single Rmd file.
+- K-M does not allow Rmd files to be in subdirectories, but M-K does.
 
 The default approach in **bookdown** is M-K. To switch to K-M, you either use the argument `new_session = TRUE` when calling `render_book()`, or set `new_session: yes` in the configuration file `_bookdown.yml`.
 

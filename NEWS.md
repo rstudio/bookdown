@@ -6,6 +6,8 @@
 
 - Added support for cross-referencing equations in multi-page HTML output and EPUB; see https://bookdown.org/yihui/bookdown/markdown-syntax.html for the syntax (thanks, @deleeuw, #85).
 
+- Rmd files can live in subdirectories if you use the Merge-and-Knit approach (the default), and they will be found if the configuration option `rmd_subdir` is true in `_bookdown.yml` (thanks, @leobuchignani, #205).
+
 ## MAJOR CHANGES
 
 - The `force_knit` argument of `render_book()` was removed (to avoid confusion when switching output formats).
