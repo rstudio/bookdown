@@ -6,9 +6,15 @@ In this chapter, we show the syntax of some basic components of a book, includin
 
 We give a very brief introduction to Pandoc's Markdown\index{Markdown} in this section. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
 
-You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-^` renders ClO^-^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations). Section headers can be written after a number of pound signs, e.g.,
+### Inline formatting
 
-```
+You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-^` renders ClO^-^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, just use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](http://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations).
+
+### Block-level elements
+
+Section headers can be written after a number of pound signs, e.g.,
+
+```markdown
 # First-level header
 
 ## Second-level header
@@ -18,13 +24,13 @@ You can make text _italic_ by surrounding it with underscores or asterisks, e.g.
 
 If you do not want a certain heading to be numbered, you can add `{-}` after the heading, e.g.,
 
-```
+```markdown
 # Preface {-}
 ```
 
 Unordered list items start with `*`, `-`, or `+`, and you can nest one list within another list by indenting the sub-list by four spaces, e.g.,
 
-```
+```markdown
 - one item
 - one item
 - one item
@@ -42,7 +48,7 @@ The output is:
 
 Ordered list items start with numbers (the rule for nested lists is the same as above), e.g.,
 
-```
+```markdown
 1. the first item
 2. the second item
 3. the third item
@@ -56,7 +62,7 @@ The output does not look too much different with the Markdown source:
 
 Blockquotes are written after `>`, e.g.,
 
-```
+```markdown
 > "I thoroughly disapprove of duels. If a man should challenge me,
   I would take him kindly and forgivingly by the hand and lead him
   to a quiet place and kill him."
@@ -74,7 +80,7 @@ The actual output:
 
 Plain code blocks can be written after three or more backticks, and you can also indent the blocks by four spaces, e.g.,
 
-````
+````markdown
 ```
 This text is displayed verbatim / preformatted
 ```
@@ -84,28 +90,120 @@ Or indent by four spaces:
     This text is displayed verbatim / preformatted
 ````
 
+### Math expressions
+
 Inline LaTeX equations\index{LaTeX math expression} can be written in a pair of dollar signs using the LaTeX syntax, e.g., `$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$` (actual output: $f(k)={n \choose k}p^{k}(1-p)^{n-k}$); math expressions of the display style can be written in a pair of double dollar signs, e.g., `$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$`, and the output looks like this:
 
 $$f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k}$$
 
-To number and refer to equations, put them in the equation environments and assign labels to them, e.g.,
+You can also use math environments inside `$ $` or `$$ $$`, e.g.,
+
+```latex
+$$\begin{array}{ccc}
+x_{11} & x_{12} & x_{13}\\
+x_{21} & x_{22} & x_{23}
+\end{array}$$
+```
+
+$$\begin{array}{ccc}
+x_{11} & x_{12} & x_{13}\\
+x_{21} & x_{22} & x_{23}
+\end{array}$$
+
+```latex
+$$X = \begin{bmatrix}1 & x_{1}\\
+1 & x_{2}\\
+1 & x_{3}
+\end{bmatrix}$$
+```
+
+$$X = \begin{bmatrix}1 & x_{1}\\
+1 & x_{2}\\
+1 & x_{3}
+\end{bmatrix}$$
+
+```latex
+$$\begin{vmatrix}a & b\\
+c & d
+\end{vmatrix}=ad-bc$$
+```
+
+$$\begin{vmatrix}a & b\\
+c & d
+\end{vmatrix}=ad-bc$$
+
+To number and refer to equations, put them in the equation environments and assign labels to them using the syntax `(\#label)`, e.g.,
 
 ```latex
 \begin{equation} 
   f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
-  \label{eq:binom}
+  (\#eq:binom)
 \end{equation} 
 ```
 
 It renders the equation below:
 
 \begin{equation}
-f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k} \label{eq:binom}
+f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k} (\#eq:binom)
 \end{equation}
 
-You may refer to it using `\@ref(eq:binom)`, e.g., see Equation \@ref(eq:binom). Due to some technical constraints, you must label your equations with the prefix `eq:` in **bookdown**.
+You may refer to it using `\@ref(eq:binom)`, e.g., see Equation \@ref(eq:binom).
 
-Equation references work best for LaTeX/PDF output, and it partially works for HTML output in the sense that you cannot refer to equations on other pages. Currently this feature is not available to Word output or e-books. It may be improved in the future versions of **bookdown**.
+```{block2, type='rmdcaution'}
+Equation labels must start with the prefix `eq:` in **bookdown**. Equation references work best for LaTeX/PDF output, and they are not well supported in Word output or e-books. For HTML output, **bookdown** can only number the equations with labels. Please make sure equations without labels are not numbered by either using the `equation*` environment or adding `\nonumber` or `\notag` to your equations. The same rules apply to other math environments, such as `eqnarray`, `gather`, `align`, and so on (e.g., you can use the `align*` environment).
+```
+
+We demonstrate a few more math equation environments below. Here is an unnumbered equation using the `equation*` environment:
+
+```latex
+\begin{equation*} 
+\frac{d}{dx}\left( \int_{a}^{x} f(u)\,du\right)=f(x)
+\end{equation*} 
+```
+
+\begin{equation*}
+\frac{d}{dx}\left( \int_{a}^{x} f(u)\,du\right)=f(x)
+\end{equation*}
+
+Below is an `align` environment \@ref(eq:align):
+
+```latex
+\begin{align} 
+g(X_{n}) &= g(\theta)+g'({\tilde{\theta}})(X_{n}-\theta) \notag \\
+\sqrt{n}[g(X_{n})-g(\theta)] &= g'\left({\tilde{\theta}}\right)
+  \sqrt{n}[X_{n}-\theta ] (\#eq:align)
+\end{align} 
+```
+
+\begin{align}
+g(X_{n}) &= g(\theta)+g'({\tilde{\theta}})(X_{n}-\theta) \notag \\
+\sqrt{n}[g(X_{n})-g(\theta)] &= g'\left({\tilde{\theta}}\right)
+  \sqrt{n}[X_{n}-\theta ] (\#eq:align)
+\end{align}
+
+The `split` environment inside `equation` so that all lines share the same number \@ref(eq:var-beta)^[By default, each line in the `align` environment will be assigned an equation number. We suppressed the number of the first line in the previous example using `\notag`. In this example, the whole `split` environment was assigned a single number.]:
+
+```latex
+\begin{equation} 
+\begin{split}
+\mathrm{Var}(\hat{\beta}) & =\mathrm{Var}((X'X)^{-1}X'y)\\
+ & =(X'X)^{-1}X'\mathrm{Var}(y)((X'X)^{-1}X')'\\
+ & =(X'X)^{-1}X'\mathrm{Var}(y)X(X'X)^{-1}\\
+ & =(X'X)^{-1}\sigma^{2}
+\end{split}
+(\#eq:var-beta)
+\end{equation} 
+```
+
+\begin{equation}
+\begin{split}
+\mathrm{Var}(\hat{\beta}) & =\mathrm{Var}((X'X)^{-1}X'y)\\
+ & =(X'X)^{-1}X'\mathrm{Var}(y)((X'X)^{-1}X')'\\
+ & =(X'X)^{-1}X'\mathrm{Var}(y)X(X'X)^{-1}\\
+ & =(X'X)^{-1}\sigma^{2}
+\end{split}
+(\#eq:var-beta)
+\end{equation}
 
 ## Markdown extensions by bookdown
 
@@ -254,6 +352,8 @@ You can also create text-based links using explicit or automatic section IDs or 
     - `[link text](#autoID)`: example "[How to build your book](#build-the-book)" via `[How to build your book](#build-the-book)`
 
 The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/MANUAL.html#extension-implicit_header_references).
+
+Cross-references still work even when we refer to an item that is not on the current page of the PDF or HTML output. For example, see Equation \@ref(eq:binom) and Figure \@ref(fig:knitr-logo).
 
 ## Custom blocks
 

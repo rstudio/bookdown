@@ -359,7 +359,7 @@ Another tool to convert EPUB to MOBI is provided by Calibre\index{Calibre}. Unli
 
 ## A single document
 
-Sometimes you may not want to write a book, but just a single long-form article or report instead. Usually what you do is call `rmarkdown::render()`\index{rmarkdown::render()} with a certain output format. The main features missing there are the automatic numbering of figure/table captions, and cross-referencing figures/tables/sections. We have factored out these features from **bookdown**, so that you can use them without having to prepare a book of multiple Rmd files.
+Sometimes you may not want to write a book, but just a single long-form article or report instead. Usually what you do is call `rmarkdown::render()`\index{rmarkdown::render()} with a certain output format. The main features missing there are the automatic numbering of figures/tables/equations, and cross-referencing figures/tables/equations/sections. We have factored out these features from **bookdown**, so that you can use them without having to prepare a book of multiple Rmd files.
 
 The functions `html_document2()`, `tufte_html2()`, `pdf_document2()`, `word_document2()`, `tufte_handout2()`, and `tufte_book2()` are designed for this purpose. If you render an R Markdown document with the output format, say, `bookdown::html_document2`, you will get figure/table numbers and be able to cross-reference them in the single HTML page using the syntax described in Chapter \@ref(components).
 
