@@ -2,6 +2,12 @@ quiet = "--quiet" %in% commandArgs(FALSE)
 formats = commandArgs(TRUE)
 travis = !is.na(Sys.getenv('CI', NA))
 
+src = (function() {
+  attr(body(sys.function()), 'srcfile')
+})()$filename
+if (is.null(src) || src == '') src = '.'
+owd = setwd(dirname(src))
+
 # provide default formats if necessary
 if (length(formats) == 0) formats = c(
   'bookdown::pdf_book', 'bookdown::epub_book', 'bookdown::gitbook'
@@ -25,3 +31,5 @@ if (travis) {
     writeLines(x, f)
   }
 }
+
+setwd(owd)
