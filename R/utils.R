@@ -411,3 +411,12 @@ html_or_latex = function(format) {
   if (grepl('pdf', format)) return('latex')
   switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
 }
+
+verify_rstudio_version = function() {
+  if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable() &&
+      !rstudioapi::isAvailable('0.99.1200')) {
+    message(
+      'You are recommended to use a newer version of RStudio IDE to compile the book: ',
+      'https://www.rstudio.com/products/rstudio/download/preview/'
+    )
+  }
