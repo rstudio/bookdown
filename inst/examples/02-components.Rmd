@@ -438,7 +438,7 @@ A related function is `knitr::include_app()`, which is very similar to `include_
 \let\ooldhref\href
 \let\href\oldhref
 
-```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=10,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
+```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=20,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
 knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
 ```
 
