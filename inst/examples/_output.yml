@@ -25,6 +25,7 @@ bookdown::pdf_book:
   citation_package: natbib
   template: null
   pandoc_args: --chapters
+  toc_depth: 3
   toc_unnumbered: no
   toc_appendix: yes
   quote_footer: ["\\VA{", "}{}"]
