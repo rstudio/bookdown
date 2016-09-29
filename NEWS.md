@@ -4,6 +4,8 @@
 
 - Added arguemnts `toc_unnumberred`, `toc_appendix`, `toc_bib`, and `quote_footer` to `pdf_book()`.
 
+- Added support for cross-referencing equations in multi-page HTML output and EPUB; see https://bookdown.org/yihui/bookdown/markdown-syntax.html for the syntax (thanks, @deleeuw, #85).
+
 ## MAJOR CHANGES
 
 - The `force_knit` argument of `render_book()` was removed (to avoid confusion when switching output formats).

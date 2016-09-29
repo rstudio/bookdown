@@ -71,7 +71,8 @@ process_markdown = function(input_file, from, pandoc_args, global) {
   intermediate_html = with_ext(input_file, 'tmp.html')
   on.exit(unlink(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
-    input_file, 'html', from, intermediate_html, TRUE, c(pandoc_args, '--section-divs')
+    input_file, 'html', from, intermediate_html, TRUE,
+    c(pandoc_args, '--section-divs', '--mathjax')
   )
   x = readUTF8(intermediate_html)
   figs = parse_fig_labels(x, global)
@@ -102,12 +103,41 @@ resolve_refs_md = function(content, ref_table) {
   }
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
   content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
+  # replace (\#eq:label) with equation numbers
+  content = add_eq_numbers(content, ids, ref_table)
 
   # look for \@ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr('(?<!`)\\\\@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, ref_to_number, ref_table, TRUE)
   content
+}
+
+# change labels (\#eq:label) in math environments into actual numbers in \tag{}
+add_eq_numbers = function(x, ids, ref_table) {
+  ids = grep('^eq:', ids, value = TRUE)
+  if (length(ids) == 0) return(x)
+  ref_table = ref_table[ids]
+  env = paste(math_envs, collapse = '|')
+  # no white spaces allowed after \begin|end{env}, and I added spaces for those
+  # env in verbatim chunks so so they won't be recognized and I can display
+  i1 = grep(sprintf('^\\\\begin\\{(%s)\\}$', env), x)
+  i2 = grep(sprintf('^\\\\end\\{(%s)\\}$', env), x)
+  if (length(i1) * length(i2) == 0) return(x)
+  i3 = unlist(mapply(seq, i1, next_nearest(i1, i2), SIMPLIFY = FALSE))
+  i3 = i3[grep('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', x[i3])]
+  for (i in i3) {
+    for (j in ids) {
+      m = sprintf('\\(\\\\#%s\\)', j)
+      if (grepl(m, x[i])) {
+        # it is weird that \tag{} does not work in iBooks, so I have to cheat by
+        # using \qquad then the (equation number)
+        x[i] = sub(m, sprintf('\\\\qquad(%s)', ref_table[j]), x[i])
+        break
+      }
+    }
+  }
+  x
 }
 
 reg_part = '^# \\(PART\\) .+ \\{-\\}$'
@@ -129,10 +159,13 @@ restore_appendix_epub = function(x) {
   x
 }
 
+# may add more LaTeX environments later
+math_envs = c('equation', 'align', 'eqnarray', 'gather')
+
 # wrap math environments in $$, otherwise they are discarded by Pandoc
 # https://github.com/jgm/pandoc/issues/2758
 protect_math_env = function(x) {
-  env = 'equation'  # may add more LaTeX environments later
+  env = c(math_envs, paste0(math_envs, '*'))
   s1 = sprintf('\\begin{%s}', env)
   s2 = sprintf('\\end{%s}', env)
   for (s in s1) {

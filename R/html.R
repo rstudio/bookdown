@@ -411,27 +411,23 @@ ref_to_number = function(ref, ref_table, backslash) {
   ref = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
   num = ref_table[ref]
   i = is.na(num)
-  j = i & grepl('^eq:', ref)
-  # equation labels will be replaced by \ref{eq:label}; the reason that we
-  # cannot directly use \ref{} for HTML even MathJax supports it is that
-  # Pandoc will remove the LaTeX command \ref{} for HTML output, and MathJax
-  # needs the literal command \ref{} on the page
-  i[j] = FALSE
   if (any(i)) {
     if (!isTRUE(opts$get('preview')))
       warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
-  ifelse(
-    j, sprintf(if (backslash) '\\\\ref{%s}' else '\\ref{%s}', ref),
-    sprintf('<a href="#%s">%s</a>', ref, num)
-  )
+  # equation references should include paratheses
+  i = grepl('^eq:', ref)
+  num[i] = paste0('(', num[i], ')')
+  res = sprintf('<a href="#%s">%s</a>', ref, num)
+  # do not add relative links to equation numbers in ePub/Word (not implemented)
+  ifelse(backslash & i, num, res)
 }
 
 reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
 
 # default names for labels
-label_names = list(fig = 'Figure ', tab = 'Table ')
+label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # types of labels currently supported, e.g. \(#fig:foo), \(#tab:bar)
 label_types = names(label_names)
 reg_label_types = paste(label_types, collapse = '|')
@@ -445,11 +441,14 @@ parse_fig_labels = function(content, global = FALSE) {
   arry = character()  # an array of the form c(label = number, ...)
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
 
+  content = restore_math_labels(content)
+
   # look for (#fig:label) or (#tab:label) and replace them with Figure/Table x.x
   m = gregexpr(sprintf('\\(#((%s):[-/[:alnum:]]+)\\)', reg_label_types), content)
   labs = regmatches(content, m)
   cntr = new_counters(label_types, chaps)  # chapter counters
   figs = grep('^<div class="figure', content)
+  eqns = grep('<span class="math display">', content)
 
   for (i in seq_along(labs)) {
     lab = labs[[i]]
@@ -467,7 +466,7 @@ parse_fig_labels = function(content, global = FALSE) {
     }
     arry = c(arry, setNames(num, lab))
 
-    if (type == 'fig') {
+    switch(type, fig = {
       if (length(grep('^<p class="caption', content[i - 0:1])) == 0) {
         # remove these labels, because there must be a caption on this or
         # previous line (possible negative case: the label appears in the alt
@@ -478,10 +477,18 @@ parse_fig_labels = function(content, global = FALSE) {
       labs[[i]] = paste0(label_prefix(type), num, ': ')
       k = max(figs[figs <= i])
       content[k] = paste0(content[k], sprintf('<span id="%s"></span>', lab))
-    } else {
+    }, tab = {
       if (length(grep('^<caption>', content[i - 0:1])) == 0) next
-      labs[[i]] = sprintf('<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': '))
-    }
+      labs[[i]] = sprintf(
+        '<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': ')
+      )
+    }, eq = {
+      labs[[i]] = sprintf('\\tag{%s}', num)
+      k = max(eqns[eqns <= i])
+      content[k] = sub(
+        '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
+      )
+    })
   }
 
   regmatches(content, m) = labs
@@ -774,4 +781,17 @@ js_min_sources = function(x) {
   r = '[.]min[.]js$'
   x = grep(r, x, value = TRUE)
   c(gsub(r, '.js', x), gsub(r, '.min.map', x))
+}
+
+# only parse equation labels (\#eq:label) in math environments; this needs
+# special treatment because the backslash \ before # is preserved in equation
+# environments in HTML output, whereas it is removed in normal paragraphs
+restore_math_labels = function(x) {
+  i1 = grep('^(<p>)?<span class="math display">\\\\\\[', x)
+  i2 = grep('\\\\\\]</span>(</p>)?$', x)
+  if (length(i1) * length(i2) == 0) return(x)
+  i = unlist(mapply(seq, i1, next_nearest(i1, i2), SIMPLIFY = FALSE))
+  # remove \ before #
+  x[i] = gsub('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', '(\\1)', x[i])
+  x
 }
