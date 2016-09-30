@@ -132,6 +132,12 @@ $$\begin{vmatrix}a & b\\
 c & d
 \end{vmatrix}=ad-bc$$
 
+## Markdown extensions by bookdown
+
+Although Pandoc's Markdown is much richer than the [original Markdown syntax](http://daringfireball.net/projects/markdown/), it still has a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill up the gaps.
+
+### Number and reference equations
+
 To number and refer to equations, put them in the equation environments and assign labels to them using the syntax `(\#label)`, e.g.,
 
 ```latex
@@ -205,7 +211,8 @@ The `split` environment inside `equation` so that all lines share the same numbe
 (\#eq:var-beta)
 \end{equation}
 
-## Markdown extensions by bookdown
+
+### Special headers
 
 There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles\index{part}. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
 
@@ -236,6 +243,18 @@ The second type is an unnumbered header that starts with `(APPENDIX)`, indicatin
 ```
 
 The numbering style of appendices will be automatically changed in LaTeX/PDF and HTML output (usually in the form A, A.1, A.2, B, B.1, ...). This feature is not available to e-books or Word output.
+
+### Text references
+
+You can assign some text to a label and reference the text using the label elsewhere in your document. This can be particularly useful for long figure/table captions (Section \@ref(figures) and \@ref(tables)), in which case you normally will have to write the whole character string in the chunk header (e.g., `fig.cap = "A long long figure caption."`) or your R code (e.g., `kable(caption = "A long long table caption.")`). It is also useful when these captions contain special HTML or LaTeX characters, e.g., if the figure caption contains an underscore, it works in the HTML output but may not work in LaTeX output because the underscore must be escaped in LaTeX.
+
+The syntax for a text reference is `(ref:label) text`, where `label` is a unique label^[You may consider using the code chunk labels. The label should only contain alphanumeric characters, `:`, `-`, and/or `/`. This is the same requirement as labels for figure/table references in Section \@ref(figures).] through out the document for `text`. It must be in a separate paragraph with empty lines above and below it. For example,
+
+```markdown
+(ref:foo) Define a text reference **here**. 
+```
+
+Then you can use `(ref:foo)` in your figure/table captions. The text can contain anything that Markdown supports, as long as it is one single paragraph.
 
 ## R code
 
