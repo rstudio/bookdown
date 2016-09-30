@@ -419,7 +419,7 @@ ref_to_number = function(ref, ref_table, backslash) {
   # equation references should include paratheses
   i = grepl('^eq:', ref)
   num[i] = paste0('(', num[i], ')')
-  res = sprintf('<a href="#%s">%s</a>', ref, num)
+  res = sprintf("<a href='#%s'>%s</a>", ref, num)
   # do not add relative links to equation numbers in ePub/Word (not implemented)
   ifelse(backslash & i, num, res)
 }
