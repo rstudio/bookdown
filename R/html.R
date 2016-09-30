@@ -395,6 +395,8 @@ edit_setting = function() {
 }
 
 resolve_refs_html = function(content, global = FALSE) {
+  content = resolve_ref_links_html(content)
+
   res = parse_fig_labels(content, global)
   content = res$content
   ref_table = c(res$ref_table, parse_section_labels(content))
@@ -532,6 +534,43 @@ parse_section_labels = function(content) {
     ))
   }
   arry
+}
+
+reg_ref_links = '(\\(ref:[-/[:alnum:]]+\\))'
+# parse "reference links" of the form "(ref:foo) text", and replace (ref:foo) in
+# the content with `text`; this is for figure/table captions that are
+# complicated in the sense that they contain special LaTeX/HTML characters (e.g.
+# _), or special Markdown syntax (e.g. citations); we can just use (ref:foo) in
+# the captions, and write the actual captions elsewhere using (ref:foo) text
+resolve_ref_links_html = function(x) {
+  res = parse_ref_links(x, '^<p>%s (.+)</p>$')
+  if (is.null(res)) return(x)
+  restore_ref_links(res$content, '(?<!>)%s', res$tags, res$txts, TRUE)
+}
+
+parse_ref_links = function(x, regexp) {
+  r = sprintf(regexp, reg_ref_links)
+  if (length(i <- grep(r, x)) == 0) return()
+  tags = gsub(r, '\\1', x[i])
+  txts = gsub(r, '\\2', x[i])
+  x[i] = ''
+  list(content = x, tags = tags, txts = txts, matches = i)
+}
+
+restore_ref_links = function(x, regexp, tags, txts, alt = TRUE) {
+  r = sprintf(regexp, reg_ref_links)
+  m = gregexpr(r, x, perl = TRUE)
+  tagm = regmatches(x, m)
+  for (i in seq_along(tagm)) {
+    tag = tagm[[i]]
+    if (length(tag) == 0) next
+    k = match(tag, tags)
+    tag[!is.na(k)] = txts[na.omit(k)]
+    if (alt && is_img_line(x[i])) tag = strip_html(tag)
+    tagm[[i]] = tag
+  }
+  regmatches(x, m) = tagm
+  x
 }
 
 # add automatic identifiers to those section headings without ID's

@@ -80,6 +80,7 @@ process_markdown = function(input_file, from, pandoc_args, global) {
   content = resolve_refs_md(
     readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
   )
+  content = resolve_ref_links_epub(content)
   content = restore_part_epub(content)
   content = restore_appendix_epub(content)
   content = protect_math_env(content)
@@ -138,6 +139,12 @@ add_eq_numbers = function(x, ids, ref_table) {
     }
   }
   x
+}
+
+resolve_ref_links_epub = function(x) {
+  res = parse_ref_links(x, '^%s (.+[^ ])$')
+  if (is.null(res)) return(x)
+  restore_ref_links(res$content, '(?<!`)%s', res$tags, res$txts, TRUE)
 }
 
 reg_part = '^# \\(PART\\) .+ \\{-\\}$'

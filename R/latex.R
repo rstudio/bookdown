@@ -37,6 +37,7 @@ pdf_book = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
     x = resolve_refs_latex(readUTF8(f))
+    x = resolve_ref_links_latex(x)
     x = restore_part_latex(x)
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
@@ -103,6 +104,23 @@ resolve_refs_latex = function(x) {
   )
   x = gsub(sprintf('\\(\\\\#((%s):[-/[:alnum:]]+)\\)', reg_label_types), '\\\\label{\\1}', x)
   x
+}
+
+resolve_ref_links_latex = function(x) {
+  res = parse_ref_links(x, '^%s (.+)$')
+  if (is.null(res)) return(x)
+  x = res$content; txts = res$txts; i = res$matches
+  # text for a tag may be wrapped into multiple lines; collect them until the
+  # empty line
+  for (j in seq_along(i)) {
+    k = 1
+    while (x[i[j] + k] != '') {
+      txts[j] = paste(txts[j], x[i[j] + k], sep = '\n')
+      x[i[j] + k] = ''
+      k = k + 1
+    }
+  }
+  restore_ref_links(x, '(?<!\\\\texttt{)%s', res$tags, txts, FALSE)
 }
 
 restore_part_latex = function(x) {
