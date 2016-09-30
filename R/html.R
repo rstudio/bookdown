@@ -402,7 +402,12 @@ resolve_refs_html = function(content, global = FALSE) {
   # look for @ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr('(?<!\\\\)@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
-  regmatches(content, m) = lapply(refs, ref_to_number, ref_table, FALSE)
+  for (i in seq_along(refs)) {
+    refs[[i]] = if (grepl('^<img src=".* alt="', content[i])) {
+      character(length(refs[[i]]))
+    } else ref_to_number(refs[[i]], ref_table, FALSE)
+  }
+  regmatches(content, m) = refs
   content
 }
 
@@ -419,7 +424,7 @@ ref_to_number = function(ref, ref_table, backslash) {
   # equation references should include paratheses
   i = grepl('^eq:', ref)
   num[i] = paste0('(', num[i], ')')
-  res = sprintf("<a href='#%s'>%s</a>", ref, num)
+  res = sprintf('<a href="#%s">%s</a>', ref, num)
   # do not add relative links to equation numbers in ePub/Word (not implemented)
   ifelse(backslash & i, num, res)
 }
