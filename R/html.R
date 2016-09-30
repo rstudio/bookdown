@@ -403,13 +403,19 @@ resolve_refs_html = function(content, global = FALSE) {
   m = gregexpr('(?<!\\\\)@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   for (i in seq_along(refs)) {
-    refs[[i]] = if (grepl('^<img src=".* alt="', content[i])) {
+    # do not resolve numbers in <img>'s alt attribute because the numbers may
+    # contain double quotes, e.g. <img alt="<a href="#foo">1.2</a>"" width=...
+    refs[[i]] = if (is_img_line(content[i])) {
       character(length(refs[[i]]))
-    } else ref_to_number(refs[[i]], ref_table, FALSE)
+    } else {
+      ref_to_number(refs[[i]], ref_table, FALSE)
+    }
   }
   regmatches(content, m) = refs
   content
 }
+
+is_img_line = function(x) grepl('^<img src=".* alt="', x)
 
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
