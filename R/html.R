@@ -403,13 +403,13 @@ resolve_refs_html = function(content, global = FALSE) {
   m = gregexpr('(?<!\\\\)@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   for (i in seq_along(refs)) {
-    # do not resolve numbers in <img>'s alt attribute because the numbers may
-    # contain double quotes, e.g. <img alt="<a href="#foo">1.2</a>"" width=...
-    refs[[i]] = if (is_img_line(content[i])) {
-      character(length(refs[[i]]))
-    } else {
-      ref_to_number(refs[[i]], ref_table, FALSE)
-    }
+    if (length(refs[[i]]) == 0) next
+    # strip off html tags when resolve numbers in <img>'s alt attribute because
+    # the numbers may contain double quotes, e.g. <img alt="<a
+    # href="#foo">1.2</a>"" width=...
+    ref = ref_to_number(refs[[i]], ref_table, FALSE)
+    if (is_img_line(content[i])) ref = strip_html(ref)
+    refs[[i]] = ref
   }
   regmatches(content, m) = refs
   content
