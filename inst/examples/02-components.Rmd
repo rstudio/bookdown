@@ -134,7 +134,7 @@ c & d
 
 ## Markdown extensions by bookdown
 
-Although Pandoc's Markdown is much richer than the original Markdown syntax, it still has a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill up the gaps.
+Although Pandoc's Markdown is much richer than the original Markdown syntax, it still has a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill the gaps.
 
 ### Number and reference equations
 
