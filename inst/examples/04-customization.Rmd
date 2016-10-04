@@ -200,7 +200,7 @@ For non-LaTeX output, you can set the `language` field in the configuration file
 
 ```{r echo=FALSE, comment=''}
 cat(yaml::as.yaml(
-  list(language = list(label = bookdown:::label_names))
+  list(language = list(label = c(bookdown:::label_names, bookdown:::label_names_math2)))
 ))
 ```
 

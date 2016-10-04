@@ -136,9 +136,9 @@ c & d
 
 Although Pandoc's Markdown is much richer than the original Markdown syntax, it still has a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill the gaps.
 
-### Number and reference equations
+### Number and reference equations {#equations}
 
-To number and refer to equations, put them in the equation environments and assign labels to them using the syntax `(\#label)`, e.g.,
+To number and refer to equations\index{equation}\index{cross-reference}, put them in the equation environments and assign labels to them using the syntax `(\#eq:label)`, e.g.,
 
 ```latex
 \begin{equation} 
@@ -156,7 +156,7 @@ f\left(k\right)=\binom{n}{k}p^k\left(1-p\right)^{n-k} (\#eq:binom)
 You may refer to it using `\@ref(eq:binom)`, e.g., see Equation \@ref(eq:binom).
 
 ```{block2, type='rmdcaution'}
-Equation labels must start with the prefix `eq:` in **bookdown**. Equation references work best for LaTeX/PDF output, and they are not well supported in Word output or e-books. For HTML output, **bookdown** can only number the equations with labels. Please make sure equations without labels are not numbered by either using the `equation*` environment or adding `\nonumber` or `\notag` to your equations. The same rules apply to other math environments, such as `eqnarray`, `gather`, `align`, and so on (e.g., you can use the `align*` environment).
+Equation labels must start with the prefix `eq:` in **bookdown**. All labels in **bookdown** must only contain alphanumeric characters, `:`, `-`, and/or `/`. Equation references work best for LaTeX/PDF output, and they are not well supported in Word output or e-books. For HTML output, **bookdown** can only number the equations with labels. Please make sure equations without labels are not numbered by either using the `equation*` environment or adding `\nonumber` or `\notag` to your equations. The same rules apply to other math environments, such as `eqnarray`, `gather`, `align`, and so on (e.g., you can use the `align*` environment).
 ```
 
 We demonstrate a few more math equation environments below. Here is an unnumbered equation using the `equation*` environment:
@@ -195,6 +195,7 @@ The `split` environment inside `equation` so that all lines share the same numbe
 \mathrm{Var}(\hat{\beta}) & =\mathrm{Var}((X'X)^{-1}X'y)\\
  & =(X'X)^{-1}X'\mathrm{Var}(y)((X'X)^{-1}X')'\\
  & =(X'X)^{-1}X'\mathrm{Var}(y)X(X'X)^{-1}\\
+ & =(X'X)^{-1}X'\sigma^{2}IX(X'X)^{-1}\\
  & =(X'X)^{-1}\sigma^{2}
 \end{split}
 (\#eq:var-beta)
@@ -206,11 +207,159 @@ The `split` environment inside `equation` so that all lines share the same numbe
 \mathrm{Var}(\hat{\beta}) & =\mathrm{Var}((X'X)^{-1}X'y)\\
  & =(X'X)^{-1}X'\mathrm{Var}(y)((X'X)^{-1}X')'\\
  & =(X'X)^{-1}X'\mathrm{Var}(y)X(X'X)^{-1}\\
+ & =(X'X)^{-1}X'\sigma^{2}IX(X'X)^{-1}\\
  & =(X'X)^{-1}\sigma^{2}
 \end{split}
 (\#eq:var-beta)
 \end{equation}
 
+### Theorems and proofs {#theorems}
+
+Theorems\index{theorem} and proofs are commonly used in articles and books in mathematics. However, please do not be mislead by the names: a "theorem" is just a numbered/labeled environment, and it does not have to be a mathematical theorem (e.g., it can be an example irrelevant to mathematics). Similarly, a "proof" is an unnumbered environment. In this section, we always use the _general_ meanings of a "theorem" and "proof" unless explicitly stated.
+
+In **bookdown**, the types of theorem environments supported are in Table \@ref(tab:theorem-envs). To write a theorem, you can use the syntax below:
+
+````markdown
+`r ''````{theorem}
+Here is my theorem.
+```
+````
+
+(ref:theorem-envs) Theorem environments in **bookdown**.
+
+```{r theorem-envs, echo=FALSE}
+knitr::kable(data.frame(
+  Environment = names(bookdown:::theorem_abbr),
+  `Printed Name` = unname(unlist(bookdown:::label_names_math)),
+  `Label Prefix` = unname(bookdown:::theorem_abbr),
+  stringsAsFactors = FALSE, check.names = FALSE
+), caption = '(ref:theorem-envs)', booktabs = TRUE)
+```
+
+To write other theorem environments, just replace ```` ```{theorem} ```` with other environment names in Table \@ref(tab:theorem-envs), e.g., ```` ```{lemma} ````.
+
+A theorem can have a `name` option so its name will be printed, e.g.,
+
+````markdown
+`r ''````{theorem, name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+$$a^2 + b^2 = c^2$$
+```
+````
+
+If you want to refer to a theorem, you should label it. The label can be written after ```` ```{theorem````, e.g.,
+
+````markdown
+`r ''````{theorem, label="foo"}
+A labeled theorem here.
+```
+````
+
+The `label` option can be implicit, e.g., the following theorem has the label `bar`:
+
+````markdown
+`r ''````{theorem, bar}
+A labeled theorem here.
+```
+````
+
+After you label a theorem, you can refer to it using the syntax `\@ref(prefix:label)`.\index{cross-reference} See the column `Label Prefix` in Table \@ref(tab:theorem-envs) for the value of `prefix` for each environment. For example, we have a labeled and named theorem below, and `\@ref(thm:pyth)` gives us its theorem number \@ref(thm:pyth):
+
+````markdown
+`r ''````{theorem, pyth, name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+```
+````
+
+```{theorem, pyth, name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+```
+
+The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named. The only difference is that since they are unnumbered, you cannot reference them.
+
+We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF, HTML, or EPUB. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package.
+
+Theorems are numbered by chapters by default. If there are no chapters in your document, they are numbered by sections instead. If the whole document is unnumbered (the output format option `number_sections = FALSE`), all theorems are numbered sequentially from 1, 2, ..., N. LaTeX supports numbering one theorem environment after another, e.g., let theorems and lemmas share the same counter. This is not supported for HTML/EPUB output in **bookdown**. You can change the numbering scheme in the LaTeX preamble by defining your own theorem environments, e.g.,
+
+```latex
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+```
+
+When **bookdown** detects `\newtheorem{theorem}` in your LaTeX preamble, it will not write out its default theorem definitions, which means you have to define all theorem environments by yourself. For the sake of simplicity and consistency, we do not recommend you to do this. It can be confusing when your Theorem 18 in PDF becomes Theorem 2.4 in HTML.
+
+Below we show more examples^[Some examples are adapted from the Wikipedia page https://en.wikipedia.org/wiki/Characteristic_function_(probability_theory)] of the theorem and proof environments, so you can see the default styles in **bookdown**.
+
+```{definition}
+The characteristic function of a random variable $X$ is defined by
+
+$$\varphi _{X}(t)=\operatorname {E} \left[e^{itX}\right], \; t\in\mathcal{R}$$
+```
+
+
+```{example}
+We derive the characteristic function of $X\sim U(0,1)$ with the probability density function $f(x)=\mathbf{1}_{x \in [0,1]}$.
+
+\begin{equation*}
+\begin{split}
+\varphi _{X}(t) &= \operatorname {E} \left[e^{itX}\right] =\int e^{itx}f(x)dx =\int_{0}^{1}e^{itx}dx\\
+ & =\int_{0}^{1}\left(\cos(tx)+i\sin(tx)\right)dx\\
+ & =\left.\left(\frac{\sin(tx)}{t}-i\frac{\cos(tx)}{t}\right)\right|_{0}^{1}\\
+ & =\frac{\sin(t)}{t}-i\left(\frac{\cos(t)-1}{t}\right)\\
+ & =\frac{i\sin(t)}{it}+\frac{\cos(t)-1}{it}\\
+ & =\frac{e^{it}-1}{it}
+\end{split}
+\end{equation*}
+
+Note we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
+```
+
+```{lemma, chf-pdf}
+For any two random variables $X_1$, $X_2$, they both have the same probability distribution if and only if
+
+$$\varphi _{X_1}(t)=\varphi _{X_2}(t)$$
+```
+
+```{theorem, chf-sum}
+If $X_1$, ..., $X_n$ are independent random variables, and $a_1$, ..., $a_n$ are some constants, then the characteristic function of the linear combination $S_n=\sum_{i=1}^na_iX_i$ is
+
+$$\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}t)\cdots \varphi _{X_{n}}(a_{n}t)$$
+```
+
+```{proposition}
+The distribution of the sum of independent Poisson random variables $X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
+```
+
+```{proof}
+The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)=e^{\lambda (e^{it}-1)}$. Let $P_n=\sum_{i=1}^nX_i$. We know from Theorem \@ref(thm:chf-sum) that
+
+\begin{equation*}
+\begin{split}
+\varphi _{P_{n}}(t) & =\prod_{i=1}^n\varphi _{X_i}(t) \\
+& =\prod_{i=1}^n e^{\lambda_i (e^{it}-1)} \\
+& = e^{\sum_{i=1}^n \lambda_i (e^{it}-1)}
+\end{split}
+\end{equation*}
+
+This is the characteristic function of a Poisson random variable with the parameter $\lambda=\sum_{i=1}^n \lambda_i$. From Lemma \@ref(lem:chf-pdf), we know the distribution of $P_n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
+```
+
+```{remark}
+In some cases, it is very convenient and easy to figure out the distribution of the sum of independent random variables using characteristic functions.
+```
+
+```{corollary}
+The characteristic function of the sum of two independent random variables $X_1$ and $X_2$ is the product of characteristic functions of $X_1$ and $X_2$, i.e.,
+
+$$\varphi _{X_1+X_2}(t)=\varphi _{X_1}(t) \varphi _{X_2}(t)$$
+```
 
 ### Special headers
 
@@ -248,7 +397,7 @@ The numbering style of appendices will be automatically changed in LaTeX/PDF and
 
 You can assign some text to a label and reference the text using the label elsewhere in your document. This can be particularly useful for long figure/table captions (Section \@ref(figures) and \@ref(tables)), in which case you normally will have to write the whole character string in the chunk header (e.g., `fig.cap = "A long long figure caption."`) or your R code (e.g., `kable(caption = "A long long table caption.")`). It is also useful when these captions contain special HTML or LaTeX characters, e.g., if the figure caption contains an underscore, it works in the HTML output but may not work in LaTeX output because the underscore must be escaped in LaTeX.
 
-The syntax for a text reference is `(ref:label) text`, where `label` is a unique label^[You may consider using the code chunk labels. The label should only contain alphanumeric characters, `:`, `-`, and/or `/`. This is the same requirement as labels for figure/table references in Section \@ref(figures).] through out the document for `text`. It must be in a separate paragraph with empty lines above and below it. For example,
+The syntax for a text reference is `(ref:label) text`, where `label` is a unique label^[You may consider using the code chunk labels.] through out the document for `text`. It must be in a separate paragraph with empty lines above and below it. For example,
 
 ```markdown
 (ref:foo) Define a text reference **here**. 
@@ -277,7 +426,7 @@ By default, figures\index{figure} have no captions in the output generated by **
 
 The disadvantage of typesetting figures in this way is that when there is not enough space on the current page to place a figure, it may either reach the bottom of the page (hence exceeds the page margin), or be pushed to the next page, leaving a large white margin at the bottom of the current page. That is basically why there are "floating environments"\index{floating environment} in LaTeX: elements that cannot be split over multiple pages (like figures) are put in floating environments, so they can float to a page that has enough space to hold them. There is also a disadvantage of floating things forward or backward, though. That is, readers may have to jump to a different page to find the figure mentioned on the current page. This is simply a natural consequence of having to typeset things on multiple pages of fixed sizes. This issue does not exist in HTML, however, since everything can be placed continuously on one single page (presumably with infinite height), and there is no need to split anything across multiple pages of the same page size.
 
-If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-references}, use the syntax `\@ref(label)`^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.], where `label` is the figure label, e.g., `fig:foo`.
+If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-reference}, use the syntax `\@ref(label)`^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.], where `label` is the figure label, e.g., `fig:foo`.
 
 ```{block2, type='rmdimportant'}
 If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains _alphanumeric_ characters (a-z, A-Z, 0-9), slashes (/), or dashes (-). Other characters do not qualify.
@@ -323,7 +472,7 @@ There are a few advantages of using `include_graphics()`:
 
 For now, the most convenient way to generate a table\index{table} is the function `knitr::kable()`, because there are some internal tricks in **knitr** to make it work with **bookdown** and users do not have to know anything about these implementation details. We will explain how to use other packages and functions later in this section.
 
-Like figures, tables with captions will also be numbered and can be referenced\index{cross-references}. The `kable()` function will automatically generate a label for a table environment, which is the prefix `tab:` plus the chunk label. For example, the table label for a code chunk with the label `foo` will be `tab:foo`, and we can still use the syntax `\@ref(label)` to reference the table. Table \@ref(tab:table-single) is a simple example.
+Like figures, tables with captions will also be numbered and can be referenced\index{cross-reference}. The `kable()` function will automatically generate a label for a table environment, which is the prefix `tab:` plus the chunk label. For example, the table label for a code chunk with the label `foo` will be `tab:foo`, and we can still use the syntax `\@ref(label)` to reference the table. Table \@ref(tab:table-single) is a simple example.
 
 ```{r table-single, tidy=FALSE}
 knitr::kable(
@@ -357,7 +506,7 @@ If you decide to use other packages to generate tables, you have to make sure th
 
 ## Cross-references
 
-We have explained how cross-references\index{cross-references} work for figures (Section \@ref(figures)) and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.
+We have explained how cross-references\index{cross-reference} work for equations (Section \@ref(equations)), theorems (Section \@ref(theorems), figures (Section \@ref(figures)), and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.
 
 When a referenced label cannot be found, you will see two question marks like \@ref(fig:does-not-exist), as well as a warning message in the R console when rendering the book.
 
@@ -464,6 +613,8 @@ One more caveat for the `block2` engine: if the last element in the block is not
     - end the list with a blank line
     
     ```
+
+The theorem and proof environments in Section \@ref(theorems) are actually implemented through the `block2` engine.
 
 ## Citations {#citations}
 
