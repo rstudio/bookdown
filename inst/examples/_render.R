@@ -33,3 +33,5 @@ if (travis) {
 }
 
 setwd(owd)
+
+if (length(formats) > 1) bookdown::publish_book()
