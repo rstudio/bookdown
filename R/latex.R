@@ -42,7 +42,7 @@ pdf_book = function(
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
-    x = restore_block2(x)
+    x = restore_block2(x, !number_sections)
     if (!is.null(quote_footer)) {
       if (length(quote_footer) != 2 || !is.character(quote_footer)) warning(
         "The 'quote_footer' argument should be a character vector of length 2"
@@ -165,11 +165,33 @@ add_toc_bib = function(x) {
   x
 }
 
-restore_block2 = function(x) {
+restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
   if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
     x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
+  if (length(grep('^\\\\BeginKnitrBlock\\{theorem\\}', x)) &&
+      length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
+    theorem_defs = sprintf(
+      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
+      str_trim(vapply(theorem_abbr, label_prefix, character(1), USE.NAMES = FALSE)),
+      if (global) '' else {
+        if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
+      }
+    )
+    # the proof environment has already been defined by amsthm
+    proof_envs = setdiff(names(label_names_math2), 'proof')
+    proof_defs = sprintf(
+      '%s\\newtheorem*{%s}{%s}', theorem_style(proof_envs), proof_envs,
+      gsub('^\\s+|[.]\\s*$', '', vapply(proof_envs, label_prefix, character(1), label_names_math2))
+    )
+    x = append(x, c('\\usepackage{amsthm}', theorem_defs, proof_defs), i - 1)
+  }
+  # remove the empty lines around the block2 environments
+  i3 = if (length(i1 <- grep('^\\\\BeginKnitrBlock\\{', x))) (i1 + 1)[x[i1 + 1] == '']
+  i3 = c(i3, if (length(i2 <- grep('^\\\\EndKnitrBlock\\{', x))) (i2 - 1)[x[i2 - 1] == ''])
+  if (length(i3)) x = x[-i3]
+
   r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi)(.*)$'
   if (length(i <- grep(r, x)) == 0) return(x)
   opts = sapply(strsplit(gsub(r, '\\3', x[i]), '-'), function(z) {
@@ -177,6 +199,16 @@ restore_block2 = function(x) {
   }, USE.NAMES = FALSE)
   x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\5', x[i]))
   x
+}
+
+style_definition = c('definition', 'example')
+style_remark = c('remark')
+# which styles of theorem environments to use
+theorem_style = function(env) {
+  styles = character(length(env))
+  styles[env %in% style_definition] = '\\theoremstyle{definition}\n'
+  styles[env %in% style_remark] = '\\theoremstyle{remark}\n'
+  styles
 }
 
 process_quote_latex = function(x, commands) {

@@ -5,9 +5,9 @@ bookdown_file = function(...) {
 }
 
 # find the y[j] closest to x[i] with y[j] > x[i]; x and y have been sorted
-next_nearest = function(x, y) {
+next_nearest = function(x, y, allow_eq = FALSE) {
   n = length(x); z = integer(n)
-  for (i in seq_len(n)) z[i] = y[y > x[i]][1]
+  for (i in seq_len(n)) z[i] = y[if (allow_eq) y >= x[i] else y > x[i]][1]
   z
 }
 
@@ -421,4 +421,55 @@ verify_rstudio_version = function() {
       'https://www.rstudio.com/products/rstudio/download/preview/'
     )
   }
+}
+
+str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
+
+`%n%` = knitr:::`%n%`
+
+# a theorem engine for knitr (can also be used for lemmas, definitions, etc)
+eng_theorem = function(options) {
+  type = options$type %n% 'theorem'
+  if (!(type %in% names(theorem_abbr))) stop(
+    "The type of theorem '", type, "' is not supported yet."
+  )
+  options$type = type
+  label = paste(theorem_abbr[type], options$label, sep = ':')
+  html.before2 = sprintf('(\\#%s)', label)
+  name = options$name
+  if (length(name) == 1) {
+    options$latex.options = sprintf('[%s]', name)
+    html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi ', name))
+  }
+  options$html.before2 = sprintf(
+    '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
+  )
+  knitr:::eng_block2(options)
+}
+
+# a proof engine for unnumbered math environments
+eng_proof = function(options) {
+  type = options$type %n% 'proof'
+  if (!(type %in% names(label_names_math2))) stop(
+    "The type of proof '", type, "' is not supported yet."
+  )
+  options$type = type
+  name = options$name
+  if (length(name) == 1) {
+    options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
+  }
+  options$html.before2 = sprintf(
+    '\\iffalse <span class="%s"><em>%s</em></span> \\fi ', type,
+    if (length(name) == 1) name else label_prefix(type, label_names_math2)
+  )
+  knitr:::eng_block2(options)
+}
+
+register_eng_math = function(envs, engine) {
+  knitr::knit_engines$set(setNames(lapply(envs, function(env) {
+    function(options) {
+      options$type = env
+      engine(options)
+    }
+  }), envs))
 }

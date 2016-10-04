@@ -90,13 +90,19 @@ process_markdown = function(input_file, from, pandoc_args, global) {
 resolve_refs_md = function(content, ref_table) {
   ids = names(ref_table)
   # replace (\#fig:label) with Figure x.x:
-  for (i in grep('^(<p class="caption|<caption>|Table:)|(!\\[.*?\\]\\(.+?\\))', content)) {
+  for (i in grep('^(<p class="caption|<caption>|Table:|\\\\BeginKnitrBlock)|(!\\[.*?\\]\\(.+?\\))', content)) {
     for (j in ids) {
       m = sprintf('\\(\\\\#%s\\)', j)
       if (grepl(m, content[i])) {
-        type = label_prefix(gsub('^([^:]+).*$', '\\1', j))
+        id = ''; sep = ':'
+        type = gsub('^([^:]+).*$', '\\1', j)
+        if (type %in% names(theorem_abbr)) {
+          id = sprintf('<span id="%s"></span>', j)
+          sep = ''
+        }
+        label = label_prefix(type)
         content[i] = sub(
-          m, sprintf('<span id="%s"></span>%s%s: ', j, type, ref_table[j]), content[i]
+          m, paste0(id, label, ref_table[j], ' '), content[i]
         )
         break
       }

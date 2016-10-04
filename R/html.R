@@ -441,6 +441,20 @@ reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1
 
 # default names for labels
 label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
+# prefixes for theorem environments
+theorem_abbr = c(
+  theorem = 'thm', lemma = 'lem', definition = 'def', corollary = 'cor',
+  proposition = 'prp', example = 'ex'
+)
+# numbered math environments
+label_names_math = setNames(list(
+  'Theorem ', 'Lemma ', 'Definition ', 'Corollary ', 'Proposition ', 'Example '
+), theorem_abbr)
+# unnumbered math environments
+label_names_math2 = list(proof = 'Proof. ', remark = 'Remark. ')
+
+label_names = c(label_names, label_names_math)
+
 # types of labels currently supported, e.g. \(#fig:foo), \(#tab:bar)
 label_types = names(label_names)
 reg_label_types = paste(label_types, collapse = '|')
@@ -501,6 +515,8 @@ parse_fig_labels = function(content, global = FALSE) {
       content[k] = sub(
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
+    }, {
+      labs[[i]] = paste0(label_prefix(type), num, ' ')
     })
   }
 
@@ -514,9 +530,9 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type) {
+label_prefix = function(type, dict = label_names) {
   labels = load_config()[['language']][['label']]
-  if (is.null(labels[[type]])) label_names[[type]] else labels[[type]]
+  if (is.null(labels[[type]])) dict[[type]] else labels[[type]]
 }
 
 sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
@@ -840,7 +856,7 @@ restore_math_labels = function(x) {
   i1 = grep('^(<p>)?<span class="math display">\\\\\\[', x)
   i2 = grep('\\\\\\]</span>(</p>)?$', x)
   if (length(i1) * length(i2) == 0) return(x)
-  i = unlist(mapply(seq, i1, next_nearest(i1, i2), SIMPLIFY = FALSE))
+  i = unlist(mapply(seq, i1, next_nearest(i1, i2, TRUE), SIMPLIFY = FALSE))
   # remove \ before #
   x[i] = gsub('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', '(\\1)', x[i])
   x
