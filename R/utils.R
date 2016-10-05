@@ -322,6 +322,7 @@ serve_book = function(
   if (is.null(output_dir)) output_dir = '_book'
   if (missing(preview)) preview = getOption('bookdown.preview', TRUE)
   if (missing(daemon)) daemon = getOption('bookdown.serve.daemon', FALSE)
+  output_format = first_html_format()
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
     i = match(sans_ext(book_filename()), sans_ext(basename(files)))
@@ -331,15 +332,27 @@ serve_book = function(
     if (length(files) == 0) return()
     # if the output dir has been deleted, rebuild the whole book
     if (!dir_exists(output_dir)) preview_ = FALSE
-    if (in_session) {
-      render_book(files, output_dir = output_dir, preview = preview_, envir = globalenv())
-    } else {
-      args = shQuote(c(bookdown_file('scripts', 'servr.R'), output_dir, preview_, files))
+    if (in_session) render_book(
+      files, output_format, output_dir = output_dir, preview = preview_,
+      envir = globalenv()
+    ) else {
+      args = shQuote(c(
+        bookdown_file('scripts', 'servr.R'), output_format, output_dir, preview_, files
+      ))
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
   }
   rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild, daemon = daemon)
+}
+
+# can only preview HTML output via servr, so look for the first HTML format
+first_html_format = function() {
+  fallback = 'bookdown::gitbook'
+  if (!file.exists('index.Rmd')) return(fallback)
+  formats = rmarkdown::all_output_formats('index.Rmd', 'UTF-8')
+  formats = grep('gitbook|html', formats, value = TRUE)
+  if (length(formats) == 0) fallback else formats[1]
 }
 
 sans_ext = knitr:::sans_ext
