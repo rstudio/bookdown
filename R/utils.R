@@ -307,7 +307,11 @@ serve_book = function(
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
   if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE)) {
-    path = rstudioapi::getActiveDocumentContext()[['path']]
+    context_fun = tryCatch(
+      getFromNamespace('rstudioapi', 'getSourceEditorContext'),
+      error = function(e) rstudioapi::getActiveDocumentContext
+    )
+    path = context_fun()[['path']]
     if (!(is.null(path) || path == '')) dir = dirname(path)
   }
   owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
