@@ -27,7 +27,7 @@ options(
 )
 
 lapply(c('DT', 'citr'), function(pkg) {
-  if (!requireNamespace(pkg)) install.packages(pkg)
+  if (system.file(package = pkg) == '') install.packages(pkg)
 })
 ```
 
