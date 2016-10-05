@@ -512,12 +512,11 @@ When a referenced label cannot be found, you will see two question marks like \@
 
 You can also create text-based links using explicit or automatic section IDs or even the actual section header text.
 
-  * If you're happy with the section header as the link text, use it inside a single set of square brackets:
+  * If you are happy with the section header as the link text, use it inside a single set of square brackets:
     - `[Section header text]`: example "[A single document]" via `[A single document]`
-  * There are three ways to specify custom link text:
-    - `[link text][Section header text]`: example "[non-English books][Internationalization]" via `[non-English books][Internationalization]`
-    - `[link text](#explicitID)`: example "[Table stuff](#tables)" via `[Table stuff](#tables)`
-    - `[link text](#autoID)`: example "[How to build your book](#build-the-book)" via `[How to build your book](#build-the-book)`
+  * There are two ways to specify custom link text:
+    - `[link text][Section header text]`, e.g., "[non-English books][Internationalization]" via `[non-English books][Internationalization]`
+    - `[link text](#ID)`, e.g., "[Table stuff](#tables)" via `[Table stuff](#tables)`
 
 The Pandoc documentation provides more detail on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/MANUAL.html#extension-implicit_header_references).
 
