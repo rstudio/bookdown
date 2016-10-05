@@ -9,9 +9,7 @@ bookdown::gitbook:
       after: |
         <li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
     download: [pdf, epub, mobi]
-    edit:
-      link: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
-      text: "Edit"
+    edit: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:

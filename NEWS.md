@@ -16,6 +16,8 @@
 
 - The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (http://stackoverflow.com/q/38883222/559676).
 
+- The configurations `edit: text` and `chapter_name` have been moved from the top-level options to the sub-options of `language: ui` in `_bookdown.yml`. See https://bookdown.org/yihui/bookdown/internationalization.html
+
 ## BUG FIXES
 
 - Figures are not correctly numbered in Word output using the `bookdown::word_document2()` format (thanks, @byzheng, #158).

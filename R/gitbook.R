@@ -124,7 +124,7 @@ gitbook_page = function(
   }
 
   # you can set the edit setting in either _bookdown.yml or _output.yml
-  if (is.list(setting <- edit_setting())) config$edit = setting
+  if (is.list(setting <- edit_setting(config$edit))) config$edit = setting
   if (length(rmd_cur) && is.list(config$edit))
     config$edit$link = sprintf(config$edit$link, rmd_cur)
 

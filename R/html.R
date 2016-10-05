@@ -386,11 +386,14 @@ edit_link = function(target) {
   button_link(sprintf(setting$link, target), setting$text)
 }
 
-edit_setting = function() {
-  config = load_config()[['edit']]
+edit_setting = function(config) {
+  config_default = load_config()[['edit']]
+  if (missing(config) || is.null(config)) config = config_default
+  if (is.null(config)) return()
+  if (is.character(config)) config = list(link = config, text = NULL)
   if (!is.character(link <- config[['link']])) return()
   if (!grepl('%s', link)) stop('The edit link must contain %s')
-  if (!is.character(text <- config[['text']])) text = 'Edit'
+  if (!is.character(text <- config[['text']])) text = ui_language('edit')
   list(link = link, text = text)
 }
 
@@ -530,9 +533,14 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type, dict = label_names) {
-  labels = load_config()[['language']][['label']]
-  if (is.null(labels[[type]])) dict[[type]] else labels[[type]]
+label_prefix = function(type, dict = label_names) i18n('label', type, dict)
+
+ui_names = list(edit = 'Edit', chapter = '')
+ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
+
+i18n = function(group, key, dict = list()) {
+  labels = load_config()[['language']][[group]]
+  if (is.null(labels[[key]])) dict[[key]] else labels[[key]]
 }
 
 sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
@@ -627,8 +635,8 @@ add_toc_ids = function(toc) {
 
 add_chapter_prefix = function(content) {
   config = load_config()
-  chapter_name = config[['chapter_name']]
-  if (is.null(chapter_name)) return(content)
+  chapter_name = config[['chapter_name']] %n% ui_language('chapter_name')
+  if (is.null(chapter_name) || chapter_name == '') return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(
       length(chapter_name), paste0(chapter_name, i),
