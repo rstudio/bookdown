@@ -62,6 +62,7 @@ render_book = function(
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
+  on.exit(clean_empty_dir(output_dir), add = TRUE)
   # store output directory and the initial input Rmd name
   opts$set(
     output_dir = output_dir, input_rmd = basename(input), preview = preview
