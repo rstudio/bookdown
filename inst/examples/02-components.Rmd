@@ -615,6 +615,8 @@ One more caveat for the `block2` engine: if the last element in the block is not
 
 The theorem and proof environments in Section \@ref(theorems) are actually implemented through the `block2` engine.
 
+For all custom blocks based on the `block` or `block2` engine, there is one chunk option `echo` that you can use to show (`echo = TRUE`) or hide (`echo = FALSE`) the blocks.
+
 ## Citations {#citations}
 
 Although Pandoc supports multiple ways of writing citations\index{citation}, we recommend you to use BibTeX\index{BibTeX} databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
