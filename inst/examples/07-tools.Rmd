@@ -88,8 +88,9 @@ tlmgr install titling  # may require sudo
 
 LaTeX distributions and packages are also updated from time to time, and you may consider updating them especially when you run into LaTeX problems. You can find out the version of your LaTeX distribution by:
 
-```{r echo=1, collapse=TRUE}
-system('pdflatex --version')
-cat(system('pdflatex --version', intern = TRUE), sep = '\n')
+```{r include=FALSE}
+system = function(...) cat(base::system(..., intern = TRUE), sep = '\n')
 ```
-
+```{r collapse=TRUE}
+system('pdflatex --version')
+```
