@@ -377,6 +377,8 @@ There are a few special types of first-level headers that will be processed diff
 # Chapter Three
 ```
 
+A part title should be written right before the first chapter title in this part.
+
 The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices\index{appendix}, e.g.,
 
 ```
