@@ -8,7 +8,7 @@ For those who are not familiar with software packages required for using R Markd
 
 ## R and R packages
 
-R can be downloaded and installed from any CRAN (the Comprehensive R Archive Network) mirorrs, e.g., https://cran.rstudio.com. Please note there will be a few new releases of R every year, and you may want to upgrade R occasionally.
+R can be downloaded and installed from any CRAN (the Comprehensive R Archive Network) mirrors, e.g., https://cran.rstudio.com. Please note there will be a few new releases of R every year, and you may want to upgrade R occasionally.
 
 To install the **bookdown** package, you can type this in R:
 
