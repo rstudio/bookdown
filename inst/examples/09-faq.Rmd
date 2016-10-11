@@ -1,6 +1,6 @@
 # FAQ
 
-Below is the complete list of frequently asked questions (FAQ).
+Below is the _complete_ list of frequently asked questions (FAQ). Yes, there is only one question here. I do not like FAQ's. They often mean surprises, and surprises are not good for software users.
 
 1. Q: Will **bookdown** have the features X, Y, and Z?
 

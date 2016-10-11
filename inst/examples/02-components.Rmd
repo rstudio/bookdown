@@ -1,10 +1,10 @@
 # Components
 
-In this chapter, we show the syntax of some basic components of a book, including R code, figures, tables, citations, and so on. First we start with the syntax of Pandoc's\index{Pandoc} Markdown.
+In this chapter, we show the syntax of common components of a book, including R code, figures, tables, citations, math theorems, and equations, etc. First we start with the syntax of Pandoc's\index{Pandoc} Markdown.
 
 ## Markdown syntax
 
-We give a very brief introduction to Pandoc's Markdown\index{Markdown} in this section. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
+In this section We give a very brief introduction to Pandoc's Markdown\index{Markdown}. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
 
 ### Inline formatting
 
@@ -409,7 +409,7 @@ Then you can use `(ref:foo)` in your figure/table captions. The text can contain
 
 ## R code
 
-There are two types of R code in R Markdown/**knitr** documents: R code chunks\index{code chunk}, and inline R code\index{inline R code}. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but has `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
+There are two types of R code in R Markdown/**knitr** documents: R code chunks\index{code chunk}, and inline R code\index{inline R code}. The syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but have `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
 
     `r ''````{r chunk-label, echo = FALSE, fig.cap = 'A figure caption.'}
     1 + 1
