@@ -861,8 +861,8 @@ js_min_sources = function(x) {
 # special treatment because the backslash \ before # is preserved in equation
 # environments in HTML output, whereas it is removed in normal paragraphs
 restore_math_labels = function(x) {
-  i1 = grep('^(<p>)?<span class="math display">\\\\\\[', x)
-  i2 = grep('\\\\\\]</span>(</p>)?$', x)
+  i1 = grep('^(<[a-z]+>)?<span class="math display">\\\\\\[', x)
+  i2 = grep('\\\\\\]</span>(</[a-z]+>)?$', x)
   if (length(i1) * length(i2) == 0) return(x)
   i = unlist(mapply(seq, i1, next_nearest(i1, i2, TRUE), SIMPLIFY = FALSE))
   # remove \ before #
