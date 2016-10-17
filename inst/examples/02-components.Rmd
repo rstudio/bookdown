@@ -660,6 +660,12 @@ link-citations: true
 
 The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibilography entry in the HTML output.
 
+When the output format is LaTeX, citations will be automatically put in a chapter or section. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
+
+```markdown
+`r "\x60r if (knitr:::is_html_output()) '# References {-}'\x60"`
+```
+
 ## Index {#latex-index}
 
 Currently the index\index{index} is only supported for LaTeX/PDF output. To print an index after the book, you can use the LaTeX package **makeidx** in the preamble (see Section \@ref(yaml-options)):
