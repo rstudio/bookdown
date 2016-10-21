@@ -139,7 +139,8 @@ mark_dirs = function(x) {
 }
 
 clean_empty_dir = function(dir) {
-  files = setdiff(list.files(dir, all.files = TRUE), c('.', '..'))
+  if (!dir_exists(dir)) return()
+  files = list.files(dir, all.files = TRUE, recursive = TRUE)
   if (length(files) == 0) unlink(dir, recursive = TRUE)
 }
 
