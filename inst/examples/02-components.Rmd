@@ -405,7 +405,19 @@ The syntax for a text reference is `(ref:label) text`, where `label` is a unique
 (ref:foo) Define a text reference **here**. 
 ```
 
-Then you can use `(ref:foo)` in your figure/table captions. The text can contain anything that Markdown supports, as long as it is one single paragraph.
+Then you can use `(ref:foo)` in your figure/table captions. The text can contain anything that Markdown supports, as long as it is one single paragraph. Here is a complete example:
+
+````markdown
+A normal paragraph.
+
+(ref:foo) A scatterplot of the data `cars` using **base** R graphics. 
+
+`r ''````{r foo, fig.cap='(ref:foo)'}
+plot(cars)  # a scatterplot
+```
+````
+
+Text references can be used anywhere in the document (not limited to figure captions). It can also be useful if you want to reuse a fragment of text in multiple places.
 
 ## R code
 
