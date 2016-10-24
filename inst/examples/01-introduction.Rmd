@@ -27,7 +27,7 @@ Another goal of this project is to make it easy to produce books that look visua
 The easiest way for beginners to get started with writing a book with R Markdown and **bookdown** is through the demo `bookdown-demo` on GitHub:
 
 1. Fork or clone the GitHub repository <https://github.com/rstudio/bookdown-demo> if you are familiar with GIT and GitHub, or just download it as a Zip file, then unzip it locally;
-1. Install the RStudio IDE. Note that you'll need [the preview version](https://www.rstudio.com/products/rstudio/download/preview/), which is higher than 1.0.0, otherwise following steps will not work;
+1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. You may download [the preview version](https://www.rstudio.com/products/rstudio/download/preview/) if you do not see an official version 1.0.0+;
 1. Open the `bookdown-demo` repository you cloned or downloaded in RStudio by clicking `bookdown-demo.Rproj`;
 1. Install the R package **bookdown**:
 
