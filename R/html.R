@@ -535,7 +535,7 @@ parse_fig_labels = function(content, global = FALSE) {
 # given a label, e.g. fig:foo, figure out the appropriate prefix
 label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 
-ui_names = list(edit = 'Edit', chapter = '')
+ui_names = list(edit = 'Edit', chapter_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
 i18n = function(group, key, dict = list()) {
