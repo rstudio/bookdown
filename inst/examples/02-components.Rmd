@@ -500,8 +500,8 @@ If you want to put multiple tables in a single table environment, just wrap the 
 ```{r table-multi, tidy=FALSE}
 knitr::kable(
   list(
-    head(iris[,1:2],3),
-    head(mtcars[,1:3],5)
+    head(iris[, 1:2], 3),
+    head(mtcars[, 1:3], 5)
   ),
   caption = 'A Tale of Two Tables.', booktabs = TRUE
 )
