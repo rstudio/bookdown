@@ -1,6 +1,6 @@
 #' Convert R Markdown to a PDF book
 #'
-#' Convert R Markdown files to PDF while resolving the special tokens of
+#' Convert R Markdown files to PDF after resolving the special tokens of
 #' \pkg{bookdown} (e.g., the tokens for references and labels) to native LaTeX
 #' commands.
 #'
@@ -21,11 +21,13 @@
 #'   starts with three dashes (\samp{---}), \code{quote_footer[1]} will be
 #'   prepended to the footer, and \code{quote_footer[2]} will be appended; if
 #'   \code{NULL}, the quote footer will not be processed.
+#' @param highlight_bw Whether to convert colors for syntax highlighting to
+#'   black-and-white (grayscale).
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
-  toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL
+  toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -48,6 +50,7 @@ pdf_book = function(
         "The 'quote_footer' argument should be a character vector of length 2"
       ) else x = process_quote_latex(x, quote_footer)
     }
+    if (highlight_bw) x = highlight_grayscale_latex(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
@@ -217,6 +220,35 @@ process_quote_latex = function(x, commands) {
     x[i - 1] = paste0(commands[1], x[i - 1], commands[2])
   }
   x
+}
+
+# \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+# \newcommand{\KeywordTok}[1]{\textcolor[rgb]{x.xx,x.xx,x.xx}{\textbf{{#1}}}}
+# \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{x.xx,x.xx,x.xx}{{#1}}}
+# ...
+highlight_grayscale_latex = function(x) {
+  i1 = grep('^\\\\newenvironment\\{Shaded\\}', x)
+  if (length(i1) == 0) return(x)
+  i1 = i1[1]
+  r1 = '^\\\\newcommand\\{\\\\[a-zA-Z]+\\}\\[1]\\{.*\\{#1\\}.*\\}$'
+  r2 = '^(.*?)([.0-9]+,[.0-9]+,[.0-9]+)(.*)$'
+  i = i1 + 1
+  while (grepl(r1, x[i])) {
+    if (grepl(r2, x[i])) {
+      col = as.numeric(strsplit(gsub(r2, '\\2', x[i]), ',')[[1]])
+      x[i] = gsub(
+        r2, paste0('\\1', paste(round(rgb2gray(col), 2), collapse = ','), '\\3'),
+        x[i]
+      )
+    }
+    i = i + 1
+  }
+  x
+}
+
+# https://en.wikipedia.org/wiki/Grayscale
+rgb2gray = function(x, maxColorValue = 1) {
+  rep(sum(c(.2126, .7152, .0722) * x/maxColorValue), 3)
 }
 
 latexmk = function(...) {

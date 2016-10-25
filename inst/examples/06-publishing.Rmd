@@ -189,6 +189,7 @@ bookdown::pdf_book:
   toc_unnumbered: no
   toc_appendix: yes
   quote_footer: ["\\VA{", "}{}"]
+  highlight_bw: yes
 ```
 
 All preamble settings we mentioned above are in the file `latex/preamble.tex`. In `latex/before_body.tex`, we inserted a few blank pages required by the publisher, wrote the dedication page, and specified that the front matter starts:
@@ -210,6 +211,8 @@ We printed the index in `latex/after_body.tex` (Section \@ref(latex-index)).
 The graphical device (`dev`) for saving plots was set to `cairo_pdf` so that the fonts are embedded in plots, since the default device `pdf` does not embed fonts. Your copyeditor is likely to require you to embed all fonts used in the PDF, so that the book can be printed exactly like what it looks, otherwise certain fonts may be substituted and the typeface can be unpredictable.
 
 The `quote_footer` field was to make sure the quote footers were right-aligned: the LaTeX command `\VA{}` was provided by `krantz.cls` to include the quote footer.
+
+The `highlight_bw` option was set to true so that the colors in syntax highlighted code blocks were converted to grayscale, since this book will be printed in black-and-white.
 
 The book was compiled to PDF through `xelatex` to make it easier for us to use custom fonts.
 
