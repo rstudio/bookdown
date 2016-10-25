@@ -21,15 +21,16 @@ for (fmt in formats) {
     bookdown::calibre('_book/bookdown.epub', 'mobi')
 }
 
-# patch HTML files in gh-pages if built on Travis
-if (travis) {
-  r = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
-  for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
-    x = readLines(f)
-    if (length(i <- grep('^\\s*<body>\\s*$', x)) == 0) next
-    x[i[1]] = r
-    writeLines(x, f)
-  }
+r = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
+for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
+  x = readLines(f)
+  if (length(i <- grep('^\\s*<body>\\s*$', x)) == 0) next
+  # patch HTML files in gh-pages if built on Travis, to redirect to bookdown.org
+  if (travis) x[i[1]] = r
+  i = grep('<i class="fa fa-circle-o-notch fa-spin"></i><a href="./">.+</a>', x)[1]
+  # shorter title on the toolbar
+  if (!is.na(i)) x[i] = gsub('bookdown: ', '', x[i], fixed = TRUE)
+  writeLines(x, f)
 }
 
 if (length(formats) > 1) bookdown::publish_book()
