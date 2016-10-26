@@ -28,6 +28,8 @@
 
 - Math expressions does not appear in the table of contents when the output format is `gitbook` (thanks, @philomonk, #204).
 
+- Footnotes of multiple paragraphs are not displayed on the current page (thanks, @axitdn, #234).
+
 # CHANGES IN bookdown VERSION 0.1
 
 ## NEW FEATURES

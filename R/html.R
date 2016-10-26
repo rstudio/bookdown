@@ -750,16 +750,17 @@ parse_a_targets = function(x) {
   }))
 }
 
-# we assume one footnote only contains one paragraph here, although it is
-# possible to write multiple paragraphs in a footnote with Pandoc's Markdown
+# parse footnotes in the div of class "footnotes"; each footnote is one <li>
+# with id fnX and a link back to the text
 parse_footnotes = function(x) {
   i = which(x == '<div class="footnotes">')
   if (length(i) == 0) return(list(items = character(), range = integer()))
   j = which(x == '</div>')
   j = min(j[j > i])
   n = length(x)
-  r = '<li id="fn([0-9]+)"><p>(.+)<a href="#fnref\\1">.</a></p></li>'
-  items = grep(r, x[i:n], value = TRUE)
+  r = '<li id="fn([0-9]+)"><p>.+?<a href="#fnref\\1">.</a></p></li>'
+  s = paste(x[i:n], collapse = '')
+  items = unlist(regmatches(s, gregexpr(r, s)))
   list(items = setNames(items, gsub(r, 'fn\\1', items)), range = i:j)
 }
 
