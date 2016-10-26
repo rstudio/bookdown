@@ -6,7 +6,7 @@ As you develop the book, you may put the draft book in the public to get early f
 
 In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free.\index{bookdown.org} This website is built on top of ["RStudio Connect"](https://www.rstudio.com/products/connect/)\index{RStudio Connect}, an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
 
-You do not have to know much about RStudio Connect to publish your book to bookdown.org. Basically you just sign up at https://bookdown.org/connect/, and the first time you try to run `bookdown::publish_book()`\index{bookdown::publish\_book()}, you will be asked to authorize **bookdown** to publish to your bookdown.org account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
+You do not have to know much about RStudio Connect to publish your book to bookdown.org. Basically you sign up at https://bookdown.org/connect/, and the first time you try to run `bookdown::publish_book()`\index{bookdown::publish\_book()}, you will be asked to authorize **bookdown** to publish to your bookdown.org account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
 
 ```{r publish-book-usage, eval=FALSE, code=formatR::usage(bookdown::publish_book, output=FALSE)}
 ```
@@ -43,7 +43,7 @@ git commit -m"Initial commit"
 git push origin gh-pages
 ```
 
-The hidden file `.nojekyll` tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. If you are on Windows, you may not have the `touch` command, and you can just create the file in R using `file.create('.nojekyll')`.
+The hidden file `.nojekyll` tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. If you are on Windows, you may not have the `touch` command, and you can create the file in R using `file.create('.nojekyll')`.
 
 After you have set up GIT, the rest of work can be automated via a script (Shell, R, or Makefile, depending on your preference). Basically, you compile the book to HTML, then run git commands to push the files to GitHub, but you probably do not want to do this over and over again manually and locally. It can be very handy to automate the publishing process completely on the cloud, so once it is set up correctly, all you have to do next is write the book and push the Rmd source files to GitHub, and your book will always be automatically built and published from the server side.
 
@@ -125,7 +125,7 @@ GitHub and Travis CI are certainly not the only choices to build and publish you
 
 Besides publishing your book online, you can certainly consider publishing it with a publisher\index{publisher}. For example, this book was published with Chapman & Hall/CRC, and there is also a free online version at https://bookdown.org/yihui/bookdown/ (with an agreement with the publisher). Another option that you can consider is self-publishing (https://en.wikipedia.org/wiki/Self-publishing) if you do not want to work with an established publisher.
 
-It will be much easier to publish a book written with **bookdown** if the publisher you choose supports LaTeX.\index{LaTeX} For example, Chapman & Hall provides a LaTeX class named `krantz.cls`, and Springer provides `svmono.cls`. To apply these LaTeX classes to your PDF book, just set `documentclass` in the YAML metadata of `index.Rmd` to the class filename (without the extension `.cls`).
+It will be much easier to publish a book written with **bookdown** if the publisher you choose supports LaTeX.\index{LaTeX} For example, Chapman & Hall provides a LaTeX class named `krantz.cls`, and Springer provides `svmono.cls`. To apply these LaTeX classes to your PDF book, set `documentclass` in the YAML metadata of `index.Rmd` to the class filename (without the extension `.cls`).
 
 The LaTeX class is the most important setting in the YAML metadata. It controls the overall style of the PDF book. There are often other settings you want to tweak, and we will show some details about this book below.
 
@@ -159,7 +159,7 @@ The following commands make floating environments\index{floating environment} le
 \renewcommand{\floatpagefraction}{0.75}
 ```
 
-Since `krantz.cls` provided an environment `VF` for quotes, we just redefine the standard `quote` environment to `VF`. You can see its style in Section \@ref(markdown-syntax).
+Since `krantz.cls` provided an environment `VF` for quotes, we redefine the standard `quote` environment to `VF`. You can see its style in Section \@ref(markdown-syntax).
 
 ```latex
 \renewenvironment{quote}{\begin{VF}}{\end{VF}}

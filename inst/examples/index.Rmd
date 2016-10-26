@@ -60,6 +60,12 @@ The combination of R (https://www.r-project.org), Markdown, and Pandoc (http://p
 
 In short, you just prepare a few R Markdown book chapters, and **bookdown** can help you turn them into a beautiful book.
 
+## Structure of the book {-}
+
+For most readers, it suffices to get started with writing a book after reading Chapters \@ref(introduction) and \@ref(components), which introduced the basic usage and syntax. Chapters \@ref(output-formats) and \@ref(customization) are for those who want to fine-tune the appearance of their books. They may look very technical if you are not familiar with HTML/CSS and LaTeX. You do not need to read these two chapters very carefully for the first time. You can learn what can be possibly changed, and come back later to know how. For Chapter \@ref(editing), the technical details are not important unless you do not use the RStudio IDE (Section \@ref(rstudio-ide)). Similarly, you may feel overwhelmed by the commands presented in Chapter \@ref(publishing) to publish your book, but again, we have tried to make it easy to publish your book online via the RStudio IDE. The custom commands and functions are only for those who choose not to use RStudio's service or want to understand the technical details.
+
+To sum it up, this book is a comprehensive reference of the **bookdown** package. You can follow the 80/20 rule when reading it. Some sections are there for the sake of completeness, and not all sections are equally useful to the particular book(s) that you intend to write.
+
 ## Software information and conventions {-}
 
 This book is primarily about the R package **bookdown**, so you need to at least install R and the **bookdown** package. However, your book does not have to be related to the R language at all. It can use other computing languages (C++, SQL, Python, and so on; see Appendix \@ref(software-usage)), and it can even be totally irrelevant to computing (e.g., you can write a novel, or a collection of poems). The software tools required to build a book are introduced in Appendix \@ref(software-tools).

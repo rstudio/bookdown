@@ -49,12 +49,12 @@ A LaTeX\index{LaTeX} source document has a similar structure:
 \end{document}
 ```
 
-The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax\index{MathJax} library in the HTML output, and want to number the equations in the `equation` environment, you can create a text file that contains the following code:
+The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax\index{MathJax} library in the HTML output, and want the equation numbers to be displayed on the left (default is on the right), you can create a text file that contains the following code:
 
 ```html
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  TeX: { TagSide: "left" }
 });
 </script>
 ```
@@ -188,7 +188,7 @@ If we use the above template to generate an HTML document, its source code will 
 </html>
 ```
 
-The actual HTML, LaTeX, and EPUB templates are more complicated, but the idea is the same. You just need to know what variables are available: some variables are built-in Pandoc variables, and some can be either defined by users in the YAML metadata, or passed from the command line option `-V` or `--variable`. Some variables only make sense to specific output formats, e.g., the `documentclass` variable is only used in LaTeX output. Please see the documentation of Pandoc to learn more about these variables, and you can find all default Pandoc templates from the GitHub repository https://github.com/jgm/pandoc-templates.
+The actual HTML, LaTeX, and EPUB templates are more complicated, but the idea is the same. You need to know what variables are available: some variables are built-in Pandoc variables, and some can be either defined by users in the YAML metadata, or passed from the command line option `-V` or `--variable`. Some variables only make sense to specific output formats, e.g., the `documentclass` variable is only used in LaTeX output. Please see the documentation of Pandoc to learn more about these variables, and you can find all default Pandoc templates from the GitHub repository https://github.com/jgm/pandoc-templates.
 
 Note that for HTML output, **bookdown** requires some additional comment tokens in the template, and we have explained them in Section \@ref(bootstrap-style).
 
