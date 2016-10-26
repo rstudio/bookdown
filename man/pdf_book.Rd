@@ -5,7 +5,7 @@
 \usage{
 pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ..., 
     base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_appendix = FALSE, 
-    toc_bib = FALSE, quote_footer = NULL)
+    toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE)
 }
 \arguments{
 \item{toc, number_sections, fig_caption}{See
@@ -28,9 +28,12 @@ contents.}
 starts with three dashes (\samp{---}), \code{quote_footer[1]} will be
 prepended to the footer, and \code{quote_footer[2]} will be appended; if
 \code{NULL}, the quote footer will not be processed.}
+
+\item{highlight_bw}{Whether to convert colors for syntax highlighting to
+black-and-white (grayscale).}
 }
 \description{
-Convert R Markdown files to PDF while resolving the special tokens of
+Convert R Markdown files to PDF after resolving the special tokens of
 \pkg{bookdown} (e.g., the tokens for references and labels) to native LaTeX
 commands.
 }
