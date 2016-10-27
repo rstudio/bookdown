@@ -70,7 +70,7 @@ output:
 ---
 ```
 
-If you use the HTML output format `html_book` or `gitbook` in **bookdown**, this has already been set up in the HTML templates, so you do not really need to insert such a file in the HTML head. You only need to do it for other HTML output formats.
+Another example is to enable comments or discussions on your HTML pages. There are several possibilities, such as Disqus (https://disqus.com) or Hypothesis (https://hypothes.is). These services can be easily embedded in your HTML book via the `includes` option (see Section \@ref(collaboration) for details).
 
 Similarly, if you are familiar with LaTeX, you can add arbitrary LaTeX code to the preamble. That means you can use any LaTeX packages and set up any package options for your book. For example, this book used the `in_header` option to use a few more LaTeX packages like **booktabs** (for better-looking tables) and **longtable** (for tables that span across multiple pages), and apply a fix to an XeLaTeX problem that links on graphics do not work:
 
