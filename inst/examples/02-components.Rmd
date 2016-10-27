@@ -443,7 +443,7 @@ The disadvantage of typesetting figures in this way is that when there is not en
 If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-reference}, use the syntax `\@ref(label)`^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.], where `label` is the figure label, e.g., `fig:foo`.
 
 ```{block2, type='rmdimportant'}
-If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains _alphanumeric_ characters (a-z, A-Z, 0-9), slashes (/), or dashes (-). Other characters do not qualify.
+If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains _alphanumeric_ characters (a-z, A-Z, 0-9), slashes (/), or dashes (-).
 ```
 
 
@@ -605,27 +605,31 @@ http://www.gnu.org/licenses/.
 
 The **knitr** `block` engine was designed to display simple content (typically a paragraph of plain text). You can use simple formatting syntax such as making certain words bold or italic, but more advanced syntax such as citations and cross-references will not work. However, there is an alternative engine named `block2` that supports arbitrary Markdown syntax, e.g.,
 
-    `r ''````{block2, type='FOO'}
-    Some text for this block [@citation-key].
-    
-    - a list item
-    - another item
-    
-    More text.
-    ```
+````markdown
+`r ''````{block2, type='FOO'}
+Some text for this block [@citation-key].
+
+- a list item
+- another item
+
+More text.
+```
+````
 
 The `block2` engine should also be faster than the `block` engine if you have a lot of custom blocks in the document, but its implementation was based on [a hack](https://github.com/jgm/pandoc/issues/2453), so we are not 100% sure if it is always going to work in the future. We have not seen problems with Pandoc v1.17.2 yet.
 
 One more caveat for the `block2` engine: if the last element in the block is not an ordinary paragraph, you must leave a blank line at the end, e.g.,
 
-    `r ''````{block2, type='FOO'}
-    Some text for this block [@citation-key].
-    
-    - a list item
-    - another item
-    - end the list with a blank line
-    
-    ```
+````markdown
+`r ''````{block2, type='FOO'}
+Some text for this block [@citation-key].
+
+- a list item
+- another item
+- end the list with a blank line
+
+```
+````
 
 The theorem and proof environments in Section \@ref(theorems) are actually implemented through the `block2` engine.
 
