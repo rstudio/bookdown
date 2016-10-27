@@ -30,7 +30,7 @@ $endfor$
 $if(institute-meta)$
 <meta name="institute" content="$institute-meta$">
 $endif$
-  
+
 $if(date-meta)$
 <meta name="date" content="$date-meta$">
 $endif$
@@ -144,6 +144,9 @@ $endif$
 <!--bookdown:body:start-->
 $body$
 <!--bookdown:body:end-->
+$for(include-after)$
+$include-after$
+$endfor$
             </section>
 
           </div>
@@ -154,9 +157,6 @@ $body$
 
 <!--bookdown:config-->
 
-$for(include-after)$
-$include-after$
-$endfor$
 $if(math)$
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
