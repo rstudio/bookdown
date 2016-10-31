@@ -2,40 +2,14 @@ library(htmltools)
 library(xml2)
 options(stringsAsFactors = FALSE)
 
-exclude_urls = c(
-  'https://bookdown.org/aclark/useR2016videos/',
-  'https://bookdown.org/daattali/happy-git-with-r/',
-  'https://bookdown.org/nowosad/modele_clay_podsumowanie/',
-  'https://bookdown.org/nowosad/obrona_doktorska/',
-  'https://bookdown.org/nowosad/01_lucas_topsoil/',
-  'https://bookdown.org/nowosad/02_lucas_topsoil/',
-  'https://bookdown.org/nowosad/erum2016_map/',
-  'https://bookdown.org/nowosad/eRum2016_map/',
-  'https://bookdown.org/nowosad/modele_soc_podsumowanie/',
-  'https://bookdown.org/nowosad/modele_liczba_probek_podsumowanie/',
-  'https://bookdown.org/hagutierrezro/TRI/',
-  'https://bookdown.org/csgillespie/components/',
-  'https://bookdown.org/csgillespie/diagnostics/',
-  'https://bookdown.org/csgillespie/useR2016/',
-  'https://bookdown.org/weicheng/shinyTutorial/',
-  'https://bookdown.org/jjallaire/new-homepage/',
-  'https://bookdown.org/jjallaire/bookdown/',
-  'https://bookdown.org/jjallaire/site/',
-  'https://bookdown.org/Cardinal_Daniel/R_Reporting_Book_-_Kinduct_Data/',
-  'https://bookdown.org/Cardinal_Daniel/Mechanical_Intensity_Book/',
-  'https://bookdown.org/pranayaryal/test-book/',
-  'https://bookdown.org/nanx/rphbook/',
-  'https://bookdown.org/scottming/rns/',
-  'https://bookdown.org/yihui/bookdown-demo2/',
-  'https://bookdown.org/yihui/bookdown-demo3/',
-  'https://bookdown.org/home/'
-)
+exclude_urls = readLines('exclude.txt')
 
 pinned_urls = c(
   "https://bookdown.org/yihui/bookdown/",
   "http://r4ds.had.co.nz/",
   "https://bookdown.org/rdpeng/rprogdatascience/",
   "http://tidytextmining.com/",
+  "https://bookdown.org/rdpeng/exdata/",
   "https://bookdown.org/csgillespie/efficientR/"
 )
 
