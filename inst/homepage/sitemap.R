@@ -41,6 +41,9 @@ pinned_urls = c(
 book_listing = function() {
 
   read_meta = function(xml) {
+    if (!grepl('[.]xml$', xml)) {
+      return(data.frame(url = readLines(xml), lastmod = NA))
+    }
     xmldoc = as_list(read_xml(xml))
     meta = lapply(xmldoc, function(site) {
       if (length(site) < 2) return()
@@ -52,7 +55,7 @@ book_listing = function() {
     do.call(rbind, meta)
   }
   meta = rbind(read_meta('https://bookdown.org/sitemap.xml'),
-               read_meta('external.xml'))
+               read_meta('external.txt'))
   meta = meta[order(meta$lastmod, decreasing = TRUE), ]
 
   # elevate pinned urls to the top
