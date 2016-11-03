@@ -1,0 +1,30 @@
+citHeader("To cite the 'bookdown' package in publications use:")
+
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
+vers = paste('R package version', meta$Version)
+
+citEntry(
+  entry = 'manual',
+  title = paste('bookdown:', meta$Title),
+  author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
+  year = year,
+  note = vers,
+  url = meta$URL,
+  textVersion = paste('Yihui Xie (', year, '). bookdown: ', meta$Title, '. ', vers, '.', sep = '')
+)
+
+citEntry(
+  entry = 'book',
+  title = 'bookdown: Authoring Books and Technical Documents with {R} Markdown',
+  author = 'Yihui Xie',
+  publisher = 'Chapman and Hall/CRC',
+  address = 'Boca Raton, Florida',
+  year = '2017',
+  note = 'ISBN 978-1138700109',
+  url = meta$URL,
+  textVersion = paste(
+    'Yihui Xie (2017).',
+    'bookdown: Authoring Books and Technical Documents with R Markdown.',
+    'Chapman and Hall/CRC. ISBN 978-1138700109'
+  )
+)
