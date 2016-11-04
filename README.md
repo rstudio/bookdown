@@ -4,12 +4,14 @@
 
 A open-source (GPL-3) R package to facilitate writing books and long-form articles/reports with R Markdown. Features include:
 
-- Multiple output formats: HTML, PDF, and ePub.
-- Makes it easy to produce books that look visually pleasant.
-- Styles include Gitbook (https://www.gitbook.com), Tufte CSS (http://rstudio.github.io/tufte/), and Tufte-LaTeX.
-- Extended Markdown syntax to support numbering figures/tables, and cross-references, etc.
-- Renders interactive HTML widgets and Shiny apps in books.
-- Integrated with the RStudio IDE.
-- One-click publishing to <https://bookdown.org>.
+- Generate printer-ready books and ebooks from R Markdown documents
+- A markup language easier to learn than LaTeX, and to write elements such as section headers, lists, quotes, figures, tables, and citations
+- Multiple choices of output formats: PDF, LaTeX, HTML, EPUB, and Word.
+- Possibility of including dynamic graphics and interactive applications (HTML widgets and Shiny apps)
+- Support for languages other than R, including C/C++, Python, and SQL, etc.
+- LaTeX equations, theorems, and proofs work for all output formats
+- Can be published to GitHub, bookdown.org, and any web servers
+- Integrated with the RStudio IDE
+- One-click publishing to <https://bookdown.org>
 
 Full documentation at <https://bookdown.org/yihui/bookdown>, and see "Get Started" at <https://bookdown.org> to know how to get started with writing a book. You are welcome to send us feedback using [Github issues](https://github.com/rstudio/bookdown/issues) or ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/bookdown) with the `bookdown` tag.
