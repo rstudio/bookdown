@@ -2,7 +2,7 @@
 
 # Introduction
 
-This book is a guide to authoring books with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as
+This book is a guide to authoring books and technical documents with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as
 
 - How to typeset equations, theorems, figures and tables, and cross-reference them;
 - How to generate multiple output formats such as HTML, PDF, and e-books for a single book;
@@ -16,9 +16,9 @@ It is not a comprehensive introduction to R Markdown or the **knitr** package [@
 
 Markdown is a wonderful language to write relatively simple documents that contain elements like sections, paragraphs, lists, links, and images, etc. Pandoc (<http://pandoc.org>) has greatly extended the [original Markdown syntax](http://daringfireball.net/projects/markdown/), and added quite a few useful new features, such as footnotes, citations, and tables. More importantly, Pandoc makes it possible to generate output documents of a large variety of formats from Markdown, including HTML, LaTeX/PDF, Word, and slides.
 
-There are still a few useful features missing in Pandoc’s Markdown at the moment that are necessary to write a relatively complicated document like a book, such as automatic numbering of figures and tables in the HTML output, cross-references of figures and tables, and fine control of the appearance of figures (e.g., currently it is impossible to specify the alignment of images using the Markdown syntax). These are some of the problems that we have addressed in the **bookdown** package.
+There are still a few useful features missing in Pandoc's Markdown at the moment that are necessary to write a relatively complicated document like a book, such as automatic numbering of figures and tables in the HTML output, cross-references of figures and tables, and fine control of the appearance of figures (e.g., currently it is impossible to specify the alignment of images using the Markdown syntax). These are some of the problems that we have addressed in the **bookdown** package.
 
-Under the constraint that we want to produce the book in multiple output formats, it is nearly impossible to cover all possible features specific to these output formats. For example, it may be difficult to reinvent a certain complicated LaTeX environment in the HTML output using the (R) Markdown syntax. Our main goal is not to replace _everything_ with Markdown, but to cover _most_ common functionalities required to write a relatively complicated document, and make the syntax of such functionalities consistent across all output formats, so that you only need to learn one thing and it works for all output formats.\index{Markdown}\index{LaTeX}
+Under the constraint that we want to produce the book in multiple output formats, it is nearly impossible to cover all possible features specific to these diverse output formats. For example, it may be difficult to reinvent a certain complicated LaTeX environment in the HTML output using the (R) Markdown syntax. Our main goal is not to replace _everything_ with Markdown, but to cover _most_ common functionalities required to write a relatively complicated document, and make the syntax of such functionalities consistent across all output formats, so that you only need to learn one thing and it works for all output formats.\index{Markdown}\index{LaTeX}
 
 Another goal of this project is to make it easy to produce books that look visually pleasant. Some nice existing examples include GitBook (<https://www.gitbook.com>), Tufte CSS (<http://edwardtufte.github.io/tufte-css/>), and Tufte-LaTeX (<https://tufte-latex.github.io/tufte-latex/>). We hope to integrate these themes and styles into **bookdown**, so authors do not have to dive into the details of how to use a certain LaTeX class or how to configure CSS for HTML output.
 
@@ -27,7 +27,7 @@ Another goal of this project is to make it easy to produce books that look visua
 The easiest way for beginners to get started with writing a book with R Markdown and **bookdown** is through the demo `bookdown-demo` on GitHub:
 
 1. Download the GitHub repository <https://github.com/rstudio/bookdown-demo> as a [Zip file](https://github.com/rstudio/bookdown-demo/archive/master.zip), then unzip it locally;
-1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. You may download [the preview version](https://www.rstudio.com/products/rstudio/download/preview/) if you do not see an official version 1.0.0+;
+1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. Please [download the latest version](https://www.rstudio.com/products/rstudio/download/) if your RStudio version is lower than 1.0.0;
 1. Install the R package **bookdown**:
 
     ```{r eval=FALSE}
@@ -46,7 +46,7 @@ Although you see quite a few files in the `bookdown-demo` example, most of them 
 
 ## Usage {#usage}
 
-Normally, a book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title using the first-level heading, e.g., `# Chapter Title`. All R Markdown files must be encoded in UTF-8, especially when they contain multi-byte characters such as Chinese, Japanese, and Korean. Here is an example (the bullets are the filenames, followed by the file content):
+A typical **bookdown** book contains multiple chapters, and one chapter lives in one R Markdown file, with the filename extension `.Rmd`. Each R Markdown file must start immediately with the chapter title using the first-level heading, e.g., `# Chapter Title`. All R Markdown files must be encoded in UTF-8, especially when they contain multi-byte characters such as Chinese, Japanese, and Korean. Here is an example (the bullets are the filenames, followed by the file content):
 
 - index.Rmd
 
@@ -172,7 +172,7 @@ Merging all chapters into one Rmd file and knitting it is one way to render the 
 
 The default approach in **bookdown** is M-K. To switch to K-M, you either use the argument `new_session = TRUE` when calling `render_book()`, or set `new_session: yes` in the configuration file `_bookdown.yml`.
 
-You can still configure `book_filename` in `_bookdown.yml` for the K-M approach, but it should be a Markdown filename, e.g., `_main.md`, although the filename extension does not really matter, and you can even leave out the extension, e.g., just set `book_filename: _main`. All other configurations work for both M-K and K-M.
+You can configure the `book_filename` option in `_bookdown.yml` for the K-M approach, but it should be a Markdown filename, e.g., `_main.md`, although the filename extension does not really matter, and you can even leave out the extension, e.g., just set `book_filename: _main`. All other configurations work for both M-K and K-M.
 
 ## Some tips
 
@@ -184,4 +184,4 @@ If certain code chunks in your R Markdown documents are time-consuming to run, y
 
     `r ''````{r important-computing, cache=TRUE}
 
-We will talk about how to quickly preview books as you edit it in Chapter \@ref(editing). In short, you can use the `preview_chapter()` function to render a single chapter instead of the whole book. The function `serve_book()` makes it easy to live-preview HTML book pages: whenever you modify an Rmd file, the book can be recompiled and the browser can be automatically refreshed accordingly.
+We will talk about how to quickly preview a book as you edit it in Chapter \@ref(editing). In short, you can use the `preview_chapter()` function to render a single chapter instead of the whole book. The function `serve_book()` makes it easy to live-preview HTML book pages: whenever you modify an Rmd file, the book can be recompiled and the browser can be automatically refreshed accordingly.
