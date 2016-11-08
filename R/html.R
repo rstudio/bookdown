@@ -110,7 +110,7 @@ tufte_html_book = function(...) {
 #'   \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
 #'   functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
 #'   package.
-#' @references \url{http://rstudio.github.io/bookdown/figures.html}
+#' @references \url{https://bookdown.org/yihui/bookdown/a-single-document.html}
 #' @export
 html_document2 = function(..., number_sections = TRUE) {
   html_document_alt(

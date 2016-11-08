@@ -52,5 +52,5 @@ These function are expected to work with a single R Markdown document
   package.
 }
 \references{
-\url{http://rstudio.github.io/bookdown/figures.html}
+\url{https://bookdown.org/yihui/bookdown/a-single-document.html}
 }
