@@ -72,7 +72,7 @@ process_markdown = function(input_file, from, pandoc_args, global) {
   on.exit(unlink(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
     input_file, 'html', from, intermediate_html, TRUE,
-    c(pandoc_args, '--section-divs', '--mathjax')
+    c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
   )
   x = readUTF8(intermediate_html)
   figs = parse_fig_labels(x, global)
