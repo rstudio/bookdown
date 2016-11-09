@@ -134,7 +134,10 @@ html_document_alt = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     x = readUTF8(output)
-    writeUTF8(resolve_refs_html(x, global = !number_sections), output)
+    x = resolve_refs_html(x, global = !number_sections)
+    x = restore_part_html(x, remove = FALSE)
+    x = restore_appendix_html(x)
+    writeUTF8(x, output)
     output
   }
   config$bookdown_output_format = 'html'
@@ -678,11 +681,15 @@ restore_links = function(segment, full, lines, filenames) {
   segment
 }
 
-restore_part_html = function(x) {
+restore_part_html = function(x, remove = TRUE) {
   i = grep('^<h1>\\(PART\\) .+</h1>$', x)
   if (length(i) == 0) return(x)
   i = i[grep('^<div .*class=".*unnumbered.*">$', x[i - 1])]
-  x[i] = x[i - 1] = x[i + 1] = ''
+  if (remove) {
+    x[i] = x[i - 1] = x[i + 1] = ''
+  } else {
+    x[i] = gsub('<h1>\\(PART\\) ', '<h1 class="part">', x[i])
+  }
   r = '^<li><a href="[^"]*">\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
