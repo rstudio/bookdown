@@ -30,6 +30,11 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   i = grep('<i class="fa fa-circle-o-notch fa-spin"></i><a href="./">.+</a>', x)[1]
   # shorter title on the toolbar
   if (!is.na(i)) x[i] = gsub('bookdown: ', '', x[i], fixed = TRUE)
+  i = c(
+    grep('^<meta name="generator" content="bookdown [.0-9]+ and GitBook [.0-9]+">$', x),
+    grep('^<meta name="date" content="[-0-9]+">$', x)
+  )
+  if (travis && length(i)) x = x[-i]
   writeLines(x, f)
 }
 
