@@ -31,7 +31,7 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   # shorter title on the toolbar
   if (!is.na(i)) x[i] = gsub('bookdown: ', '', x[i], fixed = TRUE)
   i = c(
-    grep('^<meta name="generator" content="bookdown [.0-9]+ and GitBook [.0-9]+">$', x),
+    grep('^\\s*<meta name="generator" content="bookdown [.0-9]+ and GitBook [.0-9]+">$', x),
     grep('^<meta name="date" content="[-0-9]+">$', x)
   )
   if (travis && length(i)) x = x[-i]
