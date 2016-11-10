@@ -483,13 +483,15 @@ html_or_latex = function(format) {
 }
 
 verify_rstudio_version = function() {
-  if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable() &&
-      !rstudioapi::isAvailable('0.99.1200')) {
-    message(
-      'You are recommended to use a newer version of RStudio IDE to compile the book: ',
-      'https://www.rstudio.com/products/rstudio/download/preview/'
+  if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable()) {
+    if (!rstudioapi::isAvailable('0.99.1200')) warning(
+      'Please install a newer version of the RStudio IDE: ',
+      'https://www.rstudio.com/products/rstudio/download/'
     )
-  }
+  } else if (!rmarkdown::pandoc_available('1.17.2')) warning(
+    "Please install or upgrade Pandoc to at least version 1.17.2; ",
+    "or if you are using RStudio, you can just install RStudio 1.0+."
+  )
 }
 
 str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
