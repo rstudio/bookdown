@@ -86,13 +86,14 @@ tufte_html_book = function(...) {
   html_chapters(..., base_format = tufte::tufte_html)
 }
 
-#' Output formats that allow numbering and cross-referencing figures/tables
+#' Output formats that allow numbering and cross-referencing
+#' figures/tables/equations
 #'
 #' These are simple wrappers of the output format functions like
 #' \code{rmarkdown::\link{html_document}()}, and they added the capability of
-#' numbering figures/tables and cross-referencing them. See References for the
-#' syntax. Note you can also cross-reference sections by their ID's using the
-#' same syntax as figures/tables.
+#' numbering figures/tables/equations/theorems and cross-referencing them. See
+#' References for the syntax. Note you can also cross-reference sections by
+#' their ID's using the same syntax when sections are numbered.
 #' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
 #'   specific output format function. For a function \code{foo2()}, its
 #'   arguments are passed to \code{foo()}, e.g. \code{...} of
@@ -103,6 +104,7 @@ tufte_html_book = function(...) {
 #'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 #'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
 #'   section headers in this case.
+#' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
 #' @note These function are expected to work with a single R Markdown document
@@ -110,25 +112,12 @@ tufte_html_book = function(...) {
 #'   \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
 #'   functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
 #'   package.
-#' @references \url{https://bookdown.org/yihui/bookdown/a-single-document.html}
+#' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
-html_document2 = function(..., number_sections = TRUE) {
-  html_document_alt(
-    ..., number_sections = number_sections, base_format = rmarkdown::html_document
-  )
-}
-
-#' @rdname html_document2
-#' @export
-tufte_html2 = function(..., number_sections = FALSE) {
-  html_document_alt(
-    ..., number_sections = number_sections, base_format = tufte::tufte_html
-  )
-}
-
-html_document_alt = function(
+html_document2 = function(
   ..., number_sections = TRUE, base_format = rmarkdown::html_document
 ) {
+  base_format = get_base_format(base_format)
   config = base_format(..., number_sections = number_sections)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
@@ -144,6 +133,15 @@ html_document_alt = function(
   config = set_opts_knit(config)
   config
 }
+
+#' @rdname html_document2
+#' @export
+tufte_html2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = tufte::tufte_html
+  )
+}
+
 
 #' Combine different parts of an HTML page
 #'
