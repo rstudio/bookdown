@@ -6,9 +6,10 @@
 \alias{tufte_handout2}
 \alias{tufte_html2}
 \alias{word_document2}
-\title{Output formats that allow numbering and cross-referencing figures/tables}
+\title{Output formats that allow numbering and cross-referencing
+figures/tables/equations}
 \usage{
-html_document2(..., number_sections = TRUE)
+html_document2(..., number_sections = TRUE, base_format = rmarkdown::html_document)
 
 tufte_html2(..., number_sections = FALSE)
 
@@ -32,6 +33,8 @@ current first-level section number, and \code{i} is an incremental number
 (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
+
+\item{base_format}{An output format function to be used as the base format.}
 }
 \value{
 An R Markdown output format object to be passed to
@@ -40,9 +43,9 @@ An R Markdown output format object to be passed to
 \description{
 These are simple wrappers of the output format functions like
 \code{rmarkdown::\link{html_document}()}, and they added the capability of
-numbering figures/tables and cross-referencing them. See References for the
-syntax. Note you can also cross-reference sections by their ID's using the
-same syntax as figures/tables.
+numbering figures/tables/equations/theorems and cross-referencing them. See
+References for the syntax. Note you can also cross-reference sections by
+their ID's using the same syntax when sections are numbered.
 }
 \note{
 These function are expected to work with a single R Markdown document
@@ -52,5 +55,5 @@ These function are expected to work with a single R Markdown document
   package.
 }
 \references{
-\url{https://bookdown.org/yihui/bookdown/a-single-document.html}
+\url{https://bookdown.org/yihui/bookdown/}
 }
