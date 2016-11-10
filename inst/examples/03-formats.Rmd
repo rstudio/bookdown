@@ -323,6 +323,8 @@ biblio-style: apalike
 ---
 ```
 
+There are a large number of other YAML options that you can specify for LaTeX output, such as the paper size, font size, page margin, line spacing, font families, and so on. See http://pandoc.org/MANUAL.html#variables-for-latex for a full list of options.
+
 The `pdf_book()` format is a general format like `html_book()`, and it also has a `base_format` argument:
 
 ```{r pdf-book-usage, eval=FALSE, code=formatR::usage(bookdown::pdf_book, output=FALSE)}
