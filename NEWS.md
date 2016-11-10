@@ -30,6 +30,8 @@
 
 - Footnotes of multiple paragraphs are not displayed on the current page (thanks, @axitdn, #234).
 
+- The output format `pdf_document2()` also works with articles now when an R Markdown document contains bookdown-specific headers, such as parts or appendix headers (http://stackoverflow.com/q/40529798/559676).
+
 # CHANGES IN bookdown VERSION 0.1
 
 ## NEW FEATURES

@@ -127,22 +127,27 @@ resolve_ref_links_latex = function(x) {
 }
 
 restore_part_latex = function(x) {
-  r = '^\\\\chapter\\*\\{\\(PART\\) '
+  r = '^\\\\(chapter|section)\\*\\{\\(PART\\) '
   i = grep(r, x)
   if (length(i) == 0) return(x)
   x[i] = gsub(r, '\\\\part{', x[i])
   # remove the line \addcontentsline since it is not really a chapter title
-  j = grep('\\addcontentsline{toc}{chapter}{(PART) ', x[i + 1], fixed = TRUE)
+  j = grep(
+    '\\addcontentsline{toc}{(chapter|section)}{(PART) ', x[i + 1], fixed = TRUE
+  )
   x[(i + 1)[j]] = ''
   x
 }
 
 restore_appendix_latex = function(x, toc = FALSE) {
-  r = '^\\\\chapter\\*\\{\\(APPENDIX\\) '
+  r = '^\\\\(chapter|section)\\*\\{\\(APPENDIX\\) .*'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
+  level = gsub(r, '\\1', x[i])
   x[i] = '\\appendix'
-  if (toc) x[i] = paste(x[i], '\\addcontentsline{toc}{chapter}{\\appendixname}')
+  if (toc) x[i] = paste(
+    x[i], sprintf('\\addcontentsline{toc}{%s}{\\appendixname}', level)
+  )
   if (grepl('^\\\\addcontentsline', x[i + 1])) x[i + 1] = ''
   x
 }
@@ -164,7 +169,8 @@ add_toc_bib = function(x) {
   i = grep(r, x)
   if (length(i) == 0) return(x)
   i = i[1]
-  x[i] = paste0(x[i], '\n\\addcontentsline{toc}{chapter}{\\bibname}')
+  level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
+  x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
   x
 }
 
