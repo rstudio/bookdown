@@ -79,16 +79,10 @@ get_base_format = function(format) {
 load_config = function() {
   if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
     # store the book config
-    opts$set(config = yaml_utf8('_bookdown.yml'))
+    opts$set(config = yaml::yaml.load_file('_bookdown.yml'))
   }
   opts$get('config')
 }
-
-mark_utf8 = getFromNamespace('mark_utf8', 'rmarkdown')
-
-yaml_utf8 = function(x) mark_utf8(yaml::yaml.load(
-  enc2utf8(paste(readUTF8(x), collapse = '\n'))
-))
 
 book_filename = function(config = load_config(), fallback = TRUE) {
   if (is.character(config[['book_filename']])) {

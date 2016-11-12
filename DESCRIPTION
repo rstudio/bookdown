@@ -21,7 +21,7 @@ Imports:
     knitr (>= 1.15),
     miniUI,
     rmarkdown (>= 0.9.6),
-    yaml,
+    yaml (>= 2.1.14),
     rsconnect (>= 0.4.3)
 Suggests:
     htmlwidgets,
