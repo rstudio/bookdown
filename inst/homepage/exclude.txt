@@ -37,3 +37,10 @@ https://bookdown.org/raghavendrajain/predictingdengue/
 https://bookdown.org/raghavendrajain/dengueforecasting/
 https://bookdown.org/svkucheryavski/mdatools/
 https://bookdown.org/adioshun/booklock/
+https://bookdown.org/hakanemekci/_book/
+https://bookdown.org/aclark/bookNotebook/
+https://bookdown.org/aclark/zevRossShinyBook/
+https://bookdown.org/mikabr/wordbank-book3/
+https://bookdown.org/nsafaian/trading-analytics-book/
+https://bookdown.org/paulcbauer/anscombe/
+https://bookdown.org/paulcbauer/plotly_styling_margins/
