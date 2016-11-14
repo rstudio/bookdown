@@ -14,7 +14,7 @@ output:
 ---
 ```
 
-For HTML\index{HTML} output formats, you are most likely to use the `css` option to provide your own CSS\index{CSS} stylesheets to customize the appearance of HTML elements. There is an option `includes` that applies to more formats, including HTML and LaTeX. The `includes` option allows your to insert arbitrary custom content before and/or after the body of the output. It has three sub options: `in_header`, `before_body`, and `after_body`. You need to know the basic structure of an HTML or LaTeX document to understand these options. The source of an HTML document looks like this:
+For HTML\index{HTML} output formats, you are most likely to use the `css` option to provide your own CSS\index{CSS} stylesheets to customize the appearance of HTML elements. There is an option `includes` that applies to more formats, including HTML and LaTeX. The `includes` option allows you to insert arbitrary custom content before and/or after the body of the output. It has three sub-options: `in_header`, `before_body`, and `after_body`. You need to know the basic structure of an HTML or LaTeX document to understand these options. The source of an HTML document looks like this:
 
 ```html
 <html>
@@ -49,7 +49,7 @@ A LaTeX\index{LaTeX} source document has a similar structure:
 \end{document}
 ```
 
-The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code to the output. For example, when you have LaTeX math expressions rendered via the MathJax\index{MathJax} library in the HTML output, and want the equation numbers to be displayed on the left (default is on the right), you can create a text file that contains the following code:
+The `includes` option is very useful and flexible. For HTML output, it means you can insert arbitrary HTML code into the output. For example, when you have LaTeX math expressions rendered via the MathJax\index{MathJax} library in the HTML output, and want the equation numbers to be displayed on the left (default is on the right), you can create a text file that contains the following code:
 
 ```html
 <script type="text/x-mathjax-config">
@@ -72,7 +72,7 @@ output:
 
 Another example is to enable comments or discussions on your HTML pages. There are several possibilities, such as Disqus (https://disqus.com) or Hypothesis (https://hypothes.is). These services can be easily embedded in your HTML book via the `includes` option (see Section \@ref(collaboration) for details).
 
-Similarly, if you are familiar with LaTeX, you can add arbitrary LaTeX code to the preamble. That means you can use any LaTeX packages and set up any package options for your book. For example, this book used the `in_header` option to use a few more LaTeX packages like **booktabs** (for better-looking tables) and **longtable** (for tables that span across multiple pages), and apply a fix to an XeLaTeX problem that links on graphics do not work:
+Similarly, if you are familiar with LaTeX, you can add arbitrary LaTeX code to the preamble. That means you can use any LaTeX packages and set up any package options for your book. For example, this book used the `in_header` option to use a few more LaTeX packages like **booktabs** (for better-looking tables) and **longtable** (for tables that span across multiple pages), and applied a fix to an XeLaTeX problem that links on graphics do not work:
 
 ```latex
 \usepackage{booktabs}
@@ -120,7 +120,7 @@ output:
 
 If you do not like any of these Bootstrap styles, you can set `theme` to `null`, and apply your own CSS through the `css` or `includes` option.
 
-For `pdf_book()`, besides the `in_header` option mentioned in the previous section, another possibility is to change the document class. There are many possible LaTeX classes for books, such as **memoir** (https://www.ctan.org/pkg/memoir), **amsbook** (https://www.ctan.org/pkg/amsbook), KOMA-Script (https://www.ctan.org/pkg/koma-script) and so on. A brief sample of the YAML metadata specifying the `scrbook` class from the KOMA-Script package:
+For `pdf_book()`, besides the `in_header` option mentioned in the previous section, another possibility is to change the document class. There are many possible LaTeX classes for books, such as **memoir** (https://www.ctan.org/pkg/memoir), **amsbook** (https://www.ctan.org/pkg/amsbook), KOMA-Script (https://www.ctan.org/pkg/koma-script) and so on. Here is a brief sample of the YAML metadata specifying the `scrbook` class from the KOMA-Script package:
 
 ```yaml
 ---
@@ -131,9 +131,9 @@ output:
 ---
 ```
 
-Some publishers (e.g., Springer and Chapman & Hall/CRC) have their own LaTeX style or class files. You may try to change the `documentclass` option to use their document classes, although typically it is not as simple as that. You may end up with using `in_header`, or even design a custom Pandoc LaTeX template to accommodate these document classes.
+Some publishers (e.g., Springer and Chapman & Hall/CRC) have their own LaTeX style or class files. You may try to change the `documentclass` option to use their document classes, although typically it is not as simple as that. You may end up using `in_header`, or even design a custom Pandoc LaTeX template to accommodate these document classes.
 
-Note when you change `documentclass`, you are likely to specify an additional Pandoc argument `--chapters` so that Pandoc knows the first-level headers should be treated as chapters instead of sections (this is the default when `documentclass` is `book`), e.g.,
+Note that when you change `documentclass`, you are likely to specify an additional Pandoc argument `--chapters` so that Pandoc knows the first-level headers should be treated as chapters instead of sections (this is the default when `documentclass` is `book`), e.g.,
 
 ```yaml
 documentclass: krantz
@@ -144,7 +144,7 @@ output:
 
 ## Templates
 
-When Pandoc converts Markdown to another output format, it uses a template\index{Pandoc template} under the hood. The template is a plain text file that contains some variables of the form `$variable$`. These variables will be replaced by their values generated by Pandoc. Below is a very brief template for HTML output:
+When Pandoc converts Markdown to another output format, it uses a template\index{Pandoc template} under the hood. The template is a plain-text file that contains some variables of the form `$variable$`. These variables will be replaced by their values generated by Pandoc. Below is a very brief template for HTML output:
 
 ```html
 <html>
@@ -188,7 +188,7 @@ If we use the above template to generate an HTML document, its source code will 
 </html>
 ```
 
-The actual HTML, LaTeX, and EPUB templates are more complicated, but the idea is the same. You need to know what variables are available: some variables are built-in Pandoc variables, and some can be either defined by users in the YAML metadata, or passed from the command line option `-V` or `--variable`. Some variables only make sense to specific output formats, e.g., the `documentclass` variable is only used in LaTeX output. Please see the documentation of Pandoc to learn more about these variables, and you can find all default Pandoc templates from the GitHub repository https://github.com/jgm/pandoc-templates.
+The actual HTML, LaTeX, and EPUB templates are more complicated, but the idea is the same. You need to know what variables are available: some variables are built-in Pandoc variables, and some can be either defined by users in the YAML metadata, or passed from the command-line option `-V` or `--variable`. Some variables only make sense in specific output formats, e.g., the `documentclass` variable is only used in LaTeX output. Please see the documentation of Pandoc to learn more about these variables, and you can find all default Pandoc templates in the GitHub repository https://github.com/jgm/pandoc-templates.
 
 Note that for HTML output, **bookdown** requires some additional comment tokens in the template, and we have explained them in Section \@ref(bootstrap-style).
 

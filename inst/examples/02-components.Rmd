@@ -8,7 +8,7 @@ In this section We give a very brief introduction to Pandoc's Markdown\index{Mar
 
 ### Inline formatting
 
-You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-1^` renders ClO^-1^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``^[To include literal backticks, use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.]. Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](https://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations).
+You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `ClO^-1^` renders ClO^-1^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``.^[To include literal backticks, use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.] Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](https://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations).
 
 ### Block-level elements
 
@@ -187,7 +187,7 @@ g(X_{n}) &= g(\theta)+g'({\tilde{\theta}})(X_{n}-\theta) \notag \\
   \sqrt{n}[X_{n}-\theta ] (\#eq:align)
 \end{align}
 
-The `split` environment inside `equation` so that all lines share the same number \@ref(eq:var-beta)^[By default, each line in the `align` environment will be assigned an equation number. We suppressed the number of the first line in the previous example using `\notag`. In this example, the whole `split` environment was assigned a single number.]:
+You can use the `split` environment inside `equation` so that all lines share the same number \@ref(eq:var-beta). By default, each line in the `align` environment will be assigned an equation number. We suppressed the number of the first line in the previous example using `\notag`. In this example, the whole `split` environment was assigned a single number.
 
 ```latex
 \begin{equation} 
@@ -215,7 +215,7 @@ The `split` environment inside `equation` so that all lines share the same numbe
 
 ### Theorems and proofs {#theorems}
 
-Theorems\index{theorem} and proofs are commonly used in articles and books in mathematics. However, please do not be mislead by the names: a "theorem" is just a numbered/labeled environment, and it does not have to be a mathematical theorem (e.g., it can be an example irrelevant to mathematics). Similarly, a "proof" is an unnumbered environment. In this section, we always use the _general_ meanings of a "theorem" and "proof" unless explicitly stated.
+Theorems\index{theorem} and proofs are commonly used in articles and books in mathematics. However, please do not be misled by the names: a "theorem" is just a numbered/labeled environment, and it does not have to be a mathematical theorem (e.g., it can be an example irrelevant to mathematics). Similarly, a "proof" is an unnumbered environment. In this section, we always use the _general_ meanings of a "theorem" and "proof" unless explicitly stated.
 
 In **bookdown**, the types of theorem environments supported are in Table \@ref(tab:theorem-envs). To write a theorem, you can use the syntax below:
 
@@ -293,7 +293,7 @@ Theorems are numbered by chapters by default. If there are no chapters in your d
 \newtheorem{lemma}[theorem]{Lemma}
 ```
 
-When **bookdown** detects `\newtheorem{theorem}` in your LaTeX preamble, it will not write out its default theorem definitions, which means you have to define all theorem environments by yourself. For the sake of simplicity and consistency, we do not recommend you to do this. It can be confusing when your Theorem 18 in PDF becomes Theorem 2.4 in HTML.
+When **bookdown** detects `\newtheorem{theorem}` in your LaTeX preamble, it will not write out its default theorem definitions, which means you have to define all theorem environments by yourself. For the sake of simplicity and consistency, we do not recommend that you to do this. It can be confusing when your Theorem 18 in PDF becomes Theorem 2.4 in HTML.
 
 Below we show more examples^[Some examples are adapted from the Wikipedia page https://en.wikipedia.org/wiki/Characteristic_function_(probability_theory)] of the theorem and proof environments, so you can see the default styles in **bookdown**.
 
@@ -318,7 +318,7 @@ We derive the characteristic function of $X\sim U(0,1)$ with the probability den
 \end{split}
 \end{equation*}
 
-Note we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
+Note that we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
 ```
 
 ```{lemma, chf-pdf}
@@ -399,7 +399,7 @@ The numbering style of appendices will be automatically changed in LaTeX/PDF and
 
 You can assign some text to a label and reference the text using the label elsewhere in your document. This can be particularly useful for long figure/table captions (Section \@ref(figures) and \@ref(tables)), in which case you normally will have to write the whole character string in the chunk header (e.g., `fig.cap = "A long long figure caption."`) or your R code (e.g., `kable(caption = "A long long table caption.")`). It is also useful when these captions contain special HTML or LaTeX characters, e.g., if the figure caption contains an underscore, it works in the HTML output but may not work in LaTeX output because the underscore must be escaped in LaTeX.
 
-The syntax for a text reference is `(ref:label) text`, where `label` is a unique label^[You may consider using the code chunk labels.] through out the document for `text`. It must be in a separate paragraph with empty lines above and below it. For example,
+The syntax for a text reference is `(ref:label) text`, where `label` is a unique label^[You may consider using the code chunk labels.] throughout the document for `text`. It must be in a separate paragraph with empty lines above and below it. For example,
 
 ```markdown
 (ref:foo) Define a text reference **here**. 
@@ -440,7 +440,7 @@ By default, figures\index{figure} have no captions in the output generated by **
 
 The disadvantage of typesetting figures in this way is that when there is not enough space on the current page to place a figure, it may either reach the bottom of the page (hence exceeds the page margin), or be pushed to the next page, leaving a large white margin at the bottom of the current page. That is basically why there are "floating environments"\index{floating environment} in LaTeX: elements that cannot be split over multiple pages (like figures) are put in floating environments, so they can float to a page that has enough space to hold them. There is also a disadvantage of floating things forward or backward, though. That is, readers may have to jump to a different page to find the figure mentioned on the current page. This is simply a natural consequence of having to typeset things on multiple pages of fixed sizes. This issue does not exist in HTML, however, since everything can be placed continuously on one single page (presumably with infinite height), and there is no need to split anything across multiple pages of the same page size.
 
-If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-reference}, use the syntax `\@ref(label)`^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.], where `label` is the figure label, e.g., `fig:foo`.
+If we assign a figure caption to a code chunk via the chunk option `fig.cap`, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is `foo`, the figure label will be `fig:foo` (the prefix `fig:` is added before `foo`). To reference a figure\index{cross-reference}, use the syntax `\@ref(label)`,^[Do not forget the leading backslash! And also note the parentheses `()` after `ref`; they are not curly braces `{}`.] where `label` is the figure label, e.g., `fig:foo`.
 
 ```{block2, type='rmdimportant'}
 If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains _alphanumeric_ characters (a-z, A-Z, 0-9), slashes (/), or dashes (-).
@@ -461,7 +461,7 @@ par(mar = c(4, 4, .1, .1))
 plot(cars, pch = 19)
 ```
 
-If you want to put multiple plots in one figure environment, you must use the chunk option `fig.show = 'hold'` to hold multiple plots from a code chunk and include them in one environment. You can also place plots side by side if the sum of the width of all plots is smaller than or equal to the current line width. For example, if two plots have the same width `50%`, they will be placed side by side. Similarly, you can specify `out.width = '33%'` to arrange three plots on one line. Figure \@ref(fig:multi-plots) is an example of two plots, each with a width `50%`.
+If you want to put multiple plots in one figure environment, you must use the chunk option `fig.show = 'hold'` to hold multiple plots from a code chunk and include them in one environment. You can also place plots side by side if the sum of the width of all plots is smaller than or equal to the current line width. For example, if two plots have the same width `50%`, they will be placed side by side. Similarly, you can specify `out.width = '33%'` to arrange three plots on one line. Figure \@ref(fig:multi-plots) is an example of two plots, each with a width of `50%`.
 
 ```{r multi-plots, out.width='50%', fig.show='hold', fig.cap='Two plots placed side by side.'}
 par(mar = c(4, 4, .1, .1))
@@ -469,7 +469,7 @@ plot(pressure, pch = 19, type = 'b')
 plot(cars, pch = 19)
 ```
 
-Sometimes you may have certain images that are not generated from R code, and you can include them them in R Markdown via the function `knitr::include_graphics()`. Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. You may pass one or multiple image paths to the `include_graphics()`\index{knitr::include\_graphics()} function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use `out.width = '33%'` to set the widths of these images in the output document.
+Sometimes you may have certain images that are not generated from R code, and you can include them in R Markdown via the function `knitr::include_graphics()`. Figure \@ref(fig:knitr-logo) is an example of three **knitr** logos included in a figure environment. You may pass one or multiple image paths to the `include_graphics()`\index{knitr::include\_graphics()} function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use `out.width = '33%'` to set the widths of these images in the output document.
 
 ```{r knitr-logo, out.width='32.8%', fig.show='hold', fig.cap='Three knitr logos included in the document from an external PNG image file.'}
 knitr::include_graphics(rep('images/knit-logo.png', 3))
@@ -507,7 +507,7 @@ knitr::kable(
 )
 ```
 
-When you do not want a table to float in PDF, you may use the LaTeX package [**longtable**](https://www.ctan.org/pkg/longtable)\index{longtable}, which can break a table across multiple pages. To use **longtable**, pass `longtable = TRUE` to `kable()`, and make sure to include `\usepackage{longtable}` in the LaTeX preamble (see Section \@ref(yaml-options) for how to customize the LaTeX preamble). Of course, this is irrelevant to HTML output, since tables in HTML do not need to float.
+When you do not want a table to float in PDF, you may use the LaTeX package [**longtable**,](https://www.ctan.org/pkg/longtable)\index{longtable} which can break a table across multiple pages. To use **longtable**, pass `longtable = TRUE` to `kable()`, and make sure to include `\usepackage{longtable}` in the LaTeX preamble (see Section \@ref(yaml-options) for how to customize the LaTeX preamble). Of course, this is irrelevant to HTML output, since tables in HTML do not need to float.
 
 ```{r longtable, tidy=FALSE}
 knitr::kable(
@@ -520,7 +520,7 @@ If you decide to use other packages to generate tables, you have to make sure th
 
 ## Cross-references
 
-We have explained how cross-references\index{cross-reference} work for equations (Section \@ref(equations)), theorems (Section \@ref(theorems), figures (Section \@ref(figures)), and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.
+We have explained how cross-references\index{cross-reference} work for equations (Section \@ref(equations)), theorems (Section \@ref(theorems)), figures (Section \@ref(figures)), and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.
 
 When a referenced label cannot be found, you will see two question marks like \@ref(fig:does-not-exist), as well as a warning message in the R console when rendering the book.
 
@@ -532,7 +532,7 @@ You can also create text-based links using explicit or automatic section IDs or 
     - `[link text][Section header text]`, e.g., "[non-English books][Internationalization]" via `[non-English books][Internationalization]`
     - `[link text](#ID)`, e.g., "[Table stuff](#tables)" via `[Table stuff](#tables)`
 
-The Pandoc documentation provides more details on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references](http://pandoc.org/MANUAL.html#extension-implicit_header_references).
+The Pandoc documentation provides more details on [automatic section IDs](http://pandoc.org/MANUAL.html#extension-auto_identifiers) and [implicit header references.](http://pandoc.org/MANUAL.html#extension-implicit_header_references)
 
 Cross-references still work even when we refer to an item that is not on the current page of the PDF or HTML output. For example, see Equation \@ref(eq:binom) and Figure \@ref(fig:knitr-logo).
 
@@ -616,7 +616,7 @@ More text.
 ```
 ````
 
-The `block2` engine should also be faster than the `block` engine if you have a lot of custom blocks in the document, but its implementation was based on [a hack](https://github.com/jgm/pandoc/issues/2453), so we are not 100% sure if it is always going to work in the future. We have not seen problems with Pandoc v1.17.2 yet.
+The `block2` engine should also be faster than the `block` engine if you have a lot of custom blocks in the document, but its implementation was based on [a hack,](https://github.com/jgm/pandoc/issues/2453) so we are not 100% sure if it is always going to work in the future. We have not seen problems with Pandoc v1.17.2 yet.
 
 One more caveat for the `block2` engine: if the last element in the block is not an ordinary paragraph, you must leave a blank line at the end, e.g.,
 
@@ -637,7 +637,7 @@ For all custom blocks based on the `block` or `block2` engine, there is one chun
 
 ## Citations {#citations}
 
-Although Pandoc supports multiple ways of writing citations\index{citation}, we recommend you to use BibTeX\index{BibTeX} databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibiliography style if it is required by a certain publisher or journal.
+Although Pandoc supports multiple ways of writing citations\index{citation}, we recommend you to use BibTeX\index{BibTeX} databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibliography style if it is required by a certain publisher or journal.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
@@ -653,18 +653,18 @@ A BibTeX database is a plain-text file (with the conventional filename extension
 }
 ```
 
-A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on^[The type name is case-insensitive, so it does not matter if it is `manual`, `Manual`, or `MANUAL`.]. Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered as @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
+A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on.^[The type name is case-insensitive, so it does not matter if it is `manual`, `Manual`, or `MANUAL`.] Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered as @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
 
 There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
 
-There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
+There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note that it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
 
 ```{r write-bib, comment='', warning=FALSE}
 # the second argument can be a .bib file
 knitr::write_bib(c('knitr', 'stringr'), '', width = 60)
 ```
 
-Once you have got one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliography style via `biblio-style` (this only applies to PDF output), e.g.,
+Once you have one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your R Markdown document, and you can also specify the bibliography style via `biblio-style` (this only applies to PDF output), e.g.,
 
 ```yaml
 ---
@@ -674,7 +674,7 @@ link-citations: true
 ---
 ```
 
-The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibilography entry in the HTML output.
+The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibliography entry in the HTML output.
 
 When the output format is LaTeX, citations will be automatically put in a chapter or section. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
 
@@ -712,21 +712,21 @@ When **knitr** detects an HTML widget object in a code chunk, it either renders 
 DT::datatable(iris)
 ```
 
-If you are reading this book as web pages now, you should see an interactive table generated from the above code chunk, e.g., you may sort the columns and search in the table. If you are reading a non-HTML version of this book, you should see a screenshot of the table. The screenshot may look a little different with the actual widget rendered in the web browser, due to the difference between a real web browser and PhantomJS' virtual browser.
+If you are reading this book as web pages now, you should see an interactive table generated from the above code chunk, e.g., you may sort the columns and search in the table. If you are reading a non-HTML version of this book, you should see a screenshot of the table. The screenshot may look a little different with the actual widget rendered in the web browser, due to the difference between a real web browser and PhantomJS's virtual browser.
 
 There are a number of **knitr** chunk options related to screen-capturing. First, if you are not satisfied with the quality of the automatic screenshots, or want a screenshot of the widget of a particular state (e.g., after you click and sort a certain column of a table), you may capture the screen manually, and provide your own screenshot via the chunk option `screenshot.alt` (alternative screenshots). This option takes the paths of images. If you have multiple widgets in a chunk, you can provide a vector of image paths. When this option is present, **knitr** will no longer call **webshot** to take automatic screenshots.
 
-Second, sometimes you may want to force **knitr** to use static screenshots instead of rendering the actual widgets even on HTML pages. In this case, you can set the chunk option `screenshot.force = TRUE`, and widgets will always be rendered as static images. Note you can still choose to use automatic or custom screenshots.
+Second, sometimes you may want to force **knitr** to use static screenshots instead of rendering the actual widgets even on HTML pages. In this case, you can set the chunk option `screenshot.force = TRUE`, and widgets will always be rendered as static images. Note that you can still choose to use automatic or custom screenshots.
 
-Third, **webshot** has some options to control the automatic screenshots, and you may specify these options via the chunk option `screenshot.opts`, which takes a list like `list(delay = 2, cliprect = 'viewport')`. See the help page `?webshot::webshot` for the full list of possible options, and the [package vignette](https://cran.rstudio.com/web/packages/webshot/vignettes/intro.html) `vignette('intro', package = 'webshot')` has illustrated the effect of these options. Here the `delay` option can be important for widgets that take long time to render: `delay` specifies the number of seconds to wait before PhantomJS takes the screenshot. If you see an incomplete screenshot, you may want to specify a longer delay (the default is 0.2 seconds).
+Third, **webshot** has some options to control the automatic screenshots, and you may specify these options via the chunk option `screenshot.opts`, which takes a list like `list(delay = 2, cliprect = 'viewport')`. See the help page `?webshot::webshot` for the full list of possible options, and the [package vignette](https://cran.rstudio.com/web/packages/webshot/vignettes/intro.html) `vignette('intro', package = 'webshot')` illustrates the effect of these options. Here the `delay` option can be important for widgets that take long time to render: `delay` specifies the number of seconds to wait before PhantomJS takes the screenshot. If you see an incomplete screenshot, you may want to specify a longer delay (the default is 0.2 seconds).
 
 Fourth, if you feel it is slow to capture the screenshots, or do not want to do it every time the code chunk is executed, you may use the chunk option `cache = TRUE` to cache the chunk. Caching works for both HTML and non-HTML output formats.
 
-Screenshots behave like normal R plots in the sense that many chunk options related to figures also apply to screenshots, including `fig.width`, `fig.height`, `out.width`, `fig.cap`, and so on. So you can specify the size of screenshots in the output document, and assign figure captions to them as well. The image format of the automatic screenshots can be specified via the chunk option `dev`, and possible values are `pdf`, `png`, and `jpeg`. The default for PDF output is `pdf`, and it is `png` for other types of output. Note `pdf` may not work as faithfully as `png`: sometimes there are certain elements on an HTML page that fail to render to the PDF screenshot, so you may want to use `dev = 'png'` even for PDF output. It depends on specific cases of HTML widgets, and you can try both `pdf` and `png` (or `jpeg`) before deciding which format is more desirable.
+Screenshots behave like normal R plots in the sense that many chunk options related to figures also apply to screenshots, including `fig.width`, `fig.height`, `out.width`, `fig.cap`, and so on. So you can specify the size of screenshots in the output document, and assign figure captions to them as well. The image format of the automatic screenshots can be specified via the chunk option `dev`, and possible values are `pdf`, `png`, and `jpeg`. The default for PDF output is `pdf`, and it is `png` for other types of output. Note that `pdf` may not work as faithfully as `png`: sometimes there are certain elements on an HTML page that fail to render to the PDF screenshot, so you may want to use `dev = 'png'` even for PDF output. It depends on specific cases of HTML widgets, and you can try both `pdf` and `png` (or `jpeg`) before deciding which format is more desirable.
 
 ## Web pages and Shiny apps
 
-Similar to HTML widgets, arbitrary web pages can be embedded in the book. You can use the function `knitr::include_url()` to include a web page through its URL. When the output format is HTML, an `iframe` is used^[An `iframe` is basically a box on one web page to embed another web page.]; in other cases, **knitr** tries to take a screenshot of the web page (or use the custom screenshot you provided). All chunk options are the same as those for HTML widgets. One option that may require your special attention is the `delay` option: HTML widgets are rendered locally, so usually they are fast to load for PhantomJS to take screenshots, but an arbitrary URL may take longer to load, so you may want to use a larger `delay` value, e.g., use the chunk option `screenshot.opts = list(delay = 5)`.
+Similar to HTML widgets, arbitrary web pages can be embedded in the book. You can use the function `knitr::include_url()` to include a web page through its URL. When the output format is HTML, an `iframe` is used;^[An `iframe` is basically a box on one web page to embed another web page.] in other cases, **knitr** tries to take a screenshot of the web page (or use the custom screenshot you provided). All chunk options are the same as those for HTML widgets. One option that may require your special attention is the `delay` option: HTML widgets are rendered locally, so usually they are fast to load for PhantomJS to take screenshots, but an arbitrary URL may take longer to load, so you may want to use a larger `delay` value, e.g., use the chunk option `screenshot.opts = list(delay = 5)`.
 
 A related function is `knitr::include_app()`, which is very similar to `include_url()`, and it was designed for embedding Shiny apps\index{Shiny application} via their URLs in the output. Its only difference with `include_url()` is that it automatically adds a query parameter `?showcase=0` to the URL, if no other query parameters are present in the URL, to disable the Shiny showcase mode, which is unlikely to be useful for screenshots or iframes. If you do want the showcase mode, use `include_url()` instead of `include_app()`. Below is a Shiny app example (Figure \@ref(fig:miniUI)):
 

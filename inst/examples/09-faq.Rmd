@@ -1,11 +1,11 @@
 # FAQ
 
-Below is the _complete_ list of frequently asked questions (FAQ). Yes, there is only one question here. Personally I do not like FAQ's. They often mean surprises, and surprises are not good for software users.
+Below is the _complete_ list of frequently asked questions (FAQ). Yes, there is only one question here. Personally I do not like FAQs. They often mean surprises, and surprises are not good for software users.
 
 1. Q: Will **bookdown** have the features X, Y, and Z?
 
     A: The short answer is no, but if you have asked yourself three times "do I really need them" and the answer is still "yes", please feel free to file a feature request to https://github.com/rstudio/bookdown/issues.
 
-    Users asking for more features often come from the LaTeX world. If that is the case for you, the answer to this question is yes, because Pandoc's Markdown supports raw LaTeX code. Whenever you feel Markdown cannot do the job for you, you always have the option to apply some raw LaTeX code in your Markdown document. For example, you can create glossaries using the **glossaries** package, or embed a complicated LaTeX table, as long as you know the LaTeX syntax. However, please keep in mind that the LaTeX content is not portable. It will only work for LaTeX/PDF output, and will be ignored in other types of output. Depending on the request, we may port a few more LaTeX features into **bookdown** in the future, but our general philosophy is Markdown should be kept as simple as possible.
+    Users asking for more features often come from the LaTeX world. If that is the case for you, the answer to this question is yes, because Pandoc's Markdown supports raw LaTeX code. Whenever you feel Markdown cannot do the job for you, you always have the option to apply some raw LaTeX code in your Markdown document. For example, you can create glossaries using the **glossaries** package, or embed a complicated LaTeX table, as long as you know the LaTeX syntax. However, please keep in mind that the LaTeX content is not portable. It will only work for LaTeX/PDF output, and will be ignored in other types of output. Depending on the request, we may port a few more LaTeX features into **bookdown** in the future, but our general philosophy is that Markdown should be kept as simple as possible.
 
 The most challenging thing in the world is not to learn fancy technologies, but control your own wild heart.
