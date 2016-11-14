@@ -17,7 +17,7 @@ site: bookdown::bookdown_site
 description: "A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)."
 url: 'https\://bookdown.org/yihui/bookdown/'
 github-repo: rstudio/bookdown
-cover-image: images/cover.png
+cover-image: images/cover.jpg
 ---
 
 ```{r setup, include=FALSE}
@@ -34,7 +34,7 @@ lapply(c('DT', 'citr'), function(pkg) {
 # Preface {-}
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html')}
-knitr::include_graphics('images/cover.png', dpi = NA)
+knitr::include_graphics('images/cover.jpg', dpi = NA)
 ```
 
 This short book introduces an R package, **bookdown**, to change your workflow of writing books. It should be technically easy to write a book, visually pleasant to view the book, fun to interact with the book, convenient to navigate through the book, straightforward for readers to contribute or leave feedback to the book author(s), and more importantly, authors should not always be distracted by typesetting details.
