@@ -2,7 +2,7 @@
 
 # Introduction
 
-This book is a guide to authoring books and technical documents with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as
+This book is a guide to authoring books and technical documents with R Markdown [@R-rmarkdown] and the R package **bookdown** [@R-bookdown]. It focuses on the features specific to writing books, long-form articles, or reports, such as:
 
 - How to typeset equations, theorems, figures and tables, and cross-reference them;
 - How to generate multiple output formats such as HTML, PDF, and e-books for a single book;
