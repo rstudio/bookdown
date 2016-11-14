@@ -48,7 +48,8 @@ book_listing = function() {
 
   # function to produce book html
   book_html = function(url, date) {
-    html = read_html(url, encoding = 'UTF-8')
+    html = try(read_html(url, encoding = 'UTF-8'))
+    if (inherits(html, 'try-error')) return()
     title = xml_find(html, './/title')
     if (length(title) == 0) return()
     title = xml_text(title)
