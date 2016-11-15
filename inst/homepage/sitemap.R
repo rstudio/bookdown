@@ -31,11 +31,6 @@ book_listing = function() {
   }
   meta = rbind(read_meta('https://bookdown.org/sitemap.xml'),
                read_meta('external.txt'))
-  meta = meta[order(meta$lastmod, decreasing = TRUE), ]
-
-  # elevate pinned urls to the top
-  pinned = match(pinned_urls, meta$url)
-  meta = rbind(meta[pinned, ], meta[-pinned, ])
 
   # function to yield the next color class (we rotate among 3 colors)
   next_color <- 1
@@ -95,7 +90,7 @@ book_listing = function() {
                       div(class = "author", author))
     }
 
-    div(class = "book",
+    structure(div(class = "book",
         a(href = url,
           coverDiv,
           div(class = "bookMeta",
@@ -106,7 +101,7 @@ book_listing = function() {
               div(class = "overview", description)
           )
         )
-    )
+    ), BOOK_DATE = date)
   }
 
 
@@ -122,7 +117,7 @@ book_listing = function() {
     if (file.exists('_book_meta.rds')) {
       panels = readRDS('_book_meta.rds')
       if (!is.na(date) && identical(panels[[url]][['date']], date)) {
-        return(panels[[url]][['panel']])
+        return(structure(panels[[url]][['panel']], BOOK_DATE = as.Date(date)))
       }
     } else panels = list()
 
@@ -133,6 +128,14 @@ book_listing = function() {
     panel
 
   }, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+
+  dates = sapply(books, function(x) {
+    date = attr(x, 'BOOK_DATE')
+    if (is.null(date)) NA else as.Date(date)
+  })
+  # elevate pinned urls to the top, and order by dates
+  i = order(match(meta$url, rev(pinned_urls)), dates, decreasing = TRUE, na.last = TRUE)
+  books = books[i]
 
   tagList(books)
 }
