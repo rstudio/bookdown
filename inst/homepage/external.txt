@@ -2,3 +2,4 @@ http://r4ds.had.co.nz/
 http://timtrice.github.io/backtesting-strategies/
 https://www.masteringdfsanalytics.com/
 http://tidytextmining.com/
+http://www.brodrigues.co/fput/
