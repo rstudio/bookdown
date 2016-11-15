@@ -149,6 +149,7 @@ github_buttons = function(repo = NULL) {
   if (is.null(repo)) return()
   a(
     class = "github-button", href = sprintf("https://github.com/%s", repo),
+    `data-count-href` = sprintf("/%s/stargazers", repo),
     `data-count-api` = sprintf("/repos/%s#stargazers_count", repo),
     `data-count-aria-label` = "# stargazers on GitHub",
     `aria-label` = "Star on GitHub", "Star"
