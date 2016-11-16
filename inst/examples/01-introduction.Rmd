@@ -27,7 +27,7 @@ Another goal of this project is to make it easy to produce books that look visua
 The easiest way for beginners to get started with writing a book with R Markdown and **bookdown** is through the demo `bookdown-demo` on GitHub:
 
 1. Download the GitHub repository <https://github.com/rstudio/bookdown-demo> as a [Zip file,](https://github.com/rstudio/bookdown-demo/archive/master.zip) then unzip it locally.
-1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. Please [download the latest version](https://www.rstudio.com/products/rstudio/download/) if your RStudio version is lower than 1.0.0;
+1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. Please [download the latest version](https://www.rstudio.com/products/rstudio/download/) if your RStudio version is lower than 1.0.0.
 1. Install the R package **bookdown**:
 
     ```{r eval=FALSE}
@@ -37,7 +37,7 @@ The easiest way for beginners to get started with writing a book with R Markdown
     # devtools::install_github('rstudio/bookdown')
     ```
 
-1. Open the `bookdown-demo` repository you downloaded in RStudio by clicking `bookdown-demo.Rproj`;
+1. Open the `bookdown-demo` repository you downloaded in RStudio by clicking `bookdown-demo.Rproj`.
 1. Open the R Markdown file `index.Rmd` and click the button `Build Book` on the `Build` tab of RStudio.
 
 Now you should see the index page of this book demo in the RStudio Viewer. You may add or change the R Markdown files, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through the command line. See the next section for details.
@@ -166,7 +166,7 @@ link-citations: yes
 
 Merging all chapters into one Rmd file and knitting it is one way to render the book in **bookdown**. There is actually another way: you may knit each chapter in a _separate_ R session, and **bookdown** will merge the Markdown output of all chapters to render the book. We call these two approaches "Merge and Knit" (M-K) and "Knit and Merge" (K-M), respectively. The differences between them may seem subtle, but can be fairly important depending on your use cases.
 
-- The most significant difference is that M-K runs _all_ code chunks in all chapters in the same R session, whereas K-M uses separate R sessions for individual chapters. For M-K, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for K-M, all chapters are isolated from each other.^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter. It is hard to isolate these kind of side-effects.] If you want each chapter to compile from a clean state, use the K-M approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the M-K approach. For example, even you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
+- The most significant difference is that M-K runs _all_ code chunks in all chapters in the same R session, whereas K-M uses separate R sessions for individual chapters. For M-K, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for K-M, all chapters are isolated from each other.^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter. It is hard to isolate these kinds of side-effects.] If you want each chapter to compile from a clean state, use the K-M approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the M-K approach. For example, even you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
 - Because **knitr** does not allow duplicate chunk labels in a source document, you need to make sure there are no duplicate labels in your book chapters when you use the M-K approach, otherwise **knitr** will signal an error when knitting the merged Rmd file. Note that this means there must not be duplicate labels throughout the whole book. The K-M approach only requires no duplicate labels within any single Rmd file.
 - K-M does not allow Rmd files to be in subdirectories, but M-K does.
 
