@@ -1,5 +1,15 @@
-require(["gitbook", "lodash"], function(gitbook, _) {
+require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var SITES = {
+        'github': {
+            'label': 'Github',
+            'icon': 'fa fa-github',
+            'onClick': function(e) {
+                e.preventDefault();
+                var repo = $('meta[name="github-repo"]').attr('content');
+                if (typeof repo === 'undefined') throw("Github repo not defined");
+                window.open("https://github.com/"+repo);
+            }
+        },
         'facebook': {
             'label': 'Facebook',
             'icon': 'fa fa-facebook',

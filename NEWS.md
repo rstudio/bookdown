@@ -1,3 +1,9 @@
+# CHANGES IN bookdown VERSION 0.3 (unreleased)
+
+## NEW FEATURES
+
+- Added a Github button in the group of sharing buttons on the toolbar. By default, this button is not displayed. You have to set `github: yes` under `sharing` in the `gitbook` configurations (https://bookdown.org/yihui/bookdown/html.html) and specify your Github repo using the top-level option `github-repo` in the YAML metadata of `index.Rmd`, e.g. `github-repo: rstudio/bookdown`.
+
 # CHANGES IN bookdown VERSION 0.2
 
 ## NEW FEATURES
