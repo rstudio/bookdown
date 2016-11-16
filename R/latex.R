@@ -133,7 +133,7 @@ restore_part_latex = function(x) {
   x[i] = gsub(r, '\\\\part{', x[i])
   # remove the line \addcontentsline since it is not really a chapter title
   j = grep(
-    '\\addcontentsline{toc}{(chapter|section)}{(PART) ', x[i + 1], fixed = TRUE
+    '\\\\addcontentsline\\{toc\\}\\{(chapter|section)\\}\\{\\(PART\\) ', x[i + 1]
   )
   x[(i + 1)[j]] = ''
   x
