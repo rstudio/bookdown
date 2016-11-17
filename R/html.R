@@ -125,7 +125,7 @@ html_document2 = function(
     x = readUTF8(output)
     x = resolve_refs_html(x, global = !number_sections)
     x = restore_part_html(x, remove = FALSE)
-    x = restore_appendix_html(x)
+    x = restore_appendix_html(x, keep_header = TRUE)
     writeUTF8(x, output)
     output
   }
@@ -695,13 +695,16 @@ restore_part_html = function(x, remove = TRUE) {
   x
 }
 
-# remove the appendix chapter (only a placeholder) in the body, and change the
-# numbering style in the appendices (also change in TOC), e.g. A.1, A.2, B.1, ...
-restore_appendix_html = function(x) {
-  r = '^(<h1>)\\(APPENDIX\\) (.+</h1>)$'
+# process the appendix "chapter" in the body, and change the numbering style in
+# the appendices (also change in TOC), e.g. A.1, A.2, B.1, ...
+restore_appendix_html = function(x, keep_header = FALSE) {
+  r = '^(<h1>)\\(APPENDIX\\) (.+)(</h1>)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
-  x[i] = x[i - 1] = x[i + 1] = ''  # no need to show appendix in body
+  # keep or remove the appendix heading in body
+  if (keep_header) {
+    x[i] = gsub(r, '\\1\\2\\3', x[i])
+  } else x[i] = x[i - 1] = x[i + 1] = ''
   x = number_appendix(x, i + 1, length(x), 'header')
   r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
   i = find_appendix_line(r, x)
