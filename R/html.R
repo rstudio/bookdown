@@ -123,9 +123,9 @@ html_document2 = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     x = readUTF8(output)
-    x = resolve_refs_html(x, global = !number_sections)
-    x = restore_part_html(x, remove = FALSE)
     x = restore_appendix_html(x, keep_header = TRUE)
+    x = restore_part_html(x, remove = FALSE)
+    x = resolve_refs_html(x, global = !number_sections)
     writeUTF8(x, output)
     output
   }

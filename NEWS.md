@@ -10,6 +10,8 @@
 
 - Wrong part titles were inserted to the table of contents of PDF output (thanks, @florisvdh, #243).
 
+- Cross-references for appendices in `html_document2` output did not work (thanks, @florisvdh, #245).
+
 # CHANGES IN bookdown VERSION 0.2
 
 ## NEW FEATURES
