@@ -686,12 +686,18 @@ restore_part_html = function(x, remove = TRUE) {
   if (remove) {
     x[i] = x[i - 1] = x[i + 1] = ''
   } else {
-    x[i] = gsub('<h1>\\(PART\\) ', '<h1 class="part">', x[i])
+    x[i] = mapply(
+      gsub, '<h1>\\(PART\\)', x = x[i],
+      sprintf('<h1><span class="header-section-number">%s</span>', as.roman(seq_along(i)))
+    )
   }
   r = '^<li><a href="[^"]*">\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
-  x[i] = gsub(r, '<li class="part"><span><b>\\1</b></span>\\2', x[i])
+  x[i] = mapply(
+    gsub, r, x = x[i],
+    sprintf('<li class="part"><span><b>%s \\1</b></span>\\2', as.roman(seq_along(i)))
+  )
   x
 }
 

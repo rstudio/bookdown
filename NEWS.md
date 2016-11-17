@@ -6,6 +6,8 @@
 
 - The appendix heading will be preserved in `bookdown::html_document2` output, e.g. if you have `# (APPENDIX) Appendix {-}` in your document, you will see the heading `Appendix` in the output. Previously it was removed.
 
+- Parts in HTML output are also be numbered using roman numerals like LaTeX/PDF output.
+
 ## BUG FIXES
 
 - Wrong part titles were inserted to the table of contents of PDF output (thanks, @florisvdh, #243).
