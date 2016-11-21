@@ -14,6 +14,8 @@
 
 - Cross-references for appendices in `html_document2` output did not work (thanks, @florisvdh, #245).
 
+- Part titles were not correctly processed when they were longer than 20 characters in PDF output (thanks, @florisvdh, #246).
+
 # CHANGES IN bookdown VERSION 0.2
 
 ## NEW FEATURES

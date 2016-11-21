@@ -127,15 +127,23 @@ resolve_ref_links_latex = function(x) {
 }
 
 restore_part_latex = function(x) {
-  r = '^\\\\(chapter|section)\\*\\{\\(PART\\) '
+  r = '^\\\\(chapter|section)\\*\\{\\(PART\\)( |$)'
   i = grep(r, x)
   if (length(i) == 0) return(x)
   x[i] = gsub(r, '\\\\part{', x[i])
   # remove the line \addcontentsline since it is not really a chapter title
-  j = grep(
-    '\\\\addcontentsline\\{toc\\}\\{(chapter|section)\\}\\{\\(PART\\) ', x[i + 1]
-  )
-  x[(i + 1)[j]] = ''
+  j = grep('^\\\\addcontentsline\\{toc\\}\\{(chapter|section)\\}\\{\\(PART\\)( |$)', x)
+  k = j; n = length(x)
+  for (i in seq_along(j)) {
+    # figure out how many lines \addcontentsline{toc} spans over (search until
+    # it finds an empty line)
+    l = 1
+    while (j[i] + l <= n && x[j[i] + l] != '') {
+      k = c(k, j[i] + l)
+      l = l + 1
+    }
+  }
+  if (length(k)) x = x[-k]
   x
 }
 
