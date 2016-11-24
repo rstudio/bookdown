@@ -516,7 +516,27 @@ knitr::kable(
 )
 ```
 
-If you decide to use other packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)`, where `label` must have the prefix `tab:`. You have to be very careful about the _portability_ of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice. If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
+Pandoc offers several options to specify inline tables in a Markdown documnent, the following example has been adapted from the [Pandoc manual](http://pandoc.org/MANUAL.html):
+
+```markdown
+Table: (\#tab:nice-inline-table)My nice table
+
+| One | Two   |
+|-----+-------|
+| my  | table |
+| is  | nice  |
+```
+
+Table: (\#tab:nice-inline-table)My nice table
+
+| One | Two   |
+|-----+-------|
+| my  | table |
+| is  | nice  |
+
+The table's label is encoded in the beginning of the caption, so that the cross-referencing mechanism works as usual.
+
+If you decide to use other packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)`, where `label` must have the prefix `tab:`, just like the inline table \@ref(tab:nice-inline-table). You have to be very careful about the _portability_ of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice. If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
 
 ## Cross-references
 
