@@ -516,27 +516,24 @@ knitr::kable(
 )
 ```
 
-Pandoc offers several options to specify inline tables in a Markdown documnent, the following example has been adapted from the [Pandoc manual](http://pandoc.org/MANUAL.html):
+Pandoc supports several types of [Markdown tables,](http://pandoc.org/MANUAL.html#tables) such as simple tables, multiline tables, grid tables, and pipe tables. What `knitr::kable()` generates is a simple table like this:
 
 ```markdown
-Table: (\#tab:nice-inline-table)My nice table
+Table: A simple table in Markdown.
 
-| One | Two   |
-|-----+-------|
-| my  | table |
-| is  | nice  |
+ Sepal.Length   Sepal.Width   Petal.Length   Petal.Width
+-------------  ------------  -------------  ------------
+          5.1           3.5            1.4           0.2
+          4.9           3.0            1.4           0.2
+          4.7           3.2            1.3           0.2
+          4.6           3.1            1.5           0.2
+          5.0           3.6            1.4           0.2
+          5.4           3.9            1.7           0.4
 ```
 
-Table: (\#tab:nice-inline-table)My nice table
+You can use any types of Markdown tables in your document. To be able to cross-reference a Markdown table, it must have a labeled caption of the form `Table: (\#label) Caption here`, where `label` must have the prefix `tab:`, e.g., `tab:simple-table`.
 
-| One | Two   |
-|-----+-------|
-| my  | table |
-| is  | nice  |
-
-The table's label is encoded in the beginning of the caption, so that the cross-referencing mechanism works as usual.
-
-If you decide to use other packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)`, where `label` must have the prefix `tab:`, just like the inline table \@ref(tab:nice-inline-table). You have to be very careful about the _portability_ of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice. If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
+If you decide to use other R packages to generate tables, you have to make sure the label for the table environment appears in the beginning of the table caption in the form `(\#label)` (again, `label` must have the prefix `tab:`). You have to be very careful about the _portability_ of the table generating function: it should work for both HTML and LaTeX output automatically, so it must consider the output format internally (check `knitr::opts_knit$get('pandoc.to')`). When writing out an HTML table, the caption must be written in the `<caption></caption>` tag. For simple tables, `kable()` should suffice. If you have to create complicated tables (e.g., with certain cells spanning across multiple columns/rows), you will have to take the aforementioned issues into consideration.
 
 ## Cross-references
 
