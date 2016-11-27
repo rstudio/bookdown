@@ -3,3 +3,4 @@ http://timtrice.github.io/backtesting-strategies/
 https://www.masteringdfsanalytics.com/
 http://tidytextmining.com/
 http://www.brodrigues.co/fput/
+https://kazutan.github.io/ggplot2-gyakubiki-book/

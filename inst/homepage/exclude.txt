@@ -44,3 +44,5 @@ https://bookdown.org/mikabr/wordbank-book3/
 https://bookdown.org/nsafaian/trading-analytics-book/
 https://bookdown.org/paulcbauer/anscombe/
 https://bookdown.org/paulcbauer/plotly_styling_margins/
+https://bookdown.org/adriandel/IntroR/
+https://bookdown.org/content/191/
