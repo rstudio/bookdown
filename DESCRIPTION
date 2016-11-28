@@ -19,13 +19,13 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.5),
     knitr (>= 1.15),
-    miniUI,
     rmarkdown (>= 0.9.6),
-    yaml (>= 2.1.14),
-    rsconnect (>= 0.4.3)
+    yaml (>= 2.1.14)
 Suggests:
     htmlwidgets,
     rstudioapi,
+    miniUI,
+    rsconnect (>= 0.4.3),
     servr (>= 0.3),
     shiny,
     testit (>= 0.5),

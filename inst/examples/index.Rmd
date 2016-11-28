@@ -75,6 +75,7 @@ The R session information when compiling this book is shown below:
 ```{r include=FALSE}
 # only show versions of very relevant packages
 sessionInfo = function() {
+  lapply(c('shiny', 'miniUI'), loadNamespace)
   res = utils::sessionInfo()
   loaded = res$loadedOnly
   res$loadedOnly = loaded[intersect(names(loaded), c(
