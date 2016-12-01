@@ -42,3 +42,6 @@ This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
 with better default arguments. You can also change the default format to
 other LaTeX/PDF format functions using the \code{base_format} argument.
 }
+\note{
+This output format can only be used with \code{\link{render_book}()}.
+}
