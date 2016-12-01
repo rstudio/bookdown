@@ -23,6 +23,7 @@
 #'   \code{NULL}, the quote footer will not be processed.
 #' @param highlight_bw Whether to convert colors for syntax highlighting to
 #'   black-and-white (grayscale).
+#' @note This output format can only be used with \code{\link{render_book}()}.
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
