@@ -843,7 +843,7 @@ move_files_html = function(output, lib_dir) {
     list.files(lib_dir, '^leaflet', full.names = TRUE),
     full.names = TRUE, recursive = TRUE
   ), value = TRUE))
-  f = unique(f[file.exists(f)])
+  f = unique(f[file_test('-f', f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   file.copy(f, file.path(o, f), overwrite = TRUE)
   # should not need the lib dir any more
