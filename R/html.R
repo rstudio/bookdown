@@ -238,7 +238,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     writeUTF8(build(
       html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, output, html_foot, ...
     ), output)
-    return(output)
+    return(move_to_output_dir(output))
   }
 
   if (split_bib) {
@@ -352,17 +352,21 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     writeUTF8(html, nms[i])
   }
-  # move HTML files to output dir
-  nms2 = output_path(nms)
-  i = file.exists(nms) & (nms != nms2)
-  file.rename(nms[i], nms2[i])
-  nms = nms2
+  nms = move_to_output_dir(nms)
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+# move files to output dir if specified
+move_to_output_dir = function(files) {
+  files2 = output_path(files)
+  i = file.exists(files) & (files != files2)
+  file.rename(files[i], files2[i])
+  files2
 }
 
 find_token = function(x, token) {

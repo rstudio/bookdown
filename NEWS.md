@@ -1,3 +1,9 @@
+# CHANGES IN bookdown VERSION 0.4 (unreleased)
+
+## BUG FIXES
+
+- The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
+
 # CHANGES IN bookdown VERSION 0.3
 
 ## NEW FEATURES
