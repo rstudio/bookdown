@@ -26,7 +26,7 @@ options(
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
 
-lapply(c('DT', 'citr'), function(pkg) {
+lapply(c('DT', 'citr', 'formatR'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
 ```
