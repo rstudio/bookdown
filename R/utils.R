@@ -349,7 +349,7 @@ serve_book = function(
   # current active document
   if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE)) {
     context_fun = tryCatch(
-      getFromNamespace('rstudioapi', 'getSourceEditorContext'),
+      getFromNamespace('getSourceEditorContext', 'rstudioapi'),
       error = function(e) rstudioapi::getActiveDocumentContext
     )
     path = context_fun()[['path']]
