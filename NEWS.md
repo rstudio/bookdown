@@ -4,6 +4,8 @@
 
 - The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
 
+- The YAML option `includes: before_body` works correctly for `gitbook` output now (thanks, @benmarwick, #267).
+
 # CHANGES IN bookdown VERSION 0.3
 
 ## NEW FEATURES
