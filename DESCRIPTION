@@ -33,5 +33,6 @@ Suggests:
     webshot
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
+SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 5.0.1
