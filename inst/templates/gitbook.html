@@ -75,9 +75,7 @@ $endfor$
 
 <body>
 
-$for(include-before)$
-$include-before$
-$endfor$
+
 
 <!--bookdown:title:start-->
 $if(title)$
@@ -132,6 +130,9 @@ $endif$
           <div class="page-inner">
 
             <section class="normal" id="section-">
+$for(include-before)$
+$include-before$
+$endfor$
 <!--bookdown:toc:end-->
 <!--bookdown:body:start-->
 $body$
