@@ -206,7 +206,7 @@ epub_css = function(files, output = tempfile('epub', fileext = '.css')) {
 #' This function calls the command \command{ebook-convert} in Calibre
 #' (\url{http://calibre-ebook.com}) to convert e-books.
 #' @param input The input filename.
-#' @param output The output filename or extension (if only an extenion is
+#' @param output The output filename or extension (if only an extension is
 #'   provided, the output filename will be the input filename with its extension
 #'   replaced by \code{output}; for example, \code{calibre('foo.epub', 'mobi')}
 #'   generates \file{foo.mobi}).
