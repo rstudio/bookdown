@@ -5,7 +5,7 @@ word_document2 = function(fig_caption = TRUE, md_extensions = NULL, pandoc_args 
   from = from_rmarkdown(fig_caption, md_extensions)
 
   config = rmarkdown::word_document(
-    fig_caption = fig_caption, md_extensions = md_extensions, ...
+    fig_caption = fig_caption, md_extensions = md_extensions, pandoc_args = pandoc_args, ...
   )
   pre = config$pre_processor
   config$pre_processor = function(metadata, input_file, ...) {
