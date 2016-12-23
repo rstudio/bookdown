@@ -1,0 +1,3 @@
+Title: Bookdown Project
+Binding: bookdown_skeleton
+OpenFiles: README.md, _bookdown.yml, _output.yml, index.Rmd
