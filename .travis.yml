@@ -13,10 +13,10 @@ env:
     - secure: B2gZCV0jLwvvIERxorr4R4VntZJZ6DdwLh3diC3sxNTPETCisPmmOAXvHpGVZEMRxHG4mUXv5k+k21z+X6PlqPjTsD5USaM7lI88aGs9k3RoLBUb26o+pgw4uPj40T5QxCbOTGRxy8h6enUvW+e5zV24eAsACytO1SRmctny1hOpLa2RG9NZqIthceVZSqXcXpvB6HOCAiyD4hdIO4EGmTJgJYLPu3vQMujW3jt2V1iOjLfH01NQjyqyRPtxNylMT7B6A22DZDxokRdcVNmwUAVDZfxQicuk+juUP/2MaIGWDdHtYKmR1ilLGroTFVnKGfZgpLcv55WK1ZLsanlUYQb8St2OpjgF3qzSCl1fGKgA6ZHDksu0o0fYQCwEaVlpZamjYVGODFQxrfTwDT279gA8b4eJZ3nOM9o+HHf5VTOUm9H5qbpl0aAaOovQpPbeZAZwfN54fPOqhpvtyomOUXE1dq98MMZcRHjijlmJcviBG7WXTHEFJT9195j7m7Woawa3JdAGUxbH3Uzg77uxJYaTugY9+GF2lo2JrkWIirZ4xBgowM98XGhPHl49DGPhpvwh3fZvIHshwnsbAoBF7weAwb6W+7kFpQRvuVqdGDGC8nWWoFu+iGEMuuoPk9sujVk0T7sOKsUe/TO2Ij1lWoquMVE9PDFKlaNEu0QhJT0=
 
 repos:
-  XRAN: http://yihui.name/xran
+  XRAN: https://yihui.name/xran
 
 before_install:
-  - "wget -q http://yihui.name/xran/.gitconfig -O ~/.gitconfig"
+  - "curl -L https://yihui.name/xran/.gitconfig -o ~/.gitconfig"
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
 
@@ -28,5 +28,5 @@ before_script:
   - cd ../..
 
 after_success:
-  - "(wget -q -O - http://yihui.name/xran/r-xran | bash)"
+  - "(curl -L https://yihui.name/xran/r-xran | bash)"
   - cd inst/examples; ./deploy_github
