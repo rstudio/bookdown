@@ -1,21 +1,21 @@
-bookdown_skeleton <- function(path) {
+bookdown_skeleton = function(path) {
 
   # ensure directory exists
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
 
   # copy 'resources' folder to path
-  skeleton_resources <- system.file(
-    "rstudio/templates/project/resources",
-    package = "bookdown"
-  )
+  resources = bookdown_file('rstudio', 'templates', 'project', 'resources')
 
-  skeleton_files <- list.files(skeleton_resources,
-                               recursive = TRUE,
-                               include.dirs = FALSE)
+  files = list.files(resources, recursive = TRUE, include.dirs = FALSE)
 
-  source <- file.path(skeleton_resources, skeleton_files)
-  target <- file.path(path, skeleton_files)
+  source = file.path(resources, files)
+  target = file.path(path, files)
   file.copy(source, target)
+
+  # add book_filename to _bookdown.yml and default to the base path name
+  f = file.path(path, '_bookdown.yml')
+  x = readUTF8(f)
+  writeUTF8(c(sprintf('book_filename: "%s"', basename(path)), x), f)
 
   TRUE
 }
@@ -26,6 +26,10 @@ bookdown_skeleton <- function(path) {
 #' chapters with the chapter titles specified, create the output format file
 #' \file{_output.yml}, and generate the book configuration file
 #' \file{_bookdown.yml}.
+#'
+#' If you use RStudio v1.1.28 or a greater version, you do not really need to
+#' use this function, since you can create a new RStudio project and select the
+#' project type to be book.
 #' @param name An ID for the book to be written to the \code{book_filename}
 #'   field in \code{_bookdown.yml} and used as the \code{name} argument of
 #'   \code{\link{publish_book}()}. You can use the current directory name here.
@@ -65,5 +69,4 @@ book_skeleton = function(
   )
   write_file(sprintf('book_filename: %s', name), '_bookdown.yml')
 }
-
 
