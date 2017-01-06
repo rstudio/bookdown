@@ -8,7 +8,7 @@ calibre(input, output, options = "")
 \arguments{
 \item{input}{The input filename.}
 
-\item{output}{The output filename or extension (if only an extenion is
+\item{output}{The output filename or extension (if only an extension is
 provided, the output filename will be the input filename with its extension
 replaced by \code{output}; for example, \code{calibre('foo.epub', 'mobi')}
 generates \file{foo.mobi}).}
