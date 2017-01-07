@@ -4,7 +4,7 @@ In this chapter, we show the syntax of common components of a book, including R 
 
 ## Markdown syntax
 
-In this section We give a very brief introduction to Pandoc's Markdown\index{Markdown}. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
+In this section, we give a very brief introduction to Pandoc's Markdown\index{Markdown}. Readers who are familiar with Markdown can skip this section. The comprehensive syntax of Pandoc's Markdown can be found on the Pandoc website <http://pandoc.org>.
 
 ### Inline formatting
 
@@ -144,7 +144,7 @@ c & d
 
 ## Markdown extensions by bookdown
 
-Although Pandoc's Markdown is much richer than the original Markdown syntax, it still has a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill the gaps.
+Although Pandoc's Markdown is much richer than the original Markdown syntax, it still lacks a number of things that we may need for academic writing. For example, it supports math equations, but you cannot number and reference equations in multi-page HTML or EPUB output. We have provided a few Markdown extensions in **bookdown** to fill the gaps.
 
 ### Number and reference equations {#equations}
 
