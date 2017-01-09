@@ -460,6 +460,7 @@ label_names_math = setNames(list(
 ), theorem_abbr)
 # unnumbered math environments
 label_names_math2 = list(proof = 'Proof. ', remark = 'Remark. ')
+all_math_env = c(names(theorem_abbr), names(label_names_math2))
 
 label_names = c(label_names, label_names_math)
 

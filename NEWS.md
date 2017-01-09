@@ -6,6 +6,8 @@
 
 - The YAML option `includes: before_body` works correctly for `gitbook` output now (thanks, @benmarwick, #267).
 
+- Theorem environments are not defined for LaTeX output unless a `theorem` block is present (thanks, @JeffreyRacine, #291).
+
 # CHANGES IN bookdown VERSION 0.3
 
 ## NEW FEATURES
