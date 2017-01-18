@@ -71,7 +71,7 @@ cd book-output
 cp -r ../_book/* ./
 git add --all *
 git commit -m"Update the book"
-git push origin gh-pages
+git push -q origin gh-pages
 ```
 
 The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
