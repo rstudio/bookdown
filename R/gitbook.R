@@ -91,7 +91,7 @@ gitbook_page = function(
     link_prev, if (has_next) '' else 'navigation-unique'
   ) else ''
   a_next = if (has_next) sprintf(
-    '<a href="%s" class="navigation navigation-next %s" aria-label="Next page""><i class="fa fa-angle-right"></i></a>',
+    '<a href="%s" class="navigation navigation-next %s" aria-label="Next page"><i class="fa fa-angle-right"></i></a>',
     link_next, if (has_prev) '' else 'navigation-unique'
   ) else ''
   foot = sub('<!--bookdown:link_prev-->', a_prev, foot)
