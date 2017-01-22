@@ -55,7 +55,9 @@ book_listing = function() {
     }
 
     description = xml_find(html, './/meta[@name="description"]')
-    if (!is.null(description)) description = xml_attr(description, 'content')
+    if (is.null(description)) return()
+    description = xml_attr(description, 'content')
+    if (is.na(description) || description == 'NA') return()
     cover = xml_find(html, './/meta[@property="og:image"]')
     if (!is.null(cover)) {
       cover = xml_attr(cover, 'content')

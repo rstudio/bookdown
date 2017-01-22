@@ -46,3 +46,14 @@ https://bookdown.org/paulcbauer/anscombe/
 https://bookdown.org/paulcbauer/plotly_styling_margins/
 https://bookdown.org/adriandel/IntroR/
 https://bookdown.org/content/191/
+https://bookdown.org/rsanchezavalos/guatemala_-_pena_de_oro/
+https://bookdown.org/maurolepore/pragmatic/
+https://bookdown.org/fgabriel1891/draft1/
+https://bookdown.org/bomeara/GettingStarted/
+https://bookdown.org/maurolepore/interview/
+https://bookdown.org/jmichaelrosenberg/dser/
+https://bookdown.org/danielykim/bookdown-demo-kr/
+https://bookdown.org/marcosvital/Livro-do-Cantinho/
+https://bookdown.org/csgillespie/meetingsR/
+https://bookdown.org/asmundhreinn/r4ds-master/
+https://bookdown.org/henningsway/bookdown-workflow/
