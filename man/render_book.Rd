@@ -25,7 +25,7 @@ the book in a non-interactive R session.}
 
 \item{output_dir}{The output directory. If \code{NULL}, a field named
 \code{output_dir} in the configuration file \file{_bookdown.yml} will be
-used (possiblely not specified, either, in which case a directory name
+used (possibly not specified, either, in which case a directory name
 \file{_book} will be used).}
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
@@ -42,7 +42,7 @@ accurate (e.g. cross-references to other chapters will not work).}
 supposed to be UTF-8.}
 }
 \description{
-Render mulitple R Markdown files under the current working directory into a
+Render multiple R Markdown files under the current working directory into a
 book. It can be used in the RStudio IDE (specifically, the \code{knit} field
 in YAML). The \code{preview_chapter()} function is a wrapper of
 \code{render_book(preview = TRUE)}.
