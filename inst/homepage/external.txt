@@ -4,3 +4,4 @@ https://www.masteringdfsanalytics.com/
 http://tidytextmining.com/
 http://www.brodrigues.co/fput/
 https://kazutan.github.io/ggplot2-gyakubiki-book/
+https://ismayc.github.io/moderndiver-book/
