@@ -41,7 +41,18 @@ $endif$
   $if(favicon)$<link rel="shortcut icon" href="$favicon$" type="image/x-icon">$endif$
 <!--bookdown:link_prev-->
 <!--bookdown:link_next-->
-
+$if(abstract)$
+<style type="text/css">
+p.abstract{
+  text-align: center;
+  font-weight: bold;
+}
+div.abstract{
+  margin: auto;
+  width: 90%;
+}
+</style>
+$endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
@@ -99,6 +110,12 @@ $endif$
 $endfor$
 $if(date)$
 <h4 class="date"><em>$date$</em></h4>
+$endif$
+$if(abstract)$
+<div class="abstract">
+<p class="abstract">Abstract</p>
+$abstract$
+</div>
 $endif$
 </div>
 $endif$

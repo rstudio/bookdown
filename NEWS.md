@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.4 (unreleased)
 
+## NEW FEATURES
+
+- The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
+
 ## BUG FIXES
 
 - The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
