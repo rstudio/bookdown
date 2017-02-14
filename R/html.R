@@ -883,8 +883,22 @@ js_min_sources = function(x) {
 restore_math_labels = function(x) {
   i1 = grep('^(<[a-z]+>)?<span class="math display">\\\\\\[', x)
   i2 = grep('\\\\\\]</span>(</[a-z]+>)?$', x)
-  if (length(i1) * length(i2) == 0) return(x)
-  i = unlist(mapply(seq, i1, next_nearest(i1, i2, TRUE), SIMPLIFY = FALSE))
+  n1 = length(i1); n2 = length(i2)
+  if (n1 * n2 == 0) return(x)
+  i2 = next_nearest(i1, i2, TRUE)
+  if (any(is.na(i2))) {
+    # retry without assuming the closing \]</span> is only followed by an optional </tag>
+    i2 = grep('\\\\\\]</span>(</[a-z]+>)?', x)
+    i2 = next_nearest(i1, i2, TRUE)
+    if (any(is.na(i2))) {
+      warning(
+        "There seems to be problems with math expressions of the display style. ",
+        "Labels of these expressions will not be processed."
+      )
+      return(x)
+    }
+  }
+  i = unlist(mapply(seq, i1, i2, SIMPLIFY = FALSE))
   # remove \ before #
   x[i] = gsub('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', '(\\1)', x[i])
   x
