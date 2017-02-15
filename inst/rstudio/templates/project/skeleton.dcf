@@ -1,3 +1,4 @@
 Title: Book Project using bookdown
 Binding: bookdown_skeleton
 OpenFiles: README.md, _bookdown.yml, _output.yml, index.Rmd
+Icon: book.png
