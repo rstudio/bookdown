@@ -292,12 +292,11 @@ local_resources = function(x) {
 #' @param in_session Whether to compile the book using the current R session, or
 #'   always open a new R session to compile the book whenever changes occur in
 #'   the book directory.
-#' @param daemon,... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
+#' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
 serve_book = function(
-  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE,
-  daemon = FALSE, ...
+  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, ...
 ) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
@@ -316,7 +315,6 @@ serve_book = function(
   }
   if (is.null(output_dir)) output_dir = '_book'
   if (missing(preview)) preview = getOption('bookdown.preview', TRUE)
-  if (missing(daemon)) daemon = getOption('bookdown.serve.daemon', FALSE)
   output_format = first_html_format()
   rebuild = function(..., preview_ = preview) {
     files = grep('[.]R?md$', c(...), value = TRUE, ignore.case = TRUE)
@@ -338,7 +336,7 @@ serve_book = function(
     }
   }
   rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
-  servr::httw('.', ..., site.dir = output_dir, handler = rebuild, daemon = daemon)
+  servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
 }
 
 # can only preview HTML output via servr, so look for the first HTML format

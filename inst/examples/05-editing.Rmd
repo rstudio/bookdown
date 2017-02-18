@@ -56,7 +56,7 @@ The server will listen to changes in the book root directory: whenever you modif
 
 If it does not really take too much time to recompile the whole book, you may set the argument `preview = FALSE`, so that every time you update the book, the whole book is recompiled, otherwise only the modified chapters are recompiled via `preview_chapter()`.
 
-The arguments `daemon` and `...` are passed to `servr::httw()`, and please refer to its help page to see all possible options, such as `port`. There are pros and cons of using `in_session = TRUE` or `FALSE`:
+The arguments in `...` are passed to `servr::httw()`, and please refer to its help page to see all possible options, such as `daemon` and `port`. There are pros and cons of using `in_session = TRUE` or `FALSE`:
 
 - For `in_session = TRUE`, you will have access to all objects created in the book in the current R session: if you use a daemonized server (via the argument `daemon = TRUE`), you can check the objects at any time when the current R session is not busy; otherwise you will have to stop the server before you can check the objects. This can be useful when you need to interactively explore the R objects in the book. The downside of `in_session = TRUE` is that the output may be different with the book compiled from a fresh R session, because the state of the current R session may not be clean.
 - For `in_session = FALSE`, you do not have access to objects in the book from the current R session, but the output is more likely to be reproducible since everything is created from new R sessions. Since this function is only for previewing purposes, the cleanness of the R session may not be a big concern.
