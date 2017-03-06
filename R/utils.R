@@ -150,7 +150,9 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   }))
   if (preview && !(files[1] %in% input))
     content = c(fetch_yaml(readUTF8(files[1])), content)
+  unlink(to)
   writeUTF8(content, to)
+  Sys.chmod(to, '644')
 }
 
 match_dashes = function(x) grep('^---\\s*$', x)
