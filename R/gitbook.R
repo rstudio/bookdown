@@ -234,6 +234,18 @@ download_filenames = function(config) {
     in_dir(output_path('.'), {
       downloads = downloads[file.exists(downloads)]
     })
-  } else downloads = with_ext(book_name, exts)
+  } else {
+    downloads = with_ext(book_name, exts)
+    i = match('rmd', exts)
+    if (!is.na(i)) {
+      r = '^(https://github.com/[^/]+/[^/]+)/edit/'
+      if (is.character(link <- config$edit$link) && grepl(r, link)) {
+        downloads[i] = gsub(r, '\\1/raw/', link)
+      } else {
+        warning('The edit link was not specified, and the download link for RMD will not work')
+        downloads = downloads[-i]
+      }
+    }
+  }
   if (length(downloads)) I(downloads)
 }

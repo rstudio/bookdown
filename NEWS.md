@@ -4,6 +4,8 @@
 
 - The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
 
+- For the `gitbook` output format, the `downloads` option in `config` supports `rmd` now (e.g. `downloads: ["pdf", "epub", "rmd"]`) if the edit link has been specified and is a link to Github (thanks, @coatless, #330).
+
 ## BUG FIXES
 
 - The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
