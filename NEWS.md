@@ -14,6 +14,8 @@
 
 - Theorem environments are not defined for LaTeX output unless a `theorem` block is present (thanks, @JeffreyRacine, #291).
 
+- For `remark` and `proof` blocks, the chunk option `name` did not work correctly for non-LaTeX output (thanks, @ugroempi, #347).
+
 ## MINOR CHANGES
 
 - The `daemon` argument was removed from `serve_book()`, but you can still pass it to `servr::httw()` via the `...` argument.

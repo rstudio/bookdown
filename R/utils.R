@@ -473,13 +473,23 @@ eng_proof = function(options) {
     "The type of proof '", type, "' is not supported yet."
   )
   options$type = type
+  label = label_prefix(type, label_names_math2)
   name = options$name
   if (length(name) == 1) {
     options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
+    r = '^(.+?)([[:punct:][:space:]]+)$'  # "Remark. " -> "Remark (Name). "
+    if (grepl(r, label)) {
+      label1 = gsub(r, '\\1', label)
+      label2 = paste0(' (', name, ')', gsub(r, '\\2', label))
+    } else {
+      label1 = label; label2 = ''
+    }
+    label = sprintf('<em>%s</em>%s', label1, label2)
+  } else {
+    label = sprintf('<em>%s</em>', label)
   }
   options$html.before2 = sprintf(
-    '\\iffalse <span class="%s"><em>%s</em></span> \\fi ', type,
-    if (length(name) == 1) name else label_prefix(type, label_names_math2)
+    '\\iffalse <span class="%s">%s</span> \\fi ', type, label
   )
   knitr:::eng_block2(options)
 }
