@@ -20,6 +20,8 @@
 
 - The `daemon` argument was removed from `serve_book()`, but you can still pass it to `servr::httw()` via the `...` argument.
 
+- Added a small space (padding) to the right of section numbers in `gitbook` output, so that the section numbers are better separated from the titles (thanks, @aronatkins, #367).
+
 # CHANGES IN bookdown VERSION 0.3
 
 ## NEW FEATURES
