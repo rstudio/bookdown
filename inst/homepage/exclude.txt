@@ -57,3 +57,10 @@ https://bookdown.org/marcosvital/Livro-do-Cantinho/
 https://bookdown.org/csgillespie/meetingsR/
 https://bookdown.org/asmundhreinn/r4ds-master/
 https://bookdown.org/henningsway/bookdown-workflow/
+https://bookdown.org/yihui/blogdown/
+https://bookdown.org/fgabriel1891/Internship2_progress_FGMA/
+https://bookdown.org/garza7149/ACTS131Notes/
+https://bookdown.org/fgabriel1891/datalunch2feb/
+https://bookdown.org/paulcbauer/causal_inference2/
+https://bookdown.org/paulcbauer/causal_inference7/
+https://bookdown.org/paulcbauer/causal_inference6/
