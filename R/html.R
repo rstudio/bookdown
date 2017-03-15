@@ -575,7 +575,7 @@ reg_ref_links = '(\\(ref:[-/[:alnum:]]+\\))'
 resolve_ref_links_html = function(x) {
   res = parse_ref_links(x, '^<p>%s (.+)</p>$')
   if (is.null(res)) return(x)
-  restore_ref_links(res$content, '(?<!>)%s', res$tags, res$txts, TRUE)
+  restore_ref_links(res$content, '(?<!code>)%s', res$tags, res$txts, TRUE)
 }
 
 parse_ref_links = function(x, regexp) {
