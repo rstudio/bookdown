@@ -194,7 +194,7 @@ restore_block2 = function(x, global = FALSE) {
       '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
       str_trim(vapply(theorem_abbr, label_prefix, character(1), USE.NAMES = FALSE)),
       if (global) '' else {
-        if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
+        if (length(grep('^\\s*\\\\chapter[*]?', x))) '[chapter]' else '[section]'
       }
     )
     # the proof environment has already been defined by amsthm
