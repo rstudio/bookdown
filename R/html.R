@@ -583,6 +583,13 @@ parse_ref_links = function(x, regexp) {
   if (length(i <- grep(r, x)) == 0) return()
   tags = gsub(r, '\\1', x[i])
   txts = gsub(r, '\\2', x[i])
+  if (any(k <- duplicated(tags))) {
+    warning('Possibly duplicated text reference labels: ', paste(tags[k], collapse = ', '))
+    k = !k
+    tags = tags[k]
+    txts = txts[k]
+    i = i[k]
+  }
   x[i] = ''
   list(content = x, tags = tags, txts = txts, matches = i)
 }
