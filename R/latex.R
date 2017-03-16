@@ -45,6 +45,7 @@ pdf_book = function(
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
+    x = fix_eqs(x)
     x = restore_block2(x, !number_sections)
     if (!is.null(quote_footer)) {
       if (length(quote_footer) != 2 || !is.character(quote_footer)) warning(
@@ -216,6 +217,18 @@ restore_block2 = function(x, global = FALSE) {
     intToUtf8(as.integer(z))
   }, USE.NAMES = FALSE)
   x[i] = paste0(gsub(r, '\\1', x[i]), opts, gsub(r, '\\5', x[i]))
+  x
+}
+
+fix_eqs = function(x){
+  beg_reg <- '^\\s*\\\\begin\\{equation|align\\**\\}'
+  end_reg <- '^\\s*\\\\end\\{equation|align\\**\\}'
+  i3 = if (length(i1 <- grep(beg_reg, x))) (i1 - 1)[grepl("^\\s*", x[i1 - 1])]
+
+  i3 = c(i3,
+         if (length(i2 <- grep(end_reg, x))) (i2 + 1)[grepl("^\\s*", x[i2 + 1])]
+         )
+  if (length(i3)) x = x[-i3]
   x
 }
 
