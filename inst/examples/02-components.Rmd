@@ -519,7 +519,7 @@ knitr::kable(
 )
 ```
 
-If you want to put multiple tables in a single table environment, wrap the data objects (usually data frames in R) into a list. See Table \@ref(tab:table-multi) for an example.
+If you want to put multiple tables in a single table environment, wrap the data objects (usually data frames in R) into a list. See Table \@ref(tab:table-multi) for an example. Please note that this feature is only available in HTML and PDF output.
 
 ```{r table-multi, tidy=FALSE}
 knitr::kable(
