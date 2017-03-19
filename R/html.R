@@ -261,6 +261,10 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   } else {
     h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', html_body)
     h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', html_body)
+    if (length(h1) < length(nms)) warning(
+      'You have ', length(nms), ' Rmd input file(s) but only ', length(h1),
+      ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
+    )
     idx2 = if (split_level == 1) h1 else if (split_level == 2) {
       h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
       if (length(h12) > 0 && h12[1] != 1) stop(
