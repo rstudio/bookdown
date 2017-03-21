@@ -1,8 +1,8 @@
 http://r4ds.had.co.nz/
-http://timtrice.github.io/backtesting-strategies/
+https://timtrice.github.io/backtesting-strategies/
 https://www.masteringdfsanalytics.com/
 http://tidytextmining.com/
 http://www.brodrigues.co/fput/
 https://kazutan.github.io/ggplot2-gyakubiki-book/
 https://ismayc.github.io/moderndiver-book/
-http://yijutseng.github.io/DataScienceRBook/
+https://yijutseng.github.io/DataScienceRBook/
