@@ -458,7 +458,7 @@ eng_theorem = function(options) {
   name = options$name
   if (length(name) == 1) {
     options$latex.options = sprintf('[%s]', name)
-    html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi ', name))
+    html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
   }
   options$html.before2 = sprintf(
     '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
@@ -489,7 +489,7 @@ eng_proof = function(options) {
     label = sprintf('<em>%s</em>', label)
   }
   options$html.before2 = sprintf(
-    '\\iffalse <span class="%s">%s</span> \\fi ', type, label
+    '\\iffalse <span class="%s">%s</span> \\fi{} ', type, label
   )
   knitr:::eng_block2(options)
 }

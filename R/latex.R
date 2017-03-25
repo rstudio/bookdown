@@ -210,7 +210,7 @@ restore_block2 = function(x, global = FALSE) {
   i3 = c(i3, if (length(i2 <- grep('^\\\\EndKnitrBlock\\{', x))) (i2 - 1)[x[i2 - 1] == ''])
   if (length(i3)) x = x[-i3]
 
-  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi)(.*)$'
+  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
   if (length(i <- grep(r, x)) == 0) return(x)
   opts = sapply(strsplit(gsub(r, '\\3', x[i]), '-'), function(z) {
     intToUtf8(as.integer(z))
