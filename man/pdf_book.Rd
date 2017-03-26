@@ -42,6 +42,12 @@ commands.
 This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
 with better default arguments. You can also change the default format to
 other LaTeX/PDF format functions using the \code{base_format} argument.
+
+The global R option \code{bookdown.post.latex} can be set to a function to
+post-process the LaTeX output. This function takes the character vector of
+the LaTeX output as its input argument, and should return a character vector
+to be written to the \file{.tex} output file. This gives you full power to
+post-process the LaTeX output.
 }
 \note{
 This output format can only be used with \code{\link{render_book}()}.
