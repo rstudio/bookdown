@@ -20,6 +20,6 @@ cover-image: "images/cover.png"
 url: 'https\://bookdown.org/yihui/bookdown-demo/'
 ```
 
-If your book is written with **bookdown** but not published to bookdown.org, please feel free to [let us know](https://github.com/rstudio/bookdown/issues) the URL, and we can also list it on the homepage.
+If your book is written with **bookdown** but not published to bookdown.org, please feel free to [let us know](https://github.com/rstudio/bookdown/issues) the URL, and we can also list it on the homepage. Please note that the book list is updated manually, so your book will not be listed automatically on the homepage after you upload it.
 
 The website bookdown.org is a service provided by [RStudio Inc.](https://www.rstudio.com) to host books. It is free for you to publish the static output files of your book, and you hold the full copyright of your own books.
