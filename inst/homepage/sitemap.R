@@ -106,7 +106,7 @@ book_listing = function() {
     ), BOOK_DATE = date)
   }
 
-
+  unlink('listed.txt')
 
   books = mapply(meta$url, meta$lastmod, FUN = function(url, date) {
 
@@ -114,6 +114,7 @@ book_listing = function() {
     if (grepl('/bookdown-demo/$', url) && !grepl('/yihui/', url)) return()
     if (grepl('^https://bookdown.org/ChaitaTest/', url)) return()
     message('Processing ', url)
+    cat(url, sep = '\n', file = 'listed.txt', append = TRUE)
 
     # cache the scraped data
     if (file.exists('_book_meta.rds')) {
@@ -138,6 +139,9 @@ book_listing = function() {
   # elevate pinned urls to the top, and order by dates
   i = order(match(meta$url, rev(pinned_urls)), dates, decreasing = TRUE, na.last = TRUE)
   books = books[i]
+
+  urls = readLines('listed.txt')
+  writeLines(sort(urls), 'listed.txt')
 
   tagList(books)
 }
