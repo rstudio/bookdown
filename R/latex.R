@@ -7,6 +7,12 @@
 #' This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
 #' with better default arguments. You can also change the default format to
 #' other LaTeX/PDF format functions using the \code{base_format} argument.
+#'
+#' The global R option \code{bookdown.post.latex} can be set to a function to
+#' post-process the LaTeX output. This function takes the character vector of
+#' the LaTeX output as its input argument, and should return a character vector
+#' to be written to the \file{.tex} output file. This gives you full power to
+#' post-process the LaTeX output.
 #' @param toc,number_sections,fig_caption See
 #'   \code{rmarkdown::\link{pdf_document}}, or the documentation of the
 #'   \code{base_format} function.
@@ -52,6 +58,8 @@ pdf_book = function(
       ) else x = process_quote_latex(x, quote_footer)
     }
     if (highlight_bw) x = highlight_grayscale_latex(x)
+    post = getOption('bookdown.post.latex')
+    if (is.function(post)) x = post(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
