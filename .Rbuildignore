@@ -8,3 +8,4 @@ inst/resources/gitbook/js/app.js
 inst/resources/gitbook/js/app.min.map
 ^CONTRIBUTING\.md$
 .*/rsconnect
+^\.github$
