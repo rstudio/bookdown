@@ -64,3 +64,5 @@ https://bookdown.org/fgabriel1891/datalunch2feb/
 https://bookdown.org/paulcbauer/causal_inference2/
 https://bookdown.org/paulcbauer/causal_inference7/
 https://bookdown.org/paulcbauer/causal_inference6/
+https://bookdown.org/burak2358/SARP/
+https://bookdown.org/maurolepore/idigbio/

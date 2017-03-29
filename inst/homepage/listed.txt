@@ -8,6 +8,7 @@ https://bookdown.org/alizaidi/mrs-spark-ml/
 https://bookdown.org/baydap/papasdiary/
 https://bookdown.org/bkbelton/bookdown-demo-win/
 https://bookdown.org/bomeara/comparative-methods/
+https://bookdown.org/burak2358/SARP-TR/
 https://bookdown.org/ccolonescu/RPoE4/
 https://bookdown.org/chen/snaEd/
 https://bookdown.org/chesterismay/rbasics/
@@ -30,7 +31,6 @@ https://bookdown.org/jandeleeuw6/gifi/
 https://bookdown.org/jmichaelrosenberg/state_tweets_app/
 https://bookdown.org/kuzmenkov111/MapGardIt/
 https://bookdown.org/mathemedicine/Stat_book/
-https://bookdown.org/matthewdisorbo/_book/
 https://bookdown.org/maurolepore/ctpa/
 https://bookdown.org/maurolepore/culebra/
 https://bookdown.org/maurolepore/mds_depth/
@@ -66,6 +66,7 @@ https://bookdown.org/yihui/bookdown-demo/
 https://bookdown.org/yihui/bookdown/
 https://bookdown.org/yihui/r-ninja/
 https://dzchilds.github.io/eda-for-bio/
+https://info201-s17.github.io/book/
 https://ismayc.github.io/moderndiver-book/
 https://kazutan.github.io/ggplot2-gyakubiki-book/
 https://timtrice.github.io/backtesting-strategies/

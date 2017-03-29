@@ -7,3 +7,4 @@ https://kazutan.github.io/ggplot2-gyakubiki-book/
 https://ismayc.github.io/moderndiver-book/
 https://yijutseng.github.io/DataScienceRBook/
 https://dzchilds.github.io/eda-for-bio/
+https://info201-s17.github.io/book/
