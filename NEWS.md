@@ -20,6 +20,8 @@
 
 - Some text references do not work for HTML and Word output (thanks, @ugroempi, #363).
 
+- The option `chapter_name` in `_bookdown.yml` does not work when it is specified as a function (thanks, @tzerk, 0c05c3828be).
+
 ## MINOR CHANGES
 
 - The `daemon` argument was removed from `serve_book()`, but you can still pass it to `servr::httw()` via the `...` argument.

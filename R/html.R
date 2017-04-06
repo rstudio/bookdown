@@ -653,7 +653,7 @@ add_toc_ids = function(toc) {
 add_chapter_prefix = function(content) {
   config = load_config()
   chapter_name = config[['chapter_name']] %n% ui_language('chapter_name')
-  if (is.null(chapter_name) || chapter_name == '') return(content)
+  if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(
       length(chapter_name), paste0(chapter_name, i),
