@@ -15,6 +15,11 @@ pinned_urls = c(
 
 book_listing = function() {
 
+  structure = function(x, ...) {
+    if (is.null(x)) x = list()
+    base::structure(x, ...)
+  }
+
   read_meta = function(xml) {
     if (!grepl('[.]xml$', xml)) {
       return(data.frame(url = readLines(xml), lastmod = NA))
