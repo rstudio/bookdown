@@ -66,3 +66,9 @@ https://bookdown.org/paulcbauer/causal_inference7/
 https://bookdown.org/paulcbauer/causal_inference6/
 https://bookdown.org/burak2358/SARP/
 https://bookdown.org/maurolepore/idigbio/
+https://bookdown.org/burak2358/SARP-EN/
+https://bookdown.org/jmichaelrosenberg/r_introduction_414_present/
+https://bookdown.org/matthewdisorbo/solutions/
+https://bookdown.org/paulcbauer/mpsa2017-presentation/
+https://bookdown.org/peterolejua/estimacion_puntual/
+https://bookdown.org/robertkck/ecf_draft/
