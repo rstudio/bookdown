@@ -173,7 +173,7 @@ $if(math)$
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "$if(mathjax)$$mathjax$$else$https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML$endif$";
+    script.src  = "$if(mathjax)$$mathjax$$else$https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML$endif$";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
