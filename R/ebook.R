@@ -153,7 +153,7 @@ resolve_ref_links_epub = function(x) {
   restore_ref_links(res$content, '(?<!`)%s', res$tags, res$txts, TRUE)
 }
 
-reg_part = '^# \\(PART\\) .+ \\{-\\}$'
+reg_part = '^# \\(PART(\\\\\\*)?\\) .+ \\{-\\}$'
 
 # simply remove parts in epub
 restore_part_epub = function(x) {

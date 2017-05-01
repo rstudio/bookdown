@@ -696,17 +696,25 @@ restore_links = function(segment, full, lines, filenames) {
 }
 
 restore_part_html = function(x, remove = TRUE) {
-  i = grep('^<h1>\\(PART\\) .+</h1>$', x)
+  i = grep('^<h1>\\(PART\\*?\\) .+</h1>$', x)
   if (length(i) == 0) return(x)
   i = i[grep('^<div .*class=".*unnumbered.*">$', x[i - 1])]
   if (remove) {
     x[i] = x[i - 1] = x[i + 1] = ''
   } else {
-    x[i] = mapply(
-      gsub, '<h1>\\(PART\\)', x = x[i],
-      sprintf('<h1><span class="header-section-number">%s</span>', as.roman(seq_along(i)))
+    k = grepl('^<h1>\\(PART\\*\\) .+</h1>$', x[i])  # unnumbered parts
+    i1 = i[k]; i2 = i[!k]
+    x[i1] = gsub('<h1>\\(PART\\*\\)', '<h1>', x[i1])
+    x[i2] = mapply(
+      gsub, '<h1>\\(PART\\)', x = x[i2],
+      sprintf('<h1><span class="header-section-number">%s</span>', as.roman(seq_along(i2)))
     )
   }
+
+  r = '^<li><a href="[^"]*">\\(PART\\*\\) (.+)</a>(.+)$'
+  i = grep(r, x)
+  x[i] = gsub(r, '<li class="part"><span><b>\\1</b></span>\\2', x[i])
+
   r = '^<li><a href="[^"]*">\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)

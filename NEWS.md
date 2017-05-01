@@ -2,6 +2,8 @@
 
 ## NEW FEATURES
 
+- Added special syntax for unnumbered part headers: `# (PART\*)`. Numbered parts should be written after `# (PART)` as before (thanks, @brooksambrose, http://stackoverflow.com/q/43688902/559676).
+
 - The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
 
 - For the `gitbook` output format, the `downloads` option in `config` supports `rmd` now (e.g. `download: ["pdf", "epub", "rmd"]`) if the edit link has been specified and is a link to Github (thanks, @coatless, #330).

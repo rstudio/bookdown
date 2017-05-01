@@ -136,11 +136,15 @@ resolve_ref_links_latex = function(x) {
 }
 
 restore_part_latex = function(x) {
-  r = '^\\\\(chapter|section)\\*\\{\\(PART\\)( |$)'
+  r = '^\\\\(chapter|section)\\*\\{\\(PART(\\*)?\\)( |$)'
   i = grep(r, x)
   if (length(i) == 0) return(x)
-  x[i] = gsub(r, '\\\\part{', x[i])
-  # remove the line \addcontentsline since it is not really a chapter title
+  x[i] = gsub(r, '\\\\part\\2{', x[i])
+  # remove (PART*) from the TOC lines for unnumbered parts
+  r = '^(\\\\addcontentsline\\{toc\\}\\{)(chapter|section)(\\}\\{)\\(PART\\*\\)( |$)'
+  x = gsub(r, '\\1part\\3', x)
+  # for numbered parts, remove the line \addcontentsline since it is not really
+  # a chapter title and should not be added to TOC
   j = grep('^\\\\addcontentsline\\{toc\\}\\{(chapter|section)\\}\\{\\(PART\\)( |$)', x)
   k = j; n = length(x)
   for (i in seq_along(j)) {
