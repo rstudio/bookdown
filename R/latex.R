@@ -243,8 +243,20 @@ theorem_style = function(env) {
 
 process_quote_latex = function(x, commands) {
   for (i in grep('^\\\\end\\{quote\\}$', x)) {
-    if (!grepl('^---.+', x[i - 1])) next
-    x[i - 1] = paste0(commands[1], x[i - 1], commands[2])
+    i1 = NULL; i2 = i - 1
+    k = 1
+    while (k < i) {
+      xk = x[i - k]
+      if (grepl('^---.+', xk)) {
+        i1 = i - k
+        break
+      }
+      if (xk == '' || grepl('^\\\\begin', xk)) break
+      k = k + 1
+    }
+    if (is.null(i1)) next
+    x[i1] = paste0(commands[1], x[i1])
+    x[i2] = paste0(x[i2], commands[2])
   }
   x
 }
