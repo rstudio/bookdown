@@ -96,9 +96,9 @@ render_book = function(
     'The file ', main, ' exists. Please delete it if it was automatically generated, ',
     'or set a different book_filename option in _bookdown.yml.'
   )
-  on.exit(add = TRUE, if (file.exists(main)) {
+  on.exit(if (file.exists(main)) {
     message('Please delete ', main, ' after you finish debugging the error.')
-  })
+  }, add = TRUE)
   opts$set(book_filename = main)  # store the book filename
 
   files = setdiff(source_files(format, config), main)
