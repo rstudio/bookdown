@@ -18,7 +18,7 @@ Description: Output formats and utilities for authoring books and technical docu
 License: GPL-3
 Imports:
     htmltools (>= 0.3.5),
-    knitr (>= 1.15),
+    knitr (>= 1.16),
     rmarkdown (>= 0.9.6),
     yaml (>= 2.1.14)
 Suggests:
@@ -36,4 +36,3 @@ BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 6.0.1
-Remotes: yihui/knitr
