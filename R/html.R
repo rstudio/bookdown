@@ -869,7 +869,9 @@ move_files_html = function(output, lib_dir) {
   ), value = TRUE))
   f = unique(f[file_test('-f', f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
-  file.copy(f, file.path(o, f), overwrite = TRUE)
+  f2 = file.path(o, f)
+  i = !same_path(f, f2, mustWork = FALSE)
+  if (any(i)) file.copy(f[i], f2[i], overwrite = TRUE)
   # should not need the lib dir any more
   if (length(lib_dir) == 1 && is.character(lib_dir))
     unlink(lib_dir, recursive = TRUE)
