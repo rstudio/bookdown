@@ -81,6 +81,7 @@ sessionInfo = function() {
   res$loadedOnly = loaded[intersect(names(loaded), c(
     'bookdown', 'knitr', 'rmarkdown', 'shiny', 'htmltools', 'tools', 'miniUI'
   ))]
+  res$BLAS = res$LAPACK = NULL
   res
 }
 ```
