@@ -17,9 +17,9 @@ Maintainer: Yihui Xie <xie@yihui.name>
 Description: Output formats and utilities for authoring books and technical documents with R Markdown.
 License: GPL-3
 Imports:
-    htmltools (>= 0.3.5),
+    htmltools (>= 0.3.6),
     knitr (>= 1.16),
-    rmarkdown (>= 0.9.6),
+    rmarkdown (>= 1.5),
     yaml (>= 2.1.14)
 Suggests:
     htmlwidgets,
