@@ -210,7 +210,7 @@ gitbook_config = function(config = list()) {
   config$toc$before = NULL; config$toc$after = NULL
   config = sprintf('gitbook.start(%s);', knitr:::tojson(config))
   paste(
-    '<script>', 'require(["gitbook"], function(gitbook) {', config, '});',
+    '<script>', 'gitbook.require(["gitbook"], function(gitbook) {', config, '});',
     '</script>', sep = '\n'
   )
 }
