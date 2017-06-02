@@ -433,12 +433,13 @@ is_img_line = function(x) grepl('^<img src=".* alt="', x)
 
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
-  ref = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
+  lab = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
+  ref = prefix_section_labels(lab)
   num = ref_table[ref]
   i = is.na(num)
   if (any(i)) {
     if (!isTRUE(opts$get('preview')))
-      warning('The label(s) ', paste(ref[i], collapse = ', '), ' not found', call. = FALSE)
+      warning('The label(s) ', paste(lab[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
   # equation references should include paratheses
@@ -447,6 +448,14 @@ ref_to_number = function(ref, ref_table, backslash) {
   res = sprintf('<a href="#%s">%s</a>', ref, num)
   # do not add relative links to equation numbers in ePub/Word (not implemented)
   ifelse(backslash & i, num, res)
+}
+
+# add prefix to section id's
+prefix_section_labels = function(labels) {
+  prefix = knitr::opts_knit$get("rmarkdown.pandoc.id_prefix")
+  is_sec = !grepl(sprintf("^(%s):", reg_label_types), labels)
+  labels[is_sec] = paste0(prefix, labels[is_sec])
+  labels
 }
 
 reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
