@@ -91,7 +91,7 @@ render_book = function(
   }
 
   main = book_filename()
-  if (!grepl('[.][a-zA-Z]+$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
+  if (!grepl('[.][Rr]?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
   if (file.exists(main)) stop(
     'The file ', main, ' exists. Please delete it if it was automatically generated, ',
     'or set a different book_filename option in _bookdown.yml.'

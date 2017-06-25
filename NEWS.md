@@ -1,3 +1,9 @@
+# CHANGES IN bookdown VERSION 0.5 (unreleased)
+
+## BUG FIXES
+
+- The book cannot be properly rendered when the option `book_filename` in `_bookdown.yml` contains a dot (thanks, @pinusm, #410).
+
 # CHANGES IN bookdown VERSION 0.4
 
 ## NEW FEATURES
