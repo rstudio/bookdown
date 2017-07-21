@@ -8,15 +8,17 @@ rmarkdown::pandoc_version()
 system('pdflatex --version')
 ```
 
-To include a verbatim chunk of arbitrary text, indent it by four spaces (this can be done in RStudio by selecting the text and pressing the `Tab` key once or twice, depending on your settings), especially when it contains backticks, e.g.
+To include a verbatim chunk of arbitrary text, enclose it in four backticks, especially when the text contains backticks, e.g.
 
-    A sample document.
+````
+A sample document.
 
-    ```{r}
-    1 + 1  # a line of code
-    ```
+```{r}
+1 + 1  # a line of code
+```
 
-    Another paragraph.
+Another paragraph.
+````
 
 If it is just a chunk of R code (or other languages) and you want syntax highlighting, you may use three backticks to format it, e.g.
 
