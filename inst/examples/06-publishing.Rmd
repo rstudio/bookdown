@@ -79,6 +79,7 @@ The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrar
 
 ```yaml
 language: r
+pandoc_version: 1.19.2.1
 
 env:
   global:
@@ -99,6 +100,7 @@ Since this Travis service is primarily for checking R packages, you will also ne
 
 ```dcf
 Package: placeholder
+Type: Book
 Title: Does not matter.
 Version: 0.0.1
 Imports: bookdown, ggplot2
