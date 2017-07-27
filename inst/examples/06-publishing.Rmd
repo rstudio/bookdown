@@ -29,13 +29,13 @@ You can host your book on GitHub\index{GitHub} for free via GitHub Pages (https:
 
 # create a hidden file .nojekyll
 touch .nojekyll
-# add to git here because won't show up in RStudio
+# add to git here because will not show up in RStudio
 git add .nojekyll
 ```
 
 If you are on Windows, you may not have the `touch` command, and you can create the file in R using `file.create('.nojekyll')`.
 
-One approach is to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help.](http://bit.ly/2cvloKV) First, set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder". In this case the `.nojekyll` file has to be in the `/docs` folder. 
+One approach is to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help.](http://bit.ly/2cvloKV) First, set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder". In this case, the `.nojekyll` file has to be in the `/docs` folder. 
 
 An alternative approach is to create a `gh-pages` branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository. If your book repository does not have the `gh-pages` branch, you may use the following commands to create one:
 
