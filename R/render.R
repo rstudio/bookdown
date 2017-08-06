@@ -1,42 +1,45 @@
 #' Render multiple R Markdown documents into a book
-#'
-#' Render multiple R Markdown files under the current working directory into a
-#' book. It can be used in the RStudio IDE (specifically, the \code{knit} field
-#' in YAML). The \code{preview_chapter()} function is a wrapper of
+#' 
+#' Render multiple R Markdown files under the current working directory into a 
+#' book. It can be used in the RStudio IDE (specifically, the \code{knit} field 
+#' in YAML). The \code{preview_chapter()} function is a wrapper of 
 #' \code{render_book(preview = TRUE)}.
-#'
-#' There are two ways to render a book from Rmd files. The default way
-#' (\code{new_session = FALSE}) is to merge Rmd files into a single file and
+#' 
+#' There are two ways to render a book from Rmd files. The default way 
+#' (\code{new_session = FALSE}) is to merge Rmd files into a single file and 
 #' render this file. You can also choose to render each individual Rmd file in a
 #' new R session (\code{new_session = TRUE}).
-#' @param input An input filename (or multiple filenames). If \code{preview =
-#'   TRUE}, only files specified in this argument are rendered, otherwise all R
+#' @param input An input filename (or multiple filenames). If \code{preview = 
+#'   TRUE}, only files specified in this argument are rendered, otherwise all R 
 #'   Markdown files specified by the book are rendered.
-#' @param output_format,...,clean,envir Arguments to be passed to
+#' @param output_format,...,clean,envir Arguments to be passed to 
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 #'   \code{...} is passed to \code{render_book()}.
-#' @param clean_envir Whether to clean up the environment \code{envir} before
-#'   rendering the book. By default, the environment is cleaned when rendering
+#' @param clean_envir Whether to clean up the environment \code{envir} before 
+#'   rendering the book. By default, the environment is cleaned when rendering 
 #'   the book in a non-interactive R session.
-#' @param output_dir The output directory. If \code{NULL}, a field named
-#'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be
-#'   used (possibly not specified, either, in which case a directory name
+#' @param output_dir The output directory. If \code{NULL}, a field named 
+#'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be 
+#'   used (possibly not specified, either, in which case a directory name 
 #'   \file{_book} will be used).
-#' @param new_session Whether to use new R sessions to compile individual Rmd
-#'   files (if not provided, the value of the \code{new_session} option in
-#'   \file{_bookdown.yml} is used; if this is also not provided,
+#' @param new_session Whether to use new R sessions to compile individual Rmd 
+#'   files (if not provided, the value of the \code{new_session} option in 
+#'   \file{_bookdown.yml} is used; if this is also not provided, 
 #'   \code{new_session = FALSE}).
 #' @param preview Whether to render and preview the input files specified by the
-#'   \code{input} argument. Previewing a certain chapter may save compilation
-#'   time as you actively work on this chapter, but the output may not be
+#'   \code{input} argument. Previewing a certain chapter may save compilation 
+#'   time as you actively work on this chapter, but the output may not be 
 #'   accurate (e.g. cross-references to other chapters will not work).
-#' @param encoding Ignored. The character encoding of all input files is
+#' @param encoding Ignored. The character encoding of all input files is 
 #'   supposed to be UTF-8.
+#' @param render2md.encoding. passed on to `rmarkdown::render()` as the argument
+#'   of `encoding` parameter when render Rmarkdown document to pandoc's markdown
+#'   document. Use default value if you don't understand what you are doing.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
-  preview = FALSE, encoding = 'UTF-8'
+  preview = FALSE, encoding = 'UTF-8', render2md.encoding = 'UTF-8'
 ) {
 
   verify_rstudio_version()
@@ -111,9 +114,9 @@ render_book = function(
   )
 
   res = if (new_session) {
-    render_new_session(files, main, config, output_format, clean, envir, ...)
+    render_new_session(files, main, config, output_format, clean, envir, render2md.encoding, ...)
   } else {
-    render_cur_session(files, main, config, output_format, clean, envir, ...)
+    render_cur_session(files, main, config, output_format, clean, envir, render2md.encoding, ...)
   }
   unlink(main)
   res
@@ -134,13 +137,13 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
   rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
 }
 
-render_new_session = function(files, main, config, output_format, clean, envir, ...) {
+render_new_session = function(files, main, config, output_format, clean, envir, render2md.encoding, ...) {
 
   # save a copy of render arguments in a temp file
   render_args = tempfile('render', '.', '.rds')
   on.exit(unlink(render_args), add = TRUE)
   saveRDS(
-    list(output_format = output_format, ..., clean = FALSE, envir = envir),
+    list(output_format = output_format, ..., clean = FALSE, envir = envir, encoding = render2md.encoding),
     render_args
   )
   # an RDS file to save all the metadata after compiling each Rmd
@@ -169,6 +172,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
       txt = c(add1, readUTF8(f), add2)
       writeUTF8(txt, f)
       Rscript_render(f, render_args, render_meta)
+
     }, finally = {
       if (file.copy(f2, f, overwrite = TRUE)) unlink(f2)
     })
