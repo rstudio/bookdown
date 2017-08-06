@@ -131,7 +131,9 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'before'),
     insert_chapter_script(config, 'after')
   )
-  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
+
+  render.encoding = if (.Platform$OS.type == 'windows') getOption("encoding") else 'UTF-8'
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = render.encoding)
 }
 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
