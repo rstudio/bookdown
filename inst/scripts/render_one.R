@@ -3,8 +3,9 @@
 # filename to save the returned value of render()
 local({
   args = commandArgs(TRUE)
+  render.encoding = if (.Platform$OS.type == 'windows') getOption("encoding") else 'UTF-8'
   out = do.call(
-    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE, encoding = 'UTF-8'))
+    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE, encoding = render.encoding))
   )
   out_expected = bookdown:::with_ext(args[1], '.md')
   if (out != out_expected) {
