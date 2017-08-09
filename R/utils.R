@@ -437,7 +437,7 @@ eng_theorem = function(options) {
   options$html.before2 = sprintf(
     '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
   )
-  knitr:::eng_block2(options)
+  process_block(options, to_md)
 }
 
 # a proof engine for unnumbered math environments
@@ -466,6 +466,17 @@ eng_proof = function(options) {
     '<span class="%s">%s</span> ', type, label
   )
   if (!to_md) options$html.before2 = paste('\\iffalse', options$html.before2, '\\fi{}')
+  process_block(options, to_md)
+}
+
+process_block = function(options, md) {
+  if (md) {
+    code = options$code
+    code = knitr:::pandoc_fragment(code)
+    r = '^<p>(.+)</p>$'
+    if (length(code) > 0 && grepl(r, code[1])) code[1] = gsub(r, '\\1', code[1])
+    options$code = code
+  }
   knitr:::eng_block2(options)
 }
 

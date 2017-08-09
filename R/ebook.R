@@ -78,19 +78,21 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
   content = resolve_refs_md(
-    readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
+    readUTF8(input_file), c(figs$ref_table, parse_section_labels(x)), to_md
   )
   if (to_md) content = gsub(
     '^\\\\BeginKnitrBlock\\{[^}]+\\}|\\\\EndKnitrBlock\\{[^}]+\\}$', '', content
   )
   content = resolve_ref_links_epub(content)
-  content = restore_part_epub(content)
-  content = restore_appendix_epub(content)
-  content = protect_math_env(content)
+  if (!to_md) {
+    content = restore_part_epub(content)
+    content = restore_appendix_epub(content)
+    content = protect_math_env(content)
+  }
   writeUTF8(content, input_file)
 }
 
-resolve_refs_md = function(content, ref_table) {
+resolve_refs_md = function(content, ref_table, to_md = output_md()) {
   ids = names(ref_table)
   # replace (\#fig:label) with Figure x.x:
   for (i in grep('^(<p class="caption|<caption>|Table:|\\\\BeginKnitrBlock)|(!\\[.*?\\]\\(.+?\\))', content)) {
@@ -114,7 +116,7 @@ resolve_refs_md = function(content, ref_table) {
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
   content = gsub('"\\(\\\\#(fig:[-[:alnum:]]+)\\)', '"', content)
   # replace (\#eq:label) with equation numbers
-  content = add_eq_numbers(content, ids, ref_table)
+  content = add_eq_numbers(content, ids, ref_table, to_md)
 
   # look for \@ref(label) and resolve to actual figure/table/section numbers
   m = gregexpr('(?<!`)\\\\@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
@@ -124,7 +126,7 @@ resolve_refs_md = function(content, ref_table) {
 }
 
 # change labels (\#eq:label) in math environments into actual numbers in \tag{}
-add_eq_numbers = function(x, ids, ref_table) {
+add_eq_numbers = function(x, ids, ref_table, to_md = output_md()) {
   ids = grep('^eq:', ids, value = TRUE)
   if (length(ids) == 0) return(x)
   ref_table = ref_table[ids]
@@ -141,8 +143,11 @@ add_eq_numbers = function(x, ids, ref_table) {
       m = sprintf('\\(\\\\#%s\\)', j)
       if (grepl(m, x[i])) {
         # it is weird that \tag{} does not work in iBooks, so I have to cheat by
-        # using \qquad then the (equation number)
-        x[i] = sub(m, sprintf('\\\\qquad(%s)', ref_table[j]), x[i])
+        # using \qquad then the (equation number); however, when the output
+        # format is Markdown instead of EPUB, I'll still use \tag{}
+        x[i] = sub(m, sprintf(
+          if (to_md) '\\\\tag{%s}' else '\\\\qquad(%s)', ref_table[j]
+        ), x[i])
         break
       }
     }
