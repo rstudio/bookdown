@@ -67,7 +67,7 @@ move_output = function(output) {
   output2
 }
 
-process_markdown = function(input_file, from, pandoc_args, global) {
+process_markdown = function(input_file, from, pandoc_args, global, to_md = output_md()) {
   intermediate_html = with_ext(input_file, 'tmp.html')
   on.exit(unlink(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
@@ -79,6 +79,9 @@ process_markdown = function(input_file, from, pandoc_args, global) {
   # resolve cross-references and update the Markdown input file
   content = resolve_refs_md(
     readUTF8(input_file), c(figs$ref_table, parse_section_labels(x))
+  )
+  if (to_md) content = gsub(
+    '^\\\\BeginKnitrBlock\\{[^}]+\\}|\\\\EndKnitrBlock\\{[^}]+\\}$', '', content
   )
   content = resolve_ref_links_epub(content)
   content = restore_part_epub(content)

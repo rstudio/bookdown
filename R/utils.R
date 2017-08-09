@@ -414,6 +414,8 @@ str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
 
 `%n%` = knitr:::`%n%`
 
+output_md = function() getOption('bookdown.output.markdown', FALSE)
+
 # a theorem engine for knitr (can also be used for lemmas, definitions, etc)
 eng_theorem = function(options) {
   type = options$type %n% 'theorem'
@@ -422,11 +424,15 @@ eng_theorem = function(options) {
   )
   options$type = type
   label = paste(theorem_abbr[type], options$label, sep = ':')
-  html.before2 = sprintf('(\\#%s)', label)
-  name = options$name
+  html.before2 = sprintf('(\\#%s) ', label)
+  name = options$name; to_md = output_md()
   if (length(name) == 1) {
-    options$latex.options = sprintf('[%s]', name)
-    html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
+    if (to_md) {
+      html.before2 = paste(html.before2, sprintf('(%s) ', name))
+    } else {
+      options$latex.options = sprintf('[%s]', name)
+      html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
+    }
   }
   options$html.before2 = sprintf(
     '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
@@ -442,9 +448,9 @@ eng_proof = function(options) {
   )
   options$type = type
   label = label_prefix(type, label_names_math2)
-  name = options$name
+  name = options$name; to_md = output_md()
   if (length(name) == 1) {
-    options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
+    if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
     r = '^(.+?)([[:punct:][:space:]]+)$'  # "Remark. " -> "Remark (Name). "
     if (grepl(r, label)) {
       label1 = gsub(r, '\\1', label)
@@ -457,8 +463,9 @@ eng_proof = function(options) {
     label = sprintf('<em>%s</em>', label)
   }
   options$html.before2 = sprintf(
-    '\\iffalse <span class="%s">%s</span> \\fi{} ', type, label
+    '<span class="%s">%s</span> ', type, label
   )
+  if (!to_md) options$html.before2 = paste('\\iffalse', options$html.before2, '\\fi{}')
   knitr:::eng_block2(options)
 }
 
