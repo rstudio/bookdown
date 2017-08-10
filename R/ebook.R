@@ -83,7 +83,9 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
   if (to_md) content = gsub(
     '^\\\\BeginKnitrBlock\\{[^}]+\\}|\\\\EndKnitrBlock\\{[^}]+\\}$', '', content
   )
-  content = resolve_ref_links_epub(content)
+  content = resolve_ref_links_epub(
+    content, parse_ref_links(x, '^<p>%s (.+)</p>$'), to_md
+  )
   if (!to_md) {
     content = restore_part_epub(content)
     content = restore_appendix_epub(content)
@@ -155,9 +157,15 @@ add_eq_numbers = function(x, ids, ref_table, to_md = output_md()) {
   x
 }
 
-resolve_ref_links_epub = function(x) {
+# replace text references (ref:label); note refs is the parsed text references
+# from the HTML output of Markdown, i.e. Markdown has been translated to HTML
+resolve_ref_links_epub = function(x, refs, to_md = output_md()) {
   res = parse_ref_links(x, '^%s (.+[^ ])$')
   if (is.null(res)) return(x)
+  if (to_md && length(refs$tags)) {
+    i = match(res$tags, refs$tags)
+    res$txts[!is.na(i)] = na.omit(refs$txts[i])
+  }
   restore_ref_links(res$content, '(?<!`)%s', res$tags, res$txts, TRUE)
 }
 
