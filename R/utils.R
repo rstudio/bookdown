@@ -198,8 +198,8 @@ check_special_chars = function(filename) {
   filename
 }
 
-Rscript = function(args) {
-  system2(file.path(R.home('bin'), 'Rscript'), args)
+Rscript = function(args, ...) {
+  system2(file.path(R.home('bin'), 'Rscript'), args, ...)
 }
 
 Rscript_render = function(file, ...) {
