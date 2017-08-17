@@ -177,14 +177,14 @@ restore_part_epub = function(x) {
   x
 }
 
+reg_app = '^(# )\\(APPENDIX\\) (.+ \\{-\\})$'
 # this is not good enough since appendix chapters will continue to be numbered
 # after the last chapter instead of being numbered differently like A.1, A.2,
 # ..., but probably not too many people care about it in e-books
 restore_appendix_epub = function(x) {
-  r = '^(# )\\(APPENDIX\\) (.+ \\{-\\})$'
-  i = find_appendix_line(r, x)
+  i = find_appendix_line(reg_app, x)
   if (length(i) == 0) return(x)
-  x[i] = gsub(r, '\\1\\2', x[i])
+  x[i] = gsub(reg_app, '\\1\\2', x[i])
   x
 }
 
