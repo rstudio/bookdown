@@ -159,9 +159,13 @@ match_dashes = function(x) grep('^---\\s*$', x)
 
 create_placeholder = function(x) {
   h = grep('^# ', x, value = TRUE)  # chapter title
-  h1 = grep(reg_part, h, value = TRUE)
-  h2 = setdiff(h, h1)
-  c('', if (length(h1)) h1[1], if (length(h2)) h2[1] else '# Placeholder')
+  h1 = grep(reg_part, h, value = TRUE)  # part title
+  h2 = grep(reg_app, h, value = TRUE)   # appendix title
+  h3 = setdiff(h, c(h1, h2))
+  h4 = grep('^#{2,} ', x, value = TRUE)  # section/subsection/... titles
+  c(
+    '', head(h1, 1), head(h2, 1), if (length(h3)) h3[1] else '# Placeholder', h4
+  )
 }
 
 fetch_yaml = function(x) {
