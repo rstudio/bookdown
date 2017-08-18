@@ -231,7 +231,7 @@ restore_block2 = function(x, global = FALSE) {
   x
 }
 
-style_definition = c('definition', 'example')
+style_definition = c('definition', 'example', 'exercise')
 style_remark = c('remark')
 # which styles of theorem environments to use
 theorem_style = function(env) {
