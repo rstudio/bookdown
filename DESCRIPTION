@@ -1,11 +1,12 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.4.6
+Version: 0.4.7
 Date: 2017-05-20
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"),
     person("JJ", "Allaire", role = "ctb"),
+    person("David", "Shuman", role = "ctb"),
     person(family = "RStudio Inc", role = "cph"),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"),

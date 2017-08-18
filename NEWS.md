@@ -2,6 +2,8 @@
 
 ## NEW FEATURES
 
+- Added support for two more environments: Exercises and Solutions (thanks, @dshuman1, #423).
+
 - If the Rmd file merged from all chapters exists and you are sure it can be safely deleted, you can set an option `delete_merged_file` to `true` in `_bookdown.yml` (thanks, @dmenne, #442).
 
 ## BUG FIXES
