@@ -223,6 +223,20 @@ You can use the `split` environment inside `equation` so that all lines share th
 (\#eq:var-beta)
 \end{equation}
 
+If you would like a word_document2 output, you may find that the equation environment is not rendered, i.e. you probably cannot see the equation in the Word document. The easiest way to solve this problem is shown in the following example:
+
+```
+(@eq-mc) $E = mc^2$
+
+I like Eq. (@eq-mc) so much that I am falling love with her.
+```
+(@eq-mc) $E = mc^2$
+
+I like Eq. (@eq-mc) so much that I am falling love with her.
+
+Thus the equation can be rendered in the Word document with a number and reference. 
+
+
 ### Theorems and proofs {#theorems}
 
 Theorems\index{theorem} and proofs are commonly used in articles and books in mathematics. However, please do not be misled by the names: a "theorem" is just a numbered/labeled environment, and it does not have to be a mathematical theorem (e.g., it can be an example irrelevant to mathematics). Similarly, a "proof" is an unnumbered environment. In this section, we always use the _general_ meanings of a "theorem" and "proof" unless explicitly stated.
