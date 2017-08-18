@@ -465,7 +465,7 @@ label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # prefixes for theorem environments
 theorem_abbr = c(
   theorem = 'thm', lemma = 'lem', definition = 'def', corollary = 'cor',
-  proposition = 'prp', example = 'ex', exercise = 'exer'
+  proposition = 'prp', example = 'ex', exercise = 'exr'
 )
 # numbered math environments
 label_names_math = setNames(list(
