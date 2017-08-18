@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.5 (unreleased)
 
+## NEW FEATURES
+
+- If the Rmd file merged from all chapters exists and you are sure it can be safely deleted, you can set an option `delete_merged_file` to `true` in `_bookdown.yml` (thanks, @dmenne, #442).
+
 ## BUG FIXES
 
 - The book cannot be properly rendered when the option `book_filename` in `_bookdown.yml` contains a dot (thanks, @pinusm, #410).
