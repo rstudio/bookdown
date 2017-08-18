@@ -8,6 +8,8 @@
 
 - The book cannot be properly rendered when the option `book_filename` in `_bookdown.yml` contains a dot (thanks, @pinusm, #410).
 
+- Proof and Remark blocks do not work well for EPUB output (thanks, @mamaciasq, #443).
+
 # CHANGES IN bookdown VERSION 0.4
 
 ## NEW FEATURES

@@ -469,7 +469,7 @@ eng_proof = function(options) {
   options$html.before2 = sprintf(
     '<span class="%s">%s</span> ', type, label
   )
-  if (!to_md) options$html.before2 = paste('\\iffalse', options$html.before2, '\\fi{}')
+  if (!to_md) options$html.before2 = paste('\\iffalse{}', options$html.before2, '\\fi{}')
   process_block(options, to_md)
 }
 
