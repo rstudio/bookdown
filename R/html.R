@@ -434,6 +434,14 @@ is_img_line = function(x) grepl('^<img src=".* alt="', x)
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
   lab = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
+  # TODO: deprecate the prefix ex: for Examples (use exm: instead)
+  if (length(i <- grep('^ex:.+', lab))) {
+    warning(
+      'Please change the prefix ex: to exm: in label(s) ', knitr::combine_words(lab[i]),
+      call. = FALSE
+    )
+    lab[i] = sub('^ex:', 'exm:', lab[i])
+  }
   ref = prefix_section_labels(lab)
   num = ref_table[ref]
   i = is.na(num)
@@ -465,7 +473,7 @@ label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # prefixes for theorem environments
 theorem_abbr = c(
   theorem = 'thm', lemma = 'lem', definition = 'def', corollary = 'cor',
-  proposition = 'prp', example = 'ex', exercise = 'exr'
+  proposition = 'prp', example = 'exm', exercise = 'exr'
 )
 # numbered math environments
 label_names_math = setNames(list(
@@ -480,6 +488,8 @@ label_names = c(label_names, label_names_math)
 # types of labels currently supported, e.g. \(#fig:foo), \(#tab:bar)
 label_types = names(label_names)
 reg_label_types = paste(label_types, collapse = '|')
+# compatibility with bookdown <= 0.4.7: ex was the prefix for Example; now it's exm
+reg_label_types = paste(reg_label_types, 'ex', sep = '|')
 
 # parse figure/table labels, and number them either by section numbers (Figure
 # 1.1, 1.2, ..., 2.1, ...), or globally (Figure 1, 2, ...)

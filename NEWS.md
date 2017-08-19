@@ -12,6 +12,10 @@
 
 - Proof and Remark blocks do not work well for EPUB output (thanks, @mamaciasq, #443).
 
+## MINOR CHANGES
+
+- The label prefix for Example blocks was changed from `ex:` to `exm:`.
+
 # CHANGES IN bookdown VERSION 0.4
 
 ## NEW FEATURES
