@@ -209,15 +209,15 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   r_chap = '^<!--chapter:end:(.+)-->$'
   n = length( grep(r_chap, x) )
 
-  # Need to take care of the div tags here before restore_part_html and 
-  # restore_appendix_html erase the section ids of the hidden PART
-  # or APPENDIX sections.  -- @dataopt
+  # Need to take care of the div tags here before restore_part_html and
+  # restore_appendix_html erase the section ids of the hidden PART or APPENDIX
+  # sections.
   if (split_level > 1) {
-    body = x[(i5+1):(i6-1)]
+    body = x[(i5 + 1):(i6 - 1)]
     h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', body) + i5
     h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', body) + i5
     h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
-    if (length(h12) > 0 && h12[1] != i5+1) stop(
+    if (length(h12) > 0 && h12[1] != i5 + 1) stop(
       'The document must start with a first (#) or second level (##) heading'
     )
     h12 = sort(h12)
@@ -233,7 +233,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       i = h12[i] - 1
       if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(x))
       for (j in i) {
-        # the i-th lines should be the closing </div> for h1, or empty 
+        # the i-th lines should be the closing </div> for h1, or empty
         # because of the appendix h1, which will be removed
         if (!x[j] %in% c('</div>', '')) warning(
           'Something wrong with the HTML output. The line ', x[j],
@@ -304,9 +304,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   } else {
     h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', html_body)
     h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', html_body)
-    idx2 = if (split_level == 1) h1 else if (split_level == 2) {
-      h12 = sort(c(h1, h2))
-    }
+    idx2 = if (split_level == 1) h1 else if (split_level == 2) sort(c(h1, h2))
     n = length(idx2)
     nms_chaps = if (length(idx)) {
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
