@@ -188,6 +188,15 @@ build_chapter = function(
 }
 
 split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
+
+  use_rmd_names = split_by == 'rmd'
+  split_level = switch(
+    split_by, none = 0, chapter = 1, `chapter+number` = 1,
+    section = 2, `section+number` = 2, rmd = 1
+  )
+
+  if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
+
   x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
@@ -196,6 +205,44 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i4 = find_token(x, '<!--bookdown:toc:end-->')
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
+
+  r_chap = '^<!--chapter:end:(.+)-->$'
+  n = length( grep(r_chap, x) )
+
+  # Need to take care of the div tags here before restore_part_html and 
+  # restore_appendix_html erase the section ids of the hidden PART
+  # or APPENDIX sections.  -- @dataopt
+  if (split_level > 1) {
+    body = x[(i5+1):(i6-1)]
+    h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', body) + i5
+    h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', body) + i5
+    h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
+    if (length(h12) > 0 && h12[1] != i5+1) stop(
+      'The document must start with a first (#) or second level (##) heading'
+    )
+    h12 = sort(h12)
+    if (length(h12) > 1) {
+      n12 = names(h12)
+      # h2 that immediately follows h1
+      i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
+      # close the h1 section early with </div>
+      if (length(i)) x[i] = paste(x[i], '\n</div>')
+      # h1 that immediately follows h2 but not the first h1
+      i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
+      if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
+      i = h12[i] - 1
+      if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(x))
+      for (j in i) {
+        # the i-th lines should be the closing </div> for h1, or empty 
+        # because of the appendix h1, which will be removed
+        if (!x[j] %in% c('</div>', '')) warning(
+          'Something wrong with the HTML output. The line ', x[j],
+          ' is supposed to be </div>'
+        )
+      }
+      x[i] = paste('<!--', x[i], '-->')  # remove the extra </div> of h1
+    }
+  }
 
   x = add_section_ids(x)
   x = restore_part_html(x)
@@ -209,12 +256,6 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     return(output)
   }
 
-  use_rmd_names = split_by == 'rmd'
-  split_level = switch(
-    split_by, none = 0, chapter = 1, `chapter+number` = 1,
-    section = 2, `section+number` = 2, rmd = 1
-  )
-
   html_head  = x[1:(i1 - 1)]  # HTML header + includes
   html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date
   html_toc   = x[(i3 + 1):(i4 - 1)]  # TOC
@@ -223,14 +264,16 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   html_toc = add_toc_ids(html_toc)
 
-  r_chap = '^<!--chapter:end:(.+)-->$'
   idx = grep(r_chap, html_body)
   nms = gsub(r_chap, '\\1', html_body[idx])  # to be used in HTML filenames
-  n = length(idx)
+  h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', x)
+  if (length(h1) < length(nms)) warning(
+    'You have ', length(nms), ' Rmd input file(s) but only ', length(h1),
+    ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
+  )
 
   html_body = resolve_refs_html(html_body, !number_sections)
 
-  if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
   # do not split the HTML file
   if (split_level == 0) {
     html_body[idx] = ''  # remove chapter tokens
@@ -261,38 +304,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   } else {
     h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', html_body)
     h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', html_body)
-    if (length(h1) < length(nms)) warning(
-      'You have ', length(nms), ' Rmd input file(s) but only ', length(h1),
-      ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
-    )
     idx2 = if (split_level == 1) h1 else if (split_level == 2) {
-      h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
-      if (length(h12) > 0 && h12[1] != 1) stop(
-        'The document must start with a first (#) or second level (##) heading'
-      )
-      h12 = sort(h12)
-      if (length(h12) > 1) {
-        n12 = names(h12)
-        # h2 that immediately follows h1
-        i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
-        # close the h1 section early with </div>
-        if (length(i)) html_body[i] = paste(html_body[i], '\n</div>')
-        # h1 that immediately follows h2 but not the first h1
-        i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
-        if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
-        i = h12[i] - 1
-        if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(html_body))
-        for (j in i) {
-          # the i-th lines should be the closing </div> for h1, or empty because
-          # of the appendix h1, which will be removed
-          if (!html_body[j] %in% c('</div>', '')) warning(
-            'Something wrong with the HTML output. The line ', html_body[j],
-            ' is supposed to be </div>'
-          )
-        }
-        html_body[i] = paste('<!--', html_body[i], '-->')  # remove the extra </div> of h1
-      }
-      unname(h12)
+      h12 = sort(c(h1, h2))
     }
     n = length(idx2)
     nms_chaps = if (length(idx)) {
