@@ -12,6 +12,8 @@
 
 - Proof and Remark blocks do not work well for EPUB output (thanks, @mamaciasq, #443).
 
+- When `split_by = 'section'` for the `gitbook` output format, navigation buttons are missing on the page before the appendix (thanks, @dataopt, #409).
+
 ## MINOR CHANGES
 
 - The label prefix for Example blocks was changed from `ex:` to `exm:`.
