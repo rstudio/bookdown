@@ -1,6 +1,6 @@
 # Components
 
-In this chapter, we show the syntax of common components of a book, including R code, figures, tables, citations, math theorems, and equations, etc. First we start with the syntax of Pandoc's\index{Pandoc} Markdown.
+This chapter demonstrates the syntax of common components of a book written in **bookdown**, including code chunks, figures, tables, citations, math theorems, and equations. The approach is based on Pandoc, so we start with the syntax of Pandoc's\index{Pandoc} flavor of Markdown.
 
 ## Markdown syntax
 
