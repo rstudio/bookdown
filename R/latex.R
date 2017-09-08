@@ -62,7 +62,7 @@ pdf_book = function(
     if (is.function(post)) x = post(x)
     writeUTF8(x, f)
     latexmk(f, config$pandoc$latex_engine)
-    unlink(with_ext(output, 'bbl'))  # not sure why latexmk left a .bbl there
+    unlink(with_ext(output, c('bbl', 'run.xml'))) # clean up after latexmk (and biber)
 
     output = with_ext(output, '.pdf')
     o = opts$get('output_dir')
