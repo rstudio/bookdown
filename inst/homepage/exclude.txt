@@ -142,3 +142,6 @@ https://bookdown.org/walsu1109/TMDD_Cetuximab_RxODE_mk_to_human/
 https://bookdown.org/yufree/sciguide/
 https://bookdown.org/yufree/Notes/
 https://bookdown.org/yufree/Metabolomics/
+https://bookdown.org/content/771/
+https://bookdown.org/content/782/
+https://bookdown.org/paulcbauer/btw_data_neu/

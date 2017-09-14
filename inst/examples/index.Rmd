@@ -29,7 +29,6 @@ options(
 lapply(c('DT', 'citr', 'formatR', 'svglite'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
-install.packages(c('gdtools', 'svglite'))
 ```
 
 # Preface {-}

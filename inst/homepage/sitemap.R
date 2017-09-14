@@ -7,6 +7,7 @@ exclude_urls = readLines('exclude.txt')
 pinned_urls = c(
   "https://bookdown.org/yihui/bookdown/",
   "http://r4ds.had.co.nz/",
+  "http://adv-r.hadley.nz/",
   "https://bookdown.org/rdpeng/rprogdatascience/",
   "http://tidytextmining.com/",
   "https://bookdown.org/rdpeng/exdata/",

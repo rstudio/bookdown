@@ -1,3 +1,4 @@
+http://adv-r.hadley.nz/
 http://moderndive.com/
 http://r4ds.had.co.nz/
 http://tidytextmining.com/
@@ -12,7 +13,6 @@ https://bookdown.org/areedv/docSens/
 https://bookdown.org/baydap/bdguitar/
 https://bookdown.org/baydap/bookdownplus/
 https://bookdown.org/baydap/papasdiary/
-https://bookdown.org/baydap/qyp/
 https://bookdown.org/bkbelton/bookdown-demo-win/
 https://bookdown.org/bomeara/comparative-methods/
 https://bookdown.org/burak2358/SARP-TR/
@@ -25,6 +25,7 @@ https://bookdown.org/csgillespie/shiny_components/
 https://bookdown.org/davoodastaraky/ShinyApp/
 https://bookdown.org/delferts/PBB_gramata/
 https://bookdown.org/dusadrian/QCAbook/
+https://bookdown.org/egarpor/nonpar-eafit/
 https://bookdown.org/egarpor/SSS2-UC3M/
 https://bookdown.org/eriklgb/incidensprediktion/
 https://bookdown.org/eythorbj/Egils_saga/
