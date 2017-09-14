@@ -96,7 +96,7 @@ render_book = function(
   if (file.exists(main) && !delete_main) stop(
     'The file ', main, ' exists. Please delete it if it was automatically generated, ',
     'or set a different book_filename option in _bookdown.yml. If you are sure ',
-    "it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yaml."
+    "it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yml."
   )
   on.exit(if (file.exists(main) && !delete_main) {
     message('Please delete ', main, ' after you finish debugging the error.')

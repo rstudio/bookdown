@@ -2,6 +2,7 @@ book_filename: bookdown
 repo: https://github.com/rstudio/bookdown/
 output_dir: _book
 clean: [packages.bib, bookdown.bbl]
+delete_merged_file: true
 language:
   label:
     fig: "FIGURE "
