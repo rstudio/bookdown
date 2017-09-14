@@ -1,8 +1,8 @@
-http://adv-r.hadley.nz/
 http://moderndive.com/
 http://r4ds.had.co.nz/
 http://tidytextmining.com/
 http://zuguang.de/circlize_book/book/
+https://adv-r.hadley.nz/
 https://b-rodrigues.github.io/fput/
 https://bookdown.org/aclark/chess/
 https://bookdown.org/adelmofilho/book/
