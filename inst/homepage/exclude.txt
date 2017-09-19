@@ -57,7 +57,6 @@ https://bookdown.org/marcosvital/Livro-do-Cantinho/
 https://bookdown.org/csgillespie/meetingsR/
 https://bookdown.org/asmundhreinn/r4ds-master/
 https://bookdown.org/henningsway/bookdown-workflow/
-https://bookdown.org/yihui/blogdown/
 https://bookdown.org/fgabriel1891/Internship2_progress_FGMA/
 https://bookdown.org/garza7149/ACTS131Notes/
 https://bookdown.org/fgabriel1891/datalunch2feb/
@@ -145,3 +144,4 @@ https://bookdown.org/yufree/Metabolomics/
 https://bookdown.org/content/771/
 https://bookdown.org/content/782/
 https://bookdown.org/paulcbauer/btw_data_neu/
+https://bookdown.org/paulcbauer/Candidates_Germany_2017/

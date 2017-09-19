@@ -80,6 +80,7 @@ https://bookdown.org/statist_/DataTableManual/
 https://bookdown.org/Tazinho/Advanced-R-Solutions/
 https://bookdown.org/Tazinho/Tidyverse-Cookbook/
 https://bookdown.org/wall1/bookdown-bysh/
+https://bookdown.org/yihui/blogdown/
 https://bookdown.org/yihui/bookdown-demo/
 https://bookdown.org/yihui/bookdown/
 https://bookdown.org/yihui/r-ninja/
