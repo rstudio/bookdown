@@ -76,21 +76,23 @@ get_base_format = function(format) {
   format
 }
 
-load_config = function() {
-  if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
+load_config = function(config_file='_bookdown.yml') {
+  if (length(opts$get('config')) == 0 && file.exists(config_file)) {
     # store the book config
-    opts$set(config = yaml::yaml.load_file('_bookdown.yml'))
+    opts$set(config = yaml::yaml.load_file(config_file))
   }
   opts$get('config')
 }
 
-book_filename = function(config = load_config(), fallback = TRUE) {
+book_filename = function(config_file = '_bookdown.yml', fallback = TRUE) {
+  config = load_config(config_file)
   if (is.character(config[['book_filename']])) {
     config[['book_filename']][1]
   } else if (fallback) '_main'
 }
 
-source_files = function(format = NULL, config = load_config(), all = FALSE) {
+source_files = function(format = NULL, config_file = '_bookdown.yml', all = FALSE) {
+  config = load_config(config_file)
   # a list of Rmd chapters
   files = list.files(
     '.', '[.]Rmd$', ignore.case = TRUE, recursive = isTRUE(config[['rmd_subdir']])
@@ -109,7 +111,8 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   check_special_chars(files)
 }
 
-output_dirname = function(dir, config = load_config(), create = TRUE) {
+output_dirname = function(dir, config_file = '_bookdown.yml', create = TRUE) {
+  config = load_config(config_file)
   if (is.null(dir)) {
     dir2 = config[['output_dir']]
     if (!is.null(dir2)) dir = dir2
@@ -292,9 +295,10 @@ local_resources = function(x) {
 #'   the book directory.
 #' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 #'   including the \code{handler} argument, which has been set internally).
+#' @param config_file File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.
 #' @export
 serve_book = function(
-  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, ...
+  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, config_file = 'bookdown.yml', ...
 ) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
@@ -309,7 +313,7 @@ serve_book = function(
   owd = setwd(dir); on.exit(setwd(owd), add = TRUE)
   if (missing(output_dir) || is.null(output_dir)) {
     on.exit(opts$restore(), add = TRUE)
-    output_dir = load_config()[['output_dir']]
+    output_dir = load_config(config_file)[['output_dir']]
   }
   if (is.null(output_dir)) output_dir = '_book'
   if (missing(preview)) preview = getOption('bookdown.preview', TRUE)

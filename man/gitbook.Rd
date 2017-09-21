@@ -4,9 +4,10 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, 
-    lib_dir = "libs", ..., split_by = c("chapter", "chapter+number", "section", 
-        "section+number", "rmd", "none"), split_bib = TRUE, config = list())
+gitbook(fig_caption = TRUE, number_sections = TRUE,
+  self_contained = FALSE, lib_dir = "libs", ..., split_by = c("chapter",
+  "chapter+number", "section", "section+number", "rmd", "none"),
+  split_bib = TRUE, config = list())
 }
 \arguments{
 \item{fig_caption, number_sections, self_contained, lib_dir, ...}{Arguments to be

@@ -4,7 +4,8 @@
 \alias{serve_book}
 \title{Continously preview the HTML output of a book using the \pkg{servr} package}
 \usage{
-serve_book(dir = ".", output_dir = "_book", preview = TRUE, in_session = TRUE, ...)
+serve_book(dir = ".", output_dir = "_book", preview = TRUE,
+  in_session = TRUE, config_file = "bookdown.yml", ...)
 }
 \arguments{
 \item{dir}{The root directory of the book (containing the Rmd source files).}
@@ -18,6 +19,8 @@ whole book; see \code{\link{render_book}()}.}
 \item{in_session}{Whether to compile the book using the current R session, or
 always open a new R session to compile the book whenever changes occur in
 the book directory.}
+
+\item{config_file}{File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.}
 
 \item{...}{Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 including the \code{handler} argument, which has been set internally).}

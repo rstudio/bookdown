@@ -80,7 +80,7 @@ gitbook_dependency = function() {
 
 gitbook_page = function(
   head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot,
-  config, split_by
+  config, split_by, config_file='_bookdown.yml'
 ) {
   toc = gitbook_toc(toc, rmd_cur, config[['toc']])
 
@@ -128,7 +128,7 @@ gitbook_page = function(
   if (length(rmd_cur) && is.list(config$edit))
     config$edit$link = sprintf(config$edit$link, rmd_cur)
 
-  config$download = download_filenames(config)
+  config$download = download_filenames(config, config_file)
 
   foot = sub('<!--bookdown:config-->', gitbook_config(config), foot)
 
@@ -216,8 +216,8 @@ gitbook_config = function(config = list()) {
 }
 
 # infer pdf/epub/mobi filenames from the book filename
-download_filenames = function(config) {
-  if (length(exts <- load_config()[['download']]) == 0) exts = config$download
+download_filenames = function(config, config_file='_bookdown.yml') {
+  if (length(exts <- load_config(config_file)[['download']]) == 0) exts = config$download
   if (identical(exts, FALSE)) return()
   if (is.list(exts)) return(exts)  # I assume you are doing it correctly
   if ((n <- length(grep('[.]', exts))) > 0) {

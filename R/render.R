@@ -24,7 +24,7 @@
 #'   \file{_book} will be used).
 #' @param new_session Whether to use new R sessions to compile individual Rmd
 #'   files (if not provided, the value of the \code{new_session} option in
-#'   \file{_bookdown.yml} is used; if this is also not provided,
+#'   \file{_bookdown.yml} (or the non-default file) is used; if this is also not provided,
 #'   \code{new_session = FALSE}).
 #' @param preview Whether to render and preview the input files specified by the
 #'   \code{input} argument. Previewing a certain chapter may save compilation
@@ -32,11 +32,12 @@
 #'   accurate (e.g. cross-references to other chapters will not work).
 #' @param encoding Ignored. The character encoding of all input files is
 #'   supposed to be UTF-8.
+#' @param config_file File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
-  preview = FALSE, encoding = 'UTF-8'
+  preview = FALSE, encoding = 'UTF-8', config_file='_bookdown.yml'
 ) {
 
   verify_rstudio_version()
@@ -60,7 +61,7 @@ render_book = function(
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
 
   on.exit(opts$restore(), add = TRUE)
-  config = load_config()  # configurations in _bookdown.yml
+  config = load_config(config_file)  # configurations in _bookdown.yml (by default)
   output_dir = output_dirname(output_dir, config)
   on.exit(clean_empty_dir(output_dir), add = TRUE)
   # store output directory and the initial input Rmd name
@@ -209,8 +210,9 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 #'   force this function to delete files. You are recommended to take a look at
 #'   the list of files at least once before actually deleting them, i.e. run
 #'   \code{clean_book(FALSE)} before \code{clean_book(TRUE)}.
+#' @param config_file File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.
 #' @export
-clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
+clean_book = function(clean = getOption('bookdown.clean_book', FALSE), config_file='_bookdown.yml') {
   r = '_(files|cache)$'
   one = with_ext(book_filename(), '')  # the main book file
   src = with_ext(source_files(all = TRUE), '')  # input documents
@@ -219,7 +221,7 @@ clean_book = function(clean = getOption('bookdown.clean_book', FALSE)) {
   out = out[gsub(r, '', out) %in% c(src, one)]  # output dirs generated from src names
   out = c(out, output_dirname(NULL, create = FALSE))  # output directory
   out = c(out, with_ext(one, c('bbl', 'html', 'tex', 'rds')))  # aux files for main file
-  out = c(out, load_config()[['clean']])  # extra files specified in _bookdown.yml
+  out = c(out, load_config(config_file)[['clean']])  # extra files specified in _bookdown.yml
   out = sort(unique(out))
   if (length(out) == 0) return(invisible())
   if (clean) unlink(out, recursive = TRUE) else {

@@ -3,10 +3,12 @@
 #'
 #' Implementation of custom R Markdown site generator for bookdown.
 #'
+#' @param config_file File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.
+#'
 #' @inheritParams rmarkdown::render_site
 #'
 #' @export
-bookdown_site = function(input, ...) {
+bookdown_site = function(input, config_file='_bookdown.yml', ...) {
 
   on.exit(opts$restore(), add = TRUE)
 
@@ -15,7 +17,7 @@ bookdown_site = function(input, ...) {
   on.exit(setwd(oldwd), add = TRUE)
 
   # load the config for the input directory
-  config = load_config()
+  config = load_config(config_file)
 
   # get the name from the config (default to the directory name
   # if there is no name in the config)

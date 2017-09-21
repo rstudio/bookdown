@@ -4,7 +4,8 @@
 \alias{kindlegen}
 \title{A wrapper function to convert EPUB to the Mobipocket format}
 \usage{
-kindlegen(epub, exec = Sys.which("kindlegen"))
+kindlegen(epub, exec = Sys.which("kindlegen"),
+  config_file = "_bookdown.yml")
 }
 \arguments{
 \item{epub}{The path to a \code{.epub} file (e.g. created from the
@@ -14,6 +15,8 @@ from the book configurations.}
 \item{exec}{The path to the executable \command{kindlegen}, which can be
 downloaded from
 \url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.}
+
+\item{config_file}{File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.}
 }
 \value{
 The path of the \file{.mobi} file if the conversion is successful.

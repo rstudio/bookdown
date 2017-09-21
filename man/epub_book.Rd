@@ -4,10 +4,11 @@
 \alias{epub_book}
 \title{The EPUB e-book format}
 \usage{
-epub_book(fig_width = 5, fig_height = 4, dev = "png", fig_caption = TRUE, 
-    number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL, 
-    cover_image = NULL, metadata = NULL, chapter_level = 1, epub_version = c("epub3", 
-        "epub"), md_extensions = NULL, pandoc_args = NULL)
+epub_book(fig_width = 5, fig_height = 4, dev = "png",
+  fig_caption = TRUE, number_sections = TRUE, toc = FALSE,
+  toc_depth = 3, stylesheet = NULL, cover_image = NULL, metadata = NULL,
+  chapter_level = 1, epub_version = c("epub3", "epub"),
+  md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{fig_width, fig_height, dev, fig_caption}{Figure options (width, height,

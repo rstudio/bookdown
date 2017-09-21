@@ -4,10 +4,12 @@
 \alias{bookdown_site}
 \title{R Markdown site generator for bookdown}
 \usage{
-bookdown_site(input, ...)
+bookdown_site(input, config_file = "_bookdown.yml", ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory)}
+
+\item{config_file}{File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.}
 
 \item{...}{Currently unused}
 }
