@@ -406,8 +406,8 @@ edit_link = function(target) {
   button_link(sprintf(setting$link, target), setting$text)
 }
 
-edit_setting = function(config) {
-  config_default = load_config()[['edit']]
+edit_setting = function(config, config_file='_bookdown.yml') {
+  config_default = load_config(config_file)[['edit']]
   if (missing(config) || is.null(config)) config = config_default
   if (is.null(config)) return()
   if (is.character(config)) config = list(link = config, text = NULL)
@@ -578,8 +578,8 @@ label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 ui_names = list(edit = 'Edit', chapter_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
-i18n = function(group, key, dict = list()) {
-  labels = load_config()[['language']][[group]]
+i18n = function(group, key, dict = list(), config_file='_bookdown.yml') {
+  labels = load_config(config_file)[['language']][[group]]
   if (is.null(labels[[key]])) dict[[key]] else labels[[key]]
 }
 
@@ -680,8 +680,8 @@ add_toc_ids = function(toc) {
   toc
 }
 
-add_chapter_prefix = function(content) {
-  config = load_config()
+add_chapter_prefix = function(content, config_file='_bookdown.yml') {
+  config = load_config(config_file)
   chapter_name = config[['chapter_name']] %n% ui_language('chapter_name')
   if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {

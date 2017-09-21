@@ -4,7 +4,8 @@
 \alias{clean_book}
 \title{Clean up the output files and directories from the book}
 \usage{
-clean_book(clean = getOption("bookdown.clean_book", FALSE))
+clean_book(clean = getOption("bookdown.clean_book", FALSE),
+  config_file = "_bookdown.yml")
 }
 \arguments{
 \item{clean}{Whether to delete the possible output files. If \code{FALSE},
@@ -13,6 +14,8 @@ deleted. You can set the global option \code{bookdown.clean_book = TRUE} to
 force this function to delete files. You are recommended to take a look at
 the list of files at least once before actually deleting them, i.e. run
 \code{clean_book(FALSE)} before \code{clean_book(TRUE)}.}
+
+\item{config_file}{File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.}
 }
 \description{
 After a book is rendered, there will be a series of output files and

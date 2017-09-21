@@ -5,9 +5,10 @@
 \alias{preview_chapter}
 \title{Render multiple R Markdown documents into a book}
 \usage{
-render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    clean_envir = !interactive(), output_dir = NULL, new_session = NA, preview = FALSE, 
-    encoding = "UTF-8")
+render_book(input, output_format = NULL, ..., clean = TRUE,
+  envir = parent.frame(), clean_envir = !interactive(), output_dir = NULL,
+  new_session = NA, preview = FALSE, encoding = "UTF-8",
+  config_file = "_bookdown.yml")
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -31,7 +32,7 @@ used (possibly not specified, either, in which case a directory name
 
 \item{new_session}{Whether to use new R sessions to compile individual Rmd
 files (if not provided, the value of the \code{new_session} option in
-\file{_bookdown.yml} is used; if this is also not provided,
+\file{_bookdown.yml} (or the non-default file) is used; if this is also not provided,
 \code{new_session = FALSE}).}
 
 \item{preview}{Whether to render and preview the input files specified by the
@@ -41,6 +42,8 @@ accurate (e.g. cross-references to other chapters will not work).}
 
 \item{encoding}{Ignored. The character encoding of all input files is
 supposed to be UTF-8.}
+
+\item{config_file}{File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.}
 }
 \description{
 Render multiple R Markdown files under the current working directory into a

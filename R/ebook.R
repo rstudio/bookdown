@@ -249,16 +249,17 @@ calibre = function(input, output, options = '') {
 #' @param exec The path to the executable \command{kindlegen}, which can be
 #'   downloaded from
 #'   \url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.
+#' @param config_file File name (inc. relative path if required) of the configuration file for the render. The default is \file{_bookdown.yml}.
 #' @return The path of the \file{.mobi} file if the conversion is successful.
 #' @export
-kindlegen = function(epub, exec = Sys.which('kindlegen')) {
+kindlegen = function(epub, exec = Sys.which('kindlegen'), config_file="_bookdown.yml") {
   if (exec == '') stop(
     'Cannot find the executable KindleGen. You may download it from ',
     'http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211'
   )
   if (missing(epub)) {
     on.exit(opts$restore(), add = TRUE)
-    config = load_config()
+    config = load_config(config_file)
     main = with_ext(book_filename(config), 'epub')
     epub = file.path(output_dirname(NULL, config), main)
   }
