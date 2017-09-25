@@ -32,12 +32,12 @@
 #'   accurate (e.g. cross-references to other chapters will not work).
 #' @param encoding Ignored. The character encoding of all input files is
 #'   supposed to be UTF-8.
-#' @param config The book configuration file.
+#' @param config_file The book configuration file.
 #' @export
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
-  preview = FALSE, encoding = 'UTF-8', config = '_bookdown.yml'
+  preview = FALSE, encoding = 'UTF-8', config_file = '_bookdown.yml'
 ) {
 
   verify_rstudio_version()
@@ -60,12 +60,12 @@ render_book = function(
 
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
 
-  if (config != '_bookdown.yml') {
+  if (config_file != '_bookdown.yml') {
     unlink(tmp_config <- tempfile())
     if (file.exists('_bookdown.yml')) file.rename('_bookdown.yml', tmp_config)
-    file.rename(config, '_bookdown.yml')
+    file.rename(config_file, '_bookdown.yml')
     on.exit({
-      file.rename('_bookdown.yml', config)
+      file.rename('_bookdown.yml', config_file)
       if (file.exists(tmp_config)) file.rename(tmp_config, '_bookdown.yml')
     }, add = TRUE)
   }

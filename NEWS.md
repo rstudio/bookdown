@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Added an argument `config` to `render_book()` so that one can specify a custom config file; the default config file is still `_bookdown.yml` (thanks, @stephlocke, #465).
+- Added an argument `config_file` to `render_book()` so that one can specify a custom config file; the default config file is still `_bookdown.yml` (thanks, @stephlocke, #465).
 
 # CHANGES IN bookdown VERSION 0.5
 

@@ -7,7 +7,7 @@
 \usage{
 render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
     clean_envir = !interactive(), output_dir = NULL, new_session = NA, preview = FALSE, 
-    encoding = "UTF-8", config = "_bookdown.yml")
+    encoding = "UTF-8", config_file = "_bookdown.yml")
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -42,7 +42,7 @@ accurate (e.g. cross-references to other chapters will not work).}
 \item{encoding}{Ignored. The character encoding of all input files is
 supposed to be UTF-8.}
 
-\item{config}{The book configuration file.}
+\item{config_file}{The book configuration file.}
 }
 \description{
 Render multiple R Markdown files under the current working directory into a
