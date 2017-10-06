@@ -164,8 +164,14 @@ create_placeholder = function(x) {
   h3 = setdiff(h, c(h1, h2))
   h4 = grep('^#{2,} ', x, value = TRUE)  # section/subsection/... titles
   c(
-    '', head(h1, 1), head(h2, 1), if (length(h3)) h3[1] else '# Placeholder', h4
+    '', placeholder(head(h1, 1)), placeholder(head(h2, 1)),
+    placeholder(h3[1], '# Placeholder'), '', h4
   )
+}
+
+# x1: the title; x2: placeholder if title is empty
+placeholder = function(x1, x2 = NULL) {
+  if (length(x1) && !is.na(x1)) c(x1, '\nPlaceholder\n') else x2
 }
 
 fetch_yaml = function(x) {
