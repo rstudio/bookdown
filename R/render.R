@@ -52,7 +52,7 @@ render_book = function(
     if (length(output_format) > 1) {
       return(unlist(lapply(output_format, function(fmt) render_book(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
-        new_session = new_session, preview = preview, config = config
+        new_session = new_session, preview = preview, config_file = config_file
       ))))
     }
     format = html_or_latex(output_format)
