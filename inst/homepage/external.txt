@@ -9,3 +9,4 @@ http://moderndive.com/
 https://dzchilds.github.io/eda-for-bio/
 https://info201-s17.github.io/book/
 http://zuguang.de/circlize_book/book/
+https://rachaellappan.github.io/16S-analysis/
