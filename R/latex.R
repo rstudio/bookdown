@@ -272,8 +272,8 @@ highlight_grayscale_latex = function(x) {
   r1 = '^\\\\newcommand\\{\\\\[a-zA-Z]+\\}\\[1]\\{.*\\{#1\\}.*\\}$'
   r2 = '^(.*?)([.0-9]+,[.0-9]+,[.0-9]+)(.*)$'
   i = i1 + 1
-  while (grepl(r1, x[i])) {
-    if (grepl(r2, x[i])) {
+  while (grepl('^\\\\newcommand\\{.+\\}$', x[i])) {
+    if (grepl(r1, x[i]) && grepl(r2, x[i])) {
       col = as.numeric(strsplit(gsub(r2, '\\2', x[i]), ',')[[1]])
       x[i] = gsub(
         r2, paste0('\\1', paste(round(rgb2gray(col), 2), collapse = ','), '\\3'),
