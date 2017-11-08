@@ -173,9 +173,12 @@ $if(math)$
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "$if(mathjax)$$mathjax$$else$https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML$endif$";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "$if(mathjax)$$mathjax$$endif$";
+    if (src === "") return;
+    if (src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
