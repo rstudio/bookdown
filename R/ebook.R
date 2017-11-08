@@ -27,6 +27,7 @@ epub_book = function(
 
   epub_version = match.arg(epub_version)
   args = c(
+    if (pandoc2.0()) '--epub-subdirectory=',
     pandoc_args,
     if (number_sections) '--number-sections',
     if (toc) '--toc',

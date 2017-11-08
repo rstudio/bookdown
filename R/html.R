@@ -959,7 +959,7 @@ restore_math_labels = function(x) {
 # unfortunately bookdown heavily relies on <div>, so we need to restore
 # <section> to <div>
 fix_sections = function(x) {
-  if (!rmarkdown::pandoc_available('2.0')) return(x)
+  if (!pandoc2.0()) return(x)
   i1 = grep('^<section .*>$', x)
   i2 = grep('^</section>$', x)
   if (length(i1) != length(i2)) {

@@ -499,3 +499,5 @@ register_eng_math = function(envs, engine) {
     }
   }), envs))
 }
+
+pandoc2.0 = function() rmarkdown::pandoc_available('2.0')
