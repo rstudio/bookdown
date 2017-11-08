@@ -207,7 +207,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
   r_chap = '^<!--chapter:end:(.+)-->$'
-  n = length( grep(r_chap, x) )
+  n = length(grep(r_chap, x))
 
   # Need to take care of the div tags here before restore_part_html and
   # restore_appendix_html erase the section ids of the hidden PART or APPENDIX
