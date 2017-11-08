@@ -1,5 +1,5 @@
 language: r
-pandoc_version: 1.19.2.1
+pandoc_version: 2.0.1.1
 sudo: false
 cache:
   packages: yes
