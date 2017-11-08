@@ -4,6 +4,10 @@
 
 - Added an argument `config_file` to `render_book()` so that one can specify a custom config file; the default config file is still `_bookdown.yml` (thanks, @stephlocke, #465).
 
+## BUG FIXES
+
+- Compatibility with Pandoc 2.0 (thanks, @maxheld83 #479, @jerrythomas #481, and #478).
+
 # CHANGES IN bookdown VERSION 0.5
 
 ## NEW FEATURES

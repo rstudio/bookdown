@@ -38,7 +38,7 @@ epub_book = function(
   )
   if (is.null(stylesheet)) css = NULL else {
     css = rmarkdown::pandoc_path_arg(epub_css(stylesheet))
-    args = c(args, '--epub-stylesheet', css)
+    args = c(args, if (pandoc2.0()) '--css' else '--epub-stylesheet', css)
   }
 
   from_rmarkdown = getFromNamespace('from_rmarkdown', 'rmarkdown')
