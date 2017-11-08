@@ -969,7 +969,7 @@ fix_sections = function(x) {
   x[i1] = gsub('^<section', '<div', x[i1])
   x[i2] = '</div>'
   # Pandoc 2.0 also removed the "section" class
-  i3 = grep('^<div (id="[^"]+" )?class="level[12]("| )', x)
+  i3 = grep('^<div (id="[^"]+" )?class="level[1-6]("| )', x)
   x[i3] = gsub('class="level', 'class="section level', x[i3])
   x
 }
