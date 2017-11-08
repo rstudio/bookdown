@@ -165,10 +165,12 @@ restore_appendix_latex = function(x, toc = FALSE) {
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   level = gsub(r, '\\1', x[i])
+  brace = grepl('}}$', x[i])
   x[i] = '\\appendix'
   if (toc) x[i] = paste(
     x[i], sprintf('\\addcontentsline{toc}{%s}{\\appendixname}', level)
   )
+  if (brace) x[i] = paste0(x[i], '}')  # pandoc 2.0
   if (grepl('^\\\\addcontentsline', x[i + 1])) x[i + 1] = ''
   x
 }
