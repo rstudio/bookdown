@@ -6,7 +6,7 @@
 
 ## BUG FIXES
 
-- Compatibility with Pandoc 2.0 (thanks, @maxheld83 #479, @jerrythomas #481, and #478).
+- Compatibility with Pandoc 2.0 (thanks, @maxheld83 #479, @jerrythomas #481, @Hantabaru #483, and #478).
 
 # CHANGES IN bookdown VERSION 0.5
 
