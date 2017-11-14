@@ -60,6 +60,9 @@ html_chapters = function(
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, ...
   )
+  if (pandoc2.0()) {
+    config$pandoc$to = 'html4'; config$pandoc$ext = '.html'
+  }
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
@@ -119,10 +122,13 @@ html_document2 = function(
 ) {
   base_format = get_base_format(base_format)
   config = base_format(..., number_sections = number_sections)
+  if (pandoc2.0()) {
+    config$pandoc$to = 'html4'; config$pandoc$ext = '.html'
+  }
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
-    x = fix_sections(readUTF8(output))
+    x = readUTF8(output)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
@@ -197,7 +203,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
 
-  x = fix_sections(readUTF8(output))
+  x = readUTF8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
   i2 = find_token(x, '<!--bookdown:title:end-->')
@@ -952,24 +958,5 @@ restore_math_labels = function(x) {
   i = unlist(mapply(seq, i1, i2, SIMPLIFY = FALSE))
   # remove \ before #
   x[i] = gsub('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', '(\\1)', x[i])
-  x
-}
-
-# Pandoc 2.0 starts to use <section> instead of <div> for html5 output, but
-# unfortunately bookdown heavily relies on <div>, so we need to restore
-# <section> to <div>
-fix_sections = function(x) {
-  if (!pandoc2.0()) return(x)
-  i1 = grep('^<section .*>$', x)
-  i2 = grep('^</section>$', x)
-  if (length(i1) != length(i2)) {
-    warning('The <section> tags in HTML output do not seem to be balanced:\n')
-    cat(grep('^(<section .*>|</section>)$', x, value = TRUE), sep = '\n')
-  }
-  x[i1] = gsub('^<section', '<div', x[i1])
-  x[i2] = '</div>'
-  # Pandoc 2.0 also removed the "section" class
-  i3 = grep('^<div (id="[^"]+" )?class="level[1-6]("| )', x)
-  x[i3] = gsub('class="level', 'class="section level', x[i3])
   x
 }

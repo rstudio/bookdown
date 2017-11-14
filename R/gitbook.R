@@ -25,6 +25,12 @@ gitbook = function(
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
     template = bookdown_file('templates', 'gitbook.html'), ...
   )
+  # Pandoc 2.0 starts to use <section> instead of <div> for html (defaults to
+  # html5) output, but unfortunately bookdown heavily relies on <div>, so we
+  # have to use html4
+  if (pandoc2.0()) {
+    config$pandoc$to = 'html4'; config$pandoc$ext = '.html'
+  }
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
