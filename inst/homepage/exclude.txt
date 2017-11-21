@@ -145,3 +145,4 @@ https://bookdown.org/content/771/
 https://bookdown.org/content/782/
 https://bookdown.org/paulcbauer/btw_data_neu/
 https://bookdown.org/paulcbauer/Candidates_Germany_2017/
+https://bookdown.org/lyzhang10/my_r_tips_book2/
