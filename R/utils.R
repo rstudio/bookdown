@@ -143,7 +143,9 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   preview = opts$get('preview'); input = opts$get('input_rmd')
   content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = readUTF8(f)
-    x = if (preview && !(o %in% input)) create_placeholder(x) else {
+    x = if (preview && !(o %in% input)) {
+      create_placeholder(x)
+    } else {
       insert_code_chunk(x, before, after)
     }
     c(x, '', paste0('<!--chapter:end:', o, '-->'), '')
@@ -162,10 +164,24 @@ create_placeholder = function(x) {
   h1 = grep(reg_part, h, value = TRUE)  # part title
   h2 = grep(reg_app, h, value = TRUE)   # appendix title
   h3 = setdiff(h, c(h1, h2))
-  h4 = grep('^#{2,} ', x, value = TRUE)  # section/subsection/... titles
+
+  poss_sections = grep('^#{2,} ', x)  # section/subsection/... titles
+  code_blocks = grep('^```', x)
+
+  # Checks for ^#{2,} potentially occuring in a code block
+  # for each match count the preceeding occurances of ^```
+  #  - odd counts = in code block
+  #  - even counts = section / subsection / etc.
+  in_block = vapply(poss_sections, function(x) as.logical(sum(x>code_blocks) %% 2), TRUE)
+
+  sections = poss_sections[!in_block]
+  h4 = x[sections]
+
   c(
-    '', placeholder(head(h1, 1)), placeholder(head(h2, 1)),
-    placeholder(h3[1], '# Placeholder'), '', h4
+    '',
+    placeholder(head(h1, 1)), placeholder(head(h2, 1)), placeholder(head(h3, 1)),
+    '',
+    h4
   )
 }
 
