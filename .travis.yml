@@ -16,7 +16,6 @@ repos:
 
 before_install:
   - "curl https://xran.yihui.name/.gitconfig -o ~/.gitconfig"
-  - Rscript -e "devtools::install_github('rstudio/rmarkdown')"
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
 
