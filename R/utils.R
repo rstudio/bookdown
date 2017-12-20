@@ -165,7 +165,7 @@ create_placeholder = function(x) {
   h4 = grep('^#{2,} ', x, value = TRUE)  # section/subsection/... titles
   c(
     '', placeholder(head(h1, 1)), placeholder(head(h2, 1)),
-    placeholder(h3[1], '# Placeholder'), '', h4
+    placeholder(h3[1]), '', h4
   )
 }
 
