@@ -2,7 +2,7 @@ http://r4ds.had.co.nz/
 https://adv-r.hadley.nz/
 https://timtrice.github.io/backtesting-strategies/
 https://www.masteringdfsanalytics.com/
-http://tidytextmining.com/
+https://tidytextmining.com/
 https://b-rodrigues.github.io/fput/
 https://kazutan.github.io/ggplot2-gyakubiki-book/
 http://moderndive.com/
