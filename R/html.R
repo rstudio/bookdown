@@ -223,9 +223,11 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', body) + i5
     h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', body) + i5
     h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
-    if (length(h12) > 0 && h12[1] != i5 + 1) stop(
-      'The document must start with a first (#) or second level (##) heading'
-    )
+    if (!pandoc2.0()) {
+      if (length(h12) > 0 && h12[1] != i5 + 1) stop(
+        'The document must start with a first (#) or second level (##) heading'
+      )
+    }
     h12 = sort(h12)
     if (length(h12) > 1) {
       n12 = names(h12)
@@ -938,15 +940,20 @@ js_min_sources = function(x) {
 # special treatment because the backslash \ before # is preserved in equation
 # environments in HTML output, whereas it is removed in normal paragraphs
 restore_math_labels = function(x) {
-  i1 = grep('^(<[a-z]+>)?<span class="math display">\\\\\\[', x)
-  i2 = grep('\\\\\\]</span>(</[a-z]+>)?$', x)
+  i1 = grep('<span class="math display">\\\\\\[', x)
+  i2 = grep('\\\\\\]</span>', x)
   n1 = length(i1); n2 = length(i2)
   if (n1 * n2 == 0) return(x)
-  i2 = next_nearest(i1, i2, TRUE)
+  allow_eq = !(pandoc2.0())  # pandoc 2 doesn't put a newline before display
+                             # equation environment.  Therefore, next_nearest
+                             # cannot be called with TRUE for allow_eq.
+                             # This means that \begin and \end of an environment
+                             # must now be on different lines.
+  i2 = next_nearest(i1, i2, allow_eq)
   if (any(is.na(i2))) {
     # retry without assuming the closing \]</span> is only followed by an optional </tag>
-    i2 = grep('\\\\\\]</span>(</[a-z]+>)?', x)
-    i2 = next_nearest(i1, i2, TRUE)
+    i2 = grep('\\\\\\]</span>', x)
+    i2 = next_nearest(i1, i2, allow_eq)
     if (any(is.na(i2))) {
       warning(
         "There seems to be problems with math expressions of the display style. ",
