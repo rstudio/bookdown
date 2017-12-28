@@ -239,9 +239,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       i = h12[i] - 1
       if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(body) + i5)
       for (j in i) {
-        # the i-th lines should be the closing </div> for h1, or empty
-        # because of the appendix h1, which will be removed
-        if (!x[j] %in% c('</div>', '')) warning(
+        # the i-th lines should be the closing </div> for h1
+        if (x[j] != '</div>') stop(
           'Something wrong with the HTML output. The line ', x[j],
           ' is supposed to be </div>'
         )
