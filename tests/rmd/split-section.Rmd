@@ -1,0 +1,15 @@
+---
+title: "A Book"
+author: "Frida Gomam"
+output:
+  bookdown::gitbook:
+    split_by: section
+---
+
+# Section 1 
+
+Some content
+
+## subsection 1
+
+Hello.

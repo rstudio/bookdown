@@ -1,0 +1,15 @@
+---
+title: "A Book"
+author: "Frida Gomam"
+output:
+  bookdown::gitbook:
+    split_by: section
+---
+
+# Test footnote
+
+Hello world.^[Hello world footnote.]
+
+## Subsection
+
+Something.
