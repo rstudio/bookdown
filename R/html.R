@@ -237,7 +237,14 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
       if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
       i = h12[i] - 1
-      if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) i = c(i, length(body) + i5)
+      # need to comment out the </div> corresponding to the last <h1> in the body
+      if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) {
+        for (j in (i6 - 1):(tail(h12, 1))) {
+          # the line j should close h1, and j - 1 should close h2
+          if (all(x[j - 0:1] == '</div>')) break
+        }
+        i = c(i, j)
+      }
       for (j in i) {
         # the i-th lines should be the closing </div> for h1
         if (x[j] != '</div>') stop(
