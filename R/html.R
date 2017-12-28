@@ -212,6 +212,17 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
+  html_head  = x[1:(i1 - 1)]  # HTML header + includes
+  html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date
+  html_toc   = x[(i3 + 1):(i4 - 1)]  # TOC
+  html_body  = x[(i5 + 1):(i6 - 1)]  # body
+  html_foot  = x[(i6 + 1):length(x)]  # HTML footer
+
+  # parse and remove footnotes (will reassign them to relevant pages later)
+  res = parse_footnotes(html_body)
+  fnts = res$items
+  if (length(fnts)) html_body[res$range] = ''
+
   r_chap = '^<!--chapter:end:(.+)-->$'
   n = length(grep(r_chap, x))
 
@@ -262,12 +273,6 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     return(output)
   }
 
-  html_head  = x[1:(i1 - 1)]  # HTML header + includes
-  html_title = x[(i1 + 1):(i2 - 1)]  # title/author/date
-  html_toc   = x[(i3 + 1):(i4 - 1)]  # TOC
-  html_body  = x[(i5 + 1):(i6 - 1)]  # body
-  html_foot  = x[(i6 + 1):length(x)]  # HTML footer
-
   html_toc = add_toc_ids(html_toc)
 
   idx = grep(r_chap, html_body)
@@ -295,10 +300,6 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     res = parse_references(html_body)
     refs = res$refs; html_body = res$html; ref_title = res$title
   }
-  # parse and remove footnotes (will reassign them to relevant pages later)
-  res = parse_footnotes(html_body)
-  fnts = res$items
-  if (length(fnts)) html_body[res$range] = ''
 
   if (use_rmd_names) {
     html_body[idx] = ''
