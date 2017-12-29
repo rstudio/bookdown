@@ -5,7 +5,7 @@
 #' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
 #' functions of \code{html_chapter()} using a specific base output format.
 #' @inheritParams pdf_book
-#' @param toc,number_sections,fig_caption,lib_dir,template See
+#' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
 #'   \code{rmarkdown::\link{html_document}},
 #'   \code{tufte::\link[tufte]{tufte_html}}, or the documentation of the
 #'   \code{base_format} function.
