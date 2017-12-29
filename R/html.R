@@ -50,7 +50,7 @@
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
-  template = bookdown_file('templates/default.html'), ...,
+  template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
@@ -58,7 +58,7 @@ html_chapters = function(
   config = base_format(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
-    template = template, ...
+    template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   if (pandoc2.0()) {
     config$pandoc$to = 'html4'; config$pandoc$ext = '.html'
@@ -75,6 +75,12 @@ html_chapters = function(
   config$bookdown_output_format = 'html'
   config = set_opts_knit(config)
   config
+}
+
+# add --wrap=preserve to pandoc args for pandoc 2.0:
+# https://github.com/rstudio/bookdown/issues/504
+pandoc_args2 = function(args) {
+  if (pandoc2.0()) c('--wrap', 'preserve', args) else args
 }
 
 #' @rdname html_chapters
@@ -118,10 +124,12 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   base_format = get_base_format(base_format)
-  config = base_format(..., number_sections = number_sections)
+  config = base_format(
+    ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
+  )
   if (pandoc2.0()) {
     config$pandoc$to = 'html4'; config$pandoc$ext = '.html'
   }

@@ -3,14 +3,15 @@
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,... Arguments to be
-#'   passed to \code{rmarkdown::\link{html_document}()} (\code{...} not
-#'   including \code{toc}, \code{theme}, and \code{template}).
+#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
+#'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
+#'   (\code{...} not including \code{toc}, \code{theme}, and \code{template}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
 gitbook = function(
-  fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, lib_dir = 'libs', ...,
+  fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
+  lib_dir = 'libs', pandoc_args = NULL, ...,
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list()
 ) {
@@ -23,7 +24,8 @@ gitbook = function(
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
-    template = bookdown_file('templates', 'gitbook.html'), ...
+    template = bookdown_file('templates', 'gitbook.html'),
+    pandoc_args = pandoc_args2(pandoc_args), ...
   )
   # Pandoc 2.0 starts to use <section> instead of <div> for html (defaults to
   # html5) output, but unfortunately bookdown heavily relies on <div>, so we

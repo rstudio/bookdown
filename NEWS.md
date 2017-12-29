@@ -6,7 +6,7 @@
 
 ## BUG FIXES
 
-- Compatibility with Pandoc 2.0 (thanks, @maxheld83 #479, @jerrythomas #481, @Hantabaru #483, and #478).
+- Various compatibility issues with Pandoc 2.0 (thanks, @maxheld83 #479, @jerrythomas #481, @Hantabaru #483, @dataopt #504, and #478).
 
 - `split_by = 'section'` does not work completely correctly for the HTML output formats like `gitbook` (thanks, @dataopt, @502).
 
