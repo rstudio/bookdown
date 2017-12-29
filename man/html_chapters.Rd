@@ -8,7 +8,7 @@
 \usage{
 html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, 
     lib_dir = "libs", template = bookdown_file("templates/default.html"), 
-    ..., base_format = rmarkdown::html_document, split_bib = TRUE, 
+    pandoc_args = NULL, ..., base_format = rmarkdown::html_document, split_bib = TRUE, 
     page_builder = build_chapter, split_by = c("section+number", "section", 
         "chapter+number", "chapter", "rmd", "none"))
 
