@@ -847,7 +847,7 @@ parse_footnotes = function(x) {
   j = min(j[j > i])
   n = length(x)
   r = '<li id="fn([0-9]+)"><p>.+?<a href="#fnref\\1"[^>]*?>.</a></p></li>'
-  s = paste(x[i:n], collapse = '')
+  s = paste(x[i:n], collapse = ' ')
   items = unlist(regmatches(s, gregexpr(r, s)))
   list(items = setNames(items, gsub(r, 'fn\\1', items)), range = i:j)
 }
