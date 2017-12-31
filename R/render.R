@@ -61,7 +61,7 @@ render_book = function(
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
 
   if (config_file != '_bookdown.yml') {
-    unlink(tmp_config <- tempfile())
+    unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'))
     if (file.exists('_bookdown.yml')) file.rename('_bookdown.yml', tmp_config)
     file.rename(config_file, '_bookdown.yml')
     on.exit({
