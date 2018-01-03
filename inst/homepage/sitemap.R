@@ -11,7 +11,9 @@ pinned_urls = c(
   "https://bookdown.org/rdpeng/rprogdatascience/",
   "http://tidytextmining.com/",
   "https://bookdown.org/rdpeng/exdata/",
-  "https://bookdown.org/csgillespie/efficientR/"
+  "https://bookdown.org/csgillespie/efficientR/",
+  "https://otexts.org/fpp2/",
+  "https://bookdown.org/yihui/blogdown/"
 )
 
 book_listing = function() {
