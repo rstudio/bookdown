@@ -33,7 +33,7 @@ lapply(c('DT', 'citr', 'formatR', 'svglite'), function(pkg) {
 
 # Preface {-}
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html4'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
 knitr::include_graphics('images/cover.jpg', dpi = NA)
 ```
 
@@ -41,7 +41,7 @@ This short book introduces an R package, **bookdown**, to change your workflow o
 
 The **bookdown** package is built on top of R Markdown (http://rmarkdown.rstudio.com), and inherits the simplicity of the Markdown syntax (you can learn the basics in five minutes; see Section \@ref(markdown-syntax)), as well as the possibility of multiple types of output formats (PDF/HTML/Word/...). It has also added features like multi-page HTML output, numbering and cross-referencing figures/tables/sections/equations, inserting parts/appendices, and imported the GitBook\index{GitBook} style (https://www.gitbook.com) to create elegant and appealing HTML book pages. This book itself is an example of how you can produce a book from a series of R Markdown documents, and both the printed version and the online version can look professional. You can find more examples at https://bookdown.org.
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://github.com/rstudio/bookdown'}
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html4'), fig.link='https://github.com/rstudio/bookdown'}
 knitr::include_graphics('images/logo.png', dpi = NA)
 ```
 
