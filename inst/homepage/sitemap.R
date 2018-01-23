@@ -95,7 +95,7 @@ book_listing = function() {
       coverDiv <- div(class = "bookImage",
                       style = paste0("background-image:url(", cover ,")"))
     } else {
-      coverDiv <- div(class=paste("bookImage", next_color_class()),
+      coverDiv <- div(class = paste("bookImage", next_color_class()),
                       div(class = "title", title),
                       div(class = "author", author))
     }
