@@ -920,7 +920,7 @@ move_files_html = function(output, lib_dir) {
   f = unique(f[file_test('-f', f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   f2 = file.path(o, f)
-  i = !same_path(f, f2, mustWork = FALSE)
+  i = !same_path(f, f2)
   if (any(i)) file.copy(f[i], f2[i], overwrite = TRUE)
   # should not need the lib dir any more
   if (length(lib_dir) == 1 && is.character(lib_dir))

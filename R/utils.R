@@ -84,7 +84,7 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
   if (length(dir)) {
     if (create) dir_create(dir)
     # ignore dir that is just the current working directory
-    if (same_path(dir, getwd(), mustWork = FALSE)) dir = NULL
+    if (same_path(dir, getwd())) dir = NULL
   }
   dir
 }
