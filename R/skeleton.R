@@ -14,8 +14,8 @@ bookdown_skeleton = function(path) {
 
   # add book_filename to _bookdown.yml and default to the base path name
   f = file.path(path, '_bookdown.yml')
-  x = readUTF8(f)
-  writeUTF8(c(sprintf('book_filename: "%s"', basename(path)), x), f)
+  x = read_utf8(f)
+  write_utf8(c(sprintf('book_filename: "%s"', basename(path)), x), f)
 
   TRUE
 }
@@ -47,7 +47,7 @@ book_skeleton = function(
   rmd_files[1] = 'index.Rmd'
   write_file = function(x, f) {
     if (file.exists(f)) stop('The file ', f, ' exists.')
-    writeUTF8(x, f)
+    write_utf8(x, f)
   }
   titles = c(chapters, sprintf("`r if (knitr:::is_html_output()) '# %s {-}'`", references))
   titles = paste('#', titles)

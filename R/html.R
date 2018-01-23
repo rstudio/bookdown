@@ -136,11 +136,11 @@ html_document2 = function(
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
-    x = readUTF8(output)
+    x = read_utf8(output)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
-    writeUTF8(x, output)
+    write_utf8(x, output)
     output
   }
   config$bookdown_output_format = 'html'
@@ -211,7 +211,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
 
-  x = readUTF8(output)
+  x = read_utf8(output)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
   i2 = find_token(x, '<!--bookdown:title:end-->')
@@ -272,7 +272,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
     x = resolve_refs_html(x, !number_sections)
     x = add_chapter_prefix(x)
-    writeUTF8(x, output)
+    write_utf8(x, output)
     return(output)
   }
 
@@ -298,7 +298,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (split_level == 0) {
     html_body[idx] = ''  # remove chapter tokens
     html_body = add_chapter_prefix(html_body)
-    writeUTF8(build(
+    write_utf8(build(
       html_head, html_toc, c(html_title, html_body), NULL, NULL, NULL, output, html_foot, ...
     ), output)
     return(move_to_output_dir(output))
@@ -385,7 +385,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       if (length(nms_chaps)) nms_chaps[i],
       nms[i], html_foot, ...
     )
-    writeUTF8(html, nms[i])
+    write_utf8(html, nms[i])
   }
   nms = move_to_output_dir(nms)
 
@@ -887,7 +887,7 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
 # detect and move files to the output directory (if specified)
 move_files_html = function(output, lib_dir) {
   if (is.null(o <- opts$get('output_dir'))) return()
-  x = readUTF8(output)
+  x = read_utf8(output)
   # detect local resources used in HTML
   r = '[- ](src|href)="([^"]+)"'
   m = gregexpr(r, x)
@@ -899,7 +899,7 @@ move_files_html = function(output, lib_dir) {
   # detect resources in CSS
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
     d = dirname(z)
-    z = readUTF8(z)
+    z = read_utf8(z)
     r = 'url\\("?([^")]+)"?\\)'
     lapply(regmatches(z, gregexpr(r, z)), function(s) {
       s = local_resources(gsub(r, '\\1', s))

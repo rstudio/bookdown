@@ -179,8 +179,8 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
     file.copy(f, f2, overwrite = TRUE)
     # write add1/add2 to the original Rmd, compile it, and restore it
     tryCatch({
-      txt = c(add1, readUTF8(f), add2)
-      writeUTF8(txt, f)
+      txt = c(add1, read_utf8(f), add2)
+      write_utf8(txt, f)
       Rscript_render(f, render_args, render_meta)
     }, finally = {
       if (file.copy(f2, f, overwrite = TRUE)) unlink(f2)

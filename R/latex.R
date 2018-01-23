@@ -45,7 +45,7 @@ pdf_book = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
-    x = resolve_refs_latex(readUTF8(f))
+    x = resolve_refs_latex(read_utf8(f))
     x = resolve_ref_links_latex(x)
     x = restore_part_latex(x)
     x = restore_appendix_latex(x, toc_appendix)
@@ -60,7 +60,7 @@ pdf_book = function(
     if (highlight_bw) x = highlight_grayscale_latex(x)
     post = getOption('bookdown.post.latex')
     if (is.function(post)) x = post(x)
-    writeUTF8(x, f)
+    write_utf8(x, f)
     latexmk(f, config$pandoc$latex_engine)
     unlink(with_ext(output, c('bbl', 'run.xml'))) # clean up after latexmk (and biber)
 

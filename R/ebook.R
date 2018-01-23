@@ -74,11 +74,11 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     input_file, 'html4', from, intermediate_html, TRUE,
     c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
   )
-  x = readUTF8(intermediate_html)
+  x = read_utf8(intermediate_html)
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
   content = resolve_refs_md(
-    readUTF8(input_file), c(figs$ref_table, parse_section_labels(x)), to_md
+    read_utf8(input_file), c(figs$ref_table, parse_section_labels(x)), to_md
   )
   if (to_md) content = gsub(
     '^\\\\BeginKnitrBlock\\{[^}]+\\}|\\\\EndKnitrBlock\\{[^}]+\\}$', '', content
@@ -91,7 +91,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     content = restore_appendix_epub(content)
     content = protect_math_env(content)
   }
-  writeUTF8(content, input_file)
+  write_utf8(content, input_file)
 }
 
 resolve_refs_md = function(content, ref_table, to_md = output_md()) {
@@ -213,7 +213,7 @@ epub_css = function(files, output = tempfile('epub', fileext = '.css')) {
   css = unlist(lapply(files, function(css) {
     in_dir(dirname(css), base64_css(basename(css)))
   }))
-  writeUTF8(css, output)
+  write_utf8(css, output)
   output
 }
 
