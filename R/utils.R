@@ -109,6 +109,8 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   preview = opts$get('preview'); input = opts$get('input_rmd')
   content = unlist(mapply(files, orig, SIMPLIFY = FALSE, FUN = function(f, o) {
     x = read_utf8(f)
+    # if a chapter is short enough (<= 30 lines), just include the full chapter for preview
+    preview = preview && length(x) >= getOption('bookdown.preview.cutoff', 30)
     x = if (preview && !(o %in% input)) create_placeholder(x) else {
       insert_code_chunk(x, before, after)
     }
