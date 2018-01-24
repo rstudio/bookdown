@@ -1,8 +1,7 @@
 #' @rdname html_document2
 #' @export
 word_document2 = function(fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, ...) {
-  from_rmarkdown = getFromNamespace('from_rmarkdown', 'rmarkdown')
-  from = from_rmarkdown(fig_caption, md_extensions)
+  from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)
 
   config = rmarkdown::word_document(
     fig_caption = fig_caption, md_extensions = md_extensions, pandoc_args = pandoc_args, ...

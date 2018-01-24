@@ -40,8 +40,7 @@ epub_book = function(
     args = c(args, if (pandoc2.0()) '--css' else '--epub-stylesheet', css)
   }
 
-  from_rmarkdown = getFromNamespace('from_rmarkdown', 'rmarkdown')
-  from = from_rmarkdown(fig_caption, md_extensions)
+  from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)
 
   config = rmarkdown::output_format(
     knitr = rmarkdown::knitr_options_html(fig_width, fig_height, NULL, FALSE, dev),
