@@ -61,8 +61,10 @@ pdf_book = function(
     post = getOption('bookdown.post.latex')
     if (is.function(post)) x = post(x)
     write_utf8(x, f)
-    latexmk(f, config$pandoc$latex_engine)
-    unlink(with_ext(output, c('bbl', 'run.xml'))) # clean up after latexmk (and biber)
+    tinytex::latexmk(
+      f, config$pandoc$latex_engine,
+      if ('--biblatex' %in% config$pandoc$args) 'biber' else 'bibtex'
+    )
 
     output = with_ext(output, '.pdf')
     o = opts$get('output_dir')
@@ -290,9 +292,4 @@ highlight_grayscale_latex = function(x) {
 # https://en.wikipedia.org/wiki/Grayscale
 rgb2gray = function(x, maxColorValue = 1) {
   rep(sum(c(.2126, .7152, .0722) * x/maxColorValue), 3)
-}
-
-latexmk = function(...) {
-  FUN = getFromNamespace('latexmk', 'rmarkdown')
-  FUN(...)
 }

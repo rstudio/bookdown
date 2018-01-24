@@ -52,6 +52,7 @@ Imports:
     knitr (>= 1.16),
     rmarkdown (>= 1.5),
     xfun,
+    tinytex,
     yaml (>= 2.1.14)
 Suggests:
     htmlwidgets,
