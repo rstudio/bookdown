@@ -49,7 +49,7 @@ book_skeleton = function(
     if (file.exists(f)) stop('The file ', f, ' exists.')
     write_utf8(x, f)
   }
-  titles = c(chapters, sprintf("`r if (knitr:::is_html_output()) '# %s {-}'`", references))
+  titles = c(chapters, sprintf("`r if (knitr::is_html_output()) '# %s {-}'`", references))
   titles = paste('#', titles)
   for (i in seq_along(rmd_files)) {
     content = c(titles[i], '')

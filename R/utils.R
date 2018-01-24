@@ -176,6 +176,7 @@ check_special_chars = function(filename) {
   filename
 }
 
+# TODO: use xfun::Rscript
 Rscript = function(args, ...) {
   system2(file.path(R.home('bin'), 'Rscript'), args, ...)
 }
@@ -208,11 +209,6 @@ strip_search_text = function(x) {
   x = gsub('<div id="refs" class="references">.*', '', x)
   x = strip_html(x)
   x
-}
-
-# quote a string and escape backslashes/double quotes
-json_string = function(x, toArray = FALSE) {
-  knitr:::json_vector(x, toArray)
 }
 
 # manipulate internal options
