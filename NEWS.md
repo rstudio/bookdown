@@ -1,4 +1,4 @@
-# CHANGES IN bookdown VERSION 0.6 (unreleased)
+# CHANGES IN bookdown VERSION 0.6
 
 ## NEW FEATURES
 
