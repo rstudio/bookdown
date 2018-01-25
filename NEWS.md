@@ -1,3 +1,9 @@
+# CHANGES IN bookdown VERSION 0.7 (unreleased)
+
+## MINOR CHANGES
+
+- Added a new dependency **tinytex** to build PDF, and **xfun** for some utility functions.
+
 # CHANGES IN bookdown VERSION 0.6
 
 ## NEW FEATURES
