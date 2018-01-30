@@ -105,10 +105,11 @@ bookdown::gitbook:
       facebook: yes
       twitter: yes
       google: no
+      linkedin: no
       weibo: no
       instapper: no
       vk: no
-      all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
+      all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
 ```
 
 The `toc` option controls the behavior of the table of contents (TOC). You can collapse some items initially when a page is loaded via the `collapse` option. Its possible values are `subsection`, `section`, `none` (or `null`). This option can be helpful if your TOC is very long and has more than three levels of headings: `subsection` means collapsing all TOC items for subsections (X.X.X), `section` means those items for sections (X.X) so only the top-level headings are displayed initially, and `none` means not collapsing any items in the TOC. For those collapsed TOC items, you can toggle their visibility by clicking their parent TOC items. For example, you can click a chapter title in the TOC to show/hide its sections.
