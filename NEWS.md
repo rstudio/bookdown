@@ -4,6 +4,8 @@
 
 - Added a new dependency **tinytex** to build PDF, and **xfun** for some utility functions.
 
+- Added the ability to share documents on LinkedIn with the `gitbook` output format (thanks, @WeeBeasties, #523, https://stackoverflow.com/q/48494097/559676).
+
 # CHANGES IN bookdown VERSION 0.6
 
 ## NEW FEATURES
