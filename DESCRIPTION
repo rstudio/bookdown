@@ -12,6 +12,7 @@ Authors@R: c(
     person("Ben", "Marwick", role = "ctb"),
     person("Chester", "Ismay", role = "ctb"),
     person("Christophe", "Dervieux", role = "ctb"),
+    person("Clifton", "Franklund", role = "ctb"),
     person("Daniel", "Emaasit", role = "ctb"),
     person("David", "Shuman", role = "ctb"),
     person("Dean", "Attali", role = "ctb"),
