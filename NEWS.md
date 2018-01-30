@@ -2,7 +2,8 @@
 
 ## MINOR CHANGES
 
-- Added a new dependency **tinytex** to build PDF, and **xfun** for some utility functions.
+- Added a new dependency **tinytex** to build PDF, and **xfun** for some utility functions.  
+- Added the ability to share documents on LinkedIn
 
 # CHANGES IN bookdown VERSION 0.6
 
