@@ -190,7 +190,7 @@ Below we show some sample YAML metadata (again, please note that these are _top-
 title: "An Awesome Book"
 author: "John Smith"
 description: "This book introduces the ABC theory, and ..."
-url: "https\://bookdown.org/john/awesome/"
+url: 'https\://bookdown.org/john/awesome/'
 github-repo: "john/awesome"
 cover-image: "images/cover.png"
 apple-touch-icon: "touch-icon.png"
