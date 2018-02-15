@@ -1,6 +1,6 @@
 # bookdown
 
-[![Build Status](https://travis-ci.org/rstudio/bookdown.svg)](https://travis-ci.org/rstudio/bookdown) ![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/bookdown)
+[![Build Status](https://travis-ci.org/rstudio/bookdown.svg)](https://travis-ci.org/rstudio/bookdown) ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/bookdown)
 
 <a href="https://bookdown.org/yihui/blogdown"><img src="https://bookdown.org/yihui/bookdown/images/logo.png" alt="bookdown logo" align="right" /></a>
 
