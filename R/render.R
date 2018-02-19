@@ -34,6 +34,9 @@
 #'   supposed to be UTF-8.
 #' @param config_file The book configuration file.
 #' @export
+#' @examples
+#' # see https://bookdown.org/yihui/bookdown for the full documentation
+#' if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,

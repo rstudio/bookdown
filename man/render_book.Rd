@@ -56,3 +56,7 @@ There are two ways to render a book from Rmd files. The default way
 render this file. You can also choose to render each individual Rmd file in a
 new R session (\code{new_session = TRUE}).
 }
+\examples{
+# see https://bookdown.org/yihui/bookdown for the full documentation
+if (file.exists("index.Rmd")) bookdown::render_book("index.Rmd")
+}
