@@ -70,7 +70,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
   intermediate_html = with_ext(input_file, 'tmp.html')
   on.exit(unlink(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
-    input_file, 'html4', from, intermediate_html, TRUE,
+    input_file, 'html', from, intermediate_html, TRUE,
     c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
   )
   x = read_utf8(intermediate_html)
