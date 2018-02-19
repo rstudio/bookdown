@@ -1,4 +1,4 @@
-# CHANGES IN bookdown VERSION 0.7 (unreleased)
+# CHANGES IN bookdown VERSION 0.7
 
 ## MINOR CHANGES
 
