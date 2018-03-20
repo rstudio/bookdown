@@ -497,12 +497,12 @@ reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1
 label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # prefixes for theorem environments
 theorem_abbr = c(
-  theorem = 'thm', lemma = 'lem', definition = 'def', corollary = 'cor',
-  proposition = 'prp', example = 'exm', exercise = 'exr'
+  theorem = 'thm', lemma = 'lem', corollary = 'cor', proposition = 'prp',
+  definition = 'def', example = 'exm', exercise = 'exr'
 )
 # numbered math environments
 label_names_math = setNames(list(
-  'Theorem ', 'Lemma ', 'Definition ', 'Corollary ', 'Proposition ', 'Example ', 'Exercise '
+  'Theorem ', 'Lemma ', 'Corollary ', 'Proposition ', 'Definition ', 'Example ', 'Exercise '
 ), theorem_abbr)
 # unnumbered math environments
 label_names_math2 = list(proof = 'Proof. ', remark = 'Remark. ', solution = 'Solution. ')
