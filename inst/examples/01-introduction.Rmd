@@ -40,6 +40,10 @@ The easiest way for beginners to get started with writing a book with R Markdown
 1. Open the `bookdown-demo` repository you downloaded in RStudio by clicking `bookdown-demo.Rproj`.
 1. Open the R Markdown file `index.Rmd` and click the button `Build Book` on the `Build` tab of RStudio.
 
+```{block2, type='rmdnote'}
+If you are planning on printing your book to PDF, you will need a LaTeX distribution. We recommend that you install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
+```
+
 Now you should see the index page of this book demo in the RStudio Viewer. You may add or change the R Markdown files, and hit the `Knit` button again to preview the book. If you prefer not to use RStudio, you may also compile the book through the command line. See the next section for details.
 
 Although you see quite a few files in the `bookdown-demo` example, most of them are not essential to a book. If you feel overwhelmed by the number of files, you can use this minimal example instead, which is essentially one file `index.Rmd`: https://github.com/yihui/bookdown-minimal. The `bookdown-demo` example contains some advanced settings that you may want to learn later, such as how to customize the LaTeX preamble, tweak the CSS, and build the book on GitHub, etc.
