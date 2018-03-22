@@ -205,12 +205,12 @@ bookdown::pdf_book:
   highlight_bw: yes
 ```
 
-All preamble settings we mentioned above are in the file `latex/preamble.tex`. In `latex/before_body.tex`, we inserted a few blank pages required by the publisher, wrote the dedication page, and specified that the front matter starts:
+All preamble settings we mentioned above are in the file `latex/preamble.tex`, where we also specified that the front matter starts:
 
 ```latex
 \frontmatter
 ```
-
+In `latex/before_body.tex`, we inserted a few blank pages required by the publisher and wrote the dedication page.
 Before the first chapter of the book, we inserted
 
 ```latex
