@@ -1,6 +1,7 @@
 # compile an Rmd file without running Pandoc; arguments are passed from Rscript;
 # the three arguments are 1) the Rmd filename; 2) the render arguments; 3) the
 # filename to save the returned value of render()
+library(methods)
 local({
   args = commandArgs(TRUE)
   out = do.call(
