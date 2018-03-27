@@ -1,3 +1,9 @@
+# CHANGES IN bookdown VERSION 0.8
+
+## NEW FEATURE
+
+- Added Conjecture to the list of theorem environments.
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MINOR CHANGES
