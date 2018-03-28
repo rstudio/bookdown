@@ -261,6 +261,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   x = add_section_ids(x)
   x = restore_part_html(x)
   x = restore_appendix_html(x)
+  x = clean_pandoc2_highlight_tags(x)
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
@@ -966,5 +967,14 @@ restore_math_labels = function(x) {
   i = unlist(mapply(seq, i1, i2, SIMPLIFY = FALSE))
   # remove \ before #
   x[i] = gsub('\\(\\\\(#eq:[-/[:alnum:]]+)\\)', '(\\1)', x[i])
+  x
+}
+
+# remove the <div> tags around <pre>, and clean up <a> on all lines
+clean_pandoc2_highlight_tags = function(x) {
+  if (!pandoc2.0()) return(x)
+  x = gsub('(</a></code></pre>)</div>', '\\1', x)
+  x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
+  x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
   x
 }
