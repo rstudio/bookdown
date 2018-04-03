@@ -126,6 +126,8 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
 match_dashes = function(x) grep('^---\\s*$', x)
 
 create_placeholder = function(x) {
+  # filter out fenced code blocks (which may contain #'s that are comments)
+  if (xfun::loadable('xaringan')) x = x[xaringan:::prose_index(x)]
   h = grep('^# ', x, value = TRUE)  # chapter title
   h1 = grep(reg_part, h, value = TRUE)  # part title
   h2 = grep(reg_app, h, value = TRUE)   # appendix title
