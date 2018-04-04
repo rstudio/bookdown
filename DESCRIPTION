@@ -17,7 +17,7 @@ Authors@R: c(
     person("David", "Shuman", role = "ctb"),
     person("Dean", "Attali", role = "ctb"),
     person("Drew", "Tyre", role = "ctb"),
-    person("Ellis", "Valentiner", role = "ctb")
+    person("Ellis", "Valentiner", role = "ctb"),
     person("Frans", "van Dunne", role = "ctb"),
     person("Hadley", "Wickham", role = "ctb"),
     person("Jeff", "Allen", role = "ctb"),
