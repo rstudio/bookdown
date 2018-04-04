@@ -4,6 +4,8 @@
 
 - Added Conjecture to the list of theorem environments.
 
+- In addition to `rmd_subdir: true`, which searches all subdirectories, you can now provide a list of subdirectories to be recursively searched (#242).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MINOR CHANGES
