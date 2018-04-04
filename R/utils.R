@@ -58,9 +58,20 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   # a list of Rmd chapters
-  files = list.files(
-    '.', '[.]Rmd$', ignore.case = TRUE, recursive = isTRUE(config[['rmd_subdir']])
-  )
+  if (isTRUE(config[['rmd_subdir']])) {
+    files = list.files(
+      '.', '[.]Rmd$', ignore.case = TRUE, recursive = TRUE
+      )
+  } else if (is.character(config[['rmd_subdir']])) {
+    files = list.files(
+      config[['rmd_subdir']], '[.]Rmd$', ignore.case = TRUE, recursive = TRUE,
+      full.names = TRUE
+    )
+  } else {
+    files = list.files(
+      '.', '[.]Rmd$', ignore.case = TRUE
+    )
+  }
   if (length(config[['rmd_files']]) > 0) {
     files = config[['rmd_files']]
     if (is.list(files)) {
