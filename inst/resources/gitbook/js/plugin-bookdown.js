@@ -157,7 +157,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var toolbar = config.toolbar;
     if (!toolbar || toolbar.position !== 'static') {
       var bookHeader = $('.book-header');
-      bookBody.addClass('fixed');
+      //bookBody.addClass('fixed'); bookBody should not be changed.  Fixes disappearing toolbar on iPad.
       bookHeader.addClass('fixed')
       .css('background-color', bookBody.css('background-color'))
       .on('click.bookdown', function(e) {
