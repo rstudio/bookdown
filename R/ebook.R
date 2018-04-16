@@ -15,6 +15,7 @@
 #' @param epub_version Whether to use version 3 or 2 of EPUB.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
+#' @inheritParams html_chapters
 #' @note Figure/table numbers cannot be generated if sections are not numbered
 #'   (\code{number_sections = FALSE}).
 #' @export
@@ -22,9 +23,9 @@ epub_book = function(
   fig_width = 5, fig_height = 4, dev = 'png', fig_caption = TRUE,
   number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL,
   cover_image = NULL, metadata = NULL, chapter_level = 1,
-  epub_version = c('epub3', 'epub'), md_extensions = NULL, pandoc_args = NULL
+  epub_version = c('epub3', 'epub'), md_extensions = NULL, pandoc_args = NULL,
+  template
 ) {
-
   epub_version = match.arg(epub_version)
   args = c(
     pandoc_args,
@@ -33,6 +34,7 @@ epub_book = function(
     if (!missing(toc_depth)) c('--toc-depth', toc_depth),
     if (!is.null(cover_image)) c('--epub-cover-image', cover_image),
     if (!is.null(metadata)) c('--epub-metadata', metadata),
+    if (!missing(template)) c('--template', template),
     if (!missing(chapter_level)) c('--epub-chapter-level', chapter_level)
   )
   if (is.null(stylesheet)) css = NULL else {
