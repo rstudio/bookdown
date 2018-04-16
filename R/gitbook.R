@@ -5,13 +5,13 @@
 #' @inheritParams html_chapters
 #' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (\code{...} not including \code{toc}, \code{theme}, and \code{template}).
+#'   (\code{...} not including \code{toc}, and \code{theme}).
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  lib_dir = 'libs', pandoc_args = NULL, ...,
+  lib_dir = 'libs', pandoc_args = NULL, ..., template = bookdown_file('templates', 'gitbook.html'),
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list()
 ) {
@@ -24,7 +24,7 @@ gitbook = function(
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
-    template = bookdown_file('templates', 'gitbook.html'),
+    template = template,
     pandoc_args = pandoc_args2(pandoc_args), ...
   )
   split_by = match.arg(split_by)
