@@ -29,7 +29,7 @@ gitbook = function(
   }
   gb_config = config
   if (identical(template, 'default')) {
-    template <- bookdown_file('templates', 'gitbook.html')
+    template = bookdown_file('templates', 'gitbook.html')
   }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
