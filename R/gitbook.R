@@ -6,7 +6,13 @@
 #' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (\code{...} not including \code{toc}, and \code{theme}).
-#' @param template Pandoc template to use for rendering. Pass "default" to use the rmarkdown package default template; pass a path to use a custom template that you've created. The default template should be sufficient for most use cases. In case you want to develop a custom template, we highly recommend to start from the \href{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}{rmarkdown package default template}.
+#' @param template Pandoc template to use for rendering. Pass "default" to use
+#'   the bookdown default template; pass a path to use a custom template that
+#'   you have created. The default template should be sufficient for most use
+#'   cases. In case you want to develop a custom template, we highly recommend
+#'   to start from
+#'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
+#'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
