@@ -6,6 +6,8 @@
 
 - In addition to `rmd_subdir: true`, which searches all subdirectories, you can now provide a list of subdirectories to be recursively searched (#242).
 
+- Added an argument `template` to `gitbook()` and `epub_book()` (thanks, @ThierryO, #570).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MINOR CHANGES
