@@ -15,7 +15,7 @@
 #' @param epub_version Whether to use version 3 or 2 of EPUB.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
-#' @inheritParams html_chapters
+#' @param template Pandoc template to use for rendering. Pass "default" to use use pandoc's built-in template; pass a path to use a custom template that you've created. The default pandoc template should be sufficient for most use cases. In case you want to develop a custom template, we highly recommend to start from the \href{https://github.com/jgm/pandoc-templates/blob/master/default.epub3}{default pandoc template}.
 #' @note Figure/table numbers cannot be generated if sections are not numbered
 #'   (\code{number_sections = FALSE}).
 #' @export
@@ -24,7 +24,7 @@ epub_book = function(
   number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL,
   cover_image = NULL, metadata = NULL, chapter_level = 1,
   epub_version = c('epub3', 'epub'), md_extensions = NULL, pandoc_args = NULL,
-  template
+  template = 'default'
 ) {
   epub_version = match.arg(epub_version)
   args = c(
@@ -34,7 +34,7 @@ epub_book = function(
     if (!missing(toc_depth)) c('--toc-depth', toc_depth),
     if (!is.null(cover_image)) c('--epub-cover-image', cover_image),
     if (!is.null(metadata)) c('--epub-metadata', metadata),
-    if (!missing(template)) c('--template', template),
+    if (!identical(template, 'default')) c('--template', template),
     if (!missing(chapter_level)) c('--epub-chapter-level', chapter_level)
   )
   if (is.null(stylesheet)) css = NULL else {
