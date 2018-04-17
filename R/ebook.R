@@ -15,7 +15,12 @@
 #' @param epub_version Whether to use version 3 or 2 of EPUB.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
-#' @param template Pandoc template to use for rendering. Pass "default" to use use pandoc's built-in template; pass a path to use a custom template that you've created. The default pandoc template should be sufficient for most use cases. In case you want to develop a custom template, we highly recommend to start from the \href{https://github.com/jgm/pandoc-templates/blob/master/default.epub3}{default pandoc template}.
+#' @param template Pandoc template to use for rendering. Pass \code{"default"}
+#'   to use Pandoc's built-in template; pass a path to use a custom template.
+#'   The default pandoc template should be sufficient for most use cases. In
+#'   case you want to develop a custom template, we highly recommend to start
+#'   from the default EPUB templates at
+#'   \url{https://github.com/jgm/pandoc-templates/}.
 #' @note Figure/table numbers cannot be generated if sections are not numbered
 #'   (\code{number_sections = FALSE}).
 #' @export

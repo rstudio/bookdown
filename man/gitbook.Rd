@@ -18,7 +18,12 @@ Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
 \code{html_chapters()}.}
 
-\item{template}{Pandoc template to use for rendering. Pass "default" to use the rmarkdown package default template; pass a path to use a custom template that you've created. The default template should be sufficient for most use cases. In case you want to develop a custom template, we highly recommend to start from the \href{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}{rmarkdown package default template}.}
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"}
+to use the bookdown default template; pass a path to use a custom template.
+The default template should be sufficient for most use cases. In case you
+want to develop a custom template, we highly recommend to start from the
+default template:
+\url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.}
 
 \item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML

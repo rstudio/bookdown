@@ -33,7 +33,12 @@ applied to the eBook.}
 
 \item{pandoc_args}{A vector of additional Pandoc arguments.}
 
-\item{template}{Pandoc template to use for rendering. Pass "default" to use use pandoc's built-in template; pass a path to use a custom template that you've created. The default pandoc template should be sufficient for most use cases. In case you want to develop a custom template, we highly recommend to start from the \href{https://github.com/jgm/pandoc-templates/blob/master/default.epub3}{default pandoc template}.}
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"}
+to use Pandoc's built-in template; pass a path to use a custom template.
+The default pandoc template should be sufficient for most use cases. In
+case you want to develop a custom template, we highly recommend to start
+from the default EPUB templates at
+\url{https://github.com/jgm/pandoc-templates/}.}
 }
 \description{
 Convert a book to the EPUB format, which is is an e-book format supported by
