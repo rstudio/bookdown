@@ -5,17 +5,25 @@
 \title{The GitBook output format}
 \usage{
 gitbook(fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, 
-    lib_dir = "libs", pandoc_args = NULL, ..., split_by = c("chapter", "chapter+number", 
-        "section", "section+number", "rmd", "none"), split_bib = TRUE, config = list())
+    lib_dir = "libs", pandoc_args = NULL, ..., template = "default", 
+    split_by = c("chapter", "chapter+number", "section", "section+number", 
+        "rmd", "none"), split_bib = TRUE, config = list())
 }
 \arguments{
 \item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-(\code{...} not including \code{toc}, \code{theme}, and \code{template}).}
+(\code{...} not including \code{toc}, and \code{theme}).}
 
 \item{...}{Other arguments to be passed to \code{base_format}. For
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
 \code{html_chapters()}.}
+
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"}
+to use the bookdown default template; pass a path to use a custom template.
+The default template should be sufficient for most use cases. In case you
+want to develop a custom template, we highly recommend to start from the
+default template:
+\url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.}
 
 \item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML

@@ -5,13 +5,20 @@
 #' @inheritParams html_chapters
 #' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (\code{...} not including \code{toc}, \code{theme}, and \code{template}).
+#'   (\code{...} not including \code{toc}, and \code{theme}).
+#' @param template Pandoc template to use for rendering. Pass \code{"default"}
+#'   to use the bookdown default template; pass a path to use a custom template.
+#'   The default template should be sufficient for most use cases. In case you
+#'   want to develop a custom template, we highly recommend to start from the
+#'   default template:
+#'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
+#'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  lib_dir = 'libs', pandoc_args = NULL, ...,
+  lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list()
 ) {
@@ -21,11 +28,13 @@ gitbook = function(
     )
   }
   gb_config = config
+  if (identical(template, 'default')) {
+    template = bookdown_file('templates', 'gitbook.html')
+  }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
-    template = bookdown_file('templates', 'gitbook.html'),
-    pandoc_args = pandoc_args2(pandoc_args), ...
+    template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined

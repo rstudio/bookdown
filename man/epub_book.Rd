@@ -7,7 +7,7 @@
 epub_book(fig_width = 5, fig_height = 4, dev = "png", fig_caption = TRUE, 
     number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL, 
     cover_image = NULL, metadata = NULL, chapter_level = 1, epub_version = c("epub3", 
-        "epub"), md_extensions = NULL, pandoc_args = NULL)
+        "epub"), md_extensions = NULL, pandoc_args = NULL, template = "default")
 }
 \arguments{
 \item{fig_width, fig_height, dev, fig_caption}{Figure options (width, height,
@@ -32,6 +32,13 @@ applied to the eBook.}
 \item{md_extensions}{A character string of Pandoc Markdown extensions.}
 
 \item{pandoc_args}{A vector of additional Pandoc arguments.}
+
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"}
+to use Pandoc's built-in template; pass a path to use a custom template.
+The default pandoc template should be sufficient for most use cases. In
+case you want to develop a custom template, we highly recommend to start
+from the default EPUB templates at
+\url{https://github.com/jgm/pandoc-templates/}.}
 }
 \description{
 Convert a book to the EPUB format, which is is an e-book format supported by
