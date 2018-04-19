@@ -577,9 +577,10 @@ When a referenced label cannot be found, you will see two question marks like \@
 
 You can also create text-based links using explicit or automatic section IDs or even the actual section header text.
 
-  * If you are happy with the section header as the link text, use it inside a single set of square brackets:
+- If you are happy with the section header as the link text, use it inside a single set of square brackets:
     - `[Section header text]`: example "[A single document]" via `[A single document]`
-  * There are two ways to specify custom link text:
+
+- There are two ways to specify custom link text:
     - `[link text][Section header text]`, e.g., "[non-English books][Internationalization]" via `[non-English books][Internationalization]`
     - `[link text](#ID)`, e.g., "[Table stuff](#tables)" via `[Table stuff](#tables)`
 
