@@ -750,7 +750,7 @@ restore_part_html = function(x, remove = TRUE) {
     k = grepl('^<h1>\\(PART\\*\\) .+</h1>$', x[i])  # unnumbered parts
     i1 = i[k]; i2 = i[!k]
     x[i1] = gsub('<h1>\\(PART\\*\\)', '<h1>', x[i1])
-    x[i2] = mapply(
+    if (length(i2)) x[i2] = mapply(
       gsub, '<h1>\\(PART\\)', x = x[i2],
       sprintf('<h1><span class="header-section-number">%s</span>', as.roman(seq_along(i2)))
     )

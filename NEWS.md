@@ -8,6 +8,10 @@
 
 - Added an argument `template` to `gitbook()` and `epub_book()` (thanks, @ThierryO, #570).
 
+## BUG FIXES
+
+- HTML output formats such as `gitbook` and `html_document2` won't work when only unnumbered parts (i.e., `# (PART\*)`) are used (thanks, @tjmahr, #575).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MINOR CHANGES
