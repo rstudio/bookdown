@@ -131,7 +131,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  unlink(main)
+  file.remove(main)
   res
 }
 
@@ -154,7 +154,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   # save a copy of render arguments in a temp file
   render_args = tempfile('render', '.', '.rds')
-  on.exit(unlink(render_args), add = TRUE)
+  on.exit(file.remove(render_args), add = TRUE)
   saveRDS(
     list(output_format = output_format, ..., clean = FALSE, envir = envir),
     render_args
@@ -186,7 +186,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
       write_utf8(txt, f)
       Rscript_render(f, render_args, render_meta)
     }, finally = {
-      if (file.copy(f2, f, overwrite = TRUE)) unlink(f2)
+      if (file.copy(f2, f, overwrite = TRUE)) file.remove(f2)
     })
   }
   if (!all(dirname(files_md) == '.'))
