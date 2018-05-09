@@ -64,7 +64,7 @@ render_book = function(
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
 
   if (config_file != '_bookdown.yml') {
-    unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'), recursive = TRUE)
+    unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'))
     if (file.exists('_bookdown.yml')) file.rename('_bookdown.yml', tmp_config)
     file.rename(config_file, '_bookdown.yml')
     on.exit({
@@ -131,7 +131,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  unlink(main, recursive = TRUE)
+  file.remove(main)
   res
 }
 
@@ -154,7 +154,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   # save a copy of render arguments in a temp file
   render_args = tempfile('render', '.', '.rds')
-  on.exit(unlink(render_args, recursive = TRUE), add = TRUE)
+  on.exit(file.remove(render_args), add = TRUE)
   saveRDS(
     list(output_format = output_format, ..., clean = FALSE, envir = envir),
     render_args
@@ -186,7 +186,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
       write_utf8(txt, f)
       Rscript_render(f, render_args, render_meta)
     }, finally = {
-      if (file.copy(f2, f, overwrite = TRUE)) unlink(f2, recursive = TRUE)
+      if (file.copy(f2, f, overwrite = TRUE)) file.remove(f2)
     })
   }
   if (!all(dirname(files_md) == '.'))
