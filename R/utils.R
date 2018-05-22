@@ -135,14 +135,12 @@ create_placeholder = function(x) {
   h2 = grep(reg_app, h, value = TRUE)   # appendix title
   h3 = setdiff(h, c(h1, h2))
   h4 = grep('^#{2,} ', x, value = TRUE)  # section/subsection/... titles
-  c(
-    '', head(h1, 1), head(h2, 1), placeholder(h3[1]), '', h4
-  )
+  c('', head(h1, 1), head(h2, 1), placeholder(h3), '', h4)
 }
 
-# x1: the title; x2: placeholder if title is empty
-placeholder = function(x1, x2 = NULL) {
-  if (length(x1) && !is.na(x1)) c(x1, '\nPlaceholder\n') else x2
+# add a placeholder paragraph
+placeholder = function(x) {
+  if (length(x)) c(x[1], '\nPlaceholder\n')
 }
 
 fetch_yaml = function(x) {
