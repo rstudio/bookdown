@@ -454,3 +454,27 @@ register_eng_math = function(envs, engine) {
 }
 
 pandoc2.0 = function() rmarkdown::pandoc_available('2.0')
+
+# remove the body of the LaTeX document; only keep section headers and
+# figure/table captions
+strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n') {
+  i = which(x == '\\mainmatter')
+  if (length(i) == 0) i = which(x == '\\begin{document}')
+  x1 = head(x, i[1])  # preamble (or frontmatter)
+  x2 = tail(x, -i[1]) # body
+  i = grep('^\\\\(part|chapter|(sub)*section)\\*?\\{', x2)  # headers
+  x2[i] = sub('}}$', '}\n', x2[i])  # get rid of the closing } from \hypertarget{
+  x2[i] = paste0(x2[i], alt)
+  i = c(i, grep('^\\\\bibliography', x2))
+  # extract figure/table environments
+  envs = list(
+    fig = c('figure', '.*(\\\\caption\\{.+})\\\\label\\{fig:.+}.*'),
+    tab = c('table', '^(\\\\caption\\{\\\\label\\{tab:.+}).*')
+  )
+  for (j in names(envs)) {
+    r = envs[[j]][2]; i2 = grep(r, x2); env = envs[[j]][1]
+    x2[i2] = sprintf('\\begin{%s}%s\\end{%s}\n', env, gsub(r, '\\1', x2[i2]), env)
+    i = c(i, i2)
+  }
+  c(x1, x2[sort(i)], '\\end{document}')
+}
