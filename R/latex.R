@@ -204,7 +204,7 @@ restore_block2 = function(x, global = FALSE) {
   if (is.na(i)) return(x)
   if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
     x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
-  if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{%s\\}', paste(all_math_env, collapse = '|')), x)) &&
+  if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
     theorem_defs = sprintf(
       '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
