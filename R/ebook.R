@@ -84,7 +84,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
   content = read_utf8(input_file)
-  i = if (xfun::loadable('xaringan')) xaringan:::prose_index(content) else seq_along(content)
+  i = xfun::prose_index(content)
   content[i] = resolve_refs_md(content[i], c(figs$ref_table, parse_section_labels(x)), to_md)
   if (to_md) content = gsub(
     '^\\\\BeginKnitrBlock\\{[^}]+\\}|\\\\EndKnitrBlock\\{[^}]+\\}$', '', content
