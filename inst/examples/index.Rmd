@@ -26,9 +26,10 @@ options(
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
 
-local({r <- getOption("repos")
-  r["CRAN"] <- "https://cran.rstudio.com/" 
-  options(repos=r)
+local({
+  r = getOption('repos')
+  if (!length(r) || identical(r['CRAN'], '@CRAN@')) r['CRAN'] = 'https://cran.rstudio.com' 
+  options(repos = r)
 })
 
 lapply(c('DT', 'citr', 'formatR', 'svglite'), function(pkg) {
