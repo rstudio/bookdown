@@ -64,7 +64,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     recursive = subdir_yes, full.names = subdir_yes
   )
   if (length(config[['rmd_files']]) > 0) {
-    files = config[['rmd_files']]
+    files = c(files, config[['rmd_files']])
     if (is.list(files)) {
       files = if (all && is.null(format)) unlist(files) else files[[format]]
     }
@@ -75,6 +75,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     if (!is.na(index)) files = c(files[index], files[-index])
   }
   check_special_chars(files)
+  unique(normalizePath(files))
 }
 
 output_dirname = function(dir, config = load_config(), create = TRUE) {
