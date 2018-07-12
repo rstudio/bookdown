@@ -75,7 +75,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     if (!is.na(index)) files = c(files[index], files[-index])
   }
   check_special_chars(files)
-  unique(normalizePath(files))
+  unique(normalize_path(files))
 }
 
 output_dirname = function(dir, config = load_config(), create = TRUE) {

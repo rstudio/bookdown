@@ -1,4 +1,4 @@
-#' @importFrom xfun in_dir sans_ext with_ext same_path read_utf8 write_utf8
+#' @importFrom xfun in_dir sans_ext with_ext same_path read_utf8 write_utf8 normalize_path
 NULL
 
 .onLoad = function(lib, pkg) {
