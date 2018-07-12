@@ -14,6 +14,10 @@
 
 # CHANGES IN bookdown VERSION 0.7
 
+## MAJOR CHANGES
+
+- The label prefix for Example blocks must be `exm:` (`ex:` is no longer supported).
+
 ## MINOR CHANGES
 
 - Added a new dependency **tinytex** to build PDF, and **xfun** for some utility functions.

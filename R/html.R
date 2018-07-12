@@ -460,14 +460,6 @@ is_img_line = function(x) grepl('^<img src=".* alt="', x)
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
   lab = gsub(if (backslash) '^\\\\@ref\\(|\\)$' else '^@ref\\(|\\)$', '', ref)
-  # TODO: deprecate the prefix ex: for Examples (use exm: instead)
-  if (length(i <- grep('^ex:.+', lab))) {
-    warning(
-      'Please change the prefix ex: to exm: in label(s) ', knitr::combine_words(lab[i]),
-      call. = FALSE
-    )
-    lab[i] = sub('^ex:', 'exm:', lab[i])
-  }
   ref = prefix_section_labels(lab)
   num = ref_table[ref]
   i = is.na(num)
