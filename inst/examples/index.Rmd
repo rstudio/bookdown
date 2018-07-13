@@ -28,7 +28,8 @@ options(
 
 local({
   r = getOption('repos')
-  if (!length(r) || identical(r['CRAN'], '@CRAN@')) r['CRAN'] = 'https://cran.rstudio.com' 
+  if (!length(r) || identical(unname(r['CRAN']), '@CRAN@'))
+    r['CRAN'] = 'https://cran.rstudio.com' 
   options(repos = r)
 })
 
