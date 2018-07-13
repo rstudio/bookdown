@@ -12,6 +12,8 @@
 
 - HTML output formats such as `gitbook` and `html_document2` won't work when only unnumbered parts (i.e., `# (PART\*)`) are used (thanks, @tjmahr, #575).
 
+- Setting `rmd_files` would override `rmd_subdir` but now both parameters can be used.
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MAJOR CHANGES
