@@ -64,7 +64,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     recursive = subdir_yes, full.names = subdir_yes
   )
   if (length(config[['rmd_files']]) > 0) {
-    files = c(files, config[['rmd_files']])
+    files = c(config[['rmd_files']], files)
     if (is.list(files)) {
       files = if (all && is.null(format)) unlist(files) else files[[format]]
     }
