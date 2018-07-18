@@ -105,6 +105,13 @@ tufte_book2 = function(...) {
   pdf_book(..., base_format = tufte::tufte_book)
 }
 
+      
+#' @rdname html_document2
+#' @export
+tint_book2 = function(...) {
+  pdf_book(..., base_format = tint::tintBook)
+}
+      
 resolve_refs_latex = function(x) {
   # equation references \eqref{}
   x = gsub(
