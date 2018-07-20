@@ -206,6 +206,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
 
   x = read_utf8(output)
+  x = clean_meta_tags(x)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
   i2 = find_token(x, '<!--bookdown:title:end-->')
@@ -389,6 +390,20 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+# clean HTML tags inside <meta>, which can be introduced by certain YAML
+# metadata, such as an improper description that contains Markdown syntax, e.g.,
+# <meta name="description" content="A <i>description</i>.">
+clean_meta_tags = function(x) {
+  r = '^(\\s*<meta )(.+<.+>.+)(/?>\\s*)$'
+  if (length(i <- grep(r, x)) == 0) return(x)
+  x1 = sub(r, '\\1', x[i])
+  x2 = sub(r, '\\2', x[i])
+  x3 = sub(r, '\\3', x[i])
+  x2 = gsub('<[^>]+>', '', x2)
+  x[i] = paste0(x1, x2, x3)
+  x
 }
 
 # move files to output dir if specified

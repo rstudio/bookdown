@@ -26,3 +26,10 @@ assert(
   'with_ext() signals an error when length(x) != length(ext)',
   has_error(with_ext(c('a', 'b.css'), c('foo', 'bar', 'ham')))
 )
+
+assert('clean_meta_tags() cleans HTML inside <meta>', {
+  (clean_meta_tags('<meta name="foo" content="hi text">') %==%
+     '<meta name="foo" content="hi text">')
+  (clean_meta_tags('<meta name="foo" content="hi <strong>HTML</strong>">') %==%
+    '<meta name="foo" content="hi HTML">')
+})
