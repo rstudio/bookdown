@@ -112,6 +112,8 @@ resolve_refs_latex = function(x) {
     perl = TRUE
   )
   # normal references \ref{}
+  x = gsub( '(?<=\\\\)@ref\\(([-/:[:alnum:]]+)\\)', '\\ref{\\1}',
+           x, perl = TRUE )
   x = gsub(
     '(?<!\\\\textbackslash{})@ref\\(([-/:[:alnum:]]+)\\)', '\\\\ref{\\1}', x,
     perl = TRUE
