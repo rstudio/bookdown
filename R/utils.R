@@ -63,12 +63,12 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   files = c(files, list.files(
     if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
     recursive = subdir_yes, full.names = subdir_yes
-  )
-  if (length(config[['rmd_files']]) > 0) {
-    files = c(config[['rmd_files']], files)
-    if (is.list(files)) {
-      files = if (all && is.null(format)) unlist(files) else files[[format]]
+  ))
+  if (length(files2 <- config[['rmd_files']]) > 0) {
+    if (is.list(files2)) {
+      files2 = if (all && is.null(format)) unlist(files2) else files2[[format]]
     }
+    files = c(files2, files)
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
     index = match('index', with_ext(files, ''))
