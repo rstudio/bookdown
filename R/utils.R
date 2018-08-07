@@ -59,21 +59,23 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   # a list of Rmd chapters
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
-  files = list.files(
+  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  files = c(files, list.files(
     if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
     recursive = subdir_yes, full.names = subdir_yes
-  )
-  if (length(config[['rmd_files']]) > 0) {
-    files = config[['rmd_files']]
-    if (is.list(files)) {
-      files = if (all && is.null(format)) unlist(files) else files[[format]]
+  ))
+  if (length(files2 <- config[['rmd_files']]) > 0) {
+    if (is.list(files2)) {
+      files2 = if (all && is.null(format)) unlist(files2) else files2[[format]]
     }
+    files = c(files2, files)
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
-    index = match('index', with_ext(files, ''))
-    # if there is a index.Rmd, put it in the beginning
-    if (!is.na(index)) files = c(files[index], files[-index])
   }
+  files = unique(gsub('^[.]/', '', files))
+  index = 'index' == with_ext(files, '')
+  # if there is a index.Rmd, put it in the beginning
+  if (any(index)) files = c(files[index], files[!index])
   check_special_chars(files)
 }
 
