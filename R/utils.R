@@ -71,12 +71,12 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     files = c(files2, files)
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
-    index = match('index', with_ext(files, ''))
-    # if there is a index.Rmd, put it in the beginning
-    if (!is.na(index)) files = c(files[index], files[-index])
   }
+  files = unique(gsub('^[.]/', '', files))
+  index = 'index' == with_ext(files, '')
+  # if there is a index.Rmd, put it in the beginning
+  if (any(index)) files = c(files[index], files[!index])
   check_special_chars(files)
-  unique(normalize_path(files))
 }
 
 output_dirname = function(dir, config = load_config(), create = TRUE) {
