@@ -49,11 +49,13 @@ If you find this version too low and there are Pandoc features only in a later v
 
 ## LaTeX
 
-LaTeX\index{LaTeX} is required only if you want to convert your book to PDF. The typical choice of the LaTeX distribution depends on your operating system. Windows users may consider MiKTeX (http://miktex.org), Mac OS X users can install MacTeX (http://www.tug.org/mactex/), and Linux users can install TeXLive (http://www.tug.org/texlive). See https://www.latex-project.org/get/ for more information about LaTeX and its installation.
+LaTeX\index{LaTeX} is required only if you want to convert your book to PDF. You may see https://www.latex-project.org/get/ for more information about LaTeX and its installation, but we strongly recommend that you install the lightweight and cross-platform LaTeX distribution named [TinyTeX](https://yihui.name/tinytex/) and based on TeX Live. TinyTeX can be easily installed through the R package **tinytex** (which should be automatically installed when you install **bookdown**):
 
-Most LaTeX distributions provide a minimal/basic package and a full package. You can install the basic package if you have limited disk space and know how to install LaTeX packages later. The full package is often significantly larger in size, since it contains all LaTeX packages, and you are unlikely to run into the problem of missing packages in LaTeX.
+```{r, eval=FALSE}
+tinytex::install_tinytex()
+```
 
-LaTeX error messages may be obscure to beginners, but you may find solutions by searching for the error message online (you have good chances of ending up on [StackExchange](http://tex.stackexchange.com)). In fact, the LaTeX code converted from R Markdown should be safe enough and you should not frequently run into LaTeX problems unless you introduced raw LaTeX content in your Rmd documents. The most common LaTeX problem should be missing LaTeX packages, and the error may look like this:
+With TinyTeX, you should never see error messages like this:
 
 ```latex
 ! LaTeX Error: File `titling.sty' not found.
@@ -72,19 +74,7 @@ Error: pandoc document conversion failed with error 43
 Execution halted
 ```
 
-This means you used a package that contains `titling.sty`, but it was not installed. LaTeX package names are often the same as the `*.sty` filenames, so in this case, you can try to install the `titling` package. Both MiKTeX and MacTeX provide a graphical user interface to manage packages. You can find the MiKTeX package manager from the start menu, and MacTeX's package manager from the application "TeX Live Utility". Type the name of the package, or the filename to search for the package and install it. TeXLive may be a little trickier: if you use the pre-built TeXLive packages of your Linux distribution, you need to search in the package repository and your keywords may match other non-LaTeX packages. Personally, I find it frustrating to use the pre-built collections of packages on Linux, and much easier to install TeXLive from source, in which case you can manage packages using the `tlmgr` command. For example, you can search for `titling.sty` from the TeXLive package repository:
-
-```bash
-tlmgr search --global --file titling.sty
-# titling:
-#	 texmf-dist/tex/latex/titling/titling.sty
-```
-
-Once you have figured out the package name, you can install it by:
-
-```bash
-tlmgr install titling  # may require sudo
-```
+The above error means you used a package that contains `titling.sty`, but it was not installed. LaTeX package names are often the same as the `*.sty` filenames, so in this case, you can try to install the `titling` package. If you use TinyTeX with R Markdown, missing LaTeX packages will be installed automatically, so you never need to worry about such problems.
 
 LaTeX distributions and packages are also updated from time to time, and you may consider updating them especially when you run into LaTeX problems. You can find out the version of your LaTeX distribution by:
 
@@ -93,4 +83,16 @@ system = function(...) cat(base::system(..., intern = TRUE), sep = '\n')
 ```
 ```{r collapse=TRUE}
 system('pdflatex --version')
+```
+
+To update TinyTeX, you may run:
+
+```{r eval=FALSE}
+tinytex::tlmgr_update()
+```
+
+From year to year, you may need to upgrade TinyTeX, too (otherwise you cannot install or update any LaTeX packages), in which case you may reinstall TinyTeX:
+
+```{r eval=FALSE}
+tinytex::reinstall_tinytex()
 ```
