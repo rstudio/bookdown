@@ -68,7 +68,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     if (is.list(files2)) {
       files2 = if (all && is.null(format)) unlist(files2) else files2[[format]]
     }
-    files = c(files2, files)
+    files = if (subdir_yes) c(files2, files) else files2
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
   }
