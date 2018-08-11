@@ -106,16 +106,23 @@ tufte_book2 = function(...) {
 }
 
 resolve_refs_latex = function(x) {
-  # equation references \eqref{}
-  x = gsub( '(?<=\\\\)@ref\\((eq:[-/:[:alnum:]]+)\\)', '\\eqref{\\1}',
-           x, perl = TRUE )
+  ## In case the out.width or out.height options were specified, the
+  ## handling of the references requires are specialized handling. The
+  ## whole string specifying figure will be present in a single line
+  ## and the main gsub statement won't work
+  if ( length( grep( "\\\\includegraphics", x ) ) > 0 ){
+    x[ grep( "\\\\includegraphics", x ) ] <-
+      gsub( '(?<=\\\\)@ref\\((eq:[-/:[:alnum:]]+)\\)', '\\eqref{\\1}',
+           x[ grep( "\\\\includegraphics", x ) ], perl = TRUE )
+    x[ grep( "\\\\includegraphics", x ) ] <-
+      gsub( '(?<=\\\\)@ref\\(([-/:[:alnum:]]+)\\)', '\\ref{\\1}',
+           x[ grep( "\\\\includegraphics", x ) ], perl = TRUE )
+  }
   x = gsub(
     '(?<!\\\\textbackslash{})@ref\\((eq:[-/:[:alnum:]]+)\\)', '\\\\eqref{\\1}', x,
     perl = TRUE
   )
   # normal references \ref{}
-  x = gsub( '(?<=\\\\)@ref\\(([-/:[:alnum:]]+)\\)', '\\ref{\\1}',
-           x, perl = TRUE )
   x = gsub(
     '(?<!\\\\textbackslash{})@ref\\(([-/:[:alnum:]]+)\\)', '\\\\ref{\\1}', x,
     perl = TRUE
