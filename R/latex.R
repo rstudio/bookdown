@@ -107,6 +107,8 @@ tufte_book2 = function(...) {
 
 resolve_refs_latex = function(x) {
   # equation references \eqref{}
+  x = gsub( '(?<=\\\\)@ref\\((eq:[-/:[:alnum:]]+)\\)', '\\eqref{\\1}',
+           x, perl = TRUE )
   x = gsub(
     '(?<!\\\\textbackslash{})@ref\\((eq:[-/:[:alnum:]]+)\\)', '\\\\eqref{\\1}', x,
     perl = TRUE
