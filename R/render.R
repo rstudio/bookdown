@@ -178,7 +178,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
       next
     }
     # first backup the original Rmd to a tempfile
-    f2 = tempfile('bookdown', '.')
+    f2 = paste0(f, '.bak')
     file.copy(f, f2, overwrite = TRUE)
     # write add1/add2 to the original Rmd, compile it, and restore it
     tryCatch({
