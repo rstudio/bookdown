@@ -16,4 +16,4 @@ A open-source (GPL-3) R package to facilitate writing books and long-form articl
 - Integrated with the RStudio IDE
 - One-click publishing to <https://bookdown.org>
 
-Full documentation at <https://bookdown.org/yihui/bookdown>, and see "Get Started" at <https://bookdown.org> to know how to get started with writing a book. You are welcome to send us feedback using [Github issues](https://github.com/rstudio/bookdown/issues) or ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/bookdown) with the `bookdown` tag.
+Full documentation at <https://bookdown.org/yihui/bookdown>. Documentation source (and a complete working example) can be found in [inst/examples/](https://github.com/rstudio/bookdown/tree/master/inst/examples). See <https://bookdown.org> for more information and featured books. You are welcome to send us feedback using [Github issues](https://github.com/rstudio/bookdown/issues) or ask questions on [StackOverflow](http://stackoverflow.com/questions/tagged/bookdown) with the `bookdown` tag.
