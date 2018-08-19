@@ -198,7 +198,7 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   template: null
-  pandoc_args: "--chapters"
+  pandoc_args: --top-level-division=chapter
   toc_unnumbered: no
   toc_appendix: yes
   quote_footer: ["\\VA{", "}{}"]
