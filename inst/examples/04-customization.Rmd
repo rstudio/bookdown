@@ -133,13 +133,13 @@ output:
 
 Some publishers (e.g., Springer and Chapman & Hall/CRC) have their own LaTeX style or class files. You may try to change the `documentclass` option to use their document classes, although typically it is not as simple as that. You may end up using `in_header`, or even design a custom Pandoc LaTeX template to accommodate these document classes.
 
-Note that when you change `documentclass`, you are likely to specify an additional Pandoc argument `--chapters` so that Pandoc knows the first-level headers should be treated as chapters instead of sections (this is the default when `documentclass` is `book`), e.g.,
+Note that when you change `documentclass`, you are likely to specify an additional Pandoc argument `--top-level-division=chapter` so that Pandoc knows the first-level headers should be treated as chapters instead of sections (this is the default when `documentclass` is `book`), e.g.,
 
 ```yaml
 documentclass: krantz
 output:
   bookdown::pdf_book:
-    pandoc_args: --chapters
+    pandoc_args: --top-level-division=chapter
 ```
 
 ## Templates
