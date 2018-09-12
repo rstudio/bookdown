@@ -14,6 +14,8 @@
 
 - Previously the `rmd_files` parameter in `_bookdown.yml` would override `rmd_subdir`, but now both parameters can be used simultaneously (thanks, @ellisvalentiner, #600).
 
+- Resources with URL encoded special characters are now correctly copied to the output directory (thanks, @AshesITR, #622).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MAJOR CHANGES
