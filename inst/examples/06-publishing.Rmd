@@ -136,7 +136,7 @@ GitHub and Travis CI are certainly not the only choices to build and publish you
 
 ## Publishers
 
-Besides publishing your book online, you can certainly consider publishing it with a publisher\index{publisher}. For example, this book was published with Chapman & Hall/CRC, and there is also a free online version at https://bookdown.org/yihui/bookdown/ (with an agreement with the publisher). Another option that you can consider is self-publishing (https://en.wikipedia.org/wiki/Self-publishing) if you do not want to work with an established publisher.
+Besides publishing your book online, you can certainly consider publishing it with a publisher\index{publisher}. For example, this book was published with Chapman & Hall/CRC, and there is also a free online version at https://bookdown.org/yihui/bookdown/ (with an agreement with the publisher). Another option that you can consider is self-publishing (https://en.wikipedia.org/wiki/Self-publishing) if you do not want to work with an established publisher. Pablo Casas has written two blog posts that you may find useful: ["How to self-publish a book"](https://blog.datascienceheroes.com/how-to-self-publish-a-book/) and ["How to self-publish a book: customizing bookdown"](https://blog.datascienceheroes.com/how-to-self-publish-a-book-customizing-bookdown/).
 
 It will be much easier to publish a book written with **bookdown** if the publisher you choose supports LaTeX.\index{LaTeX} For example, Chapman & Hall provides a LaTeX class named `krantz.cls`, and Springer provides `svmono.cls`. To apply these LaTeX classes to your PDF book, set `documentclass` in the YAML metadata of `index.Rmd` to the class filename (without the extension `.cls`).
 
