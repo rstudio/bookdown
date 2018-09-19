@@ -447,6 +447,22 @@ edit_setting = function(config) {
   list(link = link, text = text)
 }
 
+#' Resolve figure/table/section references in HTML
+#'
+#' Post-process the HTML content to resolve references of figures, tables, and
+#' sections, etc. The references are written in the form \code{\@ref(key)} in
+#' the R Markdown source document.
+#' @param content A character vector of the HTML content.
+#' @param global Whether to number the elements incrementally throughout the
+#'   whole document, or number them by the first-level headers. For an R
+#'   Markdown output format, \code{global = !number_sections} is likely to be a
+#'   reasonable default (i.e., when the sections are numbered, you number
+#'   figures/tables by sections; otherwise just number them incrementally).
+#' @return A post-processed character vector of the HTML character.
+#' @export
+#' @keywords internal
+#' @examples library(bookdown)
+#' resolve_refs_html(c('<caption>(#tab:foo) A nice table.</caption>', '<p>See Table @ref(tab:foo).</p>'), TRUE)
 resolve_refs_html = function(content, global = FALSE) {
   content = resolve_ref_links_html(content)
 
