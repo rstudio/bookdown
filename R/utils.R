@@ -268,7 +268,8 @@ serve_book = function(
 ) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
-  if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE)) {
+  if (missing(dir) && requireNamespace('rstudioapi', quietly = TRUE) &&
+      rstudioapi::isAvailable()) {
     path = rstudioapi::getSourceEditorContext()[['path']]
     if (!(is.null(path) || path == '')) dir = dirname(path)
   }
