@@ -16,6 +16,8 @@
 
 - Resources with URL encoded special characters are now correctly copied to the output directory (thanks, @AshesITR, #622).
 
+- `serve_book()` can now be used without error when rstudioapi is installed but RStudio is not being used (thanks, @jimhester, #637).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MAJOR CHANGES
