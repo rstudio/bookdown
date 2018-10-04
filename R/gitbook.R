@@ -12,6 +12,8 @@
 #'   want to develop a custom template, we highly recommend to start from the
 #'   default template:
 #'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
+#' @param bootstrap_table \code{TRUE} to replace default gitbook table styles
+#'   with bootstrap. Default is \code{FALSE}.
 #'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
@@ -20,11 +22,12 @@ gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  split_bib = TRUE, config = list()
+  split_bib = TRUE, bootstrap_table = FALSE, config = list()
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency())
+      ..., extra_dependencies = c(extra_dependencies,
+                                  gitbook_dependency(bootstrap_table))
     )
   }
   gb_config = config
@@ -72,15 +75,17 @@ write_search_data = function(x) {
   write_utf8(x, output_path('search_index.json'))
 }
 
-gitbook_dependency = function() {
+gitbook_dependency = function(bootstrap_table) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
+  table_css = if (bootstrap_table) 'plugin-bootstrap-table.css' else
+    'plugin-gitbook-table.css'
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
       'style.css', 'plugin-bookdown.css', 'plugin-highlight.css',
-      'plugin-search.css', 'plugin-fontsettings.css'
+      'plugin-search.css', 'plugin-fontsettings.css', table_css
     )),
     script = file.path('js', c(
       app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
