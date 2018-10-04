@@ -12,17 +12,17 @@
 #'   want to develop a custom template, we highly recommend to start from the
 #'   default template:
 #'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
-#' @param bootstrap_table \code{TRUE} to replace default gitbook table styles
-#'   with bootstrap. Default is \code{FALSE}.
 #'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
+#' @param bootstrap_table \code{TRUE} to replace default gitbook table styles
+#'   with bootstrap. Default is \code{FALSE}.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  split_bib = TRUE, bootstrap_table = FALSE, config = list()
+  split_bib = TRUE, config = list(), bootstrap_table = FALSE
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
