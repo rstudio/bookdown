@@ -4,11 +4,10 @@
 \alias{gitbook}
 \title{The GitBook output format}
 \usage{
-gitbook(fig_caption = TRUE, number_sections = TRUE,
-  self_contained = FALSE, lib_dir = "libs", pandoc_args = NULL, ...,
-  template = "default", split_by = c("chapter", "chapter+number",
-  "section", "section+number", "rmd", "none"), split_bib = TRUE,
-  config = list(), bootstrap_table = FALSE)
+gitbook(fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE, 
+    lib_dir = "libs", pandoc_args = NULL, ..., template = "default", 
+    split_by = c("chapter", "chapter+number", "section", "section+number", 
+        "rmd", "none"), split_bib = TRUE, config = list(), table_css = TRUE)
 }
 \arguments{
 \item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args}{...
@@ -45,8 +44,9 @@ the citations are actually used.}
 \item{config}{A list of configuration options for the gitbook style, such as
 the font/theme settings.}
 
-\item{bootstrap_table}{\code{TRUE} to replace default gitbook table styles
-with bootstrap. Default is \code{FALSE}.}
+\item{table_css}{\code{TRUE} to load gitbook's default CSS for tables. Choose
+\code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+the \code{css} option. Default is \code{TRUE}.}
 }
 \description{
 This output format function ported a style provided by GitBook
