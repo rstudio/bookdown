@@ -27,8 +27,7 @@ gitbook = function(
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies,
-                                  gitbook_dependency(table_css))
+      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css))
     )
   }
   gb_config = config
@@ -80,12 +79,11 @@ gitbook_dependency = function(table_css) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  table_css = if (table_css) 'plugin-gitbook-table.css' else NULL
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
-      'style.css', 'plugin-bookdown.css', 'plugin-highlight.css',
-      'plugin-search.css', 'plugin-fontsettings.css', table_css
+      'style.css', if (table_css) 'plugin-table.css', 'plugin-bookdown.css',
+      'plugin-highlight.css', 'plugin-search.css', 'plugin-fontsettings.css'
     )),
     script = file.path('js', c(
       app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
