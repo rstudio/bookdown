@@ -15,16 +15,20 @@
 #'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
+#' @param table_css \code{TRUE} to load gitbook's default CSS for tables. Choose
+#' \code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+#' the \code{css} option. Default is \code{TRUE}.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  split_bib = TRUE, config = list()
+  split_bib = TRUE, config = list(), table_css = TRUE
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency())
+      ..., extra_dependencies = c(extra_dependencies,
+                                  gitbook_dependency(table_css))
     )
   }
   gb_config = config
@@ -72,15 +76,16 @@ write_search_data = function(x) {
   write_utf8(x, output_path('search_index.json'))
 }
 
-gitbook_dependency = function() {
+gitbook_dependency = function(table_css) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
+  table_css = if (table_css) 'plugin-gitbook-table.css' else NULL
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
       'style.css', 'plugin-bookdown.css', 'plugin-highlight.css',
-      'plugin-search.css', 'plugin-fontsettings.css'
+      'plugin-search.css', 'plugin-fontsettings.css', table_css
     )),
     script = file.path('js', c(
       app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
