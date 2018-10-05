@@ -134,6 +134,7 @@ html_document2 = function(
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
+    x = clean_pandoc2_highlight_tags(x)
     write_utf8(x, output)
     output
   }
