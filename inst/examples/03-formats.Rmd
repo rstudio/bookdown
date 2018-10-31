@@ -107,7 +107,7 @@ bookdown::gitbook:
       google: no
       linkedin: no
       weibo: no
-      instapper: no
+      instapaper: no
       vk: no
       all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
 ```
