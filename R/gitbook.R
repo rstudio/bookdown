@@ -210,7 +210,7 @@ gitbook_config = function(config = list()) {
   default = list(
     sharing = list(
       github = FALSE, facebook = TRUE, twitter = TRUE, google = FALSE,
-      linkedin = FALSE, weibo = FALSE, instapper = FALSE, vk = FALSE,
+      linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
       all = c('facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper')
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
