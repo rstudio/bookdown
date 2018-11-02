@@ -99,7 +99,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             'class': 'book-search',
             'role': 'search'
         });
-        
+
         $searchLabel = $('<label>', {
             'for': 'search-box',
             'aria-hidden': 'false',
@@ -113,7 +113,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             'val': value,
             'placeholder': 'Type to search'
         });
-        
+
         $searchLabel.append("Type to search");
         $searchLabel.appendTo($searchForm);
         $searchInput.appendTo($searchForm);
