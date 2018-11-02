@@ -65,7 +65,7 @@ gitbook_search = local({
   )
 })
 
-write_search_data = function(x) {
+write_search_data = function() {
   x = gitbook_search$get()
   if (length(x) == 0) return()
   gitbook_search$empty()
