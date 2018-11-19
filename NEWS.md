@@ -10,6 +10,8 @@
 
 - Added an argument `table_css` to `gitbook()` to allow customized css for tables. (thanks, @haozhu233, #642)
 
+- You can also add a "history" button on the Gitbook toolbar, which is similar to the "edit" button, but shows the GIT history of a source file instead (thanks, @maelle #638, @noamross, #639).
+
 ## BUG FIXES
 
 - HTML output formats such as `gitbook` and `html_document2` won't work when only unnumbered parts (i.e., `# (PART\*)`) are used (thanks, @tjmahr, #575).
