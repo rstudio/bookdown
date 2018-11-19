@@ -187,7 +187,8 @@ build_chapter = function(
     chapter,
     '<p style="text-align: center;">',
     button_link(link_prev, 'Previous'),
-    edit_link(rmd_cur),
+    source_link(rmd_cur, type = 'edit'),
+    source_link(rmd_cur, type = 'history'),
     button_link(link_next, 'Next'),
     '</p>',
     '</div>',
@@ -430,21 +431,21 @@ button_link = function(target, text) {
   )
 }
 
-edit_link = function(target) {
+source_link = function(target, type) {
   if (length(target) == 0) return()
-  setting = edit_setting()
+  setting = source_link_setting(type = type)
   if (is.null(setting)) return()
   button_link(sprintf(setting$link, target), setting$text)
 }
 
-edit_setting = function(config) {
-  config_default = load_config()[['edit']]
+source_link_setting = function(config, type) {
+  config_default = load_config()[[type]]
   if (missing(config) || is.null(config)) config = config_default
   if (is.null(config)) return()
   if (is.character(config)) config = list(link = config, text = NULL)
   if (!is.character(link <- config[['link']])) return()
-  if (!grepl('%s', link)) stop('The edit link must contain %s')
-  if (!is.character(text <- config[['text']])) text = ui_language('edit')
+  if (!grepl('%s', link)) stop('The ', type, ' link must contain %s')
+  if (!is.character(text <- config[['text']])) text = ui_language(type)
   list(link = link, text = text)
 }
 
