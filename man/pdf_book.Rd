@@ -4,12 +4,12 @@
 \alias{pdf_book}
 \title{Convert R Markdown to a PDF book}
 \usage{
-pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ..., 
-    base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, toc_appendix = FALSE, 
-    toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE)
+pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE, pandoc_args = NULL, 
+    ..., base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE, 
+    toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE)
 }
 \arguments{
-\item{toc, number_sections, fig_caption}{See
+\item{toc, number_sections, fig_caption, pandoc_args}{See
 \code{rmarkdown::\link{pdf_document}}, or the documentation of the
 \code{base_format} function.}
 
