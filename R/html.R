@@ -377,7 +377,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     html = relocate_footnotes(html, fnts, a_targets)
     html = restore_links(html, html_body, idx, nms)
     html = build(
-      html_head, html_toc, html,
+      prepend_chapter_title(html_head, html), html_toc, html,
       if (i > 1) nms[i - 1],
       if (i < n) nms[i + 1],
       if (length(nms_chaps)) nms_chaps[i],
@@ -1003,4 +1003,24 @@ clean_pandoc2_highlight_tags = function(x) {
   x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
   x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
   x
+}
+
+# extract a chapter title from the body, and prepend it to the page <title>
+prepend_chapter_title = function(head, body) {
+  r1 = '(.*?<title>)(.+?)(</title>.*)'
+  if (length(i <- grep(r1, head)) == 0) return(head)
+  body = paste(body, collapse = ' ')
+  r2 = '.*?<h[0-6][^>]*>(.+?)</h[0-6]>.*'
+  if (!grepl(r2, body)) return(head)
+  title = strip_html(gsub(r2, '\\1', body))
+  x1 = gsub(r1, '\\1', head[i])
+  x2 = gsub(r1, '\\2', head[i])
+  x3 = gsub(r1, '\\3', head[i])
+  if (title == x2) return(head)
+  head[i] = paste0(x1, title, ' | ', x2, x3)
+  # update possible OpenGraph tags <meta property="og:title" content="...">
+  gsub(
+    paste0(' content="', x2, '"'), paste0(' content="', title, ' | ', x2),
+    head, fixed = TRUE
+  )
 }
