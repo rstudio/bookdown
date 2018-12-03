@@ -260,11 +260,13 @@ local_resources = function(x) {
 #' @param in_session Whether to compile the book using the current R session, or
 #'   always open a new R session to compile the book whenever changes occur in
 #'   the book directory.
+#' @param quiet Whether to suppress output (e.g., the knitting progress) in the
+#'   console.
 #' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
 #'   including the \code{handler} argument, which has been set internally).
 #' @export
 serve_book = function(
-  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, ...
+  dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, quiet = FALSE, ...
 ) {
   # when this function is called via the RStudio addin, use the dir of the
   # current active document
@@ -292,10 +294,11 @@ serve_book = function(
     if (!dir_exists(output_dir)) preview_ = FALSE
     if (in_session) render_book(
       files, output_format, output_dir = output_dir, preview = preview_,
-      envir = globalenv()
+      envir = globalenv(), quiet = quiet
     ) else {
       args = shQuote(c(
-        bookdown_file('scripts', 'servr.R'), output_format, output_dir, preview_, files
+        bookdown_file('scripts', 'servr.R'), output_format, output_dir, preview_,
+        quiet, files
       ))
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
