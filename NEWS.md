@@ -24,6 +24,8 @@
 
 - `serve_book()` can now be used without error when rstudioapi is installed but RStudio is not being used (thanks, @jimhester, #637).
 
+- Text references via `(ref:label)` for `bookdown::pdf_document()` doesn't always work (thanks, @brendanf, #616).
+
 # CHANGES IN bookdown VERSION 0.7
 
 ## MAJOR CHANGES

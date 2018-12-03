@@ -13,7 +13,7 @@
 #' the LaTeX output as its input argument, and should return a character vector
 #' to be written to the \file{.tex} output file. This gives you full power to
 #' post-process the LaTeX output.
-#' @param toc,number_sections,fig_caption See
+#' @param toc,number_sections,fig_caption,pandoc_args See
 #'   \code{rmarkdown::\link{pdf_document}}, or the documentation of the
 #'   \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
@@ -32,13 +32,14 @@
 #' @note This output format can only be used with \code{\link{render_book}()}.
 #' @export
 pdf_book = function(
-  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, ...,
+  toc = TRUE, number_sections = TRUE, fig_caption = TRUE, pandoc_args = NULL, ...,
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
   toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
-    toc = toc, number_sections = number_sections, fig_caption = fig_caption, ...
+    toc = toc, number_sections = number_sections, fig_caption = fig_caption,
+    pandoc_args = pandoc_args2(pandoc_args), ...
   )
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
