@@ -1020,7 +1020,7 @@ prepend_chapter_title = function(head, body) {
   head[i] = paste0(x1, title, ' | ', x2, x3)
   # update possible OpenGraph tags <meta property="og:title" content="...">
   gsub(
-    paste0(' content="', x2, '"'), paste0(' content="', title, ' | ', x2),
+    paste0(' content="', x2), paste0(' content="', title, ' | ', x2),
     head, fixed = TRUE
   )
 }

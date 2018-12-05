@@ -33,3 +33,21 @@ assert('clean_meta_tags() cleans HTML inside <meta>', {
   (clean_meta_tags('<meta name="foo" content="hi <strong>HTML</strong>">') %==%
     '<meta name="foo" content="hi HTML">')
 })
+
+assert('prepend_chapter_title() adds the chapter title to the page title', {
+  h = '<head></head>'
+  (prepend_chapter_title(h, '')  %==% h)
+
+  h = '<title>asdf qwer</title>'
+  (prepend_chapter_title(h, '')  %==% h)
+
+  h = '<title>asdf qwer</title>'
+  (prepend_chapter_title(h, '<h1>chapter one</h1>')  %==% '<title>chapter one | asdf qwer</title>')
+
+  h = '<title>asdf qwer</title>'
+  (prepend_chapter_title(h, '<h1>asdf qwer</h1>')  %==% '<title>asdf qwer</title>')
+
+  h = '<title>asdf qwer</title><meta property="og:title" content="asdf qwer" />'
+  (prepend_chapter_title(h, '<h1>chapter one</h1>')  %==%
+      '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
+})
