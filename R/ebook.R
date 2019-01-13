@@ -126,8 +126,8 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
   # replace (\#eq:label) with equation numbers
   content = add_eq_numbers(content, ids, ref_table, to_md)
 
-  # look for \@ref(label) and resolve to actual figure/table/section numbers
-  m = gregexpr('(?<!`)\\\\@ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
+  # look for \@ref(label) or \@aref(label) and resolve to actual figure/table/section numbers
+  m = gregexpr('(?<!`)\\\\@a?ref\\(([-:[:alnum:]]+)\\)', content, perl = TRUE)
   refs = regmatches(content, m)
   regmatches(content, m) = lapply(refs, ref_to_number, ref_table, TRUE)
   content
