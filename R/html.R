@@ -453,7 +453,8 @@ source_link_setting = function(config, type) {
 #'
 #' Post-process the HTML content to resolve references of figures, tables, and
 #' sections, etc. The references are written in the form \code{\@ref(key)} in
-#' the R Markdown source document.
+#' or \code{\@aref(key)} the R Markdown source document, the latter intended
+#' for use with Hungarian language text.
 #' @param content A character vector of the HTML content.
 #' @param global Whether to number the elements incrementally throughout the
 #'   whole document, or number them by the first-level headers. For an R
@@ -488,15 +489,16 @@ resolve_refs_html = function(content, global = FALSE) {
   content
 }
 
-magyar_article = function(num) {
-  ifelse(grepl("^5", num) |
-        (grepl("^1", num) & (nchar(num) %% 3 == 1)), "ar", "a")
-}
-
 is_img_line = function(x) grepl('^<img src=".* alt="', x)
 
 ref_to_number = function(ref, ref_table, backslash) {
   if (length(ref) == 0) return(ref)
+  magyar_article = function(num) {
+    num <- sub("[.].*$", "", num)
+    num <- sub("[^[:digit:]]", "", num)
+    ifelse(grepl("^5", num) |
+             (grepl("^1", num) & (nchar(num) %% 3 == 1)), "az", "a")
+  }
   aref = grepl("@aref", ref)
   lab = gsub(if (backslash) '^\\\\@a?ref\\(|\\)$' else '^@a?ref\\(|\\)$', '', ref)
   ref = prefix_section_labels(lab)
@@ -507,12 +509,12 @@ ref_to_number = function(ref, ref_table, backslash) {
       warning('The label(s) ', paste(lab[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
-  ar <- magyar_article(num[aref])
+  az <- magyar_article(num[aref])
   # equation references should include parentheses
   i = grepl('^eq:', ref)
   num[i] = paste0('(', num[i], ')')
-  num[aref] <- paste(ar, num[aref])
   res = sprintf('<a href="#%s">%s</a>', ref, num)
+  res[aref] <- paste(az, res[aref])
   # do not add relative links to equation numbers in ePub/Word (not implemented)
   ifelse(backslash & i, num, res)
 }
