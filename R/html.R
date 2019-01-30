@@ -843,7 +843,7 @@ parse_references = function(x) {
 # move references back to the relevant chapter
 relocate_references = function(x, refs, title, ids) {
   if (length(refs) == 0) return(x)
-  ids = intersect(ids, names(refs))
+  ids = intersect(names(refs), ids)
   if (length(ids) == 0) return(x)
   title = if (is.null(title)) '<h3>References</h3>' else gsub('h1>', 'h3>', title)
   c(x, title, '<div id="refs" class="references">', refs[ids], '</div>')

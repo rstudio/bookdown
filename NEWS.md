@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.10
 
+## BUG FIXES
 
+- Split reference sections in `gitbook` ignored the sorting definition of the citation style (thanks @GegznaV #661, @crsh #674).
 
 # CHANGES IN bookdown VERSION 0.9
 
