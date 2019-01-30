@@ -8,6 +8,7 @@ Authors@R: c(
     person("Albert", "Kim", role = "ctb"),
     person("Alessandro", "Samuel-Rosa", role = "ctb"),
     person("Andrzej", "Oles", role = "ctb"),
+    person("Aust", "Frederik", role = "ctb", comment = c(ORCID = "0000-0003-4900-788X")),
     person("Bastiaan", "Quast", role = "ctb"),
     person("Ben", "Marwick", role = "ctb"),
     person("Chester", "Ismay", role = "ctb"),
