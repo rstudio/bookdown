@@ -15643,7 +15643,7 @@ var buttons = [];
 
 // Insert a jquery element at a specific position
 function insertAt(parent, selector, index, element) {
-    var lastIndex = parent.children(selector).size();
+    var lastIndex = parent.children(selector).length;
     if (index < 0) {
         index = Math.max(0, lastIndex + 1 + index);
     }
