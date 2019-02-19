@@ -78,8 +78,7 @@ write_search_data = function() {
 gitbook_dependency = function(table_css) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
-  # app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  app = 'app.js'
+  app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
