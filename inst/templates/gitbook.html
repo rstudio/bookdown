@@ -80,6 +80,13 @@ $endif$
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
+
+<script type="application/javascript">
+  window.onload = function() {
+    document.querySelector(".page-wrapper").focus();
+  };
+</script>
+
 </head>
 
 <body>
