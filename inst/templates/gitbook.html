@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html $if(lang)$ lang="$lang$"$endif$>
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
-  <meta name="description" content="$if(description)$$description$$else$$title$$endif$">
-  <meta name="generator" content="bookdown <!--bookdown:version--> and GitBook 2.6.7">
+  <meta name="description" content="$if(description)$$description$$else$$title$$endif$" />
+  <meta name="generator" content="bookdown <!--bookdown:version--> and GitBook 2.6.7" />
 
   <meta property="og:title" content="$pagetitle$" />
   <meta property="og:type" content="book" />
@@ -23,22 +22,22 @@
   $if(cover-image)$<meta name="twitter:image" content="$url$$cover-image$" />$endif$
 
 $for(author-meta)$
-<meta name="author" content="$author-meta$">
+<meta name="author" content="$author-meta$" />
 $endfor$
 
 $if(institute-meta)$
-<meta name="institute" content="$institute-meta$">
+<meta name="institute" content="$institute-meta$" />
 $endif$
 
 $if(date-meta)$
-<meta name="date" content="$date-meta$">
+<meta name="date" content="$date-meta$" />
 $endif$
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  $if(apple-touch-icon)$<link rel="apple-touch-icon-precomposed" sizes="$if(apple-touch-icon-size)$$apple-touch-icon-size$x$apple-touch-icon-size$$else$152x152$endif$" href="$apple-touch-icon$">$endif$
-  $if(favicon)$<link rel="shortcut icon" href="$favicon$" type="image/x-icon">$endif$
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  $if(apple-touch-icon)$<link rel="apple-touch-icon-precomposed" sizes="$if(apple-touch-icon-size)$$apple-touch-icon-size$x$apple-touch-icon-size$$else$152x152$endif$" href="$apple-touch-icon$" />$endif$
+  $if(favicon)$<link rel="shortcut icon" href="$favicon$" type="image/x-icon" />$endif$
 <!--bookdown:link_prev-->
 <!--bookdown:link_next-->
 $if(abstract)$
