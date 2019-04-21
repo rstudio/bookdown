@@ -110,6 +110,8 @@ tufte_html_book = function(...) {
 #'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 #'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
 #'   section headers in this case.
+#' @param highlight_cleaned Whether to remove the <div> tags around <pre>,
+#'   and clean up <a> on all lines in code blocks (default: `TRUE`).
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
@@ -121,7 +123,8 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document,
+  highlight_cleaned = TRUE
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -134,7 +137,7 @@ html_document2 = function(
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
-    x = clean_pandoc2_highlight_tags(x)
+    if (highlight_cleaned) x = clean_pandoc2_highlight_tags(x)
     write_utf8(x, output)
     output
   }
