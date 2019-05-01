@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.10
 
+## NEW FEATURES
+
+- Added an argument `clean_highlight_tags` to `html_document2()` (thanks, @atusy, #706).
+
 ## BUG FIXES
 
 - Split reference sections in `gitbook` ignored the sorting definition of the citation style (thanks @GegznaV #661, @crsh #674).
@@ -12,7 +16,7 @@
 
 # CHANGES IN bookdown VERSION 0.8
 
-## NEW FEATURE
+## NEW FEATURES
 
 - Added Conjecture to the list of theorem environments.
 
