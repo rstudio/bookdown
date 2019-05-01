@@ -15201,6 +15201,7 @@ function start(config) {
     toolbar.createButton({
         index: 0,
         icon: 'fa fa-align-justify',
+        label: 'Toggle Sidebar',
         onClick: function(e) {
             e.preventDefault();
             sidebar.toggle();
@@ -15754,6 +15755,7 @@ function updateButton(opts) {
         'class': 'btn',
         'text': opts.text? ' ' + opts.text : '',
         'aria-label': opts.label,
+        'title': opts.label,
         'href': '#'
     });
 

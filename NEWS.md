@@ -10,6 +10,8 @@
 
 - For the `gitbook` output format, the content doesn't get the focus when the page is loaded, which makes it fail to respond to keystrokes such as PageUp/PageDown/Up/Down (thanks, @darshanbaral #691, @aronatkins #699).
 
+- Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
+
 # CHANGES IN bookdown VERSION 0.9
 
 ## BUG FIXES
