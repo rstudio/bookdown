@@ -223,8 +223,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         if (pos.body !== 0) bookBody.scrollTop(pos.body);
         if (pos.inner !== 0) bookInner.scrollTop(pos.inner);
       }
-      if (pos.focused) bookInner.find('.page-wrapper').focus();
     }
+    if ((pos && pos.focused) || !inIFrame()) bookInner.find('.page-wrapper').focus();
     // clear book body scroll position
     gs.remove('bodyScrollTop');
   });

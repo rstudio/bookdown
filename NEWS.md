@@ -8,6 +8,8 @@
 
 - Split reference sections in `gitbook` ignored the sorting definition of the citation style (thanks @GegznaV #661, @crsh #674).
 
+- For the `gitbook` output format, the content doesn't get the focus when the page is loaded, which makes it fail to respond to keystrokes such as PageUp/PageDown/Up/Down (thanks, @darshanbaral #691, @aronatkins #699).
+
 # CHANGES IN bookdown VERSION 0.9
 
 ## BUG FIXES
