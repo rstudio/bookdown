@@ -10,9 +10,13 @@
 
 - For the `gitbook` output format, the content doesn't get the focus when the page is loaded, which makes it fail to respond to keystrokes such as PageUp/PageDown/Up/Down (thanks, @darshanbaral #691, @aronatkins #699).
 
+- For the `gitbook` output format, when searching for keywords in code blocks, the automatic scroll to keywords doesn't work (thanks, @colearendt, #700).
+
+## MINOR CHANGES
+
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
 
-- For the `gitbook` output format, when searching for keywords in code blocks, the automatic scroll to keywords doesn't work (thanks, @colearendt, #700).
+- Added an Information button to the `gitbook` toolbar to show the keybindings that are otherwise difficult for users to discover without reading the **bookdown** book (thanks, @aronatkins, #697).
 
 # CHANGES IN bookdown VERSION 0.9
 
