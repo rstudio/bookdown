@@ -173,7 +173,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         // Type in search bar
         $(document).on("keyup", ".book-search input", function(e) {
             var key = (e.keyCode ? e.keyCode : e.which);
-            // [Yihui] Escape -> close search box; Up/Down: previous/next highlighted
+            // [Yihui] Escape -> close search box; Up/Down/Enter: previous/next highlighted
             if (key == 27) {
                 e.preventDefault();
                 toggleSearch(false);
@@ -181,7 +181,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
               if (hi <= 0 && $highlighted) hi = $highlighted.length;
               hi--;
               scrollToHighlighted();
-            } else if (key == 40) {
+            } else if (key == 40 || key == 13) {
               hi++;
               if ($highlighted && hi >= $highlighted.length) hi = 0;
               scrollToHighlighted();
