@@ -18,6 +18,8 @@
 
 - Added an Information button to the `gitbook` toolbar to show the keybindings that are otherwise difficult for users to discover without reading the **bookdown** book (thanks, @aronatkins, #697).
 
+- Added information about the keybindings Enter/Up/Down to the placeholder text and tooltip of the search input in `gitbook` output (thanks, @pyltime, #660).
+
 # CHANGES IN bookdown VERSION 0.9
 
 ## BUG FIXES
