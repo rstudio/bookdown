@@ -63,11 +63,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       if (!$highlighted) return;
       var n = $highlighted.length;
       if (n === 0) return;
-      var $p = $highlighted.eq(hi), p = $p[0], rect = p.getBoundingClientRect();
-      if (rect.top < 0 || rect.bottom > $(window).height()) {
-        ($(window).width() >= 1240 ? $('.body-inner') : $('.book-body'))
-          .scrollTop(p.offsetTop - 100);
-      }
+      var $p = $highlighted.eq(hi);
+      $p[0].scrollIntoView();
       $highlighted.css('background-color', '');
       // an orange background color on the current item and removed later
       $p.css('background-color', 'orange');

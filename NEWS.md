@@ -12,6 +12,8 @@
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
 
+- For the `gitbook` output format, when searching for keywords in code blocks, the automatic scroll to keywords doesn't work (thanks, @colearendt, #700).
+
 # CHANGES IN bookdown VERSION 0.9
 
 ## BUG FIXES
