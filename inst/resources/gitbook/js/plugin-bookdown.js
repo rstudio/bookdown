@@ -207,9 +207,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   var chapterTitle = function() {
     return bookInner.find('.page-inner').find('h1,h2').first().text();
   };
-  var bookTitle = function() {
-    return bookInner.find('.book-header > h1').first().text();
-  };
   var saveScrollPos = function(e) {
     // save scroll position before page is reloaded
     gs.set('bodyScrollTop', {
@@ -227,13 +224,11 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     try { inIframe = window.self !== window.top; } catch (e) {}
     return inIframe;
   };
-  $(window).on('blur unload', function(e) {
-    if (inIFrame()) saveScrollPos(e);
-    gs.set('bookTitle', bookTitle());
-  });
+  if (inIFrame()) {
+    $(window).on('blur unload', saveScrollPos);
+  }
 
   $(function(e) {
-    if (gs.get('bookTitle', '') !== bookTitle()) localStorage.clear();
     var pos = gs.get('bodyScrollTop');
     if (pos) {
       if (pos.title === chapterTitle()) {

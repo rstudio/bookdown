@@ -12,6 +12,8 @@
 
 - For the `gitbook` output format, when searching for keywords in code blocks, the automatic scroll to keywords doesn't work (thanks, @colearendt, #700).
 
+- The search keyword no longer persists across page loads for different books in the `gitbook` format (thanks, @aronatkins, #695).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).

@@ -15222,7 +15222,7 @@ var gitbook = {
     toolbar: toolbar,
     sidebar: sidebar,
 
-    // Read/Write the localstorage
+    // Read/Write the sessionStorage
     storage: storage,
 
     // Create keyboard shortcuts
@@ -15605,31 +15605,31 @@ module.exports = {
         baseKey = key;
     },
 
-    // Write something in localstorage
+    // Write something in sessionStorage
     set: function(key, value) {
         key = baseKey+':'+key;
 
         try {
-            localStorage[key] = JSON.stringify(value);
+            sessionStorage[key] = JSON.stringify(value);
         } catch(e) {}
     },
 
-    // Read a value from localstorage
+    // Read a value from sessionStorage
     get: function(key, def) {
         key = baseKey+':'+key;
-        if (localStorage[key] === undefined) return def;
+        if (sessionStorage[key] === undefined) return def;
         try {
-            var v = JSON.parse(localStorage[key]);
+            var v = JSON.parse(sessionStorage[key]);
             return v == null ? def : v;;
         } catch(err) {
-            return localStorage[key] || def;
+            return sessionStorage[key] || def;
         }
     },
 
-    // Remove a key from localstorage
+    // Remove a key from sessionStorage
     remove: function(key) {
         key = baseKey+':'+key;
-        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
     }
 };
 
