@@ -1,7 +1,7 @@
 gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
     var $searchInput, $searchLabel, $searchForm;
-    var $highlighted, hi = 0, hiOpts = { className: 'search-highlight' };
+    var $highlighted = [], hi, hiOpts = { className: 'search-highlight' };
     var collapse = false, toc_visible = [];
 
     // Use a specific index
@@ -49,19 +49,33 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         .value();
 
         // [Yihui] Highlight the search keyword on current page
-        hi = 0;
-        $highlighted = results.length === 0 ? undefined : $('.page-inner')
+        $highlighted = results.length === 0 ? [] : $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
-        scrollToHighlighted();
+        scrollToHighlighted(0);
         toggleTOC(results.length > 0);
 
         return results;
     }
 
     // [Yihui] Scroll the chapter body to the i-th highlighted string
-    function scrollToHighlighted() {
-      if (!$highlighted) return;
+    function scrollToHighlighted(d) {
       var n = $highlighted.length;
+      hi = hi === undefined ? 0 : hi + d;
+      // navignate to the previous/next page in the search results if reached the top/bottom
+      var b = hi < 0;
+      if (d !== 0 && (b || hi >= n)) {
+        var path = currentPath(), n2 = toc_visible.length;
+        if (n2 === 0) return;
+        for (var i = b ? 0 : n2; (b && i < n2) || (!b && i >= 0); i += b ? 1 : -1) {
+          if (toc_visible.eq(i).data('path') === path) break;
+        }
+        i += b ? -1 : 1;
+        if (i < 0) i = n2 - 1;
+        if (i >= n2) i = 0;
+        var lnk = toc_visible.eq(i).find('a[href$=".html"]');
+        if (lnk.length) lnk[0].click();
+        return;
+      }
       if (n === 0) return;
       var $p = $highlighted.eq(hi);
       $p[0].scrollIntoView();
@@ -187,13 +201,9 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 e.preventDefault();
                 toggleSearch(false);
             } else if (key == 38) {
-              if (hi <= 0 && $highlighted) hi = $highlighted.length;
-              hi--;
-              scrollToHighlighted();
+              scrollToHighlighted(-1);
             } else if (key == 40 || key == 13) {
-              hi++;
-              if ($highlighted && hi >= $highlighted.length) hi = 0;
-              scrollToHighlighted();
+              scrollToHighlighted(1);
             }
         }).on("input", ".book-search input", function(e) {
             var q = $(this).val().trim();

@@ -14,6 +14,8 @@
 
 - The search keyword no longer persists across page loads for different books in the `gitbook` format (thanks, @aronatkins, #695).
 
+- The keybindings `Up` and `Down` (or `Enter`) in the search input of the `gitbook` output format work across all pages now; previously they only work on the current page (thanks, @dsblank, #657).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
