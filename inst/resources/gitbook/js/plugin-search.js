@@ -73,15 +73,18 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }, 2000);
     }
 
+    function currentPath() {
+      var href = window.location.pathname;
+      href = href.substr(href.lastIndexOf('/') + 1);
+      return href === '' ? 'index.html' : href;
+    }
+
     // [Yihui] Expand/collapse TOC
     function toggleTOC(show) {
       if (!collapse) return;
       var toc_sub = $('ul.summary').children('li[data-level]').children('ul');
       if (show) return toc_sub.show();
-      var href = window.location.pathname;
-      href = href.substr(href.lastIndexOf('/') + 1);
-      if (href === '') href = 'index.html';
-      var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
+      var li = $('a[href^="' + currentPath() + location.hash + '"]').parent('li.chapter').first();
       toc_sub.hide().parent().has(li).children('ul').show();
       li.children('ul').show();
     }
