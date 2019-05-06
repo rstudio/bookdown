@@ -70,7 +70,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       '<left>/<right>: navigate to previous/next page',
       's: Toggle sidebar'];
     if (config.search !== false) info.push('f: Toggle search input ' +
-      '(use <up>/<down>/Enter in the search input to navigate through search matches)');
+      '(use <up>/<down>/Enter in the search input to navigate through search matches; ' +
+      'press Esc to cancel search)');
     gitbook.toolbar.createButton({
       icon: 'fa fa-info',
       label: 'Information about the toolbar',
