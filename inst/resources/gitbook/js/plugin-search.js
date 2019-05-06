@@ -2,7 +2,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
     var $searchInput, $searchLabel, $searchForm;
     var $highlighted, hi = 0, hiOpts = { className: 'search-highlight' };
-    var collapse = false;
+    var collapse = false, toc_visible = [];
 
     // Use a specific index
     function loadIndex(data) {
@@ -147,6 +147,11 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         }
     }
 
+    function sidebarFilter(results) {
+        gitbook.sidebar.filter(_.pluck(results, "path"));
+        toc_visible = $('ul.summary').find('li:visible');
+    }
+
     // Recover current search when page changed
     function recoverSearch() {
         var keyword = gitbook.storage.get("keyword", "");
@@ -157,7 +162,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             if(!isSearchOpen()) {
                 toggleSearch(true); // [Yihui] open the search box
             }
-            gitbook.sidebar.filter(_.pluck(search(keyword), "path"));
+            sidebarFilter(search(keyword));
         }
     }
 
@@ -199,9 +204,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 toggleTOC(false);
             } else {
                 var results = search(q);
-                gitbook.sidebar.filter(
-                    _.pluck(results, "path")
-                );
+                sidebarFilter(results);
                 gitbook.storage.set("keyword", q);
             }
         });
