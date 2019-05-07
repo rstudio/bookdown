@@ -18,6 +18,8 @@
 
 - When performing searching, the `gitbook` sidebar will only display relevant TOC items that actually take users to the HTML pages containing the search keyword. Previously, some TOC items do not really take users to the search destination but an anchor on a page instead, which can be confusing (thanks, @aronatkins, #696).
 
+- Hyphenated words will be correctly highlighted in the search results now if spaces are used in the search keyword instead of dashes, e.g., you can search for `hand-off` using the keyword `hand off` (thanks, @aronatkins, #701).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
