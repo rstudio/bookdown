@@ -52,7 +52,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         $highlighted = results.length === 0 ? [] : $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
         scrollToHighlighted(0);
-        toggleTOC(results.length > 0);
 
         return results;
     }
@@ -91,16 +90,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       var href = window.location.pathname;
       href = href.substr(href.lastIndexOf('/') + 1);
       return href === '' ? 'index.html' : href;
-    }
-
-    // [Yihui] Expand/collapse TOC
-    function toggleTOC(show) {
-      if (!collapse) return;
-      var toc_sub = $('ul.summary').children('li[data-level]').children('ul');
-      if (show) return toc_sub.show();
-      var li = $('a[href^="' + currentPath() + location.hash + '"]').parent('li.chapter').first();
-      toc_sub.hide().parent().has(li).children('ul').show();
-      li.children('ul').show();
     }
 
     // Create search form
@@ -157,7 +146,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             gitbook.storage.remove("keyword");
             gitbook.sidebar.filter(null);
             $('.page-inner').unhighlight(hiOpts);
-            toggleTOC(false);
         }
     }
 
@@ -211,7 +199,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 gitbook.sidebar.filter(null);
                 gitbook.storage.remove("keyword");
                 $('.page-inner').unhighlight(hiOpts);
-                toggleTOC(false);
             } else {
                 var results = search(q);
                 sidebarFilter(results);
