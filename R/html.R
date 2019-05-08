@@ -1016,6 +1016,7 @@ prepend_chapter_title = function(head, body) {
   r2 = '.*?<h[0-6][^>]*>(.+?)</h[0-6]>.*'
   if (!grepl(r2, body)) return(head)
   title = strip_html(gsub(r2, '\\1', body))
+  if (knitr:::is_blank(title)) return(head)
   x1 = gsub(r1, '\\1', head[i])
   x2 = gsub(r1, '\\2', head[i])
   x3 = gsub(r1, '\\3', head[i])
