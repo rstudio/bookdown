@@ -9,4 +9,4 @@ inst/resources/gitbook/js/app.min.js.map
 ^CONTRIBUTING\.md$
 .*/rsconnect
 ^\.github$
-^revdep$
+^NEWS\.md$
