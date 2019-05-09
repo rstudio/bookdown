@@ -22,6 +22,8 @@
 
 - Hyphenated words will be correctly highlighted in the search results now if spaces are used in the search keyword instead of dashes, e.g., you can search for `hand-off` using the keyword `hand off` (thanks, @aronatkins, #701).
 
+- When `rmd_files` is configured in `_bookdown.yml`, `render_book()` will fail if the output format is not HTML or LaTeX (thanks, Ladislas Nalborczyk, https://stackoverflow.com/q/56061122/559676).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
