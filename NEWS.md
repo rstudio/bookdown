@@ -24,6 +24,8 @@
 
 - When `rmd_files` is configured in `_bookdown.yml`, `render_book()` will fail if the output format is not HTML or LaTeX (thanks, Ladislas Nalborczyk, https://stackoverflow.com/q/56061122/559676).
 
+- The colon after figure/table numbers is missing in Word and EPUB output (thanks, @upton9265, #618).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
