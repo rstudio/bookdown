@@ -4,6 +4,8 @@
 
 - Added an argument `clean_highlight_tags` to `html_document2()` (thanks, @atusy, #706).
 
+- For HTML output formats such as `gitbook`, the abstract title (if the abstract is provided) can be customized via the field `abstract-title` in the YAML frontmatter (thanks, @XiangyunHuang, #715).
+
 ## BUG FIXES
 
 - Split reference sections in `gitbook` ignored the sorting definition of the citation style (thanks @GegznaV #661, @crsh #674).
