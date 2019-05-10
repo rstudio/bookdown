@@ -550,7 +550,12 @@ reg_label_types = paste(reg_label_types, 'ex', sep = '|')
 parse_fig_labels = function(content, global = FALSE) {
   lines = grep(reg_chap, content)
   chaps = gsub(reg_chap, '\\2', content[lines])  # chapter numbers
-  if (length(chaps) == 0) global = TRUE  # no chapter titles or no numbered chapters
+  if (length(chaps) == 0) {
+    global = TRUE  # no chapter titles or no numbered chapters
+  } else {
+    chaps = c('0', chaps)  # use Chapter 0 in case of any figure before Chapter 1
+    lines = c(0, lines)
+  }
   arry = character()  # an array of the form c(label = number, ...)
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
 
@@ -567,6 +572,7 @@ parse_fig_labels = function(content, global = FALSE) {
     if (length(lab <- labs[[i]]) == 0) next
 
     j = if (global) chaps else tail(chaps[lines <= i], 1)
+    if (length(j) == 0) j = chaps[1]  # use Chapter 0
     lab = gsub('^\\(#|\\)$', '', lab)
     type = gsub('^([^:]+):.*', '\\1', lab)
     # there could be multiple labels on the same line, but their types must be
