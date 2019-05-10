@@ -564,18 +564,21 @@ parse_fig_labels = function(content, global = FALSE) {
   eqns = grep('<span class="math display">', content)
 
   for (i in seq_along(labs)) {
-    lab = labs[[i]]
-    if (length(lab) == 0) next
-    if (length(lab) > 1)
-      stop('There are multiple labels on one line: ', paste(lab, collapse = ', '))
+    if (length(lab <- labs[[i]]) == 0) next
 
     j = if (global) chaps else tail(chaps[lines <= i], 1)
     lab = gsub('^\\(#|\\)$', '', lab)
     type = gsub('^([^:]+):.*', '\\1', lab)
+    # there could be multiple labels on the same line, but their types must be
+    # the same (https://github.com/rstudio/bookdown/issues/538)
+    if (length(unique(type)) != 1) stop(
+      'There are mutiple types of labels on one line: ', paste(labs, collapse = ', ')
+    )
+    type = type[1]
     num = arry[lab]
-    if (is.na(num)) {
-      num = cntr$inc(type, j)  # increment number only if the label has not been used
-      if (!global) num = paste0(j, '.', num)  # Figure X.x
+    for (k in which(is.na(num))) {
+      num[k] = cntr$inc(type, j)  # increment number only if the label has not been used
+      if (!global) num[k] = paste0(j, '.', num[k])  # Figure X.x
     }
     arry = c(arry, setNames(num, lab))
 
@@ -589,7 +592,7 @@ parse_fig_labels = function(content, global = FALSE) {
       }
       labs[[i]] = paste0(label_prefix(type), num, ': ')
       k = max(figs[figs <= i])
-      content[k] = paste0(content[k], sprintf('<span id="%s"></span>', lab))
+      content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf(

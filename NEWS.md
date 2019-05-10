@@ -26,6 +26,8 @@
 
 - The colon after figure/table numbers is missing in Word and EPUB output (thanks, @upton9265, #618).
 
+- Multiple labels on the same line are allowed for Word output (thanks, @mdlincoln @h-k-kan @brooksambrose, #538).
+
 ## MINOR CHANGES
 
 - Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
