@@ -54,18 +54,18 @@ Description: Output formats and utilities for authoring books and technical docu
 License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
-    knitr (>= 1.16),
-    rmarkdown (>= 1.9),
-    xfun (>= 0.2),
-    tinytex
+    knitr (>= 1.22),
+    rmarkdown (>= 1.12),
+    xfun (>= 0.6),
+    tinytex (>= 0.12)
 Suggests:
     htmlwidgets,
     rstudioapi,
     miniUI,
     rsconnect (>= 0.4.3),
-    servr (>= 0.3),
+    servr (>= 0.13),
     shiny,
-    testit (>= 0.5),
+    testit (>= 0.9),
     tufte,
     webshot
 URL: https://github.com/rstudio/bookdown
