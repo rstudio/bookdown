@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.11
 
+## BUG FIXES
 
+- The fix for https://stackoverflow.com/q/56061122/559676 in the previous version was incorrect, causing `rmd_files` to fail when it is a character vector of Rmd filenames (thanks, Joyce Robbins and Hadley Wickham, https://stackoverflow.com/q/56118663/559676).
 
 # CHANGES IN bookdown VERSION 0.10
 
