@@ -357,9 +357,11 @@ existing_r = function(base, first = FALSE) {
   existing_files(x, first)
 }
 
-html_or_latex = function(format) {
-  if (grepl('(html|gitbook|epub)', format)) return('html')
+target_format = function(format) {
+  if (grepl('(html|gitbook)', format)) return('html')
   if (grepl('pdf', format)) return('latex')
+  if (grepl('epub_', format)) return('epub')
+  if (grepl('word_', format)) return('docx')
   switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
 }
 

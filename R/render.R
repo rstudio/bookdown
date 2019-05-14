@@ -58,7 +58,7 @@ render_book = function(
         new_session = new_session, preview = preview, config_file = config_file
       ))))
     }
-    format = html_or_latex(output_format)
+    format = target_format(output_format)
   }
 
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
