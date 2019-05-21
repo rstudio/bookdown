@@ -1,7 +1,7 @@
 
 
 <!--
-Please keep the below portion in your issue. Your issue will be closed if any of the above boxes is not checked. In certain (rare) cases, you may be exempted if you give a brief explanation (e.g., you are only making a suggestion for improvement). Thanks!
+Please keep the below portion in your issue. Your issue will be closed if any of the boxes is not checked. In certain (rare) cases, you may be exempted if you give a brief explanation (e.g., you are only making a suggestion for improvement). Thanks!
 -->
 
 ---
