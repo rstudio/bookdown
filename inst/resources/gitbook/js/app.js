@@ -15334,55 +15334,6 @@ function handleNavigation(relativeUrl, push) {
         location.href = relativeUrl;
         return;
     //}
-
-    return loading.show($.get(uri)
-    .done(function (html) {
-        // Push url to history
-        if (push) history.pushState({ path: uri }, null, uri);
-
-        // Replace html content
-        html = html.replace( /<(\/?)(html|head|body)([^>]*)>/ig, function(a,b,c,d){
-            return '<' + b + 'div' + ( b ? '' : ' data-element="' + c + '"' ) + d + '>';
-        });
-
-        var $page = $(html);
-        var $pageHead = $page.find('[data-element=head]');
-        var $pageBody = $page.find('.book');
-
-        // Merge heads
-        // !! Warning !!: we only update necessary portions to avoid strange behavior (page flickering etc ...)
-
-        // Update title
-        document.title = $pageHead.find('title').text();
-
-        // Reference to $('head');
-        var $head = $('head');
-
-        // Update next & prev <link> tags
-        // Remove old
-        $head.find('link[rel=prev]').remove();
-        $head.find('link[rel=next]').remove();
-
-        // Add new next * prev <link> tags
-        $head.append($pageHead.find('link[rel=prev]'));
-        $head.append($pageHead.find('link[rel=next]'));
-
-        // Merge body
-        var bodyClass = $('.book').attr('class');
-        var scrollPosition = $('.book-summary .summary').scrollTop();
-        $pageBody.toggleClass('with-summary', $('.book').hasClass('with-summary'));
-
-        $('.book').replaceWith($pageBody);
-        $('.book').attr('class', bodyClass);
-        $('.book-summary .summary').scrollTop(scrollPosition);
-
-        // Update state
-        state.update($('html'));
-        preparePage();
-    })
-    .fail(function (e) {
-        location.href = relativeUrl;
-    }));
 }
 
 function updateNavigationPosition() {
