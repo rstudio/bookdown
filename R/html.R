@@ -1011,7 +1011,7 @@ restore_math_labels = function(x) {
 # remove the <div> tags around <pre>, and clean up <a> on all lines
 clean_pandoc2_highlight_tags = function(x) {
   if (!pandoc2.0()) return(x)
-  x = gsub('(</a></code></pre>)</div>', '\\1', x)
+  x = gsub('(</code></pre>)</div>', '\\1', x)
   x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
   x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
   x

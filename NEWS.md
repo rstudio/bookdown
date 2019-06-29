@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.12
 
+## BUG FIXES
 
+- The `gitbook` format failed to work with Pandoc 2.7.3 (thanks, @varemo @jwbowers @serine @RLesur, #733).
 
 # CHANGES IN bookdown VERSION 0.11
 
