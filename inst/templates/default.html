@@ -98,6 +98,23 @@ $if(theme)$
   margin-left: auto;
   margin-right: auto;
 }
+pre:not([class]),
+  pre[class="sourceCode numberSource numberLines"],
+  pre[class="sourceCode numberSource numberLines lineAnchors"],
+  pre[class="sourceCode numberSource numberLines line-anchors"],
+  pre[class="sourceCode numberSource number-lines"],
+  pre[class="sourceCode numberSource number-lines lineAnchors"],
+  pre[class="sourceCode numberSource number-lines line-anchors"],
+  pre[class="sourceCode numberSource lineAnchors numberLines"],
+  pre[class="sourceCode numberSource lineAnchors number-Lines"],
+  pre[class="sourceCode numberSource line-anchors numberLines"],
+  pre[class="sourceCode numberSource line-anchors number-lines"] {
+    background-color: white;
+}
+pre.sourceCode {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);

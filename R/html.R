@@ -1014,6 +1014,16 @@ clean_pandoc2_highlight_tags = function(x) {
   x = gsub('(</code></pre>)</div>', '\\1', x)
   x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
   x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
+
+  css_start = which(x == '<style type="text/css" data-origin="pandoc">')
+  style_end = which(x == '</style>')
+  css_end = vapply(css_start, function(x) style_end[x < style_end][1L], 1L)
+  css_range = intersect(
+    unlist(Map(seq, css_start, css_end)),
+    which(x %in% c("div.sourceCode { margin: 1em 0; }", "pre.sourceCode { margin: 0; }"))
+  )
+  if (length(css_range) > 0) x = x[-css_range]
+
   x
 }
 

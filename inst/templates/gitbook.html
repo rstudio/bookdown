@@ -77,6 +77,12 @@ $highlighting-css$
 </style>
 $endif$
 
+<style type="text/css">
+.numberLines code.sourceCode {
+  left: 1.5em;
+}
+</style>
+
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
