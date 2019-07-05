@@ -17,13 +17,15 @@ print(x.split(' '))
 
 Python users may be familiar with IPython\index{IPython} or Jupyter\index{Jupyter Notebook} Notebooks (https://jupyter.org). In fact, R Markdown can also be used as notebooks, and has some additional benefits; see this blog post for more information: https://blog.rstudio.org/2016/10/05/r-notebooks/.
 
-If you want to show a literal chunk in your document, you can add an inline expression that generates an empty string (`` `r "\x60r ''\x60"` ``) before the chunk header, and indent the code chunk by four spaces,^[Follow the four-space rule if the literal code chunk is to be displayed in other environments such as a list: http://pandoc.org/MANUAL.html#the-four-space-rule] e.g.,
+If you want to show a literal chunk in your document, you can add an inline expression that generates an empty string (`` `r "\x60r ''\x60"` ``) before the chunk header, and wrap the code chunk in four backticks,^[Follow the indenting rule if the literal code chunk is to be displayed in other environments such as a list: https://pandoc.org/MANUAL.html#block-content-in-list-items] e.g.,
 
-````markdown
-    `r "\x60r ''\x60"````{r}
-    # a literal code chunk
-    ```
+`````markdown
 ````
+`r "\x60r ''\x60"````{r}
+# a literal code chunk
+```
+````
+`````
 
 After the document is compiled, the inline expression will disappear and you will see:
 

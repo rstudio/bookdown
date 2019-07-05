@@ -592,9 +592,11 @@ Cross-references still work even when we refer to an item that is not on the cur
 
 You can generate custom blocks\index{custom block} using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
 
-    `r ''````{block, type='FOO'}
-    Some text for this block.
-    ```
+````markdown
+`r ''````{block, type='FOO'}
+Some text for this block.
+```
+````
 
 will be this:
 
