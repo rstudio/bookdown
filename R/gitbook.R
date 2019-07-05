@@ -44,6 +44,13 @@ gitbook = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     on.exit(write_search_data(), add = TRUE)
+
+    # a hack to remove Pandoc's margin for code blocks since gitbook has already
+    # defined margin on <pre> (there would be too much bottom margin)
+    x = read_utf8(output)
+    x = x[x != 'div.sourceCode { margin: 1em 0; }']
+    write_utf8(x, output)
+
     move_files_html(output, lib_dir)
     output2 = split_chapters(
       output, gitbook_page, number_sections, split_by, split_bib, gb_config, split_by

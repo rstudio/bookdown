@@ -11,7 +11,7 @@
 figures/tables/equations}
 \usage{
 html_document2(..., number_sections = TRUE, pandoc_args = NULL, 
-    base_format = rmarkdown::html_document, clean_highlight_tags = TRUE)
+    base_format = rmarkdown::html_document)
 
 tufte_html2(..., number_sections = FALSE)
 
@@ -38,9 +38,6 @@ sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
 
 \item{base_format}{An output format function to be used as the base format.}
-
-\item{clean_highlight_tags}{Whether to remove the \verb{<div>} tags around
-\verb{<pre>}, and clean up \verb{<a>} on all lines in code blocks.}
 }
 \value{
 An R Markdown output format object to be passed to
