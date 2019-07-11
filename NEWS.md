@@ -1,3 +1,7 @@
+# CHANGES IN bookdown VERSION 0.13
+
+
+
 # CHANGES IN bookdown VERSION 0.12
 
 ## MINOR CHANGES
