@@ -26,6 +26,7 @@ Other contributors:
   \item Albert Kim [contributor]
   \item Alessandro Samuel-Rosa [contributor]
   \item Andrzej Oles [contributor]
+  \item Atsushi Yasumoto (0000-0002-8335-495X) [contributor]
   \item Aust Frederik (0000-0003-4900-788X) [contributor]
   \item Bastiaan Quast [contributor]
   \item Ben Marwick [contributor]
