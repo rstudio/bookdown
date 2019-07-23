@@ -118,8 +118,8 @@ gitbook_page = function(
   foot = sub('<!--bookdown:link_prev-->', a_prev, foot)
   foot = sub('<!--bookdown:link_next-->', a_next, foot)
 
-  l_prev = if (has_prev) sprintf('<link rel="prev" href="%s">', link_prev) else ''
-  l_next = if (has_next) sprintf('<link rel="next" href="%s">', link_next) else ''
+  l_prev = if (has_prev) sprintf('<link rel="prev" href="%s"/>', link_prev) else ''
+  l_next = if (has_next) sprintf('<link rel="next" href="%s"/>', link_next) else ''
   head = sub('<!--bookdown:link_prev-->', l_prev, head)
   head = sub('<!--bookdown:link_next-->', l_next, head)
   head = sub('#bookdown:version#', packageVersion('bookdown'), head)
