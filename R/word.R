@@ -19,7 +19,7 @@ office_document2_base = function(base_format) {
       if (is.function(post)) output = post(metadata, input, output, clean, verbose)
       move_output(output)
     }
-    config$bookdown_output_format = 'docx'
+    config$bookdown_output_format = config$pandoc$to
     config = set_opts_knit(config)
     config
   }
