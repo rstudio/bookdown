@@ -1,6 +1,10 @@
 # CHANGES IN bookdown VERSION 0.13
 
+## NEW FEATURES
 
+- Added `odt_document2` and `powerpoint_presentation2` (thanks, @atusy, #742).
+
+- Added `markdown_document2` which enables to use cross references in an arbitrary format specified in `base_format` argument (e.g., `markdown_document2(base_format = prettydoc::html_pretty)`) (thanks, @atusy, #742).
 
 # CHANGES IN bookdown VERSION 0.12
 

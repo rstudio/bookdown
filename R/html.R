@@ -99,7 +99,9 @@ tufte_html_book = function(...) {
 #' \code{rmarkdown::\link{html_document}()}, and they added the capability of
 #' numbering figures/tables/equations/theorems and cross-referencing them. See
 #' References for the syntax. Note you can also cross-reference sections by
-#' their ID's using the same syntax when sections are numbered.
+#' their ID's using the same syntax when sections are numbered. In case you want
+#' to enable cross reference in other formats, use \code{markdown_document2} with
+#' \code{base_format} argument.
 #' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
 #'   specific output format function. For a function \code{foo2()}, its
 #'   arguments are passed to \code{foo()}, e.g. \code{...} of
