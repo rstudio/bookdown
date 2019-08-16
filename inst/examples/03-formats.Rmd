@@ -103,6 +103,7 @@ bookdown::gitbook:
       size: 2
     sharing:
       facebook: yes
+      github: no
       twitter: yes
       google: no
       linkedin: no
