@@ -56,6 +56,7 @@ gitbook = function(
       output, gitbook_page, number_sections, split_by, split_bib, gb_config, split_by
     )
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
+    move_files_html(output2, lib_dir)
     output2
   }
   config$bookdown_output_format = 'html'
