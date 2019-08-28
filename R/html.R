@@ -563,7 +563,7 @@ parse_fig_labels = function(content, global = FALSE) {
   m = gregexpr(sprintf('\\(#((%s):[-/[:alnum:]]+)\\)', reg_label_types), content)
   labs = regmatches(content, m)
   cntr = new_counters(label_types, chaps)  # chapter counters
-  figs = grep('^<div class="figure', content)
+  figs = grep('^<div( id=".*") class="figure', content)
   eqns = grep('<span class="math display">', content)
 
   for (i in seq_along(labs)) {
