@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Yihui Xie \email{xie@yihui.name} (0000-0003-0645-5666)
+\strong{Maintainer}: Yihui Xie \email{xie@yihui.name} (\href{https://orcid.org/0000-0003-0645-5666}{ORCID})
 
 Other contributors:
 \itemize{
@@ -26,8 +26,8 @@ Other contributors:
   \item Albert Kim [contributor]
   \item Alessandro Samuel-Rosa [contributor]
   \item Andrzej Oles [contributor]
-  \item Atsushi Yasumoto (0000-0002-8335-495X) [contributor]
-  \item Aust Frederik (0000-0003-4900-788X) [contributor]
+  \item Atsushi Yasumoto (\href{https://orcid.org/0000-0002-8335-495X}{ORCID}) [contributor]
+  \item Aust Frederik (\href{https://orcid.org/0000-0003-4900-788X}{ORCID}) [contributor]
   \item Bastiaan Quast [contributor]
   \item Ben Marwick [contributor]
   \item Chester Ismay [contributor]
@@ -43,6 +43,7 @@ Other contributors:
   \item Jeff Allen [contributor]
   \item Jennifer Bryan [contributor]
   \item Jonathan McPhers [contributor]
+  \item JooYoung Seo (\href{https://orcid.org/0000-0002-4064-6012}{ORCID}) [contributor]
   \item Junwen Huang [contributor]
   \item Kevin Cheung [contributor]
   \item Kevin Ushey [contributor]
@@ -57,7 +58,7 @@ Other contributors:
   \item Peter Hickey [contributor]
   \item Sahir Bhatnagar [contributor]
   \item Steve Simpson [contributor]
-  \item Thierry Onkelinx (0000-0001-8804-4216) [contributor]
+  \item Thierry Onkelinx (\href{https://orcid.org/0000-0001-8804-4216}{ORCID}) [contributor]
   \item Vincent Fulco [contributor]
   \item Yixuan Qiu [contributor]
   \item Zhuoer Dong [contributor]

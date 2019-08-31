@@ -43,3 +43,9 @@ odt_document2 = function(...) {
 powerpoint_presentation2 = function(...) {
   markdown_document2(..., base_format = rmarkdown::powerpoint_presentation)
 }
+
+#' @rdname html_document2
+#' @export
+rtf_document2 = function(...) {
+  markdown_document2(..., base_format = rmarkdown::rtf_document)
+}
