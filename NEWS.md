@@ -4,6 +4,10 @@
 
 - Images specified in `toc: before:` of the `gitbook` format are not copied to the output directory (thanks, @dcossyleon, #763).
 
+## NEW FEATURES
+
+- Added `rtf_document2`.
+
 # CHANGES IN bookdown VERSION 0.13
 
 ## NEW FEATURES
