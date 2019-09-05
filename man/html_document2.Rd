@@ -14,8 +14,8 @@
 \title{Output formats that allow numbering and cross-referencing
 figures/tables/equations}
 \usage{
-html_document2(..., number_sections = TRUE, pandoc_args = NULL,
-  base_format = rmarkdown::html_document)
+html_document2(..., number_sections = TRUE, pandoc_args = NULL, 
+    base_format = rmarkdown::html_document)
 
 tufte_html2(..., number_sections = FALSE)
 
@@ -25,8 +25,8 @@ tufte_handout2(...)
 
 tufte_book2(...)
 
-markdown_document2(fig_caption = TRUE, md_extensions = NULL,
-  pandoc_args = NULL, ..., base_format)
+markdown_document2(fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, 
+    ..., base_format)
 
 word_document2(...)
 
