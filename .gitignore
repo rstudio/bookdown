@@ -3,5 +3,4 @@
 .RData
 **/rsconnect/
 .DS_Store
-**/*.min.map
-revdep
+**/*.min.js.map

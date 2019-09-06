@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
   <meta name="description" content="$if(description)$$description$$else$$title$$endif$" />
-  <meta name="generator" content="bookdown <!--bookdown:version--> and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown #bookdown:version# and GitBook 2.6.7" />
 
   <meta property="og:title" content="$pagetitle$" />
   <meta property="og:type" content="book" />
@@ -112,7 +112,7 @@ $if(date)$
 $endif$
 $if(abstract)$
 <div class="abstract">
-<p class="abstract">Abstract</p>
+<p class="abstract">$if(abstract-title)$$abstract-title$$else$Abstract$endif$</p>
 $abstract$
 </div>
 $endif$
@@ -174,8 +174,9 @@ $if(math)$
     script.type = "text/javascript";
     var src = "$if(mathjax)$$mathjax$$endif$";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

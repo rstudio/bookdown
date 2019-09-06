@@ -1,8 +1,74 @@
+# CHANGES IN bookdown VERSION 0.14
+
+## NEW FEATURES
+
+- Added `rtf_document2` (thanks, @jooyoungseo, #768).
+
+## BUG FIXES
+
+- Images specified in `toc: before:` of the `gitbook` format are not copied to the output directory (thanks, @dcossyleon, #763).
+
+# CHANGES IN bookdown VERSION 0.13
+
+## NEW FEATURES
+
+- Added `odt_document2` and `powerpoint_presentation2` (thanks, @atusy, #742).
+
+- Added `markdown_document2` which enables to use cross references in an arbitrary format specified in `base_format` argument (e.g., `markdown_document2(base_format = prettydoc::html_pretty)`) (thanks, @atusy, #742).
+
+# CHANGES IN bookdown VERSION 0.12
+
+## MINOR CHANGES
+
+- Reverted #706 and removed the `clean_highlight_tags` argument in `html_document2()`; **bookdown** will no longer clean up the HTML tags of the syntax-highlighted code blocks.
+
+## BUG FIXES
+
+- The `gitbook` format failed to work with Pandoc 2.7.3 (thanks, @varemo @jwbowers @serine @RLesur, #733).
+
+# CHANGES IN bookdown VERSION 0.11
+
+## BUG FIXES
+
+- The fix for https://stackoverflow.com/q/56061122/559676 in the previous version was incorrect, causing `rmd_files` to fail when it is a character vector of Rmd filenames (thanks, Joyce Robbins and Hadley Wickham, https://stackoverflow.com/q/56118663/559676).
+
 # CHANGES IN bookdown VERSION 0.10
+
+## NEW FEATURES
+
+- Added an argument `clean_highlight_tags` to `html_document2()` (thanks, @atusy, #706).
+
+- For HTML output formats such as `gitbook`, the abstract title (if the abstract is provided) can be customized via the field `abstract-title` in the YAML frontmatter (thanks, @XiangyunHuang, #715).
 
 ## BUG FIXES
 
 - Split reference sections in `gitbook` ignored the sorting definition of the citation style (thanks @GegznaV #661, @crsh #674).
+
+- For the `gitbook` output format, the content doesn't get the focus when the page is loaded, which makes it fail to respond to keystrokes such as PageUp/PageDown/Up/Down (thanks, @darshanbaral #691, @aronatkins #699).
+
+- For the `gitbook` output format, when searching for keywords in code blocks, the automatic scroll to keywords doesn't work (thanks, @colearendt, #700).
+
+- The search keyword no longer persists across page loads for different books in the `gitbook` format (thanks, @aronatkins, #695).
+
+- The keybindings `Up` and `Down` (or `Enter`) in the search input of the `gitbook` output format work across all pages now; previously they only work on the current page (thanks, @dsblank, #657).
+
+- When performing searching, the `gitbook` sidebar will only display relevant TOC items that actually take users to the HTML pages containing the search keyword. Previously, some TOC items do not really take users to the search destination but an anchor on a page instead, which can be confusing (thanks, @aronatkins, #696).
+
+- Hyphenated words will be correctly highlighted in the search results now if spaces are used in the search keyword instead of dashes, e.g., you can search for `hand-off` using the keyword `hand off` (thanks, @aronatkins, #701).
+
+- When `rmd_files` is configured in `_bookdown.yml`, `render_book()` will fail if the output format is not HTML or LaTeX (thanks, Ladislas Nalborczyk, https://stackoverflow.com/q/56061122/559676).
+
+- The colon after figure/table numbers is missing in Word and EPUB output (thanks, @upton9265, #618).
+
+- Multiple labels on the same line are allowed for Word output (thanks, @mdlincoln @h-k-kan @brooksambrose, #538).
+
+## MINOR CHANGES
+
+- Added alt/hover text to icons on the `gitbook` toolbar (thanks, @aronatkins, #698).
+
+- Added an Information button to the `gitbook` toolbar to show the keybindings that are otherwise difficult for users to discover without reading the **bookdown** book (thanks, @aronatkins, #697).
+
+- Added information about the keybindings Enter/Up/Down to the placeholder text and tooltip of the search input in `gitbook` output (thanks, @pyltime, #660).
 
 # CHANGES IN bookdown VERSION 0.9
 
@@ -12,7 +78,7 @@
 
 # CHANGES IN bookdown VERSION 0.8
 
-## NEW FEATURE
+## NEW FEATURES
 
 - Added Conjecture to the list of theorem environments.
 

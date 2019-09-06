@@ -45,7 +45,7 @@ get_base_format = function(format) {
 load_config = function() {
   if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
     # store the book config
-    opts$set(config = yaml::yaml.load_file('_bookdown.yml'))
+    opts$set(config = rmarkdown:::yaml_load_file('_bookdown.yml'))
   }
   opts$get('config')
 }
@@ -65,9 +65,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     recursive = subdir_yes, full.names = subdir_yes
   ))
   if (length(files2 <- config[['rmd_files']]) > 0) {
-    if (is.list(files2)) {
-      files2 = if (all && is.null(format)) unlist(files2) else files2[[format]]
-    }
+    if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
     files = if (subdir_yes) c(files2, files) else files2
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
@@ -359,9 +357,11 @@ existing_r = function(base, first = FALSE) {
   existing_files(x, first)
 }
 
-html_or_latex = function(format) {
-  if (grepl('(html|gitbook|epub)', format)) return('html')
+target_format = function(format) {
+  if (grepl('(html|gitbook)', format)) return('html')
   if (grepl('pdf', format)) return('latex')
+  if (grepl('epub_', format)) return('epub')
+  if (grepl('word_', format)) return('docx')
   switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
 }
 

@@ -1,3 +1,5 @@
+\backmatter
+
 `r if (knitr::is_html_output()) '
 # References {-}
 '`
@@ -8,4 +10,3 @@ knitr::write_bib(c(
   'miniUI', 'tufte', 'servr', 'citr', 'rticles'
 ), 'packages.bib')
 ```
-

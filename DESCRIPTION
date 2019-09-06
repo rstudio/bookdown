@@ -1,13 +1,14 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.9.2
+Version: 0.13.2
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
     person("Albert", "Kim", role = "ctb"),
     person("Alessandro", "Samuel-Rosa", role = "ctb"),
     person("Andrzej", "Oles", role = "ctb"),
+    person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
     person("Aust", "Frederik", role = "ctb", comment = c(ORCID = "0000-0003-4900-788X")),
     person("Bastiaan", "Quast", role = "ctb"),
     person("Ben", "Marwick", role = "ctb"),
@@ -24,6 +25,7 @@ Authors@R: c(
     person("Jeff", "Allen", role = "ctb"),
     person("Jennifer", "Bryan", role = "ctb"),
     person("Jonathan", "McPhers", role = "ctb"),
+    person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
     person("Junwen", "Huang", role = "ctb"),
     person("Kevin", "Cheung", role = "ctb"),
     person("Kevin", "Ushey", role = "ctb"),
@@ -54,19 +56,18 @@ Description: Output formats and utilities for authoring books and technical docu
 License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
-    knitr (>= 1.16),
-    rmarkdown (>= 1.9),
-    xfun (>= 0.2),
-    tinytex,
-    yaml (>= 2.1.14)
+    knitr (>= 1.22),
+    rmarkdown (>= 1.12),
+    xfun (>= 0.6),
+    tinytex (>= 0.12)
 Suggests:
     htmlwidgets,
     rstudioapi,
     miniUI,
     rsconnect (>= 0.4.3),
-    servr (>= 0.3),
+    servr (>= 0.13),
     shiny,
-    testit (>= 0.5),
+    testit (>= 0.9),
     tufte,
     webshot
 URL: https://github.com/rstudio/bookdown

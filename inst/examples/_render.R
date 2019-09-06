@@ -20,6 +20,7 @@ for (fmt in formats) {
   if (!travis && fmt == 'bookdown::epub_book')
     bookdown::calibre('_book/bookdown.epub', 'mobi')
 }
+unlink('bookdown.log')
 
 r = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
 for (f in list.files('_book', '[.]html$', full.names = TRUE)) {

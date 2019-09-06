@@ -67,6 +67,7 @@ html_chapters = function(
     move_files_html(output, lib_dir)
     output2 = split_chapters(output, page_builder, number_sections, split_by, split_bib)
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
+    move_files_html(output2, lib_dir)
     output2
   }
   config$bookdown_output_format = 'html'
@@ -99,7 +100,9 @@ tufte_html_book = function(...) {
 #' \code{rmarkdown::\link{html_document}()}, and they added the capability of
 #' numbering figures/tables/equations/theorems and cross-referencing them. See
 #' References for the syntax. Note you can also cross-reference sections by
-#' their ID's using the same syntax when sections are numbered.
+#' their ID's using the same syntax when sections are numbered. In case you want
+#' to enable cross reference in other formats, use \code{markdown_document2} with
+#' \code{base_format} argument.
 #' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
 #'   specific output format function. For a function \code{foo2()}, its
 #'   arguments are passed to \code{foo()}, e.g. \code{...} of
@@ -134,7 +137,6 @@ html_document2 = function(
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
-    x = clean_pandoc2_highlight_tags(x)
     write_utf8(x, output)
     output
   }
@@ -264,7 +266,6 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   x = add_section_ids(x)
   x = restore_part_html(x)
   x = restore_appendix_html(x)
-  x = clean_pandoc2_highlight_tags(x)
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
@@ -547,7 +548,12 @@ reg_label_types = paste(reg_label_types, 'ex', sep = '|')
 parse_fig_labels = function(content, global = FALSE) {
   lines = grep(reg_chap, content)
   chaps = gsub(reg_chap, '\\2', content[lines])  # chapter numbers
-  if (length(chaps) == 0) global = TRUE  # no chapter titles or no numbered chapters
+  if (length(chaps) == 0) {
+    global = TRUE  # no chapter titles or no numbered chapters
+  } else {
+    chaps = c('0', chaps)  # use Chapter 0 in case of any figure before Chapter 1
+    lines = c(0, lines)
+  }
   arry = character()  # an array of the form c(label = number, ...)
   if (global) chaps = '0'  # Chapter 0 (could be an arbitrary number)
 
@@ -561,18 +567,22 @@ parse_fig_labels = function(content, global = FALSE) {
   eqns = grep('<span class="math display">', content)
 
   for (i in seq_along(labs)) {
-    lab = labs[[i]]
-    if (length(lab) == 0) next
-    if (length(lab) > 1)
-      stop('There are multiple labels on one line: ', paste(lab, collapse = ', '))
+    if (length(lab <- labs[[i]]) == 0) next
 
     j = if (global) chaps else tail(chaps[lines <= i], 1)
+    if (length(j) == 0) j = chaps[1]  # use Chapter 0
     lab = gsub('^\\(#|\\)$', '', lab)
     type = gsub('^([^:]+):.*', '\\1', lab)
+    # there could be multiple labels on the same line, but their types must be
+    # the same (https://github.com/rstudio/bookdown/issues/538)
+    if (length(unique(type)) != 1) stop(
+      'There are mutiple types of labels on one line: ', paste(labs, collapse = ', ')
+    )
+    type = type[1]
     num = arry[lab]
-    if (is.na(num)) {
-      num = cntr$inc(type, j)  # increment number only if the label has not been used
-      if (!global) num = paste0(j, '.', num)  # Figure X.x
+    for (k in which(is.na(num))) {
+      num[k] = cntr$inc(type, j)  # increment number only if the label has not been used
+      if (!global) num[k] = paste0(j, '.', num[k])  # Figure X.x
     }
     arry = c(arry, setNames(num, lab))
 
@@ -586,7 +596,7 @@ parse_fig_labels = function(content, global = FALSE) {
       }
       labs[[i]] = paste0(label_prefix(type), num, ': ')
       k = max(figs[figs <= i])
-      content[k] = paste0(content[k], sprintf('<span id="%s"></span>', lab))
+      content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf(
@@ -996,15 +1006,6 @@ restore_math_labels = function(x) {
   x
 }
 
-# remove the <div> tags around <pre>, and clean up <a> on all lines
-clean_pandoc2_highlight_tags = function(x) {
-  if (!pandoc2.0()) return(x)
-  x = gsub('(</a></code></pre>)</div>', '\\1', x)
-  x = gsub('<div class="sourceCode"[^>]+>(<pre)', '\\1', x)
-  x = gsub('<a class="sourceLine"[^>]+>(.*)</a>', '\\1', x)
-  x
-}
-
 # extract a chapter title from the body, and prepend it to the page <title>
 prepend_chapter_title = function(head, body) {
   r1 = '(.*?<title>)(.+?)(</title>.*)'
@@ -1013,6 +1014,7 @@ prepend_chapter_title = function(head, body) {
   r2 = '.*?<h[0-6][^>]*>(.+?)</h[0-6]>.*'
   if (!grepl(r2, body)) return(head)
   title = strip_html(gsub(r2, '\\1', body))
+  if (knitr:::is_blank(title)) return(head)
   x1 = gsub(r1, '\\1', head[i])
   x2 = gsub(r1, '\\2', head[i])
   x3 = gsub(r1, '\\3', head[i])

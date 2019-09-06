@@ -170,7 +170,7 @@ link-citations: yes
 
 Merging all chapters into one Rmd file and knitting it is one way to render the book in **bookdown**. There is actually another way: you may knit each chapter in a _separate_ R session, and **bookdown** will merge the Markdown output of all chapters to render the book. We call these two approaches "Merge and Knit" (M-K) and "Knit and Merge" (K-M), respectively. The differences between them may seem subtle, but can be fairly important depending on your use cases.
 
-- The most significant difference is that M-K runs _all_ code chunks in all chapters in the same R session, whereas K-M uses separate R sessions for individual chapters. For M-K, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for K-M, all chapters are isolated from each other.^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter. It is hard to isolate these kinds of side-effects.] If you want each chapter to compile from a clean state, use the K-M approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the M-K approach. For example, even you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
+- The most significant difference is that M-K runs _all_ code chunks in all chapters in the same R session, whereas K-M uses separate R sessions for individual chapters. For M-K, the state of the R session from previous chapters is carried over to later chapters (e.g., objects created in previous chapters are available to later chapters, unless you deliberately deleted them); for K-M, all chapters are isolated from each other.^[Of course, no one can stop you from writing out some files in one chapter, and reading them in another chapter. It is hard to isolate these kinds of side-effects.] If you want each chapter to compile from a clean state, use the K-M approach. It can be very tricky and difficult to restore a running R session to a completely clean state if you use the M-K approach. For example, even if you detach/unload packages loaded in a previous chapter, R will not clean up the S3 methods registered by these packages.
 - Because **knitr** does not allow duplicate chunk labels in a source document, you need to make sure there are no duplicate labels in your book chapters when you use the M-K approach, otherwise **knitr** will signal an error when knitting the merged Rmd file. Note that this means there must not be duplicate labels throughout the whole book. The K-M approach only requires no duplicate labels within any single Rmd file.
 - K-M does not allow Rmd files to be in subdirectories, but M-K does.
 
@@ -186,6 +186,8 @@ If you want to preview the book, preview the HTML output. Work on the PDF versio
 
 If certain code chunks in your R Markdown documents are time-consuming to run, you may cache them by adding the chunk option `cache = TRUE` in the chunk header, and you are recommended to label such code chunks as well, e.g.,
 
-    `r ''````{r important-computing, cache=TRUE}
+````markdown
+`r ''````{r important-computing, cache=TRUE}
+````
 
 In Chapter \@ref(editing), we will talk about how to quickly preview a book as you edit . In short, you can use the `preview_chapter()` function to render a single chapter instead of the whole book. The function `serve_book()` makes it easy to live-preview HTML book pages: whenever you modify an Rmd file, the book can be recompiled and the browser can be automatically refreshed accordingly.
