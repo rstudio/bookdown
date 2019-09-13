@@ -370,6 +370,17 @@ Sometimes you may not want to write a book, but a single long-form article or re
 
 The functions `html_document2()`, `tufte_html2()`, `pdf_document2()`, `word_document2()`, `tufte_handout2()`, and `tufte_book2()` are designed for this purpose. If you render an R Markdown document with the output format, say, `bookdown::html_document2`, you will get figure/table numbers and be able to cross-reference them in the single HTML page using the syntax described in Chapter \@ref(components).
 
+Below are a few examples of these output formats in the YAML metadata of a single Rmd file (you can also add these formats to the `_output.yml` file):
+
+```yaml
+output:
+  bookdown::html_document2: default
+  bookdown::pdf_document2:
+    keep_tex: true
+  bookdown::word_document2:
+    toc: true
+```
+
 The above HTML and PDF output format functions are basically wrappers of output formats `bookdown::html_book` and `bookdown::pdf_book`, in the sense that they changed the `base_format` argument. For example, you can take a look at the source code of `pdf_document2`:
 
 ```{r}
