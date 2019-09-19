@@ -94,7 +94,7 @@ gitbook_dependency = function(table_css) {
       'plugin-highlight.css', 'plugin-search.css', 'plugin-fontsettings.css'
     )),
     script = file.path('js', c(
-      app, 'lunr.js', 'plugin-search.js', 'plugin-sharing.js',
+      app, 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
       'plugin-fontsettings.js', 'plugin-bookdown.js', 'jquery.highlight.js'
     ))
   ))

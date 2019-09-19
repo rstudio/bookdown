@@ -46,6 +46,7 @@ Authors@R: c(
     person("Zhuoer", "Dong", role = "ctb"),
     person(family = "RStudio Inc", role = "cph"),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
+    person("Zeno", "Rocha", role = "cph", comment = "clipboard.js library"),
     person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"),
     person(family = "jQuery contributors", role = c("ctb", "cph"), comment = "jQuery library; authors listed in inst/resources/AUTHORS"),
     person(family = "MathQuill contributors", role = "ctb", comment = "The MathQuill library; authors listed in inst/resources/AUTHORS"),
