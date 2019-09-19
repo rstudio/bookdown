@@ -56,6 +56,7 @@ Other contributors:
   \item Michal Bojanowski [contributor]
   \item Noam Ross [contributor]
   \item Peter Hickey [contributor]
+  \item Romain Lesur (0000-0002-0721-5595) [contributor]
   \item Sahir Bhatnagar [contributor]
   \item Steve Simpson [contributor]
   \item Thierry Onkelinx (0000-0001-8804-4216) [contributor]
