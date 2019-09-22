@@ -82,21 +82,23 @@ render_book = function(
     output_dir = output_dir, input_rmd = basename(input), preview = preview
   )
 
-  aux_diro = '_bookdown_files'
-  # for compatibility with bookdown <= 0.0.64
-  if (isTRUE(dir_exists(aux_dir2 <- file.path(output_dir, aux_diro)))) {
-    if (!dir_exists(aux_diro)) file.rename(aux_dir2, aux_diro)
-  }
-  # move _files and _cache from _bookdown_files to ./, then from ./ to _bookdown_files
-  aux_dirs = files_cache_dirs(aux_diro)
-  move_dirs(aux_dirs, basename(aux_dirs))
-  on.exit({
-    aux_dirs = files_cache_dirs('.')
-    if (length(aux_dirs)) {
-      dir_create(aux_diro)
-      move_dirs(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+  if (bookdown_move_files(output_format)) {
+    aux_diro = '_bookdown_files'
+    # for compatibility with bookdown <= 0.0.64
+    if (isTRUE(dir_exists(aux_dir2 <- file.path(output_dir, aux_diro)))) {
+      if (!dir_exists(aux_diro)) file.rename(aux_dir2, aux_diro)
     }
-  }, add = TRUE)
+    # move _files and _cache from _bookdown_files to ./, then from ./ to _bookdown_files
+    aux_dirs = files_cache_dirs(aux_diro)
+    move_dirs(aux_dirs, basename(aux_dirs))
+    on.exit({
+      aux_dirs = files_cache_dirs('.')
+      if (length(aux_dirs)) {
+        dir_create(aux_diro)
+        move_dirs(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+      }
+    }, add = TRUE)
+  }
 
   # you may set, e.g., new_session: yes in _bookdown.yml
   if (is.na(new_session)) {

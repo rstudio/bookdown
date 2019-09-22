@@ -365,6 +365,11 @@ target_format = function(format) {
   switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
 }
 
+bookdown_move_files = function(format) {
+  if (is.character(format)) format <- eval(parse(text = format))()
+  format$bookdown_move_files %n% TRUE
+}
+
 verify_rstudio_version = function() {
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable()) {
     if (!rstudioapi::isAvailable('0.99.1200')) warning(

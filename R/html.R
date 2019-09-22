@@ -141,6 +141,7 @@ html_document2 = function(
     output
   }
   config$bookdown_output_format = 'html'
+  config$bookdown_move_files = FALSE
   config = set_opts_knit(config)
   config
 }
