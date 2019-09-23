@@ -6,6 +6,8 @@
 
 - Added copy to clipboard buttons to code blocks in the `gitbook` output format (thanks, @behrman #775, @RLesur #776).
 
+- `render_book` supports `self_contained: false` for `html_document2` and its extensions such as `pagedown::html_paged` (thanks, @atusy, #777)
+
 ## BUG FIXES
 
 - Images specified in `toc: before:` of the `gitbook` format are not copied to the output directory (thanks, @dcossyleon, #763).
