@@ -166,7 +166,7 @@ add_eq_numbers = function(x, ids, ref_table, to_md = output_md()) {
 # replace text references (ref:label); note refs is the parsed text references
 # from the HTML output of Markdown, i.e. Markdown has been translated to HTML
 resolve_ref_links_epub = function(x, refs, to_md = output_md()) {
-  res = parse_ref_links(x, '^%s (.+[^ ])$')
+  res = parse_ref_links(x, '^%s (.+[^\\s])\\s*$')
   if (is.null(res)) return(x)
   if (to_md && length(refs$tags)) {
     i = match(res$tags, refs$tags)
