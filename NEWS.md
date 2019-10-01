@@ -4,6 +4,8 @@
 
 - Added `rtf_document2` (thanks, @jooyoungseo, #768).
 
+- Added copy to clipboard buttons to code blocks in the `gitbook` output format (thanks, @behrman #775, @RLesur #776).
+
 ## BUG FIXES
 
 - Images specified in `toc: before:` of the `gitbook` format are not copied to the output directory (thanks, @dcossyleon, #763).
