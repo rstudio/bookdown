@@ -56,7 +56,7 @@ assert('number_appendix inserts the prefix and counters', {
   html = c(
     '<ul>',
     '<li><span class=\"toc-section-number\">1</span> One',
-    '<li><span class=\"toc-section-number\">1.1.</span> One subsection',
+    '<li><span class=\"toc-section-number\">1.1</span> One subsection',
     '<li><span class=\"toc-section-number\">2</span> Two',
     '</ul>'
   )
@@ -64,8 +64,21 @@ assert('number_appendix inserts the prefix and counters', {
     c(
       '<ul>',
       '<li><span class=\"toc-section-number\">APP a</span> One',
-      '<li><span class=\"toc-section-number\">APP a.1.</span> One subsection',
+      '<li><span class=\"toc-section-number\">APP a.1</span> One subsection',
       '<li><span class=\"toc-section-number\">APP b</span> Two',
+      '</ul>'
+    ))
+  eng_ints <- function(n) {
+    eng = c("one", "two", "three")[n[1]]
+    rest = paste0(n[-1], collapse = ".")
+    trimws(paste(eng, rest))
+  }
+  (number_appendix(html, 2, 5, 'toc', prefix = 'APP ', counters = eng_ints) %==%
+    c(
+      '<ul>',
+      '<li><span class=\"toc-section-number\">APP one</span> One',
+      '<li><span class=\"toc-section-number\">APP one 1</span> One subsection',
+      '<li><span class=\"toc-section-number\">APP two</span> Two',
       '</ul>'
     ))
 })

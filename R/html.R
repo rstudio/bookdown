@@ -625,7 +625,7 @@ parse_fig_labels = function(content, global = FALSE) {
 # given a label, e.g. fig:foo, figure out the appropriate prefix
 label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 
-ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '', appendix_counters = LETTERS)
+ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '', appendix_counters = NULL)
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
 i18n = function(group, key, dict = list()) {
@@ -901,7 +901,7 @@ relocate_footnotes = function(x, notes, ids) {
 
 number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counters) {
   r = sprintf(
-    '^(<%s>.*<span class="%s-section-number">)[0-9]+(\\.[.0-9]+)?(</span>.+)',
+    '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
     if (type == 'toc') 'li' else 'h[1-6]', type
   )
   i = grep(r, x)
@@ -910,14 +910,25 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
     return(x)
   }
   s1 = gsub(r, '\\1', x[i])
-  s2 = gsub(r, '\\2', x[i]) # section sub-numbers
+  s2 = gsub(r, '\\2', x[i]) # section numbers
   s3 = gsub(r, '\\3', x[i])
-  top = !nzchar(s2)
-  if (sum(top) > length(counters)) {
-    stop('Too many chapters in the appendix (more than ', length(counters), ')')
+  s = strsplit(s2, ".", fixed = TRUE)
+  s = lapply(s, as.integer)
+  top = which(1 == vapply(s, length, integer(1)))
+  app_num = findInterval(seq_along(s), top)
+  for (j in seq_along(s)) {
+    s[[j]][1] = app_num[j]
   }
-  group = findInterval(seq_along(i), which(top))
-  x[i] = paste0(s1, prefix, counters[group], s2, s3)
+  if (is.null(counters)) counters = LETTERS
+  if (is.character(counters)) {
+    counters = rep_len(counters, sum(top))
+    counter_fun = function(nums) paste0(c(counters[nums[1]], nums[-1]), collapse = ".")
+  } else if (is.function(counters)) {
+    counter_fun = counters
+  } else {
+    stop('appendix_counters in _bookdown.yml must be either a character vector or a function')
+  }
+  x[i] = paste0(s1, prefix, vapply(s, counter_fun, character(1)), s3)
   x
 }
 
