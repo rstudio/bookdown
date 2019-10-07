@@ -51,3 +51,21 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
   (prepend_chapter_title(h, '<h1>chapter one</h1>')  %==%
       '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
 })
+
+assert('number_appendix inserts the prefix and counters', {
+  html = c(
+    '<ul>',
+    '<li><span class=\"toc-section-number\">1</span> One',
+    '<li><span class=\"toc-section-number\">1.1.</span> One subsection',
+    '<li><span class=\"toc-section-number\">2</span> Two',
+    '</ul>'
+  )
+  (number_appendix(html, 2, 5, 'toc', prefix = 'APP ', counters = letters) %==%
+    c(
+      '<ul>',
+      '<li><span class=\"toc-section-number\">APP a</span> One',
+      '<li><span class=\"toc-section-number\">APP a.1.</span> One subsection',
+      '<li><span class=\"toc-section-number\">APP b</span> Two',
+      '</ul>'
+    ))
+})
