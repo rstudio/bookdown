@@ -130,10 +130,20 @@ gitbook_page = function(
   # gitbook JS scripts only work after the DOM has been loaded, so move them
   # from head to foot
   i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[.a-z-]+[.]js"></script>\\s*$', head)
-  # it is probably a self-contained page, so look for base64 encoded scripts
-  if (length(i) == 0) i = grep(
-    '^\\s*<script src="data:application/x-javascript;base64,[^"]+"></script>\\s*$', head
-  )
+  # it is probably a self-contained page, so look for script node.
+  # from pandoc2, they are not always base64 encoded scripts, so start and end of scripts
+  # node must be found and moved.
+  if (length(i) == 0) {
+    s_start = grep(
+      '^\\s*<script( src="data:application/(x-)?javascript;base64,[^"]+")?>',
+      head)
+    s_end = grep("</script>\\s*$", head)
+    # find all lines to move
+    i = unlist(mapply(seq.int,
+                      from = s_start, to = s_end,
+                      MoreArgs = list(by = 1)
+    ))
+  }
   s = head[i]; head[i] = ''
   j = grep('<!--bookdown:config-->', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
