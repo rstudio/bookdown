@@ -2,8 +2,7 @@
 
 ## BUG FIXES
 
-- gitbook toolbar is not missing anymore when rendering bookdown books with pandoc2 and using `self_contained = TRUE`. (thanks, @Pindar777, @RLesur, @cderv, #739)
-
+- gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
 
 # CHANGES IN bookdown VERSION 0.14
 
