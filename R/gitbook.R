@@ -135,14 +135,11 @@ gitbook_page = function(
   # node must be found and moved.
   if (length(i) == 0) {
     s_start = grep(
-      '^\\s*<script( src="data:application/(x-)?javascript;base64,[^"]+")?>',
-      head)
+      '^\\s*<script( src="data:application/(x-)?javascript;base64,[^"]+")?>', head
+    )
     s_end = grep("</script>\\s*$", head)
     # find all lines to move
-    i = unlist(mapply(seq.int,
-                      from = s_start, to = s_end,
-                      MoreArgs = list(by = 1)
-    ))
+    i = unlist(mapply(seq.int, s_start, s_end, SIMPLIFY = FALSE))
   }
   s = head[i]; head[i] = ''
   j = grep('<!--bookdown:config-->', foot)[1]
