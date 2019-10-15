@@ -28,8 +28,8 @@ markdown_document2 = function(
 
 #' @rdname html_document2
 #' @export
-word_document2 = function(...) {
-  markdown_document2(..., base_format = rmarkdown::word_document)
+ioslides_presentation2 = function(...) {
+  markdown_document2(..., base_format = rmarkdown::ioslides_presentation)
 }
 
 #' @rdname html_document2
@@ -48,4 +48,16 @@ powerpoint_presentation2 = function(...) {
 #' @export
 rtf_document2 = function(...) {
   markdown_document2(..., base_format = rmarkdown::rtf_document)
+}
+
+#' @rdname html_document2
+#' @export
+slidy_presentation2 = function(...) {
+  markdown_document2(..., base_format = rmarkdown::slidy_presentation)
+}
+
+#' @rdname html_document2
+#' @export
+word_document2 = function(...) {
+  markdown_document2(..., base_format = rmarkdown::word_document)
 }

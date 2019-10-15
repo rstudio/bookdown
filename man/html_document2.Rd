@@ -7,10 +7,12 @@
 \alias{tufte_handout2}
 \alias{tufte_book2}
 \alias{markdown_document2}
-\alias{word_document2}
+\alias{ioslides_presentation2}
 \alias{odt_document2}
 \alias{powerpoint_presentation2}
 \alias{rtf_document2}
+\alias{slidy_presentation2}
+\alias{word_document2}
 \title{Output formats that allow numbering and cross-referencing
 figures/tables/equations}
 \usage{
@@ -28,13 +30,17 @@ tufte_book2(...)
 markdown_document2(fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, 
     ..., base_format)
 
-word_document2(...)
+ioslides_presentation2(...)
 
 odt_document2(...)
 
 powerpoint_presentation2(...)
 
 rtf_document2(...)
+
+slidy_presentation2(...)
+
+word_document2(...)
 }
 \arguments{
 \item{..., fig_caption, md_extensions, pandoc_args}{Arguments to be passed to a
