@@ -171,17 +171,17 @@ html_vignette2 = function(..., number_sections = FALSE) {
 
 #' @rdname html_document2
 #' @export
-ioslides_presentation2 = function(..., number_sections = FALSE) {
+ioslides_presentation2 = function(...) {
   html_document2(
-    ..., number_sections = number_sections, base_format = rmarkdown::ioslides_presentation
+    ..., base_format = rmarkdown::ioslides_presentation
   )
 }
 
 #' @rdname html_document2
 #' @export
-slidy_presentation2 = function(..., number_sections = FALSE) {
+slidy_presentation2 = function(...) {
   html_document2(
-    ..., number_sections = number_sections, base_format = rmarkdown::slidy_presentation
+    ..., base_format = rmarkdown::slidy_presentation
   )
 }
 
@@ -231,7 +231,6 @@ build_chapter = function(
     button_link(link_prev, 'Previous'),
     source_link(rmd_cur, type = 'edit'),
     source_link(rmd_cur, type = 'history'),
-    source_link(rmd_cur, type = 'view'),
     button_link(link_next, 'Next'),
     '</p>',
     '</div>',
@@ -917,10 +916,10 @@ parse_footnotes = function(x) {
   j = which(x == '</div>')
   j = min(j[j > i])
   n = length(x)
-  r = '<li id="fn([0-9]+)"><p>.+?<a href="#fnref\\1"[^>]*?>\\X</a></p></li>'
+  r = '<li id="fn([0-9]+)"><p>.+?<a href="#fnref\\1"[^>]*?>.</a></p></li>'
   s = paste(x[i:n], collapse = '\n')
-  items = unlist(regmatches(s, gregexpr(r, s, perl = TRUE)))
-  list(items = setNames(items, gsub(r, 'fn\\1', items, perl = TRUE)), range = i:j)
+  items = unlist(regmatches(s, gregexpr(r, s)))
+  list(items = setNames(items, gsub(r, 'fn\\1', items)), range = i:j)
 }
 
 # move footnotes to the relevant page
