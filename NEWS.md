@@ -10,6 +10,10 @@
 
 # CHANGES IN bookdown VERSION 0.15
 
+## NEW FEATURES
+
+- Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, and `slidy_presentation2` for cross-referencing capabilities on top of `rmarkdown` outputs.
+
 ## BUG FIXES
 
 - Sharing to Facebook and Twitter is possible again. Google+ sharing has been disabled (with a warning) as this service no longer exists (thanks, @cderv, #802).

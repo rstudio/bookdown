@@ -4,8 +4,12 @@
 \alias{publish_book}
 \title{Publish a book to the web}
 \usage{
-publish_book(name = NULL, account = NULL, server = NULL, render = c("none", "local", 
-    "server"))
+publish_book(
+  name = NULL,
+  account = NULL,
+  server = NULL,
+  render = c("none", "local", "server")
+)
 }
 \arguments{
 \item{name}{Name of the book (this will be used in the URL path of the
