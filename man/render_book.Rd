@@ -5,9 +5,19 @@
 \alias{preview_chapter}
 \title{Render multiple R Markdown documents into a book}
 \usage{
-render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    clean_envir = !interactive(), output_dir = NULL, new_session = NA, preview = FALSE, 
-    encoding = "UTF-8", config_file = "_bookdown.yml")
+render_book(
+  input,
+  output_format = NULL,
+  ...,
+  clean = TRUE,
+  envir = parent.frame(),
+  clean_envir = !interactive(),
+  output_dir = NULL,
+  new_session = NA,
+  preview = FALSE,
+  encoding = "UTF-8",
+  config_file = "_bookdown.yml"
+)
 
 preview_chapter(..., envir = parent.frame())
 }
