@@ -147,41 +147,41 @@ html_document2 = function(
 
 #' @rdname html_document2
 #' @export
-html_fragment2 = function(...) {
+html_fragment2 = function(..., number_sections = FALSE) {
   html_document2(
-    ..., base_format = rmarkdown::html_fragment
+    ..., number_sections = number_sections, base_format = rmarkdown::html_fragment
   )
 }
 
 #' @rdname html_document2
 #' @export
-html_notebook2 = function(...) {
+html_notebook2 = function(..., number_sections = FALSE) {
   html_document2(
-    ..., base_format = rmarkdown::html_notebook
+    ..., number_sections = number_sections, base_format = rmarkdown::html_notebook
   )
 }
 
 #' @rdname html_document2
 #' @export
-html_vignette2 = function(...) {
+html_vignette2 = function(..., number_sections = FALSE) {
   html_document2(
-    ..., base_format = rmarkdown::html_vignette
+    ..., number_sections = number_sections, base_format = rmarkdown::html_vignette
   )
 }
 
 #' @rdname html_document2
 #' @export
-ioslides_presentation2 = function(...) {
+ioslides_presentation2 = function(..., number_sections = FALSE) {
   html_document2(
-    ..., base_format = rmarkdown::ioslides_presentation
+    ..., number_sections = number_sections, base_format = rmarkdown::ioslides_presentation
   )
 }
 
 #' @rdname html_document2
 #' @export
-slidy_presentation2 = function(...) {
+slidy_presentation2 = function(..., number_sections = FALSE) {
   html_document2(
-    ..., base_format = rmarkdown::slidy_presentation
+    ..., number_sections = number_sections, base_format = rmarkdown::slidy_presentation
   )
 }
 

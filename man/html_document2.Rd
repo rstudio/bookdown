@@ -26,15 +26,15 @@ html_document2(
   base_format = rmarkdown::html_document
 )
 
-html_fragment2(...)
+html_fragment2(..., number_sections = FALSE)
 
-html_notebook2(...)
+html_notebook2(..., number_sections = FALSE)
 
-html_vignette2(...)
+html_vignette2(..., number_sections = FALSE)
 
-ioslides_presentation2(...)
+ioslides_presentation2(..., number_sections = FALSE)
 
-slidy_presentation2(...)
+slidy_presentation2(..., number_sections = FALSE)
 
 tufte_html2(..., number_sections = FALSE)
 
