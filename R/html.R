@@ -332,21 +332,22 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     }
   } else {
 	  
+	patternSec <- paste(seq_len(split_level), collapse = "")
     idx2 = if (split_level == 1){
 		grep(paste0('^<div (id="[^"]+" )?class="section level1("| )'), html_body)
 	}else if (split_level > 1){
-		levelCur <- split_level-1
-		levelNext <- split_level
-		idxCur = grep(paste0('^<div (id="[^"]+" )?class="section level', levelCur, '("| )'), html_body)
-		idxNext = grep(paste0('^<div (id="[^"]+" )?class="section level', levelNext, '("| )'), html_body)
-		sort(c(idxCur, idxNext))
+		idxSections = grep(paste0('^<div (id="[^"]+" )?class="section level[', 
+			patternSec, ']("| )'), html_body)
+		sort(idxSections)
 	}
     n = length(idx2)
     nms_chaps = if (length(idx)) {
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
     }
     reg_id = '^<div id="([^"]+)".*$'
-    reg_num = '^(<h[12]><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[12]>).*$'
+    reg_num = paste0('^(<h[', patternSec, 
+		']><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[', patternSec, ']>).*$'
+	)
     nms = vapply(idx2, character(1), FUN = function(i) {
       x1 = html_body[i]; x2 = html_body[i + 1]
       id = if (grepl(reg_id, x1)) gsub(reg_id, '\\1', x1)
