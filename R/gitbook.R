@@ -39,7 +39,7 @@ gitbook = function(
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
-  split_by = match.arg(split_by)
+#  split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
