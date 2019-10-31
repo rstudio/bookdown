@@ -234,28 +234,35 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 	levelCur <- split_level-1
 	levelNext <- split_level
     body = x[(i5 + 1):(i6 - 1)]
-    idxCur = grep(paste0('^<div (id="[^"]+" )?class="section level', levelCur, '("| )'), body) + i5
-    idxNext = grep(paste0('^<div (id="[^"]+" )?class="section level', levelNext, '("| )'), body) + i5
-	hCur <- paste0('h', levelCur)
-	hNext <- paste0('h', levelNext)
-    idxCurNext = setNames(c(idxCur, idxNext), rep(c(hCur, hNext), c(length(idxCur), length(idxNext))))
-#    if (length(idxCurNext) > 0 && idxCurNext[1] != i5 + 1) stop(
-#      'The document must start with a first (#) or second level (##) heading'
-#    )
-	idxCurNext = sort(idxCurNext)
-    if (length(idxCurNext) > 1) {
-      nCurNext = names(idxCurNext)
+    idxSecBody = grep(paste0('^<div (id="[^"]+" )?class="section level(', 
+		paste(seq_len(split_level), collapse = "|"), ')("| )'), body)
+	names(idxSecBody) <- paste0("h", 
+		sub('^<div (id="[^"]+" )?class="section level([[:digit:]])("| ).*',"\\2", body[idxSecBody])
+	)
+	idxSec <- idxSecBody + i5
+ 
+    if (length(idxSec) > 0 && idxSec[1] != i5 + 1) stop(
+      'The document must start with a first (#) or second level (##) heading'
+    )
+	idxSec = sort(idxSec)
+    if (length(idxSec) > 1) {
+		
+		nNext <- paste0("h", levelNext)
+		nCur <- paste0("h", levelCur)
+      	nSec = names(idxSec)
+		
       # h2 that immediately follows h1
-      i = idxCurNext[nCurNext == hNext & c(hNext, head(nCurNext, -1)) == hCur] - 1
-      # close the hCur section early with </div>
+      i = idxSec[nSec == nNext & c(nNext, head(nSec, -1)) == nCur] - 1
+      # close the h1 section early with </div>
       if (length(i)) x[i] = paste(x[i], '\n</div>')
+	  
       # h1 that immediately follows h2 but not the first h1
-      i = nCurNext == hCur & c(hCur, head(nCurNext, -1)) == hNext
-      if (any(i) && nCurNext[1] == hNext) i[which(nCurNext == hCur)[1]] = FALSE
-      i = idxCurNext[i] - 1
+      i = nSec == nCur & c(nCur, head(nSec, -1)) >= nNext
+      if (any(i) && nSec[1] == nNext) i[which(nSec == nCur)[1]] = FALSE
+      i = idxSec[which(i)] - 1
       # need to comment out the </div> corresponding to the last <h2> in the body
-      if (tail(nCurNext, 1) == hNext && any(nCurNext == hCur)) {
-        for (j in (i6 - 1):(tail(idxCurNext, 1))) {
+      if (tail(nSec, 1) == nNext && any(nSec == nCur)) {
+        for (j in (i6 - 1):(tail(idxSec, 1))) {
           # the line j should close h2, and j - 1 should close h1
           if (all(x[j - 0:1] == '</div>')) break
         }
@@ -263,13 +270,12 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       }
       for (j in i) {
         # the i-th lines should be the closing </div> for h2
-        if (x[j] != '</div>') warning(
+        if (x[j] != '</div>') stop(
           'Something wrong with the HTML output. The line ', x[j],
           ' is supposed to be </div>'
         )
-		i <- setdiff(i, j)
       }
-      x[i] = paste('<!--', x[i], '-->')  # remove the extra </div> of h2
+      x[i] = paste('<!--', x[i], '-->')  # remove the extra </div> of h1
     }
   }
 
@@ -333,12 +339,12 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   } else {
 	  
 	patternSec <- paste(seq_len(split_level), collapse = "")
-    idx2 = if (split_level == 1){
-		grep(paste0('^<div (id="[^"]+" )?class="section level1("| )'), html_body)
-	}else if (split_level > 1){
-		idxSections = grep(paste0('^<div (id="[^"]+" )?class="section level[', 
-			patternSec, ']("| )'), html_body)
-		sort(idxSections)
+    idx2 = if (split_level >= 1){
+		idxSec = grep(
+			paste0('^<div (id="[^"]+" )?class="section level[', patternSec, ']("| )'), 
+			html_body
+		)
+		sort(idxSec)
 	}
     n = length(idx2)
     nms_chaps = if (length(idx)) {
@@ -714,7 +720,7 @@ restore_ref_links = function(x, regexp, tags, txts, alt = TRUE) {
 
 # add automatic identifiers to those section headings without ID's
 add_section_ids = function(content) {
-  r = '^(<div)( class="section level[1-6].+)$'
+  r = '^(<div).*(class="section level[1-6].+)$'
   for (i in grep(r, content)) {
     if (grepl('id=".+"', content[i])) next  # the id exists
     h = content[i + 1]
@@ -784,12 +790,9 @@ restore_links = function(segment, full, lines, filenames) {
       a = grep(sprintf(' id="%s"', links[i]), full, fixed = TRUE)
       if (length(a) == 0) next
       a = a[1]
-	  idx <- which(lines <= a)
-	  if(length(idx) > 0){
-	      x[i] = sprintf(
-	        '<a href="%s#%s"', filenames[which.max(lines[lines <= a])], links[i]
-	      )
-	  }
+      x[i] = sprintf(
+        '<a href="%s#%s"', filenames[which.max(lines[lines <= a])], links[i]
+      )
     }
     x
   })

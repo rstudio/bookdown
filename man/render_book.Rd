@@ -5,9 +5,10 @@
 \alias{preview_chapter}
 \title{Render multiple R Markdown documents into a book}
 \usage{
-render_book(input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(), 
-    clean_envir = !interactive(), output_dir = NULL, new_session = NA, preview = FALSE, 
-    encoding = "UTF-8", config_file = "_bookdown.yml")
+render_book(input, output_format = NULL, ..., clean = TRUE,
+  envir = parent.frame(), clean_envir = !interactive(),
+  output_dir = NULL, new_session = NA, preview = FALSE,
+  encoding = "UTF-8", config_file = "_bookdown.yml")
 
 preview_chapter(..., envir = parent.frame())
 }
@@ -58,5 +59,5 @@ new R session (\code{new_session = TRUE}).
 }
 \examples{
 # see https://bookdown.org/yihui/bookdown for the full documentation
-if (file.exists("index.Rmd")) bookdown::render_book("index.Rmd")
+if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
 }
