@@ -10,7 +10,8 @@ html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
   lib_dir = "libs", template = bookdown_file("templates/default.html"),
   pandoc_args = NULL, ..., base_format = rmarkdown::html_document,
   split_bib = TRUE, page_builder = build_chapter,
-  split_by = "section+number")
+  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("",
+  "+number"), paste0)))
 
 html_book(...)
 

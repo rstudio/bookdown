@@ -52,7 +52,7 @@ html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
-  split_by = 'section+number'
+  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("", "+number"), paste0))
 ) {
   base_format = get_base_format(base_format)
   config = base_format(
@@ -60,6 +60,7 @@ html_chapters = function(
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
+  split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
@@ -200,18 +201,22 @@ build_chapter = function(
 
 split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
 
+	split_by <- match.arg(split_by, choices = 
+		c("none", "rmd", outer(c("chapter", "section", 0:7), c("", "+number"), paste0))
+	)
+  
   use_rmd_names = split_by == 'rmd'
   
   split_level <- sub("[+]number$", "", split_by)
   split_level <- switch(split_level, 
-			none = 0, 
-			chapter = 1, 
-		    section = 2, 
-			rmd = 1,
-			if (!(split_level %in% as.character(0:7))){
-				stop("split_level must be: 'none', 'chapter', 'section', 'rmd' or among 0:8")
-			}else	as.numeric(split_level)
-	)
+	none = 0, 
+	chapter = 1, 
+	section = 2, 
+	rmd = 1,
+	if (!(split_level %in% as.character(0:7))){
+		stop("split_level must be: 'none', 'chapter', 'section', 'rmd' or among 0:8")
+	}else	as.numeric(split_level)
+  )
 
   x = read_utf8(output)
   x = clean_meta_tags(x)

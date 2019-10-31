@@ -22,7 +22,7 @@
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
-  split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
+  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("", "+number"), paste0)),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
@@ -39,7 +39,7 @@ gitbook = function(
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
-#  split_by = match.arg(split_by)
+  split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)

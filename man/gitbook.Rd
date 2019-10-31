@@ -6,8 +6,8 @@
 \usage{
 gitbook(fig_caption = TRUE, number_sections = TRUE,
   self_contained = FALSE, lib_dir = "libs", pandoc_args = NULL, ...,
-  template = "default", split_by = c("chapter", "chapter+number",
-  "section", "section+number", "rmd", "none"), split_bib = TRUE,
+  template = "default", split_by = c("none", "rmd", outer(c("chapter",
+  "section", 0:7), c("", "+number"), paste0)), split_bib = TRUE,
   config = list(), table_css = TRUE)
 }
 \arguments{
