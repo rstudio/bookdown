@@ -15,7 +15,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             'icon': 'fa fa-facebook',
             'onClick': function(e) {
                 e.preventDefault();
-                window.open("http://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href));
+                window.open("http://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(location.href));
             }
         },
         'twitter': {
