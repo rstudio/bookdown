@@ -2,7 +2,7 @@
 
 ## BUG FIXES
 
-- When using pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter. (#798, thanks @cderv) 
+- When using pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter. (#798, #801, thanks @cderv) 
 
 - gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
 
