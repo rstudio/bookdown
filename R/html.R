@@ -256,15 +256,22 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 		nCur <- paste0("h", levelCur)
       	nSec = names(idxSec)
 		
-      # h2 that immediately follows h1
+      # h[X+1] that immediately follows hX
       i = idxSec[nSec == nNext & c(nNext, head(nSec, -1)) == nCur] - 1
-      # close the h1 section early with </div>
+      # close the hX section early with </div>
       if (length(i)) x[i] = paste(x[i], '\n</div>')
 	  
-      # h1 that immediately follows h2 but not the first h1
-      i = nSec == nCur & c(nCur, head(nSec, -1)) >= nNext
-      if (any(i) && nSec[1] == nNext) i[which(nSec == nCur)[1]] = FALSE
-      i = idxSec[which(i)] - 1
+      # hX that immediately follows h[X+1] but not the first h1
+	  iSec <- as.numeric(sub("h", "", nSec))
+	  diffSec <- diff(iSec)
+	  # in case next section is X > 1, remove multiple </div>
+	  i <- c()
+      for(d in unique(diffSec[diffSec < 0])){
+		  i <- c(i, c(sapply(which(diffSec == d), `+`, seq(1, 2+d))))
+	 }
+	  i <- setdiff(i, which(nSec == "h1")[1])
+      if (length(i) && nSec[1] == nNext) i <- setdiff(i, which(nSec == nCur)[1])
+      i = idxSec[i] - 1
       # need to comment out the </div> corresponding to the last <h2> in the body
       if (tail(nSec, 1) == nNext && any(nSec == nCur)) {
         for (j in (i6 - 1):(tail(idxSec, 1))) {

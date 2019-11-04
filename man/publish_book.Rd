@@ -18,6 +18,13 @@ published to account or any single account already associated with
 
 \item{server}{Server to publish to (by default beta.rstudioconnect.com but
 any RStudio Connect server can be published to).}
+
+\item{render}{Rendering behavior for site: "none" to upload a
+static version of the current contents of the site directory;
+"local" to render the site locally then upload it; "server" to
+render the site on the server. Note that for "none" and "local"
+R scripts (.R) and markdown documents (.Rmd and .md) will not be
+uploaded to the server.}
 }
 \description{
 Publish a book to the web. Note that you should be sure to render all
