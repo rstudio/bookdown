@@ -229,9 +229,9 @@ gitbook_toc = function(x, cur, config) {
 gitbook_config = function(config = list()) {
   default = list(
     sharing = list(
-      github = FALSE, facebook = TRUE, twitter = TRUE, google = FALSE,
+      facebook = TRUE, twitter = TRUE, google = FALSE,
       linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
-      all = c('facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper')
+      all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper')
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
