@@ -44,7 +44,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         },
         'instapaper': {
             'label': 'Instapaper',
-            'icon': 'fa fa-instapaper',
+            'icon': 'fa fa-italic',
             'onClick': function(e) {
                 e.preventDefault();
                 window.open("http://www.instapaper.com/text?u="+encodeURIComponent(location.href));
