@@ -105,12 +105,11 @@ bookdown::gitbook:
       facebook: yes
       github: no
       twitter: yes
-      google: no
       linkedin: no
       weibo: no
       instapaper: no
       vk: no
-      all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
+      all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
 ```
 
 The `toc` option controls the behavior of the table of contents (TOC). You can collapse some items initially when a page is loaded via the `collapse` option. Its possible values are `subsection`, `section`, `none` (or `null`). This option can be helpful if your TOC is very long and has more than three levels of headings: `subsection` means collapsing all TOC items for subsections (X.X.X), `section` means those items for sections (X.X) so only the top-level headings are displayed initially, and `none` means not collapsing any items in the TOC. For those collapsed TOC items, you can toggle their visibility by clicking their parent TOC items. For example, you can click a chapter title in the TOC to show/hide its sections.
@@ -173,7 +172,7 @@ You can also write it as:
 
 Each vector in the list consists of the filename and the text to be displayed in the menu. Compared to the first form, this form allows you to customize the menu text, e.g., you may have two different copies of the PDF for readers to download and you will need to make the menu items different.
 
-On the right of the toolbar, there are some buttons to share the link on social network websites such as Twitter, Facebook, and Google+. You can use the `sharing` option to decide which buttons to enable. If you want to get rid of these buttons entirely, use `sharing: null` (or `no`).
+On the right of the toolbar, there are some buttons to share the link on social network websites such as Twitter, Facebook, and Linkedin. You can use the `sharing` option to decide which buttons to enable. If you want to get rid of these buttons entirely, use `sharing: null` (or `no`).
 
 Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
 
