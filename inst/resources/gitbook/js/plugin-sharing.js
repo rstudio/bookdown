@@ -26,14 +26,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 window.open("http://twitter.com/home?status="+encodeURIComponent(document.title+" "+location.href));
             }
         },
-        'google': {
-            'label': 'Google+',
-            'icon': 'fa fa-google-plus',
-            'onClick': function(e) {
-                e.preventDefault();
-                window.open("https://plus.google.com/share?url="+encodeURIComponent(location.href));
-            }
-        },
         'linkedin': {
             'label': 'LinkedIn',
             'icon': 'fa fa-linkedin',
