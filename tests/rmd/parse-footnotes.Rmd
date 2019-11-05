@@ -10,6 +10,13 @@ output:
 
 Hello world.^[Hello world footnote.]
 
-## Subsection
+## Subsection footnotes 1
+
+```{block2, type = 'rmdtip'}
+  Another text with footnote^[second footnote]
+```
+
+## Subsection footnotes 2
 
 Something.
+
