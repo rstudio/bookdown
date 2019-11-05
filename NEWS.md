@@ -2,9 +2,9 @@
 
 ## BUG FIXES
 
-- Sharing to facebook and twitter is possible again. Google+ sharing has been disable (with a warning) as it no more exists. (thanks, @cderv, #802)
+- Sharing to Facebook and Twitter is possible again. Google+ sharing has been disabled (with a warning) as this service no longer exists (thanks, @cderv, #802).
 
-- When using pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter. (#798, thanks @cderv) 
+- When using Pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter (#798, #801, thanks @cderv).
 
 - gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
 
