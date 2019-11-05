@@ -285,15 +285,15 @@ download_filenames = function(config) {
   if (length(downloads)) I(downloads)
 }
 
-check_gb_config <- function(config) {
-  # to insure retrocompatibility with 0.14 and earlier
+check_gb_config = function(config) {
+  # to ensure backward compatibility with 0.14 and earlier
   if (isTRUE(config[["sharing"]][["google"]]) ||
       'google' %in% config[["sharing"]][["all"]]) {
-    warning("Sharing to Google+ is no more supported because it does not exist anymore.\n",
+    warning("Sharing to Google+ is no longer supported because Google has shut down Google+.\n",
             "Please update your configuration in `_output.yml`.",
             call. = FALSE)
-    config[["sharing"]][["google"]] <- NULL
-    config[["sharing"]][["all"]] <- setdiff(config[["sharing"]][["all"]], 'google')
+    config[["sharing"]][["google"]] = NULL
+    config[["sharing"]][["all"]] = setdiff(config[["sharing"]][["all"]], "google")
   }
   config
 }
