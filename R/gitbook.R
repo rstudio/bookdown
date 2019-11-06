@@ -155,7 +155,7 @@ gitbook_page = function(
   }
 
   # you can set the edit setting in either _bookdown.yml or _output.yml
-  for (type in c('edit', 'history')) {
+  for (type in c('edit', 'history', 'view')) {
     if (is.list(setting <- source_link_setting(config[[type]], type = type)))
       config[[type]] = setting
     if (length(rmd_cur) && is.list(config[[type]]))
@@ -236,6 +236,7 @@ gitbook_config = function(config = list()) {
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
     history = list(link = NULL, text = NULL),
+    view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
     toc = list(collapse = 'subsection')
