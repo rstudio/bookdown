@@ -285,13 +285,10 @@ download_filenames = function(config) {
   if (length(downloads)) I(downloads)
 }
 
-#' @importFrom xfun isFALSE
 check_gb_config = function(config) {
   # to ensure backward compatibility with 0.14 and earlier
-  sharing = config[["sharing"]]
-  # if sharing is disabled do nothing
-  if (xfun::isFALSE(sharing) || is.null(sharing)) return(config)
   # if google is present in config, disable google sharing
+  sharing = config[["sharing"]]
   if ("google" %in% names(sharing) ||
       ("all" %in% names(sharing) && "google" %in% sharing[["all"]])
   ) {
