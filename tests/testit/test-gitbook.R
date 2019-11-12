@@ -12,6 +12,9 @@ suppressWarnings(
     # sharing is null => do nothing
     check_gb_config(list(search = TRUE, sharing = NULL)) %==%
       list(search = TRUE, sharing = NULL),
+    # sharing is true => do nothing
+    check_gb_config(list(search = TRUE, sharing = TRUE)) %==%
+      list(search = TRUE, sharing = TRUE),
     # sharing has no google field => do nothing
     check_gb_config(list(sharing = list(facebook = TRUE))) %==%
       list(sharing = list(facebook = TRUE)),
