@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.16
+
+
 # CHANGES IN bookdown VERSION 0.15
 
 ## BUG FIXES
