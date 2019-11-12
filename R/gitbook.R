@@ -285,6 +285,7 @@ download_filenames = function(config) {
   if (length(downloads)) I(downloads)
 }
 
+#' @importFrom xfun isFALSE
 check_gb_config = function(config) {
   # to ensure backward compatibility with 0.14 and earlier
   sharing <- config[["sharing"]]
