@@ -287,8 +287,13 @@ download_filenames = function(config) {
 
 check_gb_config = function(config) {
   # to ensure backward compatibility with 0.14 and earlier
-  if (isTRUE(config[["sharing"]][["google"]]) ||
-      'google' %in% config[["sharing"]][["all"]]) {
+  sharing <- config[["sharing"]]
+  # if sharing is disabled do nothing
+  if (xfun::isFALSE(sharing) || is.null(sharing)) return(config)
+  # if google is present in config, disable google sharing
+  if ("google" %in% names(sharing) ||
+      'google' %in% config[["sharing"]][["all"]]
+  ) {
     warning("Sharing to Google+ is no longer supported because Google has shut down Google+.\n",
             "Please update your configuration in `_output.yml`.",
             call. = FALSE)
