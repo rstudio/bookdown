@@ -191,6 +191,7 @@ build_chapter = function(
     button_link(link_prev, 'Previous'),
     source_link(rmd_cur, type = 'edit'),
     source_link(rmd_cur, type = 'history'),
+    source_link(rmd_cur, type = 'view'),
     button_link(link_next, 'Next'),
     '</p>',
     '</div>',

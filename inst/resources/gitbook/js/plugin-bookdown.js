@@ -28,6 +28,18 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }
     });
 
+        // add the View button (file view on Github)
+    var view = config.view;
+    if (view && view.link) gitbook.toolbar.createButton({
+      icon: 'fa fa-eye',
+      label: view.text || 'View Source',
+      position: 'left',
+      onClick: function(e) {
+        e.preventDefault();
+        window.open(view.link);
+      }
+    });
+
     // add the Download button
     var down = config.download;
     var normalizeDownload = function() {

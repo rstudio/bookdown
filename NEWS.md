@@ -1,8 +1,12 @@
 # CHANGES IN bookdown VERSION 0.16
 
+## NEW FEATURES
+
+- You can also add a "view" button on the GitBook toolbar, similar to the "edit" and "history" buttons, which shows the page's `.Rmd` source file on GitHub. Unlike "edit", "view" does not require the reader to login to GitHub and fork the repo (thanks, @jtr13, #806).
+
 ## BUG FIXES
 
-- Disabling `sharing` in config with `no`, `false` or `null` now works as Google+ sharing removal is done into JS directly and no warning is issued anymore (thanks, @lwjohnst86, #812).
+- For the `gitbook` output format, disabling the `sharing` menu or buttons works again (thanks, @lwjohnst86, #812).
 
 # CHANGES IN bookdown VERSION 0.15
 
