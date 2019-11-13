@@ -26,6 +26,7 @@ Authors@R: c(
     person("Jennifer", "Bryan", role = "ctb"),
     person("Jonathan", "McPhers", role = "ctb"),
     person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Joyce", "Robbins", role = "ctb"),
     person("Junwen", "Huang", role = "ctb"),
     person("Kevin", "Cheung", role = "ctb"),
     person("Kevin", "Ushey", role = "ctb"),

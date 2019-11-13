@@ -32,7 +32,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var view = config.view;
     if (view && view.link) gitbook.toolbar.createButton({
       icon: 'fa fa-eye',
-      label: view.text || 'View',
+      label: view.text || 'View Source',
       position: 'left',
       onClick: function(e) {
         e.preventDefault();
