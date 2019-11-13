@@ -2,7 +2,7 @@
 
 ## BUG FIXES
 
-- Disabling `sharing` in config with `no`, `false` or `null` now works and is no more impacted by check in config for Google+ sharing removal (thanks, @lwjohnst86, #812).
+- Disabling `sharing` in config with `no`, `false` or `null` now works as Google+ sharing removal is done into JS directly (thanks, @lwjohnst86, #812).
 
 # CHANGES IN bookdown VERSION 0.15
 
