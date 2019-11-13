@@ -229,7 +229,7 @@ gitbook_toc = function(x, cur, config) {
 gitbook_config = function(config = list()) {
   default = list(
     sharing = list(
-      facebook = TRUE, twitter = TRUE,
+      github = FALSE, facebook = TRUE, twitter = TRUE,
       linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
       all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper')
     ),
