@@ -30,7 +30,7 @@ gitbook = function(
       ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css))
     )
   }
-  gb_config = check_gb_config(config)
+  gb_config = config
   if (identical(template, 'default')) {
     template = bookdown_file('templates', 'gitbook.html')
   }
@@ -283,20 +283,4 @@ download_filenames = function(config) {
     }
   }
   if (length(downloads)) I(downloads)
-}
-
-check_gb_config = function(config) {
-  # to ensure backward compatibility with 0.14 and earlier
-  # if google is present in config, disable google sharing
-  sharing = config[["sharing"]]
-  if ("google" %in% names(sharing) ||
-      ("all" %in% names(sharing) && "google" %in% sharing[["all"]])
-  ) {
-    warning("Sharing to Google+ is no longer supported because Google has shut down Google+.\n",
-            "Please update your configuration in `_output.yml`.",
-            call. = FALSE)
-    config[["sharing"]][["google"]] = NULL
-    config[["sharing"]][["all"]] = setdiff(config[["sharing"]][["all"]], "google")
-  }
-  config
 }
