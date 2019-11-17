@@ -8,6 +8,8 @@
 
 - For the `gitbook` output format, disabling the `sharing` menu or buttons works again (thanks, @lwjohnst86, #812).
 
+- For the `gitbook` output format, toc collapsed by section now works with accents in chapter titles (thanks, @glimmerphoenix, @cderv, #819) 
+
 # CHANGES IN bookdown VERSION 0.15
 
 ## BUG FIXES
