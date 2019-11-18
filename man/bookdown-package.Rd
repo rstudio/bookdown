@@ -44,6 +44,7 @@ Other contributors:
   \item Jennifer Bryan [contributor]
   \item Jonathan McPhers [contributor]
   \item JooYoung Seo (\href{https://orcid.org/0000-0002-4064-6012}{ORCID}) [contributor]
+  \item Joyce Robbins [contributor]
   \item Junwen Huang [contributor]
   \item Kevin Cheung [contributor]
   \item Kevin Ushey [contributor]
