@@ -98,7 +98,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var href = window.location.pathname;
     href = href.substr(href.lastIndexOf('/') + 1);
     // accentuated characters need to be decoded (#819)
-    href = decodeURI(href);
+    href = decodeURIComponent(href);
     if (href === '') href = 'index.html';
     var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
