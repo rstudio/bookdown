@@ -28,7 +28,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }
     });
 
-        // add the View button (file view on Github)
+    // add the View button (file view on Github)
     var view = config.view;
     if (view && view.link) gitbook.toolbar.createButton({
       icon: 'fa fa-eye',
@@ -97,6 +97,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     // highlight the current section in TOC
     var href = window.location.pathname;
     href = href.substr(href.lastIndexOf('/') + 1);
+    // accentuated characters need to be decoded (#819)
+    href = decodeURIComponent(href);
     if (href === '') href = 'index.html';
     var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
