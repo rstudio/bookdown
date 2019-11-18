@@ -4,8 +4,14 @@
 \alias{serve_book}
 \title{Continously preview the HTML output of a book using the \pkg{servr} package}
 \usage{
-serve_book(dir = ".", output_dir = "_book", preview = TRUE, in_session = TRUE, 
-    quiet = FALSE, ...)
+serve_book(
+  dir = ".",
+  output_dir = "_book",
+  preview = TRUE,
+  in_session = TRUE,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{dir}{The root directory of the book (containing the Rmd source files).}
