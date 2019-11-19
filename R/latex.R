@@ -90,6 +90,12 @@ pdf_book = function(
 
 #' @rdname html_document2
 #' @export
+beamer_presentation2 = function(..., number_sections = FALSE) {
+  pdf_book(..., base_format = function(..., number_sections) {rmarkdown::beamer_presentation(...)})
+}
+
+#' @rdname html_document2
+#' @export
 pdf_document2 = function(...) {
   pdf_book(..., base_format = rmarkdown::pdf_document)
 }
