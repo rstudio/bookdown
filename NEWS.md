@@ -1,6 +1,24 @@
+# CHANGES IN bookdown VERSION 0.16
+
+## NEW FEATURES
+
+- You can also add a "view" button on the GitBook toolbar, similar to the "edit" and "history" buttons, which shows the page's `.Rmd` source file on GitHub. Unlike "edit", "view" does not require the reader to login to GitHub and fork the repo (thanks, @jtr13, #806).
+
+- Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, and `slidy_presentation2` for cross-referencing capabilities on top of **rmarkdown** output formats (thanks, @jooyoungseo, #789).
+
+## BUG FIXES
+
+- For the `gitbook` output format, disabling the `sharing` menu or buttons works again (thanks, @lwjohnst86, #812).
+
+- For the `gitbook` output format, toc collapsed by section now works with accents in chapter titles (thanks, @glimmerphoenix, @cderv, #819) 
+
 # CHANGES IN bookdown VERSION 0.15
 
 ## BUG FIXES
+
+- Sharing to Facebook and Twitter is possible again. Google+ sharing has been disabled (with a warning) as this service no longer exists (thanks, @cderv, #802).
+
+- When using Pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter (#798, #801, thanks @cderv).
 
 - gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
 

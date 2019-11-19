@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.14.1
+Version: 0.15.1
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
@@ -26,6 +26,7 @@ Authors@R: c(
     person("Jennifer", "Bryan", role = "ctb"),
     person("Jonathan", "McPhers", role = "ctb"),
     person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Joyce", "Robbins", role = "ctb"),
     person("Junwen", "Huang", role = "ctb"),
     person("Kevin", "Cheung", role = "ctb"),
     person("Kevin", "Ushey", role = "ctb"),
@@ -76,5 +77,5 @@ URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Encoding: UTF-8
