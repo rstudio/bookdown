@@ -8,8 +8,8 @@
 \alias{ioslides_presentation2}
 \alias{slidy_presentation2}
 \alias{tufte_html2}
-\alias{beamer_presentation2}
 \alias{pdf_document2}
+\alias{beamer_presentation2}
 \alias{tufte_handout2}
 \alias{tufte_book2}
 \alias{markdown_document2}
@@ -39,9 +39,9 @@ slidy_presentation2(..., number_sections = FALSE)
 
 tufte_html2(..., number_sections = FALSE)
 
-beamer_presentation2(..., number_sections = FALSE)
-
 pdf_document2(...)
+
+beamer_presentation2(..., number_sections = FALSE)
 
 tufte_handout2(...)
 

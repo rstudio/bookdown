@@ -55,6 +55,7 @@ Other contributors:
   \item Maximilian Held [contributor]
   \item Michael Sachs [contributor]
   \item Michal Bojanowski [contributor]
+  \item Nathan Werth [contributor]
   \item Noam Ross [contributor]
   \item Peter Hickey [contributor]
   \item Romain Lesur (\href{https://orcid.org/0000-0002-0721-5595}{ORCID}) [contributor]
