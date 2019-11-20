@@ -49,7 +49,7 @@ If you find this version too low and there are Pandoc features only in a later v
 
 ## LaTeX
 
-LaTeX\index{LaTeX} is required only if you want to convert your book to PDF. You may see https://www.latex-project.org/get/ for more information about LaTeX and its installation, but we strongly recommend that you install the lightweight and cross-platform LaTeX distribution named [TinyTeX](https://yihui.name/tinytex/) and based on TeX Live. TinyTeX can be easily installed through the R package **tinytex** (which should be automatically installed when you install **bookdown**):
+LaTeX\index{LaTeX} is required only if you want to convert your book to PDF. You may see https://www.latex-project.org/get/ for more information about LaTeX and its installation, but we strongly recommend that you install the lightweight and cross-platform LaTeX distribution named [TinyTeX](https://yihui.org/tinytex/) and based on TeX Live. TinyTeX can be easily installed through the R package **tinytex** (which should be automatically installed when you install **bookdown**):
 
 ```{r, eval=FALSE}
 tinytex::install_tinytex()

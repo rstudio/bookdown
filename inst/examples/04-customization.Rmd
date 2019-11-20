@@ -203,6 +203,7 @@ We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optio
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter.
 - `edit`: a link that collaborators can click to edit the Rmd source document of the current page; this was designed primarily for GitHub repositories, since it is easy to edit arbitrary plain-text files on GitHub even in other people's repositories (if you do not have write access to the repository, GitHub will automatically fork it and let you submit a pull request after you finish editing the file). This link should have `%s` in it, which will be substituted by the actual Rmd filename for each page.
 -  `history`: similar to `edit`, a link to the edit/commit history of the current page.
+-  `view`: similar to `edit`, a link to source code of the current page. 
 - `rmd_subdir`: whether to search for book source Rmd files in subdirectories (by default, only the root directory is searched). This may be either a boolean (e.g. `true` will search for book source Rmd files in the project directory and all subdirectories) or list of paths if you want to search for book source Rmd files in a subset of subdirectories.
 - `output_dir`: the output directory of the book (`_book` by default); this setting is read and used by `render_book()`.
 - `clean`: a vector of files and directories to be cleaned by the `clean_book()` function.
@@ -213,6 +214,7 @@ Here is a sample `_bookdown.yml`:
 book_filename: "my-book.Rmd"
 before_chapter_script: ["script1.R", "script2.R"]
 after_chapter_script: "script3.R"
+view: https://github.com/rstudio/bookdown-demo/blob/master/%s
 edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
 output_dir: "book-output"
 clean: ["my-book.bbl", "R-packages.bib"]

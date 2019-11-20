@@ -1,6 +1,30 @@
-# CHANGES IN bookdown VERSION 0.15
+# CHANGES IN bookdown VERSION 0.16
+
+## NEW FEATURES
+
+- You can also add a "view" button on the GitBook toolbar, similar to the "edit" and "history" buttons, which shows the page's `.Rmd` source file on GitHub. Unlike "edit", "view" does not require the reader to login to GitHub and fork the repo (thanks, @jtr13, #806).
+
+- For `gitbook` output, the font setting button can be removed via `fontsettings: false` in the `config` option. Similarly, the info button can be removed by `info: false` in `config` (thanks, @mnazarov, #788).
 
 - It is possible to customize the prefixes and numbers of appendix titles in `gitbook` output now (the default is still `A.1`, `A.2`, `B.1`, ..., and now you can change them to something like `Appendix I.1`, `Appendix I.2`, ...); see the documentation at https://bookdown.org/yihui/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
+
+- Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, `slidy_presentation2`, and `beamer_presentation2` for cross-referencing capabilities on top of **rmarkdown** output formats (thanks, @jooyoungseo, #789 #823).
+
+## BUG FIXES
+
+- For the `gitbook` output format, disabling the `sharing` menu or buttons works again (thanks, @lwjohnst86, #812).
+
+- For the `gitbook` output format, toc collapsed by section now works with accents in chapter titles (thanks, @glimmerphoenix, @cderv, #819) 
+
+# CHANGES IN bookdown VERSION 0.15
+
+## BUG FIXES
+
+- Sharing to Facebook and Twitter is possible again. Google+ sharing has been disabled (with a warning) as this service no longer exists (thanks, @cderv, #802).
+
+- When using Pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter (#798, #801, thanks @cderv).
+
+- gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
 
 # CHANGES IN bookdown VERSION 0.14
 

@@ -2,7 +2,13 @@
 % Please edit documentation in R/html.R, R/latex.R, R/word.R
 \name{html_document2}
 \alias{html_document2}
+\alias{html_fragment2}
+\alias{html_notebook2}
+\alias{html_vignette2}
+\alias{ioslides_presentation2}
+\alias{slidy_presentation2}
 \alias{tufte_html2}
+\alias{beamer_presentation2}
 \alias{pdf_document2}
 \alias{tufte_handout2}
 \alias{tufte_book2}
@@ -14,10 +20,26 @@
 \title{Output formats that allow numbering and cross-referencing
 figures/tables/equations}
 \usage{
-html_document2(..., number_sections = TRUE, pandoc_args = NULL, 
-    base_format = rmarkdown::html_document)
+html_document2(
+  ...,
+  number_sections = TRUE,
+  pandoc_args = NULL,
+  base_format = rmarkdown::html_document
+)
+
+html_fragment2(..., number_sections = FALSE)
+
+html_notebook2(..., number_sections = FALSE)
+
+html_vignette2(..., number_sections = FALSE)
+
+ioslides_presentation2(..., number_sections = FALSE)
+
+slidy_presentation2(..., number_sections = FALSE)
 
 tufte_html2(..., number_sections = FALSE)
+
+beamer_presentation2(..., number_sections = FALSE)
 
 pdf_document2(...)
 
@@ -25,8 +47,13 @@ tufte_handout2(...)
 
 tufte_book2(...)
 
-markdown_document2(fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, 
-    ..., base_format)
+markdown_document2(
+  fig_caption = TRUE,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  ...,
+  base_format
+)
 
 word_document2(...)
 
