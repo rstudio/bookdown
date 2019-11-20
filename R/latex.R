@@ -96,6 +96,12 @@ pdf_document2 = function(...) {
 
 #' @rdname html_document2
 #' @export
+beamer_presentation2 = function(..., number_sections = FALSE) {
+  pdf_book(..., base_format = rmarkdown::beamer_presentation)
+}
+
+#' @rdname html_document2
+#' @export
 tufte_handout2 = function(...) {
   pdf_book(..., base_format = tufte::tufte_handout)
 }
