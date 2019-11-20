@@ -969,6 +969,8 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   } else {
     stop('appendix_counters in _bookdown.yml must be either a character vector or a function')
   }
+  # only add the prefix to top-level appendix titles
+  if (length(prefix) == 1 && prefix != '') prefix = ifelse(top, prefix, '')
   x[i] = paste0(s1, prefix, vapply(s, counter_fun, character(1)), s3)
   x
 }
