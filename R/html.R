@@ -666,7 +666,7 @@ parse_fig_labels = function(content, global = FALSE) {
 # given a label, e.g. fig:foo, figure out the appropriate prefix
 label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 
-ui_names = list(edit = 'Edit', chapter_name = '')
+ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '', appendix_counters = NULL)
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
 i18n = function(group, key, dict = list()) {
@@ -856,13 +856,18 @@ restore_appendix_html = function(x, remove = TRUE) {
   if (remove) {
     x[i] = x[i - 1] = x[i + 1] = ''
   } else x[i] = gsub(r, '\\1\\2\\3', x[i])
-  x = number_appendix(x, i + 1, length(x), 'header')
+  config = load_config()
+  prefix = config[['appendix_name']] %n% ui_language('appendix_name')
+  counters = config[['appendix_counters']] %n% ui_language('appendix_counters')
+  x = number_appendix(x, i + 1, length(x), 'header', prefix, counters)
   r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   # remove link on (APPENDIX) in the TOC item
   x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
-  x = number_appendix(x, i + 1, next_nearest(i, which(x == '</div>')), 'toc')
+  x = number_appendix(
+    x, i + 1, next_nearest(i, which(x == '</div>')), 'toc', prefix, counters
+  )
   x
 }
 
@@ -935,23 +940,36 @@ relocate_footnotes = function(x, notes, ids) {
   )
 }
 
-number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
+number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counters) {
   r = sprintf(
     '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
     if (type == 'toc') 'li' else 'h[1-6]', type
   )
-  d = list()  # a dictionary e.g. list(12 = 'A', 13 = 'B', ...)
-  i = i1:i2
-  for (j in i[grep(r, x[i])]) {
-    s1 = gsub(r, '\\1', x[j])
-    s2 = gsub(r, '\\2', x[j])
-    s3 = gsub(r, '\\3', x[j])
-    s = strsplit(s2, '[.]')[[1]]  # section numbers
-    if (is.null(d[[s[1]]])) d[[s[1]]] = LETTERS[length(d) + 1]
-    s[1] = d[[s[1]]]
-    if (is.na(s[1])) stop('Too many chapters in the appendix (more than 26)')
-    x[j] = paste0(s1, paste(s, collapse = '.'), s3)
+  i = grep(r, x)
+  i = i[i >= i1 & i <= i2]
+  if (length(i) == 0) {
+    return(x)
   }
+  s1 = gsub(r, '\\1', x[i])
+  s2 = gsub(r, '\\2', x[i]) # section numbers
+  s3 = gsub(r, '\\3', x[i])
+  s = strsplit(s2, ".", fixed = TRUE)
+  s = lapply(s, as.integer)
+  top = which(1 == vapply(s, length, integer(1)))
+  app_num = findInterval(seq_along(s), top)
+  for (j in seq_along(s)) {
+    s[[j]][1] = app_num[j]
+  }
+  if (is.null(counters)) counters = LETTERS
+  if (is.character(counters)) {
+    counters = rep_len(counters, sum(top))
+    counter_fun = function(nums) paste0(c(counters[nums[1]], nums[-1]), collapse = ".")
+  } else if (is.function(counters)) {
+    counter_fun = counters
+  } else {
+    stop('appendix_counters in _bookdown.yml must be either a character vector or a function')
+  }
+  x[i] = paste0(s1, prefix, vapply(s, counter_fun, character(1)), s3)
   x
 }
 

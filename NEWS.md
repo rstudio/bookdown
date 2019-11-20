@@ -6,6 +6,8 @@
 
 - For `gitbook` output, the font setting button can be removed via `fontsettings: false` in the `config` option. Similarly, the info button can be removed by `info: false` in `config` (thanks, @mnazarov, #788).
 
+- It is possible to customize the prefixes and numbers of appendix titles in `gitbook` output now (the default is still `A.1`, `A.2`, `B.1`, ..., and now you can change them to something like `Appendix I.1`, `Appendix I.2`, ...); see the documentation at https://bookdown.org/yihui/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
+
 - Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, `slidy_presentation2`, and `beamer_presentation2` for cross-referencing capabilities on top of **rmarkdown** output formats (thanks, @jooyoungseo, #789 #823).
 
 ## BUG FIXES
