@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.15
 
+- It is possible to customize the prefixes and numbers of appendix titles in `gitbook` output now (the default is still `A.1`, `A.2`, `B.1`, ..., and now you can change them to something like `Appendix I.1`, `Appendix I.2`, ...); see the documentation at https://bookdown.org/yihui/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
 
 # CHANGES IN bookdown VERSION 0.14
 
