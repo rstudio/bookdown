@@ -955,8 +955,8 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   s3 = gsub(r, '\\3', x[i])
   s = strsplit(s2, ".", fixed = TRUE)
   s = lapply(s, as.integer)
-  top = which(1 == vapply(s, length, integer(1)))
-  app_num = findInterval(seq_along(s), top)
+  top = vapply(s, length, integer(1)) == 1
+  app_num = findInterval(seq_along(s), which(top))
   for (j in seq_along(s)) {
     s[[j]][1] = app_num[j]
   }
