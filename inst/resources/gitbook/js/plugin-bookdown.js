@@ -84,16 +84,15 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     if (config.search !== false) info.push('f: Toggle search input ' +
       '(use <up>/<down>/Enter in the search input to navigate through search matches; ' +
       'press Esc to cancel search)');
-    if (config.info !== false) 
-      gitbook.toolbar.createButton({
-        icon: 'fa fa-info',
-        label: 'Information about the toolbar',
-        position: 'left',
-        onClick: function(e) {
-          e.preventDefault();
-          window.alert(info.join('\n\n'));
-        }
-      });
+    if (config.info !== false) gitbook.toolbar.createButton({
+      icon: 'fa fa-info',
+      label: 'Information about the toolbar',
+      position: 'left',
+      onClick: function(e) {
+        e.preventDefault();
+        window.alert(info.join('\n\n'));
+      }
+    });
 
     // highlight the current section in TOC
     var href = window.location.pathname;
