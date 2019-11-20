@@ -947,20 +947,20 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   )
   i = grep(r, x)
   i = i[i >= i1 & i <= i2]
-  if (length(i) == 0) {
-    return(x)
-  }
+  if (length(i) == 0) return(x)
+
   s1 = gsub(r, '\\1', x[i])
   s2 = gsub(r, '\\2', x[i]) # section numbers
   s3 = gsub(r, '\\3', x[i])
   s = strsplit(s2, ".", fixed = TRUE)
   s = lapply(s, as.integer)
+
   top = vapply(s, length, integer(1)) == 1
   app_num = findInterval(seq_along(s), which(top))
-  for (j in seq_along(s)) {
-    s[[j]][1] = app_num[j]
-  }
+  # normalize chapter numbers to appendix numbers
+  for (j in seq_along(s)) s[[j]][1] = app_num[j]
   if (is.null(counters)) counters = LETTERS
+
   if (is.character(counters)) {
     counters = rep_len(counters, sum(top))
     counter_fun = function(nums) paste0(c(counters[nums[1]], nums[-1]), collapse = ".")
@@ -969,8 +969,10 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   } else {
     stop('appendix_counters in _bookdown.yml must be either a character vector or a function')
   }
+
   # only add the prefix to top-level appendix titles
   if (length(prefix) == 1 && prefix != '') prefix = ifelse(top, prefix, '')
+
   x[i] = paste0(s1, prefix, vapply(s, counter_fun, character(1)), s3)
   x
 }
