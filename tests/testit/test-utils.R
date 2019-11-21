@@ -64,7 +64,7 @@ assert('number_appendix inserts the prefix and counters', {
     c(
       '<ul>',
       '<li><span class=\"toc-section-number\">APP a</span> One',
-      '<li><span class=\"toc-section-number\">APP a.1</span> One subsection',
+      '<li><span class=\"toc-section-number\">a.1</span> One subsection',
       '<li><span class=\"toc-section-number\">APP b</span> Two',
       '</ul>'
     ))
@@ -77,7 +77,7 @@ assert('number_appendix inserts the prefix and counters', {
     c(
       '<ul>',
       '<li><span class=\"toc-section-number\">APP one</span> One',
-      '<li><span class=\"toc-section-number\">APP one 1</span> One subsection',
+      '<li><span class=\"toc-section-number\">one 1</span> One subsection',
       '<li><span class=\"toc-section-number\">APP two</span> Two',
       '</ul>'
     ))
