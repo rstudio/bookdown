@@ -93,9 +93,12 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     content, parse_ref_links(x, '^<p>%s (.+)</p>$'), to_md
   )
   if (!to_md) {
-    content = restore_part_epub(content)
-    content = restore_appendix_epub(content)
-    content = protect_math_env(content)
+    i = xfun::prose_index(content)
+    s = content[i]
+    s = restore_part_epub(s)
+    s = restore_appendix_epub(s)
+    s = protect_math_env(s)
+    content[i] = s
   }
   write_utf8(content, input_file)
 }
