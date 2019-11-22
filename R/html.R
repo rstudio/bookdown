@@ -666,7 +666,7 @@ parse_fig_labels = function(content, global = FALSE) {
 # given a label, e.g. fig:foo, figure out the appropriate prefix
 label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 
-ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '', appendix_counters = NULL)
+ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
 i18n = function(group, key, dict = list()) {
@@ -858,15 +858,14 @@ restore_appendix_html = function(x, remove = TRUE) {
   } else x[i] = gsub(r, '\\1\\2\\3', x[i])
   config = load_config()
   prefix = config[['appendix_name']] %n% ui_language('appendix_name')
-  counters = config[['appendix_counters']] %n% ui_language('appendix_counters')
-  x = number_appendix(x, i + 1, length(x), 'header', prefix, counters)
+  x = number_appendix(x, i + 1, length(x), 'header', prefix)
   r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   # remove link on (APPENDIX) in the TOC item
   x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
   x = number_appendix(
-    x, i + 1, next_nearest(i, which(x == '</div>')), 'toc', prefix, counters
+    x, i + 1, next_nearest(i, which(x == '</div>')), 'toc', prefix
   )
   x
 }
@@ -940,7 +939,7 @@ relocate_footnotes = function(x, notes, ids) {
   )
 }
 
-number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counters) {
+number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix) {
   r = sprintf(
     '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
     if (type == 'toc') 'li' else 'h[1-6]', type
@@ -959,15 +958,11 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   app_num = findInterval(seq_along(s), which(top))
   # normalize chapter numbers to appendix numbers
   for (j in seq_along(s)) s[[j]][1] = app_num[j]
-  if (is.null(counters)) counters = LETTERS
 
-  if (is.character(counters)) {
-    counters = rep_len(counters, sum(top))
-    counter_fun = function(nums) paste0(c(counters[nums[1]], nums[-1]), collapse = ".")
-  } else if (is.function(counters)) {
-    counter_fun = counters
-  } else {
-    stop('appendix_counters in _bookdown.yml must be either a character vector or a function')
+  counter_fun = function(nums) {
+    if (nums[1] > length(LETTERS))
+      stop('Too many chapters in the appendix (more than 26)')
+    paste0(c(LETTERS[nums[1]], nums[-1]), collapse = ".")
   }
 
   prefix_fun = if (is.character(prefix)) {
@@ -981,9 +976,11 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix, counter
   }
   counters = vapply(s, counter_fun, character(1))
   prefixes = character(length(s))
-  # only add the prefix to top-level appendix titles
-  prefixes[top] = vapply(counters[top], prefix_fun, character(1))
-  counters[top] = ''
+  if (type == 'header') {
+    # only add the prefix to top-level appendix titles
+    prefixes[top] = vapply(counters[top], prefix_fun, character(1))
+    counters[top] = ''
+  }
 
   x[i] = paste0(s1, prefixes, counters, s3)
   x
