@@ -772,19 +772,30 @@ add_toc_ids = function(toc) {
 }
 
 add_chapter_prefix = function(content) {
+  for (type in c('chapter', 'appendix'))
+    content = add_chapter_prefix_one(content, type)
+  content
+}
+
+add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
   config = load_config()
-  chapter_name = config[['chapter_name']] %n% ui_language('chapter_name')
+  field = paste0(type, '_name')
+  chapter_name = config[[field]] %n% ui_language(field)
   if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(
       length(chapter_name), paste0(chapter_name, i),
       paste0(chapter_name[1], i, chapter_name[2]),
-      stop('chapter_name must be of length 1 or 2')
+      stop(field, ' must be of length 1 or 2')
     )
   } else if (is.function(chapter_name)) chapter_name else {
-    stop('chapter_name in _bookdown.yml must be a character string or function')
+    stop(field, ' in _bookdown.yml must be a character string or function')
   }
-  r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>.*)$'
+  # chapters use Arabic numerals; appendices use A-Z
+  r_chap = sprintf(
+    '^(<h1><span class="header-section-number">)([%s]+)(</span>.+</h1>.*)$',
+    switch(type, chapter = '0-9', appendix = 'A-Z')
+  )
   for (i in grep(r_chap, content)) {
     h = content[i]
     x1 = gsub(r_chap, '\\1', h)
@@ -856,17 +867,13 @@ restore_appendix_html = function(x, remove = TRUE) {
   if (remove) {
     x[i] = x[i - 1] = x[i + 1] = ''
   } else x[i] = gsub(r, '\\1\\2\\3', x[i])
-  config = load_config()
-  prefix = config[['appendix_name']] %n% ui_language('appendix_name')
-  x = number_appendix(x, i + 1, length(x), 'header', prefix)
+  x = number_appendix(x, i + 1, length(x), 'header')
   r = '^<li><a href="[^"]*">\\(APPENDIX\\) (.+)</a>(.+)$'
   i = find_appendix_line(r, x)
   if (length(i) == 0) return(x)
   # remove link on (APPENDIX) in the TOC item
   x[i] = gsub(r, '<li class="appendix"><span><b>\\1</b></span>\\2', x[i])
-  x = number_appendix(
-    x, i + 1, next_nearest(i, which(x == '</div>')), 'toc', prefix
-  )
+  x = number_appendix(x, i + 1, next_nearest(i, which(x == '</div>')), 'toc')
   x
 }
 
@@ -939,7 +946,7 @@ relocate_footnotes = function(x, notes, ids) {
   )
 }
 
-number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix) {
+number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
   r = sprintf(
     '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
     if (type == 'toc') 'li' else 'h[1-6]', type
@@ -964,25 +971,8 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header'), prefix) {
       stop('Too many chapters in the appendix (more than 26)')
     paste0(c(LETTERS[nums[1]], nums[-1]), collapse = ".")
   }
-
-  prefix_fun = if (is.character(prefix)) {
-    function(i) switch(
-      length(prefix), paste0(prefix, i),
-      paste0(prefix[1], i, prefix[2]),
-      stop('appendix_name must be of length 1 or 2')
-    )
-  } else if (is.function(prefix)) prefix else {
-    stop('appendix_name in _bookdown.yml must be a character string or function')
-  }
   counters = vapply(s, counter_fun, character(1))
-  prefixes = character(length(s))
-  if (type == 'header') {
-    # only add the prefix to top-level appendix titles
-    prefixes[top] = vapply(counters[top], prefix_fun, character(1))
-    counters[top] = ''
-  }
-
-  x[i] = paste0(s1, prefixes, counters, s3)
+  x[i] = paste0(s1, counters, s3)
   x
 }
 
