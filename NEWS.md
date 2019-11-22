@@ -16,7 +16,7 @@
 
 - For the `gitbook` output format, toc collapsed by section now works with accents in chapter titles (thanks, @glimmerphoenix, @cderv, #819) 
 
-- For output formats `word_docuemnt2`, `powerpoint_presentation2`, and `odt_document2`, `$$` is no longer added to equation environments when they are inside fenced code blocks (thanks, @N0rbert, #814).
+- For output formats `word_document2`, `powerpoint_presentation2`, and `odt_document2`, `$$` is no longer added to equation environments when they are inside fenced code blocks (thanks, @N0rbert, #814).
 
 # CHANGES IN bookdown VERSION 0.15
 
