@@ -52,7 +52,7 @@ markdown_document2(
   md_extensions = NULL,
   pandoc_args = NULL,
   ...,
-  base_format
+  base_format = rmarkdown::md_document
 )
 
 word_document2(...)

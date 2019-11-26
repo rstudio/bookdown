@@ -4,6 +4,10 @@
 
 - For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
 
+## MINOR CHANGES
+
+- The default value of `base_format` in the `markdown_document2` format is `rmarkdown::md_document` now. Previously the default value is missing.
+
 # CHANGES IN bookdown VERSION 0.16
 
 ## NEW FEATURES
