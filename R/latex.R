@@ -36,11 +36,10 @@ pdf_book = function(
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
   toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     pandoc_args = pandoc_args2(pandoc_args), ...
-  )
+  ))
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {

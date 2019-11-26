@@ -54,12 +54,11 @@ html_chapters = function(
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
-  )
+  ))
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
@@ -126,10 +125,9 @@ tufte_html_book = function(...) {
 html_document2 = function(
   ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
-  )
+  ))
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)

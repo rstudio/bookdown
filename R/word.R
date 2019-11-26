@@ -5,10 +5,9 @@ markdown_document2 = function(
 ) {
   from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)
 
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     fig_caption = fig_caption, md_extensions = md_extensions, pandoc_args = pandoc_args, ...
-  )
+  ))
   pre = config$pre_processor
   config$pre_processor = function(metadata, input_file, ...) {
     # Pandoc does not support numbered sections for Word, so figures/tables have

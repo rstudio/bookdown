@@ -34,12 +34,14 @@ set_opts_knit = function(config) {
   config
 }
 
-get_base_format = function(format) {
-  if (is.character(format)) {
-    format = eval(parse(text = format))
-  }
+get_base_format = function(format, options = list()) {
+  if (is.character(format)) format = eval(parse(text = format))
   if (!is.function(format)) stop('The output format must be a function')
-  format
+  # make sure named elements in `options` have corresponding named arguments in
+  # the format function, unless the function has the ... argument
+  nms = names(formals(format))
+  if (!('...' %in% nms)) options = options[names(options) %in% c(nms, '')]
+  do.call(format, options)
 }
 
 load_config = function() {

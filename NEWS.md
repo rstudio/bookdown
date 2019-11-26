@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.17
 
+## BUG FIXES
 
+- For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
 
 # CHANGES IN bookdown VERSION 0.16
 
