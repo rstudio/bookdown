@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.17
 
+## NEW FEATURES
+
+- Added `github_document2`.
+
 ## BUG FIXES
 
 - For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
