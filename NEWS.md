@@ -8,6 +8,8 @@
 
 - For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
 
+- For the sake of backward-compatibility, prevent the commands `\frontmatter`, `\mainmatter`, and `\backmatter` from being automatically added to the LaTeX output when the Pandoc version is higher than 2.7, because **bookdown** users may have added these commands by themselves (thanks, @remlapmot, rstudio/rmarkdown#1721).
+
 ## MINOR CHANGES
 
 - The default value of `base_format` in the `markdown_document2` format is `rmarkdown::md_document` now. Previously the default value is missing.

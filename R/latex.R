@@ -80,7 +80,10 @@ pdf_book = function(
   # always enable tables (use packages booktabs, longtable, ...)
   pre = config$pre_processor
   config$pre_processor = function(...) {
-    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone')
+    c(
+      if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone',
+      if (rmarkdown::pandoc_available('2.7.1')) '-Mhas-frontmatter=false'
+    )
   }
   config$bookdown_output_format = 'latex'
   config = set_opts_knit(config)
