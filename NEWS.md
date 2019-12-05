@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Added `github_document2`.
+- Added an output format `github_document2`, which is a wrapper function based on `markdown_document2` using `rmarkdown::github_document` as the base format (thanks, @jooyoungseo, #831).
 
 ## BUG FIXES
 
