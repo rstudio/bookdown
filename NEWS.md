@@ -12,6 +12,8 @@
 
 - For the sake of backward-compatibility, prevent the commands `\frontmatter`, `\mainmatter`, and `\backmatter` from being automatically added to the LaTeX output when the Pandoc version is higher than 2.7, because **bookdown** users may have added these commands by themselves (thanks, @remlapmot, rstudio/rmarkdown#1721).
 
+- Fixed the issues yihui/bookdown-chinese#29 and yihui/bookdown-chinese#30. Such issues can occurr on Windows when there are multibyte characters in the section headers, and users will run into the error "Error in file.exists(f): file name conversion problem - name too long?" (thanks, @kongdd @JiaxiangBU @gaospecial and other users who reported the same issue such as https://twitter.com/matsuchiy/status/1186653559405727744 and https://d.cosx.org/d/420961).
+
 ## MINOR CHANGES
 
 - The default value of `base_format` in the `markdown_document2` format is `rmarkdown::md_document` now. Previously the default value is missing.
