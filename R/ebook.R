@@ -81,6 +81,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
   )
   x = read_utf8(intermediate_html)
+  x = clean_html_tags(x)
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
   content = read_utf8(input_file)
