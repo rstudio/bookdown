@@ -575,7 +575,7 @@ prefix_section_labels = function(labels) {
   labels
 }
 
-reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
+reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)( \n</div>)?$'
 
 # default names for labels
 label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
@@ -690,7 +690,7 @@ i18n = function(group, key, dict = list()) {
   if (is.null(labels[[key]])) dict[[key]] else labels[[key]]
 }
 
-sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
+sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>( \n</div>)?$'
 
 # parse section numbers and labels (id's)
 parse_section_labels = function(content) {
