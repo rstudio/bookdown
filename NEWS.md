@@ -6,7 +6,7 @@
 
 ## BUG FIXES
 
-- Fixed cross-reference issues with Pandoc 2.9+. Note that Pandoc 2.8 is not supported since it had a fairly short lifespan, but Pandoc below v2.8 or above v2.9 is still supported (thanks, @N0rbert @RLesur, #832).
+- Fixed cross-reference issues with Pandoc 2.9+. Note that Pandoc 2.8 is not supported since it had a fairly short lifespan, but Pandoc below v2.8 or above v2.9 is still supported (thanks, @N0rbert @RLesur, #832; @jooyoungseo #845).
 
 - For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
 
