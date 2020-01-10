@@ -449,20 +449,13 @@ clean_meta_tags = function(x) {
   x
 }
 
-# remove extra attributes on headers (Pandoc 2.8+), and merge the 'class' of a
-# header into its parent div: https://github.com/rstudio/bookdown/issues/832
+# remove extra attributes on headers (Pandoc 2.9+):
+# https://github.com/rstudio/bookdown/issues/832
 clean_header_tags = function(x) {
-  r1 = '^(<div [^>]*class="section level[1-6][^"]*)(">)$'
+  r1 = '^<div [^>]*?class="section level[1-6][^"]*"[^>]*>$'
   r2 = '^(<h[1-6])([^>]+)(>.+</h[1-6]>.*)$'
   i = grep(r2, x)
   i = i[grep(r1, x[i - 1])]  # the line above <h1> should be <div>
-  if (length(i) == 0) return(x)
-
-  a = gsub(r2, '\\2', x[i])  # attributes of <h1>
-  j = grep(r3 <- '(.* class=")([^"]+)(".*)', a)
-  a = gsub(r3, ' \\2', a[j])  # extract the 'class' attribute of <h1>
-  k = i[j] - 1  # add the 'class' attribute of <h1> to its parent <div>
-  x[k] = paste0(gsub(r1, '\\1', x[k]), a, gsub(r1, '\\2', x[k]))
   x[i] = gsub(r2, '\\1\\3', x[i])  # remove attributes on <h1>
   x
 }
