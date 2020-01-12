@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.18
+
+
 # CHANGES IN bookdown VERSION 0.17
 
 ## NEW FEATURES
