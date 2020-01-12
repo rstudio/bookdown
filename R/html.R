@@ -279,6 +279,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       # h2 that immediately follows h1
       i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
       # close the h1 section early with </div>
+      # reg_chap and sec_num must take this into account so that cross reference
+      # works when split by section. (#849)
       if (length(i)) x[i] = paste(x[i], '\n</div>')
       # h1 that immediately follows h2 but not the first h1
       i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
