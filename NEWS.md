@@ -1,5 +1,8 @@
 # CHANGES IN bookdown VERSION 0.18
 
+## BUG FIXES
+
+- Cross-referencing works correctly now with `gitbook` when using `split_by: section` or `split_by: section+number` (thanks, @ThierryO, @cderv, #787)
 
 # CHANGES IN bookdown VERSION 0.17
 
