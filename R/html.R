@@ -279,7 +279,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       # h2 that immediately follows h1
       i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
       # close the h1 section early with </div>
-      if (length(i)) x[i] = paste(x[i], '\n</div>')
+      # reg_chap and sec_num must take this into account so that cross reference
+      # works when split by section. (#849)
+      if (length(i)) x[i] = paste0(x[i], '\n</div>')
       # h1 that immediately follows h2 but not the first h1
       i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
       if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
@@ -575,7 +577,7 @@ prefix_section_labels = function(labels) {
   labels
 }
 
-reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
+reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)(\n</div>)?$'
 
 # default names for labels
 label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
@@ -690,7 +692,7 @@ i18n = function(group, key, dict = list()) {
   if (is.null(labels[[key]])) dict[[key]] else labels[[key]]
 }
 
-sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
+sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>(\n</div>)?$'
 
 # parse section numbers and labels (id's)
 parse_section_labels = function(content) {
