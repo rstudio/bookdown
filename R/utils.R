@@ -163,10 +163,23 @@ insert_code_chunk = function(x, before, after) {
 }
 
 insert_chapter_script = function(config, where = 'before') {
-  script = config[[sprintf('%s_chapter_script', where)]]
+  script = get_chapter_script(config, where)
   if (is.character(script)) {
-    c('```{r include=FALSE, cache=FALSE}', unlist(lapply(script, read_utf8)), '```')
+    c('```{r include=FALSE, cache=FALSE}', script, '```')
   }
+}
+
+get_chapter_script = function(config, where) {
+  script = config[[sprintf('%s_chapter_script', where)]]
+  unlist(lapply(script, read_utf8))
+}
+
+merge_chapter_script = function(config, where) {
+  if (!is.character(script <- get_chapter_script(config, where)) || length(script) == 0)
+    return('')
+  f = tempfile(fileext = '.R')
+  write_utf8(script, f)
+  f
 }
 
 check_special_chars = function(filename) {
@@ -184,6 +197,11 @@ Rscript = function(...) xfun::Rscript(...)
 Rscript_render = function(file, ...) {
   args = shQuote(c(bookdown_file('scripts', 'render_one.R'), file, ...))
   if (Rscript(args) != 0) stop('Failed to compile ', file)
+}
+
+source_utf8 = function(file) {
+  if (file == '') return()
+  eval(xfun::parse_only(read_utf8(file)), envir = globalenv())
 }
 
 clean_meta = function(meta_file, files) {

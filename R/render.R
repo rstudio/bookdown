@@ -169,26 +169,12 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   # if input is index.Rmd or not preview mode, compile all Rmd's
   rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
   if (!rerun) rerun = files %in% opts$get('input_rmd')
-  add1 = insert_chapter_script(config, 'before')
-  add2 = insert_chapter_script(config, 'after')
+  add1 = merge_chapter_script(config, 'before')
+  add2 = merge_chapter_script(config, 'after')
+  on.exit(unlink(c(add1, add2)), add = TRUE)
   # compile chapters in separate R sessions
-  for (f in files[rerun]) {
-    if (length(add1) + length(add2) == 0) {
-      Rscript_render(f, render_args, render_meta)
-      next
-    }
-    # first backup the original Rmd to a tempfile
-    f2 = tempfile('bookdown', '.', fileext = '.bak')
-    file.copy(f, f2, overwrite = TRUE)
-    # write add1/add2 to the original Rmd, compile it, and restore it
-    tryCatch({
-      txt = c(add1, read_utf8(f), add2)
-      write_utf8(txt, f)
-      Rscript_render(f, render_args, render_meta)
-    }, finally = {
-      if (file.copy(f2, f, overwrite = TRUE)) file.remove(f2)
-    })
-  }
+  for (f in files[rerun]) Rscript_render(f, render_args, render_meta, add1, add2)
+
   if (!all(dirname(files_md) == '.'))
     file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 
