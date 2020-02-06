@@ -65,7 +65,7 @@ Other contributors:
   \item Vincent Fulco [contributor]
   \item Yixuan Qiu [contributor]
   \item Zhuoer Dong [contributor]
-  \item  RStudio Inc [copyright holder]
+  \item  RStudio, PBC [copyright holder]
   \item Bartek Szopka (The jQuery Highlight plugin) [contributor]
   \item Zeno Rocha (clipboard.js library) [copyright holder]
   \item  jQuery Foundation (jQuery library) [copyright holder]
