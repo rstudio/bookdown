@@ -51,3 +51,18 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
   (prepend_chapter_title(h, '<h1>chapter one</h1>')  %==%
       '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
 })
+
+assert("correctly clean empty dir if required", {
+       # do nothing is NULL (#857)
+       (clean_empty_dir(NULL) %==% NULL)
+       # remove if empty
+       dir.create(temp_dir <- tempfile())
+       clean_empty_dir(temp_dir)
+       (dir_exists(temp_dir) %==% FALSE)
+       # do no remove if not empty
+       dir.create(temp_dir <- tempfile())
+       writeLines("test", tempfile(tmpdir = temp_dir))
+       (clean_empty_dir(temp_dir) %==% NULL)
+       (dir_exists(temp_dir) %==% TRUE)
+       unlink(temp_dir, recursive = TRUE)
+       })
