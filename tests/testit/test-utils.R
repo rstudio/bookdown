@@ -59,7 +59,7 @@ assert("correctly clean empty dir if required", {
        dir.create(temp_dir <- tempfile())
        clean_empty_dir(temp_dir)
        (dir_exists(temp_dir) %==% FALSE)
-       # do no remove if not empty
+       # do not remove if not empty
        dir.create(temp_dir <- tempfile())
        writeLines("test", tempfile(tmpdir = temp_dir))
        (clean_empty_dir(temp_dir) %==% NULL)
