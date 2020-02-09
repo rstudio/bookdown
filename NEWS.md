@@ -2,10 +2,9 @@
 
 ## BUG FIXES
 
-- `render_book` now handles correctly when `output_dir` is set to current
-working directory i.e `output_dir = "."` (thanks, @julianre, @cderv, #857)
+- `render_book()` works correctly with `output_dir = "."` now (thanks, @julianre, @cderv, #857).
 
-- Cross-referencing works correctly now with `gitbook` when using `split_by: section` or `split_by: section+number` (thanks, @ThierryO, @cderv, #787)
+- Cross-referencing works correctly now with `gitbook` when using `split_by: section` or `split_by: section+number` (thanks, @ThierryO, @cderv, #787).
 
 - When using the Knit-and-Merge approach to compile a book (`new_session: true` in `_bookdown.yml`) and the fields `before_chapter_script` and/or `after_chapter_script` are configured in `_bookdown.yml`, the original Rmd files are no longer touched (thanks, @clauswilke #405 and @bob-carpenter https://stackoverflow.com/q/50554196/559676), and the scripts specified in `before/after_chapter_script` are no longer inserted into the Rmd files (they are read and evaluated separately), so the line numbers will be correct in case of **knitr** errors (thanks, @arencambre, #852).
 
