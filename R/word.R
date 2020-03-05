@@ -28,6 +28,12 @@ markdown_document2 = function(
 
 #' @rdname html_document2
 #' @export
+context_document2 = function(...) {
+  markdown_document2(..., base_format = rmarkdown::context_document)
+}
+
+#' @rdname html_document2
+#' @export
 github_document2 = function(...) {
   markdown_document2(..., base_format = rmarkdown::github_document)
 }

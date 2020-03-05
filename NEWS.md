@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.18
 
+## NEW FEATURES
+
+- Added an output format `context_document2`, based on the newly developed `rmarkdown::context_document` (see rstudio/rmarkdown#1713, rstudio/rmarkdown#1715, and rstudio/rmarkdown#1725; thanks @jooyoungseo, @atusy, and @RLesur).
+
 ## BUG FIXES
 
 - `render_book()` works correctly with `output_dir = "."` now (thanks, @julianre, @cderv, #857).
