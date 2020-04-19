@@ -16,6 +16,9 @@ Hello world.^[Hello world footnote.]
   Another text with footnote^[second footnote]
 ```
 
+A text^[with a multi line 
+footnote]
+
 ## Subsection footnotes 2
 
 Something.
