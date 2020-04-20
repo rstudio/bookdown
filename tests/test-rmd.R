@@ -41,4 +41,9 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
       !any(grepl('id="fn2"', readLines('rmd/subsection-footnotes-1.html')))) {
     stop('Failed to move the footnotes back to subsection 1 in parse_footnotes.Rmd')
   }
+  # multiline footnote is also moved
+  if (!any(readLines('rmd/subsection-footnotes-1.html') == '<div class="footnotes">') ||
+      !any(grepl('id="fn3"', readLines('rmd/subsection-footnotes-1.html')))) {
+    stop('Failed to move the footnotes back to subsection 1 in parse_footnotes.Rmd')
+  }
 })
