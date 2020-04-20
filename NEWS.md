@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.19
 
-- Multiline footnotes are now correctly rendered in HTML output (thanks, @jtbayly,  @cderv, #876)
+## BUG FIXES
+
+- Multiline footnotes are now correctly rendered in HTML output (thanks, @jtbayly,  @cderv, #876).
 
 # CHANGES IN bookdown VERSION 0.18
 
