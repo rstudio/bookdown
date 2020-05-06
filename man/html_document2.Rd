@@ -13,6 +13,7 @@
 \alias{tufte_handout2}
 \alias{tufte_book2}
 \alias{markdown_document2}
+\alias{context_document2}
 \alias{github_document2}
 \alias{odt_document2}
 \alias{powerpoint_presentation2}
@@ -55,6 +56,8 @@ markdown_document2(
   ...,
   base_format = rmarkdown::md_document
 )
+
+context_document2(...)
 
 github_document2(...)
 
