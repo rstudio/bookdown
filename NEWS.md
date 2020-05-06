@@ -4,6 +4,8 @@
 
 - Multiline footnotes are now correctly rendered in HTML output (thanks, @jtbayly,  @cderv, #876).
 
+- Text references do not work for `theorem` environments (thanks, @ssp3nc3r, rstudio/tufte#75).
+
 # CHANGES IN bookdown VERSION 0.18
 
 ## NEW FEATURES
