@@ -66,3 +66,49 @@ assert('correctly clean empty dir if required', {
   (dir_exists(temp_dir) %==% TRUE)
   unlink(temp_dir, recursive = TRUE)
 })
+
+assert('source_files() handles several configurations correcly', {
+  # create dummy projet
+  dir.create(project <- tempfile())
+  old <- setwd(project)
+  file.create(c("index.Rmd", "_ignored.Rmd", "01-first.Rmd"))
+  dir.create("subdir")
+  dir.create("subdir2")
+  file.create(c("subdir/other.Rmd", "subdir2/last.Rmd"))
+  # default behavior is all in root dir except _*.Rmd
+  (source_files(format = NULL, config = list(), all = FALSE) %==%
+    c("index.Rmd", "01-first.Rmd"))
+  # using rmd_files allow to change default
+  (source_files(format = NULL,
+                config = list(rmd_files = "index.Rmd"),
+                all = FALSE) %==%
+    c("index.Rmd"))
+  # format allows to filter selected files
+  (source_files(format = 'html',
+                config = list(rmd_files = list(html = "index.Rmd")),
+                all = FALSE) %==%
+    c("index.Rmd"))
+  # rmd_subdir allows subdir contents and root Rmds
+  (source_files(format = NULL,
+                config = list(rmd_subdir = TRUE),
+                all = FALSE) %==%
+    c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+  (source_files(format = NULL,
+                config = list(rmd_subdir = "subdir"),
+                all = FALSE) %==%
+    c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd"))
+  # using rmd_files with subdir adds to subdir content
+  (source_files(format = NULL,
+                config = list(rmd_subdir = "subdir",
+                              rmd_files = "01-first.Rmd"),
+                all = FALSE) %==%
+      c("01-first.Rmd", "subdir/other.Rmd"))
+  (source_files(format = NULL,
+                config = list(rmd_subdir = TRUE,
+                              rmd_files = "01-first.Rmd"),
+                all = FALSE) %==%
+      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+  # clean tests
+  unlink(project, recursive = TRUE); rm(project)
+  setwd(old); rm(old)
+})
