@@ -59,17 +59,20 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 }
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
-  # a list of Rmd chapters
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
+  # a list of Rmd chapters
   files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  # content in subdir if asked
   subdir_files = setdiff(
     list.files(
       if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
       recursive = subdir_yes, full.names = is.character(subdir)),
     files)
   files = c(files, subdir_files)
+  # keep only some wanted files
   if (length(files2 <- config[['rmd_files']]) > 0) {
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
+    # add those files to subdir content if any
     files = if (subdir_yes) c(files2, subdir_files) else files2
   } else {
     files = files[grep('^[^_]', basename(files))]  # exclude those start with _
