@@ -83,6 +83,10 @@ assert('source_files() handles several configurations correcly', {
                 config = list(rmd_files = "index.Rmd"),
                 all = FALSE) %==%
     c("index.Rmd"))
+  (source_files(format = NULL,
+                config = list(rmd_files = c("index.Rmd", "_ignored.Rmd")),
+                all = FALSE) %==%
+    c("index.Rmd", "_ignored.Rmd"))
   # format allows to filter selected files
   (source_files(format = 'html',
                 config = list(rmd_files = list(html = "index.Rmd")),
@@ -97,6 +101,10 @@ assert('source_files() handles several configurations correcly', {
                 config = list(rmd_subdir = "subdir"),
                 all = FALSE) %==%
     c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd"))
+  (source_files(format = NULL,
+                config = list(rmd_subdir = c("subdir", "subdir2")),
+                all = FALSE) %==%
+      c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
   # using rmd_files with subdir adds to subdir content
   (source_files(format = NULL,
                 config = list(rmd_subdir = "subdir",
@@ -105,6 +113,11 @@ assert('source_files() handles several configurations correcly', {
       c("01-first.Rmd", "subdir/other.Rmd"))
   (source_files(format = NULL,
                 config = list(rmd_subdir = TRUE,
+                              rmd_files = "01-first.Rmd"),
+                all = FALSE) %==%
+      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+  (source_files(format = NULL,
+                config = list(rmd_subdir = c("subdir", "subdir2"),
                               rmd_files = "01-first.Rmd"),
                 all = FALSE) %==%
       c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
