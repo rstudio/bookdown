@@ -70,10 +70,9 @@ assert('correctly clean empty dir if required', {
 assert('source_files() handles several configurations correcly', {
   # create dummy projet
   dir.create(project <- tempfile())
-  old <- setwd(project)
+  old = setwd(project)
   file.create(c("index.Rmd", "_ignored.Rmd", "01-first.Rmd"))
-  dir.create("subdir")
-  dir.create("subdir2")
+  dir.create("subdir"); dir.create("subdir2")
   file.create(c("subdir/other.Rmd", "subdir2/last.Rmd"))
   # default behavior is all in root dir except _*.Rmd
   (source_files(format = NULL, config = list(), all = FALSE) %==%
