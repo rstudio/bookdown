@@ -6,6 +6,8 @@
 
 - Text references do not work for `theorem` environments (thanks, @ssp3nc3r, rstudio/tufte#75).
 
+- when `rmd_subdir` and `rmd_files` are provided, only the `rmd_files` are now selected in addition to the `rmd_subdir` content. (thanks, @Gnossos, @cderv, #885).
+
 # CHANGES IN bookdown VERSION 0.18
 
 ## NEW FEATURES
