@@ -231,13 +231,13 @@ restore_block2 = function(x, global = FALSE) {
   }
   # remove the empty lines around the block2 environments
   i3 = c(
-    if (length(i1 <- grep(r1 <- '^\\\\BeginKnitrBlock\\{', x)))
+    if (length(i1 <- grep(r1 <- '^(\\\\)BeginKnitrBlock(\\{)', x)))
       (i1 + 1)[x[i1 + 1] == ''],
-    if (length(i2 <- grep(r2 <- '^\\\\EndKnitrBlock\\{', x)))
+    if (length(i2 <- grep(r2 <- '(\\\\)EndKnitrBlock(\\{[^}]+})$', x)))
       (i2 - 1)[x[i2 - 1] == '']
   )
-  x[i1] = gsub(r1, '\\\\begin{', x[i1])
-  x[i2] = gsub(r2, '\\\\end{',   x[i2])
+  x[i1] = gsub(r1, '\\1begin\\2', x[i1])
+  x[i2] = gsub(r2, '\\1end\\2',   x[i2])
   if (length(i3)) x = x[-i3]
 
   r = '^(.*\\\\begin\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
