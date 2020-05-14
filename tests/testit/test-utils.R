@@ -85,7 +85,7 @@ assert('source_files() handles several configurations correcly', {
   (source_files(format = NULL,
                 config = list(rmd_files = c("index.Rmd", "_ignored.Rmd")),
                 all = FALSE) %==%
-    c("index.Rmd", "_ignored.Rmd"))
+    c("index.Rmd"))
   # format allows to filter selected files
   (source_files(format = 'html',
                 config = list(rmd_files = list(html = "index.Rmd")),
