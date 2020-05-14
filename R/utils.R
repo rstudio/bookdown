@@ -66,8 +66,10 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   subdir_files = setdiff(
     list.files(
       if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
-      recursive = subdir_yes, full.names = is.character(subdir)),
-    files)
+      recursive = subdir_yes, full.names = is.character(subdir)
+    ),
+    files
+  )
   files = c(files, subdir_files)
   # keep only some wanted files
   if (length(files2 <- config[['rmd_files']]) > 0) {
