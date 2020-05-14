@@ -71,7 +71,7 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     files
   )
   files = c(files, subdir_files)
-  # keep only some wanted files
+  # if rmd_files is provided, use those files in addition to those under rmd_subdir
   if (length(files2 <- config[['rmd_files']]) > 0) {
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
     # add those files to subdir content if any
