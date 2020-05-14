@@ -59,19 +59,25 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 }
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
-  # a list of Rmd chapters
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
+  # a list of Rmd chapters
   files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
-  files = c(files, list.files(
-    if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
-    recursive = subdir_yes, full.names = subdir_yes
-  ))
+  # content in subdir if asked
+  subdir_files = setdiff(
+    list.files(
+      if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
+      recursive = subdir_yes, full.names = is.character(subdir)
+    ),
+    files
+  )
+  files = c(files, subdir_files)
+  # if rmd_files is provided, use those files in addition to those under rmd_subdir
   if (length(files2 <- config[['rmd_files']]) > 0) {
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
-    files = if (subdir_yes) c(files2, files) else files2
-  } else {
-    files = files[grep('^[^_]', basename(files))]  # exclude those start with _
+    # add those files to subdir content if any
+    files = if (subdir_yes) c(files2, subdir_files) else files2
   }
+  files = files[grep('^[^_]', basename(files))]  # exclude those start with _
   files = unique(gsub('^[.]/', '', files))
   index = 'index' == with_ext(files, '')
   # if there is a index.Rmd, put it in the beginning
