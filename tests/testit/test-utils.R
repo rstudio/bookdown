@@ -68,60 +68,45 @@ assert('correctly clean empty dir if required', {
 })
 
 assert('source_files() handles several configurations correcly', {
+  get_files = function(files = NULL, dirs = NULL, ...) {
+    source_files(config = list(rmd_files = files, rmd_subdir = dirs), ...)
+  }
+
   # create dummy projet
   dir.create(project <- tempfile())
   old = setwd(project)
-  file.create(c("index.Rmd", "_ignored.Rmd", "01-first.Rmd"))
-  dir.create("subdir"); dir.create("subdir2")
-  file.create(c("subdir/other.Rmd", "subdir/_ignore.Rmd", "subdir2/last.Rmd"))
+  files = c(
+    'index.Rmd', '_ignored.Rmd', '01-first.Rmd',
+    c('subdir/other.Rmd', 'subdir/_ignore.Rmd', 'subdir2/last.Rmd')
+  )
+  lapply(unique(dirname(files)), dir.create, FALSE, recursive = TRUE)
+  file.create(files)
+
   # default behavior is all in root dir except _*.Rmd
-  (source_files(format = NULL, config = list(), all = FALSE) %==%
-    c("index.Rmd", "01-first.Rmd"))
-  # using rmd_files allow to change default
-  (source_files(format = NULL,
-                config = list(rmd_files = "index.Rmd"),
-                all = FALSE) %==%
-    c("index.Rmd"))
-  (source_files(format = NULL,
-                config = list(rmd_files = c("index.Rmd", "_ignored.Rmd")),
-                all = FALSE) %==%
-    c("index.Rmd"))
+  (get_files() %==% files[c(1, 3)])
+
+  # using rmd_files allow to change default (_*.Rmd is always ignored, and
+  # index.Rmd is always the first)
+  (get_files(files[1]) %==% files[1])
+  (get_files(files[1:2]) %==% files[1])
+  (get_files(files[3:1]) %==% files[c(1, 3)])
+
   # format allows to filter selected files
-  (source_files(format = 'html',
-                config = list(rmd_files = list(html = "index.Rmd")),
-                all = FALSE) %==%
-    c("index.Rmd"))
+  (get_files(list(html = 'index.Rmd'), NULL, 'html') %==% files[1])
+
   # rmd_subdir allows subdir contents and root Rmds
-  (source_files(format = NULL,
-                config = list(rmd_subdir = TRUE),
-                all = FALSE) %==%
-    c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
-  (source_files(format = NULL,
-                config = list(rmd_subdir = "subdir"),
-                all = FALSE) %==%
-    c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd"))
-  (source_files(format = NULL,
-                config = list(rmd_subdir = c("subdir", "subdir2")),
-                all = FALSE) %==%
-      c("index.Rmd", "01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+  (get_files(, TRUE) %==% files[c(1, 3, 4, 6)])
+  (get_files(, dirname(files[4])) %==% files[c(1, 3, 4)])
+  (get_files(, dirname(files[c(4, 6)])) %==% files[c(1, 3, 4, 6)])
+
   # using rmd_files with subdir adds to subdir content
-  # _*.Rmd are no more ignored in subdirectories
-  (source_files(format = NULL,
-                config = list(rmd_subdir = "subdir2",
-                              rmd_files = "01-first.Rmd"),
-                all = FALSE) %==%
-      c("01-first.Rmd", "subdir2/last.Rmd"))
-  (source_files(format = NULL,
-                config = list(rmd_subdir = TRUE,
-                              rmd_files = "01-first.Rmd"),
-                all = FALSE) %==%
-      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
-  (source_files(format = NULL,
-                config = list(rmd_subdir = c("subdir", "subdir2"),
-                              rmd_files = "01-first.Rmd"),
-                all = FALSE) %==%
-      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+  (get_files(files[3], dirname(files[6])) %==% files[c(3, 6)])
+  (get_files(files[3], TRUE) %==% files[c(3, 4, 6)])
+  (get_files(files[3], dirname(files[c(4, 6)])) %==% files[c(3, 4, 6)])
+
   # clean tests
   unlink(project, recursive = TRUE); rm(project)
   setwd(old); rm(old)
+
+  TRUE
 })
