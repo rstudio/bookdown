@@ -74,9 +74,8 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
     # add those files to subdir content if any
     files = if (subdir_yes) c(files2, subdir_files) else files2
-  } else {
-    files = files[grep('^[^_]', basename(files))]  # exclude those start with _
   }
+  files = files[grep('^[^_]', basename(files))]  # exclude those start with _
   files = unique(gsub('^[.]/', '', files))
   index = 'index' == with_ext(files, '')
   # if there is a index.Rmd, put it in the beginning
