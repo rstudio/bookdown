@@ -123,7 +123,9 @@ render_book = function(
     ' or in the rmd_files field of _bookdown.yml'
   )
   if (new_session && any(dirname(files) != '.')) stop(
-    'All input files must be under the current working directory'
+    'With new_session = TRUE, all input files must be under the root directory ',
+    'of the (book) project. You might have used `rmd_files` or `rmd_subdir` to ',
+    'specify input files from subdirectories, which will not work with `new_session`.'
   )
 
   res = if (new_session) {
