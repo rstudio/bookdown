@@ -6,7 +6,11 @@
 
 - Text references do not work for `theorem` environments (thanks, @ssp3nc3r, rstudio/tufte#75).
 
-- when `rmd_subdir` and `rmd_files` are provided, only the `rmd_files` are now selected in addition to the `rmd_subdir` content. (thanks, @Gnossos, @cderv, #885).
+- When both `rmd_subdir` and `rmd_files` are provided in the config file `_bookdown.yml`, only the files specified in `rmd_files` are now selected in addition to files under `rmd_subdir`. In the previous version, all files under the root directory are selected (thanks, @Gnossos #885, @cderv #886).
+
+## MAJOR CHANGES
+
+- Files with a leading `_` in their names are always ignored, even if they are specified in `rmd_files` in `_bookdown.yml`. Such files under subdirectories are also always ignored (#886).
 
 # CHANGES IN bookdown VERSION 0.18
 
