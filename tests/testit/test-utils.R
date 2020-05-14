@@ -115,12 +115,12 @@ assert('source_files() handles several configurations correcly', {
                 config = list(rmd_subdir = TRUE,
                               rmd_files = "01-first.Rmd"),
                 all = FALSE) %==%
-      c("01-first.Rmd", "subdir/_ignore.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
   (source_files(format = NULL,
                 config = list(rmd_subdir = c("subdir", "subdir2"),
                               rmd_files = "01-first.Rmd"),
                 all = FALSE) %==%
-      c("01-first.Rmd", "subdir/_ignore.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
+      c("01-first.Rmd", "subdir/other.Rmd", "subdir2/last.Rmd"))
   # clean tests
   unlink(project, recursive = TRUE); rm(project)
   setwd(old); rm(old)
