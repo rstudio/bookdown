@@ -115,7 +115,7 @@ You can override the above behavior by including a configuration file named `_bo
 rmd_files: ["index.Rmd", "abstract.Rmd", "intro.Rmd"]
 ```
 
-In this case, **bookdown** will just use whatever you defined in this YAML field without any special treatments of `index.Rmd` or underscores. If you want both HTML and LaTeX/PDF output from the book, and use different Rmd files for HTML and LaTeX output, you may specify these files for the two output formats separately, e.g.,
+In this case, **bookdown** will use the list of files you defined in this YAML field (`index.Rmd` will be added to the list if it exists, and filenames starting with underscores are always ignored). If you want both HTML and LaTeX/PDF output from the book, and use different Rmd files for HTML and LaTeX output, you may specify these files for the two output formats separately, e.g.,
 
 ```yaml
 rmd_files:
