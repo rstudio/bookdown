@@ -63,13 +63,12 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   # a list of Rmd chapters
   files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
   # content in subdir if asked
-  subdir_files = setdiff(
-    list.files(
-      if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
-      recursive = subdir_yes, full.names = is.character(subdir)
-    ),
-    files
-  )
+  subdir_files = unlist(mapply(
+    list.files,
+    if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
+    recursive = subdir_yes, full.names = is.character(subdir), USE.NAMES = FALSE
+  ))
+  subdir_files = setdiff(subdir_files, files)
   files = c(files, subdir_files)
   # if rmd_files is provided, use those files in addition to those under rmd_subdir
   if (length(files2 <- config[['rmd_files']]) > 0) {
