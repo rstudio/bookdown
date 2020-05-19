@@ -691,196 +691,28 @@ For all custom blocks based on the `block` or `block2` engine, there is one chun
 
 ## Citations {#citations}
 
-rmarkdown and bookdown offer two different methods for managing
-citations and bibliographic references in a document.
+Pandoc offers two methods for managing citations and bibliographic references in a document.
 
-The default setting for rmarkdown and bookdown (and pandoc itself) is to
-use a pandoc helper program (specifically, a "filter") called
-[**pandoc-citeproc**](https://github.com/jgm/pandoc-citeproc), which
-follows the specifications of the [Citation Style Language
-(CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and
-obtains specific formatting instructions from one of the huge number of
-available [CSL style files](https://www.zotero.org/styles/) (default is
-`chicago-author-date.csl`).
+1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
 
-In some circumstances, users might prefer to use either
-[**natbib**](https://ctan.org/pkg/natbib) (based on bibtex) or
-[**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package"
-instead. In this case, the bibliographic data files need to be in bibtex
-or biblatex format, and the document output format is limited to PDF.
-Again, various bibliographic styles are available. The [core biblatex
-package](https://ctan.org/pkg/biblatex) provides styles such as
-"numeric" (the default), "alphabetic", and "authoryear". Further styles
-are supplied by packages such as
-[biblatex-apa](https://ctan.org/pkg/biblatex-apa) and
-[biblatex-chicago](https://ctan.org/pkg/biblatex-chicago). (The
-underlying functionality for creating a latex file containing natbib or
-biblatex commands from the rmarkdown/bookdown source is provided by
-pandoc; required subsequent runs of pdflatex or xelatex, and bibtex or
-biber for creating a PDF file are carried out automatically. If the
-`keep_tex: yes` flag is set, the intermediate latex file is kept for
-inspection or manual processing.)
+1. Users may also choose to use either [**natbib**](https://ctan.org/pkg/natbib) (based on `bibtex`) or [**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package". In this case, the bibliographic data files need to be in the `bibtex` or `biblatex` format, and the document output format is limited to PDF. Again, various bibliographic styles are available (please consult the documentation of these packages).
 
-Even if you choose natbib or biblatex for PDF output, all other output
-formats will be using pandoc-citeproc. If you use matching styles (e.g.,
-`biblio-style: apa` for biblatex along with `csl: apa.csl` for
-pandoc-citeproc), output to PDF and to non-PDF formats will be very
-similar, though not necessarily identical.
+  To use **natbib** or **biblatex** to process references, you can set the `citation_package` option of the R Markdown output format, e.g.,
 
-Upshot: For any non-PDF output format, pandoc-citeproc is the only
-available option anyway. If consistency across PDF and non-PDF output
-formats is important, use pandoc-citeproc throughout. If a natbib or
-biblatex style yields preferable results, and possible inconsistencies
-are acceptable, choose this for PDF output (while pandoc-citeproc will
-be used for all other output formats).
+  ```yaml
+  output:
+    pdf_document:
+      citation_package: natbib
+    bookdown::pdf_book:
+      citation_package: biblatex
+  ```
 
-For both kinds of "citation package", at least one bibliographic data
-file needs to be specified in the YAML metadata block, e.g.,
-`bibliography: mybibdata.bib`. In addition to bibtex and biblatex,
-pandoc-citeproc accepts the bibliographic data file formats [CSL
-JSON](https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html),
-its pandoc-flavoured cousin [CSL
-YAML](https://pandoc.org/MANUAL.html#citations),
-[MODS](https://en.wikipedia.org/wiki/Metadata_Object_Description_Schema),
-[RIS](https://en.wikipedia.org/wiki/RIS_(file_format)), and others
-([full list](https://pandoc.org/MANUAL.html#citations)).
+Even if you choose `natbib` or `biblatex` for PDF output, all other output formats will be using `pandoc-citeproc`. If you use matching styles (e.g., `biblio-style: apa` for `biblatex` along with `csl: apa.csl` for `pandoc-citeproc`), output to PDF and to non-PDF formats will be very similar, though not necessarily identical.
 
-For all "citation packages", in-text citations need to be written in
-pandoc syntax, e.g.,
+For any non-PDF output format, `pandoc-citeproc` is the only available option. If consistency across PDF and non-PDF output
+formats is important, use `pandoc-citeproc` throughout.
 
-    Foo is bar [@roe:2019, 23-27; see also @doe:2017, 13-14, for further details].
-    @smith:2018 [34-39] says blah.
-
-(Note that the relative positions of citation label and punctuation, as
-well as spacing will be adjusted automatically by pandoc if a footnote
-or numbered style is selected. Explicit footnote commands should *not*
-be used in the context of citations.)
-
-For more detailed instructions and further examples see the
-["Citations"](https://pandoc.org/MANUAL.html#citations%5D) section of
-the pandoc manual.
-
-### pandoc-citeproc
-
-pandoc-citeproc is the default "citation package", so no specific option
-needs to be given to select it.
-
-Other useful options include:
-
--   `csl:` -- to select a citation style (e.g., `csl: apa.csl`)
-    -   The default setting is `csl: chicago-author-date.csl`
--   `reference-section-title:` (e.g.,
-    `reference-section-title: Works Cited`)
-    -   Default is not to render a reference section title at all.
--   `link-citations: yes` -- for creating hyperlinks from an in-text
-    citation to the corresponding entry in the list of references.
-
-For full instructions see the
-["Citations"](https://pandoc.org/MANUAL.html#citations%5D) section of
-the pandoc manual and the [pandoc-citeproc man
-page](https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md).
-
-In terms of suitable data sources and efficient workflows there are many
-options, the following is by no means exhaustive.
-
-pandoc-citeproc's native bibliographic data file formats are CSL JSON
-and CSL YAML.
-
-[CSL
-JSON](https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html)
-can be exported from many library catalogues, databases (such as
-crossref.org), and reference management programs. Many bibliographic
-data formats ([list](https://pandoc.org/MANUAL.html#citations)) can be
-converted to CSL JSON by using pandoc-citeproc on the command line,
-e.g., `pandoc-citeproc -j mydata.bib > mydata.json`.
-
-[CSL
-YAML](https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md)
-is pandoc-specific, uses markdown for in-field markup, and can also be
-included in a YAML metadata block of a markdown document. Many
-bibliographic data formats
-([list](https://pandoc.org/MANUAL.html#citations)) can be converted to
-CSL YAML by using pandoc-citeproc on the command line, e.g.,
-`pandoc-citeproc -y mydata.bib > mydata.yaml`.
-
-Using biblatex data files is of course the only option for
-rmarkdown/bookdown documents set up to use biblatex for PDF and
-pandoc-citeproc for non-PDF output. Still, even for documents set up to
-use pandoc-citeproc as the only "citation package", biblatex data files
-are a good choice, since pandoc-citeproc's mapping from biblatex to CSL
-JSON is usually all but lossless.
-
-Many other bibliographic data formats
-([list](https://pandoc.org/MANUAL.html#citations)) can be used with
-pandoc-citeproc, too. YMMV, though.
-
-Zotero users can export their data to files in bibtex, biblatex, CSL
-JSON, and other formats. The Zotero addon ["Better
-BibTeX"](https://github.com/retorquere/zotero-better-bibtex) improves
-export to these formats (plus CSL YAML) in many ways, including
-auto-updating exported files whenever data change inside Zotero. Since
-high-quality export to bibtex and biblatex is possible, this option can
-provide data for the "citation packages" natbib and biblatex as well.
-
-Another useful Zotero addon is
-[pandoc-zotxt](https://github.com/egh/zotxt), which enables direct
-access from pandoc (and hence rmarkdown and bookdown) to Zotero. There
-is no need to specify a file in the `bibliography:` metadata field;
-instead an additional filter, pandoc-zotxt.lua (included with
-[pandoc-zotxt](https://github.com/egh/zotxt)), is run before
-pandoc-citeproc, e.g., by specifying
-`pandoc_args: [ --lua-filter, pandoc-zotxt.lua, -F, pandoc-citeproc ]`.
-Adding, e.g., `zotero-bibliography: mybibdatafromzotero.json` provides a
-cache, and thus a gain in speed; however, this file needs to be removed
-manually if relevant data change in Zotero. Since the format of the
-cache file needs to be JSON, this is not an option for natbib and
-biblatex.
-
-### natbib or biblatex
-
-In order to select natbib or biblatex for the PDF output format, insert
-
-    output:
-      pdf_document:
-        citation_package: natbib
-
-or
-
-    output:
-      pdf_document:
-        citation_package: biblatex
-
-in the document's YAML metadata block.
-
-Other useful options include
-
--   `biblio-style:` (e.g., `biblio-style: chicago-authordate`)
--   `biblio-title:` (e.g., `biblio-title: Works Cited`)
--   `biblatexoptions:` (biblatex only, e.g.,
-    `biblatexoptions: isbn=false`)
--   `natbiboptions:` (natbib only, e.g., `natbiboptions: sort`)
-
-```{=html}
-<!-- `link-citations: yes` -- only relevant for pandoc-citeproc, pandoc makes biblatex and bibtex always link -->
-```
-For full instructions on pandoc syntax, variables, and command line
-options see the
-["Citations"](https://pandoc.org/MANUAL.html#citations%5D), [Citation
-rendering](https://pandoc.org/MANUAL.html#citation-rendering) and
-[Biblatex
-bibliographies](https://pandoc.org/MANUAL.html#biblatex-bibliographies)
-sections of the pandoc manual. On bibtex or biblatex data models, valid
-field names, and available styles see the
-[natbib](https://ctan.org/pkg/natbib) and
-[biblatex](https://ctan.org/pkg/biblatex) manuals as well as additional
-packages such as [biblatex-apa](https://ctan.org/pkg/biblatex-apa),
-[biblatex-chicago](https://ctan.org/pkg/biblatex-chicago), or
-[biblatex-ieee](https://ctan.org/pkg/biblatex-ieee).
-
-In terms of suitable data sources and efficient workflows there are,
-again, many options, the following is by no means exhaustive.
-
-One traditional option is to create biblatex or bibtex databases manually.
+The bibliographic data can be in several formats. We have only shown examples of BibTeX databases in this section, and please see the ["Citations"](https://pandoc.org/MANUAL.html#citations) section of the Pandoc manual for other possible formats.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
@@ -900,24 +732,12 @@ A bibliography entry starts with `@type{`, where `type` may be `article`, `book`
 
 There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
 
-There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note that it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
+There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages, e.g.,
 
 ```{r write-bib, comment='', warning=FALSE}
 # the second argument can be a .bib file
 knitr::write_bib(c('knitr', 'stringr'), '', width = 60)
 ```
-
-Other options include using one of the many available reference
-management programs. [JabRef](https://en.wikipedia.org/wiki/JabRef)
-(cross-platform) and [BibDesk](https://en.wikipedia.org/wiki/BibDesk)
-(Mac only) seem to be popular choices for managing bibtex and biblatex
-data natively. These and many others are compared
-[here](https://en.wikipedia.org/wiki/Comparison_of_reference_management_software).
-Many other reference management programs can export to bibtex and
-biblatex formats; however, quality may vary, given that mapping between
-different data models is necessary. One example of a solution that works
-well is Zotero; when used with its "Better BibTeX" addon, exports to
-bibtex and biblatex are highly configurable and relatively lossless.
 
 Once you have one or multiple `.bib` files, you may use the field `bibliography` in the YAML metadata of your first R Markdown document (which is typically `index.Rmd`), and you can also specify the bibliography style via `biblio-style` (this only applies to PDF output), e.g.,
 
@@ -931,11 +751,13 @@ link-citations: true
 
 The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibliography entry in the HTML output.
 
-When the output format is LaTeX, citations will be automatically put in a chapter or section. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
+When the output format is LaTeX, the list of references will be automatically put in a chapter or section at the end of the document. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
 
 ```markdown
 `r "\x60r if (knitr::is_html_output()) '# References {-}'\x60"`
 ```
+
+For more detailed instructions and further examples on how to use citations, please see the "Citations" section of the Pandoc manual.
 
 ## Index {#latex-index}
 
