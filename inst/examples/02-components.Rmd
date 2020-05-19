@@ -691,7 +691,7 @@ For all custom blocks based on the `block` or `block2` engine, there is one chun
 
 ## Citations {#citations}
 
-Pandoc offers two methods for managing citations and bibliographic references in a document.
+Pandoc offers two methods for managing citations\index{citation} and bibliographic references in a document.
 
 1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
 
