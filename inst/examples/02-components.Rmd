@@ -697,15 +697,15 @@ Pandoc offers two methods for managing citations\index{citation} and bibliograph
 
 1. Users may also choose to use either [**natbib**](https://ctan.org/pkg/natbib) (based on `bibtex`) or [**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package". In this case, the bibliographic data files need to be in the `bibtex` or `biblatex` format, and the document output format is limited to PDF. Again, various bibliographic styles are available (please consult the documentation of these packages).
 
-  To use **natbib** or **biblatex** to process references, you can set the `citation_package` option of the R Markdown output format, e.g.,
-
-  ```yaml
-  output:
-    pdf_document:
-      citation_package: natbib
-    bookdown::pdf_book:
-      citation_package: biblatex
-  ```
+    To use **natbib** or **biblatex** to process references, you can set the `citation_package` option of the R Markdown output format, e.g.,
+  
+    ```yaml
+    output:
+      pdf_document:
+        citation_package: natbib
+      bookdown::pdf_book:
+        citation_package: biblatex
+    ```
 
 Even if you choose `natbib` or `biblatex` for PDF output, all other output formats will be using `pandoc-citeproc`. If you use matching styles (e.g., `biblio-style: apa` for `biblatex` along with `csl: apa.csl` for `pandoc-citeproc`), output to PDF and to non-PDF formats will be very similar, though not necessarily identical.
 
