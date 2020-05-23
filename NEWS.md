@@ -1,5 +1,8 @@
 # CHANGES IN bookdown VERSION 0.20
 
+## NEW FEATURES
+
+- If `delete_merge_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
 
 # CHANGES IN bookdown VERSION 0.19
 

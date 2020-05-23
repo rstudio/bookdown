@@ -134,7 +134,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  file.remove(main)
+  if (!xfun::isFALSE(delete_main)) file.remove(main)
   res
 }
 
