@@ -106,13 +106,14 @@ render_book = function(
 
   main = book_filename()
   if (!grepl('[.][Rr]?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
-  delete_main = isTRUE(config[['delete_merged_file']])
-  if (file.exists(main) && !delete_main) stop(
-    'The file ', main, ' exists. Please delete it if it was automatically generated, ',
-    'or set a different book_filename option in _bookdown.yml. If you are sure ',
-    "it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yml."
+  delete_main = config[['delete_merged_file']]
+  check_main = function() file.exists(main) && is.null(delete_main)
+  if (check_main()) stop(
+    'The file ', main, ' exists. Please delete it if it was automatically generated. ',
+    'If you are sure it can be safely overwritten or deleted, please set the option ',
+    "'delete_merged_file' to true in _bookdown.yml."
   )
-  on.exit(if (file.exists(main) && !delete_main) {
+  on.exit(if (check_main()) {
     message('Please delete ', main, ' after you finish debugging the error.')
   }, add = TRUE)
   opts$set(book_filename = main)  # store the book filename
