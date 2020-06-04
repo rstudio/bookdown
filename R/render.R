@@ -152,7 +152,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
   )
 
   rmarkdown::render(main, output_format, ..., clean = clean, envir = envir,
-                    md_file_splitter = render_md_file_splitter(config),
+                    file_scope = render_file_scope(config),
                     encoding = 'UTF-8')
 }
 
@@ -196,14 +196,14 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
-    md_file_splitter = render_md_file_splitter(config),
+    file_scope = render_file_scope(config),
     run_pandoc = TRUE, knit_meta = knit_meta, encoding = 'UTF-8'
   )
 
 }
 
-# use the file splitter by default (unless pandoc_file_scope isfalse)
-render_md_file_splitter <- function(config) {
+# use the chapter splitter by default (unless pandoc_file_scope is false)
+render_file_scope <- function(config) {
   file_scope_config <- config[['pandoc_file_scope']]
   if (!is.null(file_scope_config)) {
     if (isTRUE(file_scope_config)) md_chapter_splitter else NULL
