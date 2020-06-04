@@ -150,7 +150,10 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'before'),
     insert_chapter_script(config, 'after')
   )
-  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
+
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir,
+                    md_file_splitter = render_md_file_splitter(config),
+                    encoding = 'UTF-8')
 }
 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
@@ -193,9 +196,20 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
+    md_file_splitter = render_md_file_splitter(config),
     run_pandoc = TRUE, knit_meta = knit_meta, encoding = 'UTF-8'
   )
 
+}
+
+# use the file splitter by default (unless pandoc_file_scope isfalse)
+render_md_file_splitter <- function(config) {
+  file_scope_config <- config[['pandoc_file_scope']]
+  if (!is.null(file_scope_config)) {
+    if (isTRUE(file_scope_config)) md_chapter_splitter else NULL
+  } else {
+    md_chapter_splitter
+  }
 }
 
 #' Clean up the output files and directories from the book

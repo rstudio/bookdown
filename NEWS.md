@@ -4,6 +4,8 @@
 
 - If `delete_merge_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
 
+- Numeric footnotes duplicated across chapters are now automatically renumbered. This is done by passing the `--file-scope` argument to pandoc (and having it operate on split out individual chapters off the target .md file rather than a combined file). This behavior can be toggled off by setting `pandoc_file_scope` to `false` in `_bookdown.yml`.
+
 # CHANGES IN bookdown VERSION 0.19
 
 ## BUG FIXES
