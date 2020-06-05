@@ -202,13 +202,12 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
 }
 
-# use the chapter splitter by default (unless pandoc_file_scope is false)
+# use the mmd_chapter_splitter if requested
 render_file_scope <- function(config) {
-  file_scope_config <- config[['pandoc_file_scope']]
-  if (!is.null(file_scope_config)) {
-    if (isTRUE(file_scope_config)) md_chapter_splitter else NULL
-  } else {
+  if (isTRUE(config[['pandoc_file_scope']])) {
     md_chapter_splitter
+  } else {
+    NULL
   }
 }
 
