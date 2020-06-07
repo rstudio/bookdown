@@ -199,6 +199,7 @@ We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optio
 
 - `book_filename`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`.
 - `delete_merged_file`: whether to delete the main Rmd file after the book is successfully rendered.
+- `pandoc_file_scope`: whether to have pandoc parse each chapter individually before combining them into the final book document. This will allow footnotes in different files with the same identifiers to work as expected. If this option is set, footnotes and links will not work across files.
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script.
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter.
 - `edit`: a link that collaborators can click to edit the Rmd source document of the current page; this was designed primarily for GitHub repositories, since it is easy to edit arbitrary plain-text files on GitHub even in other people's repositories (if you do not have write access to the repository, GitHub will automatically fork it and let you submit a pull request after you finish editing the file). This link should have `%s` in it, which will be substituted by the actual Rmd filename for each page.
@@ -212,6 +213,8 @@ Here is a sample `_bookdown.yml`:
 
 ```yaml
 book_filename: "my-book.Rmd"
+delete_merged_file: true
+pandoc_file_scope: true
 before_chapter_script: ["script1.R", "script2.R"]
 after_chapter_script: "script3.R"
 view: https://github.com/rstudio/bookdown-demo/blob/master/%s

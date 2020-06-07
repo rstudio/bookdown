@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- If `delete_merge_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
+- If `delete_merged_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
 
 - If `pandoc_file_scope` is set to `true` in `_bookdown.yml`, markdown will rendered using the `--file-scope` argument, which causes pandoc to parse each chapter file individually. This will allow footnotes in different files with the same identifiers to work as expected. If this option is set, footnotes and links will not work across files.
 
