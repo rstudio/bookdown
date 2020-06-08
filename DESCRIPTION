@@ -75,7 +75,7 @@ Suggests:
     tufte,
     webshot
 Remotes:
-    rstudio/rmarkdown@feature/pandoc-file-scope
+    rstudio/rmarkdown
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
