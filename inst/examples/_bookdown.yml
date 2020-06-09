@@ -3,7 +3,6 @@ repo: https://github.com/rstudio/bookdown/
 output_dir: _book
 clean: [packages.bib, bookdown.bbl]
 delete_merged_file: true
-pandoc_file_scope: true
 language:
   label:
     fig: "FIGURE "

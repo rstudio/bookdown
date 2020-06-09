@@ -1,5 +1,4 @@
 delete_merged_file: true
-pandoc_file_scope: true
 language:
   ui:
     chapter_name: "Chapter "
