@@ -4,6 +4,10 @@
 
 - If `delete_merge_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
 
+## BUG FIXES
+
+- When the config `chapter_name` in `_bookdown.yml` is a function, the value passed to its argument `i` should be numeric instead of character (thanks, @AzureRabbit, #899).
+
 # CHANGES IN bookdown VERSION 0.19
 
 ## BUG FIXES
