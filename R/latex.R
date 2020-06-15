@@ -29,12 +29,15 @@
 #'   \code{NULL}, the quote footer will not be processed.
 #' @param highlight_bw Whether to convert colors for syntax highlighting to
 #'   black-and-white (grayscale).
+#' @param renumber_footnotes Whether to automatically renumber duplicate
+#'   numeric footnote identifiers.
 #' @note This output format can only be used with \code{\link{render_book}()}.
 #' @export
 pdf_book = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, pandoc_args = NULL, ...,
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
-  toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
+  toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE,
+  renumber_footnotes = TRUE
 ) {
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
@@ -86,8 +89,7 @@ pdf_book = function(
       if (rmarkdown::pandoc_available('2.7.1')) '-Mhas-frontmatter=false'
     )
   }
-  config$bookdown_output_format = 'latex'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'latex', renumber_footnotes)
   config
 }
 

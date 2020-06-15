@@ -17,6 +17,7 @@ html_chapters(
   base_format = rmarkdown::html_document,
   split_bib = TRUE,
   page_builder = build_chapter,
+  renumber_footnotes = TRUE,
   split_by = c("section+number", "section", "chapter+number", "chapter", "rmd", "none")
 )
 
@@ -42,6 +43,9 @@ the citations are actually used.}
 \item{page_builder}{A function to combine different parts of a chapter into a
 page (an HTML character vector). See \code{\link{build_chapter}} for the
 specification of this function.}
+
+\item{renumber_footnotes}{Whether to automatically renumber duplicate
+numeric footnote identifiers.}
 
 \item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML

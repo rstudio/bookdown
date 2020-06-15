@@ -199,7 +199,7 @@ We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optio
 
 - `book_filename`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`.
 - `delete_merged_file`: whether to delete the main Rmd file after the book is successfully rendered.
-- `use_references_scope`: whether to pass a `references_scope` function to `rmarkdown::render()`, which in the case that duplicate footnote identifiers exist, enables rmarkdown to split the book into chapters and invoke pandoc using the  `--file-scope` option.
+- `renumber_footnotes`: whether to automatically renumber duplicate numeric footnote identifiers.
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script.
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter.
 - `edit`: a link that collaborators can click to edit the Rmd source document of the current page; this was designed primarily for GitHub repositories, since it is easy to edit arbitrary plain-text files on GitHub even in other people's repositories (if you do not have write access to the repository, GitHub will automatically fork it and let you submit a pull request after you finish editing the file). This link should have `%s` in it, which will be substituted by the actual Rmd filename for each page.

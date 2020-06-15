@@ -24,8 +24,18 @@ new_counters = function(type, rownames) {
   )
 }
 
-# set some internal knitr options
-set_opts_knit = function(config) {
+# set common format config
+common_format_config = function(config, bookdown_output_format, renumber_footnotes) {
+
+  # provide chapter splitter
+  config$file_scope = md_chapter_splitter
+
+  # set output format
+  config$bookdown_output_format = bookdown_output_format
+
+  # set footnote renumbering behavior
+  config$renumber_footnotes = renumber_footnotes
+
   # use labels of the form (\#label) in knitr
   config$knitr$opts_knit$bookdown.internal.label = TRUE
   # when the output is LaTeX, force LaTeX tables instead of default Pandoc tables
