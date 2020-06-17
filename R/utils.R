@@ -155,7 +155,7 @@ md_chapter_splitter <- function(file) {
 
   # extract the chapters and pair them w/ the names
   chapters <- list()
-  for (idx in 1:length(indexes)) {
+  for (idx in seq_along(indexes)) {
     start <- ifelse(idx == 1, 1, indexes[idx-1] + 1)
     end <- indexes[idx] - 1
     chapter <- list(
