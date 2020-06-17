@@ -25,14 +25,15 @@ new_counters = function(type, rownames) {
 }
 
 # set common format config
-common_format_config = function(config, bookdown_output_format) {
+common_format_config = function(
+  config, format, file_scope = getOption('bookdown.render.file_scope', TRUE)
+) {
 
-  # provide file_scope unless explicitly disabled
-  if (!xfun::isFALSE(getOption('bookdown.render.file_scope')))
-    config$file_scope = md_chapter_splitter
+  # provide file_scope unless disabled via the global option
+  if (file_scope) config$file_scope = md_chapter_splitter
 
   # set output format
-  config$bookdown_output_format = bookdown_output_format
+  config$bookdown_output_format = format
 
   # use labels of the form (\#label) in knitr
   config$knitr$opts_knit$bookdown.internal.label = TRUE

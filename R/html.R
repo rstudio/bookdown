@@ -138,7 +138,7 @@ html_document2 = function(
     write_utf8(x, output)
     output
   }
-  config = common_format_config(config, 'html')
+  config = common_format_config(config, 'html', file_scope = FALSE)
   config
 }
 
