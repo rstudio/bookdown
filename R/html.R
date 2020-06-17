@@ -237,7 +237,6 @@ build_chapter = function(
   ), collapse = '\n')
 }
 
-
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
 
 split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
