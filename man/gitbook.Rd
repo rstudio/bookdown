@@ -15,8 +15,7 @@ gitbook(
   split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none"),
   split_bib = TRUE,
   config = list(),
-  table_css = TRUE,
-  renumber_footnotes = TRUE
+  table_css = TRUE
 )
 }
 \arguments{
@@ -57,9 +56,6 @@ the font/theme settings.}
 \item{table_css}{\code{TRUE} to load gitbook's default CSS for tables. Choose
 \code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
 the \code{css} option. Default is \code{TRUE}.}
-
-\item{renumber_footnotes}{Whether to automatically renumber duplicate
-numeric footnote identifiers.}
 }
 \description{
 This output format function ported a style provided by GitBook

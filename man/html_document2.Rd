@@ -25,7 +25,6 @@ figures/tables/equations}
 html_document2(
   ...,
   number_sections = TRUE,
-  renumber_footnotes = TRUE,
   pandoc_args = NULL,
   base_format = rmarkdown::html_document
 )
@@ -54,7 +53,6 @@ markdown_document2(
   fig_caption = TRUE,
   md_extensions = NULL,
   pandoc_args = NULL,
-  renumber_footnotes = TRUE,
   ...,
   base_format = rmarkdown::md_document
 )
@@ -83,9 +81,6 @@ current first-level section number, and \code{i} is an incremental number
 (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
-
-\item{renumber_footnotes}{Whether to automatically renumber duplicate
-numeric footnote identifiers.}
 
 \item{base_format}{An output format function to be used as the base format.}
 }

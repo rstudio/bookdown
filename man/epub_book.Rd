@@ -16,7 +16,6 @@ epub_book(
   cover_image = NULL,
   metadata = NULL,
   chapter_level = 1,
-  renumber_footnotes = TRUE,
   epub_version = c("epub3", "epub"),
   md_extensions = NULL,
   pandoc_args = NULL,
@@ -40,9 +39,6 @@ applied to the eBook.}
 
 \item{chapter_level}{The level by which the e-book is split into separate
 \dQuote{chapter} files.}
-
-\item{renumber_footnotes}{Whether to automatically renumber duplicate
-numeric footnote identifiers.}
 
 \item{epub_version}{Whether to use version 3 or 2 of EPUB.}
 

@@ -25,16 +25,14 @@ new_counters = function(type, rownames) {
 }
 
 # set common format config
-common_format_config = function(config, bookdown_output_format, renumber_footnotes) {
+common_format_config = function(config, bookdown_output_format) {
 
-  # provide chapter splitter
-  config$file_scope = md_chapter_splitter
+  # provide file_scope unless explicitly disabled
+  if (!xfun::isFALSE(getOption('bookdown.render.file_scope')))
+    config$file_scope = md_chapter_splitter
 
   # set output format
   config$bookdown_output_format = bookdown_output_format
-
-  # set footnote renumbering behavior
-  config$renumber_footnotes = renumber_footnotes
 
   # use labels of the form (\#label) in knitr
   config$knitr$opts_knit$bookdown.internal.label = TRUE

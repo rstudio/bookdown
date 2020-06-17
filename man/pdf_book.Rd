@@ -15,8 +15,7 @@ pdf_book(
   toc_appendix = FALSE,
   toc_bib = FALSE,
   quote_footer = NULL,
-  highlight_bw = FALSE,
-  renumber_footnotes = TRUE
+  highlight_bw = FALSE
 )
 }
 \arguments{
@@ -43,9 +42,6 @@ prepended to the footer, and \code{quote_footer[2]} will be appended; if
 
 \item{highlight_bw}{Whether to convert colors for syntax highlighting to
 black-and-white (grayscale).}
-
-\item{renumber_footnotes}{Whether to automatically renumber duplicate
-numeric footnote identifiers.}
 }
 \description{
 Convert R Markdown files to PDF after resolving the special tokens of

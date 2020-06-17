@@ -52,7 +52,6 @@ html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
-  renumber_footnotes = TRUE,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
   config = get_base_format(base_format, list(
@@ -70,7 +69,7 @@ html_chapters = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config = common_format_config(config, 'html', renumber_footnotes)
+  config = common_format_config(config, 'html')
   config
 }
 
@@ -123,8 +122,7 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, renumber_footnotes = TRUE,
-  pandoc_args = NULL, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
@@ -140,7 +138,7 @@ html_document2 = function(
     write_utf8(x, output)
     output
   }
-  config = common_format_config(config, 'html', renumber_footnotes)
+  config = common_format_config(config, 'html')
   config
 }
 
