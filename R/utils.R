@@ -85,7 +85,9 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
     # add those files to subdir content if any
     files = if (subdir_yes) c(files2, subdir_files) else files2
   }
-  files = files[grep('^[^_]', basename(files))]  # exclude those start with _
+  # exclude files that start with _, and the merged file
+  files = files[grep('^[^_]', basename(files))]
+  files = setdiff(files, with_ext(book_filename(config), c('.md', '.Rmd')))
   files = unique(gsub('^[.]/', '', files))
   index = 'index' == with_ext(files, '')
   # if there is a index.Rmd, put it in the beginning

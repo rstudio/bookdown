@@ -118,7 +118,7 @@ render_book = function(
   }, add = TRUE)
   opts$set(book_filename = main)  # store the book filename
 
-  files = setdiff(source_files(format, config), main)
+  files = source_files(format, config)
   if (length(files) == 0) stop(
     'No input R Markdown files found from the current directory ', getwd(),
     ' or in the rmd_files field of _bookdown.yml'
