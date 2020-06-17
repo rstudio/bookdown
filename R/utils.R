@@ -155,7 +155,7 @@ md_chapter_splitter = function(file) {
   # extract the chapters and pair them w/ the names
   lapply(seq_along(pos), function(i) {
     i1 = if (i == 1) 1 else pos[i - 1] + 1
-    i2 = pos[i] - 1
+    i2 = pos[i]
     list(name = names[i], content = x[i1:i2])
   })
 }
