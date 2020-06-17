@@ -151,9 +151,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'after')
   )
 
-  rmarkdown::render(main, output_format, output_options = output_options(config),
-                    ..., clean = clean, envir = envir,
-                    encoding = 'UTF-8')
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
 }
 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
@@ -195,18 +193,10 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   if (clean) on.exit(unlink(intermediates, recursive = TRUE), add = TRUE)
 
   rmarkdown::render(
-    main, output_format, output_options = output_options(config),
-    ..., clean = clean, envir = envir,
+    main, output_format, ..., clean = clean, envir = envir,
     run_pandoc = TRUE, knit_meta = knit_meta, encoding = 'UTF-8'
   )
 
-}
-
-# output_options based on config
-output_options = function(config) {
-  options = list()
-  options$renumber_footnotes = config$renumber_footnotes
-  options
 }
 
 #' Clean up the output files and directories from the book
