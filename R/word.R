@@ -21,8 +21,7 @@ markdown_document2 = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_output(output)
   }
-  config$bookdown_output_format = config$pandoc$to
-  config = set_opts_knit(config)
+  config = common_format_config(config, config$pandoc$to)
   config
 }
 

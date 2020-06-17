@@ -86,8 +86,7 @@ pdf_book = function(
       if (rmarkdown::pandoc_available('2.7.1')) '-Mhas-frontmatter=false'
     )
   }
-  config$bookdown_output_format = 'latex'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'latex')
   config
 }
 

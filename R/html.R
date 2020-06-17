@@ -69,8 +69,7 @@ html_chapters = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html')
   config
 }
 
@@ -139,8 +138,7 @@ html_document2 = function(
     write_utf8(x, output)
     output
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html', file_scope = FALSE)
   config
 }
 
@@ -239,6 +237,8 @@ build_chapter = function(
   ), collapse = '\n')
 }
 
+r_chap_pattern = '^<!--chapter:end:(.+)-->$'
+
 split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
 
   use_rmd_names = split_by == 'rmd'
@@ -259,8 +259,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
-  r_chap = '^<!--chapter:end:(.+)-->$'
-  n = length(grep(r_chap, x))
+  n = length(grep(r_chap_pattern, x))
 
   # Need to take care of the div tags here before restore_part_html and
   # restore_appendix_html erase the section ids of the hidden PART or APPENDIX
@@ -325,8 +324,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   html_toc = add_toc_ids(html_toc)
 
-  idx = grep(r_chap, html_body)
-  nms = gsub(r_chap, '\\1', html_body[idx])  # to be used in HTML filenames
+  idx = grep(r_chap_pattern, html_body)
+  nms = gsub(r_chap_pattern, '\\1', html_body[idx])  # to be used in HTML filenames
   h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', x)
   if (length(h1) < length(nms)) warning(
     'You have ', length(nms), ' Rmd input file(s) but only ', length(h1),

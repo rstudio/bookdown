@@ -59,8 +59,7 @@ gitbook = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html')
   config
 }
 

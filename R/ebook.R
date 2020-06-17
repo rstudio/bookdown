@@ -61,8 +61,7 @@ epub_book = function(
       move_output(output)
     }
   )
-  config$bookdown_output_format = 'epub'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'epub')
   config
 }
 
