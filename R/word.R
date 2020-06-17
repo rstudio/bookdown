@@ -1,8 +1,7 @@
 #' @rdname html_document2
 #' @export
 markdown_document2 = function(
-  fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL,
-  ...,
+  fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, ...,
   base_format = rmarkdown::md_document
 ) {
   from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)

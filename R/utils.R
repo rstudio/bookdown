@@ -143,31 +143,21 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
 
 
 # split a markdown file into a set of chapters
-md_chapter_splitter <- function(file) {
+md_chapter_splitter = function(file) {
+  x = read_utf8(file)
 
-  # read the file
-  file_lines <- read_utf8(file)
-
-  # get the indexes of the chapter delimiters (r_chap_pattern defined in html.R)
-  indexes <- grep(r_chap_pattern, file_lines)
+  # get positions of the chapter delimiters (r_chap_pattern defined in html.R)
+  if (length(pos <- grep(r_chap_pattern, x)) <= 1) return()
 
   # get the filenames
-  names <- gsub(r_chap_pattern, '\\1', file_lines[indexes])
+  names = gsub(r_chap_pattern, '\\1', x[pos])
 
   # extract the chapters and pair them w/ the names
-  chapters <- list()
-  for (idx in seq_along(indexes)) {
-    start <- ifelse(idx == 1, 1, indexes[idx-1] + 1)
-    end <- indexes[idx] - 1
-    chapter <- list(
-      name = names[[idx]],
-      content = file_lines[start:end]
-    )
-    chapters[[length(chapters) + 1]] <- chapter
-  }
-
-  # return the chapters
-  chapters
+  lapply(seq_along(pos), function(i) {
+    i1 = if (i == 1) 1 else pos[i - 1] + 1
+    i2 = pos[i] - 1
+    list(name = names[i], content = x[i1:i2])
+  })
 }
 
 
