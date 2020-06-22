@@ -58,7 +58,7 @@ render_book = function(
         new_session = new_session, preview = preview, config_file = config_file
       ))))
     }
-    format = html_or_latex(output_format)
+    format = target_format(output_format)
   }
 
   if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
@@ -106,24 +106,27 @@ render_book = function(
 
   main = book_filename()
   if (!grepl('[.][Rr]?md$', main)) main = paste0(main, if (new_session) '.md' else '.Rmd')
-  delete_main = isTRUE(config[['delete_merged_file']])
-  if (file.exists(main) && !delete_main) stop(
-    'The file ', main, ' exists. Please delete it if it was automatically generated, ',
-    'or set a different book_filename option in _bookdown.yml. If you are sure ',
-    "it can be safely deleted, please set the option 'delete_merged_file' to true in _bookdown.yml."
+  delete_main = config[['delete_merged_file']]
+  check_main = function() file.exists(main) && is.null(delete_main)
+  if (check_main()) stop(
+    'The file ', main, ' exists. Please delete it if it was automatically generated. ',
+    'If you are sure it can be safely overwritten or deleted, please set the option ',
+    "'delete_merged_file' to true in _bookdown.yml."
   )
-  on.exit(if (file.exists(main) && !delete_main) {
+  on.exit(if (check_main()) {
     message('Please delete ', main, ' after you finish debugging the error.')
   }, add = TRUE)
   opts$set(book_filename = main)  # store the book filename
 
-  files = setdiff(source_files(format, config), main)
+  files = source_files(format, config)
   if (length(files) == 0) stop(
     'No input R Markdown files found from the current directory ', getwd(),
     ' or in the rmd_files field of _bookdown.yml'
   )
   if (new_session && any(dirname(files) != '.')) stop(
-    'All input files must be under the current working directory'
+    'With new_session = TRUE, all input files must be under the root directory ',
+    'of the (book) project. You might have used `rmd_files` or `rmd_subdir` to ',
+    'specify input files from subdirectories, which will not work with `new_session`.'
   )
 
   res = if (new_session) {
@@ -131,7 +134,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  file.remove(main)
+  if (!xfun::isFALSE(delete_main)) file.remove(main)
   res
 }
 
@@ -169,26 +172,12 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   # if input is index.Rmd or not preview mode, compile all Rmd's
   rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
   if (!rerun) rerun = files %in% opts$get('input_rmd')
-  add1 = insert_chapter_script(config, 'before')
-  add2 = insert_chapter_script(config, 'after')
+  add1 = merge_chapter_script(config, 'before')
+  add2 = merge_chapter_script(config, 'after')
+  on.exit(unlink(c(add1, add2)), add = TRUE)
   # compile chapters in separate R sessions
-  for (f in files[rerun]) {
-    if (length(add1) + length(add2) == 0) {
-      Rscript_render(f, render_args, render_meta)
-      next
-    }
-    # first backup the original Rmd to a tempfile
-    f2 = tempfile('bookdown', '.', fileext = '.bak')
-    file.copy(f, f2, overwrite = TRUE)
-    # write add1/add2 to the original Rmd, compile it, and restore it
-    tryCatch({
-      txt = c(add1, read_utf8(f), add2)
-      write_utf8(txt, f)
-      Rscript_render(f, render_args, render_meta)
-    }, finally = {
-      if (file.copy(f2, f, overwrite = TRUE)) file.remove(f2)
-    })
-  }
+  for (f in files[rerun]) Rscript_render(f, render_args, render_meta, add1, add2)
+
   if (!all(dirname(files_md) == '.'))
     file.copy(files_md[!rerun], basename(files_md[!rerun]), overwrite = TRUE)
 

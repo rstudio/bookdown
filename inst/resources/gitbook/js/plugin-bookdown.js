@@ -28,6 +28,19 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       }
     });
 
+    // add the View button (file view on Github)
+    var view = config.view;
+    if (view && view.link) gitbook.toolbar.createButton({
+      icon: 'fa fa-eye',
+      label: view.text || 'View Source',
+      position: 'left',
+      onClick: function(e) {
+        e.preventDefault();
+        window.open(view.link);
+      }
+    });
+
+    // add the Download button
     var down = config.download;
     var normalizeDownload = function() {
       if (!down || !(down instanceof Array) || down.length === 0) return;
@@ -64,9 +77,28 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
       });
     }
 
+    // add the Information button
+    var info = ['Keyboard shortcuts (<> indicates arrow keys):',
+      '<left>/<right>: navigate to previous/next page',
+      's: Toggle sidebar'];
+    if (config.search !== false) info.push('f: Toggle search input ' +
+      '(use <up>/<down>/Enter in the search input to navigate through search matches; ' +
+      'press Esc to cancel search)');
+    if (config.info !== false) gitbook.toolbar.createButton({
+      icon: 'fa fa-info',
+      label: 'Information about the toolbar',
+      position: 'left',
+      onClick: function(e) {
+        e.preventDefault();
+        window.alert(info.join('\n\n'));
+      }
+    });
+
     // highlight the current section in TOC
     var href = window.location.pathname;
     href = href.substr(href.lastIndexOf('/') + 1);
+    // accentuated characters need to be decoded (#819)
+    href = decodeURIComponent(href);
     if (href === '') href = 'index.html';
     var li = $('a[href^="' + href + location.hash + '"]').parent('li.chapter').first();
     var summary = $('ul.summary'), chaps = summary.find('li.chapter');
@@ -190,9 +222,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
   var chapterTitle = function() {
     return bookInner.find('.page-inner').find('h1,h2').first().text();
   };
-  var bookTitle = function() {
-    return bookInner.find('.book-header > h1').first().text();
-  };
   var saveScrollPos = function(e) {
     // save scroll position before page is reloaded
     gs.set('bodyScrollTop', {
@@ -210,21 +239,19 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     try { inIframe = window.self !== window.top; } catch (e) {}
     return inIframe;
   };
-  $(window).on('blur unload', function(e) {
-    if (inIFrame()) saveScrollPos(e);
-    gs.set('bookTitle', bookTitle());
-  });
+  if (inIFrame()) {
+    $(window).on('blur unload', saveScrollPos);
+  }
 
   $(function(e) {
-    if (gs.get('bookTitle', '') !== bookTitle()) localStorage.clear();
     var pos = gs.get('bodyScrollTop');
     if (pos) {
       if (pos.title === chapterTitle()) {
         if (pos.body !== 0) bookBody.scrollTop(pos.body);
         if (pos.inner !== 0) bookInner.scrollTop(pos.inner);
       }
-      if (pos.focused) bookInner.find('.page-wrapper').focus();
     }
+    if ((pos && pos.focused) || !inIFrame()) bookInner.find('.page-wrapper').focus();
     // clear book body scroll position
     gs.remove('bodyScrollTop');
   });

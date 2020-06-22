@@ -5,8 +5,8 @@
 inst/examples$
 inst/homepage$
 inst/resources/gitbook/js/app.js
-inst/resources/gitbook/js/app.min.map
+inst/resources/gitbook/js/app.min.js.map
 ^CONTRIBUTING\.md$
 .*/rsconnect
 ^\.github$
-^revdep$
+^NEWS\.md$

@@ -61,8 +61,7 @@ epub_book = function(
       move_output(output)
     }
   )
-  config$bookdown_output_format = 'epub'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'epub')
   config
 }
 
@@ -81,6 +80,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
   )
   x = read_utf8(intermediate_html)
+  x = clean_html_tags(x)
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
   content = read_utf8(input_file)
@@ -93,9 +93,12 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     content, parse_ref_links(x, '^<p>%s (.+)</p>$'), to_md
   )
   if (!to_md) {
-    content = restore_part_epub(content)
-    content = restore_appendix_epub(content)
-    content = protect_math_env(content)
+    i = xfun::prose_index(content)
+    s = content[i]
+    s = restore_part_epub(s)
+    s = restore_appendix_epub(s)
+    s = protect_math_env(s)
+    content[i] = s
   }
   write_utf8(content, input_file)
 }
@@ -115,7 +118,7 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
         }
         label = label_prefix(type)
         content[i] = sub(
-          m, paste0(id, label, ref_table[j], ' '), content[i]
+          m, paste0(id, label, ref_table[j], sep, ' '), content[i]
         )
         break
       }
