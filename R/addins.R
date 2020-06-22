@@ -1,6 +1,6 @@
 jquery_dependency = function() {
   htmltools::htmlDependency(
-    'jquery', '2.2.3', bookdown_file('resources', 'jquery'),
+    'jquery', '3.3.1', bookdown_file('resources', 'jquery'),
     script = 'jquery.min.js'
   )
 }
