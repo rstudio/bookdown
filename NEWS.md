@@ -1,3 +1,95 @@
+# CHANGES IN bookdown VERSION 0.20
+
+## NEW FEATURES
+
+- If `delete_merged_file` is set to `false` in `_bookdown.yml`, the merged (Rmd or md) file will not be deleted after the book is rendered (thanks, ilse pit, https://stackoverflow.com/q/61973608/559676).
+
+- Numeric footnotes duplicated across chapters are now automatically renumbered. This is done by passing the `--file-scope` argument to pandoc (and having it operate on split out individual chapters of the target .md file rather than a combined file). This behavior can be toggled off by setting `options(bookdown.render.file_scope = FALSE)`.
+
+## BUG FIXES
+
+- When the config `chapter_name` in `_bookdown.yml` is a function, the value passed to its argument `i` should be numeric instead of character (thanks, @AzureRabbit, #899).
+
+# CHANGES IN bookdown VERSION 0.19
+
+## BUG FIXES
+
+- Multiline footnotes are now correctly rendered in HTML output (thanks, @jtbayly,  @cderv, #876).
+
+- Text references do not work for `theorem` environments (thanks, @ssp3nc3r, rstudio/tufte#75).
+
+- When both `rmd_subdir` and `rmd_files` are provided in the config file `_bookdown.yml`, only the files specified in `rmd_files` are now selected in addition to files under `rmd_subdir`. In the previous version, all files under the root directory are selected (thanks, @Gnossos #885, @cderv #886).
+
+- When `rmd_subdir` is provided in `_bookdown.yml`, the subdirectories were always alphabetically ordered instead of following the order of elements in `rmd_subdir` (thanks, @Rothdyt, #736).
+
+## MAJOR CHANGES
+
+- Files with a leading `_` in their names are always ignored, even if they are specified in `rmd_files` in `_bookdown.yml`. Such files under subdirectories are also always ignored (#886).
+
+# CHANGES IN bookdown VERSION 0.18
+
+## NEW FEATURES
+
+- Added an output format `context_document2`, based on the newly developed `rmarkdown::context_document` (see rstudio/rmarkdown#1713, rstudio/rmarkdown#1715, and rstudio/rmarkdown#1725; thanks @jooyoungseo, @atusy, and @RLesur).
+
+## BUG FIXES
+
+- `render_book()` works correctly with `output_dir = "."` now (thanks, @julianre, @cderv, #857).
+
+- Cross-referencing works correctly now with `gitbook` when using `split_by: section` or `split_by: section+number` (thanks, @ThierryO, @cderv, #787).
+
+- When using the Knit-and-Merge approach to compile a book (`new_session: true` in `_bookdown.yml`) and the fields `before_chapter_script` and/or `after_chapter_script` are configured in `_bookdown.yml`, the original Rmd files are no longer touched (thanks, @clauswilke #405 and @bob-carpenter https://stackoverflow.com/q/50554196/559676), and the scripts specified in `before/after_chapter_script` are no longer inserted into the Rmd files (they are read and evaluated separately), so the line numbers will be correct in case of **knitr** errors (thanks, @arencambre, #852).
+
+# CHANGES IN bookdown VERSION 0.17
+
+## NEW FEATURES
+
+- Added an output format `github_document2`, which is a wrapper function based on `markdown_document2` using `rmarkdown::github_document` as the base format (thanks, @jooyoungseo, #831).
+
+## BUG FIXES
+
+- Fixed cross-reference issues with Pandoc 2.9+. Note that Pandoc 2.8 is not supported since it had a fairly short lifespan, but Pandoc below v2.8 or above v2.9 is still supported (thanks, @N0rbert @RLesur, #832; @jooyoungseo #845).
+
+- For output formats like `pdf_book`, unused arguments passed to `base_format` will be discarded (thanks, @jooyoungseo, #790).
+
+- For the sake of backward-compatibility, prevent the commands `\frontmatter`, `\mainmatter`, and `\backmatter` from being automatically added to the LaTeX output when the Pandoc version is higher than 2.7, because **bookdown** users may have added these commands by themselves (thanks, @remlapmot, rstudio/rmarkdown#1721).
+
+- Fixed the issues yihui/bookdown-chinese#29 and yihui/bookdown-chinese#30. Such issues can occurr on Windows when there are multibyte characters in the section headers, and users will run into the error "Error in file.exists(f): file name conversion problem - name too long?" (thanks, @kongdd @JiaxiangBU @gaospecial and other users who reported the same issue such as https://twitter.com/matsuchiy/status/1186653559405727744 and https://d.cosx.org/d/420961).
+
+## MINOR CHANGES
+
+- The default value of `base_format` in the `markdown_document2` format is `rmarkdown::md_document` now. Previously the default value is missing.
+
+# CHANGES IN bookdown VERSION 0.16
+
+## NEW FEATURES
+
+- You can also add a "view" button on the GitBook toolbar, similar to the "edit" and "history" buttons, which shows the page's `.Rmd` source file on GitHub. Unlike "edit", "view" does not require the reader to login to GitHub and fork the repo (thanks, @jtr13, #806).
+
+- For `gitbook` output, the font setting button can be removed via `fontsettings: false` in the `config` option. Similarly, the info button can be removed by `info: false` in `config` (thanks, @mnazarov, #788).
+
+- It is possible to customize the prefixes of appendix titles in `gitbook` output now (the default is still `A`, `B`, `C`, ..., and now you can change them to something like `Appendix A`, `Appendix B`, ...); see the documentation at https://bookdown.org/yihui/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
+
+- Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, `slidy_presentation2`, and `beamer_presentation2` for cross-referencing capabilities on top of **rmarkdown** output formats (thanks, @jooyoungseo, #789 #823).
+
+## BUG FIXES
+
+- For the `gitbook` output format, disabling the `sharing` menu or buttons works again (thanks, @lwjohnst86, #812).
+
+- For the `gitbook` output format, toc collapsed by section now works with accents in chapter titles (thanks, @glimmerphoenix, @cderv, #819) 
+
+- For output formats `word_document2`, `powerpoint_presentation2`, and `odt_document2`, `$$` is no longer added to equation environments when they are inside fenced code blocks (thanks, @N0rbert, #814).
+
+# CHANGES IN bookdown VERSION 0.15
+
+## BUG FIXES
+
+- Sharing to Facebook and Twitter is possible again. Google+ sharing has been disabled (with a warning) as this service no longer exists (thanks, @cderv, #802).
+
+- When using Pandoc 2.7.3 or later, footnotes are now placed again at the end of each chapter (#798, #801, thanks @cderv).
+
+- gitbook toolbar is not missing any more when rendering books with Pandoc 2.x and using `self_contained = TRUE` (thanks, @Pindar777, @RLesur, @cderv, #739).
+
 # CHANGES IN bookdown VERSION 0.14
 
 ## NEW FEATURES

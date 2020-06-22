@@ -1,5 +1,5 @@
 language: r
-pandoc_version: 2.0.6
+pandoc_version: 2.7.3
 sudo: false
 cache:
   packages: yes
@@ -12,10 +12,10 @@ env:
     - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE" PATH=$HOME/bin:$PATH
 
 repos:
-  XRAN: https://xran.yihui.name
+  XRAN: https://xran.yihui.org
 
 before_install:
-  - "curl https://xran.yihui.name/.gitconfig -o ~/.gitconfig"
+  - "curl https://xran.yihui.org/.gitconfig -o ~/.gitconfig"
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
 
@@ -27,5 +27,5 @@ before_script:
   - cd ../..
 
 after_success:
-  - "(curl https://xran.yihui.name/r-xran | bash)"
+  - "(curl https://xran.yihui.org/r-xran | bash)"
   - cd inst/examples; ./deploy_github

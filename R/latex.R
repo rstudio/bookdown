@@ -36,23 +36,23 @@ pdf_book = function(
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
   toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     pandoc_args = pandoc_args2(pandoc_args), ...
-  )
+  ))
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
-    x = resolve_refs_latex(read_utf8(f))
+    x = read_utf8(f)
+    x = restore_block2(x, !number_sections)
+    x = resolve_refs_latex(x)
     x = resolve_ref_links_latex(x)
     x = restore_part_latex(x)
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
-    x = restore_block2(x, !number_sections)
     if (!is.null(quote_footer)) {
       if (length(quote_footer) != 2 || !is.character(quote_footer)) warning(
         "The 'quote_footer' argument should be a character vector of length 2"
@@ -81,10 +81,12 @@ pdf_book = function(
   # always enable tables (use packages booktabs, longtable, ...)
   pre = config$pre_processor
   config$pre_processor = function(...) {
-    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone')
+    c(
+      if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone',
+      if (rmarkdown::pandoc_available('2.7.1')) '-Mhas-frontmatter=false'
+    )
   }
-  config$bookdown_output_format = 'latex'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'latex')
   config
 }
 
@@ -92,6 +94,12 @@ pdf_book = function(
 #' @export
 pdf_document2 = function(...) {
   pdf_book(..., base_format = rmarkdown::pdf_document)
+}
+
+#' @rdname html_document2
+#' @export
+beamer_presentation2 = function(..., number_sections = FALSE) {
+  pdf_book(..., base_format = rmarkdown::beamer_presentation)
 }
 
 #' @rdname html_document2
@@ -203,8 +211,6 @@ add_toc_bib = function(x) {
 restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
-  if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
-    x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
   if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
     theorem_defs = sprintf(
@@ -223,11 +229,17 @@ restore_block2 = function(x, global = FALSE) {
     x = append(x, c('\\usepackage{amsthm}', theorem_defs, proof_defs), i - 1)
   }
   # remove the empty lines around the block2 environments
-  i3 = if (length(i1 <- grep('^\\\\BeginKnitrBlock\\{', x))) (i1 + 1)[x[i1 + 1] == '']
-  i3 = c(i3, if (length(i2 <- grep('^\\\\EndKnitrBlock\\{', x))) (i2 - 1)[x[i2 - 1] == ''])
+  i3 = c(
+    if (length(i1 <- grep(r1 <- '^(\\\\)BeginKnitrBlock(\\{)', x)))
+      (i1 + 1)[x[i1 + 1] == ''],
+    if (length(i2 <- grep(r2 <- '(\\\\)EndKnitrBlock(\\{[^}]+})$', x)))
+      (i2 - 1)[x[i2 - 1] == '']
+  )
+  x[i1] = gsub(r1, '\\1begin\\2', x[i1])
+  x[i2] = gsub(r2, '\\1end\\2',   x[i2])
   if (length(i3)) x = x[-i3]
 
-  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
+  r = '^(.*\\\\begin\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
   if (length(i <- grep(r, x)) == 0) return(x)
   opts = sapply(strsplit(gsub(r, '\\3', x[i]), '-'), function(z) {
     intToUtf8(as.integer(z))

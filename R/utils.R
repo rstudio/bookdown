@@ -24,8 +24,17 @@ new_counters = function(type, rownames) {
   )
 }
 
-# set some internal knitr options
-set_opts_knit = function(config) {
+# set common format config
+common_format_config = function(
+  config, format, file_scope = getOption('bookdown.render.file_scope', TRUE)
+) {
+
+  # provide file_scope unless disabled via the global option
+  if (file_scope) config$file_scope = md_chapter_splitter
+
+  # set output format
+  config$bookdown_output_format = format
+
   # use labels of the form (\#label) in knitr
   config$knitr$opts_knit$bookdown.internal.label = TRUE
   # when the output is LaTeX, force LaTeX tables instead of default Pandoc tables
@@ -34,12 +43,14 @@ set_opts_knit = function(config) {
   config
 }
 
-get_base_format = function(format) {
-  if (is.character(format)) {
-    format = eval(parse(text = format))
-  }
+get_base_format = function(format, options = list()) {
+  if (is.character(format)) format = eval(parse(text = format))
   if (!is.function(format)) stop('The output format must be a function')
-  format
+  # make sure named elements in `options` have corresponding named arguments in
+  # the format function, unless the function has the ... argument
+  nms = names(formals(format))
+  if (!('...' %in% nms)) options = options[names(options) %in% c(nms, '')]
+  do.call(format, options)
 }
 
 load_config = function() {
@@ -57,19 +68,26 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 }
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
-  # a list of Rmd chapters
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
+  # a list of Rmd chapters
   files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
-  files = c(files, list.files(
+  # content in subdir if asked
+  subdir_files = unlist(mapply(
+    list.files,
     if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
-    recursive = subdir_yes, full.names = subdir_yes
+    recursive = subdir_yes, full.names = is.character(subdir), USE.NAMES = FALSE
   ))
+  subdir_files = setdiff(subdir_files, files)
+  files = c(files, subdir_files)
+  # if rmd_files is provided, use those files in addition to those under rmd_subdir
   if (length(files2 <- config[['rmd_files']]) > 0) {
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
-    files = if (subdir_yes) c(files2, files) else files2
-  } else {
-    files = files[grep('^[^_]', basename(files))]  # exclude those start with _
+    # add those files to subdir content if any
+    files = if (subdir_yes) c(files2, subdir_files) else files2
   }
+  # exclude files that start with _, and the merged file
+  files = files[grep('^[^_]', basename(files))]
+  files = setdiff(files, with_ext(book_filename(config), c('.md', '.Rmd')))
   files = unique(gsub('^[.]/', '', files))
   index = 'index' == with_ext(files, '')
   # if there is a index.Rmd, put it in the beginning
@@ -101,7 +119,7 @@ mark_dirs = function(x) {
 }
 
 clean_empty_dir = function(dir) {
-  if (!dir_exists(dir)) return()
+  if (is.null(dir) || !dir_exists(dir)) return()
   files = list.files(dir, all.files = TRUE, recursive = TRUE)
   if (length(files) == 0) unlink(dir, recursive = TRUE)
 }
@@ -123,6 +141,25 @@ merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) 
   unlink(to)
   write_utf8(content, to)
   Sys.chmod(to, '644')
+}
+
+# split a markdown file into a set of chapters
+md_chapter_splitter = function(file) {
+  x = read_utf8(file)
+
+  # get positions of the chapter delimiters (r_chap_pattern defined in html.R)
+  if (length(pos <- grep(r_chap_pattern, x)) <= 1) return()
+  pos = c(0, pos)
+
+  # get the filenames
+  names = gsub(r_chap_pattern, '\\1', x[pos])
+
+  # extract the chapters and pair them w/ the names
+  lapply(seq_along(names), function(i) {
+    i1 = pos[i] + 1
+    i2 = pos[i + 1]
+    list(name = names[i], content = x[i1:i2])
+  })
 }
 
 match_dashes = function(x) grep('^---\\s*$', x)
@@ -161,10 +198,23 @@ insert_code_chunk = function(x, before, after) {
 }
 
 insert_chapter_script = function(config, where = 'before') {
-  script = config[[sprintf('%s_chapter_script', where)]]
+  script = get_chapter_script(config, where)
   if (is.character(script)) {
-    c('```{r include=FALSE, cache=FALSE}', unlist(lapply(script, read_utf8)), '```')
+    c('```{r include=FALSE, cache=FALSE}', script, '```')
   }
+}
+
+get_chapter_script = function(config, where) {
+  script = config[[sprintf('%s_chapter_script', where)]]
+  unlist(lapply(script, read_utf8))
+}
+
+merge_chapter_script = function(config, where) {
+  if (!is.character(script <- get_chapter_script(config, where)) || length(script) == 0)
+    return('')
+  f = tempfile(fileext = '.R')
+  write_utf8(script, f)
+  f
 }
 
 check_special_chars = function(filename) {
@@ -182,6 +232,11 @@ Rscript = function(...) xfun::Rscript(...)
 Rscript_render = function(file, ...) {
   args = shQuote(c(bookdown_file('scripts', 'render_one.R'), file, ...))
   if (Rscript(args) != 0) stop('Failed to compile ', file)
+}
+
+source_utf8 = function(file) {
+  if (file == '') return()
+  eval(xfun::parse_only(read_utf8(file)), envir = globalenv())
 }
 
 clean_meta = function(meta_file, files) {

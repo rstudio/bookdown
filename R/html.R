@@ -54,12 +54,11 @@ html_chapters = function(
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
-  )
+  ))
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
@@ -70,8 +69,7 @@ html_chapters = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html')
   config
 }
 
@@ -126,23 +124,62 @@ tufte_html_book = function(...) {
 html_document2 = function(
   ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
-  )
+  ))
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     x = read_utf8(output)
+    x = clean_html_tags(x)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
     x = resolve_refs_html(x, global = !number_sections)
     write_utf8(x, output)
     output
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html', file_scope = FALSE)
   config
+}
+
+#' @rdname html_document2
+#' @export
+html_fragment2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = rmarkdown::html_fragment
+  )
+}
+
+#' @rdname html_document2
+#' @export
+html_notebook2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = rmarkdown::html_notebook
+  )
+}
+
+#' @rdname html_document2
+#' @export
+html_vignette2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = rmarkdown::html_vignette
+  )
+}
+
+#' @rdname html_document2
+#' @export
+ioslides_presentation2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = rmarkdown::ioslides_presentation
+  )
+}
+
+#' @rdname html_document2
+#' @export
+slidy_presentation2 = function(..., number_sections = FALSE) {
+  html_document2(
+    ..., number_sections = number_sections, base_format = rmarkdown::slidy_presentation
+  )
 }
 
 #' @rdname html_document2
@@ -191,6 +228,7 @@ build_chapter = function(
     button_link(link_prev, 'Previous'),
     source_link(rmd_cur, type = 'edit'),
     source_link(rmd_cur, type = 'history'),
+    source_link(rmd_cur, type = 'view'),
     button_link(link_next, 'Next'),
     '</p>',
     '</div>',
@@ -198,6 +236,8 @@ build_chapter = function(
     foot
   ), collapse = '\n')
 }
+
+r_chap_pattern = '^<!--chapter:end:(.+)-->$'
 
 split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
 
@@ -210,7 +250,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
 
   x = read_utf8(output)
-  x = clean_meta_tags(x)
+  x = clean_html_tags(x)
 
   i1 = find_token(x, '<!--bookdown:title:start-->')
   i2 = find_token(x, '<!--bookdown:title:end-->')
@@ -219,8 +259,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   i5 = find_token(x, '<!--bookdown:body:start-->')
   i6 = find_token(x, '<!--bookdown:body:end-->')
 
-  r_chap = '^<!--chapter:end:(.+)-->$'
-  n = length(grep(r_chap, x))
+  n = length(grep(r_chap_pattern, x))
 
   # Need to take care of the div tags here before restore_part_html and
   # restore_appendix_html erase the section ids of the hidden PART or APPENDIX
@@ -239,7 +278,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
       # h2 that immediately follows h1
       i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
       # close the h1 section early with </div>
-      if (length(i)) x[i] = paste(x[i], '\n</div>')
+      # reg_chap and sec_num must take this into account so that cross reference
+      # works when split by section. (#849)
+      if (length(i)) x[i] = paste0(x[i], '\n</div>')
       # h1 that immediately follows h2 but not the first h1
       i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
       if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
@@ -283,8 +324,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   html_toc = add_toc_ids(html_toc)
 
-  idx = grep(r_chap, html_body)
-  nms = gsub(r_chap, '\\1', html_body[idx])  # to be used in HTML filenames
+  idx = grep(r_chap_pattern, html_body)
+  nms = gsub(r_chap_pattern, '\\1', html_body[idx])  # to be used in HTML filenames
   h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', x)
   if (length(h1) < length(nms)) warning(
     'You have ', length(nms), ' Rmd input file(s) but only ', length(h1),
@@ -409,6 +450,23 @@ clean_meta_tags = function(x) {
   x
 }
 
+# remove extra attributes on headers (Pandoc 2.9+):
+# https://github.com/rstudio/bookdown/issues/832
+clean_header_tags = function(x) {
+  r1 = '^<div [^>]*?class="section level[1-6][^"]*"[^>]*>$'
+  r2 = '^(<h[1-6])([^>]+)(>.+</h[1-6]>.*)$'
+  i = grep(r2, x)
+  i = i[grep(r1, x[i - 1])]  # the line above <h1> should be <div>
+  x[i] = gsub(r2, '\\1\\3', x[i])  # remove attributes on <h1>
+  x
+}
+
+clean_html_tags = function(x) {
+  x = clean_meta_tags(x)
+  x = clean_header_tags(x)
+  x
+}
+
 # move files to output dir if specified
 move_to_output_dir = function(files) {
   files2 = output_path(files)
@@ -518,7 +576,7 @@ prefix_section_labels = function(labels) {
   labels
 }
 
-reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)$'
+reg_chap = '^(<h1><span class="header-section-number">)([A-Z0-9]+)(</span>.+</h1>)(\n</div>)?$'
 
 # default names for labels
 label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
@@ -625,7 +683,7 @@ parse_fig_labels = function(content, global = FALSE) {
 # given a label, e.g. fig:foo, figure out the appropriate prefix
 label_prefix = function(type, dict = label_names) i18n('label', type, dict)
 
-ui_names = list(edit = 'Edit', chapter_name = '')
+ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
 
 i18n = function(group, key, dict = list()) {
@@ -633,7 +691,7 @@ i18n = function(group, key, dict = list()) {
   if (is.null(labels[[key]])) dict[[key]] else labels[[key]]
 }
 
-sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>$'
+sec_num = '^<h[1-6]><span class="header-section-number">([.A-Z0-9]+)</span>.+</h[1-6]>(\n</div>)?$'
 
 # parse section numbers and labels (id's)
 parse_section_labels = function(content) {
@@ -731,25 +789,36 @@ add_toc_ids = function(toc) {
 }
 
 add_chapter_prefix = function(content) {
+  for (type in c('chapter', 'appendix'))
+    content = add_chapter_prefix_one(content, type)
+  content
+}
+
+add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
   config = load_config()
-  chapter_name = config[['chapter_name']] %n% ui_language('chapter_name')
+  field = paste0(type, '_name')
+  chapter_name = config[[field]] %n% ui_language(field)
   if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(
       length(chapter_name), paste0(chapter_name, i),
       paste0(chapter_name[1], i, chapter_name[2]),
-      stop('chapter_name must be of length 1 or 2')
+      stop(field, ' must be of length 1 or 2')
     )
   } else if (is.function(chapter_name)) chapter_name else {
-    stop('chapter_name in _bookdown.yml must be a character string or function')
+    stop(field, ' in _bookdown.yml must be a character string or function')
   }
-  r_chap = '^(<h1><span class="header-section-number">)([0-9]+)(</span>.+</h1>.*)$'
+  # chapters use Arabic numerals; appendices use A-Z
+  r_chap = sprintf(
+    '^(<h1><span class="header-section-number">)([%s]+)(</span>.+</h1>.*)$',
+    switch(type, chapter = '0-9', appendix = 'A-Z')
+  )
   for (i in grep(r_chap, content)) {
     h = content[i]
     x1 = gsub(r_chap, '\\1', h)
     x2 = gsub(r_chap, '\\2', h)
     x3 = gsub(r_chap, '\\3', h)
-    content[i] = paste0(x1, chapter_fun(x2), x3)
+    content[i] = paste0(x1, chapter_fun(as.integer(x2)), x3)
   }
   content
 }
@@ -827,7 +896,7 @@ restore_appendix_html = function(x, remove = TRUE) {
 
 # parse reference items so we can move them back to the chapter where they were used
 parse_references = function(x) {
-  i = which(x == '<div id="refs" class="references">')
+  i = grep('^<div id="refs" class="references[^"]*">$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
   r = '^<div id="(ref-[^"]+)">$'
   k = grep(r, x)
@@ -876,10 +945,10 @@ parse_footnotes = function(x) {
   j = which(x == '</div>')
   j = min(j[j > i])
   n = length(x)
-  r = '<li id="fn([0-9]+)"><p>.+?<a href="#fnref\\1"[^>]*?>.</a></p></li>'
+  r = '<li id="fn([0-9]+)"><p>(?s).+?<a href="#fnref\\1"[^>]*?>\\X</a></p></li>'
   s = paste(x[i:n], collapse = '\n')
-  items = unlist(regmatches(s, gregexpr(r, s)))
-  list(items = setNames(items, gsub(r, 'fn\\1', items)), range = i:j)
+  items = unlist(regmatches(s, gregexpr(r, s, perl = TRUE)))
+  list(items = setNames(items, gsub(r, 'fn\\1', items, perl = TRUE)), range = i:j)
 }
 
 # move footnotes to the relevant page
@@ -899,18 +968,28 @@ number_appendix = function(x, i1, i2, type = c('toc', 'header')) {
     '^(<%s>.*<span class="%s-section-number">)([.0-9]+)(</span>.+)',
     if (type == 'toc') 'li' else 'h[1-6]', type
   )
-  d = list()  # a dictionary e.g. list(12 = 'A', 13 = 'B', ...)
-  i = i1:i2
-  for (j in i[grep(r, x[i])]) {
-    s1 = gsub(r, '\\1', x[j])
-    s2 = gsub(r, '\\2', x[j])
-    s3 = gsub(r, '\\3', x[j])
-    s = strsplit(s2, '[.]')[[1]]  # section numbers
-    if (is.null(d[[s[1]]])) d[[s[1]]] = LETTERS[length(d) + 1]
-    s[1] = d[[s[1]]]
-    if (is.na(s[1])) stop('Too many chapters in the appendix (more than 26)')
-    x[j] = paste0(s1, paste(s, collapse = '.'), s3)
+  i = grep(r, x)
+  i = i[i >= i1 & i <= i2]
+  if (length(i) == 0) return(x)
+
+  s1 = gsub(r, '\\1', x[i])
+  s2 = gsub(r, '\\2', x[i]) # section numbers
+  s3 = gsub(r, '\\3', x[i])
+  s = strsplit(s2, ".", fixed = TRUE)
+  s = lapply(s, as.integer)
+
+  top = vapply(s, length, integer(1)) == 1
+  app_num = findInterval(seq_along(s), which(top))
+  # normalize chapter numbers to appendix numbers
+  for (j in seq_along(s)) s[[j]][1] = app_num[j]
+
+  counter_fun = function(nums) {
+    if (nums[1] > length(LETTERS))
+      stop('Too many chapters in the appendix (more than 26)')
+    paste0(c(LETTERS[nums[1]], nums[-1]), collapse = ".")
   }
+  counters = vapply(s, counter_fun, character(1))
+  x[i] = paste0(s1, counters, s3)
   x
 }
 
@@ -926,6 +1005,7 @@ move_files_html = function(output, lib_dir) {
   }))
   f = c(f, parse_cover_image(x))
   f = vapply(f, utils::URLdecode, FUN.VALUE = character(1))
+  Encoding(f) = 'UTF-8'
   f = local_resources(unique(f[file.exists(f)]))
   # detect resources in CSS
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {

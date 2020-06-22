@@ -4,7 +4,16 @@
 \alias{build_chapter}
 \title{Combine different parts of an HTML page}
 \usage{
-build_chapter(head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot)
+build_chapter(
+  head,
+  toc,
+  chapter,
+  link_prev,
+  link_next,
+  rmd_cur,
+  html_cur,
+  foot
+)
 }
 \arguments{
 \item{head}{A character vector of the HTML code before the document title.}

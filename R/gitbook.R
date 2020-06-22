@@ -59,8 +59,7 @@ gitbook = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config$bookdown_output_format = 'html'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'html')
   config
 }
 
@@ -130,10 +129,17 @@ gitbook_page = function(
   # gitbook JS scripts only work after the DOM has been loaded, so move them
   # from head to foot
   i = grep('^\\s*<script src=".+/gitbook([^/]+)?/js/[.a-z-]+[.]js"></script>\\s*$', head)
-  # it is probably a self-contained page, so look for base64 encoded scripts
-  if (length(i) == 0) i = grep(
-    '^\\s*<script src="data:application/x-javascript;base64,[^"]+"></script>\\s*$', head
-  )
+  # it is probably a self-contained page, so look for script node.
+  # from pandoc2, they are not always base64 encoded scripts, so start and end of scripts
+  # node must be found and moved.
+  if (length(i) == 0) {
+    s_start = grep(
+      '^\\s*<script( src="data:application/(x-)?javascript;base64,[^"]+")?>', head
+    )
+    s_end = grep("</script>\\s*$", head)
+    # find all lines to move
+    i = unlist(mapply(seq.int, s_start, s_end, SIMPLIFY = FALSE))
+  }
   s = head[i]; head[i] = ''
   j = grep('<!--bookdown:config-->', foot)[1]
   foot[j] = paste(c(s, foot[j]), collapse = '\n')
@@ -148,7 +154,7 @@ gitbook_page = function(
   }
 
   # you can set the edit setting in either _bookdown.yml or _output.yml
-  for (type in c('edit', 'history')) {
+  for (type in c('edit', 'history', 'view')) {
     if (is.list(setting <- source_link_setting(config[[type]], type = type)))
       config[[type]] = setting
     if (length(rmd_cur) && is.list(config[[type]]))
@@ -222,13 +228,14 @@ gitbook_toc = function(x, cur, config) {
 gitbook_config = function(config = list()) {
   default = list(
     sharing = list(
-      github = FALSE, facebook = TRUE, twitter = TRUE, google = FALSE,
+      github = FALSE, facebook = TRUE, twitter = TRUE,
       linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
-      all = c('facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper')
+      all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper')
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
     history = list(link = NULL, text = NULL),
+    view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
     toc = list(collapse = 'subsection')
