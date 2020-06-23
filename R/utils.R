@@ -364,7 +364,7 @@ serve_book = function(
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
   if (!file.exists('index.Rmd')) return(fallback)
-  formats = rmarkdown::all_output_formats('index.Rmd', 'UTF-8')
+  formats = rmarkdown::all_output_formats('index.Rmd')
   formats = grep('gitbook|html', formats, value = TRUE)
   if (length(formats) == 0) fallback else formats[1]
 }

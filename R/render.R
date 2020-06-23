@@ -30,8 +30,6 @@
 #'   \code{input} argument. Previewing a certain chapter may save compilation
 #'   time as you actively work on this chapter, but the output may not be
 #'   accurate (e.g. cross-references to other chapters will not work).
-#' @param encoding Ignored. The character encoding of all input files is
-#'   supposed to be UTF-8.
 #' @param config_file The book configuration file.
 #' @export
 #' @examples
@@ -40,7 +38,7 @@
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
-  preview = FALSE, encoding = 'UTF-8', config_file = '_bookdown.yml'
+  preview = FALSE, config_file = '_bookdown.yml'
 ) {
 
   verify_rstudio_version()
@@ -50,7 +48,7 @@ render_book = function(
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.character(output_format)) {
     if (identical(output_format, 'all')) {
-      output_format = rmarkdown::all_output_formats(input, 'UTF-8')
+      output_format = rmarkdown::all_output_formats(input)
     }
     if (length(output_format) > 1) {
       return(unlist(lapply(output_format, function(fmt) render_book(
@@ -150,7 +148,7 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'before'),
     insert_chapter_script(config, 'after')
   )
-  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir, encoding = 'UTF-8')
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
 }
 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
@@ -193,7 +191,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
-    run_pandoc = TRUE, knit_meta = knit_meta, encoding = 'UTF-8'
+    run_pandoc = TRUE, knit_meta = knit_meta
   )
 
 }

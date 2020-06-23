@@ -10,6 +10,10 @@
 
 - When the config `chapter_name` in `_bookdown.yml` is a function, the value passed to its argument `i` should be numeric instead of character (thanks, @AzureRabbit, #899).
 
+## MINOR CHANGES
+
+- Removed the `encoding` argument from `bookdown::render_book()`. This argument has always been ignored in **bookdown**.
+
 # CHANGES IN bookdown VERSION 0.19
 
 ## BUG FIXES

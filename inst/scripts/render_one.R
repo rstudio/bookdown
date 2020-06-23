@@ -8,7 +8,7 @@ local({
 
   bookdown:::source_utf8(args[4])
   out = do.call(
-    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE, encoding = 'UTF-8'))
+    rmarkdown::render, c(args[1], readRDS(args[2]), list(run_pandoc = FALSE))
   )
   bookdown:::source_utf8(args[5])
 
