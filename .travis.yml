@@ -19,13 +19,17 @@ before_install:
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - export BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
 
-before_script:
-  - "[ -x \"$HOME/bin/phantomjs\" ] || Rscript -e \"webshot::install_phantomjs()\""
-  - R CMD INSTALL .
-  - cd inst/examples
-  - "[ ! -z \"$BUILD_ALL\" ] && make all || make gitbook"
-  - cd ../..
-
-after_success:
-  - "(curl https://xran.yihui.org/r-xran | bash)"
-  - cd inst/examples; ./deploy_github
+jobs:
+  include:
+    - r: oldrel
+    - r: release
+      before_script:
+        - "[ -x \"$HOME/bin/phantomjs\" ] || Rscript -e \"webshot::install_phantomjs()\""
+        - R CMD INSTALL .
+        - cd inst/examples
+        - "[ ! -z \"$BUILD_ALL\" ] && make all || make gitbook"
+        - cd ../..
+      after_success:
+        - "(curl https://xran.yihui.org/r-xran | bash)"
+        - cd inst/examples; ./deploy_github
+    - r: devel
