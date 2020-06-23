@@ -6,6 +6,10 @@
 
 - Numeric footnotes duplicated across chapters are now automatically renumbered. This is done by passing the `--file-scope` argument to pandoc (and having it operate on split out individual chapters of the target .md file rather than a combined file). This behavior can be toggled off by setting `options(bookdown.render.file_scope = FALSE)`.
 
+## BUG FIXES
+
+- Fixed a JS issue in `gitbook` when it is used with jQuery 3.x (thanks, @afkegel, #895).
+
 ## MINOR CHANGES
 
 - Removed the `encoding` argument from `bookdown::render_book()`. This argument has always been ignored in **bookdown**.
