@@ -61,7 +61,7 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
-    rmarkdown (>= 2.2.6),
+    rmarkdown (>= 2.3),
     xfun (>= 0.6),
     tinytex (>= 0.12)
 Suggests:
@@ -74,8 +74,6 @@ Suggests:
     testit (>= 0.9),
     tufte,
     webshot
-Remotes:
-    rstudio/rmarkdown
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
