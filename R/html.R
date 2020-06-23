@@ -818,7 +818,7 @@ add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
     x1 = gsub(r_chap, '\\1', h)
     x2 = gsub(r_chap, '\\2', h)
     x3 = gsub(r_chap, '\\3', h)
-    content[i] = paste0(x1, chapter_fun(as.integer(x2)), x3)
+    content[i] = paste0(x1, chapter_fun(x2), x3)
   }
   content
 }
