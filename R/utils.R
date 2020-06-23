@@ -285,8 +285,8 @@ local_resources = function(x) {
 #'
 #' When any files are modified or added to the book directory, the book will be
 #' automatically recompiled, and the current HTML page in the browser will be
-#' refreshed. This function is based on \code{servr::\link[servr]{httw}()} to
-#' continuously watch a directory.
+#' refreshed. This function is based on \code{servr::\link[servr:httd]{httw}()}
+#' to continuously watch a directory.
 #'
 #' For \code{in_session = TRUE}, you will have access to all objects created in
 #' the book in the current R session: if you use a daemonized server (via the
@@ -315,8 +315,8 @@ local_resources = function(x) {
 #'   the book directory.
 #' @param quiet Whether to suppress output (e.g., the knitting progress) in the
 #'   console.
-#' @param ... Other arguments passed to \code{servr::\link[servr]{httw}()} (not
-#'   including the \code{handler} argument, which has been set internally).
+#' @param ... Other arguments passed to \code{servr::\link[servr:httd]{httw}()}
+#'   (not including the \code{handler} argument, which has been set internally).
 #' @export
 serve_book = function(
   dir = '.', output_dir = '_book', preview = TRUE, in_session = TRUE, quiet = FALSE, ...

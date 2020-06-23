@@ -13,8 +13,8 @@
 #'   TRUE}, only files specified in this argument are rendered, otherwise all R
 #'   Markdown files specified by the book are rendered.
 #' @param output_format,...,clean,envir Arguments to be passed to
-#'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
-#'   \code{...} is passed to \code{render_book()}.
+#'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
+#'   is passed to \code{render_book()}.
 #' @param clean_envir Whether to clean up the environment \code{envir} before
 #'   rendering the book. By default, the environment is cleaned when rendering
 #'   the book in a non-interactive R session.
