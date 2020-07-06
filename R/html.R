@@ -29,6 +29,7 @@
 #' @param page_builder A function to combine different parts of a chapter into a
 #'   page (an HTML character vector). See \code{\link{build_chapter}} for the
 #'   specification of this function.
+#' @param file_scope Use pandoc \code{--file-scope} option when rendering.
 #' @note These functions are expected to be used in conjunction with
 #'   \code{\link{render_book}()}. It is almost meaningless if they are used with
 #'   \code{rmarkdown::render()}. Functions like \code{\link{html_document2}} are
@@ -52,7 +53,8 @@ html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
   template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
-  split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
+  split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none'),
+  file_scope = TRUE
 ) {
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
@@ -69,7 +71,7 @@ html_chapters = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config = common_format_config(config, 'html')
+  config = common_format_config(config, 'html', file_scope = file_scope)
   config
 }
 

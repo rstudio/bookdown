@@ -23,7 +23,7 @@ gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  split_bib = TRUE, config = list(), table_css = TRUE
+  split_bib = TRUE, config = list(), table_css = TRUE, file_scope = TRUE
 ) {
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
@@ -59,7 +59,7 @@ gitbook = function(
     move_files_html(output2, lib_dir)
     output2
   }
-  config = common_format_config(config, 'html')
+  config = common_format_config(config, 'html', file_scope = file_scope)
   config
 }
 

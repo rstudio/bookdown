@@ -54,6 +54,7 @@ markdown_document2(
   md_extensions = NULL,
   pandoc_args = NULL,
   ...,
+  file_scope = TRUE,
   base_format = rmarkdown::md_document
 )
 
@@ -83,6 +84,8 @@ sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
 
 \item{base_format}{An output format function to be used as the base format.}
+
+\item{file_scope}{Use pandoc \code{--file-scope} option when rendering.}
 }
 \value{
 An R Markdown output format object to be passed to

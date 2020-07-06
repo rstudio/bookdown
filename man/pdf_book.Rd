@@ -15,7 +15,8 @@ pdf_book(
   toc_appendix = FALSE,
   toc_bib = FALSE,
   quote_footer = NULL,
-  highlight_bw = FALSE
+  highlight_bw = FALSE,
+  file_scope = TRUE
 )
 }
 \arguments{
@@ -42,6 +43,8 @@ prepended to the footer, and \code{quote_footer[2]} will be appended; if
 
 \item{highlight_bw}{Whether to convert colors for syntax highlighting to
 black-and-white (grayscale).}
+
+\item{file_scope}{Use pandoc \code{--file-scope} option when rendering.}
 }
 \description{
 Convert R Markdown files to PDF after resolving the special tokens of

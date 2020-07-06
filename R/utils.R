@@ -25,11 +25,9 @@ new_counters = function(type, rownames) {
 }
 
 # set common format config
-common_format_config = function(
-  config, format, file_scope = getOption('bookdown.render.file_scope', TRUE)
-) {
+common_format_config = function(config, format, file_scope) {
 
-  # provide file_scope unless disabled via the global option
+  # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
   # set output format
@@ -536,3 +534,10 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
   }
   c(x1, x2[sort(i)], '\\end{document}')
 }
+
+has_duplicate_footnotes <- function(input) {
+  args <- c(input, "--to", "json")
+  result <- system2(rmarkdown::pandoc_exec(), args, stdout = TRUE, stderr = TRUE)
+  any(grepl("[WARNING] Duplicate note", result, fixed = TRUE))
+}
+

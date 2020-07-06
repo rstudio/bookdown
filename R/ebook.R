@@ -15,6 +15,7 @@
 #' @param epub_version Whether to use version 3 or 2 of EPUB.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
+#' @param file_scope Use pandoc \code{--file-scope} option when rendering.
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
 #'   to use Pandoc's built-in template; pass a path to use a custom template.
 #'   The default pandoc template should be sufficient for most use cases. In
@@ -29,7 +30,7 @@ epub_book = function(
   number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL,
   cover_image = NULL, metadata = NULL, chapter_level = 1,
   epub_version = c('epub3', 'epub'), md_extensions = NULL, pandoc_args = NULL,
-  template = 'default'
+  file_scope = TRUE, template = 'default'
 ) {
   epub_version = match.arg(epub_version)
   args = c(
@@ -61,7 +62,7 @@ epub_book = function(
       move_output(output)
     }
   )
-  config = common_format_config(config, 'epub')
+  config = common_format_config(config, 'epub', file_scope = file_scope)
   config
 }
 

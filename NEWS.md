@@ -1,6 +1,6 @@
 # CHANGES IN bookdown VERSION 0.21
 
-
+- By default, the `--file-scope` argument is now only passed to pandoc when duplicate footnotes are detected in the manuscript. This is controlled by the `bookdown.render.file_scope` option, which now defaults to `"auto"`. Set the option to `TRUE` or `FALSE` to force a particular behavior irrespective of whether duplicates are detected.
 
 # CHANGES IN bookdown VERSION 0.20
 

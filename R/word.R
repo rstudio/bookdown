@@ -2,7 +2,7 @@
 #' @export
 markdown_document2 = function(
   fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, ...,
-  base_format = rmarkdown::md_document
+  file_scope = TRUE, base_format = rmarkdown::md_document
 ) {
   from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)
 
@@ -21,7 +21,7 @@ markdown_document2 = function(
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_output(output)
   }
-  config = common_format_config(config, config$pandoc$to)
+  config = common_format_config(config, config$pandoc$to, file_scope = file_scope)
   config
 }
 

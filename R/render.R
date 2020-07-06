@@ -148,7 +148,9 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
     insert_chapter_script(config, 'before'),
     insert_chapter_script(config, 'after')
   )
-  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
+
+  rmarkdown::render(main, output_format, ..., clean = clean, envir = envir,
+                    output_options = render_output_options(main))
 }
 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
@@ -191,9 +193,23 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   rmarkdown::render(
     main, output_format, ..., clean = clean, envir = envir,
+    output_options = render_output_options(main),
     run_pandoc = TRUE, knit_meta = knit_meta
   )
 
+}
+
+render_output_options <- function(main) {
+  output_options = list()
+  file_scope = getOption('bookdown.render.file_scope', "auto")
+  if (isTRUE(file_scope)) {
+    output_options$file_scope = TRUE
+  } else if (file_scope == "auto") {
+    output_options$file_scope = has_duplicate_footnotes(main)
+  } else {
+    output_options$file_scope = FALSE
+  }
+  output_options
 }
 
 #' Clean up the output files and directories from the book

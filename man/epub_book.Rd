@@ -19,6 +19,7 @@ epub_book(
   epub_version = c("epub3", "epub"),
   md_extensions = NULL,
   pandoc_args = NULL,
+  file_scope = TRUE,
   template = "default"
 )
 }
@@ -45,6 +46,8 @@ applied to the eBook.}
 \item{md_extensions}{A character string of Pandoc Markdown extensions.}
 
 \item{pandoc_args}{A vector of additional Pandoc arguments.}
+
+\item{file_scope}{Use pandoc \code{--file-scope} option when rendering.}
 
 \item{template}{Pandoc template to use for rendering. Pass \code{"default"}
 to use Pandoc's built-in template; pass a path to use a custom template.

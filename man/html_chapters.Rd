@@ -17,7 +17,8 @@ html_chapters(
   base_format = rmarkdown::html_document,
   split_bib = TRUE,
   page_builder = build_chapter,
-  split_by = c("section+number", "section", "chapter+number", "chapter", "rmd", "none")
+  split_by = c("section+number", "section", "chapter+number", "chapter", "rmd", "none"),
+  file_scope = TRUE
 )
 
 html_book(...)
@@ -55,6 +56,8 @@ Introduction} will be \file{introduction.html}; for \code{chapter+number}
 and \code{section+number}, the chapter/section numbers will be prepended to
 the HTML filenames, e.g. \file{1-introduction.html} and
 \file{2-1-literature.html}.}
+
+\item{file_scope}{Use pandoc \code{--file-scope} option when rendering.}
 }
 \value{
 An R Markdown output format object to be passed to
