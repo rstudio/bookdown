@@ -26,10 +26,10 @@ new_counters = function(type, rownames) {
 
 # set common format config
 common_format_config = function(
-  config, format, file_scope = getOption('bookdown.render.file_scope', TRUE)
+  config, format, file_scope = getOption('bookdown.render.file_scope', FALSE)
 ) {
 
-  # provide file_scope unless disabled via the global option
+  # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
   # set output format
