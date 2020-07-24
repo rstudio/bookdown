@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.21
 
+## BUG FIXES
+
+- Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
+
 ## MINOR CHANGES
 
 - The `--file-scope` behavior introduced in bookdown v0.20 is now disabled by default. This is due to broken TOC links for duplicate section names (e.g., "Exercises"; see #909) that have automatically generated identifiers.
