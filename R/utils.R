@@ -281,7 +281,7 @@ local_resources = function(x) {
   grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
 }
 
-#' Continously preview the HTML output of a book using the \pkg{servr} package
+#' Continuously preview the HTML output of a book using the \pkg{servr} package
 #'
 #' When any files are modified or added to the book directory, the book will be
 #' automatically recompiled, and the current HTML page in the browser will be

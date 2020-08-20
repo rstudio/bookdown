@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{serve_book}
 \alias{serve_book}
-\title{Continously preview the HTML output of a book using the \pkg{servr} package}
+\title{Continuously preview the HTML output of a book using the \pkg{servr} package}
 \usage{
 serve_book(
   dir = ".",
