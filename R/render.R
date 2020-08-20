@@ -75,6 +75,7 @@ render_book = function(
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
   on.exit(clean_empty_dir(output_dir), add = TRUE)
+  if (!preview) unlink(ref_keys_path(output_dir))  # clean up reference-keys.txt
   # store output directory and the initial input Rmd name
   opts$set(
     output_dir = output_dir, input_rmd = basename(input), preview = preview

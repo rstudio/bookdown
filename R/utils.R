@@ -281,6 +281,23 @@ local_resources = function(x) {
   grep('^(f|ht)tps?://.+', x, value = TRUE, invert = TRUE)
 }
 
+# write out reference keys to _book/reference-keys.txt (for the RStudio visual
+# editor to autocomplete \@ref())
+write_ref_keys = function(x) {
+  # this only works for books rendered with bookdown::render_book() (and not for
+  # rmarkdown::render())
+  if (is.null(preview <- opts$get('preview'))) return()
+  # collect reference keys from parse_fig_labels() and parse_section_labels()
+  if (is.null(d <- opts$get('output_dir'))) return()
+  p = ref_keys_path(d)
+  if (file.exists(p)) x = unique(c(xfun::read_utf8(p), x))
+  xfun::write_utf8(x, p)
+}
+
+ref_keys_path = function(d = opts$get('output_dir')) {
+  file.path(d, 'reference-keys.txt')
+}
+
 #' Continuously preview the HTML output of a book using the \pkg{servr} package
 #'
 #' When any files are modified or added to the book directory, the book will be

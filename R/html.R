@@ -673,6 +673,7 @@ parse_fig_labels = function(content, global = FALSE) {
 
   regmatches(content, m) = labs
 
+  write_ref_keys(names(arry))
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
   content = gsub('"\\(\\\\#(fig:[-/[:alnum:]]+)\\)', '"', content)
 
@@ -705,6 +706,7 @@ parse_section_labels = function(content) {
       sub(sec_ids, '\\1', content[i - 1])
     ))
   }
+  write_ref_keys(names(arry))
   arry
 }
 
