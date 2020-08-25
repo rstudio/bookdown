@@ -15,6 +15,11 @@
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
 #'   is passed to \code{render_book()}.
+#'
+#'   See \code{rmarkdown::\link{render}} and
+#'   \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the bookdown
+#'   reference book} for details on how output formatting options are set from
+#'   YAML or parameters supplied by the user when calling \code{render_book()}.
 #' @param clean_envir Whether to clean up the environment \code{envir} before
 #'   rendering the book. By default, the environment is cleaned when rendering
 #'   the book in a non-interactive R session.
@@ -35,6 +40,14 @@
 #' @examples
 #' # see https://bookdown.org/yihui/bookdown for the full documentation
 #' if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
+#' \dontrun{
+#'   # will use the default format defined in _output.yml
+#'   bookdown::render_book("index.Rmd")
+#'   # will use the options for format defined in yaml
+#'   bookdown::render_book("index.Rmd",  "pdf_book")
+#'   # If you pass an output format, it must have all the options set
+#'   bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+#' }
 render_book = function(
   input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,

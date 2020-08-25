@@ -7,6 +7,7 @@
 ## MINOR CHANGES
 
 - The `--file-scope` behavior introduced in bookdown v0.20 is now disabled by default. This is due to broken TOC links for duplicate section names (e.g., "Exercises"; see #909) that have automatically generated identifiers.
+- Updated documentation for `render_book` to make it clearer how options are set for the `output_format` parameter (See #930) (thanks, @jonathan-g, #931)
 
 # CHANGES IN bookdown VERSION 0.20
 
