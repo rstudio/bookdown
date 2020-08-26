@@ -12,6 +12,7 @@ gitbook(
   pandoc_args = NULL,
   ...,
   template = "default",
+  mathjax = "default",
   split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none"),
   split_bib = TRUE,
   config = list(),
