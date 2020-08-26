@@ -2,6 +2,8 @@
 
 ## BUG FIXES
 
+- Correctly encode the document title when creating the twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
+
 - Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
 
 ## MINOR CHANGES
