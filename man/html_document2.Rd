@@ -50,6 +50,7 @@ tufte_handout2(...)
 tufte_book2(...)
 
 markdown_document2(
+  number_sections = TRUE,
   fig_caption = TRUE,
   md_extensions = NULL,
   pandoc_args = NULL,
