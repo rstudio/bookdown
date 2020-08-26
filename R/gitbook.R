@@ -3,7 +3,7 @@
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
+#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args,mathjax ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
