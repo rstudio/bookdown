@@ -6,6 +6,8 @@
 
 - Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
 
+- Add the `number_sections` argument to `markdown_document2` and its family (thanks, @atusy, #756)
+
 ## MINOR CHANGES
 
 - The `--file-scope` behavior introduced in bookdown v0.20 is now disabled by default. This is due to broken TOC links for duplicate section names (e.g., "Exercises"; see #909) that have automatically generated identifiers.
