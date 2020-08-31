@@ -57,10 +57,21 @@ Div = function (div)
         print_debug("Type not supported")
         return div 
     end
-    -- deal with special case of more than one corresponding classes
+    -- get the theorem type as string
     if (#theorem_type ~= 1) then
+        -- warn if special case of more than one corresponding classes
         print("[WARNING] Only one custom environment can be used. Keeping the first.")
-        theorem_type = theorem_type[1]
+    end
+    theorem_type = theorem_type[1]
+    print_debug(theorem_type, "type selected ->")
+
+    -- get the id if it exists - it will we use to build label for reference
+    local id = div.identifier
+    print_debug(id, "id found ->")
+    if (id ~= nil) then 
+        -- build label
+        local label = string.format("%s:%s", theorem_abbr[theorem_type], id)
+        print_debug(label, "label for reference ->")
     end
     return div
 --[[
