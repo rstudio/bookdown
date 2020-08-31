@@ -74,32 +74,29 @@ Div = function (div)
         label = string.format("%s:%s", theorem_abbr[theorem_type], id)
         print_debug(label, "label for reference ->")
     end
-    return div
---[[
-    local options = div.attributes['data-latex']
-    if options == nil then return nil end
-  
-    -- if the output format is not latex, remove the data-latex attr and return
-    if FORMAT ~= 'latex' and FORMAT ~= 'beamer' then
-      div.attributes['data-latex'] = nil
-      return div
+
+    -- get the attributes
+    local options = div.attributes
+
+    -- create the custom environment
+
+    -- TODO: should we support beamer also ? 
+    if (FORMAT:match 'latex') then 
+        local latexoption = ""
+        if (options["data-name"] ~= nil) then
+            latexoption = string.format( "[%s]",  options["data-name"])
+            print_debug(latexoption, "latex-option ->")
+        end
+
+        table.insert(
+            div.content, 1,
+            pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, latexoption))
+        )
+        table.insert(
+            div.content,
+            pandoc.RawBlock('tex', string.format('\\end{%s}', theorem_type))
+        )
     end
-  
-    local env = div.classes[1]
-    -- if the div has no class, the object is left unchanged
-    if not env then return nil end
-  
-    -- insert raw latex before content
-    table.insert(
-      div.content, 1,
-      pandoc.RawBlock('tex', '\\begin' .. '{' .. env .. '}' .. options)
-    )
-    -- insert raw latex after content
-    table.insert(
-      div.content,
-      pandoc.RawBlock('tex', '\\end{' .. env .. '}')
-    )
+    
     return div
---]]
   end
-  
