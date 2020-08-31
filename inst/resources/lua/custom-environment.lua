@@ -68,9 +68,10 @@ Div = function (div)
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
     print_debug(id, "id found ->")
+    local label = ""
     if (id ~= nil) then 
         -- build label
-        local label = string.format("%s:%s", theorem_abbr[theorem_type], id)
+        label = string.format("%s:%s", theorem_abbr[theorem_type], id)
         print_debug(label, "label for reference ->")
     end
     return div
