@@ -69,7 +69,7 @@ Div = function (div)
     local id = div.identifier
     print_debug(id, "id found ->")
     local label = ""
-    if (id ~= nil) then 
+    if (#id ~= 0) then
         -- build label
         label = string.format("%s:%s", theorem_abbr[theorem_type], id)
         print_debug(label, "label for reference ->")
