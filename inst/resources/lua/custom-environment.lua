@@ -92,6 +92,10 @@ Div = function (div)
             div.content, 1,
             pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, latexoption))
         )
+         table.insert(
+             div.content, 2,
+             pandoc.Para(pandoc.Span("(#"..label..")", {id = label}))
+         )
         table.insert(
             div.content,
             pandoc.RawBlock('tex', string.format('\\end{%s}', theorem_type))
