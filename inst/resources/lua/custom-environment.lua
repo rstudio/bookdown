@@ -103,6 +103,28 @@ Div = function (div)
             pandoc.RawBlock('tex', string.format('\\end{%s}', theorem_type))
         )
     end
+
+    if (FORMAT:match 'html') then 
+        -- remove unwanted identifier on the div, as it will be on the span
+        div.identifier = ""
+
+        local name = ""
+        if (options["data-name"] ~= nil) then
+            name = string.format( "(%s)",  options["data-name"])
+            -- remove data-name
+            options["data-name"] = nil
+            print_debug(name, "html name ->")
+        end
+        table.insert(
+            div.content, 1,
+            pandoc.Para(
+                pandoc.Span(
+                    pandoc.Strong("(#"..label..") "..name),
+                    {id = label, class = theorem_type}
+                )
+            )
+        )
+    end
     
     return div
   end
