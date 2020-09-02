@@ -93,9 +93,14 @@ Div = function (div)
             pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, latexoption))
         )
         if (#label ~= 0) then
+            -- if no label referencing won't work but you can't reference without a label
+            -- so no one will try
             table.insert(
                 div.content, 2,
-                pandoc.Para(pandoc.Span("(#"..label..")", {id = label}))
+                pandoc.RawBlock(
+                    'tex', 
+                    string.format( "\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
+                )
              )
         end
         table.insert(
