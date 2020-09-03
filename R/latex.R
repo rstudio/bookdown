@@ -211,7 +211,7 @@ add_toc_bib = function(x) {
 restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
-  if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
+  if (length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
     theorem_defs = sprintf(
       '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
