@@ -108,22 +108,20 @@ Div = function (div)
 
     -- TODO: should we support beamer also ?
     if (FORMAT:match 'latex') then
-        local name = get_name('latex', options)
-        table.insert(
-            div.content, 1,
-            pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, name))
-        )
+        
+        local label_part = ''
         if (#label ~= 0) then
             -- if no label referencing won't work but you can't reference without a label
             -- so no one will try
-            table.insert(
-                div.content, 2,
-                pandoc.RawBlock(
-                    'tex', 
-                    string.format( "\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
-                )
-            )
+            label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
         end
+
+        local name = get_name('latex', options)
+        
+        table.insert(
+            div.content, 1,
+            pandoc.RawBlock('tex', string.format('\\begin{%s}%s%s', theorem_type, name, label_part))
+        )
         table.insert(
             div.content,
             pandoc.RawBlock('tex', string.format('\\end{%s}', theorem_type))
