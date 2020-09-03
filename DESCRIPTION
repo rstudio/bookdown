@@ -80,4 +80,4 @@ SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-Remotes: rstudio/rmarkdown
+Remotes: rstudio/rmarkdown 
