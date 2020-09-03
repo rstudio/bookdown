@@ -5,7 +5,13 @@
 -- theroem types available to be used
 local theorem_abbr = {
     theorem = 'thm',
-    lemma = 'lem'
+    lemma = 'lem',
+    corollary = 'cor',
+    proposition = 'prp',
+    conjecture = 'cnj',
+    definition = 'def',
+    example = 'exm',
+    exercise = 'exr'
 }
 local theorem_names = {}
 for k in pairs(theorem_abbr) do
