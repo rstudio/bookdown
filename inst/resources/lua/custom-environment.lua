@@ -74,6 +74,9 @@ Div = function (div)
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
     print_debug(id, "id found ->")
+    -- remove unwanted identifier on the div, as it will be on the span
+    div.identifier = ""
+
     local label = ""
     if (#id ~= 0) then
         -- build label
@@ -84,19 +87,31 @@ Div = function (div)
     -- get the attributes
     local options = div.attributes
 
+
+    function get_name(format, options)
+        local name = options["data-name"]
+        if (name == nil) then return "" end
+        local template
+        if (format == 'latex') then
+            template = "[%s]"
+        elseif (format == 'html') then
+            template = "(%s)"
+        end
+        name = string.format(template,  name)
+        print_debug(name, "name ->")
+        -- remove data-name
+        options["data-name"] = nil
+        return name
+    end
+
     -- create the custom environment
 
     -- TODO: should we support beamer also ?
     if (FORMAT:match 'latex') then
-        local latexoption = ""
-        if (options["data-name"] ~= nil) then
-            latexoption = string.format( "[%s]",  options["data-name"])
-            print_debug(latexoption, "latex-option ->")
-        end
-
+        local name = get_name('latex', options)
         table.insert(
             div.content, 1,
-            pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, latexoption))
+            pandoc.RawBlock('tex', string.format('\\begin{%s}%s', theorem_type, name))
         )
         if (#label ~= 0) then
             -- if no label referencing won't work but you can't reference without a label
@@ -116,16 +131,8 @@ Div = function (div)
     end
 
     if (FORMAT:match 'html') then
-        -- remove unwanted identifier on the div, as it will be on the span
-        div.identifier = ""
+        local name = get_name('html', options)
 
-        local name = ""
-        if (options["data-name"] ~= nil) then
-            name = string.format( "(%s)",  options["data-name"])
-            -- remove data-name
-            options["data-name"] = nil
-            print_debug(name, "html name ->")
-        end
         if (#label == 0) then
             print("[WARNING] An id needs to set in the custome divs for correct rendering")
         else
@@ -133,7 +140,7 @@ Div = function (div)
                 div.content, 1,
                 pandoc.Para(
                     pandoc.Span(
-                        pandoc.Strong("(#"..label..") "..name),
+                        pandoc.Strong("(#%s) %s", label, name),
                         {id = label, class = theorem_type}
                     )
                 )
@@ -142,4 +149,4 @@ Div = function (div)
     end
 
     return div
-  end
+end
