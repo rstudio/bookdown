@@ -120,16 +120,20 @@ Div = function (div)
             options["data-name"] = nil
             print_debug(name, "html name ->")
         end
-        table.insert(
-            div.content, 1,
-            pandoc.Para(
-                pandoc.Span(
-                    pandoc.Strong("(#"..label..") "..name),
-                    {id = label, class = theorem_type}
+        if (#label == 0) then
+            print("[WARNING] An id needs to set in the custome divs for correct rendering")
+        else
+            table.insert(
+                div.content, 1,
+                pandoc.Para(
+                    pandoc.Span(
+                        pandoc.Strong("(#"..label..") "..name),
+                        {id = label, class = theorem_type}
+                    )
                 )
             )
-        )
+        end
     end
-    
+
     return div
   end
