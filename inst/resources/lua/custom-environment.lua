@@ -132,13 +132,13 @@ Div = function (div)
         local name = get_name('html', options)
 
         if (#label == 0) then
-            print("[WARNING] An id needs to set in the custome divs for correct rendering")
+            print("[WARNING] An id needs to be set in the custom divs for correct rendering")
         else
             table.insert(
                 div.content, 1,
                 pandoc.Para(
                     pandoc.Span(
-                        pandoc.Strong("(#%s) %s", label, name),
+                        pandoc.Strong(string.format("(#%s) %s", label, name)),
                         {id = label, class = theorem_type}
                     )
                 )
