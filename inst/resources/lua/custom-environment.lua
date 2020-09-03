@@ -22,7 +22,7 @@ function print_debug(obj, label, iter)
     if (debug_mode) then
         if (type(obj) == "string") then
             print(label, obj)
-        else 
+        else
             if type(obj) == "table" then
                 for k,v in iter(obj) do
                     print(label, k, v)
@@ -33,16 +33,16 @@ function print_debug(obj, label, iter)
     return nil
 end
 
--- Modify Pandoc AST for supported custom environment 
+-- Modify Pandoc AST for supported custom environment
 Div = function (div)
     -- checking if classes correponds to a custom one
     local classes = div.classes
     -- we do nothing if no classes
-    if (#classes == 0) then 
+    if (#classes == 0) then
         print_debug("No classes in the Div")
-        return div 
+        return div
     end
-    
+
     print_debug(classes, "Div classes ->")
 
     local theorem_type = {}
@@ -53,9 +53,9 @@ Div = function (div)
     print_debug(theorem_type, "Found types ->")
 
     -- classes is not a supported one, we return as is
-    if (#theorem_type == 0) then 
+    if (#theorem_type == 0) then
         print_debug("Type not supported")
-        return div 
+        return div
     end
     -- get the theorem type as string
     if (#theorem_type ~= 1) then
@@ -80,8 +80,8 @@ Div = function (div)
 
     -- create the custom environment
 
-    -- TODO: should we support beamer also ? 
-    if (FORMAT:match 'latex') then 
+    -- TODO: should we support beamer also ?
+    if (FORMAT:match 'latex') then
         local latexoption = ""
         if (options["data-name"] ~= nil) then
             latexoption = string.format( "[%s]",  options["data-name"])
@@ -109,7 +109,7 @@ Div = function (div)
         )
     end
 
-    if (FORMAT:match 'html') then 
+    if (FORMAT:match 'html') then
         -- remove unwanted identifier on the div, as it will be on the span
         div.identifier = ""
 
