@@ -101,7 +101,7 @@ Div = function (div)
                     'tex', 
                     string.format( "\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
                 )
-             )
+            )
         end
         table.insert(
             div.content,
