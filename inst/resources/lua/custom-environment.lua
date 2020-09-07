@@ -98,7 +98,7 @@ Div = function (div)
         if (format == 'latex') then
             template = "[%s]"
         elseif (format == 'html') then
-            template = "(%s)"
+            template = " (%s)"
         end
         name = string.format(template,  name)
         print_debug(name, "name ->")
@@ -150,7 +150,7 @@ Div = function (div)
                     div.content, 1,
                     pandoc.Para(
                         pandoc.Span(
-                            pandoc.Strong(string.format("(#%s) %s", label, name)),
+                            pandoc.Strong(string.format("(#%s)%s", label, name)),
                             {id = label, class = theorem_type}
                         )
                     )
@@ -195,7 +195,6 @@ Div = function (div)
                 div.content[1].content, 1,
                     pandoc.Span({
                         pandoc.Emph(pandoc.Str(proof_label[proof_type])),
-                        pandoc.Space(),
                         pandoc.Str(name),
                         pandoc.Str("."),
                         pandoc.Space()
