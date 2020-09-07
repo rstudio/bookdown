@@ -182,8 +182,14 @@ Div = function (div)
 
             print_debug(name, "html name -> ")
 
-            -- if div is already processed by eng_proof, it passes also through this.
-            -- TODO: decide what to do to support both
+            -- if div is already processed by eng_proof, it would also modify it. 
+            -- we can ignore knowing how eng_proof modifies options$html.before2
+            -- NOT VERY RELIABLE THOUGH
+            if (div.content[1].t == "Plain" and 
+            div.content[1].content[3].t == "Span" and
+            div.content[1].content[3].classes[1] == proof_type) then
+                return div
+            end
             table.insert(
                 -- add to the first block of the div, and not as first block
                 div.content[1].content, 1,
