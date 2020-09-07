@@ -185,14 +185,13 @@ Div = function (div)
             -- if div is already processed by eng_proof, it passes also through this.
             -- TODO: decide what to do to support both
             table.insert(
-                div.content, 1,
-                pandoc.Para(
+                -- add to the first block of the div, and not as first block
+                div.content[1].content, 1,
                     pandoc.Span({
                         pandoc.Emph(pandoc.Str(proof_label[proof_type])),
                         pandoc.Str(name)},
                         {class = proof_type}
                     )
-                )
             )
         end
     end
