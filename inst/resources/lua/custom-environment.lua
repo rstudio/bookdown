@@ -20,9 +20,9 @@ end
 
 -- other special envs
 local proof_label = {
-    proof = 'Proof. ',
-    remark = 'Remark. ',
-    solution = 'Solution. '
+    proof = 'Proof',
+    remark = 'Remark',
+    solution = 'Solution'
 }
 
 -- just for debuging purpose
@@ -195,7 +195,11 @@ Div = function (div)
                 div.content[1].content, 1,
                     pandoc.Span({
                         pandoc.Emph(pandoc.Str(proof_label[proof_type])),
-                        pandoc.Str(name)},
+                        pandoc.Space(),
+                        pandoc.Str(name),
+                        pandoc.Str("."),
+                        pandoc.Space()
+                    },
                         {class = proof_type}
                     )
             )
