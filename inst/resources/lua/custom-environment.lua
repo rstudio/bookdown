@@ -201,7 +201,7 @@ Div = function (div)
                         pandoc.Str("."),
                         pandoc.Space()
                     },
-                        {class = proof_type}
+                        {id = id, class = proof_type}
                     )
             )
         end
