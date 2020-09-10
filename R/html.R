@@ -128,6 +128,16 @@ html_document2 = function(
   config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
   ))
+
+  pre = config$pre_processor # in case a pre procesor have been defined
+  config$pre_processor = function(...) {
+    c(
+      if (is.function(pre)) pre(...),
+      # pass _bookdown.yml to pandoc for accessing metadata in lua filter
+      "--metadata-file", "_bookdown.yml"
+    )
+  }
+
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
@@ -1108,4 +1118,10 @@ prepend_chapter_title = function(head, body) {
     paste0(' content="', x2), paste0(' content="', title, ' | ', x2),
     head, fixed = TRUE
   )
+}
+
+
+# Correct language config for proof environment
+apply_language_proofenv <- function(x) {
+  r1 = grep('^(<[a-z]+>)?<span class="math display">\\\\\\[', x)
 }
