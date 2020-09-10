@@ -73,7 +73,7 @@ Div = function (div)
         return div
     end
     -- get the theorem type as string
-    if (#theorem_type ~= 1 or proof_type ~= 1) then
+    if (#theorem_type > 1 or #proof_type > 1) then
         -- warn if special case of more than one corresponding classes
         print("[WARNING] Only one custom environment can be used. Keeping the first.")
     end
