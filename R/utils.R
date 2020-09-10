@@ -559,3 +559,27 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
   }
   c(x1, x2[sort(i)], '\\end{document}')
 }
+
+#' add a bookdown lua filter to use by pandoc
+#' @param filter Character vector of filenames of the lua filter to use. If
+#'   \code{lua} extension is missing, it will be added.
+#' @return character vector of pandoc argument to use in command line call.
+#' @keywords Internal
+#' @noRd
+bookdown_lua_filters = function (filter = NULL) {
+  if (pandoc2.0()) {
+    lua_folder = bookdown_file("resources", "lua")
+    if (is.null(filter)) filter = list.files(lua_folder)
+    filter = xfun::with_ext(filter, "lua")
+    c(rbind("--lua-filter", file.path(lua_folder, filter)))
+  }
+}
+
+custom_environment_filter_args = function() {
+  c(
+    # pass _bookdown.yml to pandoc for accessing metadata in lua filter
+    "--metadata-file", "_bookdown.yml",
+    # activate lua filters
+    bookdown_lua_filters("custom-environment")
+  )
+}
