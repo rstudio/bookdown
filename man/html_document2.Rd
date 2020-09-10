@@ -19,6 +19,7 @@
 \alias{powerpoint_presentation2}
 \alias{rtf_document2}
 \alias{word_document2}
+\alias{word_book}
 \title{Output formats that allow numbering and cross-referencing
 figures/tables/equations}
 \usage{
@@ -69,6 +70,8 @@ powerpoint_presentation2(...)
 rtf_document2(...)
 
 word_document2(...)
+
+word_book(...)
 }
 \arguments{
 \item{..., fig_caption, md_extensions, pandoc_args}{Arguments to be passed to a
@@ -105,6 +108,13 @@ These function are expected to work with a single R Markdown document
   functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
   package.
 }
+\section{About word output}{
+
+\code{\link[=word_book]{word_book()}} is an alias of
+\code{\link[=word_document2]{word_document2()}} and \code{...} in the former
+is passed to the later
+}
+
 \references{
 \url{https://bookdown.org/yihui/bookdown/}
 }

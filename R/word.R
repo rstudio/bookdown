@@ -61,3 +61,11 @@ rtf_document2 = function(...) {
 word_document2 = function(...) {
   markdown_document2(..., base_format = rmarkdown::word_document)
 }
+
+#' @section About word output:
+#' \code{\link[=word_book]{word_book()}} is an alias of
+#' \code{\link[=word_document2]{word_document2()}} and \code{...} in the former
+#' is passed to the later
+#' @rdname html_document2
+#' @export
+word_book = word_document2
