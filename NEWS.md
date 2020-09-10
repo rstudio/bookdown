@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.21
 
+## NEW FEATURES
+
+- Add the `number_sections` argument to `markdown_document2()` and its family. This allows to have now figure references numbered by chapters in these formats, like `word_document2()` or `odt_document2()` for example (thanks, @atusy, #756).
+
 ## BUG FIXES
 
 - Correctly encode the document title when creating the twitter sharing link from a bookdown chapter (thanks, @maelle, #934).

@@ -46,4 +46,10 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
       !any(grepl('id="fn3"', readLines('rmd/subsection-footnotes-1.html')))) {
     stop('Failed to move the footnotes back to subsection 1 in parse_footnotes.Rmd')
   }
+
+  # number sections now works in markdown_document2
+  if (!any(readLines("rmd/number-sections.md") == "1.1 subsection 1") ||
+      !any(grepl("<a href=.*>2.1</a>", readLines("rmd/number-sections.md")))) {
+    stop("Something wrong in number_sections.Rmd")
+  }
 })

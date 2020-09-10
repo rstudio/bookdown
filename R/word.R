@@ -1,19 +1,20 @@
 #' @rdname html_document2
 #' @export
 markdown_document2 = function(
-  fig_caption = TRUE, md_extensions = NULL, pandoc_args = NULL, ...,
-  base_format = rmarkdown::md_document
+  number_sections = TRUE, fig_caption = TRUE, md_extensions = NULL,
+  pandoc_args = NULL, ..., base_format = rmarkdown::md_document
 ) {
   from = rmarkdown::from_rmarkdown(fig_caption, md_extensions)
 
   config = get_base_format(base_format, list(
-    fig_caption = fig_caption, md_extensions = md_extensions, pandoc_args = pandoc_args, ...
+    number_sections = number_sections, fig_caption = fig_caption,
+    md_extensions = md_extensions, pandoc_args = pandoc_args, ...
   ))
   pre = config$pre_processor
   config$pre_processor = function(metadata, input_file, ...) {
     # Pandoc does not support numbered sections for Word, so figures/tables have
     # to be numbered globally from 1 to n
-    process_markdown(input_file, from, pandoc_args, TRUE)
+    process_markdown(input_file, from, pandoc_args, !number_sections)
     if (is.function(pre)) pre(metadata, input_file, ...)
   }
   post = config$post_processor
