@@ -54,6 +54,13 @@ html_chapters = function(
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
+
+  # add pandoc args
+  pandoc_args = c(
+    pandoc_args2(pandoc_args),
+    custom_environment_filter_args()
+  )
+
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
@@ -126,11 +133,10 @@ html_document2 = function(
   ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
 
-
-  # pass _bookdown.yml to pandoc for accessing metadata in lua filter
+  # add pandoc args
   pandoc_args = c(
     pandoc_args2(pandoc_args),
-    "--metadata-file", "_bookdown.yml"
+    custom_environment_filter_args()
   )
 
   config = get_base_format(base_format, list(
