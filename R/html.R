@@ -1124,9 +1124,3 @@ prepend_chapter_title = function(head, body) {
     head, fixed = TRUE
   )
 }
-
-
-# Correct language config for proof environment
-apply_language_proofenv <- function(x) {
-  r1 = grep('^(<[a-z]+>)?<span class="math display">\\\\\\[', x)
-}
