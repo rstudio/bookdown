@@ -578,7 +578,7 @@ bookdown_lua_filters = function (filter = NULL) {
 custom_environment_filter_args = function() {
   c(
     # pass _bookdown.yml to pandoc for accessing metadata in lua filter
-    "--metadata-file", "_bookdown.yml",
+    if (file.exists(config_file <- "_bookdown.yml")) c("--metadata-file", config_file),
     # activate lua filters
     bookdown_lua_filters("custom-environment")
   )
