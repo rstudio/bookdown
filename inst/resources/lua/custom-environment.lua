@@ -48,11 +48,13 @@ end
 
 Meta = function(m) 
     -- For internationalization feature of bookdown
-    if (m.language.label ~= nil) then
-        for k,v in pairs(m.language.label) do
-            if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
-                proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
-                print_debug(proof_label[k], k)
+    if (m.language ~= nil) then
+        if (m.language.label ~= nil) then
+            for k,v in pairs(m.language.label) do
+                if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
+                    proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
+                    print_debug(proof_label[k], k)
+                end
             end
         end
     end
