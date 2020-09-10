@@ -125,18 +125,17 @@ tufte_html_book = function(...) {
 html_document2 = function(
   ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
-  config = get_base_format(base_format, list(
-    ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
-  ))
 
-  pre = config$pre_processor # in case a pre procesor have been defined
-  config$pre_processor = function(...) {
-    c(
-      if (is.function(pre)) pre(...),
-      # pass _bookdown.yml to pandoc for accessing metadata in lua filter
-      "--metadata-file", "_bookdown.yml"
-    )
-  }
+
+  # pass _bookdown.yml to pandoc for accessing metadata in lua filter
+  pandoc_args = c(
+    pandoc_args2(pandoc_args),
+    "--metadata-file", "_bookdown.yml"
+  )
+
+  config = get_base_format(base_format, list(
+    ..., number_sections = number_sections, pandoc_args = pandoc_args
+  ))
 
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
