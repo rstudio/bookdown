@@ -561,8 +561,8 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
 }
 
 #' add a bookdown lua filter to use by pandoc
-#' @param filter Character vector of filenames of the lua filter to use. If
-#'   \code{lua} extension is missing, it will be added.
+#' @param filter Character vector of file names of lua filters to use. If
+#'   \code{.lua} extension is missing, it will be added.
 #' @return character vector of pandoc argument to use in command line call.
 #' @keywords Internal
 #' @noRd
