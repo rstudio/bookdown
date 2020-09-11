@@ -83,7 +83,7 @@ Div = function (div)
 
     -- classes is not a supported one, we return as is
     if (#theorem_type == 0 and #proof_label ~= 0) then
-        print_debug("Custom class not supported")
+        print_debug("Not a bookdown supported custom class")
         return div
     end
     -- get the theorem type as string
@@ -103,6 +103,11 @@ Div = function (div)
     div.identifier = ""
     -- get the attributes
     local options = div.attributes
+    if (options["data-latex"] ~= nil) then 
+        -- so that latex-divs.lua in rmarkdown does not activate
+        print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It as been ignored.")
+        options["data-latex"] == nil
+    end
 
     -- return [name] for latex, and (name) for html
     function get_name(format, options)
