@@ -106,7 +106,7 @@ Div = function (div)
     if (options["data-latex"] ~= nil) then 
         -- so that latex-divs.lua in rmarkdown does not activate
         print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It as been ignored.")
-        options["data-latex"] == nil
+        options["data-latex"] = nil
     end
 
     -- return [name] for latex, and (name) for html
