@@ -47,13 +47,16 @@ function print_debug(obj, label, iter)
 end
 
 Meta = function(m) 
-    -- For internationalization feature of bookdown
-    if (m.language ~= nil) then
-        if (m.language.label ~= nil) then
-            for k,v in pairs(m.language.label) do
-                if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
-                    proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
-                    print_debug(proof_label[k], k)
+    bookdownmeta = m.bookdown
+    if (bookdownmeta ~= nil) then
+        -- For internationalization feature of bookdown
+        if (bookdownmeta.language ~= nil) then
+            if (bookdownmeta.language.label ~= nil) then
+                for k,v in pairs(bookdownmeta.language.label) do
+                    if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
+                        proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
+                        print_debug(proof_label[k], k)
+                    end
                 end
             end
         end

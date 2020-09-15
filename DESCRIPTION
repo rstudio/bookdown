@@ -63,7 +63,8 @@ Imports:
     knitr (>= 1.22),
     rmarkdown (>= 2.3.5),
     xfun (>= 0.13),
-    tinytex (>= 0.12)
+    tinytex (>= 0.12),
+    yaml (>= 2.1.19)
 Suggests:
     htmlwidgets,
     rstudioapi,
