@@ -560,36 +560,22 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
   c(x1, x2[sort(i)], '\\end{document}')
 }
 
-#' add a bookdown lua filter to use by pandoc
-#' @param filter Character vector of file names of lua filters to use. If
-#'   \code{.lua} extension is missing, it will be added.
-#' @return character vector of pandoc argument to use in command line call.
-#' @keywords Internal
-#' @noRd
+# bookdown lua filters paths
 bookdown_lua_filters = function (filter = NULL) {
-  if (pandoc2.0()) {
-    lua_folder = bookdown_file("resources", "lua")
-    if (is.null(filter)) filter = list.files(lua_folder)
-    filter = xfun::with_ext(filter, "lua")
-    c(rbind(
-      "--lua-filter",
-      rmarkdown::pandoc_path_arg(file.path(lua_folder, filter))
-    ))
-  }
+  lua_folder = bookdown_file("resources", "lua")
+  if (is.null(filter)) filter = list.files(lua_folder)
+  filter = xfun::with_ext(filter, "lua")
+  rmarkdown::pandoc_path_arg(file.path(lua_folder, filter))
 }
 
-custom_environment_filter_args = function() {
+# To pass bookdown meta to pandoc lua filters
+bookdown_metadata_file_arg = function() {
   # This is only required for pandoc > 2
   if (pandoc2.0()) {
-    c(
-      # pass _bookdown.yml to pandoc for accessing metadata in lua filter
-      if (length(config <- load_config())) {
-        tmp_yml <- file.path(tempdir(), "_bookdown-meta.yml")
-        yaml::write_yaml(list(bookdown = config), tmp_yml)
-        c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
-      },
-      # activate lua filters
-      bookdown_lua_filters("custom-environment")
-    )
+    if (length(config <- load_config())) {
+      tmp_yml <- file.path(tempdir(), "_bookdown-meta.yml")
+      yaml::write_yaml(list(bookdown = config), tmp_yml)
+      c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
+    }
   }
 }
