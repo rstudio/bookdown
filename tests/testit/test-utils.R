@@ -115,6 +115,14 @@ assert('source_files() handles several configurations correcly', {
   TRUE
 })
 
+assert('bookdown_lua_filters helper works as expected', {
+  filter <- bookdown_lua_filters("filter")
+  (grepl("resources/lua$", dirname(filter)))
+  (basename(filter) %==% "filter.lua")
+  (basename(bookdown_lua_filters("filter.lua")) %==% "filter.lua")
+  (basename(bookdown_lua_filters(c("a", "b"))) %==% c("a.lua", "b.lua"))
+})
+
 assert('_bookdown-meta is generated to be found by pandoc', {
   if (pandoc2.0()) {
     dir.create(project <- tempfile())
