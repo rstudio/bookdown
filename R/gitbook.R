@@ -35,17 +35,15 @@ gitbook = function(
     template = bookdown_file('templates', 'gitbook.html')
   }
 
-  # add pandoc args
-  pandoc_args = c(
-    pandoc_args2(pandoc_args),
-    custom_environment_filter_args()
-  )
-
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
-    template = template, pandoc_args = pandoc_args, ...
+    template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
+
+  # add custom environment lua filter
+  config <- add_custom_environment_args(config)
+
   split_by = match.arg(split_by)
 
   post = config$post_processor  # in case a post processor have been defined

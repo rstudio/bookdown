@@ -579,3 +579,19 @@ bookdown_metadata_file_arg = function() {
     }
   }
 }
+
+# add custom environment filter to a format
+add_custom_environment_args <- function(format) {
+  if (!is(format, "rmarkdown_output_format"))
+    stop("format should be a rmarkdown output format.")
+  # prepend the filter
+  format$pandoc$lua_filters <- c(
+    bookdown_lua_filters("custom-environment"), format$pandoc$lua_filters
+  )
+  # and add bookdown metadata file for the filter to work
+  format$pandoc$args <- c(bookdown_metadata_file_arg(), format$pandoc$args)
+  # return the modified format
+  format
+}
+
+

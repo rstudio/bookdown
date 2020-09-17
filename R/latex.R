@@ -37,16 +37,15 @@ pdf_book = function(
   toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
 
-  # add pandoc args
-  pandoc_args = c(
-    pandoc_args2(pandoc_args),
-    custom_environment_filter_args()
-  )
-
   config = get_base_format(base_format, list(
+    ...,
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
-    pandoc_args = pandoc_args, ...
+    pandoc_args = pandoc_args2(pandoc_args)
   ))
+
+  # add custom environment lua filter
+  config <- add_custom_environment_args(config)
+
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {

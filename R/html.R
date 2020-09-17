@@ -137,12 +137,9 @@ html_document2 = function(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
   ))
 
-  # prepend bookdown lua filters
-  config$pandoc$lua_filters <- c(
-    bookdown_lua_filters("custom-environment"), config$pandoc_lua_filters
-  )
-  # and add bookdown metadata file for the filter to work
-  config$pandoc$args <- c(bookdown_metadata_file_arg(), config$pandoc$args)
+  # add custom environment lua filter
+  config <- add_custom_environment_args(config)
+
 
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
