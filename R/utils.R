@@ -579,14 +579,17 @@ bookdown_lua_filters = function (filter = NULL) {
 }
 
 custom_environment_filter_args = function() {
-  c(
-    # pass _bookdown.yml to pandoc for accessing metadata in lua filter
-    if (length(config <- load_config())) {
-      tmp_yml <- tempfile("_bookdown", fileext = ".yml")
-      yaml::write_yaml(list(bookdown = config), tmp_yml)
-      c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
-    },
-    # activate lua filters
-    bookdown_lua_filters("custom-environment")
-  )
+  # This is only required for pandoc > 2
+  if (pandoc2.0()) {
+    c(
+      # pass _bookdown.yml to pandoc for accessing metadata in lua filter
+      if (length(config <- load_config())) {
+        tmp_yml <- file.path(tempdir(), "_bookdown-meta.yml")
+        yaml::write_yaml(list(bookdown = config), tmp_yml)
+        c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
+      },
+      # activate lua filters
+      bookdown_lua_filters("custom-environment")
+    )
+  }
 }
