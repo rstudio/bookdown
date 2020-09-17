@@ -55,17 +55,15 @@ html_chapters = function(
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
 
-  # add pandoc args
-  pandoc_args = c(
-    pandoc_args2(pandoc_args),
-    custom_environment_filter_args()
-  )
-
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   ))
+
+  # add custom environment lua filter
+  config <- add_custom_environment_args(config)
+
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
