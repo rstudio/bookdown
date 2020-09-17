@@ -114,3 +114,22 @@ assert('source_files() handles several configurations correcly', {
 
   TRUE
 })
+
+assert('_bookdown-meta is generated to be found by pandoc', {
+  if (pandoc2.0()) {
+    dir.create(project <- tempfile())
+    old = setwd(project)
+    (custom_environment_filter_args() %==%
+        bookdown_lua_filters("custom-environment"))
+    yaml::write_yaml(list(dummy = "dummy"), "_bookdown.yml")
+    args <- custom_environment_filter_args()
+    (xfun::in_dir(tempdir(), file.exists("_bookdown-meta.yml")))
+    ("--metadata-file" %in% args)
+    # clean tests
+    unlink(project, recursive = TRUE); rm(project)
+    setwd(old); rm(old)
+  } else {
+    custom_environment_filter_args() %==% NULL
+  }
+  TRUE
+})
