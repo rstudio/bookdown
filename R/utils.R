@@ -593,5 +593,3 @@ add_custom_environment_args <- function(format) {
   # return the modified format
   format
 }
-
-

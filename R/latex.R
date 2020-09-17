@@ -38,9 +38,8 @@ pdf_book = function(
 ) {
 
   config = get_base_format(base_format, list(
-    ...,
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
-    pandoc_args = pandoc_args2(pandoc_args)
+    pandoc_args = pandoc_args2(pandoc_args), ...
   ))
 
   # add custom environment lua filter

@@ -138,7 +138,6 @@ html_document2 = function(
   # add custom environment lua filter
   config <- add_custom_environment_args(config)
 
-
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
