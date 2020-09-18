@@ -165,6 +165,19 @@ Div = function (div)
         if (FORMAT:match 'html') then
             local name = get_name('html', options)
 
+            -- if div is already processed by eng_theorem, it would also modify it. 
+            -- we can ignore knowing how eng_theorem modifies options$html.before2
+            -- It can be Plain or Para depending if a name was used or not.
+            -- NOT VERY RELIABLE THOUGH
+            if (div.content[1].t == "Plain" or div.content[1].t == "Para") then
+                for i,el in pairs(div.content[1].content) do
+                    if (el.t == "Span" and el.classes[1] == theorem_type) then
+                        print_debug("Already processed by knitr engine.")
+                        return div
+                    end
+                end
+            end
+
             if (#label == 0) then
                 print("[WARNING] An id needs to be set in the custom divs for correct rendering")
             else
