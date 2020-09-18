@@ -184,10 +184,10 @@ Div = function (div)
                     -- add to the first block of the div, and not as first block
                     div.content[1].content, 1,
                     pandoc.Span(
-                            pandoc.Strong(string.format("(#%s)%s", label, name)),
-                            {id = label, class = theorem_type}
-                        )
+                        pandoc.Strong(string.format("(#%s)%s ", label, name)),
+                        {id = label, class = theorem_type}
                     )
+                )
                 )
             end
         end
