@@ -28,18 +28,19 @@ local proof_label = {
 -- just for debuging purpose
 local debug_mode = os.getenv("DEBUG_PANDOC_LUA") == "TRUE"
 
-function print_debug(obj, label, iter)
+function print_debug(label,obj,iter)
+    obj = obj or nil
     iter = iter or pairs
     label = label or ""
     label = "DEBUG (from custom-environment.lua): "..label
     if (debug_mode) then
-        if (type(obj) == "string") then
-            print(label, obj)
-        else
-            if type(obj) == "table" then
-                for k,v in iter(obj) do
-                    print(label, k, v)
-                end
+        if not obj then
+          print(label)
+        elseif (type(obj) == "string") then
+            print(label.." "..obj)
+        elseif type(obj) == "table" then
+            for k,v in iter(obj) do
+                print(label.."id:"..k.. " val:"..v)
             end
         end
     end
@@ -54,8 +55,9 @@ Meta = function(m)
             if (bookdownmeta.language.label ~= nil) then
                 for k,v in pairs(bookdownmeta.language.label) do
                     if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
+                        -- remove any undesired space (3 or less)
                         proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
-                        print_debug(proof_label[k], k)
+                        print_debug("Translation-> "..k..":", proof_label[k])
                     end
                 end
             end
@@ -69,11 +71,11 @@ Div = function (div)
     local classes = div.classes
     -- we do nothing if no classes
     if (#classes == 0) then
-        print_debug("No classes in the Div")
+        print_debug("No classes in the Div.")
         return div
     end
 
-    print_debug(classes, "Div classes ->")
+    print_debug("Div classes -> " , classes)
 
     local theorem_type = {}
     local proof_type = {}
@@ -82,7 +84,7 @@ Div = function (div)
         if (proof_label[v] ~= nil) then proof_type[i] = v end
     end
     -- test
-    print_debug(theorem_type, "Found types ->")
+    print_debug("Found types -> ", theorem_type)
 
     -- classes is not a supported one, we return as is
     if (#theorem_type == 0 and #proof_type == 0) then
@@ -96,12 +98,12 @@ Div = function (div)
     end
     theorem_type = theorem_type[1]
     proof_type = proof_type[1]
-    print_debug(theorem_type, "theorem type selected ->")
-    print_debug(proof_type, "proof type selected ->")
+    print_debug("theorem type selected -> ", theorem_type)
+    print_debug("proof type selected -> ", proof_type)
 
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
-    print_debug(id, "id found ->")
+    print_debug("id found -> ", id)
     -- remove unwanted identifier on the div, as it will be on the span
     div.identifier = ""
     -- get the attributes
@@ -123,19 +125,19 @@ Div = function (div)
             template = " (%s)"
         end
         name = string.format(template,  name)
-        print_debug(name, "name ->")
+        print_debug("name -> ", name)
         -- remove data-name
         options["data-name"] = nil
         return name
     end
 
     if (theorem_type ~= nil) then
-        print_debug("Enter Theorem part")
+        print_debug("Enter Theorem part.")
         local label = ""
         if (#id ~= 0) then
             -- build label
             label = string.format("%s:%s", theorem_abbr[theorem_type], id)
-            print_debug(label, "label for reference ->")
+            print_debug("label for reference -> ", label)
         end
 
         -- create the custom environment
@@ -179,7 +181,8 @@ Div = function (div)
             end
 
             if (#label == 0) then
-                print("[WARNING] An id needs to be set in the custom divs for correct rendering")
+                print("[WARNING] An id needs to be set in the custom divs for correct rendering. Please add one to one of your "..theorem_type.." Fenced Divs.")
+                print_debug("No #id means the div is not processed by the lua filter.")
             else
                 table.insert(
                     div.content, 1,
@@ -195,7 +198,7 @@ Div = function (div)
     end
 
     if (proof_type ~= nil) then
-        print_debug("Enter Proof part")
+        print_debug("Enter Proof part.")
         -- create the custom environment
 
         -- TODO: should we support beamer also ?
@@ -216,7 +219,7 @@ Div = function (div)
         if (FORMAT:match 'html') then
             local name = get_name('html', options)
 
-            print_debug(name, "html name -> ")
+            print_debug("html name -> ", name)
 
             -- if div is already processed by eng_proof, it would also modify it. 
             -- we can ignore knowing how eng_proof modifies options$html.before2
