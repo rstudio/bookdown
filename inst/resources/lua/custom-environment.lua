@@ -31,7 +31,7 @@ local debug_mode = os.getenv("DEBUG_PANDOC_LUA") == "TRUE"
 function print_debug(obj, label, iter)
     iter = iter or pairs
     label = label or ""
-    label = "DEBUG: "..label
+    label = "DEBUG (from custom-environment.lua): "..label
     if (debug_mode) then
         if (type(obj) == "string") then
             print(label, obj)
@@ -85,7 +85,7 @@ Div = function (div)
     print_debug(theorem_type, "Found types ->")
 
     -- classes is not a supported one, we return as is
-    if (#theorem_type == 0 and #proof_label ~= 0) then
+    if (#theorem_type == 0 and #proof_type == 0) then
         print_debug("Not a bookdown supported custom class")
         return div
     end
@@ -130,7 +130,7 @@ Div = function (div)
     end
 
     if (theorem_type ~= nil) then
-        print("Theorem part")
+        print_debug("Enter Theorem part")
         local label = ""
         if (#id ~= 0) then
             -- build label
@@ -182,6 +182,7 @@ Div = function (div)
     end
 
     if (proof_type ~= nil) then
+        print_debug("Enter Proof part")
         -- create the custom environment
 
         -- TODO: should we support beamer also ?
@@ -210,6 +211,7 @@ Div = function (div)
             if (div.content[1].t == "Plain") then
                 for i,el in pairs(div.content[1].content) do
                     if (el.t == "Span" and el.classes[1] == proof_type) then
+                        print_debug("Already processed by knitr engine.")
                         return div
                     end
                 end
