@@ -188,7 +188,6 @@ Div = function (div)
                         {id = label, class = theorem_type}
                     )
                 )
-                )
             end
         end
     end
