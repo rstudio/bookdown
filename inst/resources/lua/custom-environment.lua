@@ -13,10 +13,6 @@ local theorem_abbr = {
     example = 'exm',
     exercise = 'exr'
 }
-local theorem_names = {}
-for k in pairs(theorem_abbr) do
-  table.insert(theorem_names, k)
-end
 
 -- other special envs
 local proof_label = {
