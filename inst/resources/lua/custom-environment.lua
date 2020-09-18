@@ -181,9 +181,9 @@ Div = function (div)
                 print_debug("No #id means the div is not processed by the lua filter.")
             else
                 table.insert(
-                    div.content, 1,
-                    pandoc.Para(
-                        pandoc.Span(
+                    -- add to the first block of the div, and not as first block
+                    div.content[1].content, 1,
+                    pandoc.Span(
                             pandoc.Strong(string.format("(#%s)%s", label, name)),
                             {id = label, class = theorem_type}
                         )
