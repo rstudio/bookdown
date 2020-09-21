@@ -593,3 +593,77 @@ add_custom_environment_args = function(format) {
   # return the modified format
   format
 }
+
+#' Convert theorem and proof engine to new fenced div syntax
+#'
+#' This function is helper to quickly transition from the old syntax to the knew one.
+#' It will parse a R Markdown file to replace any chunk using one of
+#' the theorems or proofs engine to use the new syntax using Pandoc's fenced div.
+#'
+#' It will replace backticks with colon, use the engine as class, use the chunk
+#' label as id and keep the attributes as is. We stronlgy advice to check the changes.
+#'
+#' @section Warning:
+#'
+#'   \strong{Use with care !}. This function overwrite the file if an engine
+#'   needs to me modified. We strongly advice to use on files that are under
+#'   version control or to create backup copy.
+#'
+#'   You should check the modifications, especially is you used theorem or proof
+#'   engine in a non standard way.
+#'
+#' @references
+#' \itemize{
+#'   \item \href{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems}{About Theorems and proofs}
+#'   \item \href{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}{About custom blocks}
+#' }
+#'
+#' @param file Path to the file to modify.
+#' @param modify Set to \code{TRUE} to overwrite the file with the theroems and
+#'   proofs environments changed.
+#'
+#' @export
+convert_to_fenced_div = function(file, modify = FALSE) {
+  if (length(file) > 1) stop("file must be only one file", call. = FALSE)
+  engines = c(names(theorem_abbr), names(label_names_math2))
+  x = xfun::read_utf8(file)
+  # identify block
+  md_pattern = knitr::all_patterns$md
+  block_start = grep(md_pattern$chunk.begin, x)
+  # extract params
+  params = gsub(md_pattern$chunk.begin, "\\1", x[block_start])
+  # find block with custom environment engine
+  reg = sprintf("^(%s).*", paste(engines, collapse = "|"))
+  to_convert = grepl(reg, params)
+  n_blocks = length(to_convert)
+  if (modify) {
+    # only modify those blocks
+    params = params[to_convert]
+    block_start = block_start[to_convert]
+    block_end = grep(md_pattern$chunk.end, x)
+    block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
+    # add a . to engine name
+    params = paste0(".", params)
+    # change label to id
+    params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
+    params = gsub("label\\s*=\\s*\"(.*)\"", "#\\1", params)
+    # clean , and space
+    params = gsub(",\\s*", " ", params)
+    params = gsub("\\s*=\\s*", "=", params)
+
+    # modify the blocks
+    x[block_start] = sprintf("::: {%s}", params)
+    x[block_end] = ":::"
+
+    # write back
+    xfun::write_utf8(x, file)
+
+    message(n_blocks, " chunks have been modified in the file ", file, ".")
+    invisible(TRUE)
+  } else {
+    message(n_blocks, " chunks would be modified in the file ", file, ".\n",
+            "Set `modify = TRUE` if you are ready to modify your file.\n",
+            "Use at your own risk - we advice to use git to undo changes if necessary.")
+    invisible(FALSE)
+  }
+}
