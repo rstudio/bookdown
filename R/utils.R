@@ -670,7 +670,7 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   } else {
     message(n_blocks, " chunks would be modified in the file ", file, ".\n",
             "Set `modify = TRUE` if you are ready to modify your file.\n",
-            "Use at your own risk - we advice to use git to undo changes if necessary.")
+            "Use at your own risk - we advice to use version control or to backup your file.")
     return(invisible(FALSE))
   }
 }
