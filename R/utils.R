@@ -646,7 +646,7 @@ convert_to_fenced_div = function(file, modify = FALSE) {
     params = paste0(".", params)
     # change label to id
     params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
-    params = gsub("label\\s*=\\s*\"(.*)\"", "#\\1", params)
+    params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
     # clean , and space
     params = gsub(",\\s*", " ", params)
     params = gsub("\\s*=\\s*", "=", params)
