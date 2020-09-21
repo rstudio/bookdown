@@ -137,3 +137,42 @@ assert('_bookdown-meta is generated to be found by pandoc', {
   }
   TRUE
 })
+
+assert('convert engine to fenced divs', {
+  tmp_file <- tempfile(fileext = ".Rmd")
+  old <- c(
+    "```{theorem, label = \"thm\", name = \"My Theorem\"}",
+    "Some text",
+    "```",
+    "",
+    "# A header",
+    "",
+    "```{remark, name = \"My Remark\"}",
+    "Some text",
+    "```",
+    "",
+    "```{lemma, my-lem}",
+    "Some text",
+    "```")
+  new <- c(
+    "::: {.theorem #thm name=\"My Theorem\"}",
+    "Some text",
+    ":::",
+    "",
+    "# A header",
+    "",
+    "::: {.remark name=\"My Remark\"}",
+    "Some text",
+    ":::",
+    "",
+    "::: {.lemma #my-lem}",
+    "Some text",
+    ":::")
+  xfun::write_utf8(old, tmp_file)
+  suppressMessages(convert_to_fenced_div(tmp_file))
+  (xfun::read_utf8(tmp_file) %==% old)
+  suppressMessages(convert_to_fenced_div(tmp_file, TRUE))
+  (xfun::read_utf8(tmp_file) %==% new)
+  unlink(tmp_file)
+  TRUE
+})
