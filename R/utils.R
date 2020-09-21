@@ -638,7 +638,7 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   # find block with custom environment engine
   reg = sprintf("^(%s).*", paste(engines, collapse = "|"))
   to_convert = grepl(reg, params)
-  n_blocks = length(to_convert)
+  n_blocks = sum(to_convert)
   if (n_blocks == 0) {
     message("Nothing to modify.")
     return(invisible(FALSE))
@@ -670,7 +670,7 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   } else {
     message(n_blocks, " chunks would be modified in the file ", file, ".\n",
             "Set `modify = TRUE` if you are ready to modify your file.\n",
-            "Use at your own risk - we advice to use version control or to backup your file.")
+            "Use at your own risk - we advice to use version control or tobackup your file.")
     return(invisible(FALSE))
   }
 }

@@ -181,6 +181,10 @@ assert('convert engine to fenced divs', {
   (xfun::isFALSE(res))
   suppressMessages(res <- convert_to_fenced_div(tmp_file, TRUE))
   (xfun::isFALSE(res))
+  # Other chunk are unchange
+  xfun::write_utf8("```{r, lab, echo=FALSE}\n1+1\n```\n", tmp_file)
+  suppressMessages(res <- convert_to_fenced_div(tmp_file, TRUE))
+  (xfun::isFALSE(res))
   unlink(tmp_file)
   TRUE
 })
