@@ -112,7 +112,7 @@ Div = function (div)
 
     -- return [name] for latex, and (name) for html
     function get_name(format, options)
-        local name = options["data-name"]
+        local name = options["name"]
         if (name == nil) then return "" end
         local template
         if (format == 'latex') then
@@ -123,7 +123,7 @@ Div = function (div)
         name = string.format(template,  name)
         print_debug("name -> ", name)
         -- remove data-name
-        options["data-name"] = nil
+        options["name"] = nil
         return name
     end
 
