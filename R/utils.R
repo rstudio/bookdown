@@ -573,7 +573,7 @@ bookdown_metadata_file_arg = function() {
   # This is only required for pandoc > 2
   if (pandoc2.0()) {
     if (length(config <- load_config())) {
-      tmp_yml <- file.path(tempdir(), "_bookdown-meta.yml")
+      tmp_yml = file.path(tempdir(), "_bookdown-meta.yml")
       yaml::write_yaml(list(bookdown = config), tmp_yml)
       c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
     }
@@ -581,15 +581,15 @@ bookdown_metadata_file_arg = function() {
 }
 
 # add custom environment filter to a format
-add_custom_environment_args <- function(format) {
+add_custom_environment_args = function(format) {
   if (!is(format, "rmarkdown_output_format"))
     stop("format should be a rmarkdown output format.")
   # prepend the filter
-  format$pandoc$lua_filters <- c(
+  format$pandoc$lua_filters = c(
     bookdown_lua_filters("custom-environment"), format$pandoc$lua_filters
   )
   # and add bookdown metadata file for the filter to work
-  format$pandoc$args <- c(bookdown_metadata_file_arg(), format$pandoc$args)
+  format$pandoc$args = c(bookdown_metadata_file_arg(), format$pandoc$args)
   # return the modified format
   format
 }
