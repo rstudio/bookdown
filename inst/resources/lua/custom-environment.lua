@@ -43,6 +43,13 @@ function print_debug(label,obj,iter)
     return nil
 end
 
+-- create a unique id for a div with none provided
+local counter = 0
+function unlabeled_div()
+    counter = counter + 1 
+    return "unlabeled-div-"..(counter)
+end
+
 Meta = function(m) 
     bookdownmeta = m.bookdown
     if (bookdownmeta ~= nil) then
@@ -99,7 +106,9 @@ Div = function (div)
 
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
-    print_debug("id found -> ", id)
+    -- if no id, one is generated so that bookdown labelling mechanism works
+    if #id == 0 then id = unlabeled_div() end
+    print_debug("id -> ", id)
     -- remove unwanted identifier on the div, as it will be on the span
     div.identifier = ""
     -- get the attributes
@@ -129,24 +138,15 @@ Div = function (div)
 
     if (theorem_type ~= nil) then
         print_debug("Enter Theorem part.")
-        local label = ""
-        if (#id ~= 0) then
-            -- build label
-            label = string.format("%s:%s", theorem_abbr[theorem_type], id)
-            print_debug("label for reference -> ", label)
-        end
+        local label = string.format("%s:%s", theorem_abbr[theorem_type], id)
+        print_debug("label for reference -> ", label)
 
         -- create the custom environment
 
         -- TODO: should we support beamer also ?
         if (FORMAT:match 'latex') then
             
-            local label_part = ''
-            if (#label ~= 0) then
-                -- if no label referencing won't work but you can't reference without a label
-                -- so no one will try
-                label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
-            end
+            local label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
 
             local name = get_name('latex', options)
             
@@ -175,20 +175,14 @@ Div = function (div)
                     end
                 end
             end
-
-            if (#label == 0) then
-                print("[WARNING] An id needs to be set in the custom divs for correct rendering. Please add one to one of your "..theorem_type.." Fenced Divs.")
-                print_debug("No #id means the div is not processed by the lua filter.")
-            else
-                table.insert(
-                    -- add to the first block of the div, and not as first block
-                    div.content[1].content, 1,
-                    pandoc.Span(
-                        pandoc.Strong(string.format("(#%s)%s ", label, name)),
-                        {id = label, class = theorem_type}
-                    )
+            table.insert(
+                -- add to the first block of the div, and not as first block
+                div.content[1].content, 1,
+                pandoc.Span(
+                    pandoc.Strong(string.format("(#%s)%s ", label, name)),
+                    {id = label, class = theorem_type}
                 )
-            end
+            )
         end
     end
 
