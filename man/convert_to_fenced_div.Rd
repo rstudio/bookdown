@@ -12,6 +12,10 @@ convert_to_fenced_div(file, modify = FALSE)
 \item{modify}{Set to \code{TRUE} to overwrite the file with the theroems and
 proofs environments changed.}
 }
+\value{
+\code{TRUE} or \code{FALSE} invisibly if the file has been modified
+  or not.
+}
 \description{
 This function is helper to quickly transition from the old syntax to the knew one.
 It will parse a R Markdown file to replace any chunk using one of

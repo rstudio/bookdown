@@ -622,6 +622,9 @@ add_custom_environment_args = function(format) {
 #' @param modify Set to \code{TRUE} to overwrite the file with the theroems and
 #'   proofs environments changed.
 #'
+#' @return \code{TRUE} or \code{FALSE} invisibly if the file has been modified
+#'   or not.
+#'
 #' @export
 convert_to_fenced_div = function(file, modify = FALSE) {
   if (length(file) > 1) stop("file must be only one file", call. = FALSE)
@@ -636,6 +639,10 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   reg = sprintf("^(%s).*", paste(engines, collapse = "|"))
   to_convert = grepl(reg, params)
   n_blocks = length(to_convert)
+  if (n_blocks == 0) {
+    message("Nothing to modify.")
+    return(invisible(FALSE))
+  }
   if (modify) {
     # only modify those blocks
     params = params[to_convert]
@@ -659,11 +666,11 @@ convert_to_fenced_div = function(file, modify = FALSE) {
     xfun::write_utf8(x, file)
 
     message(n_blocks, " chunks have been modified in the file ", file, ".")
-    invisible(TRUE)
+    return(invisible(TRUE))
   } else {
     message(n_blocks, " chunks would be modified in the file ", file, ".\n",
             "Set `modify = TRUE` if you are ready to modify your file.\n",
             "Use at your own risk - we advice to use git to undo changes if necessary.")
-    invisible(FALSE)
+    return(invisible(FALSE))
   }
 }
