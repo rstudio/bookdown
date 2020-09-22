@@ -50,6 +50,7 @@ function unlabeled_div()
     return "unlabeled-div-"..(counter)
 end
 
+-- Get metadata specific to bookdown for this filter
 Meta = function(m) 
     bookdownmeta = m.bookdown
     if (bookdownmeta ~= nil) then
@@ -80,29 +81,26 @@ Div = function (div)
 
     print_debug("Div classes -> " , classes)
 
-    local theorem_type = {}
-    local proof_type = {}
+    local env_type = {type = nil, env = nil}
     for i,v in ipairs(classes) do
-        if (theorem_abbr[v] ~= nil) then theorem_type[i] = v end
-        if (proof_label[v] ~= nil) then proof_type[i] = v end
+        if (theorem_abbr[v] ~= nil) then 
+            env_type.type = "theorem"
+            env_type.env = v
+            break
+        elseif (proof_label[v] ~= nil) then 
+            env_type.type = "proof"
+            env_type.env = v
+            break
+        end
     end
-    -- test
-    print_debug("Found types -> ", theorem_type)
 
     -- classes is not a supported one, we return as is
-    if (#theorem_type == 0 and #proof_type == 0) then
+    if not env_type.env then
         print_debug("Not a bookdown supported custom class")
         return div
     end
-    -- get the theorem type as string
-    if (#theorem_type > 1 or #proof_type > 1) then
-        -- warn if special case of more than one corresponding classes
-        print("[WARNING] Only one custom environment can be used. Keeping the first.")
-    end
-    theorem_type = theorem_type[1]
-    proof_type = proof_type[1]
-    print_debug("theorem type selected -> ", theorem_type)
-    print_debug("proof type selected -> ", proof_type)
+
+    print_debug("Found types -> ", env_type)
 
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
@@ -135,106 +133,70 @@ Div = function (div)
         options["name"] = nil
         return name
     end
+    
+    -- create the custom environment
 
-    if (theorem_type ~= nil) then
-        print_debug("Enter Theorem part.")
-        local label = string.format("%s:%s", theorem_abbr[theorem_type], id)
-        print_debug("label for reference -> ", label)
+    local label
+    if (env_type.type == "theorem") then
+        label = string.format("%s:%s", theorem_abbr[env_type.env], id)
+    end
+    print_debug("label for reference -> ", label)
 
-        -- create the custom environment
-
-        -- TODO: should we support beamer also ?
-        if (FORMAT:match 'latex') then
-            
-            local label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
-
-            local name = get_name('latex', options)
-            
-            table.insert(
-                div.content, 1,
-                pandoc.RawBlock('tex', string.format('\\begin{%s}%s%s', theorem_type, name, label_part))
-            )
-            table.insert(
-                div.content,
-                pandoc.RawBlock('tex', string.format('\\end{%s}', theorem_type))
-            )
+    -- TODO: should we support beamer also ?
+    if (FORMAT:match 'latex') then
+        
+        local label_part 
+        if label then
+            label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
         end
 
-        if (FORMAT:match 'html') then
-            local name = get_name('html', options)
-
-            -- if div is already processed by eng_theorem, it would also modify it. 
-            -- we can ignore knowing how eng_theorem modifies options$html.before2
-            -- It can be Plain or Para depending if a name was used or not.
-            -- NOT VERY RELIABLE THOUGH
-            if (div.content[1].t == "Plain" or div.content[1].t == "Para") then
-                for i,el in pairs(div.content[1].content) do
-                    if (el.t == "Span" and el.classes[1] == theorem_type) then
-                        print_debug("Already processed by knitr engine.")
-                        return div
-                    end
-                end
-            end
-            table.insert(
-                -- add to the first block of the div, and not as first block
-                div.content[1].content, 1,
-                pandoc.Span(
-                    pandoc.Strong(string.format("(#%s)%s ", label, name)),
-                    {id = label, class = theorem_type}
-                )
-            )
-        end
+        local name = get_name('latex', options)
+        
+        table.insert(
+            div.content, 1,
+            pandoc.RawBlock('tex', string.format('\\begin{%s}%s%s', env_type.env, name, label_part or ""))
+        )
+        table.insert(
+            div.content,
+            pandoc.RawBlock('tex', string.format('\\end{%s}', env_type.env))
+        )
     end
 
-    if (proof_type ~= nil) then
-        print_debug("Enter Proof part.")
-        -- create the custom environment
+    if (FORMAT:match 'html') then
+        local name = get_name('html', options)
 
-        -- TODO: should we support beamer also ?
-        if (FORMAT:match 'latex') then
-
-            local name = get_name('latex', options)
-            
-            table.insert(
-                div.content, 1,
-                pandoc.RawBlock('tex', string.format('\\begin{%s}%s', proof_type, name))
-            )
-            table.insert(
-                div.content,
-                pandoc.RawBlock('tex', string.format('\\end{%s}', proof_type))
-            )
-        end
-
-        if (FORMAT:match 'html') then
-            local name = get_name('html', options)
-
-            print_debug("html name -> ", name)
-
-            -- if div is already processed by eng_proof, it would also modify it. 
-            -- we can ignore knowing how eng_proof modifies options$html.before2
-            -- NOT VERY RELIABLE THOUGH
-            if (div.content[1].t == "Plain") then
-                for i,el in pairs(div.content[1].content) do
-                    if (el.t == "Span" and el.classes[1] == proof_type) then
-                        print_debug("Already processed by knitr engine.")
-                        return div
-                    end
+        -- if div is already processed by eng_theorem, it would also modify it. 
+        -- we can ignore knowing how eng_theorem modifies options$html.before2
+        -- It can be Plain or Para depending if a name was used or not.
+        -- NOT VERY RELIABLE THOUGH
+        if (div.content[1].t == "Plain" or div.content[1].t == "Para") then
+            for i,el in pairs(div.content[1].content) do
+                if (el.t == "Span" and el.classes[1] == env_type.env) then
+                    print_debug("Already processed by knitr engine.")
+                    return div
                 end
             end
-            table.insert(
-                -- add to the first block of the div, and not as first block
-                div.content[1].content, 1,
-                    pandoc.Span({
-                        pandoc.Emph(pandoc.Str(proof_label[proof_type])),
-                        pandoc.Str(name),
-                        pandoc.Str("."),
-                        pandoc.Space()
-                    },
-                        {id = id, class = proof_type}
-                    )
+        end
+        local span
+        if (env_type.type == "theorem") then
+            span = pandoc.Span(
+                pandoc.Strong(string.format("(#%s)%s ", label, name)),
+                {id = label, class = env_type.env}
+            )
+        elseif (env_type.type == "proof") then
+            span = pandoc.Span({
+                pandoc.Emph(pandoc.Str(proof_label[env_type.env])),
+                pandoc.Str(name),
+                pandoc.Str("."),
+                pandoc.Space()
+            },
+                {id = id, class = env_type.env}
             )
         end
+        -- add to the first block of the div, and not as first block
+        table.insert(div.content[1].content, 1, span)
     end
+
     return div
 end
 
