@@ -582,7 +582,7 @@ bookdown_metadata_file_arg = function() {
 
 # add custom environment filter to a format
 add_custom_environment_args = function(format) {
-  if (!is(format, "rmarkdown_output_format"))
+  if (!inherits(format, "rmarkdown_output_format"))
     stop("format should be a rmarkdown output format.")
   # prepend the filter
   format$pandoc$lua_filters = c(
