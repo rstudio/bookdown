@@ -7,10 +7,10 @@
 convert_to_fenced_div(file, modify = FALSE)
 }
 \arguments{
-\item{file}{Path to the file to modify.}
+\item{file}{Path to a file to modify.}
 
-\item{modify}{Set to \code{TRUE} to overwrite the file with the theroems and
-proofs environments changed.}
+\item{modify}{Set to \code{TRUE} to overwrite the file with the Theorems and
+Proofs environments changed.}
 }
 \value{
 \code{TRUE} or \code{FALSE} invisibly if the file has been modified
@@ -22,8 +22,10 @@ It will parse a R Markdown file to replace any chunk using one of
 the theorems or proofs engine to use the new syntax using Pandoc's fenced div.
 }
 \details{
-It will replace backticks with colon, use the engine as class, use the chunk
-label as id and keep the attributes as is. We stronlgy advice to check the changes.
+In the chunk header, it will replace backticks with colons, use the engine as
+class by adding a dot, use the explicit or implicit chunk label as id by
+adding a dash and keep the other attributes as is. We strongly advice to
+check the changes and adjust if necessary.
 }
 \section{Warning}{
 
