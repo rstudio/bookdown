@@ -52,4 +52,23 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
       !any(grepl("<a href=.*>2.1</a>", readLines("rmd/number-sections.md")))) {
     stop("Something wrong in number-sections.Rmd")
   }
+
+  # lua filter for custom environment
+  local({
+    i18n <-bookdown::load_config()$language$label$solution
+    reg_span <- sprintf('<span .* class="solution"><em>%s</em>\\. </span>', i18n)
+    reg_env <- sprintf('<div class="(%s)">', paste(all_math_env, collapse = "|"))
+    if (!any(grepl(reg_env, readLines("rmd/custom-environments.html"))) ||
+      !any(grepl(reg_span, readLines("rmd/custom-environments.html")))) {
+    stop("Fail to apply the lua filter for custom environment")
+    }
+  })
+
+  # tests also some specific format
+  rmarkdown::render("rmd/custom-environments.Rmd",
+                    output_format = "bookdown::pdf_document2",
+                    envir = globalenv(), quiet = TRUE)
+  if (!file.exists("rmd/custom-environments.pdf"))
+    stop("Failed to render custom-environments for Pdf Document")
+
 })
