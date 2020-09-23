@@ -175,7 +175,7 @@ Div = function (div)
         if (env_type.type == "theorem") then
             span = pandoc.Span(
                 pandoc.Strong(string.format("(#%s)%s ", label, name)),
-                {id = label, class = env_type.env}
+                pandoc.Attr(label, {env_type.env})
             )
         elseif (env_type.type == "proof") then
             span = pandoc.Span({
@@ -184,7 +184,7 @@ Div = function (div)
                 pandoc.Str("."),
                 pandoc.Space()
             },
-                {id = id, class = env_type.env}
+                pandoc.Attr(id, {env_type.env})
             )
         end
         -- add to the first block of the div, and not as first block
