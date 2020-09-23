@@ -628,7 +628,6 @@ add_custom_environment_args = function(format) {
 #' @export
 convert_to_fenced_div = function(file, modify = FALSE) {
   if (length(file) > 1) stop("file must be only one file", call. = FALSE)
-  engines = c(names(theorem_abbr), names(label_names_math2))
   x = xfun::read_utf8(file)
   # identify block
   md_pattern = knitr::all_patterns$md
@@ -636,7 +635,7 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   # extract params
   params = gsub(md_pattern$chunk.begin, "\\1", x[block_start])
   # find block with custom environment engine
-  reg = sprintf("^(%s).*", paste(engines, collapse = "|"))
+  reg = sprintf("^(%s).*", paste(all_math_env, collapse = "|"))
   to_convert = grepl(reg, params)
   n_blocks = sum(to_convert)
   if (n_blocks == 0) {
