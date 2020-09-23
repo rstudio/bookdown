@@ -55,7 +55,7 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
 
   # lua filter for custom environment
   local({
-    i18n <-bookdown::load_config()$language$label$solution
+    i18n <-bookdown:::load_config()$language$label$solution
     reg_span <- sprintf('<span .* class="solution"><em>%s</em>\\. </span>', i18n)
     reg_env <- sprintf('<div class="(%s)">', paste(all_math_env, collapse = "|"))
     if (!any(grepl(reg_env, readLines("rmd/custom-environments.html"))) ||
