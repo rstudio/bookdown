@@ -52,17 +52,13 @@ end
 -- Get metadata specific to bookdown for this filter
 Meta = function(m) 
     bookdownmeta = m.bookdown
-    if (bookdownmeta ~= nil) then
+    if (bookdownmeta and bookdownmeta.language and bookdownmeta.language.label) then
         -- For internationalization feature of bookdown
-        if (bookdownmeta.language ~= nil) then
-            if (bookdownmeta.language.label ~= nil) then
-                for k,v in pairs(bookdownmeta.language.label) do
-                    if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
-                        -- remove any undesired space (3 or less)
-                        proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
-                        print_debug("Translation-> "..k..":", proof_label[k])
-                    end
-                end
+        for k,v in pairs(bookdownmeta.language.label) do
+            if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
+                -- remove any undesired space (3 or less)
+                proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
+                print_debug("Translation-> "..k..":", proof_label[k])
             end
         end
     end
