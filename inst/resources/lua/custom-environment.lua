@@ -49,6 +49,18 @@ local function unlabeled_div()
     return "unlabeled-div-"..(counter)
 end
 
+-- return [name] for latex, and (name) for html
+local function get_name(format, options)
+    local name = options["name"]
+    if not name then return "" end
+    local template = {latex = "[%s]", html = " (%s)"}
+    name = string.format(template[format],  name)
+    print_debug("name -> ", name)
+    -- remove data-name from option
+    options["name"] = nil
+    return name
+end
+
 -- Get metadata specific to bookdown for this filter
 Meta = function(m) 
     bookdownmeta = m.bookdown
@@ -108,23 +120,6 @@ Div = function (div)
         -- so that latex-divs.lua in rmarkdown does not activate
         print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It has been removed.")
         options["data-latex"] = nil
-    end
-
-    -- return [name] for latex, and (name) for html
-    local function get_name(format, options)
-        local name = options["name"]
-        if (name == nil) then return "" end
-        local template
-        if (format == 'latex') then
-            template = "[%s]"
-        elseif (format == 'html') then
-            template = " (%s)"
-        end
-        name = string.format(template,  name)
-        print_debug("name -> ", name)
-        -- remove data-name
-        options["name"] = nil
-        return name
     end
     
     -- create the custom environment
