@@ -1,13 +1,21 @@
 # CHANGES IN bookdown VERSION 0.21
 
+## NEW FEATURES
+
+- Add the `number_sections` argument to `markdown_document2()` and its family. This allows to have now figure references numbered by chapters in these formats, like `word_document2()` or `odt_document2()` for example. This argument default to `TRUE` like `html_document2()` and  `pdf_document2()`. Set it to `number_sections = FALSE` to get the same output as previous version without numbered chapters (thanks, @atusy, #756). 
+
 ## BUG FIXES
+
+- Correctly encode the document title when creating the twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
 
 - Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
 
-## MINOR CHANGES
+## MAJOR CHANGES
 
 - The `--file-scope` behavior introduced in bookdown v0.20 is now disabled by default. This is due to broken TOC links for duplicate section names (e.g., "Exercises"; see #909) that have automatically generated identifiers.
 - Updated documentation for `render_book` to make it clearer how options are set for the `output_format` parameter (See #930) (thanks, @jonathan-g, #933)
+
+- The `clean_envir` argument of `bookdown::render_book()` has been deprecated and will be removed in the future (thanks, @jenslaufer, #932).
 
 # CHANGES IN bookdown VERSION 0.20
 

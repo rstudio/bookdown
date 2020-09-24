@@ -81,6 +81,10 @@ source_files = function(format = NULL, config = load_config(), all = FALSE) {
   files = c(files, subdir_files)
   # if rmd_files is provided, use those files in addition to those under rmd_subdir
   if (length(files2 <- config[['rmd_files']]) > 0) {
+    # users should specify 'docx' as the output format name for Word, but let's
+    # make 'word' an alias of 'docx' to avoid further confusion:
+    # https://stackoverflow.com/q/63678601/559676
+    if ('word' %in% names(files2) && identical(format, 'docx')) format = 'word'
     if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
     # add those files to subdir content if any
     files = if (subdir_yes) c(files2, subdir_files) else files2

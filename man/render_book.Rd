@@ -34,9 +34,8 @@ Markdown files specified by the book are rendered.}
   reference book} for details on how output formatting options are set from
   YAML or parameters supplied by the user when calling \code{render_book()}.}
 
-\item{clean_envir}{Whether to clean up the environment \code{envir} before
-rendering the book. By default, the environment is cleaned when rendering
-the book in a non-interactive R session.}
+\item{clean_envir}{This argument has been deprecated and will be removed in
+future versions of \pkg{bookdown}.}
 
 \item{output_dir}{The output directory. If \code{NULL}, a field named
 \code{output_dir} in the configuration file \file{_bookdown.yml} will be

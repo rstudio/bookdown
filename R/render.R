@@ -20,9 +20,8 @@
 #'   \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the bookdown
 #'   reference book} for details on how output formatting options are set from
 #'   YAML or parameters supplied by the user when calling \code{render_book()}.
-#' @param clean_envir Whether to clean up the environment \code{envir} before
-#'   rendering the book. By default, the environment is cleaned when rendering
-#'   the book in a non-interactive R session.
+#' @param clean_envir This argument has been deprecated and will be removed in
+#'   future versions of \pkg{bookdown}.
 #' @param output_dir The output directory. If \code{NULL}, a field named
 #'   \code{output_dir} in the configuration file \file{_bookdown.yml} will be
 #'   used (possibly not specified, either, in which case a directory name
@@ -64,15 +63,18 @@ render_book = function(
       output_format = rmarkdown::all_output_formats(input)
     }
     if (length(output_format) > 1) {
-      return(unlist(lapply(output_format, function(fmt) render_book(
+      return(unlist(lapply(output_format, function(fmt) xfun::Rscript_call(render_book, list(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
         new_session = new_session, preview = preview, config_file = config_file
-      ))))
+      )))))
     }
     format = target_format(output_format)
   }
 
-  if (clean_envir) rm(list = ls(envir, all.names = TRUE), envir = envir)
+  if (!missing(clean_envir)) warning(
+    "The argument 'clean_envir' has been deprecated and will be removed in future ",
+    "versions of bookdown."
+  )
 
   if (config_file != '_bookdown.yml') {
     unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'))
