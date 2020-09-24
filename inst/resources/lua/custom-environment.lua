@@ -23,7 +23,7 @@ local proof_label = {
 
 -- for debuging purpose
 local debug_mode = os.getenv("DEBUG_PANDOC_LUA") == "TRUE"
-function print_debug(label,obj,iter)
+local function print_debug(label,obj,iter)
     obj = obj or nil
     iter = iter or pairs
     label = label or ""
@@ -44,7 +44,7 @@ end
 
 -- create a unique id for a div with none provided
 local counter = 0
-function unlabeled_div()
+local function unlabeled_div()
     counter = counter + 1 
     return "unlabeled-div-"..(counter)
 end
@@ -111,7 +111,7 @@ Div = function (div)
     end
 
     -- return [name] for latex, and (name) for html
-    function get_name(format, options)
+    local function get_name(format, options)
         local name = options["name"]
         if (name == nil) then return "" end
         local template
