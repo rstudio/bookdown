@@ -26,8 +26,13 @@ TRUE}, only files specified in this argument are rendered, otherwise all R
 Markdown files specified by the book are rendered.}
 
 \item{output_format, ..., clean, envir}{Arguments to be passed to
-\code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
-is passed to \code{render_book()}.}
+  \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
+  is passed to \code{render_book()}.
+
+  See \code{rmarkdown::\link{render}} and
+  \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the bookdown
+  reference book} for details on how output formatting options are set from
+  YAML or parameters supplied by the user when calling \code{render_book()}.}
 
 \item{clean_envir}{This argument has been deprecated and will be removed in
 future versions of \pkg{bookdown}.}
@@ -63,5 +68,13 @@ new R session (\code{new_session = TRUE}).
 }
 \examples{
 # see https://bookdown.org/yihui/bookdown for the full documentation
-if (file.exists("index.Rmd")) bookdown::render_book("index.Rmd")
+if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
+\dontrun{
+  # will use the default format defined in _output.yml
+  bookdown::render_book("index.Rmd")
+  # will use the options for format defined in yaml
+  bookdown::render_book("index.Rmd",  "pdf_book")
+  # If you pass an output format, it must have all the options set
+  bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+}
 }
