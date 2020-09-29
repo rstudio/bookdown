@@ -6,7 +6,7 @@
 
 ## BUG FIXES
 
-- Correctly encode the document title when creating the twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
+- Correctly encode the document title when creating the Twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
 
 - Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
 
@@ -18,7 +18,7 @@
 
 ## MINOR CHANGES
 
-- Updated documentation for `render_book` to make it clearer how options are set for the `output_format` parameter (See #930) (thanks, @jonathan-g, #958)
+- Updated documentation for `render_book()` to make it clearer how options are set for the `output_format` parameter (thanks, @jonathan-g, #958 #930).
 
 # CHANGES IN bookdown VERSION 0.20
 
