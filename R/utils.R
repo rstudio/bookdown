@@ -122,6 +122,7 @@ mark_dirs = function(x) {
   x
 }
 
+# TODO: use xfun::del_empty_dir()
 clean_empty_dir = function(dir) {
   if (is.null(dir) || !dir_exists(dir)) return()
   files = list.files(dir, all.files = TRUE, recursive = TRUE)
