@@ -174,7 +174,46 @@ gitbook_toc = function(x, cur, config) {
   i2 = find_token(x, '<!--bookdown:toc2:end-->')
   x[i1] = ''; x[i2] = ''
   if (i2 - i1 < 2) return(x)
+
+  #Changed to allow for toc length to change over the course of the function
+  prior = x[1:i1]
   toc = x[(i1 + 1):(i2 - 1)]
+  post = x[i2:length(x)]
+
+  if(is.character(rmarkdown:::yaml_load_file('_bookdown.yml')[['custom_toc']])){  
+    toc_frame <- readRDS("toc.Rds")
+    #First add in divisions and headers
+    for(i in (1:nrow(toc_frame))){
+      if(toc_frame[i,6] == "HEADING"){
+        toc <- append(toc, paste('<li class="header">', toc_frame[i,4], '</li>', sep=""), i)
+      } else if(toc_frame[i,6] == "BREAK"){
+        toc <- append(toc, '<li class="divider"></li>', i)
+      } 
+    }    
+
+    #Check that the in length difference is due to the leading and trailing <ul> tags in toc
+    if(length(toc) - nrow(toc_frame) != 2){
+      warning("The toc file listed in _bookdown.yml has more elements than expected. \n
+          Potential causes include links to non-existent files or lines that are not one of: dividers, section headings, or pages. \n
+          Consider checking your toc file, or setting clean_book to FALSE and inspecting toc.Rds.")
+    }     
+
+    #Now sort out custom page titles and indents
+    for(i in 1:(nrow(toc_frame))){
+      #Finds pandoc-generated title (from first H1) and replaces it with title specified in the toc_frame
+      if(!is.na(toc_frame[i,2])){
+        toc[i+1] <- str_replace(toc[i+1], gsub(".*>(.+)</a>.*", "\\1", toc[i+1]), paste(" ", toc_frame[i,2]))
+      }
+      #Adds in <ul> tags so subchapters work as per the tabs in the toc_frame file
+      diff <- toc_frame[i,5] - toc_frame[i-1,5]
+      if(i == 1) diff <- 0
+      if(diff == 1){
+        toc[i] <- gsub('</li>$', '<ul>', toc[i])
+      } else if(diff < 0){
+        toc[i] <- paste(toc[i], strrep("</li></ul>", times = diff/-1), sep = "")
+      }
+    }
+  }
 
   # numbered sections
   r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([.A-Z0-9]+)</span>(.+)(</a>.*)$'
@@ -222,7 +261,8 @@ gitbook_toc = function(x, cur, config) {
       toc[n] = paste(c('<li class="divider"></li>', extra, toc[n]), collapse = '\n')
     }
   }
-  x[(i1 + 1):(i2 - 1)] = toc
+
+  x = c(prior, toc, post)
   x
 }
 
