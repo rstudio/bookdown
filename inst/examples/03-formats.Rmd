@@ -145,6 +145,13 @@ The second button on the toolbar is the search button. Its keyboard shortcut is 
 
 The third button is for font/theme settings. The reader can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (`White`, `Sepia`, or `Night`). You can set the initial value of these settings via the `fontsettings` option. Font size is measured on a scale of 0-4; the initial value can be set to 1, 2 (default), 3, or 4. The button can be removed from the toolbar by setting `fontsettings: null` (or `no`).
 
+```yaml
+# changing the default
+    fontsettings:
+      theme: night
+      family: serif
+      size: 3
+```
 The `edit` option is the same as the option mentioned in Section \@ref(configuration). If it is not empty, an edit button will be added to the toolbar. This was designed for potential contributors to the book to contribute by editing the book on GitHub after clicking the button and sending pull requests.  The `history` and `view` options work the same
 way.
 
