@@ -11,14 +11,14 @@ kindlegen(epub, exec = Sys.which("kindlegen"))
 \code{\link{epub_book}()} format). If missing, it is automatically guessed
 from the book configurations.}
 
-\item{exec}{The path to the executable \command{kindlegen}, which can be
-downloaded from
-\url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.}
+\item{exec}{The path to the executable \command{kindlegen}.}
 }
 \value{
 The path of the \file{.mobi} file if the conversion is successful.
 }
 \description{
-This function simply calls the command line tool \command{kindlegen} provided
-by Amazon to convert EPUB e-books to the Mobipocket format (\file{.mobi}).
+This function has been deprecated, since Amazon no longer provides KindleGen.
+Please consider using \code{bookdown::\link{calibre}()} instead if you want
+\file{.mobi} output.
 }
+\keyword{internal}

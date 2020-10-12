@@ -18,6 +18,8 @@
 
 - The `clean_envir` argument of `bookdown::render_book()` has been deprecated and will be removed in the future (thanks, @jenslaufer, #932).
 
+- The function `kindlegen()` has been deprecated, since Amazon no longer provides KindleGen. Please consider using `bookdown::calibre()` instead if you want `.mobi` output (#973).
+
 ## MINOR CHANGES
 
 - Updated documentation for `render_book()` to make it clearer how options are set for the `output_format` parameter (thanks, @jonathan-g, #958 #930).

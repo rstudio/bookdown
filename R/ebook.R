@@ -248,23 +248,27 @@ calibre = function(input, output, options = '') {
   invisible(output)
 }
 
+# TODO: remove kindlegen() in the future
+
 #' A wrapper function to convert EPUB to the Mobipocket format
 #'
-#' This function simply calls the command line tool \command{kindlegen} provided
-#' by Amazon to convert EPUB e-books to the Mobipocket format (\file{.mobi}).
+#' This function has been deprecated, since Amazon no longer provides KindleGen.
+#' Please consider using \code{bookdown::\link{calibre}()} instead if you want
+#' \file{.mobi} output.
 #' @param epub The path to a \code{.epub} file (e.g. created from the
 #'   \code{\link{epub_book}()} format). If missing, it is automatically guessed
 #'   from the book configurations.
-#' @param exec The path to the executable \command{kindlegen}, which can be
-#'   downloaded from
-#'   \url{http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211}.
+#' @param exec The path to the executable \command{kindlegen}.
 #' @return The path of the \file{.mobi} file if the conversion is successful.
 #' @export
+#' @keywords internal
 kindlegen = function(epub, exec = Sys.which('kindlegen')) {
-  if (exec == '') stop(
-    'Cannot find the executable KindleGen. You may download it from ',
-    'http://www.amazon.com/gp/feature.html?ie=UTF8&docId=1000765211'
+  warning(
+    'Since Amazon no longer provides KindleGen, this function has been deprecated ',
+    'and will be removed in a future version of bookdown. Please consider using ',
+    'bookdonw::calibre() instead.'
   )
+  if (exec == '') stop('Cannot find the executable KindleGen.')
   if (missing(epub)) {
     on.exit(opts$restore(), add = TRUE)
     config = load_config()

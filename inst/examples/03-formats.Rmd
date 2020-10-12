@@ -362,9 +362,7 @@ There are several EPUB readers available, including Calibre (https://www.calibre
 
 ### MOBI
 
-MOBI e-books can be read on Amazon's Kindle devices. Pandoc does not support MOBI output natively, but Amazon has provided a tool named KindleGen (https://www.amazon.com/gp/feature.html?docId=1000765211) to create MOBI books from other formats, including EPUB and HTML. We have provided a simple wrapper function `kindlegen()` in **bookdown** to call KindleGen to convert an EPUB book to MOBI. This requires you to download KindleGen first, and make sure the KindleGen executable can be found via the system environment variable `PATH`.
-
-Another tool to convert EPUB to MOBI is provided by Calibre\index{Calibre}. Unlike KindleGen, Calibre is open-source and free, and supports conversion among many more formats. For example, you can convert HTML to EPUB, Word documents to MOBI, and so on. The function `calibre()` in **bookdown** is a wrapper function of the command-line utility `ebook-convert` in Calibre. Similarly, you need to make sure that the executable `ebook-convert` can be found via the environment variable `PATH`. If you use OS X, you can install both KindleGen and Calibre via Homebrew-Cask (https://caskroom.github.io), so you do not need to worry about the `PATH` issue.
+MOBI e-books can be read on Amazon's Kindle devices. Pandoc does not support MOBI output natively, but you may use third-party tools to convert EPUB to MOBI. One possible tool is Calibre\index{Calibre}. Calibre is open-source and free, and supports conversion among many more formats. For example, you can convert HTML to EPUB, Word documents to MOBI, and so on. The function `calibre()` in **bookdown** is a wrapper function of the command-line utility `ebook-convert` in Calibre. You need to make sure that the executable `ebook-convert` can be found via the environment variable `PATH`. If you use macOS, you can install Calibre with Homebrew (https://brew.sh) via the command `brew cask install calibre`, so you do not need to worry about the `PATH` issue.
 
 ## A single document
 
