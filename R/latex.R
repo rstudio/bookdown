@@ -43,7 +43,7 @@ pdf_book = function(
   ))
 
   # add custom environment lua filter
-  config <- add_custom_environment_args(config)
+  config = add_custom_environment_args(config)
 
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined

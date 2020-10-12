@@ -42,7 +42,7 @@ gitbook = function(
   )
 
   # add custom environment lua filter
-  config <- add_custom_environment_args(config)
+  config = add_custom_environment_args(config)
 
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
