@@ -566,9 +566,7 @@ lua_filter = function (filters = NULL) {
 }
 
 # pass _bookdown.yml to Pandoc's Lua filters
-bookdown_metadata_file_arg = function(
-  config = load_config(), path = file.path(tempdir(), "_bookdown-meta.yml")
-) {
+bookdown_metadata_file_arg = function(config = load_config(), path = tempfile())) {
   # this is supported for Pandoc >= 2.0 only
   if (!pandoc2.0() || length(config) == 0) return()
   yaml::write_yaml(list(bookdown = config), path)
