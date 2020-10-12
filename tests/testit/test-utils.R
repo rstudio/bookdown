@@ -125,13 +125,13 @@ assert('_bookdown-meta is generated to be found by pandoc', {
   if (pandoc2.0()) {
     dir.create(project <- tempfile())
     old = setwd(project)
-    ("--metadata-file" %in% bookdown_metadata_file_arg())
+    ("--metadata-file" %in% bookdown_yml_arg())
     (xfun::in_dir(tempdir(), file.exists("_bookdown-meta.yml")))
     # clean tests
     unlink(project, recursive = TRUE); rm(project)
     setwd(old); rm(old)
   } else {
-    bookdown_metadata_file_arg() %==% NULL
+    bookdown_yml_arg() %==% NULL
   }
   TRUE
 })

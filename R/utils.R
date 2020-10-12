@@ -566,7 +566,7 @@ lua_filter = function (filters = NULL) {
 }
 
 # pass _bookdown.yml to Pandoc's Lua filters
-bookdown_metadata_file_arg = function(config = load_config(), path = tempfile())) {
+bookdown_yml_arg = function(config = load_config(), path = tempfile()) {
   # this is supported for Pandoc >= 2.0 only
   if (!pandoc2.0() || length(config) == 0) return()
   yaml::write_yaml(list(bookdown = config), path)
@@ -582,7 +582,7 @@ add_custom_environment_args = function(format) {
     lua_filter("custom-environment.lua"), format$pandoc$lua_filters
   )
   # and add bookdown metadata file for the filter to work
-  format$pandoc$args = c(bookdown_metadata_file_arg(), format$pandoc$args)
+  format$pandoc$args = c(bookdown_yml_arg(), format$pandoc$args)
   # return the modified format
   format
 }
