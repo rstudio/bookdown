@@ -152,6 +152,7 @@ The third button is for font/theme settings. The reader can change the font size
       family: serif
       size: 3
 ```
+
 The `edit` option is the same as the option mentioned in Section \@ref(configuration). If it is not empty, an edit button will be added to the toolbar. This was designed for potential contributors to the book to contribute by editing the book on GitHub after clicking the button and sending pull requests.  The `history` and `view` options work the same
 way.
 
