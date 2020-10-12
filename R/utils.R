@@ -565,16 +565,13 @@ lua_filter = function (filters = NULL) {
   rmarkdown::pkg_file_lua(filters, package = 'bookdown')
 }
 
-# To pass bookdown meta to pandoc lua filters
+# pass _bookdown.yml to Pandoc's Lua filters
 bookdown_metadata_file_arg = function() {
-  # This is only required for pandoc > 2
-  if (pandoc2.0()) {
-    if (length(config <- load_config())) {
-      tmp_yml = file.path(tempdir(), "_bookdown-meta.yml")
-      yaml::write_yaml(list(bookdown = config), tmp_yml)
-      c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
-    }
-  }
+  # this is supported for Pandoc >= 2.0 only
+  if (!pandoc2.0() || length(config <- load_config()) == 0) return()
+  tmp_yml = file.path(tempdir(), "_bookdown-meta.yml")
+  yaml::write_yaml(list(bookdown = config), tmp_yml)
+  c("--metadata-file", rmarkdown::pandoc_path_arg(tmp_yml))
 }
 
 # add custom environment filter to a format
