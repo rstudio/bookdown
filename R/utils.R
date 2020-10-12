@@ -602,6 +602,8 @@ add_custom_environment_args = function(format) {
 #' environments.
 #' @param input Path to an Rmd file that contains theorem environments written
 #'   in the syntax of code blocks.
+#' @param text A character vector of the Rmd source. When \code{text} is
+#'   provided, the \code{input} argument will be ignored.
 #' @param output The output file to write the converted input content. You can
 #'   specify \code{output} to be identical to \code{input}, which means the
 #'   input file will be overwritten. If you want to overwrite the input file,
@@ -615,20 +617,19 @@ add_custom_environment_args = function(format) {
 #' @return If \code{output = NULL}, the converted text is returned, otherwise
 #'   the text is written to the output file.
 #' @export
-fence_theorems = function(input, output = NULL) {
-  x = xfun::read_utf8(input)
+fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   # identify blocks
   md_pattern = knitr::all_patterns$md
-  block_start = grep(md_pattern$chunk.begin, x)
+  block_start = grep(md_pattern$chunk.begin, text)
   # extract params
-  params = gsub(md_pattern$chunk.begin, "\\1", x[block_start])
+  params = gsub(md_pattern$chunk.begin, "\\1", text[block_start])
   # find block with custom environment engine
   reg = sprintf("^(%s).*", paste(all_math_env, collapse = "|"))
   to_convert = grepl(reg, params)
   # only modify those blocks
   params = params[to_convert]
   block_start = block_start[to_convert]
-  block_end = grep(md_pattern$chunk.end, x)
+  block_end = grep(md_pattern$chunk.end, text)
   block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
   # add a . to engine name
   params = sprintf(".%s", params)
@@ -639,8 +640,8 @@ fence_theorems = function(input, output = NULL) {
   params = gsub(",\\s*", " ", params)
   params = gsub("\\s*=\\s*", "=", params)
   # modify the blocks
-  x[block_start] = sprintf("::: {%s}", params)
-  x[block_end] = ":::"
+  text[block_start] = sprintf("::: {%s}", params)
+  text[block_end] = ":::"
   # return the text or write to output file
-  if (is.null(output)) xfun::raw_string(x) else xfun::write_utf8(x, input)
+  if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
 }

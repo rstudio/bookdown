@@ -5,11 +5,14 @@
 \title{Convert the syntax of theorem and proof environments from code blocks to
 fenced Divs}
 \usage{
-fence_theorems(input, output = NULL)
+fence_theorems(input, text = xfun::read_utf8(input), output = NULL)
 }
 \arguments{
 \item{input}{Path to an Rmd file that contains theorem environments written
 in the syntax of code blocks.}
+
+\item{text}{A character vector of the Rmd source. When \code{text} is
+provided, the \code{input} argument will be ignored.}
 
 \item{output}{The output file to write the converted input content. You can
 specify \code{output} to be identical to \code{input}, which means the

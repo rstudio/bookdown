@@ -139,8 +139,7 @@ assert('_bookdown-meta is generated to be found by pandoc', {
 })
 
 assert('convert engine to fenced divs', {
-  tmp_file <- tempfile(fileext = ".Rmd")
-  old <- c(
+  old = c(
     "```{theorem, label = \"thm\", name = \"My Theorem\"}",
     "Some text",
     "```",
@@ -154,7 +153,7 @@ assert('convert engine to fenced divs', {
     "```{lemma, my-lem}",
     "Some text",
     "```")
-  new <- c(
+  new = c(
     "::: {.theorem #thm name=\"My Theorem\"}",
     "Some text",
     ":::",
@@ -168,23 +167,16 @@ assert('convert engine to fenced divs', {
     "::: {.lemma #my-lem}",
     "Some text",
     ":::")
-  xfun::write_utf8(old, tmp_file)
-  suppressMessages(res <- fence_theorems(tmp_file))
-  (xfun::isFALSE(res))
-  (xfun::read_utf8(tmp_file) %==% old)
-  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
-  (isTRUE(res))
-  (xfun::read_utf8(tmp_file) %==% new)
-  # Do not modify the file if nothing to write
-  xfun::write_utf8("# A header\n\nSome text", tmp_file)
-  suppressMessages(res <- fence_theorems(tmp_file))
-  (xfun::isFALSE(res))
-  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
-  (xfun::isFALSE(res))
-  # Other chunk are unchange
-  xfun::write_utf8("```{r, lab, echo=FALSE}\n1+1\n```\n", tmp_file)
-  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
-  (xfun::isFALSE(res))
-  unlink(tmp_file)
-  TRUE
+
+  res = fence_theorems(text = old)
+  (unclass(res) %==% new)
+
+  old = "# A header\n\nSome text"
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
+
+  # other chunk are not changed
+  old = c("```{r, lab, echo=FALSE}", "1+1", "```")
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
 })
