@@ -560,12 +560,9 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
   c(x1, x2[sort(i)], '\\end{document}')
 }
 
-# bookdown lua filters paths
-bookdown_lua_filters = function (filter = NULL) {
-  lua_folder = bookdown_file("resources", "lua")
-  if (is.null(filter)) filter = list.files(lua_folder)
-  filter = xfun::with_ext(filter, "lua")
-  rmarkdown::pandoc_path_arg(file.path(lua_folder, filter))
+# bookdown Lua filters paths
+lua_filter = function (filters = NULL) {
+  rmarkdown::pkg_file_lua(filters, package = 'bookdown')
 }
 
 # To pass bookdown meta to pandoc lua filters
@@ -586,7 +583,7 @@ add_custom_environment_args = function(format) {
     stop("format should be a rmarkdown output format.")
   # prepend the filter
   format$pandoc$lua_filters = c(
-    bookdown_lua_filters("custom-environment"), format$pandoc$lua_filters
+    lua_filter("custom-environment.lua"), format$pandoc$lua_filters
   )
   # and add bookdown metadata file for the filter to work
   format$pandoc$args = c(bookdown_metadata_file_arg(), format$pandoc$args)
