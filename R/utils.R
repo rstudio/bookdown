@@ -32,6 +32,13 @@ common_format_config = function(
   # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
+  # prepend the custom-environment filter
+  config$pandoc$lua_filters = c(
+    lua_filter("custom-environment.lua"), config$pandoc$lua_filters
+  )
+  # and add bookdown metadata file for the filter to work
+  config$pandoc$args = c(bookdown_yml_arg(), config$pandoc$args)
+
   # set output format
   config$bookdown_output_format = format
 
@@ -571,20 +578,6 @@ bookdown_yml_arg = function(config = load_config(), path = tempfile()) {
   if (!pandoc2.0() || length(config) == 0) return()
   yaml::write_yaml(list(bookdown = config), path)
   c("--metadata-file", rmarkdown::pandoc_path_arg(path))
-}
-
-# add custom environment filter to a format
-add_custom_environment_args = function(format) {
-  if (!inherits(format, "rmarkdown_output_format"))
-    stop("format should be a rmarkdown output format.")
-  # prepend the filter
-  format$pandoc$lua_filters = c(
-    lua_filter("custom-environment.lua"), format$pandoc$lua_filters
-  )
-  # and add bookdown metadata file for the filter to work
-  format$pandoc$args = c(bookdown_yml_arg(), format$pandoc$args)
-  # return the modified format
-  format
 }
 
 #' Convert the syntax of theorem and proof environments from code blocks to
