@@ -32,6 +32,13 @@ common_format_config = function(
   # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
+  # prepend the custom-environment filter
+  config$pandoc$lua_filters = c(
+    lua_filter("custom-environment.lua"), config$pandoc$lua_filters
+  )
+  # and add bookdown metadata file for the filter to work
+  config$pandoc$args = c(bookdown_yml_arg(), config$pandoc$args)
+
   # set output format
   config$bookdown_output_format = format
 
@@ -558,4 +565,69 @@ strip_latex_body = function(x, alt = '\nThe content was intentionally removed.\n
     i = c(i, i2)
   }
   c(x1, x2[sort(i)], '\\end{document}')
+}
+
+# bookdown Lua filters paths
+lua_filter = function (filters = NULL) {
+  rmarkdown::pkg_file_lua(filters, package = 'bookdown')
+}
+
+# pass _bookdown.yml to Pandoc's Lua filters
+bookdown_yml_arg = function(config = load_config(), path = tempfile()) {
+  # this is supported for Pandoc >= 2.0 only
+  if (!pandoc2.0() || length(config) == 0) return()
+  yaml::write_yaml(list(bookdown = config), path)
+  c("--metadata-file", rmarkdown::pandoc_path_arg(path))
+}
+
+#' Convert the syntax of theorem and proof environments from code blocks to
+#' fenced Divs
+#'
+#' This function converts the syntax \samp{```{theorem, label, ...}} to
+#' \samp{::: {.theorem #label ...}} (Pandoc's fenced Div) for theorem
+#' environments.
+#' @param input Path to an Rmd file that contains theorem environments written
+#'   in the syntax of code blocks.
+#' @param text A character vector of the Rmd source. When \code{text} is
+#'   provided, the \code{input} argument will be ignored.
+#' @param output The output file to write the converted input content. You can
+#'   specify \code{output} to be identical to \code{input}, which means the
+#'   input file will be overwritten. If you want to overwrite the input file,
+#'   you are strongly recommended to put the file under version control or make
+#'   a backup copy in advance.
+#' @references Learn more about
+#'   \href{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
+#'    and proofs} and
+#'   \href{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}{custom
+#'    blocks} in the \pkg{bookdown} book.
+#' @return If \code{output = NULL}, the converted text is returned, otherwise
+#'   the text is written to the output file.
+#' @export
+fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
+  # identify blocks
+  md_pattern = knitr::all_patterns$md
+  block_start = grep(md_pattern$chunk.begin, text)
+  # extract params
+  params = gsub(md_pattern$chunk.begin, "\\1", text[block_start])
+  # find block with custom environment engine
+  reg = sprintf("^(%s).*", paste(all_math_env, collapse = "|"))
+  to_convert = grepl(reg, params)
+  # only modify those blocks
+  params = params[to_convert]
+  block_start = block_start[to_convert]
+  block_end = grep(md_pattern$chunk.end, text)
+  block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
+  # add a . to engine name
+  params = sprintf(".%s", params)
+  # change label to id
+  params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
+  params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
+  # clean , and space
+  params = gsub(",\\s*", " ", params)
+  params = gsub("\\s*=\\s*", "=", params)
+  # modify the blocks
+  text[block_start] = sprintf("::: {%s}", params)
+  text[block_end] = ":::"
+  # return the text or write to output file
+  if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
 }

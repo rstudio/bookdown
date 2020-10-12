@@ -61,9 +61,10 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
-    rmarkdown (>= 2.3.5),
+    rmarkdown (>= 2.4),
     xfun (>= 0.13),
-    tinytex (>= 0.12)
+    tinytex (>= 0.12),
+    yaml (>= 2.1.19)
 Suggests:
     htmlwidgets,
     rstudioapi,
@@ -80,4 +81,3 @@ SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-Remotes: rstudio/rmarkdown

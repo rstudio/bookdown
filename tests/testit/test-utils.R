@@ -114,3 +114,57 @@ assert('source_files() handles several configurations correcly', {
 
   TRUE
 })
+
+assert('lua_filter() works as expected', {
+  (basename(lua_filter("custom-environment.lua")) %==% "custom-environment.lua")
+})
+
+if (pandoc2.0()) assert("bookdown_yml_arg() passes _bookdown.yml to Pandoc as the 'bookdown' field", {
+  p = tempfile(); d = list(book_filename = 'cool'); a = bookdown_yml_arg(d, p)
+  ("--metadata-file" %in% a)
+  (yaml::read_yaml(p) %==% list(bookdown = d))
+  unlink(p)
+})
+
+assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
+  old = c(
+    "```{theorem, label = \"thm\", name = \"My Theorem\"}",
+    "Some text",
+    "```",
+    "",
+    "# A header",
+    "",
+    "```{remark, name = \"My Remark\"}",
+    "Some text",
+    "```",
+    "",
+    "```{lemma, my-lem}",
+    "Some text",
+    "```")
+  new = c(
+    "::: {.theorem #thm name=\"My Theorem\"}",
+    "Some text",
+    ":::",
+    "",
+    "# A header",
+    "",
+    "::: {.remark name=\"My Remark\"}",
+    "Some text",
+    ":::",
+    "",
+    "::: {.lemma #my-lem}",
+    "Some text",
+    ":::")
+
+  res = fence_theorems(text = old)
+  (unclass(res) %==% new)
+
+  old = "# A header\n\nSome text"
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
+
+  # other chunk are not changed
+  old = c("```{r, lab, echo=FALSE}", "1+1", "```")
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
+})

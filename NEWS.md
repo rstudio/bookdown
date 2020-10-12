@@ -4,6 +4,8 @@
 
 - Add the `number_sections` argument to `markdown_document2()` and its family. This allows to have now figure references numbered by chapters in these formats, like `word_document2()` or `odt_document2()` for example. This argument default to `TRUE` like `html_document2()` and  `pdf_document2()`. Set it to `number_sections = FALSE` to get the same output as previous version without numbered chapters (thanks, @atusy, #756). 
 
+- Provided an alternative way to create theorem and proof environments using Pandoc's fenced Divs. Previously, **bookdown** supports theorems and proofs in special code chunks like ```` ```{theorem}````. Now you can use the new syntax ```::: {.theorem}```. You may use the helper function `bookdown::fence_theorems()` to convert the former syntax to the latter. The main benefit of using fenced Divs is that you can write arbitrary content in a theorem environment (here "theorem" includes other environments such as lemma, corollary, and definition, etc.), such as R code chunks and inline R code, which was not possible previously. Note that this feature is only supported for LaTeX and HTML output formats at the moment. To learn more about the fenced Divs in general, you may read this section in _R Markdown Cookbook_: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html (thanks, @tchevri #924, @cderv #940).
+
 ## BUG FIXES
 
 - Correctly encode the document title when creating the Twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
