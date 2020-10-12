@@ -594,44 +594,30 @@ add_custom_environment_args = function(format) {
   format
 }
 
-#' Convert theorem and proof engine to new fenced div syntax
+#' Convert the syntax of theorem and proof environments from code blocks to
+#' fenced Divs
 #'
-#' This function is helper to quickly transition from the old syntax to the knew one.
-#' It will parse a R Markdown file to replace any chunk using one of
-#' the theorems or proofs engine to use the new syntax using Pandoc's fenced div.
-#'
-#' In the chunk header, it will replace backticks with colons, use the engine as
-#' class by adding a dot, use the explicit or implicit chunk label as id by
-#' adding a dash and keep the other attributes as is. We strongly advice to
-#' check the changes and adjust if necessary.
-#'
-#' @section Warning:
-#'
-#'   \strong{Use with care !}. This function overwrite the file if an engine
-#'   needs to me modified. We strongly advice to use on files that are under
-#'   version control or to create backup copy.
-#'
-#'   You should check the modifications, especially is you used theorem or proof
-#'   engine in a non standard way.
-#'
-#' @references
-#' \itemize{
-#'   \item \href{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems}{About Theorems and proofs}
-#'   \item \href{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}{About custom blocks}
-#' }
-#'
-#' @param file Path to a file to modify.
-#' @param modify Set to \code{TRUE} to overwrite the file with the Theorems and
-#'   Proofs environments changed.
-#'
-#' @return \code{TRUE} or \code{FALSE} invisibly if the file has been modified
-#'   or not.
-#'
+#' This function converts the syntax \samp{```{theorem, label, ...}} to
+#' \samp{::: {.theorem #label ...}} (Pandoc's fenced Div) for theorem
+#' environments.
+#' @param input Path to an Rmd file that contains theorem environments written
+#'   in the syntax of code blocks.
+#' @param output The output file to write the converted input content. You can
+#'   specify \code{output} to be identical to \code{input}, which means the
+#'   input file will be overwritten. If you want to overwrite the input file,
+#'   you are strongly recommended to put the file under version control or make
+#'   a backup copy in advance.
+#' @references Learn more about
+#'   \href{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
+#'    and proofs} and
+#'   \href{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}{custom
+#'    blocks} in the \pkg{bookdown} book.
+#' @return If \code{output = NULL}, the converted text is returned, otherwise
+#'   the text is written to the output file.
 #' @export
-convert_to_fenced_div = function(file, modify = FALSE) {
-  if (length(file) > 1) stop("file must be only one file", call. = FALSE)
-  x = xfun::read_utf8(file)
-  # identify block
+fence_theorems = function(input, output = NULL) {
+  x = xfun::read_utf8(input)
+  # identify blocks
   md_pattern = knitr::all_patterns$md
   block_start = grep(md_pattern$chunk.begin, x)
   # extract params
@@ -639,39 +625,22 @@ convert_to_fenced_div = function(file, modify = FALSE) {
   # find block with custom environment engine
   reg = sprintf("^(%s).*", paste(all_math_env, collapse = "|"))
   to_convert = grepl(reg, params)
-  n_blocks = sum(to_convert)
-  if (n_blocks == 0) {
-    message("Nothing to modify.")
-    return(invisible(FALSE))
-  }
-  if (modify) {
-    # only modify those blocks
-    params = params[to_convert]
-    block_start = block_start[to_convert]
-    block_end = grep(md_pattern$chunk.end, x)
-    block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
-    # add a . to engine name
-    params = paste0(".", params)
-    # change label to id
-    params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
-    params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
-    # clean , and space
-    params = gsub(",\\s*", " ", params)
-    params = gsub("\\s*=\\s*", "=", params)
-
-    # modify the blocks
-    x[block_start] = sprintf("::: {%s}", params)
-    x[block_end] = ":::"
-
-    # write back
-    xfun::write_utf8(x, file)
-
-    message(n_blocks, " chunks have been modified in the file ", file, ".")
-    return(invisible(TRUE))
-  } else {
-    message(n_blocks, " chunks would be modified in the file ", file, ".\n",
-            "Set `modify = TRUE` if you are ready to modify your file.\n",
-            "Use at your own risk - we advice to use version control or to backup your file.")
-    return(invisible(FALSE))
-  }
+  # only modify those blocks
+  params = params[to_convert]
+  block_start = block_start[to_convert]
+  block_end = grep(md_pattern$chunk.end, x)
+  block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
+  # add a . to engine name
+  params = sprintf(".%s", params)
+  # change label to id
+  params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
+  params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
+  # clean , and space
+  params = gsub(",\\s*", " ", params)
+  params = gsub("\\s*=\\s*", "=", params)
+  # modify the blocks
+  x[block_start] = sprintf("::: {%s}", params)
+  x[block_end] = ":::"
+  # return the text or write to output file
+  if (is.null(output)) xfun::raw_string(x) else xfun::write_utf8(x, input)
 }

@@ -169,21 +169,21 @@ assert('convert engine to fenced divs', {
     "Some text",
     ":::")
   xfun::write_utf8(old, tmp_file)
-  suppressMessages(res <- convert_to_fenced_div(tmp_file))
+  suppressMessages(res <- fence_theorems(tmp_file))
   (xfun::isFALSE(res))
   (xfun::read_utf8(tmp_file) %==% old)
-  suppressMessages(res <- convert_to_fenced_div(tmp_file, TRUE))
+  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
   (isTRUE(res))
   (xfun::read_utf8(tmp_file) %==% new)
   # Do not modify the file if nothing to write
   xfun::write_utf8("# A header\n\nSome text", tmp_file)
-  suppressMessages(res <- convert_to_fenced_div(tmp_file))
+  suppressMessages(res <- fence_theorems(tmp_file))
   (xfun::isFALSE(res))
-  suppressMessages(res <- convert_to_fenced_div(tmp_file, TRUE))
+  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
   (xfun::isFALSE(res))
   # Other chunk are unchange
   xfun::write_utf8("```{r, lab, echo=FALSE}\n1+1\n```\n", tmp_file)
-  suppressMessages(res <- convert_to_fenced_div(tmp_file, TRUE))
+  suppressMessages(res <- fence_theorems(tmp_file, TRUE))
   (xfun::isFALSE(res))
   unlink(tmp_file)
   TRUE
