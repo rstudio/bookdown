@@ -126,7 +126,7 @@ if (pandoc2.0()) assert("bookdown_yml_arg() passes _bookdown.yml to Pandoc as th
   unlink(p)
 })
 
-assert('convert engine to fenced divs', {
+assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
   old = c(
     "```{theorem, label = \"thm\", name = \"My Theorem\"}",
     "Some text",
