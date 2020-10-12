@@ -119,19 +119,11 @@ assert('lua_filter() works as expected', {
   (basename(lua_filter("custom-environment.lua")) %==% "custom-environment.lua")
 })
 
-assert('_bookdown-meta is generated to be found by pandoc', {
-  if (pandoc2.0()) {
-    dir.create(project <- tempfile())
-    old = setwd(project)
-    ("--metadata-file" %in% bookdown_yml_arg())
-    (xfun::in_dir(tempdir(), file.exists("_bookdown-meta.yml")))
-    # clean tests
-    unlink(project, recursive = TRUE); rm(project)
-    setwd(old); rm(old)
-  } else {
-    bookdown_yml_arg() %==% NULL
-  }
-  TRUE
+if (pandoc2.0()) assert("bookdown_yml_arg() passes _bookdown.yml to Pandoc as the 'bookdown' field", {
+  p = tempfile(); d = list(book_filename = 'cool'); a = bookdown_yml_arg(d, p)
+  ("--metadata-file" %in% a)
+  (yaml::read_yaml(p) %==% list(bookdown = d))
+  unlink(p)
 })
 
 assert('convert engine to fenced divs', {
