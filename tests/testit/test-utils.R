@@ -116,8 +116,6 @@ assert('source_files() handles several configurations correcly', {
 })
 
 assert('lua_filter() works as expected', {
-  (has_error(lua_filter("no-such-filter")))
-
   (basename(lua_filter("custom-environment.lua")) %==% "custom-environment.lua")
 })
 
