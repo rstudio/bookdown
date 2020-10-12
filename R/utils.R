@@ -68,35 +68,86 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 }
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
-  subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
-  # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
-  # content in subdir if asked
-  subdir_files = unlist(mapply(
-    list.files,
-    if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
-    recursive = subdir_yes, full.names = is.character(subdir), USE.NAMES = FALSE
-  ))
-  subdir_files = setdiff(subdir_files, files)
-  files = c(files, subdir_files)
-  # if rmd_files is provided, use those files in addition to those under rmd_subdir
-  if (length(files2 <- config[['rmd_files']]) > 0) {
-    # users should specify 'docx' as the output format name for Word, but let's
-    # make 'word' an alias of 'docx' to avoid further confusion:
-    # https://stackoverflow.com/q/63678601/559676
-    if ('word' %in% names(files2) && identical(format, 'docx')) format = 'word'
-    if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
-    # add those files to subdir content if any
-    files = if (subdir_yes) c(files2, subdir_files) else files2
+  toc_loc = config[['custom_toc']]
+  if(is.character(toc_loc)) {
+    files = toc_build(toc_loc)
+  } else {
+    subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
+    # a list of Rmd chapters
+    files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+    # content in subdir if asked
+    subdir_files = unlist(mapply(
+      list.files,
+      if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
+      recursive = subdir_yes, full.names = is.character(subdir), USE.NAMES = FALSE
+    ))
+    subdir_files = setdiff(subdir_files, files)
+    files = c(files, subdir_files)
+    # if rmd_files is provided, use those files in addition to those under rmd_subdir
+    if (length(files2 <- config[['rmd_files']]) > 0) {
+      # users should specify 'docx' as the output format name for Word, but let's
+      # make 'word' an alias of 'docx' to avoid further confusion:
+      # https://stackoverflow.com/q/63678601/559676
+      if ('word' %in% names(files2) && identical(format, 'docx')) format = 'word'
+      if (is.list(files2)) files2 = if (all) unlist(files2) else files2[[format]]
+      # add those files to subdir content if any
+      files = if (subdir_yes) c(files2, subdir_files) else files2
+    }
   }
   # exclude files that start with _, and the merged file
   files = files[grep('^[^_]', basename(files))]
   files = setdiff(files, with_ext(book_filename(config), c('.md', '.Rmd')))
   files = unique(gsub('^[.]/', '', files))
   index = 'index' == with_ext(files, '')
-  # if there is a index.Rmd, put it in the beginning
+  #if there is an index.Rmd, put it in the beginning
   if (any(index)) files = c(files[index], files[!index])
   check_special_chars(files)
+}
+
+
+toc_build <- function(toc_loc){
+  toc <- readLines(toc_loc)
+  toc <- as.data.frame(toc[nchar(toc) > 0])
+  names(toc)[1] <- "base"
+  toc$title <- str_sub(str_extract(toc$base, "(\\[.*\\])"), 2, -2) #Couldn't work out how to regex match between-but-not-including square brackets, so cheated
+  toc$relref <- str_sub(str_extract(toc$base, "\\(.*\\)"), 2, -2)
+  toc$relref <- str_replace(toc$relref, "(^/)", "")
+  toc$heading <- str_extract(toc$base, "(?:^#+(\ |)).+") ##Matches headings including #s; can't do variable length look-behinds?
+  toc$heading <- sapply(str_split(toc$heading, "^#+(\ |)"), `[`, 2) #Drops the #s
+  toc$indent <- str_count(str_extract(toc$base, ".+?(?=\\*)"), pattern = "\\t")
+  toc$indent[is.na(toc$indent)] <- 0
+  toc$type <- apply(toc, 1, function(r){
+    if(str_detect(r[1], "(---)")){
+      "BREAK"
+    } else if(!is.na(r[4])){
+      "HEADING"
+    } else if(is.character(r[3])){
+      "PAGE"
+    }
+  })
+  toc$exists <- sapply(toc$relref, function(r){ #Check that files listed in toc actually exist
+    file.exists(r)
+  })
+  
+  #Check for files in toc.md without associated files in directory, and for files in toc_loc without an entry in toc.md
+  #Flags but allows site to be built anyway
+  missing <- toc[with(toc, is.na(relref) == FALSE & exists == FALSE),]$relref
+  if(length(missing) > 0){
+    warning('These files are listed in the table of contents but cannot be found: \n',
+            lapply(missing, function(r) paste(r, "\n")))
+  }
+  missed <- list.files('.' , full.names = TRUE, pattern = "(?i)([.]Rmd$)|([.]md$)", recursive = TRUE)
+  missed <- str_replace(missed, "(\\.\\/)", "")
+  missed <- setdiff(missed, toc$relref)
+  missed <- missed[!str_detect(missed, pattern = "(stubs/)|(toc.md)")]
+  if(length(missed) > 0){
+    warning('These files found in the "', getwd(), '" directory or subdirectories, but are not listed in toc.md: \n',
+            lapply(missed, function(r) paste(r, "\n")))
+  }
+  saveRDS(toc, file = "toc.Rds")
+  #Returns to source_files only the files that are listed in the toc and exist
+  return(toc[toc$exists == TRUE,]$relref)
+
 }
 
 output_dirname = function(dir, config = load_config(), create = TRUE) {
