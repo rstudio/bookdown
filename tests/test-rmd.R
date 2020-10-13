@@ -12,7 +12,7 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
 
   # split by section works correctly
   ## id is used for html file name
-  sections_files <- c("section-1.html", "subsection-1.html", "section-2.html", "sub2.html")
+  sections_files = c("section-1.html", "subsection-1.html", "section-2.html", "sub2.html")
   if (any(!file.exists(file.path("rmd", sections_files))))
     stop("Failed to generate sections files")
   ## reference is working correctly (see #787)
@@ -55,19 +55,20 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
 
   # lua filter for custom environment
   local({
-    reg_env <- sprintf('<div class="(%s)">', paste(bookdown:::all_math_env, collapse = "|"))
+    reg_env = sprintf('<div class="(%s)">', paste(bookdown:::all_math_env, collapse = "|"))
     if (!any(grepl(reg_env, readLines("rmd/custom-environments.html"))))
       stop("Lua filter for custom environment fails to create divs")
-    i18n <- xfun::in_dir("rmd", bookdown:::load_config()$language$label$solution)
-    reg_span <- sprintf('<span .* class="solution"><em>%s</em>\\. </span>', i18n)
+    i18n = xfun::in_dir("rmd", bookdown:::load_config()$language$label$solution)
+    reg_span = sprintf('<span .* class="solution"><em>%s</em>\\. </span>', i18n)
     if (!any(grepl(reg_span, readLines("rmd/custom-environments.html"))))
       stop("Lua filter for custom environment fails to apply correct translation")
   })
 
   # tests also some specific format
-  rmarkdown::render("rmd/custom-environments.Rmd",
-                    output_format = "bookdown::pdf_document2",
-                    envir = globalenv(), quiet = TRUE)
+  rmarkdown::render(
+    "rmd/custom-environments.Rmd", output_format = "bookdown::pdf_document2",
+    envir = globalenv(), quiet = TRUE
+  )
   if (!file.exists("rmd/custom-environments.pdf"))
     stop("Failed to render custom-environments for pdf document")
 
