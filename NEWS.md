@@ -1,5 +1,8 @@
 # CHANGES IN bookdown VERSION 0.22
 
+## BUG FIXES
+
+- The new syntax for theorem and proof environments introduced in **bookdown** requires Pandoc >= 2.3 instead of 2.0 (thanks, @markhymers, #979 #980).
 
 # CHANGES IN bookdown VERSION 0.21
 
