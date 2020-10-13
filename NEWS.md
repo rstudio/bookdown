@@ -280,7 +280,7 @@
 
 ## NEW FEATURES
 
-- Added special syntax for unnumbered part headers: `# (PART\*)`. Numbered parts should be written after `# (PART)` as before (thanks, @brooksambrose, http://stackoverflow.com/q/43688902/559676).
+- Added special syntax for unnumbered part headers: `# (PART\*)`. Numbered parts should be written after `# (PART)` as before (thanks, @brooksambrose, https://stackoverflow.com/q/43688902/559676).
 
 - The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
 
@@ -290,7 +290,7 @@
 
 ## BUG FIXES
 
-- The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
+- The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (https://stackoverflow.com/q/40976073/559676).
 
 - The YAML option `includes: before_body` works correctly for `gitbook` output now (thanks, @benmarwick, #267).
 
@@ -344,7 +344,7 @@
 
 ## MINOR CHANGES
 
-- The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (http://stackoverflow.com/q/38883222/559676).
+- The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (https://stackoverflow.com/q/38883222/559676).
 
 - The configurations `edit: text` and `chapter_name` have been moved from the top-level options to the sub-options of `language: ui` in `_bookdown.yml`. See https://bookdown.org/yihui/bookdown/internationalization.html
 
@@ -360,7 +360,7 @@
 
 - Footnotes of multiple paragraphs are not displayed on the current page (thanks, @axitdn, #234).
 
-- The output format `pdf_document2()` also works with articles now when an R Markdown document contains bookdown-specific headers, such as parts or appendix headers (http://stackoverflow.com/q/40529798/559676).
+- The output format `pdf_document2()` also works with articles now when an R Markdown document contains bookdown-specific headers, such as parts or appendix headers (https://stackoverflow.com/q/40529798/559676).
 
 # CHANGES IN bookdown VERSION 0.1
 
