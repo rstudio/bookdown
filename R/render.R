@@ -92,7 +92,7 @@ render_book = function(
   if (!preview) unlink(ref_keys_path(output_dir))  # clean up reference-keys.txt
   # store output directory and the initial input Rmd name
   opts$set(
-    output_dir = output_dir, input_rmd = basename(input), preview = preview
+    output_dir = output_dir, input_rmd = input, preview = preview
   )
 
   aux_diro = '_bookdown_files'
