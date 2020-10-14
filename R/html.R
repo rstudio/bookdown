@@ -920,8 +920,7 @@ parse_references = function(x) {
     gsub('<span class="header-section-number">[.0-9]+</span>', '', x[i - 2])
   x[k] = gsub(r, "\\1\\3", x[k])  # remove the div id's
 
-  list(refs = setNames(ref, ids), html = x,
-       title = title, div = x[i])
+  list(refs = setNames(ref, ids), html = x, title = title, div = x[i])
 }
 
 # move references back to the relevant chapter
