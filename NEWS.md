@@ -2,6 +2,8 @@
 
 ## BUG FIXES
 
+- References are now correctly relocated with Pandoc 2.11 when `split_bib = TRUE` in `gitbook()`. New citation processing in Pandoc 2.11 will also add new classes to the divs, and these are preserved when relocating. This allows for references styling using CSS (#981).
+
 - The new syntax for theorem and proof environments introduced in **bookdown** requires Pandoc >= 2.3 instead of 2.0 (thanks, @markhymers, #979 #980).
 
 ## MINOR CHANGES

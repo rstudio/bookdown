@@ -348,7 +348,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (split_bib) {
     # parse and remove the references chapter
     res = parse_references(html_body)
-    refs = res$refs; html_body = res$html; ref_title = res$title
+    refs = res$refs; html_body = res$html
+    ref_title = res$title; refs_div = res$div
   }
   # parse and remove footnotes (will reassign them to relevant pages later)
   res = parse_footnotes(html_body)
@@ -415,7 +416,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
     if (split_bib) {
-      html = relocate_references(html, refs, ref_title, a_targets)
+      html = relocate_references(html, refs, ref_title, a_targets, refs_div)
     }
     html = relocate_footnotes(html, fnts, a_targets)
     html = restore_links(html, html_body, idx, nms)
@@ -901,13 +902,13 @@ restore_appendix_html = function(x, remove = TRUE) {
 parse_references = function(x) {
   i = grep('^<div id="refs" class="references[^"]*">$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
-  r = '^<div id="(ref-[^"]+)">$'
+  r = '^(<div) id="(ref-[^"]+)"([^>]*>)$'
   k = grep(r, x)
   k = k[k > i]
   n = length(k)
   if (n == 0) return(list(refs = character(), html = x))
 
-  ids = gsub(r, '\\1', x[k])
+  ids = gsub(r, '\\2', x[k])
   ref = x[k + 1]
   # replace 3 em-dashes with author names
   dashes = paste0('^<p>', intToUtf8(rep(8212, 3)), '[.]')
@@ -917,18 +918,19 @@ parse_references = function(x) {
   ref = paste(x[k], ref, x[k + 2], sep = '\n')  # add <div id=ref-...></div>
   title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3]))
     gsub('<span class="header-section-number">[.0-9]+</span>', '', x[i - 2])
-  x[k] = '<div>'  # remove the div id's
+  x[k] = gsub(r, "\\1\\3", x[k])  # remove the div id's
 
-  list(refs = setNames(ref, ids), html = x, title = title)
+  list(refs = setNames(ref, ids), html = x, title = title, div = x[i])
 }
 
 # move references back to the relevant chapter
-relocate_references = function(x, refs, title, ids) {
+relocate_references = function(x, refs, title, ids, div) {
   if (length(refs) == 0) return(x)
   ids = intersect(names(refs), ids)
   if (length(ids) == 0) return(x)
   title = if (is.null(title)) '<h3>References</h3>' else gsub('h1>', 'h3>', title)
-  c(x, title, '<div id="refs" class="references">', refs[ids], '</div>')
+  if (is.null(div)) div = '<div id="refs" class="references">'
+  c(x, title, div , refs[ids], '</div>')
 }
 
 # extract relative links from text
