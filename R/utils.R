@@ -271,7 +271,7 @@ strip_html = function(x) {
 # remove the <script><script> content and references
 strip_search_text = function(x) {
   x = gsub('<script[^>]*>(.*?)</script>', '', x)
-  x = gsub('<div id="refs" class="references">.*', '', x)
+  x = gsub('<div id="refs" class="references[^"]*">.*', '', x)
   x = strip_html(x)
   x = gsub('[[:space:]]', ' ', x)
   x
