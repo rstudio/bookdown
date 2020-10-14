@@ -902,14 +902,13 @@ restore_appendix_html = function(x, remove = TRUE) {
 parse_references = function(x) {
   i = grep('^<div id="refs" class="references[^"]*">$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
-  regid = ' id="(ref-[^"]+)"'
-  r = sprintf('^<div%s.*>$', regid)
+  r = '^(<div) id="(ref-[^"]+)"([^>]*>)$'
   k = grep(r, x)
   k = k[k > i]
   n = length(k)
   if (n == 0) return(list(refs = character(), html = x))
 
-  ids = gsub(r, '\\1', x[k])
+  ids = gsub(r, '\\2', x[k])
   ref = x[k + 1]
   # replace 3 em-dashes with author names
   dashes = paste0('^<p>', intToUtf8(rep(8212, 3)), '[.]')
@@ -919,7 +918,7 @@ parse_references = function(x) {
   ref = paste(x[k], ref, x[k + 2], sep = '\n')  # add <div id=ref-...></div>
   title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3]))
     gsub('<span class="header-section-number">[.0-9]+</span>', '', x[i - 2])
-  x[k] = gsub(regid, "", x[k])  # remove the div id's but keep the classes
+  x[k] = gsub(r, "\\1\\3", x[k])  # remove the div id's
 
   list(refs = setNames(ref, ids), html = x,
        title = title, div = x[i])
