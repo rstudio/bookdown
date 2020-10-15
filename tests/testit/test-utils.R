@@ -140,6 +140,9 @@ assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
     "",
     "```{lemma, my-lem}",
     "Some text",
+    "```",
+    "```{solution my-sol, name = \"My Solution\"}",
+    "Some text",
     "```")
   new = c(
     "::: {.theorem #thm name=\"My Theorem\"}",
@@ -153,6 +156,9 @@ assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
     ":::",
     "",
     "::: {.lemma #my-lem}",
+    "Some text",
+    ":::",
+    "::: {.solution #my-sol name=\"My Solution\"}",
     "Some text",
     ":::")
 

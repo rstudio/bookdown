@@ -620,7 +620,7 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   # add a . to engine name
   params = sprintf(".%s", params)
   # change label to id
-  params = gsub(",\\s*([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
+  params = gsub("(?:,|\\s)([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
   params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
   # clean , and space
   params = gsub(",\\s*", " ", params)
