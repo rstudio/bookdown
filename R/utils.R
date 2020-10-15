@@ -619,11 +619,12 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   block_end = vapply(block_start, function(x) block_end[block_end > x][1], integer(1))
   # add a . to engine name
   params = sprintf(".%s", params)
-  # change label to id
-  params = gsub("(?:,|\\s)([-/[:alnum:]]+)(,|\\s*$)", " #\\1", params)
+  # change implicit label to id
+  params = gsub("^([.][a-zA-Z0-9_]+(?:\\s*,\\s*|\\s+))([-/[:alnum:]]+)(\\s*,|\\s*$)", "\\1#\\2", params)
+  # change explicit label to id
   params = gsub("label\\s*=\\s*\"([-/[:alnum:]]+)\"", "#\\1", params)
-  # clean , and space
-  params = gsub(",\\s*", " ", params)
+  # clean , and spaces
+  params = gsub("\\s*,\\s*", " ", params)
   params = gsub("\\s*=\\s*", "=", params)
   # modify the blocks
   text[block_start] = sprintf("::: {%s}", params)
