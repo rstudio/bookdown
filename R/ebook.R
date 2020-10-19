@@ -72,7 +72,10 @@ move_output = function(output) {
   output2
 }
 
-process_markdown = function(input_file, from, pandoc_args, global, to_md = output_md()) {
+process_markdown = function(
+  input_file, from, pandoc_args, global, to_md = output_md(),
+  content = read_utf8(input_file), output = input_file
+) {
   intermediate_html = with_ext(input_file, 'tmp.html')
   on.exit(file.remove(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
@@ -83,7 +86,6 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
   x = clean_html_tags(x)
   figs = parse_fig_labels(x, global)
   # resolve cross-references and update the Markdown input file
-  content = read_utf8(input_file)
   i = xfun::prose_index(content)
   content[i] = resolve_refs_md(content[i], c(figs$ref_table, parse_section_labels(x)), to_md)
   if (to_md) content = gsub(
@@ -100,7 +102,7 @@ process_markdown = function(input_file, from, pandoc_args, global, to_md = outpu
     s = protect_math_env(s)
     content[i] = s
   }
-  write_utf8(content, input_file)
+  if (is.null(output)) content else write_utf8(content, output)
 }
 
 resolve_refs_md = function(content, ref_table, to_md = output_md()) {
