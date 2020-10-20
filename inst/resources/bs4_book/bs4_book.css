@@ -1,9 +1,15 @@
+/* Navbar ---------------------------------------------- */
+
+.navbar {
+  margin-bottom: 2em;
+}
+
 /* Sidebar --------------------------------------------- */
 
 .sidebar {
   position: sticky;
-  top: 4rem;
-  height: calc(100vh - 4rem);
+  top: 5rem;
+  height: calc(100vh - 5rem);
   overflow-y: auto;
 }
 
