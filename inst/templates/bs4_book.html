@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="$lang$">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>$pagetitle$</title>
+
+  $for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+  $endfor$
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  $for(css)$
+  <link rel="stylesheet" href="$css$" />
+  $endfor$
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+  $for(header-includes)$
+  $header-includes$
+  $endfor$
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container">
+<!--bookdown:title:start-->
+<div class="row">
+  $if(title)$
+  <div id="$idprefix$header">
+  <h1 class="title">$title$</h1>
+  $if(subtitle)$
+  <h2 class="subtitle"><em>$subtitle$</em></h2>
+  $endif$
+  $for(author)$
+  $if(author.name)$
+  <p class="author"><em>$author.name$</em></p>
+  $if(author.affiliation)$
+  <address class="author_afil">
+  $author.affiliation$<br>$endif$
+  $if(author.email)$
+  <a class="author_email" href="mailto:#">$author.email$</a>
+  </address>
+  $endif$
+  $else$
+  <p class="author"><em>$author$</em></p>
+  $endif$
+  $endfor$
+  $if(date)$
+  <p class="date"><em>$date$</em></p>
+  $endif$
+  $if(abstract)$
+  <div class="abstract">
+  <p class="abstract">$if(abstract-title)$$abstract-title$$else$Abstract$endif$</p>
+  $abstract$
+  </div>
+  $endif$
+  </div>
+  $endif$
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+<div class="row">
+
+  <div class="col-2 d-none d-md-block order-last sidebar">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+    <nav id="toc" data-toggle="toc">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
+  </div>
+
+  <main class="col" id="content">
+$for(include-before)$
+$include-before$
+$endfor$
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+$body$
+<!--bookdown:body:end-->
+$for(include-after)$
+$include-after$
+$endfor$
+  </main>
+</div>
+
+<footer class="row">
+</footer>
+
+</div> <!-- .container -->
+
+
+$if(math)$
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "$if(mathjax)$$mathjax$$endif$";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+$endif$
+</body>
+
+</html>

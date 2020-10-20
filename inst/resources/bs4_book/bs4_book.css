@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  position: relative;
+}
+
+/* Sidebar --------------------------------------------- */
+
+.sidebar {
+  position: sticky;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
