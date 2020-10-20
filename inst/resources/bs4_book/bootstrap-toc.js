@@ -1,9 +1,9 @@
 /*!
- * Bootstrap Table of Contents v0.4.1 (http://afeld.github.io/bootstrap-toc/)
+ * Bootstrap Table of Contents v1.0.1 (http://afeld.github.io/bootstrap-toc/)
  * Copyright 2015 Aidan Feldman
  * Licensed under MIT (https://github.com/afeld/bootstrap-toc/blob/gh-pages/LICENSE.md) */
-(function() {
-  'use strict';
+(function($) {
+  "use strict";
 
   window.Toc = {
     helpers: {
@@ -12,13 +12,34 @@
         // http://danielnouri.org/notes/2011/03/14/a-jquery-find-that-also-finds-the-root-element/
         // http://stackoverflow.com/a/12731439/358804
         var $descendants = $el.find(selector);
-        return $el.filter(selector).add($descendants).filter(':not([data-toc-skip])');
+        return $el
+          .filter(selector)
+          .add($descendants)
+          .filter(":not([data-toc-skip])");
       },
 
       generateUniqueIdBase: function(el) {
         var text = $(el).text();
-        var anchor = text.trim().toLowerCase().replace(/[^A-Za-z0-9]+/g, '-');
-        return anchor || el.tagName.toLowerCase();
+
+        // adapted from
+        // https://github.com/bryanbraun/anchorjs/blob/65fede08d0e4a705f72f1e7e6284f643d5ad3cf3/anchor.js#L237-L257
+
+        // Regex for finding the non-safe URL characters (many need escaping): & +$,:;=?@"#{}|^~[`%!'<>]./()*\ (newlines, tabs, backspace, & vertical tabs)
+        var nonsafeChars = /[& +$,:;=?@"#{}|^~[`%!'<>\]\.\/\(\)\*\\\n\t\b\v]/g,
+          urlText;
+
+        // Note: we trim hyphens after truncating because truncating can cause dangling hyphens.
+        // Example string:                      // " ⚡⚡ Don't forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
+        urlText = text
+          .trim() // "⚡⚡ Don't forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
+          .replace(/\'/gi, "") // "⚡⚡ Dont forget: URL fragments should be i18n-friendly, hyphenated, short, and clean."
+          .replace(nonsafeChars, "-") // "⚡⚡-Dont-forget--URL-fragments-should-be-i18n-friendly--hyphenated--short--and-clean-"
+          .replace(/-{2,}/g, "-") // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated-short-and-clean-"
+          .substring(0, 64) // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated-"
+          .replace(/^-+|-+$/gm, "") // "⚡⚡-Dont-forget-URL-fragments-should-be-i18n-friendly-hyphenated"
+          .toLowerCase(); // "⚡⚡-dont-forget-url-fragments-should-be-i18n-friendly-hyphenated"
+
+        return urlText || el.tagName.toLowerCase();
       },
 
       generateUniqueId: function(el) {
@@ -27,7 +48,7 @@
           var anchor = anchorBase;
           if (i > 0) {
             // add suffix
-            anchor += '-' + i;
+            anchor += "-" + i;
           }
           // check if ID already exists
           if (!document.getElementById(anchor)) {
@@ -47,7 +68,7 @@
       },
 
       createNavList: function() {
-        return $('<ul class="nav"></ul>');
+        return $('<ul class="nav navbar-nav"></ul>');
       },
 
       createChildNavList: function($parent) {
@@ -57,10 +78,10 @@
       },
 
       generateNavEl: function(anchor, text) {
-        var $a = $('<a></a>');
-        $a.attr('href', '#' + anchor);
+        var $a = $('<a class="nav-link"></a>');
+        $a.attr("href", "#" + anchor);
         $a.text(text);
-        var $li = $('<li></li>');
+        var $li = $("<li></li>");
         $li.append($a);
         return $li;
       },
@@ -68,14 +89,14 @@
       generateNavItem: function(headingEl) {
         var anchor = this.generateAnchor(headingEl);
         var $heading = $(headingEl);
-        var text = $heading.data('toc-text') || $heading.text();
+        var text = $heading.data("toc-text") || $heading.text();
         return this.generateNavEl(anchor, text);
       },
 
       // Find the first heading level (`<h1>`, then `<h2>`, etc.) that has more than one element. Defaults to 1 (for `<h1>`).
       getTopLevel: function($scope) {
         for (var i = 1; i <= 6; i++) {
-          var $headings = this.findOrFilter($scope, 'h' + i);
+          var $headings = this.findOrFilter($scope, "h" + i);
           if ($headings.length > 1) {
             return i;
           }
@@ -86,12 +107,12 @@
 
       // returns the elements for the top level, and the next below it
       getHeadings: function($scope, topLevel) {
-        var topSelector = 'h' + topLevel;
+        var topSelector = "h" + topLevel;
 
         var secondaryLevel = topLevel + 1;
-        var secondarySelector = 'h' + secondaryLevel;
+        var secondarySelector = "h" + secondaryLevel;
 
-        return this.findOrFilter($scope, topSelector + ',' + secondarySelector);
+        return this.findOrFilter($scope, topSelector + "," + secondarySelector);
       },
 
       getNavLevel: function(el) {
@@ -141,7 +162,7 @@
       opts = this.helpers.parseOps(opts);
 
       // ensure that the data attribute is in place for styling
-      opts.$nav.attr('data-toggle', 'toc');
+      opts.$nav.attr("data-toggle", "toc");
 
       var $topContext = this.helpers.createChildNavList(opts.$nav);
       var topLevel = this.helpers.getTopLevel(opts.$scope);
@@ -156,4 +177,4 @@
       Toc.init($nav);
     });
   });
-})();
+})(jQuery);
