@@ -27,14 +27,15 @@ h4 .header-section-number {
   color: #666;
   display: block;
   text-align: right;
-  border-radius: 0.2rem;
 }
 
 /* Code ------------------------------------------------ */
 
 pre {
+  overflow: auto;
   word-wrap: normal;
   word-break: normal;
+  white-space: pre;
   border: 1px solid #eee;
   padding: 0.5em;
   margin: 0 -0.5em 1rem -0.5em;
@@ -42,13 +43,8 @@ pre {
 
 pre, code {
   background-color: #f8f8f8;
-  color: #222;
-}
-
-pre code {
-  overflow: auto;
-  word-wrap: normal;
-  white-space: pre;
+  border-radius: 0.2rem;
+  color: #212529; /* match text colour */
 }
 
 pre .copy {
