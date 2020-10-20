@@ -72,7 +72,7 @@ bs4_book_dependency <- function() {
     name = "bs4_book",
     version = "1.0.0",
     src = assets,
-    stylesheet = c("bootstrap-toc.css", "bs4_book.css"),
-    script = "bootstrap-toc.js"
+    stylesheet = c("bootstrap-toc.css", "bs4_book.css", "littlefoot.css"),
+    script = c("bootstrap-toc.js", "littlefoot.js")
   ))
 }
