@@ -64,9 +64,9 @@
 <div class="row">
   $if(title)$
   <div id="$idprefix$header">
-  <h1 class="title">$title$</h1>
+  <h1 class="title" data-toc-skip>$title$</h1>
   $if(subtitle)$
-  <h2 class="subtitle"><em>$subtitle$</em></h2>
+  <h2 class="subtitle" data-toc-skip><em>$subtitle$</em></h2>
   $endif$
   $for(author)$
   $if(author.name)$
