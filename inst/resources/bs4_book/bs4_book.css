@@ -13,18 +13,22 @@
   overflow-y: auto;
 }
 
+h2 { margin-top: 1.5em }
+h3 { margin-top: 1em }
+
 /* Code ------------------------------------------------ */
 
 pre {
   word-wrap: normal;
   word-break: normal;
   border: 1px solid #eee;
-  padding: 1px;
+  padding: 0.5em;
+  margin: 0 -0.5em 1rem -0.5em;
 }
 
 pre, code {
   background-color: #f8f8f8;
-  color: #333;
+  color: #222;
 }
 
 pre code {
