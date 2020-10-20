@@ -1,11 +1,3 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  position: relative;
-}
-
 /* Sidebar --------------------------------------------- */
 
 .sidebar {
@@ -13,4 +5,24 @@ body {
   top: 4rem;
   height: calc(100vh - 4rem);
   overflow-y: auto;
+}
+
+/* Code ------------------------------------------------ */
+
+pre {
+  word-wrap: normal;
+  word-break: normal;
+  border: 1px solid #eee;
+  padding: 1px;
+}
+
+pre, code {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+pre code {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
 }
