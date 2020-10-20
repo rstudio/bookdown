@@ -10,24 +10,24 @@ nav[data-toggle="toc"] .nav > li > a {
   display: block;
   padding: 4px 20px;
   font-weight: 500;
-  color: #767676;
+  color: #666;
 }
 nav[data-toggle="toc"] .nav > li > a:hover,
 nav[data-toggle="toc"] .nav > li > a:focus {
   padding-left: 19px;
-  color: #563d7c;
+  color: #333;
   text-decoration: none;
   background-color: transparent;
-  border-left: 1px solid #563d7c;
+  border-left: 1px solid #333;
 }
 nav[data-toggle="toc"] .nav-link.active,
 nav[data-toggle="toc"] .nav-link.active:hover,
 nav[data-toggle="toc"] .nav-link.active:focus {
   padding-left: 18px;
   font-weight: bold;
-  color: #563d7c;
+  color: #333;
   background-color: transparent;
-  border-left: 2px solid #563d7c;
+  border-left: 2px solid #333;
 }
 
 /* Nav: second level (shown on .active) */
