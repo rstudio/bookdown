@@ -37,6 +37,13 @@ pre code {
   white-space: pre;
 }
 
+pre .copy {
+  position: relative;
+  float: right;
+}
+pre .copy button {
+  background-color: #fff;
+}
 
 /* https://github.com/rstudio/distill/blob/master/inst/rmarkdown/templates/distill_article/resources/a11y.theme + https://gist.github.com/hadley/f53b6e92df20994fdabe6562d284728a */
 code span.ot {color:#007faa}
