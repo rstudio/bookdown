@@ -20,6 +20,7 @@ bs4_book <- function(
 
   config <- rmarkdown::html_document(
     toc = FALSE,
+    number_sections = number_sections,
     self_contained = FALSE,
     theme = NULL,
     template = bookdown_file("templates", "bs4_book.html"),
