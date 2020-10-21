@@ -47,6 +47,13 @@
 #' bookdown::render_book("index.Rmd",  "pdf_book")
 #' # If you pass an output format object, it must have all the options set
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+#'
+#' # will render the book in the current directory
+#' bookdown::render_book()
+#' # this is equivalent to
+#' bookdown::render_book("index.Rmd")
+#' # will render the book living in the specified directory
+#' bookdown::render_book("my_book_project")
 #' }
 render_book = function(
   input = ".", output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
