@@ -53,6 +53,7 @@ pre .copy {
 }
 pre .copy button {
   background-color: #fff;
+  font-size: 80%;
 }
 
 /* https://github.com/rstudio/distill/blob/master/inst/rmarkdown/templates/distill_article/resources/a11y.theme + https://gist.github.com/hadley/f53b6e92df20994fdabe6562d284728a */
