@@ -36,23 +36,39 @@ bs4_book <- function(
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    move_files_html(output, lib_dir)
-    output2 <- split_chapters(
-      output = output,
-      build = bs4_book_page,
+    output2 <- bs4_book_build(
+      output,
+      lib_dir,
       number_sections = number_sections,
       split_by = split_by,
       split_bib = split_bib
     )
-    if (file.exists(output) && !same_path(output, output2)) {
+
+    if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
     }
-    move_files_html(output2, lib_dir)
     output2
   }
 
   # config <- common_format_config(config, "html")
   config
+}
+
+bs4_book_build <- function(output = "bookdown.html",
+                           lib_dir = "libs",
+                           number_sections = TRUE,
+                           split_by = "chapter",
+                           split_bib = TRUE) {
+  move_files_html(output, lib_dir)
+  output2 <- split_chapters(
+    output = output,
+    build = bs4_book_page,
+    number_sections = number_sections,
+    split_by = split_by,
+    split_bib = split_bib
+  )
+  move_files_html(output2, lib_dir)
+  output2
 }
 
 bs4_book_page = function(head,
