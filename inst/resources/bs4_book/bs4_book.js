@@ -1,4 +1,6 @@
-littlefoot.littlefoot()
+$(document).ready(function() {
+  littlefoot.littlefoot();
+});
 
 function changeTooltipMessage(element, msg) {
   var tooltipOriginalTitle=element.getAttribute('data-original-title');
