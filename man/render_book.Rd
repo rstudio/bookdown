@@ -6,7 +6,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(
-  input,
+  input = NULL,
   output_format = NULL,
   ...,
   clean = TRUE,

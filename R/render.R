@@ -47,12 +47,19 @@
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
 #' }
 render_book = function(
-  input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
+  input = NULL, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
   preview = FALSE, config_file = '_bookdown.yml'
 ) {
 
   verify_rstudio_version()
+  if (is.null(input) && file.exists("index.Rmd")) {
+    input = "index.Rmd"
+  } else {
+    stop(
+      "No index.Rmd file found in the current working directory.",
+      "You must specify an input Rmd.", call. = FALSE)
+  }
   format = NULL  # latex or html
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
