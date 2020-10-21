@@ -2,6 +2,8 @@
 
 ## BUG FIXES
 
+- CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).
+
 - `fenced_theorems()` now correctly transforms implicit label in chunk header to a fenced divs id. (thanks, @enixam, #982)
 
 - References are now correctly relocated with Pandoc 2.11 when `split_bib = TRUE` in `gitbook()`. New citation processing in Pandoc 2.11 will also add new classes to the divs, and these are preserved when relocating. This allows for references styling using CSS (#981).
