@@ -134,8 +134,8 @@ bs4_book_dependency <- function() {
     name = "bs4_book",
     version = "1.0.0",
     src = assets,
-    stylesheet = c("bootstrap-toc.css", "bs4_book.css", "littlefoot.css"),
-    script = c("bootstrap-toc.js", "littlefoot.js", "bs4_book.js")
+    stylesheet = c("bootstrap-toc.css", "bs4_book.css"),
+    script = c("bootstrap-toc.js", "bs4_book.js")
   ))
 }
 
@@ -146,10 +146,39 @@ bs4_chapter_tweak <- function(path, toc) {
   html <- xml2::read_html(path, encoding = "UTF-8")
 
   tweak_tables(html)
+  tweak_footnotes(html)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
   path
+}
+
+tweak_footnotes <- function(html) {
+  container <- xml2::xml_find_all(html, ".//div[@class='footnotes']")
+  if (length(container) != 1) {
+    return()
+  }
+
+  # Find id and contents
+  footnotes <- xml2::xml_find_all(container, ".//li")
+  id <- xml2::xml_attr(footnotes, "id")
+  xml2::xml_remove(xml2::xml_find_all(footnotes, "//a[@class='footnote-back']"))
+  contents <- vapply(footnotes, FUN.VALUE = character(1), function(x) {
+    as.character(xml2::xml_children(x))
+  })
+
+  # Add popover attributes to links
+  for (i in seq_along(id)) {
+    links <- xml2::xml_find_all(html, paste0(".//a[@href='#", id[[i]], "']"))
+    xml2::xml_attr(links, "href") <- NULL
+    xml2::xml_attr(links, "id") <- NULL
+    xml2::xml_attr(links, "tabindex") <- "0"
+    xml2::xml_attr(links, "data-toggle") <- "popover"
+    xml2::xml_attr(links, "data-content") <- contents[[i]]
+  }
+
+  # Delete container
+  xml2::xml_remove(container)
 }
 
 # Ensure all tables have class="table"

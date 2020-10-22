@@ -1,6 +1,12 @@
-$(document).ready(function() {
-  littlefoot.littlefoot();
-});
+$(function () {
+  $('[data-toggle="popover"]').popover({
+    container: 'body',
+    html: true,
+    trigger: 'focus',
+    placement: "top",
+    sanitize: false,
+  });
+})
 
 function changeTooltipMessage(element, msg) {
   var tooltipOriginalTitle=element.getAttribute('data-original-title');
