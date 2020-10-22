@@ -146,6 +146,7 @@ bs4_chapter_tweak <- function(path, toc) {
   html <- xml2::read_html(path, encoding = "UTF-8")
 
   tweak_tables(html)
+  tweak_anchors(html)
   tweak_footnotes(html)
   downlit::downlit_html_node(html)
 
@@ -179,6 +180,21 @@ tweak_footnotes <- function(html) {
 
   # Delete container
   xml2::xml_remove(container)
+}
+
+tweak_anchors <- function(html) {
+  headings <- xml2::xml_find_all(html, "(.//h1|.//h2|.//h3|.//h4|.//h5|.//h6)")
+  id <- xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id")
+
+  anchor <- paste0(
+    "<a class='anchor' aria-label='anchor' href='#", id, "'>",
+    "<i class='fas fa-link'></i>",
+    "</a>"
+  )
+
+  for (i in seq_along(id)) {
+    xml2::xml_add_child(headings[[i]], xml2::read_xml(anchor[[i]]))
+  }
 }
 
 # Ensure all tables have class="table"

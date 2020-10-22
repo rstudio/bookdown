@@ -37,6 +37,20 @@ h4 .header-section-number {
   text-align: right;
 }
 
+.anchor {
+  font-size: min(0.5em, 1rem);
+  margin-left: 0.5rem;
+  display: none;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+  display: inline;
+}
+
 /* Tables ---------------------------------------------- */
 
 table.kable_wrapper td {
