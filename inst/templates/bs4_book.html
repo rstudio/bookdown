@@ -85,19 +85,14 @@ $endfor$
 <footer class="bg-primary text-light mt-5">
   <div class="container"><div class="row">
 
-  <div class="col-12 col-sm-6 col-lg-3 mt-3">
+  <div class="col-12 col-md-6 mt-3">
     <p>
-      Written by $for(author)$$author$$sep$, $endfor$<br/>
-      $if(date)$Last built on <em>$date$</em>$endif$
+      "<strong>$title$</strong>$if(subtitle)$: $subtitle$$endif$" was written by $for(author)$$author$$sep$, $endfor$
+      $if(date)$ and last built on $date$$endif$
     </p>
+
+    <p>This website is produced by the <a class="text-light" href="https://bookdown.org">bookdown</a> bs4_book template.</p>
   </div>
-  <div class="col-12 col-sm-6 col-lg-3 mt-3">
-  </div>
-  <div class="col-12 col-sm-6 col-lg-3 mt-3">
-  </div>
-  <div class="col-12 col-sm-6 col-lg-3 mt-3">
-  </div>
-  </div></div>
 </footer>
 
 
