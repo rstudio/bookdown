@@ -7,6 +7,11 @@
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @export
+#' @examples
+#' withr::with_dir("inst/examples", render_book("index.Rmd", bs4_book(), quiet = TRUE, clean = FALSE))
+#'
+#' opts$set(output_dir = "inst/examples/_book")
+#' bs4_book_build("inst/examples/bookdown.html")
 bs4_book <- function(
                      number_sections = TRUE,
                      lib_dir = "libs",
