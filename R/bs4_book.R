@@ -147,6 +147,7 @@ bs4_chapter_tweak <- function(path, toc) {
   html <- xml2::read_html(path, encoding = "UTF-8")
 
   tweak_tables(html)
+  tweak_chapter(html)
   tweak_anchors(html)
   tweak_footnotes(html)
   tweak_navbar(html, toc, basename(path))
@@ -154,6 +155,11 @@ bs4_chapter_tweak <- function(path, toc) {
 
   xml2::write_html(html, path, format = FALSE)
   path
+}
+
+tweak_chapter <- function(html) {
+  num <- xml2::xml_find_all(html, ".//h1//span[@class='header-section-number']")
+  xml2::xml_text(num) <- gsub("Chapter ", "", xml2::xml_text(num))
 }
 
 tweak_footnotes <- function(html) {

@@ -47,9 +47,7 @@ html, body {
 h2 { margin-top: 3rem }
 h3 { margin-top: 2em; font-size: 1.2rem; }
 
-h1 .header-section-number {
-  color: #666;
-}
+h1 .header-section-number,
 h2 .header-section-number,
 h3 .header-section-number,
 h4 .header-section-number {
@@ -57,6 +55,7 @@ h4 .header-section-number {
   width: 5rem;
   left: -5rem;
   color: #666;
+  font-weight: normal;
   display: block;
   text-align: right;
 }
