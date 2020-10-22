@@ -10,7 +10,7 @@ $(function () {
 
   // Activate headroom
   var myElement = document.querySelector(".navbar");
-  var headroom  = new Headroom(myElement);
+  var headroom  = new Headroom(myElement, {tolerance : 10});
   headroom.init();
 })
 
