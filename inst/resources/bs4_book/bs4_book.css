@@ -16,8 +16,8 @@
 }
 
 /* Adjust content down by height of navbar */
-.sidebar, main {
-  top: 65px;
+.sidebar {
+  margin-top: 65px;
 }
 html, body {
   scroll-padding-top: 65px;
@@ -44,6 +44,9 @@ html, body {
 h2 { margin-top: 3rem }
 h3 { margin-top: 2em; font-size: 1.2rem; }
 
+h1 .header-section-number {
+  color: #666;
+}
 h2 .header-section-number,
 h3 .header-section-number,
 h4 .header-section-number {
