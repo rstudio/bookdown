@@ -146,6 +146,7 @@ bs4_chapter_tweak <- function(path, toc) {
   html <- xml2::read_html(path, encoding = "UTF-8")
 
   tweak_tables(html)
+  downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
   path
