@@ -1,4 +1,5 @@
 $(function () {
+  // Activate popovers
   $('[data-toggle="popover"]').popover({
     container: 'body',
     html: true,
@@ -6,6 +7,11 @@ $(function () {
     placement: "top",
     sanitize: false,
   });
+
+  // Activate headroom
+  var myElement = document.querySelector(".navbar");
+  var headroom  = new Headroom(myElement);
+  headroom.init();
 })
 
 function changeTooltipMessage(element, msg) {
