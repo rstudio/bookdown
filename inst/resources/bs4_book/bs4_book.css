@@ -37,6 +37,12 @@ h4 .header-section-number {
   text-align: right;
 }
 
+/* Tables ---------------------------------------------- */
+
+table.kable_wrapper td {
+  vertical-align: top;
+}
+
 /* Code ------------------------------------------------ */
 
 pre {

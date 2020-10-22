@@ -9,22 +9,16 @@
 #' @export
 #' @examples
 #' withr::with_dir("inst/examples", render_book("index.Rmd", bs4_book(), quiet = TRUE, clean = FALSE))
-#'
-#' opts$set(output_dir = "inst/examples/_book")
 #' bs4_book_build("inst/examples/bookdown.html")
 bs4_book <- function(
-                     number_sections = TRUE,
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
-                     ...,
-                     split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none")
+                     ...
                      ) {
-  split_by <- match.arg(split_by)
-
   config <- rmarkdown::html_document(
     toc = FALSE,
-    number_sections = number_sections,
+    number_sections = TRUE,
     anchor_sections = FALSE,
     self_contained = FALSE,
     theme = NULL,
@@ -41,13 +35,7 @@ bs4_book <- function(
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    output2 <- bs4_book_build(
-      output,
-      lib_dir,
-      number_sections = number_sections,
-      split_by = split_by,
-      split_bib = FALSE
-    )
+    output2 <- bs4_book_build(output, lib_dir = lib_dir)
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
@@ -61,18 +49,25 @@ bs4_book <- function(
 
 bs4_book_build <- function(output = "bookdown.html",
                            lib_dir = "libs",
-                           number_sections = TRUE,
-                           split_by = "chapter",
-                           split_bib = TRUE) {
+                           output_dir = opts$get("output_dir")
+                           ) {
   move_files_html(output, lib_dir)
   output2 <- split_chapters(
     output = output,
     build = bs4_book_page,
-    number_sections = number_sections,
-    split_by = split_by,
-    split_bib = split_bib
+    number_sections = TRUE,
+    split_by = "chapter",
+    split_bib = FALSE
   )
   move_files_html(output2, lib_dir)
+
+  toc <- build_toc(output)
+  chapters <- file.path(output_dir, unique(toc$file_name))
+
+  for (chapter in chapters) {
+    bs4_chapter_tweak(chapter, toc)
+  }
+
   output2
 }
 
@@ -92,12 +87,14 @@ build_toc <- function(output) {
     toc <- tibble::as_tibble(toc)
   }
 
+  # Strip numbers from heading text
   toc$text <- ifelse(
     is.na(toc$num),
     toc$text,
     substr(toc$text, nchar(toc$num) + 2, nchar(toc$text))
   )
 
+  # Determine hierarchy
   toc$level <- unname(c("h1" = 1, "h2" = 2, "h3" = 3)[toc$tag])
   toc$tag <- NULL
   is_part <- grepl("(PART)", toc$text)
@@ -107,8 +104,17 @@ build_toc <- function(output) {
   toc$text[is_part] <- gsub("\\(PART\\) ", "", toc$text[is_part])
   toc$text[is_appendix] <- gsub("\\(APPENDIX\\) ", "", toc$text[is_appendix])
 
+  # Figure book structure
+  new_chapter <- toc$level == 1 & !is.na(toc$num)
+  toc$chapter <- cumsum(new_chapter)
+  toc$part <- cumsum(is_part)
+
+  chapter_files <- tapply(toc$id, toc$chapter, "[[", 1)
+  toc$file_name <- paste0(chapter_files[as.character(toc$chapter)], ".html")
+
   toc
 }
+
 
 bs4_book_page = function(head,
                          toc,
@@ -131,4 +137,28 @@ bs4_book_dependency <- function() {
     stylesheet = c("bootstrap-toc.css", "bs4_book.css", "littlefoot.css"),
     script = c("bootstrap-toc.js", "littlefoot.js", "bs4_book.js")
   ))
+}
+
+
+# HTML manip --------------------------------------------------------------
+
+bs4_chapter_tweak <- function(path, toc) {
+  html <- xml2::read_html(path, encoding = "UTF-8")
+
+  tweak_tables(html)
+
+  xml2::write_html(html, path, format = FALSE)
+  path
+}
+
+# Ensure all tables have class="table"
+tweak_tables <- function(html) {
+  table <- xml2::xml_find_all(html, ".//table")
+
+  if (length(table) > 0) {
+    class <- xml2::xml_attr(table, "class")
+    xml2::xml_attr(table[is.na(class)], "class") <- "table table-sm"
+  }
+
+  invisible()
 }
