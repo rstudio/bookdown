@@ -148,3 +148,9 @@ code span.cn {color:#d91e18}
 code span.sc {color:#008000}
 code span.dv {color:#a1024a}
 code span.kw {color:#007faa; font-weight: bold}
+
+/* Misc typograph ---------------------------------------------- */
+
+body {
+  line-height: 1.6;
+}
