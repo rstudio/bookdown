@@ -1016,9 +1016,11 @@ move_files_html = function(output, lib_dir) {
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
     d = dirname(z)
     z = read_utf8(z)
-    r = 'url\\((?:"|\')?([^"\']+)(?:"|\')?\\)'
-    m = Filter(function(x) length(x)!=0, regmatches(z, regexec(r, z)))
-    file.path(d, local_resources(sapply(m, `[`, 2)))
+    r = 'url\\((?:"|\')?([^")\']+)(?:"|\')?\\)'
+    lapply(regmatches(z, gregexpr(r, z)), function(s) {
+      s = local_resources(gsub(r, '\\1', s))
+      file.path(d, s)
+    })
   })
   f = c(f, unlist(css))
   f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
