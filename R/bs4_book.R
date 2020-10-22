@@ -18,8 +18,7 @@ bs4_book <- function(
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
                      ...,
-                     split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none"),
-                     split_bib = TRUE
+                     split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none")
                      ) {
   split_by <- match.arg(split_by)
 
@@ -47,7 +46,7 @@ bs4_book <- function(
       lib_dir,
       number_sections = number_sections,
       split_by = split_by,
-      split_bib = split_bib
+      split_bib = FALSE
     )
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
