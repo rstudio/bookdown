@@ -17,10 +17,13 @@
 
 /* Adjust content down by height of navbar */
 .sidebar {
-  margin-top: 65px;
+  top: 65px;
+}
+main {
+  margin-top: 75px;
 }
 html, body {
-  scroll-padding-top: 65px;
+  scroll-padding-top: 75px;
 }
 
 /* Sidebar --------------------------------------------- */

@@ -62,7 +62,7 @@ bs4_book_build <- function(output = "bookdown.html",
   move_files_html(output2, lib_dir)
 
   toc <- build_toc(output)
-  chapters <- file.path(output_dir, unique(toc$file_name))
+  chapters <- file.path(output_dir, setdiff(unique(toc$file_name), NA))
 
   for (chapter in chapters) {
     bs4_chapter_tweak(chapter, toc)
@@ -111,10 +111,10 @@ build_toc <- function(output) {
 
   chapter_files <- tapply(toc$id, toc$chapter, "[[", 1)
   toc$file_name <- paste0(chapter_files[as.character(toc$chapter)], ".html")
+  toc$file_name[toc$level == 0] <- NA
 
   toc
 }
-
 
 bs4_book_page = function(head,
                          toc,
@@ -148,6 +148,7 @@ bs4_chapter_tweak <- function(path, toc) {
   tweak_tables(html)
   tweak_anchors(html)
   tweak_footnotes(html)
+  tweak_navbar(html, toc, path)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -207,4 +208,29 @@ tweak_tables <- function(html) {
   }
 
   invisible()
+}
+
+tweak_navbar <- function(html, toc, active = "") {
+  nav <- subset(toc, level %in% 0:1)
+  nav <- subset(nav, !class %in% "title")
+  nav <- nav[!duplicated(nav$file_name), ]
+  nav
+
+  is_active <- nav$file_name == active
+  class <- ifelse(is_active, "dropdown-item active", "dropdown-item")
+  a <- paste0(
+    "<a class='", class, "' href='", nav$file_name, "'>",
+    nav$text,
+    "</a>"
+  )
+  a[is.na(nav$file_name)] <- paste0("<h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>")
+
+  to_insert <- paste0(
+    "<div class='dropdown-menu' aria-labelledby='navbar-toc'>\n",
+    paste0("  ", a, "\n", collapse = ""),
+    "</div>\n"
+  )
+
+  dropdown <- xml2::xml_find_first(html, ".//div[@id='toc-nav']")
+  xml2::xml_replace(dropdown, xml2::read_xml(to_insert))
 }
