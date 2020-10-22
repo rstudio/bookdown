@@ -105,11 +105,12 @@ build_toc <- function(output) {
   toc$text[is_appendix] <- gsub("\\(APPENDIX\\) ", "", toc$text[is_appendix])
 
   # Figure book structure
-  new_chapter <- toc$level == 1 & !is.na(toc$num)
+  new_chapter <- toc$level == 1
   toc$chapter <- cumsum(new_chapter)
   toc$part <- cumsum(is_part)
 
   chapter_files <- tapply(toc$id, toc$chapter, "[[", 1)
+  chapter_files[[1]] <- "index"
   toc$file_name <- paste0(chapter_files[as.character(toc$chapter)], ".html")
   toc$file_name[toc$level == 0] <- NA
 
@@ -148,7 +149,7 @@ bs4_chapter_tweak <- function(path, toc) {
   tweak_tables(html)
   tweak_anchors(html)
   tweak_footnotes(html)
-  tweak_navbar(html, toc, path)
+  tweak_navbar(html, toc, basename(path))
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -223,7 +224,7 @@ tweak_navbar <- function(html, toc, active = "") {
     nav$text,
     "</a>"
   )
-  a[is.na(nav$file_name)] <- paste0("<h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>")
+  a[is.na(nav$file_name)] <- paste0("<div class='dropdown-divider'></div><h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>")
 
   to_insert <- paste0(
     "<div class='dropdown-menu' aria-labelledby='navbar-toc'>\n",

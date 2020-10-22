@@ -7,6 +7,7 @@ $(function () {
     placement: "top",
     sanitize: false,
   });
+  $('[data-toggle="tooltip"]').tooltip();
 
   // Activate headroom
   var myElement = document.querySelector(".navbar");

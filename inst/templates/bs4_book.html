@@ -29,7 +29,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
   <div class="container">
-  <a class="navbar-brand" href="index.html">$title$</a>
+  <a class="navbar-brand" href="index.html" data-toggle="tooltip" title="$subtitle$">$title$</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -56,39 +56,6 @@
 
 <div class="container">
 <!--bookdown:title:start-->
-<div class="row">
-  $if(title)$
-  <div id="index">
-  <h1 class="title" data-toc-skip>$title$</h1>
-  $if(subtitle)$
-  <h2 class="title" data-toc-skip><em>$subtitle$</em></h2>
-  $endif$
-  $for(author)$
-  $if(author.name)$
-  <p class="author"><em>$author.name$</em></p>
-  $if(author.affiliation)$
-  <address class="author_afil">
-  $author.affiliation$<br>$endif$
-  $if(author.email)$
-  <a class="author_email" href="mailto:#">$author.email$</a>
-  </address>
-  $endif$
-  $else$
-  <p class="author"><em>$author$</em></p>
-  $endif$
-  $endfor$
-  $if(date)$
-  <p class="date"><em>$date$</em></p>
-  $endif$
-  $if(abstract)$
-  <div class="abstract">
-  <p class="abstract">$if(abstract-title)$$abstract-title$$else$Abstract$endif$</p>
-  $abstract$
-  </div>
-  $endif$
-  </div>
-  $endif$
-</div>
 <!--bookdown:title:end-->
 
 <!--bookdown:toc:start-->
