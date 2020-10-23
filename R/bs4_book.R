@@ -68,12 +68,7 @@ bs4_book_build <- function(output = "bookdown.html",
   )
   move_files_html(output2, lib_dir)
 
-  toc <- build_toc(output)
-  chapters <- file.path(output_dir, setdiff(unique(toc$file_name), NA))
-
-  for (chapter in chapters) {
-    bs4_chapter_tweak(chapter, toc)
-  }
+  bs4_chapters_tweak(output, output_dir)
 
   output2
 }
@@ -155,18 +150,22 @@ bs4_book_dependency <- function(theme) {
 
 # HTML manip --------------------------------------------------------------
 
-bs4_chapter_tweak <- function(path, toc) {
-  html <- xml2::read_html(path, encoding = "UTF-8")
+bs4_chapters_tweak <- function(output, output_dir) {
+  toc <- build_toc(output)
+  chapters <- file.path(output_dir, setdiff(unique(toc$file_name), NA))
 
-  tweak_tables(html)
-  tweak_chapter(html)
-  tweak_anchors(html)
-  tweak_footnotes(html)
-  tweak_navbar(html, toc, basename(path))
-  downlit::downlit_html_node(html)
+  for (chapter in chapters) {
+    html <- xml2::read_html(chapter, encoding = "UTF-8")
 
-  xml2::write_html(html, path, format = FALSE)
-  path
+    tweak_tables(html)
+    tweak_chapter(html)
+    tweak_anchors(html)
+    tweak_footnotes(html)
+    tweak_navbar(html, toc, basename(path))
+    downlit::downlit_html_node(html)
+
+    xml2::write_html(html, chapter, format = FALSE)
+  }
 }
 
 tweak_chapter <- function(html) {
