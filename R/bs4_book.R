@@ -11,11 +11,11 @@
 #' withr::with_dir("inst/examples", render_book("index.Rmd", bs4_book(), quiet = TRUE, clean = FALSE))
 #' bs4_book_build("inst/examples/bookdown.html")
 bs4_book <- function(
+                     theme = bs4_book_theme(),
+                     ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
-                     extra_dependencies = NULL,
-                     theme = bs4_book_theme(),
-                     ...
+                     extra_dependencies = NULL
                      ) {
   config <- rmarkdown::html_document(
     toc = FALSE,
