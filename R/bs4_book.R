@@ -14,6 +14,7 @@ bs4_book <- function(
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
+                     theme = bs4_book_theme(),
                      ...
                      ) {
   config <- rmarkdown::html_document(
@@ -25,7 +26,7 @@ bs4_book <- function(
     template = bookdown_file("templates", "bs4_book.html"),
     pandoc_args = pandoc_args2(pandoc_args),
     lib_dir = lib_dir,
-    extra_dependencies = c(bs4_book_dependency(), extra_dependencies),
+    extra_dependencies = c(bs4_book_dependency(theme), extra_dependencies),
     ...
   )
 
@@ -45,6 +46,12 @@ bs4_book <- function(
 
   # config <- common_format_config(config, "html")
   config
+}
+
+#' @export
+#' @rdname bs4_book
+bs4_book_theme <- function(...) {
+  bootstraplib::bs_theme(..., "font-size-base" = "1rem")
 }
 
 bs4_book_build <- function(output = "bookdown.html",
@@ -128,16 +135,21 @@ bs4_book_page = function(head,
   paste(c(head, toc, chapter, foot), collapse = '\n')
 }
 
-bs4_book_dependency <- function() {
+bs4_book_dependency <- function(theme) {
   assets <- bookdown_file("resources", "bs4_book")
 
-  list(htmltools::htmlDependency(
-    name = "bs4_book",
-    version = "1.0.0",
-    src = assets,
-    stylesheet = c("bootstrap-toc.css", "bs4_book.css"),
-    script = c("bootstrap-toc.js", "bs4_book.js", "headroom.js")
-  ))
+  c(
+    bootstraplib::bs_theme_dependencies(theme),
+    list(
+      htmltools::htmlDependency(
+        name = "bs4_book",
+        version = "1.0.0",
+        src = assets,
+        stylesheet = c("bootstrap-toc.css", "bs4_book.css"),
+        script = c("bootstrap-toc.js", "bs4_book.js", "headroom.js")
+      )
+    )
+  )
 }
 
 
