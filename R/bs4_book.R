@@ -9,6 +9,10 @@
 #' @export
 #' @examples
 #' withr::with_dir("inst/examples", render_book("index.Rmd", bs4_book(), quiet = TRUE, clean = FALSE))
+#' fs::dir_delete(file.path(tempdir(), "_book"))
+#' fs::dir_copy("inst/examples/_book", tempdir())
+#' browseURL(file.path(tempdir(), "_book/index.html"))
+#'
 #' bs4_book_build("inst/examples/bookdown.html")
 bs4_book <- function(
                      theme = bs4_book_theme(),
@@ -152,10 +156,15 @@ bs4_book_dependency <- function(theme) {
 
 bs4_chapters_tweak <- function(output, output_dir) {
   toc <- build_toc(output)
-  chapters <- file.path(output_dir, setdiff(unique(toc$file_name), NA))
 
-  for (chapter in chapters) {
-    html <- xml2::read_html(chapter, encoding = "UTF-8")
+  files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
+  files$path <- file.path(output_dir, files$file_name)
+
+  index <- vector("list", nrow(files))
+
+  for (i in seq_len(nrow(files))) {
+    path <- files$path[[i]]
+    html <- xml2::read_html(path, encoding = "UTF-8")
 
     tweak_tables(html)
     tweak_chapter(html)
@@ -164,8 +173,18 @@ bs4_chapters_tweak <- function(output, output_dir) {
     tweak_navbar(html, toc, basename(path))
     downlit::downlit_html_node(html)
 
-    xml2::write_html(html, chapter, format = FALSE)
+    sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
+    index[[i]] <- lapply(sections, bs4_index_data, chapter = files$text[[i]])
+
+    xml2::write_html(html, path, format = FALSE)
   }
+
+  index <- unlist(index, recursive = FALSE, use.names = FALSE)
+  jsonlite::write_json(
+    index,
+    file.path(output_dir, "search.json"),
+    auto_unbox = TRUE
+  )
 }
 
 tweak_chapter <- function(html) {
@@ -251,4 +270,30 @@ tweak_navbar <- function(html, toc, active = "") {
 
   dropdown <- xml2::xml_find_first(html, ".//div[@id='toc-nav']")
   xml2::xml_replace(dropdown, xml2::read_xml(to_insert))
+}
+
+
+# index -------------------------------------------------------------------
+
+bs4_index_data <- function(node, chapter) {
+  children <- xml2::xml_find_all(node,
+    "./*[not(self::div and contains(@class, 'section'))]"
+  )
+  if (length(children) == 0 || !is_heading(children[[1]])) {
+    return()
+  }
+
+  list(
+    chapter = chapter,
+    heading = xml_text1(children[[1]]),
+    text = xml_text1(children[-1])
+  )
+}
+
+xml_text1 <- function(x) {
+  paste0(xml2::xml_text(x), collapse = "")
+}
+
+is_heading <- function(node) {
+  xml2::xml_name(node) %in% c("h1", "h2", "h3", "h4", "h5")
 }

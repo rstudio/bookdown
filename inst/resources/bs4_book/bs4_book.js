@@ -15,6 +15,63 @@ $(function () {
   headroom.init();
 })
 
+// Initialise search index when search gets focus */
+var fuse;
+
+$(function () {
+  $("#search").focus(async function(e) {
+    if (!fuse) {
+      $(e.target).addClass("loading");
+      fuse = initFuse()
+      await fuse;
+     $(e.target).removeClass("loading");
+    }
+  });
+
+  // Perform search when #search gets keypress
+  $("#search").keydown(async function(e) {
+    if (event.which == 13) {
+      event.preventDefault();
+    }
+
+    var fuse = await getFuse();
+    if (!fuse) {
+      return;
+    }
+
+    var results = fuse.search(e.target.value);
+    console.log(results);
+  });
+
+  // TODO: add error handling
+  async function initFuse() {
+    response = await fetch('search.json');
+    data = await response.json();
+
+    var options = {
+      keys: ["heading", "text"],
+      ignoreLocation: true,
+      threshold: 0.1
+    };
+    return new Fuse(data, options);
+  }
+});
+
+var getFuse = runLatest(async () => fuse);
+function runLatest(func) {
+  var i = 0;
+  return async function() {
+    i++;
+    let this_i = i;
+    var value = await func();
+    if (i != this_i) {
+      return null;
+    } else {
+      return value;
+    }
+  };
+}
+
 function changeTooltipMessage(element, msg) {
   var tooltipOriginalTitle=element.getAttribute('data-original-title');
   element.setAttribute('data-original-title', msg);
