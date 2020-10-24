@@ -13,7 +13,6 @@
 #' fs::dir_copy("inst/examples/_book", tempdir())
 #' browseURL(file.path(tempdir(), "_book/index.html"))
 #'
-#' bs4_book_build("inst/examples/bookdown.html")
 bs4_book <- function(
                      theme = bs4_book_theme(),
                      ...,
@@ -100,6 +99,7 @@ build_toc <- function(output) {
     substr(toc$text, nchar(toc$num) + 2, nchar(toc$text))
   )
 
+
   # Determine hierarchy
   toc$level <- unname(c("h1" = 1, "h2" = 2, "h3" = 3)[toc$tag])
   toc$tag <- NULL
@@ -174,7 +174,11 @@ bs4_chapters_tweak <- function(output, output_dir) {
     downlit::downlit_html_node(html)
 
     sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
-    index[[i]] <- lapply(sections, bs4_index_data, chapter = files$text[[i]])
+    h1 <- xml_text1(xml2::xml_find_first(html, "//h1"))
+    index[[i]] <- lapply(sections, bs4_index_data,
+      chapter = h1,
+      path = basename(path)
+    )
 
     xml2::write_html(html, path, format = FALSE)
   }
@@ -275,7 +279,7 @@ tweak_navbar <- function(html, toc, active = "") {
 
 # index -------------------------------------------------------------------
 
-bs4_index_data <- function(node, chapter) {
+bs4_index_data <- function(node, chapter, path) {
   children <- xml2::xml_find_all(node,
     "./*[not(self::div and contains(@class, 'section'))]"
   )
@@ -283,7 +287,10 @@ bs4_index_data <- function(node, chapter) {
     return()
   }
 
+
   list(
+    path = path,
+    id = xml2::xml_attr(node, "id"),
     chapter = chapter,
     heading = xml_text1(children[[1]]),
     text = xml_text1(children[-1])

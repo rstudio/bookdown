@@ -1,4 +1,16 @@
 $(function () {
+  var url = new URL(window.location.href);
+  var toMark = url.searchParams.get("q");
+  var mark = new Mark("main");
+  if (toMark) {
+    mark.mark(toMark, {
+      accuracy: {
+        value: "exactly",
+        limiters: [",", ".", ":", "/"],
+      }
+    });
+  }
+
   // Activate popovers
   $('[data-toggle="popover"]').popover({
     container: 'body',
@@ -15,62 +27,77 @@ $(function () {
   headroom.init();
 })
 
-// Initialise search index when search gets focus */
+// Search ----------------------------------------------------------------------
+
 var fuse;
 
 $(function () {
+  // Initialise search index on focus
   $("#search").focus(async function(e) {
-    if (!fuse) {
-      $(e.target).addClass("loading");
-      fuse = initFuse()
-      await fuse;
-     $(e.target).removeClass("loading");
-    }
-  });
-
-  // Perform search when #search gets keypress
-  $("#search").keydown(async function(e) {
-    if (event.which == 13) {
-      event.preventDefault();
-    }
-
-    var fuse = await getFuse();
-    if (!fuse) {
+    if (fuse) {
       return;
     }
 
-    var results = fuse.search(e.target.value);
-    console.log(results);
-  });
+    $(e.target).addClass("loading");
 
-  // TODO: add error handling
-  async function initFuse() {
-    response = await fetch('search.json');
-    data = await response.json();
+    var response = await fetch('search.json');
+    var data = await response.json();
 
     var options = {
       keys: ["heading", "text"],
       ignoreLocation: true,
-      threshold: 0.1
+      threshold: 0.1,
+      includeMatches: true,
     };
-    return new Fuse(data, options);
-  }
+    fuse = new Fuse(data, options);
+
+    $(e.target).removeClass("loading");
+  });
+
+  // Use algolia autocomplete
+  var options = {
+    autoselect: true,
+    debug: true,
+    hint: false,
+    minLength: 2,
+  };
+  $("#search").autocomplete(options, [
+    {
+      name: "content",
+      source: searchFuse,
+      templates: {
+        suggestion: (s) => {
+          if (s.chapter == s.heading) {
+            return `<p>${s.chapter}`;
+          } else {
+            return `<p>${s.chapter} /<br> ${s.heading}</p>`;
+          }
+        }
+      }
+    }
+  ]).on('autocomplete:selected', function(event, s) {
+    window.location.href = s.path + "?q=" + q + "#" + s.id;
+  });
 });
 
-var getFuse = runLatest(async () => fuse);
-function runLatest(func) {
-  var i = 0;
-  return async function() {
-    i++;
-    let this_i = i;
-    var value = await func();
-    if (i != this_i) {
-      return null;
-    } else {
-      return value;
-    }
-  };
+var q;
+async function searchFuse(query, callback) {
+  await fuse;
+
+  var items;
+  if (!fuse) {
+    items = [];
+  } else {
+    q = query;
+    var results = fuse.search(query, { limit: 10 });
+    items = results.map((x) => x.item);
+  }
+
+  console.log(items);
+  callback(items);
 }
+
+// Copy to clipboard -----------------------------------------------------------
 
 function changeTooltipMessage(element, msg) {
   var tooltipOriginalTitle=element.getAttribute('data-original-title');
