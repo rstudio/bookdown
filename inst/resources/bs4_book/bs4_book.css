@@ -107,12 +107,14 @@ mark {
   width: 100%;
   background-color: #fff;
   border: 1px solid #999;
-  border-top: none;
-
+  border-radius: 0.25rem;
+  margin-top: 1px;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
   cursor: pointer;
   padding: 5px 4px;
+  border-bottom: 1px #ddd solid;
+  font-size: 0.9rem;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
   background-color: #B2D7FF;
