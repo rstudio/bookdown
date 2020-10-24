@@ -287,13 +287,20 @@ bs4_index_data <- function(node, chapter, path) {
     return()
   }
 
+  all <- function(...) paste0("descendant-or-self::", c(...), collapse = "|")
+  text_path <- all("p", "li", "caption", "figcaption", "dt", "dd")
+  code_path <- all("pre")
+
+  code <- xml2::xml_find_all(children, code_path)
+  text <- xml2::xml_find_all(children, text_path)
 
   list(
     path = path,
     id = xml2::xml_attr(node, "id"),
     chapter = chapter,
     heading = xml_text1(children[[1]]),
-    text = xml_text1(children[-1])
+    text = strip_stop_words(xml_text1(text)),
+    code = xml_text1(code)
   )
 }
 
@@ -303,4 +310,10 @@ xml_text1 <- function(x) {
 
 is_heading <- function(node) {
   xml2::xml_name(node) %in% c("h1", "h2", "h3", "h4", "h5")
+}
+
+strip_stop_words <- function(x) {
+  # paste(tidytext::get_stopwords()$word, collapse = "|")
+  pattern <- "\\b(i|me|my|myself|we|our|ours|ourselves|you|your|yours|yourself|yourselves|he|him|his|himself|she|her|hers|herself|it|its|itself|they|them|their|theirs|themselves|what|which|who|whom|this|that|these|those|am|is|are|was|were|be|been|being|have|has|had|having|do|does|did|doing|would|should|could|ought|i'm|you're|he's|she's|it's|we're|they're|i've|you've|we've|they've|i'd|you'd|he'd|she'd|we'd|they'd|i'll|you'll|he'll|she'll|we'll|they'll|isn't|aren't|wasn't|weren't|hasn't|haven't|hadn't|doesn't|don't|didn't|won't|wouldn't|shan't|shouldn't|can't|cannot|couldn't|mustn't|let's|that's|who's|what's|here's|there's|when's|where's|why's|how's|a|an|the|and|but|if|or|because|as|until|while|of|at|by|for|with|about|against|between|into|through|during|before|after|above|below|to|from|up|down|in|out|on|off|over|under|again|further|then|once|here|there|when|where|why|how|all|any|both|each|few|more|most|other|some|such|no|nor|not|only|own|same|so|than|too|very|will)\\b ?"
+  gsub(pattern, "", x, ignore.case = TRUE)
 }

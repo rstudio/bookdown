@@ -44,10 +44,11 @@ $(function () {
     var data = await response.json();
 
     var options = {
-      keys: ["heading", "text"],
+      keys: ["heading", "text", "code"],
       ignoreLocation: true,
       threshold: 0.1,
       includeMatches: true,
+      includeScore: true,
     };
     fuse = new Fuse(data, options);
 
@@ -61,6 +62,7 @@ $(function () {
     hint: false,
     minLength: 2,
   };
+
   $("#search").autocomplete(options, [
     {
       name: "content",
@@ -72,9 +74,9 @@ $(function () {
           } else {
             return `<p>${s.chapter} /<br> ${s.heading}</p>`;
           }
-        }
-      }
-    }
+        },
+      },
+    },
   ]).on('autocomplete:selected', function(event, s) {
     window.location.href = s.path + "?q=" + q + "#" + s.id;
   });
@@ -89,11 +91,13 @@ async function searchFuse(query, callback) {
     items = [];
   } else {
     q = query;
-    var results = fuse.search(query, { limit: 10 });
-    items = results.map((x) => x.item);
+    var results = fuse.search(query, { limit: 6 });
+    items = results
+      .filter((x) => x.score <= 0.75)
+      .map((x) => x.item);
   }
 
-  console.log(items);
+  console.log(results);
   callback(items);
 }
 
