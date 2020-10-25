@@ -48,18 +48,6 @@ bs4_book <- function(
   config
 }
 
-preview_book <- function(path = ".", ...) {
-  old <- setwd(path)
-  on.exit(setwd(old))
-
-  render_book("index.Rmd", bs4_book(...), quiet = TRUE, clean = FALSE)
-
-  unlink(file.path(tempdir(), "_book"))
-  file.copy("_book", tempdir(), recursive = TRUE)
-
-  browseURL(file.path(tempdir(), "_book/index.html"))
-}
-
 #' @export
 #' @rdname bs4_book
 bs4_book_theme <- function(...) {
@@ -339,4 +327,16 @@ check_packages <- function(pkgs) {
     paste0("* ", pkgs[!inst], "\n"),
     call. = FALSE
   )
+}
+
+preview_book <- function(path = ".", ...) {
+  old <- setwd(path)
+  on.exit(setwd(old))
+
+  render_book("index.Rmd", bs4_book(...), quiet = TRUE, clean = FALSE)
+
+  unlink(file.path(tempdir(), "_book"))
+  file.copy("_book", tempdir(), recursive = TRUE)
+
+  browseURL(file.path(tempdir(), "_book/index.html"))
 }
