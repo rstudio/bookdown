@@ -261,8 +261,7 @@ tweak_tables <- function(html) {
 }
 
 tweak_navbar <- function(html, toc, active = "") {
-  nav <- subset(toc, level %in% 0:1)
-  nav <- subset(nav, !class %in% "title")
+  nav <- toc[toc$level %in% 0:1, ]
   nav <- nav[!duplicated(nav$file_name), ]
   nav
 
