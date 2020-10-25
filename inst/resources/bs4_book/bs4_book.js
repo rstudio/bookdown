@@ -5,7 +5,7 @@ $(function () {
   if (toMark) {
     mark.mark(toMark, {
       accuracy: {
-        value: "exactly",
+        value: "complementary",
         limiters: [",", ".", ":", "/"],
       }
     });
