@@ -366,7 +366,12 @@ preview_book <- function(path = ".", ...) {
   old <- setwd(path)
   on.exit(setwd(old))
 
-  render_book("index.Rmd", bs4_book(...), quiet = TRUE, clean = FALSE)
+  render_book("index.Rmd",
+    bs4_book(...),
+    quiet = TRUE,
+    clean = FALSE,
+    envir = globalenv()
+  )
 
   unlink(file.path(tempdir(), "_book"))
   file.copy("_book", tempdir(), recursive = TRUE)
