@@ -1,11 +1,40 @@
-#' Bootstrap4 output format
+#' HTML book built with bootstrap4.
 #'
-#' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
-#'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (\code{...} not including \code{toc}, and \code{theme}).
-#' @param config A list of configuration options for the gitbook style, such as
-#'   the font/theme settings.
+#' @description
+#' This output format is designed to give a clean reading experience.
+#' Main features:
+#'
+#' * A per section-search engine that helps you quickly find what you're
+#'   looking for.
+#'
+#' * A sidebar that includes a within-chapter table of contents that
+#'   dynamically updates so it's easy to keep track of where you are
+#'   within the chapter.
+#'
+#' * Thoughtful typography to make the contents as easy as possible to read,
+#'   regardless of the size of your device. A sticky header gets out of your
+#'   way when reading, but is easily accessible if you need it.
+#'
+#' * In-line footnotes.
+#'
+#' * R syntax highlighting and autolinking by
+#'   [downlit](http://downlit.r-lib.org/) is paired with a accessible
+#'   theme designed by Alison Hill.
+#'
+#' * The ability to customise colours and fonts through
+#'   [bootstraplib](https://rstudio.github.io/bootstraplib)
+#'
+#' @section Limitations:
+#'
+#' * `bs_book4()` is designed specifically for books that use one chapter per
+#'   page.
+#'
+#' @param theme A named list or [bootstraplib::bs_theme()] object.
+#'   The default, `bs4_book_theme()` resets the base font size to 1rem, to
+#'   make reading easier. A named list will be passed to `bs4_book_theme()`,
+#'   making it possible to specify theme settings in the yaml metadata.
+#' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
+#'   [rmarkdown::html_document()].
 #' @export
 bs4_book <- function(
                      theme = bs4_book_theme(),
@@ -14,8 +43,12 @@ bs4_book <- function(
                      pandoc_args = NULL,
                      extra_dependencies = NULL
                      ) {
-
   check_packages(c("bootstraplib", "downlit", "jsonlite", "xml2"))
+
+  # Allow theme specification in yaml metadata
+  if (!inherits(theme, "bs_theme")) {
+    theme <- do.call(bs4_book_theme, theme)
+  }
 
   config <- rmarkdown::html_document(
     toc = FALSE,

@@ -2,6 +2,8 @@
 
 export(beamer_presentation2)
 export(bookdown_site)
+export(bs4_book)
+export(bs4_book_theme)
 export(build_chapter)
 export(calibre)
 export(clean_book)
