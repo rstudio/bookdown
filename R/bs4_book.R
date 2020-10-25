@@ -115,7 +115,6 @@ build_toc <- function(output) {
     id = xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id"),
     num = xml2::xml_attr(headings, "number"),
     text = xml2::xml_text(headings),
-    class = xml2::xml_attr(headings, "class"),
     stringsAsFactors = FALSE
   )
   if (requireNamespace("tibble", quietly = TRUE)) {
@@ -129,16 +128,15 @@ build_toc <- function(output) {
     substr(toc$text, nchar(toc$num) + 2, nchar(toc$text))
   )
 
-
   # Determine hierarchy
   toc$level <- unname(c("h1" = 1, "h2" = 2, "h3" = 3)[toc$tag])
   toc$tag <- NULL
-  is_part <- grepl("(PART)", toc$text)
-  is_appendix <- grepl("(APPENDIX)", toc$text)
+  is_part <- grepl("\\(PART\\*?\\)", toc$text)
+  is_appendix <- grepl("\\(APPENDIX\\*?\\)", toc$text)
 
   toc$level[is_part | is_appendix] <- 0
-  toc$text[is_part] <- gsub("\\(PART\\) ", "", toc$text[is_part])
-  toc$text[is_appendix] <- gsub("\\(APPENDIX\\) ", "", toc$text[is_appendix])
+  toc$text[is_part] <- gsub("\\(PART\\*?\\) ", "", toc$text[is_part])
+  toc$text[is_appendix] <- gsub("\\(APPENDIX\\*?\\) ", "", toc$text[is_appendix])
 
   # Figure book structure
   new_chapter <- toc$level == 1
@@ -283,7 +281,7 @@ tweak_tables <- function(html) {
 
 tweak_navbar <- function(html, toc, active = "") {
   nav <- toc[toc$level %in% 0:1, ]
-  nav <- nav[!duplicated(nav$file_name), ]
+  nav <- nav[!duplicated(nav$file_name) | is.na(nav$file_name), ]
   nav
 
   is_active <- nav$file_name == active
