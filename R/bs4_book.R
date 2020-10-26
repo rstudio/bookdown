@@ -33,11 +33,14 @@
 #'   The default, `bs4_book_theme()` resets the base font size to 1rem, to
 #'   make reading easier. A named list will be passed to `bs4_book_theme()`,
 #'   making it possible to specify theme settings in the yaml metadata.
+#' @param repo Link to repository where book is hosted. Currently assumes
+#'   GitHub and that the book is in the root directory of the repo.
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
 #' @export
 bs4_book <- function(
                      theme = bs4_book_theme(),
+                     repo = NULL,
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
@@ -69,7 +72,7 @@ bs4_book <- function(
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    output2 <- bs4_book_build(output, lib_dir = lib_dir)
+    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir)
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
@@ -88,20 +91,30 @@ bs4_book_theme <- function(...) {
 }
 
 bs4_book_build <- function(output = "bookdown.html",
+                           repo = NULL,
                            lib_dir = "libs",
                            output_dir = opts$get("output_dir")
                            ) {
   move_files_html(output, lib_dir)
+
+  rmd_index <- new.env(parent = emptyenv())
+
   output2 <- split_chapters(
     output = output,
-    build = bs4_book_page,
+    build = function(...) bs4_book_page(..., rmd_index = rmd_index),
     number_sections = TRUE,
     split_by = "chapter",
     split_bib = FALSE
   )
   move_files_html(output2, lib_dir)
 
-  bs4_chapters_tweak(output, output_dir)
+  rmd_index <- vapply(as.list(rmd_index), force, character(1))
+
+  bs4_chapters_tweak(output,
+    repo = repo,
+    rmd_index = rmd_index,
+    output_dir = output_dir
+  )
 
   output2
 }
@@ -158,7 +171,9 @@ bs4_book_page = function(head,
                          link_next,
                          rmd_cur,
                          html_cur,
-                         foot) {
+                         foot,
+                         rmd_index = NULL) {
+  rmd_index[[html_cur]] <- rmd_cur
   paste(c(head, toc, chapter, foot), collapse = '\n')
 }
 
@@ -182,7 +197,10 @@ bs4_book_dependency <- function(theme) {
 
 # HTML manip --------------------------------------------------------------
 
-bs4_chapters_tweak <- function(output, output_dir) {
+bs4_chapters_tweak <- function(output,
+                               rmd_index = NULL,
+                               repo = NULL,
+                               output_dir = opts$get("output_dir")) {
   toc <- build_toc(output)
 
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
@@ -198,7 +216,7 @@ bs4_chapters_tweak <- function(output, output_dir) {
     tweak_chapter(html)
     tweak_anchors(html)
     tweak_footnotes(html)
-    tweak_navbar(html, toc, basename(path))
+    tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
     downlit::downlit_html_node(html)
 
     sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
@@ -279,7 +297,27 @@ tweak_tables <- function(html) {
   invisible()
 }
 
-tweak_navbar <- function(html, toc, active = "") {
+tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) {
+
+  # Source links ------------------------------------------------------------
+  repo_node <- xml2::xml_find_first(html, ".//a[@id='book-repo']")
+  if (is.null(repo)) {
+    # Remove parent <li>
+    xml2::xml_remove(xml2::xml_parent(repo_node))
+  } else {
+    xml2::xml_attr(repo_node, "href") <- repo
+  }
+
+  edit_note <- xml2::xml_find_first(html, ".//a[@id='book-edit']")
+  if (is.null(repo) || !active %in% names(rmd_index)) {
+    # Remove parent <li>
+    xml2::xml_remove(xml2::xml_parent(edit_note))
+  } else {
+    edit_url <- paste0(repo, "/edit/master/", rmd_index[[active]])
+    xml2::xml_attr(edit_note, "href") <- edit_url
+  }
+
+  # TOC ---------------------------------------------------------------------
   nav <- toc[toc$level %in% 0:1, ]
   nav <- nav[!duplicated(nav$file_name) | is.na(nav$file_name), ]
   nav
@@ -308,7 +346,7 @@ tweak_navbar <- function(html, toc, active = "") {
     "</div>\n"
   )
 
-  dropdown <- xml2::xml_find_first(html, ".//div[@id='toc-nav']")
+  dropdown <- xml2::xml_find_first(html, ".//div[@id='book-toc']")
   xml2::xml_replace(dropdown, xml2::read_xml(to_insert))
 }
 
@@ -369,12 +407,12 @@ check_packages <- function(pkgs) {
   )
 }
 
-preview_book <- function(path = ".", ...) {
+preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   old <- setwd(path)
   on.exit(setwd(old))
 
   render_book("index.Rmd",
-    bs4_book(...),
+    output_format = output,
     quiet = TRUE,
     clean = FALSE,
     envir = globalenv()

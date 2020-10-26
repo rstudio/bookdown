@@ -7,6 +7,7 @@
 \usage{
 bs4_book(
   theme = bs4_book_theme(),
+  repo = NULL,
   ...,
   lib_dir = "libs",
   pandoc_args = NULL,
@@ -20,6 +21,9 @@ bs4_book_theme(...)
 The default, `bs4_book_theme()` resets the base font size to 1rem, to
 make reading easier. A named list will be passed to `bs4_book_theme()`,
 making it possible to specify theme settings in the yaml metadata.}
+
+\item{repo}{Link to repository where book is hosted. Currently assumes
+GitHub and that the book is in the root directory of the repo.}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 [rmarkdown::html_document()].}
