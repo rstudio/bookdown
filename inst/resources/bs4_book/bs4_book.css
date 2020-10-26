@@ -132,11 +132,12 @@ table.kable_wrapper td {
 /* Footnotes --------------------------------------------- */
 
 .popover {
-  max-width: min(100vw, 30rem);
+  max-width: min(100vw, 32rem);
   font-size: 0.9rem;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 .popover-body {
-  padding: 0.5rem;
+  padding: 0.75rem;
 }
 .popover-body p:last-child {
   margin-bottom: 0;
