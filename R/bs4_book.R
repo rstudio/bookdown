@@ -151,6 +151,18 @@ build_toc <- function(output) {
   toc$text[is_part] <- gsub("\\(PART\\*?\\) ", "", toc$text[is_part])
   toc$text[is_appendix] <- gsub("\\(APPENDIX\\*?\\) ", "", toc$text[is_appendix])
 
+  # Re-label appendixes
+  app <- toc[
+    seq_along(is_appendix) > which(is_appendix)[[1]] &
+    toc$level == 1 &
+    !is.na(toc$num),
+  ]
+  app$label <- LETTERS[seq_len(nrow(app))]
+  # TODO: make less of a hack
+  for (i in seq_len(nrow(app))) {
+    toc$num <- sub(paste0("^", app$num[[i]], "\\b"), app$label[[i]], toc$num)
+  }
+
   # Figure book structure
   new_chapter <- toc$level == 1
   toc$chapter <- cumsum(new_chapter)
@@ -325,7 +337,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   class <- ifelse(is_active, "dropdown-item active", "dropdown-item")
   a <- paste0(
     "<a class='", class, "' href='", nav$file_name, "'>",
-    nav$text,
+    nav_num(nav$num), nav$text,
     "</a>"
   )
   a[is.na(nav$file_name)] <- paste0(
@@ -349,24 +361,27 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   xml2::xml_replace(dropdown, xml2::read_xml(to_insert))
 
   # Prev/next chapter -------------------------------------------------------
-  cur <- which(is_active)
-  if (length(cur) != 1) {
-    return()
-  }
+  # Need to ignore entries without files for cross-links
+  nav2 <- nav[!is.na(nav$file_name), ]
+  cur <- which(nav2$file_name == active)
 
   node_prev <- xml2::xml_find_first(html, ".//div[@id='book-chapter-prev']")
   if (cur > 1) {
     i <- cur - 1L
-    link <- paste0("<a href='", nav$file_name[[i]], "'>", nav$text[[i]], "</a>")
+    link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
     xml2::xml_add_child(node_prev, xml2::read_xml(link))
   }
 
   node_next <- xml2::xml_find_first(html, ".//div[@id='book-chapter-next']")
-  if (cur < nrow(nav)) {
+  if (cur < nrow(nav2)) {
     i <- cur + 1L
-    link <- paste0("<a href='", nav$file_name[[i]], "'>", nav$text[[i]], "</a>")
+    link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
     xml2::xml_add_child(node_next, xml2::read_xml(link))
   }
+}
+
+nav_num <- function(x) {
+  ifelse(is.na(x), "", paste0("<span class='header-section-number'>", x, "</span> "))
 }
 
 

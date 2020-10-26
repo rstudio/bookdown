@@ -82,6 +82,13 @@ h3 { margin-top: 2em; font-size: 1.2rem; }
     text-align: right;
   }
 }
+.dropdown-item .header-section-number {
+  position: absolute;
+  width: 2rem;
+  left: -1rem;
+  display: block;
+  text-align: right;
+}
 
 .anchor {
   font-size: min(0.5em, 1rem);
