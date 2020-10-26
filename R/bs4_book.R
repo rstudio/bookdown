@@ -291,11 +291,20 @@ tweak_navbar <- function(html, toc, active = "") {
     nav$text,
     "</a>"
   )
-  a[is.na(nav$file_name)] <- paste0("<div class='dropdown-divider'></div><h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>")
+  a[is.na(nav$file_name)] <- paste0(
+    "</div>",
+    "<div class='book-part'>",
+    "<div class='dropdown-divider'></div>",
+    "<h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>"
+  )
 
   to_insert <- paste0(
     "<div class='dropdown-menu' aria-labelledby='navbar-toc'>\n",
+    "<div class='book-toc'>",
+    "<div class='book-part'>",
     paste0("  ", a, "\n", collapse = ""),
+    "</div>",
+    "</div>",
     "</div>\n"
   )
 
