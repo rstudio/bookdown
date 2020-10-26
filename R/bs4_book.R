@@ -370,6 +370,8 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     i <- cur - 1L
     link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
     xml2::xml_add_child(node_prev, xml2::read_xml(link))
+  } else {
+    xml2::xml_attr(node_prev, "class") <- "empty"
   }
 
   node_next <- xml2::xml_find_first(html, ".//div[@id='book-chapter-next']")
@@ -377,6 +379,8 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     i <- cur + 1L
     link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
     xml2::xml_add_child(node_next, xml2::read_xml(link))
+  } else {
+    xml2::xml_attr(node_next, "class") <- "empty"
   }
 }
 

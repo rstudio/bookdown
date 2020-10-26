@@ -37,6 +37,9 @@ html, body {
   padding: 0.5rem;
   border: 1px solid #ccc;
 }
+#book-chapter-prev.empty, #book-chapter-next.empty {
+  border: none;
+}
 #book-chapter-prev a:before {
   content: "« ";
 }
