@@ -80,7 +80,7 @@ bs4_book <- function(
     output2
   }
 
-  # config <- common_format_config(config, "html")
+  config <- common_format_config(config, "html")
   config
 }
 

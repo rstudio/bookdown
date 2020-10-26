@@ -82,7 +82,7 @@ Suggests:
     webshot
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
-Remotes: rstudio/bootstraplib
+Remotes: rstudio/bootstraplib, rstudio/rmarkdown
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
