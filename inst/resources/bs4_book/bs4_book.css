@@ -63,6 +63,22 @@ html, body {
   opacity: 100%;
 }
 
+/* Figures -------------------------------------------- */
+
+.figure {
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+  margin: 1.5rem -0.5rem;
+  padding: 1.5rem 0 1rem 0;
+}
+
+caption, p.caption {
+  font-weight: 300;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
 /* Headings -------------------------------------------- */
 
 h2 { margin-top: 3rem }
@@ -94,7 +110,7 @@ h3 { margin-top: 2em; font-size: 1.2rem; }
 }
 
 .anchor {
-  font-size: min(0.5em, 1rem);
+  font-size: max(0.5em, 1rem);
   margin-left: 0.5rem;
   display: none;
 }
@@ -111,6 +127,23 @@ h6:hover .anchor {
 
 table.kable_wrapper td {
   vertical-align: top;
+}
+
+/* Footnotes --------------------------------------------- */
+
+.popover {
+  max-width: min(100vw, 30rem);
+  font-size: 0.9rem;
+}
+.popover-body {
+  padding: 0.5rem;
+}
+.popover-body p:last-child {
+  margin-bottom: 0;
+}
+
+a.footnote-ref {
+  cursor: pointer;
 }
 
 /* Search ---------------------------------------------- */
@@ -165,8 +198,8 @@ pre {
   word-break: normal;
   white-space: pre;
   border: 1px solid #eee;
-  padding: 0.5em;
-  margin: 0 -0.5em 1rem -0.5em;
+  padding: 0.5rem;
+  margin: 0 -0.5rem 1rem -0.5rem;
 }
 
 pre, code {
@@ -225,8 +258,38 @@ code span.sc {color:#008000}
 code span.dv {color:#a1024a}
 code span.kw {color:#007faa;}
 
-/* Misc typograph ---------------------------------------------- */
+/* Misc typography ---------------------------------------------- */
+
+blockquote {
+  border-left: 0.5rem solid #eee;
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
+}
 
 body {
   line-height: 1.6;
+}
+
+.smallcaps {
+  font-variant: small-caps;
+}
+
+.rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
+  margin: 1rem calc(-2px - 0.5em);
+  padding: 1rem;
+  border: 2px solid #eee;
+}
+
+main ul {
+ list-style-type: square;
+}
+main ol, main ul {
+  padding-left: 25px;
+  margin-bottom: 0;
+}
+main li {
+  margin-bottom: 0.5rem;
+}
+main ol > li:first-child, main ul > li:first-child {
+  margin-top: 0.5rem;
 }
