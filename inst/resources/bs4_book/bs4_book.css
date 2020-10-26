@@ -66,6 +66,7 @@ html, body {
 /* Figures -------------------------------------------- */
 
 .figure {
+  width: 100%;
   border-top: 2px solid #eee;
   border-bottom: 2px solid #eee;
   margin: 1.5rem -0.5rem;
