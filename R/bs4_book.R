@@ -320,7 +320,6 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   # TOC ---------------------------------------------------------------------
   nav <- toc[toc$level %in% 0:1, ]
   nav <- nav[!duplicated(nav$file_name) | is.na(nav$file_name), ]
-  nav
 
   is_active <- nav$file_name == active
   class <- ifelse(is_active, "dropdown-item active", "dropdown-item")
@@ -348,6 +347,26 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
 
   dropdown <- xml2::xml_find_first(html, ".//div[@id='book-toc']")
   xml2::xml_replace(dropdown, xml2::read_xml(to_insert))
+
+  # Prev/next chapter -------------------------------------------------------
+  cur <- which(is_active)
+  if (length(cur) != 1) {
+    return()
+  }
+
+  node_prev <- xml2::xml_find_first(html, ".//div[@id='book-chapter-prev']")
+  if (cur > 1) {
+    i <- cur - 1L
+    link <- paste0("<a href='", nav$file_name[[i]], "'>", nav$text[[i]], "</a>")
+    xml2::xml_add_child(node_prev, xml2::read_xml(link))
+  }
+
+  node_next <- xml2::xml_find_first(html, ".//div[@id='book-chapter-next']")
+  if (cur < nrow(nav)) {
+    i <- cur + 1L
+    link <- paste0("<a href='", nav$file_name[[i]], "'>", nav$text[[i]], "</a>")
+    xml2::xml_add_child(node_next, xml2::read_xml(link))
+  }
 }
 
 

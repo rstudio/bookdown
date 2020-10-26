@@ -26,6 +26,24 @@ html, body {
   scroll-padding-top: 75px;
 }
 
+/* Chapter nav ----------------------------------------- */
+
+#book-chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+#book-chapter-prev, #book-chapter-next {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+#book-chapter-prev a:before {
+  content: "« ";
+}
+#book-chapter-next a:after {
+  content: " »";
+}
+
 /* Sidebar --------------------------------------------- */
 
 .sidebar {
