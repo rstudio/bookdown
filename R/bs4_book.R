@@ -224,6 +224,7 @@ bs4_chapters_tweak <- function(output,
 
   for (i in seq_len(nrow(files))) {
     path <- files$path[[i]]
+    message("Tweaking ", path)
     html <- xml2::read_html(path, encoding = "UTF-8")
 
     tweak_tables(html)
@@ -355,7 +356,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     suffix <- rep("</li>", length(link))
     suffix[next_level > this_level] <- "\n<ul class='nav navbar-nav'>"
 
-    closing <- rep("</li></ul>", max(0, this_level[[n]] - 2))
+    closing <- rep("</ul></li>", max(0, this_level[[n]] - 2))
     suffix[[n]] <- paste0("</li>", paste0(closing, collapse = ""))
 
     nav <- paste0(
