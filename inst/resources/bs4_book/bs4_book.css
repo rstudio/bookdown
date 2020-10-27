@@ -349,6 +349,21 @@ body {
   padding: 1rem;
   border: 2px solid #eee;
 }
+.rmdnote {
+  border-color: var(--primary);
+}
+.rmdimportant {
+  border-color: var(--success);
+}
+.rmdcaution {
+  border-color: var(--danger);
+}
+.rmdwarning {
+  border-color: var(--warning);
+}
+.rmdtip {
+  border-color: var(--info);
+}
 
 main ul {
  list-style-type: square;
