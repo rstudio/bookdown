@@ -152,15 +152,17 @@ build_toc <- function(output) {
   toc$text[is_appendix] <- gsub("\\(APPENDIX\\*?\\) ", "", toc$text[is_appendix])
 
   # Re-label appendixes
-  app <- toc[
-    seq_along(is_appendix) > which(is_appendix)[[1]] &
-    toc$level == 1 &
-    !is.na(toc$num),
-  ]
-  app$label <- LETTERS[seq_len(nrow(app))]
-  # TODO: make less of a hack
-  for (i in seq_len(nrow(app))) {
-    toc$num <- sub(paste0("^", app$num[[i]], "\\b"), app$label[[i]], toc$num)
+  if (any(is_appendix)) {
+    app <- toc[
+      seq_along(is_appendix) > which(is_appendix)[[1]] &
+      toc$level == 1 &
+      !is.na(toc$num),
+    ]
+    app$label <- LETTERS[seq_len(nrow(app))]
+    # TODO: make less of a hack
+    for (i in seq_len(nrow(app))) {
+      toc$num <- sub(paste0("^", app$num[[i]], "\\b"), app$label[[i]], toc$num)
+    }
   }
 
   # Figure book structure
@@ -199,8 +201,8 @@ bs4_book_dependency <- function(theme) {
         name = "bs4_book",
         version = "1.0.0",
         src = assets,
-        stylesheet = c("bootstrap-toc.css", "bs4_book.css"),
-        script = c("bootstrap-toc.js", "bs4_book.js", "headroom.js")
+        stylesheet = c("bs4_book.css"),
+        script = c("bs4_book.js", "headroom.js")
       )
     )
   )
@@ -327,6 +329,39 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   } else {
     edit_url <- paste0(repo, "/edit/master/", rmd_index[[active]])
     xml2::xml_attr(edit_note, "href") <- edit_url
+  }
+
+
+  # Within chapter nav --------------------------------------------------
+  head <- toc[toc$file_name == active & toc$level > 0 & !is.na(toc$id), ]
+  if (nrow(head) > 0) {
+    link <- paste0(
+      "<a class='nav-link' href='#", head$id, "'>",
+      nav_num(head$num), head$text,
+      "</a>"
+    )
+    n <- length(link)
+    this_level <- head$level
+    this_level[this_level == 1] <- 2 # Treat chapter like 2.0
+    next_level <- c(this_level[-1], NA)
+    prev_level <- c(NA, this_level[-n])
+
+    prefix <- rep("<li>", length(link))
+    prefix[prev_level > this_level] <- "</ul></li>\n<li>"
+    suffix <- rep("</li>", length(link))
+    suffix[next_level > this_level] <- "\n<ul class='nav navbar-nav'>"
+
+    closing <- rep("</li></ul>", max(0, this_level[[n]] - 2))
+    suffix[[n]] <- paste0("</li>", paste0(closing, collapse = ""))
+
+    nav <- paste0(
+      "<ul class='nav navbar-nav'>\n",
+      paste(prefix, link, suffix, "\n", collapse = ""),
+      "</ul>\n"
+    )
+
+    node <- xml2::xml_find_first(html, ".//nav[@id='toc']")
+    xml2::xml_add_child(node, xml2::read_xml(nav))
   }
 
   # TOC ---------------------------------------------------------------------

@@ -54,13 +54,43 @@ html, body {
   height: calc(100vh - 5rem);
   overflow-y: auto;
 
-  opacity: 80%;
+  opacity: 70%;
   transition-property: opacity;
   transition-duration: 0.5s;
 }
-
 .sidebar:hover {
   opacity: 100%;
+}
+
+.sidebar h6,
+nav[data-toggle="toc"] .nav > li > a {
+  padding: 4px;
+  margin: 4px 0;
+  color: #222;
+}
+nav[data-toggle="toc"] .nav > li > a {
+  display: block;
+}
+nav[data-toggle="toc"] .nav > li > a:hover,
+nav[data-toggle="toc"] .nav > li > a:focus,
+nav[data-toggle="toc"] .nav a.nav-link.active,
+nav[data-toggle="toc"] .nav .nav-link.active > li > a {
+  background-color: #eee;
+}
+nav[data-toggle="toc"] .nav a.nav-link.active,
+nav[data-toggle="toc"] .nav .nav-link.active > li > a {
+  font-weight: 500;
+}
+
+/* Nav: second level (shown on .active) */
+nav[data-toggle="toc"] .nav-link + ul {
+  display: none;
+}
+nav[data-toggle="toc"] .nav-link.active + ul {
+  display: block;
+}
+nav[data-toggle="toc"] .nav .nav > li > a {
+  padding-left: 20px;
 }
 
 /* Figures -------------------------------------------- */
