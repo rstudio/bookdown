@@ -70,7 +70,7 @@ main {margin-top: 1rem;}
     top: 1rem;
     overflow-y: auto;
 
-    opacity: 70%;
+    opacity: 80%;
     transition-property: opacity;
     transition-duration: 0.5s;
   }
@@ -83,7 +83,7 @@ main {margin-top: 1rem;}
     top: 1rem;
     overflow-y: auto;
 
-    opacity: 70%;
+    opacity: 80%;
     transition-property: opacity;
     transition-duration: 0.5s;
   }
@@ -91,30 +91,41 @@ main {margin-top: 1rem;}
     font-size: 1.1rem;
   }
 }
-
 .sidebar:hover {
   opacity: 100%;
 }
+
+/* Sidebar ------------------------------------------------------ */
+
 .sidebar h6 {
   margin-top: 1rem;
+  font-size: 0.9rem;
 }
 .sidebar hr {
   margin: 0 0 0.5rem 0;
 }
 
+.sidebar li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .book-toc .active {
   font-weight: bolder;
 }
-.book-toc li {
-  margin-bottom: 0.25rem;
+
+.book-extra {
+  border-top: 1px solid #ccc;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 0.9rem;
 }
 
 /* Scrollspy --------------------------------------------- */
 
 nav[data-toggle="toc"] .nav > li > a {
-  padding: 2px;
-  margin: 1px 0 1px -2px;
-  line-height: 1.4;
+  padding: 0;
   display: block;
 }
 
@@ -132,11 +143,15 @@ nav[data-toggle="toc"] .nav-link + ul {
   display: none;
 }
 nav[data-toggle="toc"] .nav-link.active + ul {
+  margin-top: 3px;
   display: block;
 }
 
+nav[data-toggle="toc"] .nav .nav > li {
+  margin-bottom: 0;
+}
 nav[data-toggle="toc"] .nav .nav > li > a {
-  padding-left: 5px;
+  margin-left: 10px;
 }
 /* Figures -------------------------------------------- */
 
@@ -254,10 +269,14 @@ pre {
   border: 1px solid #eee;
   padding: 0.5rem;
   margin: 0 -0.5rem 1rem -0.5rem;
+  background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
+}
+
+code {
+  background-color: #f8f8f8;
 }
 
 pre, code {
-  background-color: #f8f8f8;
   border-radius: 0.2rem;
   color: #212529; /* match text colour */
 }
