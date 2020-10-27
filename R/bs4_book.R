@@ -285,7 +285,8 @@ tweak_footnotes <- function(html) {
 }
 
 tweak_anchors <- function(html) {
-  headings <- xml2::xml_find_all(html, "(.//h1|.//h2|.//h3|.//h4|.//h5|.//h6)")
+  main <- xml2::xml_find_first(html, ".//main")
+  headings <- xml2::xml_find_all(main, "(.//h1|.//h2|.//h3|.//h4|.//h5|.//h6)")
   id <- xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id")
 
   headings <- headings[!is.na(id)]
