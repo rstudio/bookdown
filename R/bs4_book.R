@@ -26,7 +26,7 @@
 #'
 #' @section Limitations:
 #'
-#' * `bs_book4()` is designed specifically for books that use one chapter per
+#' * `bs4_book()` is designed specifically for books that use one chapter per
 #'   page.
 #'
 #' @param theme A named list or [bootstraplib::bs_theme()] object.
