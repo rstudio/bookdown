@@ -47,7 +47,7 @@ main {margin-top: 1rem;}
 }
 @media (min-width: 992px) {
   .collapse-lg {
-    display: block;
+    display: block !important;
   }
 }
 .collapse-lg.show {
@@ -156,20 +156,6 @@ h3 { margin-top: 2em; font-size: 1.2rem; }
   font-weight: normal;
 }
 
-/*
-@media (min-width: 576px) {
-  h1 .header-section-number,
-  h2 .header-section-number,
-  h3 .header-section-number,
-  h4 .header-section-number {
-    position: absolute;
-    width: 5rem;
-    left: -5rem;
-    display: block;
-    text-align: right;
-  }
-}
-*/
 .dropdown-item .header-section-number {
   position: absolute;
   width: 2rem;
