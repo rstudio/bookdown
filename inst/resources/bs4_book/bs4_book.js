@@ -65,9 +65,9 @@ $(function () {
       templates: {
         suggestion: (s) => {
           if (s.chapter == s.heading) {
-            return `<p>${s.chapter}`;
+            return `${s.chapter}`;
           } else {
-            return `<p>${s.chapter} /<br> ${s.heading}</p>`;
+            return `${s.chapter} /<br> ${s.heading}`;
           }
         },
       },
@@ -86,7 +86,7 @@ async function searchFuse(query, callback) {
     items = [];
   } else {
     q = query;
-    var results = fuse.search(query, { limit: 6 });
+    var results = fuse.search(query, { limit: 20 });
     items = results
       .filter((x) => x.score <= 0.75)
       .map((x) => x.item);

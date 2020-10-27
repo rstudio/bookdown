@@ -220,26 +220,19 @@ mark {
     hsla(48,92%,75%,.1)
   )
 }
-.algolia-autocomplete {
-  width: 100%;
-}
 
-.algolia-autocomplete p {
-  margin-bottom: 0;
-}
-
-.algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-  width: 100%;
-}
 .algolia-autocomplete .aa-hint {
   color: #999;
 }
 .algolia-autocomplete .aa-dropdown-menu {
-  width: 100%;
+  width: min(100%, 20rem);
   background-color: #fff;
-  border: 1px solid #999;
+  border: 1px solid var(--gray);
   border-radius: 0.2rem;
-  margin-top: 1px;
+  margin-top: 2px;
+
+  max-height: 50vh;
+  overflow-y: auto;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
   cursor: pointer;
@@ -249,10 +242,6 @@ mark {
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
   background-color: #B2D7FF;
-}
-.algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-  font-weight: bold;
-  font-style: normal;
 }
 
 /* Code ------------------------------------------------ */
