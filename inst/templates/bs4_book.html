@@ -28,24 +28,24 @@
 
 <body data-spy="scroll" data-target="#toc">
 
-<div class="container">
+<div class="container-lg">
 <!--bookdown:title:start-->
 <!--bookdown:title:end-->
 
 <!--bookdown:toc:start-->
 <div class="row">
-  <div class="col-sm-12 col-md-2 sidebar sidebar-book">
+  <div class="col-sm-12 col-lg-2 sidebar sidebar-book">
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-    <div class="d-flex align-items-start">
+    <div class="d-flex align-items-start justify-content-between">
     <h4>
       <a href="index.html" title="$subtitle$">$title$</a>$if(subtitle)$:
       <small class="text-muted">$subtitle$</small>$endif$
     </h4>
-    <button class="btn btn-primary d-md-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i></button>
+    <button class="btn btn-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i></button>
     </div>
 
-    <div id="main-nav" class="collapse-md">
+    <div id="main-nav" class="collapse-lg">
       <form>
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
       </form>
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div class="col-md-2 d-none d-md-block order-last sidebar sidebar-chapter">
+  <div class="col-md-3 col-lg-2 d-none d-md-block order-last sidebar sidebar-chapter">
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
     <nav id="toc" data-toggle="toc"></nav>
 
@@ -67,7 +67,7 @@
   </div>
 
 
-  <main class="col-sm-12 col-md-8" id="content">
+  <main class="col-sm-12 col-md-9 col-lg-8" id="content">
 $for(include-before)$
 $include-before$
 $endfor$

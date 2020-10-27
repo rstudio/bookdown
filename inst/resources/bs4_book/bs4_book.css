@@ -19,12 +19,22 @@
   content: " »";
 }
 
-/* Sidebar --------------------------------------------- */
+/* Page structure ----------------------------------------------------------
+
++-----+--------------+-----------------+------+
+|     | sidebar-book | sidebar-chapter | main |
++=====+==============+=================+======+
+| sml | -            | 12 (collapsed)  | 12   |
+| md  | 3            | 12 (collapsed)  | 9    |
+| lg  | 2            | 2               | 8    |
++-----+--------------+-----------------+------+
+
+*/
 
 main {margin-top: 1rem;}
 
-@media (max-width: 767.5px) {
-  .collapse-md {
+@media (max-width: 991.98px) {
+  .collapse-lg {
     display: none;
     padding: 0.5rem 0.5rem 0px 0.5rem;
     border-radius: 0.2rem;
@@ -35,12 +45,17 @@ main {margin-top: 1rem;}
     column-count: 2;
   }
 }
-.collapse-md.show {
+@media (min-width: 992px) {
+  .collapse-lg {
+    display: block;
+  }
+}
+.collapse-lg.show {
   display: block;
 }
 
 @media (min-width: 768px) {
-  .sidebar {
+  .sidebar-chapter {
     position: sticky;
     height: calc(100vh - 1rem);
     top: 1rem;
@@ -50,19 +65,31 @@ main {margin-top: 1rem;}
     transition-property: opacity;
     transition-duration: 0.5s;
   }
+}
 
-  .sidebar:hover {
-    opacity: 100%;
+@media (min-width: 992px) {
+  .sidebar-book {
+    position: sticky;
+    height: calc(100vh - 1rem);
+    top: 1rem;
+    overflow-y: auto;
+
+    opacity: 60%;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+  }
+  .sidebar-book h4 {
+    font-size: 1.1rem;
   }
 }
 
-.sidebar h4 {
-  font-size: 1.1rem;
+.sidebar:hover {
+  opacity: 100%;
 }
 .sidebar h6 {
   margin-top: 1rem;
 }
-.sidebar hr{
+.sidebar hr {
   margin: 0 0 0.5rem 0;
 }
 
@@ -72,6 +99,8 @@ main {margin-top: 1rem;}
 .book-toc li {
   margin-bottom: 0.25rem;
 }
+
+/* Scrollspy --------------------------------------------- */
 
 nav[data-toggle="toc"] .nav > li > a {
   padding: 2px;
