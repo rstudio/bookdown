@@ -36,13 +36,22 @@ main {margin-top: 1rem;}
 @media (max-width: 991.98px) {
   .collapse-lg {
     display: none;
-    padding: 0.5rem 0.5rem 0px 0.5rem;
+    padding: 1rem;
     border-radius: 0.2rem;
-    background: #eaeaea;
+    background: #fafafa;
     margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 5px 5px 10px rgba(0.1, 0.1, 0.1, 0.5);
+    border: 1px solid var(--primary);
   }
   .book-toc {
     column-count: 2;
+  }
+  .sidebar-book, main {
+    padding-left: 1rem;
+  }
+  .sidebar-book {
+    margin-top: 1rem;
   }
 }
 @media (min-width: 992px) {
@@ -61,7 +70,7 @@ main {margin-top: 1rem;}
     top: 1rem;
     overflow-y: auto;
 
-    opacity: 60%;
+    opacity: 70%;
     transition-property: opacity;
     transition-duration: 0.5s;
   }
@@ -74,7 +83,7 @@ main {margin-top: 1rem;}
     top: 1rem;
     overflow-y: auto;
 
-    opacity: 60%;
+    opacity: 70%;
     transition-property: opacity;
     transition-duration: 0.5s;
   }
