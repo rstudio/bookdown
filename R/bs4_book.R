@@ -202,7 +202,7 @@ bs4_book_dependency <- function(theme) {
         version = "1.0.0",
         src = assets,
         stylesheet = c("bs4_book.css"),
-        script = c("bs4_book.js", "headroom.js")
+        script = c("bs4_book.js")
       )
     )
   )
@@ -288,6 +288,9 @@ tweak_anchors <- function(html) {
   headings <- xml2::xml_find_all(html, "(.//h1|.//h2|.//h3|.//h4|.//h5|.//h6)")
   id <- xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id")
 
+  headings <- headings[!is.na(id)]
+  id <- id[!is.na(id)]
+
   anchor <- paste0(
     "<a class='anchor' aria-label='anchor' href='#", id, "'>",
     "<i class='fas fa-link'></i>",
@@ -369,27 +372,20 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   nav <- nav[!duplicated(nav$file_name) | is.na(nav$file_name), ]
 
   is_active <- nav$file_name == active
-  class <- ifelse(is_active, "dropdown-item active", "dropdown-item")
+  class <- ifelse(is_active, "active", "")
   a <- paste0(
-    "<a class='", class, "' href='", nav$file_name, "'>",
+    "<li><a class='", class, "' href='", nav$file_name, "'>",
     nav_num(nav$num), nav$text,
-    "</a>"
+    "</a></li>"
   )
   a[is.na(nav$file_name)] <- paste0(
-    "</div>",
-    "<div class='book-part'>",
-    "<div class='dropdown-divider'></div>",
-    "<h6 class='dropdown-header'>", nav$text[is.na(nav$file_name)], "</h6>"
+    "<li class='book-part'>", nav$text[is.na(nav$file_name)], "</li>"
   )
 
   to_insert <- paste0(
-    "<div class='dropdown-menu' aria-labelledby='navbar-toc'>\n",
-    "<div class='book-toc'>",
-    "<div class='book-part'>",
+    "<ul class='book-toc list-unstyled'>\n",
     paste0("  ", a, "\n", collapse = ""),
-    "</div>",
-    "</div>",
-    "</div>\n"
+    "</ul>\n"
   )
 
   dropdown <- xml2::xml_find_first(html, ".//div[@id='book-toc']")

@@ -1,31 +1,3 @@
-/* Navbar ---------------------------------------------- */
-
-.navbar {
-  margin-bottom: 2em;
-}
-
-.headroom {
-  will-change: transform;
-  transition: transform 200ms linear;
-}
-.headroom--pinned {
-  transform: translateY(0%);
-}
-.headroom--unpinned {
-  transform: translateY(-100%);
-}
-
-/* Adjust content down by height of navbar */
-.sidebar {
-  top: 65px;
-}
-main {
-  margin-top: 75px;
-}
-html, body {
-  scroll-padding-top: 75px;
-}
-
 /* Chapter nav ----------------------------------------- */
 
 #book-chapter-nav {
@@ -49,37 +21,72 @@ html, body {
 
 /* Sidebar --------------------------------------------- */
 
-.sidebar {
-  position: sticky;
-  height: calc(100vh - 5rem);
-  overflow-y: auto;
+main {margin-top: 1rem;}
 
-  opacity: 70%;
-  transition-property: opacity;
-  transition-duration: 0.5s;
+@media (max-width: 767.5px) {
+  .collapse-md {
+    display: none;
+    padding: 0.5rem 0.5rem 0px 0.5rem;
+    border-radius: 0.2rem;
+    background: #eaeaea;
+    margin-top: 0.5rem;
+  }
+  .book-toc {
+    column-count: 2;
+  }
 }
-.sidebar:hover {
-  opacity: 100%;
-}
-
-.sidebar h6,
-nav[data-toggle="toc"] .nav > li > a {
-  padding: 4px;
-  margin: 4px 0;
-  color: #222;
-}
-nav[data-toggle="toc"] .nav > li > a {
+.collapse-md.show {
   display: block;
 }
-nav[data-toggle="toc"] .nav > li > a:hover,
-nav[data-toggle="toc"] .nav > li > a:focus,
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: sticky;
+    height: calc(100vh - 1rem);
+    top: 1rem;
+    overflow-y: auto;
+
+    opacity: 60%;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+  }
+
+  .sidebar:hover {
+    opacity: 100%;
+  }
+}
+
+.sidebar h4 {
+  font-size: 1.1rem;
+}
+.sidebar h6 {
+  margin-top: 1rem;
+}
+.sidebar hr{
+  margin: 0 0 0.5rem 0;
+}
+
+.book-toc .active {
+  font-weight: bolder;
+}
+.book-toc li {
+  margin-bottom: 0.25rem;
+}
+
+nav[data-toggle="toc"] .nav > li > a {
+  padding: 2px;
+  margin: 1px 0 1px -2px;
+  line-height: 1.4;
+  display: block;
+}
+
+nav[data-toggle="toc"] .nav > li > a:hover {
+  text-decoration: underline;
+}
+
 nav[data-toggle="toc"] .nav a.nav-link.active,
 nav[data-toggle="toc"] .nav .nav-link.active > li > a {
   background-color: #eee;
-}
-nav[data-toggle="toc"] .nav a.nav-link.active,
-nav[data-toggle="toc"] .nav .nav-link.active > li > a {
-  font-weight: 500;
 }
 
 /* Nav: second level (shown on .active) */
@@ -89,10 +96,10 @@ nav[data-toggle="toc"] .nav-link + ul {
 nav[data-toggle="toc"] .nav-link.active + ul {
   display: block;
 }
-nav[data-toggle="toc"] .nav .nav > li > a {
-  padding-left: 20px;
-}
 
+nav[data-toggle="toc"] .nav .nav > li > a {
+  padding-left: 5px;
+}
 /* Figures -------------------------------------------- */
 
 .figure {
@@ -120,6 +127,7 @@ h3 { margin-top: 2em; font-size: 1.2rem; }
   font-weight: normal;
 }
 
+/*
 @media (min-width: 576px) {
   h1 .header-section-number,
   h2 .header-section-number,
@@ -132,6 +140,7 @@ h3 { margin-top: 2em; font-size: 1.2rem; }
     text-align: right;
   }
 }
+*/
 .dropdown-item .header-section-number {
   position: absolute;
   width: 2rem;
@@ -205,7 +214,7 @@ mark {
   width: 100%;
   background-color: #fff;
   border: 1px solid #999;
-  border-radius: 0.25rem;
+  border-radius: 0.2rem;
   margin-top: 1px;
 }
 .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {

@@ -28,46 +28,46 @@
 
 <body data-spy="scroll" data-target="#toc">
 
-<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-  <div class="container">
-  <a class="navbar-brand" href="index.html" data-toggle="tooltip" title="$subtitle$">$title$</a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbar-toc" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Table of contents
-        </a>
-        <div id="book-toc"></div>
-    </ul>
-    <ul class="navbar-nav">
-      <li><form class="form-inline">
-      <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    </form></li>
-    <li class="nav-item"><a id="book-repo" class="nav-link" href="#"><i class="fab fa-github"></i></a></li>
-    <li class="nav-item"><a id="book-edit" class="nav-link" href="#"><i class="fas fa-edit"></i></a></li>
-    </ul>
-  </div>
-  </div>
-</nav>
-
 <div class="container">
 <!--bookdown:title:start-->
 <!--bookdown:title:end-->
 
 <!--bookdown:toc:start-->
 <div class="row">
-
-  <div class="col-3 d-none d-md-block order-last sidebar">
+  <div class="col-sm-12 col-md-2 sidebar sidebar-book">
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
-    <nav id="toc" data-toggle="toc"></nav>
+
+    <div class="d-flex align-items-start">
+    <h4>
+      <a href="index.html" title="$subtitle$">$title$</a>$if(subtitle)$:
+      <small class="text-muted">$subtitle$</small>$endif$
+    </h4>
+    <button class="btn btn-primary d-md-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div id="main-nav" class="collapse-md">
+      <form>
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <h6>Table of contents</h6>
+      <nav><div id="book-toc"></div></nav>
+
+      <hr />
+      <p><a id="book-repo" href="#">View book source</a></li></p>
+    </div>
   </div>
 
-  <main class="col-sm-12 col-md-9 col-lg-8 offset-md-1" id="content">
+  <div class="col-md-2 d-none d-md-block order-last sidebar sidebar-chapter">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+    <nav id="toc" data-toggle="toc"></nav>
+
+    <hr />
+    <p><a id="book-edit" href="#">Edit this page</a></p>
+  </div>
+
+
+  <main class="col-sm-12 col-md-8" id="content">
 $for(include-before)$
 $include-before$
 $endfor$

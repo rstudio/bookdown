@@ -20,11 +20,6 @@ $(function () {
     sanitize: false,
   });
   $('[data-toggle="tooltip"]').tooltip();
-
-  // Activate headroom
-  var myElement = document.querySelector(".navbar");
-  var headroom  = new Headroom(myElement, {tolerance : 10});
-  headroom.init();
 })
 
 // Search ----------------------------------------------------------------------
