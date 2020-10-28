@@ -232,6 +232,7 @@ bs4_chapters_tweak <- function(output,
     tweak_tables(html)
     tweak_chapter(html)
     tweak_anchors(html)
+    tweak_chunks(html)
     tweak_footnotes(html)
     tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
     downlit::downlit_html_node(html)
@@ -285,6 +286,20 @@ tweak_footnotes <- function(html) {
 
   # Delete container
   xml2::xml_remove(container)
+}
+
+tweak_chunks <- function(html) {
+  # Want to surround inline images in special div, instead of a p, so that
+  # we can set overflow-x. But don't want for floating images, since they
+  # already have a container
+
+  img <- xml2::xml_find_all(html, ".//img")
+  parent <- xml2::xml_parent(img)
+  n_children <- xml2::xml_find_num(parent, "count(*)")
+
+  inline <- xml2::xml_name(parent) == "p" & n_children == 1
+  xml2::xml_name(parent[inline]) <- "div"
+  xml2::xml_attr(parent[inline], "class") <- "inline-figure"
 }
 
 tweak_anchors <- function(html) {

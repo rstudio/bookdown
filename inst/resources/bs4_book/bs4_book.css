@@ -155,8 +155,12 @@ nav[data-toggle="toc"] .nav .nav > li > a {
 }
 /* Figures -------------------------------------------- */
 
-.figure {
+.figure, .inline-figure {
   width: 100%;
+  overflow-x: auto;
+}
+
+.figure {
   border-top: 2px solid #eee;
   border-bottom: 2px solid #eee;
   margin: 1.5rem -0.5rem;
@@ -206,6 +210,10 @@ h6:hover .anchor {
 
 table.kable_wrapper td {
   vertical-align: top;
+}
+
+table {
+  overflow-x: auto;
 }
 
 /* Footnotes --------------------------------------------- */
