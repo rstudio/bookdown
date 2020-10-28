@@ -123,10 +123,12 @@ build_toc <- function(output) {
   html <- xml2::read_html(output)
 
   headings <- xml2::xml_find_all(html, ".//h1|.//h2|.//h3")
+  number <- xml2::xml_find_first(headings, ".//span[@class='header-section-number']")
+
   toc <- data.frame(
     tag = xml2::xml_name(headings),
     id = xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id"),
-    num = xml2::xml_attr(headings, "number"),
+    num = xml2::xml_text(number),
     text = xml2::xml_text(headings),
     stringsAsFactors = FALSE
   )
@@ -216,7 +218,6 @@ bs4_chapters_tweak <- function(output,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
   toc <- build_toc(output)
-  print(toc, n = Inf)
 
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
