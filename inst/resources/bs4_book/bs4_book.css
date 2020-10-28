@@ -66,8 +66,8 @@ main {margin-top: 1rem;}
 @media (min-width: 768px) {
   .sidebar-chapter {
     position: sticky;
-    height: calc(100vh - 1rem);
-    top: 1rem;
+    max-height: 100vh;
+    top: 0;
     overflow-y: auto;
 
     opacity: 80%;
@@ -79,8 +79,8 @@ main {margin-top: 1rem;}
 @media (min-width: 992px) {
   .sidebar-book {
     position: sticky;
-    height: calc(100vh - 1rem);
-    top: 1rem;
+    max-height: 100vh;
+    top: 0;
     overflow-y: auto;
 
     opacity: 80%;
@@ -97,8 +97,16 @@ main {margin-top: 1rem;}
 
 /* Sidebar ------------------------------------------------------ */
 
+.sidebar h4, .sidebar h6 {
+  margin-top: 1.5rem;
+}
+@media (max-width: 991.98px) {
+  .sidebar h4 {
+    margin-top: 0rem;
+  }
+}
+
 .sidebar h6 {
-  margin-top: 1rem;
   font-size: 0.9rem;
 }
 .sidebar hr {
