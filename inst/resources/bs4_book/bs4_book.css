@@ -1,21 +1,21 @@
 /* Chapter nav ----------------------------------------- */
 
-#book-chapter-nav {
+.chapter-nav {
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
 }
-#book-chapter-prev, #book-chapter-next {
+.chapter-nav .prev, .chapter-nav .next {
   padding: 0.5rem;
   border: 1px solid #ccc;
 }
-#book-chapter-prev.empty, #book-chapter-next.empty {
+.chapter-nav .empty {
   border: none;
 }
-#book-chapter-prev a:before {
+.chapter-nav .prev a:before {
   content: "« ";
 }
-#book-chapter-next a:after {
+.chapter-nav .next a:after {
   content: " »";
 }
 

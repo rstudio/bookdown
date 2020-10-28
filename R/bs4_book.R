@@ -234,6 +234,7 @@ bs4_chapters_tweak <- function(output,
     tweak_anchors(html)
     tweak_chunks(html)
     tweak_footnotes(html)
+    tweak_part_screwup(html)
     tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
     downlit::downlit_html_node(html)
 
@@ -258,6 +259,20 @@ bs4_chapters_tweak <- function(output,
 tweak_chapter <- function(html) {
   num <- xml2::xml_find_all(html, ".//h1//span[@class='header-section-number']")
   xml2::xml_text(num) <- gsub("Chapter ", "", xml2::xml_text(num))
+}
+
+tweak_part_screwup <- function(html) {
+  sidebar <- xml2::xml_find_first(html, "//div[contains(@class, 'sidebar-chapter')]")
+  parent <- xml2::xml_parent(sidebar)
+
+  if (xml2::xml_attr(parent, "class") == "row") {
+    return()
+  }
+
+  # It's been put in the wrong place and we need to repair it
+  main <- xml2::xml_find_first(html, "//main")
+  xml2::xml_add_sibling(main, sidebar)
+  xml2::xml_remove(sidebar)
 }
 
 tweak_footnotes <- function(html) {
@@ -420,23 +435,40 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   nav2 <- nav[!is.na(nav$file_name), ]
   cur <- which(nav2$file_name == active)
 
-  node_prev <- xml2::xml_find_first(html, ".//div[@id='book-chapter-prev']")
   if (cur > 1) {
     i <- cur - 1L
-    link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
-    xml2::xml_add_child(node_prev, xml2::read_xml(link))
+    chapter_prev <- paste0(
+      "<div class='prev'>",
+      "<a href='", nav2$file_name[[i]], "'>",
+      nav_num(nav2$num[[i]]), nav2$text[[i]],
+      "</a>",
+      "</div>"
+    )
   } else {
-    xml2::xml_attr(node_prev, "class") <- "empty"
+    chapter_prev <- "<div class='empty'></div>"
   }
 
-  node_next <- xml2::xml_find_first(html, ".//div[@id='book-chapter-next']")
   if (cur < nrow(nav2)) {
     i <- cur + 1L
-    link <- paste0("<a href='", nav2$file_name[[i]], "'>", nav_num(nav2$num[[i]]), nav2$text[[i]], "</a>")
-    xml2::xml_add_child(node_next, xml2::read_xml(link))
+    chapter_next <- paste0(
+      "<div class='next'>",
+      "<a href='", nav2$file_name[[i]], "'>",
+      nav_num(nav2$num[[i]]), nav2$text[[i]],
+      "</a>",
+      "</div>"
+    )
   } else {
-    xml2::xml_attr(node_next, "class") <- "empty"
+    chapter_next <- "<div class='empty'></div>"
   }
+
+  chapter_nav <- paste0(
+    "<div class='chapter-nav'>\n",
+    chapter_prev, "\n",
+    chapter_next, "\n",
+    "</div>\n"
+  )
+  main <- xml2::xml_find_first(html, ".//main")
+  xml2::xml_add_child(main, xml2::read_xml(chapter_nav))
 }
 
 nav_num <- function(x) {
