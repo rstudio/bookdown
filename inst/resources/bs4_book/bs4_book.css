@@ -341,6 +341,11 @@ code span.kw {color:#007faa;}
 
 /* Misc typography ---------------------------------------------- */
 
+a {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
 blockquote {
   border-left: 0.5rem solid #eee;
   padding-left: 0.5rem;
