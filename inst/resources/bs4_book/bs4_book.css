@@ -119,6 +119,10 @@ main {margin-top: 1rem;}
   line-height: 1.5;
 }
 
+.sidebar li.book-part {
+  margin-top: 1rem;
+}
+
 .book-toc .active {
   font-weight: bolder;
 }
@@ -182,11 +186,15 @@ nav[data-toggle="toc"] .nav .nav > li > a {
   overflow-x: auto;
 }
 
+.inline-figure {
+  margin-bottom: 1rem; /* to match <p> */
+}
+
 .figure {
   border-top: 2px solid #eee;
   border-bottom: 2px solid #eee;
-  margin: 1.5rem -0.5rem;
-  padding: 1.5rem 0 1rem 0;
+  margin:  1.5rem -0.5rem 1rem -0.5rem;
+  padding: 1.5rem    0    1rem      1rem;
 }
 
 @media (max-width: 767.98px) {
@@ -198,16 +206,21 @@ nav[data-toggle="toc"] .nav .nav > li > a {
 }
 
 caption, p.caption {
-  font-weight: 300;
   text-align: left;
   margin-top: 1rem;
   margin-bottom: 0;
+  font-size: 0.9rem;
+  color: #777;
 }
 
 /* Headings -------------------------------------------- */
 
 h2 { margin-top: 2rem }
 h3 { margin-top: 1.5em; font-size: 1.2rem; }
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.5;
+}
 
 .header-section-number {
   color: #999;
