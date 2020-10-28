@@ -300,6 +300,17 @@ tweak_chunks <- function(html) {
   inline <- xml2::xml_name(parent) == "p" & n_children == 1
   xml2::xml_name(parent[inline]) <- "div"
   xml2::xml_attr(parent[inline], "class") <- "inline-figure"
+
+  # Need to do the same for inline tables, but they don't have an existing
+  # parent, so we need to insert one
+  table <- xml2::xml_find_all(html, ".//table")
+  toplevel <- xml2::xml_find_chr(table, "name(..)") == "div"
+
+  for (table in table[toplevel]) {
+    wrapper <- xml2::read_xml("<div class='inline-table'></div>")
+    xml2::xml_add_child(wrapper, table)
+    xml2::xml_replace(table, wrapper)
+  }
 }
 
 tweak_anchors <- function(html) {

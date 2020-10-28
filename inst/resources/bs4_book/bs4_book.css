@@ -208,13 +208,14 @@ h6:hover .anchor {
 
 /* Tables ---------------------------------------------- */
 
+.inline-table {
+  overflow-x: auto;
+}
+
 table.kable_wrapper td {
   vertical-align: top;
 }
 
-table {
-  overflow-x: auto;
-}
 
 /* Footnotes --------------------------------------------- */
 
