@@ -150,8 +150,12 @@ footer {
 
 /* Scrollspy --------------------------------------------- */
 
+nav[data-toggle="toc"] .nav > li {
+  margin-bottom: calc(0.5rem - 3px);
+}
+
 nav[data-toggle="toc"] .nav > li > a {
-  padding: 0;
+  padding: 3px;
   display: block;
 }
 
