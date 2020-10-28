@@ -167,6 +167,14 @@ nav[data-toggle="toc"] .nav .nav > li > a {
   padding: 1.5rem 0 1rem 0;
 }
 
+@media (max-width: 767.98px) {
+  .figure {
+    margin: 1.5rem -1rem 1.5rem -1rem;
+    padding: 1.5rem;
+    width: 100vw;
+  }
+}
+
 caption, p.caption {
   font-weight: 300;
   text-align: left;
@@ -281,6 +289,15 @@ pre {
   background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
 }
 
+@media (max-width: 767.98px) {
+  /* Make background span full width on mobile */
+  .section > .sourceCode > pre {
+    margin: 0 -1rem 1rem -1rem;
+    padding: 0.5rem 1rem;
+    width: 100vw;
+  }
+}
+
 code {
   background-color: #f8f8f8;
 }
@@ -366,6 +383,14 @@ body {
   padding: 1rem;
   border: 2px solid #eee;
 }
+
+@media (max-width: 767.98px) {
+  .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
+    margin: 1rem -1rem;
+    border-width: 4px;
+  }
+}
+
 .rmdnote {
   border-color: var(--primary);
 }
