@@ -130,6 +130,20 @@ main {margin-top: 1rem;}
   font-size: 0.9rem;
 }
 
+/* Sticky footer ----------------------------------------- */
+html, body {height: 100%}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+.container-lg {
+  flex: 1 0 auto;
+}
+footer {
+  flex-shrink: 0;
+}
+
 /* Scrollspy --------------------------------------------- */
 
 nav[data-toggle="toc"] .nav > li > a {
