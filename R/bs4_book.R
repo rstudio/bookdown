@@ -216,6 +216,7 @@ bs4_chapters_tweak <- function(output,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
   toc <- build_toc(output)
+  print(toc, n = Inf)
 
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
