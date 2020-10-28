@@ -319,23 +319,17 @@ tweak_tables <- function(html) {
 tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) {
 
   # Source links ------------------------------------------------------------
-  repo_node <- xml2::xml_find_first(html, ".//a[@id='book-repo']")
-  if (is.null(repo)) {
-    # Remove parent <li>
-    xml2::xml_remove(xml2::xml_parent(repo_node))
+  if (!is.null(repo) && active %in% names(rmd_index)) {
+    repo_edit <- paste0(repo, "/edit/master/", rmd_index[[active]])
+    repo_view <- paste0(repo, "/blob/master/", rmd_index[[active]])
   } else {
-    xml2::xml_attr(repo_node, "href") <- repo
+    repo_edit <- NULL
+    repo_view <- NULL
   }
 
-  edit_note <- xml2::xml_find_first(html, ".//a[@id='book-edit']")
-  if (is.null(repo) || !active %in% names(rmd_index)) {
-    # Remove parent <li>
-    xml2::xml_remove(xml2::xml_parent(edit_note))
-  } else {
-    edit_url <- paste0(repo, "/edit/master/", rmd_index[[active]])
-    xml2::xml_attr(edit_note, "href") <- edit_url
-  }
-
+  template_link(html, ".//a[@id='book-repo']", repo)
+  template_link(html, ".//a[@id='book-source']", repo_view)
+  template_link(html, ".//a[@id='book-edit']", repo_edit)
 
   # Within chapter nav --------------------------------------------------
   head <- toc[toc$file_name == active & toc$level > 0 & !is.na(toc$id), ]
@@ -421,6 +415,16 @@ nav_num <- function(x) {
   ifelse(is.na(x), "", paste0("<span class='header-section-number'>", x, "</span> "))
 }
 
+# Assume links are always inside a container that should be removed
+# if there's no link
+template_link <- function(html, xpath, href) {
+  node <- xml2::xml_find_first(html, xpath)
+  if (is.null(href)) {
+    xml2::xml_remove(xml2::xml_parent(node))
+  } else {
+    xml2::xml_attr(node, "href") <- href
+  }
+}
 
 # index -------------------------------------------------------------------
 
