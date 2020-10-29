@@ -1,13 +1,11 @@
 --- 
-title: "bookdown"
-subtitle: "Authoring Books and Technical Documents with R Markdown"
+title: "bookdown: Authoring Books and Technical Documents with R Markdown"
 author: "Yihui Xie"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
-csl: chicago-fullnote-bibliography.csl
 link-citations: yes
 colorlinks: yes
 lot: yes

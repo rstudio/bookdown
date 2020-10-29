@@ -16,5 +16,6 @@ AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
 BuildType: Package
-PackageUseDevtools: Yes
-PackageRoxygenize: rd,collate,namespace
+PackageInstallArgs: -v && Rscript -e "Rd2roxygen::rab(install=T,build=F)"
+PackageBuildArgs: -v && Rscript -e "Rd2roxygen::rab(install=F,build=T)"
+PackageCheckArgs: --as-cran

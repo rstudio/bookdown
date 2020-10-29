@@ -14,10 +14,6 @@ bookdown::gitbook:
     sharing:
       github: yes
       facebook: no
-bookdown::bs4_book:
-  theme:
-    primary: #447099
-  github: https://github.com/rstudio/bookdown
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:
