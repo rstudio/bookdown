@@ -49,6 +49,7 @@ bs4_book <- function(
                      extra_dependencies = NULL
                      ) {
   check_packages(c("bootstraplib", "downlit", "jsonlite", "xml2"))
+  bs4_check_dots(...)
 
   # Allow theme specification in yaml metadata
   if (!inherits(theme, "bs_theme")) {
@@ -90,6 +91,16 @@ bs4_book <- function(
 #' @rdname bs4_book
 bs4_book_theme <- function(...) {
   bootstraplib::bs_theme(..., "font-size-base" = "1rem")
+}
+
+bs4_check_dots <- function(..., highlight = NULL) {
+  if (!is.null(highlight)) {
+    stop(
+      "`bs4_book()` does not currently support the `highlight` argument.\n",
+      "If you want to customise, you'll need to use css directly",
+      call. = FALSE
+    )
+  }
 }
 
 bs4_book_build <- function(output = "bookdown.html",
