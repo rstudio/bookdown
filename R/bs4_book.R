@@ -93,16 +93,6 @@ bs4_book_theme <- function(...) {
   bootstraplib::bs_theme(..., "font-size-base" = "1rem")
 }
 
-bs4_check_dots <- function(..., highlight = NULL) {
-  if (!is.null(highlight)) {
-    stop(
-      "`bs4_book()` does not currently support the `highlight` argument.\n",
-      "If you want to customise, you'll need to use css directly",
-      call. = FALSE
-    )
-  }
-}
-
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
@@ -570,4 +560,32 @@ preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   file.copy("_book", tempdir(), recursive = TRUE)
 
   browseURL(file.path(tempdir(), "_book/index.html"))
+}
+
+bs4_check_dots <- function(...) {
+  dot_names <- names(substitute(...()))
+
+  fixed <- c(
+    "anchor_sections",
+    "number_sections",
+    "self_contained",
+    "template",
+    "toc"
+  )
+  for (arg in fixed) {
+    if (arg %in% dot_names) {
+      stop(
+        "`bs4_book()` does not support customisation of `", arg, "`",
+        call. = FALSE
+      )
+    }
+  }
+
+  if ("highlight" %in% dot_names) {
+    stop(
+      "`bs4_book()` does not currently support the `highlight` argument.\n",
+      "You'll need to use css directly to customise the colour scheme",
+      call. = FALSE
+    )
+  }
 }
