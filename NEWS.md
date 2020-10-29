@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.22
 
+## NEW FEATURES
+
+- New `bs4_book()` theme (@hadley).
+
 ## BUG FIXES
 
 - CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).

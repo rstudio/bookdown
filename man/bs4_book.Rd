@@ -3,7 +3,7 @@
 \name{bs4_book}
 \alias{bs4_book}
 \alias{bs4_book_theme}
-\title{HTML book built with bootstrap4.}
+\title{HTML book built with bootstrap4}
 \usage{
 bs4_book(
   theme = bs4_book_theme(),
@@ -18,44 +18,44 @@ bs4_book_theme(...)
 }
 \arguments{
 \item{theme}{A named list or [bootstraplib::bs_theme()] object.
-The default, `bs4_book_theme()` resets the base font size to 1rem, to
-make reading easier. A named list will be passed to `bs4_book_theme()`,
-making it possible to specify theme settings in the yaml metadata.}
+The default, `bs4_book_theme()`, resets the base font size to 1rem to
+make reading easier.}
 
-\item{repo}{Link to repository where book is hosted. Currently assumes
-GitHub and that the book is in the root directory of the repo.}
+\item{repo}{Link to repository where book is hosted, used to generate
+view source and edit buttons. Currently assumes GitHub and that the book
+is in the root directory of the repo.}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 [rmarkdown::html_document()].}
 }
 \description{
-This output format is designed to give a clean reading experience.
-Main features:
+This output format is built with [bootstrap](https://getbootstrap.com),
+using carefully craft features to provide a clean reading experience whether
+your on a phone, tablet, or desktop.
 
-* A per section-search engine that helps you quickly find what you're
-  looking for.
+Some of the main features:
 
-* A sidebar that includes a within-chapter table of contents that
-  dynamically updates so it's easy to keep track of where you are
+* Easy customisation of colours and fonts with
+  [bootstraplib](https://rstudio.github.io/bootstraplib)
+
+* Built in search (broken down by section) that helps you quickly find what
+  you're looking for.
+
+* A sidebar containing a within-chapter table of contents that makes
+  navigation easy and helps provide context about your current position
   within the chapter.
 
 * Thoughtful typography to make the contents as easy as possible to read,
   regardless of the size of your device. A sticky header gets out of your
   way when reading, but is easily accessible if you need it.
 
-* In-line footnotes.
+* In-line footnotes mean you can read asides next to the next they refer
+  to. This theme is best paired with a reference style that generates
+  footnotes.
 
 * R syntax highlighting and autolinking by
   [downlit](http://downlit.r-lib.org/) is paired with a accessible
-  theme designed by Alison Hill.
+  colour scheme designed by Alison Hill.
 
-* The ability to customise colours and fonts through
-  [bootstraplib](https://rstudio.github.io/bootstraplib)
+This theme is designed for books that use one chapter per page.
 }
-\section{Limitations}{
-
-
-* `bs_book4()` is designed specifically for books that use one chapter per
-  page.
-}
-
