@@ -62,10 +62,9 @@ Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
     rmarkdown (>= 2.4),
-    xfun (>= 0.13),
+    xfun (>= 0.18),
     tinytex (>= 0.12),
-    yaml (>= 2.1.19),
-    xfun (>= 0.18)
+    yaml (>= 2.1.19)
 Suggests:
     htmlwidgets,
     rstudioapi,
