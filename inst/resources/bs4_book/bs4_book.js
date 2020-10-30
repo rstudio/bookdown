@@ -108,8 +108,8 @@ function changeTooltipMessage(element, msg) {
 $(document).ready(function() {
   if(ClipboardJS.isSupported()) {
     // Insert copy buttons
-    var copyButton = "<div class='copy'><button type='button' class='btn btn-outline-primary btn-copy' title='Copy to clipboard' aria-label='Copy' data-toggle='popover' data-placement='top' data-trigger='hover'>Copy</button></div>";
-    $(copyButton).prependTo("pre");
+    var copyButton = "<div class='copy'><button type='button' class='btn btn-outline-primary btn-copy' title='Copy to clipboard' aria-label='Copy to clipboard' data-toggle='popover' data-placement='top' data-trigger='hover'>Copy</button></div>";
+    $(copyButton).appendTo("pre");
     // Initialize tooltips:
     $('.btn-copy').tooltip({container: 'body', boundary: 'window'});
 

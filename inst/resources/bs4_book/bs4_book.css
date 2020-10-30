@@ -341,6 +341,7 @@ mark {
 /* Code ------------------------------------------------ */
 
 pre {
+  position: relative;
   overflow: auto;
   word-wrap: normal;
   word-break: normal;
@@ -379,17 +380,14 @@ code a:any-link {
 }
 
 pre .copy {
-  position: relative;
-  float: right;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 pre .copy button {
   background-color: #fff;
   font-size: 80%;
   padding: 4px 6px;
-  opacity: 50%;
-}
-pre:hover .copy button {
-  opacity: 100%;
 }
 
 /* https://github.com/rstudio/distill/blob/master/inst/rmarkdown/templates/distill_article/resources/a11y.theme + https://gist.github.com/hadley/f53b6e92df20994fdabe6562d284728a */
