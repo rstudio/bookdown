@@ -10,6 +10,8 @@
 
 - The new syntax for theorem and proof environments introduced in **bookdown** requires Pandoc >= 2.3 instead of 2.0 (thanks, @markhymers, #979 #980).
 
+- `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
+
 # CHANGES IN bookdown VERSION 0.21
 
 ## NEW FEATURES
