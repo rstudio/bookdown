@@ -34,30 +34,32 @@
 
 <!--bookdown:toc:start-->
 <div class="row">
-  <div class="col-sm-12 col-lg-3 sidebar sidebar-book">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
-    <h4>
-      <a href="index.html" title="$subtitle$">$title$</a>$if(subtitle)$:
-      <small class="text-muted">$subtitle$</small>$endif$
-    </h4>
-    <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i></button>
+      <h1>
+        <a href="index.html" title="$subtitle$">$title$</a>$if(subtitle)$:
+        <small class="text-muted">$subtitle$</small>$endif$
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i></button>
     </div>
 
     <div id="main-nav" class="collapse-lg">
-      <form>
+      <form role="search">
         <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
       </form>
 
-      <h6>Table of contents</h6>
-      <nav><div id="book-toc"></div></nav>
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
 
-      <div class="book-extra">
-        <p><a id="book-repo" href="#">View book source</a></li></p>
-      </div>
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source</a></li></p>
+        </div>
+      </nav>
     </div>
-  </div>
+  </header>
 
   <main class="col-sm-12 col-md-9 col-lg-7" id="content">
 $for(include-before)$
@@ -73,15 +75,17 @@ $endfor$
   </main>
 
   <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <h6>On this page</h6>
-    <nav id="toc" data-toggle="toc"></nav>
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
 
-    <div class="book-extra">
-      <ul class="list-unstyled">
-        <li><a id="book-source" href="#">View source</a></li>
-        <li><a id="book-edit" href="#">Edit this page</a></li>
-      </ul>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source</a></li>
+          <li><a id="book-edit" href="#">Edit this page</a></li>
+        </ul>
+      </div>
+    </nav>
   </div>
 
 </div>

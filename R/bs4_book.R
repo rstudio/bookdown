@@ -33,7 +33,8 @@
 #'
 #' @param theme A named list or [bootstraplib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
-#'   make reading easier.
+#'   make reading easier and uses a primary colour with greater constrast
+#'   against the background.
 #' @param repo Link to repository where book is hosted, used to generate
 #'   view source and edit buttons. Currently assumes GitHub and that the book
 #'   is in the root directory of the repo.
@@ -89,8 +90,11 @@ bs4_book <- function(
 
 #' @export
 #' @rdname bs4_book
-bs4_book_theme <- function(...) {
-  bootstraplib::bs_theme(..., "font-size-base" = "1rem")
+bs4_book_theme <- function(primary = "#0068D9", ...) {
+  bootstraplib::bs_theme(...,
+    primary = primary,
+    "font-size-base" = "1rem",
+  )
 }
 
 bs4_book_build <- function(output = "bookdown.html",
@@ -125,7 +129,9 @@ bs4_book_build <- function(output = "bookdown.html",
 build_toc <- function(output) {
   html <- xml2::read_html(output)
 
-  headings <- xml2::xml_find_all(html, ".//h1|.//h2|.//h3")
+  main <- xml2::xml_find_first(html, ".//main")
+  headings <- xml2::xml_find_all(main, ".//h1|.//h2|.//h3")
+
   number <- xml2::xml_find_first(headings, ".//span[@class='header-section-number']")
 
   toc <- data.frame(
@@ -221,7 +227,6 @@ bs4_chapters_tweak <- function(output,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
   toc <- build_toc(output)
-
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
 
@@ -405,8 +410,8 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
       "</ul>\n"
     )
 
-    node <- xml2::xml_find_first(html, ".//nav[@id='toc']")
-    xml2::xml_add_child(node, xml2::read_xml(nav))
+    node <- xml2::xml_find_first(html, ".//div[@id='book-on-this-page']")
+    xml2::xml_replace(node, xml2::read_xml(nav))
   }
 
   # TOC ---------------------------------------------------------------------

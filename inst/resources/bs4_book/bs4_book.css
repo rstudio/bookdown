@@ -76,10 +76,6 @@ main {margin-top: 1rem;}
     max-height: 100vh;
     top: 0;
     overflow-y: auto;
-
-    opacity: 80%;
-    transition-property: opacity;
-    transition-duration: 0.5s;
   }
 }
 
@@ -89,17 +85,7 @@ main {margin-top: 1rem;}
     max-height: 100vh;
     top: 0;
     overflow-y: auto;
-
-    opacity: 80%;
-    transition-property: opacity;
-    transition-duration: 0.5s;
   }
-  .sidebar-book h4 {
-    font-size: 1.1rem;
-  }
-}
-.sidebar:hover {
-  opacity: 100%;
 }
 
 /* Chapter nav ----------------------------------------- */
@@ -123,21 +109,25 @@ main {margin-top: 1rem;}
   content: " »";
 }
 
-
 /* Sidebar ------------------------------------------------------ */
 
-.sidebar h4, .sidebar h6 {
+.sidebar h1, .sidebar h2 {
   margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.sidebar h1 {
+  font-size: 1.1rem;
 }
 @media (max-width: 991.98px) {
-  .sidebar h4 {
+  .sidebar h1 {
+    font-size: 1.5rem;
     margin-top: 0rem;
   }
 }
-
-.sidebar h6 {
+.sidebar h2 {
   font-size: 0.9rem;
 }
+
 .sidebar hr {
   margin: 0 0 0.5rem 0;
 }
