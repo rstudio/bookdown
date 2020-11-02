@@ -61,12 +61,12 @@ render_book = function(
     if (identical(output_format, 'all')) {
       output_format = rmarkdown::all_output_formats(input)
     }
-    if (length(output_format) > 1) {
-      return(unlist(lapply(output_format, function(fmt) xfun::Rscript_call(render_book, list(
+    if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
+      xfun::Rscript_call(render_book, list(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
         new_session = new_session, preview = preview, config_file = config_file
-      )))))
-    }
+      ), fail = "bookdown::render_book() failed to render the output format '", fmt, "'.")
+    )))
     format = target_format(output_format)
   }
 
