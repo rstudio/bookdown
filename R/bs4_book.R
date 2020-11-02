@@ -244,8 +244,8 @@ bs4_chapters_tweak <- function(output,
 
   index <- vector("list", nrow(files))
   for (i in seq_len(nrow(files))) {
-    message("Tweaking ", path)
     path <- files$path[[i]]
+    message("Tweaking ", path)
     index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo)
   }
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
