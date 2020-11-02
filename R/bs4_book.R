@@ -42,13 +42,13 @@
 #'   [rmarkdown::html_document()].
 #' @export
 bs4_book <- function(
-                     theme = bs4_book_theme(),
-                     repo = NULL,
-                     ...,
-                     lib_dir = "libs",
-                     pandoc_args = NULL,
-                     extra_dependencies = NULL
-                     ) {
+  theme = bs4_book_theme(),
+  repo = NULL,
+  ...,
+  lib_dir = "libs",
+  pandoc_args = NULL,
+  extra_dependencies = NULL
+) {
   check_packages(c("bootstraplib", "downlit", "jsonlite", "xml2"))
   bs4_check_dots(...)
 
@@ -92,8 +92,8 @@ bs4_book <- function(
 #' @rdname bs4_book
 bs4_book_theme <- function(primary = "#0068D9", ...) {
   bootstraplib::bs_theme(...,
-    primary = primary,
-    "font-size-base" = "1rem",
+                         primary = primary,
+                         "font-size-base" = "1rem",
   )
 }
 
@@ -101,7 +101,7 @@ bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
                            output_dir = opts$get("output_dir")
-                           ) {
+) {
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
@@ -118,9 +118,9 @@ bs4_book_build <- function(output = "bookdown.html",
   rmd_index <- vapply(as.list(rmd_index), force, character(1))
 
   bs4_chapters_tweak(output,
-    repo = repo,
-    rmd_index = rmd_index,
-    output_dir = output_dir
+                     repo = repo,
+                     rmd_index = rmd_index,
+                     output_dir = output_dir
   )
 
   output2
@@ -138,7 +138,7 @@ build_toc <- function(output) {
     tag = xml2::xml_name(headings),
     id = xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id"),
     num = xml2::xml_text(number),
-    text = xml2::xml_text(headings),
+    text = htmltools::htmlEscape(xml2::xml_text(headings)),
     stringsAsFactors = FALSE
   )
   if (requireNamespace("tibble", quietly = TRUE)) {
@@ -166,8 +166,8 @@ build_toc <- function(output) {
   if (any(is_appendix)) {
     app <- toc[
       seq_along(is_appendix) > which(is_appendix)[[1]] &
-      toc$level == 1 &
-      !is.na(toc$num),
+        toc$level == 1 &
+        !is.na(toc$num),
     ]
     app$label <- LETTERS[seq_len(nrow(app))]
     # TODO: make less of a hack
@@ -249,8 +249,8 @@ bs4_chapters_tweak <- function(output,
     sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
     h1 <- xml_text1(xml2::xml_find_first(html, "//h1"))
     index[[i]] <- lapply(sections, bs4_index_data,
-      chapter = h1,
-      path = basename(path)
+                         chapter = h1,
+                         path = basename(path)
     )
 
     xml2::write_html(html, path, format = FALSE)
@@ -498,7 +498,7 @@ template_link <- function(html, xpath, href) {
 
 bs4_index_data <- function(node, chapter, path) {
   children <- xml2::xml_find_all(node,
-    "./*[not(self::div and contains(@class, 'section'))]"
+                                 "./*[not(self::div and contains(@class, 'section'))]"
   )
   if (length(children) == 0 || !is_heading(children[[1]])) {
     return()
@@ -555,10 +555,10 @@ preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   on.exit(setwd(old))
 
   render_book("index.Rmd",
-    output_format = output,
-    quiet = TRUE,
-    clean = FALSE,
-    envir = globalenv()
+              output_format = output,
+              quiet = TRUE,
+              clean = FALSE,
+              envir = globalenv()
   )
 
   unlink(file.path(tempdir(), "_book"))
