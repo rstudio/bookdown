@@ -105,7 +105,6 @@ bs4_book_build <- function(output = "bookdown.html",
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
-
   output2 <- split_chapters(
     output = output,
     build = function(...) bs4_book_page(..., rmd_index = rmd_index),
@@ -113,15 +112,27 @@ bs4_book_build <- function(output = "bookdown.html",
     split_by = "chapter",
     split_bib = FALSE
   )
+
   move_files_html(output2, lib_dir)
 
-  rmd_index <- vapply(as.list(rmd_index), force, character(1))
+  if (is.null(output_dir)) {
+    output_dir <- "_book"
+  }
 
-  bs4_chapters_tweak(output,
-    repo = repo,
-    rmd_index = rmd_index,
-    output_dir = output_dir
-  )
+  if (isTRUE(opts$get('preview'))) {
+    bs4_chapter_tweak(
+      output2,
+      repo = repo,
+      rmd_index = setNames(opts$get("input_rmd"), output2),
+      toc = build_toc(output2)
+    )
+  } else {
+    bs4_chapters_tweak(output,
+      repo = repo,
+      rmd_index = unlist(as.list(rmd_index)),
+      output_dir = output_dir
+    )
+  }
 
   output2
 }
@@ -226,42 +237,47 @@ bs4_chapters_tweak <- function(output,
                                rmd_index = NULL,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
+
   toc <- build_toc(output)
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
 
   index <- vector("list", nrow(files))
-
   for (i in seq_len(nrow(files))) {
-    path <- files$path[[i]]
     message("Tweaking ", path)
-    html <- xml2::read_html(path, encoding = "UTF-8")
-
-    tweak_tables(html)
-    tweak_chapter(html)
-    tweak_anchors(html)
-    tweak_chunks(html)
-    tweak_footnotes(html)
-    tweak_part_screwup(html)
-    tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
-    downlit::downlit_html_node(html)
-
-    sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
-    h1 <- xml_text1(xml2::xml_find_first(html, "//h1"))
-    index[[i]] <- lapply(sections, bs4_index_data,
-      chapter = h1,
-      path = basename(path)
-    )
-
-    xml2::write_html(html, path, format = FALSE)
+    path <- files$path[[i]]
+    index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo)
   }
-
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
+
   jsonlite::write_json(
     index,
     file.path(output_dir, "search.json"),
     auto_unbox = TRUE
   )
+}
+
+bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
+  html <- xml2::read_html(path, encoding = "UTF-8")
+
+  tweak_tables(html)
+  tweak_chapter(html)
+  tweak_anchors(html)
+  tweak_chunks(html)
+  tweak_footnotes(html)
+  tweak_part_screwup(html)
+  tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
+  downlit::downlit_html_node(html)
+
+  xml2::write_html(html, path, format = FALSE)
+
+  sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
+  h1 <- xml_text1(xml2::xml_find_first(html, "//h1"))
+  lapply(sections, bs4_index_data,
+    chapter = h1,
+    path = basename(path)
+  )
+
 }
 
 tweak_chapter <- function(html) {
@@ -443,7 +459,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   nav2 <- nav[!is.na(nav$file_name), ]
   cur <- which(nav2$file_name == active)
 
-  if (cur > 1) {
+  if (length(cur) > 0 && cur > 1) {
     i <- cur - 1L
     chapter_prev <- paste0(
       "<div class='prev'>",
@@ -456,7 +472,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     chapter_prev <- "<div class='empty'></div>"
   }
 
-  if (cur < nrow(nav2)) {
+  if (length(cur) > 0 && cur < nrow(nav2)) {
     i <- cur + 1L
     chapter_next <- paste0(
       "<div class='next'>",
