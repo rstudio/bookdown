@@ -387,7 +387,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   if (nrow(head) > 0) {
     link <- paste0(
       "<a class='nav-link' href='#", head$id, "'>",
-      nav_num(head$num), head$text,
+      nav_num(head$num), htmltools::htmlEscape(head$text),
       "</a>"
     )
     n <- length(link)
@@ -422,7 +422,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   class <- ifelse(is_active, "active", "")
   a <- paste0(
     "<li><a class='", class, "' href='", nav$file_name, "'>",
-    nav_num(nav$num), nav$text,
+    nav_num(nav$num), htmltools::htmlEscape(nav$text),
     "</a></li>"
   )
   a[is.na(nav$file_name)] <- paste0(
@@ -448,7 +448,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     chapter_prev <- paste0(
       "<div class='prev'>",
       "<a href='", nav2$file_name[[i]], "'>",
-      nav_num(nav2$num[[i]]), nav2$text[[i]],
+      nav_num(nav2$num[[i]]), htmltools::htmlEscape(nav2$text[[i]]),
       "</a>",
       "</div>"
     )
@@ -461,7 +461,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     chapter_next <- paste0(
       "<div class='next'>",
       "<a href='", nav2$file_name[[i]], "'>",
-      nav_num(nav2$num[[i]]), nav2$text[[i]],
+      nav_num(nav2$num[[i]]), htmltools::htmlEscape(nav2$text[[i]]),
       "</a>",
       "</div>"
     )
