@@ -90,6 +90,7 @@ bs4_book <- function(
 
 #' @export
 #' @rdname bs4_book
+#' @param primary Primary colour: used for links and background of footer.
 bs4_book_theme <- function(primary = "#0068D9", ...) {
   bootstraplib::bs_theme(...,
     primary = primary,

@@ -14,12 +14,13 @@ bs4_book(
   extra_dependencies = NULL
 )
 
-bs4_book_theme(...)
+bs4_book_theme(primary = "#0068D9", ...)
 }
 \arguments{
 \item{theme}{A named list or [bootstraplib::bs_theme()] object.
 The default, `bs4_book_theme()`, resets the base font size to 1rem to
-make reading easier.}
+make reading easier and uses a primary colour with greater constrast
+against the background.}
 
 \item{repo}{Link to repository where book is hosted, used to generate
 view source and edit buttons. Currently assumes GitHub and that the book
@@ -27,6 +28,8 @@ is in the root directory of the repo.}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 [rmarkdown::html_document()].}
+
+\item{primary}{Primary colour: used for links and background of footer.}
 }
 \description{
 This output format is built with [bootstrap](https://getbootstrap.com),
