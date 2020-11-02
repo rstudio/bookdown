@@ -1,6 +1,6 @@
 # bookdown
 
-[![Build Status](https://travis-ci.org/rstudio/bookdown.svg)](https://travis-ci.org/rstudio/bookdown)
+[![Build Status](https://travis-ci.com/rstudio/bookdown.svg?branch=master)](https://travis-ci.com/rstudio/bookdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/bookdown)](https://cran.r-project.org/package=bookdown)
 
 <a href="https://bookdown.org/yihui/bookdown"><img src="https://bookdown.org/yihui/bookdown/images/logo.png" alt="bookdown logo" align="right" /></a>
