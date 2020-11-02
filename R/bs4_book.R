@@ -138,7 +138,7 @@ build_toc <- function(output) {
     tag = xml2::xml_name(headings),
     id = xml2::xml_attr(xml2::xml_find_first(headings, "parent::div"), "id"),
     num = xml2::xml_text(number),
-    text = xml2::xml_text(headings),
+    text = htmltools::htmlEscape(xml2::xml_text(headings)),
     stringsAsFactors = FALSE
   )
   if (requireNamespace("tibble", quietly = TRUE)) {
