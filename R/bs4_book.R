@@ -258,7 +258,10 @@ bs4_chapters_tweak <- function(output,
 }
 
 bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
-  html <- xml2::read_html(path, encoding = "UTF-8")
+  text <- readChar(path, file.size(path))
+  # Convert ANSI escape to \u2029 since control characters are ignored in XML2
+  text <- gsub("\033", "&#8233;", text, fixed = TRUE)
+  html <- xml2::read_html(text, encoding = "UTF-8")
 
   tweak_tables(html)
   tweak_chapter(html)
