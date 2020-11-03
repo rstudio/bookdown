@@ -26,6 +26,6 @@ the R Markdown source document.
 \examples{
 library(bookdown)
 resolve_refs_html(c("<caption>(#tab:foo) A nice table.</caption>", 
-    "<p>See Table @ref(tab:foo).</p>"), TRUE)
+    "<p>See Table @ref(tab:foo).</p>"), global = TRUE)
 }
 \keyword{internal}

@@ -525,7 +525,13 @@ source_link_setting = function(config, type) {
 #' @export
 #' @keywords internal
 #' @examples library(bookdown)
-#' resolve_refs_html(c('<caption>(#tab:foo) A nice table.</caption>', '<p>See Table @ref(tab:foo).</p>'), TRUE)
+#' resolve_refs_html(
+#'   c(
+#'     '<caption>(#tab:foo) A nice table.</caption>',
+#'     '<p>See Table @ref(tab:foo).</p>'
+#'   ),
+#'   global = TRUE
+#' )
 resolve_refs_html = function(content, global = FALSE) {
   content = resolve_ref_links_html(content)
 

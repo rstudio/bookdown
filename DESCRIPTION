@@ -66,17 +66,26 @@ Imports:
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
+    bootstraplib,
+    downlit,
     htmlwidgets,
+    jsonlite,
     rstudioapi,
     miniUI,
     rsconnect (>= 0.4.3),
     servr (>= 0.13),
     shiny,
+    tibble,
     testit (>= 0.9),
     tufte,
+    xml2,
     webshot
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
+Remotes: 
+    rstudio/bootstraplib, 
+    rstudio/rmarkdown,
+    r-lib/downlit
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
