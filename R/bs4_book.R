@@ -277,7 +277,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
   xml2::write_html(html, path, format = FALSE)
 
   sections <- xml2::xml_find_all(html, ".//div[contains(@class, 'section')]")
-  h1 <- xml_text1(xml2::xml_find_first(html, "//h1"))
+  h1 <- xml_text1(xml2::xml_find_first(html, "//main//h1"))
   lapply(sections, bs4_index_data,
     chapter = h1,
     path = basename(path)
