@@ -166,6 +166,9 @@ body {
 footer {
   flex-shrink: 0;
 }
+footer a {
+  text-decoration: underline;
+}
 
 /* Scrollspy --------------------------------------------- */
 
