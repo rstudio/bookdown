@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- New `bs4_book()` theme (@hadley).
+- New `bs4_book()` theme (thanks, @hadley, #996).
 
 - `render_book()` can now take a directory as input, i.e `render_book("book_dir")`, to render in this directory by using the `index.Rmd` file if it exists. The default is now to look for `input.Rmd` is the current working directory. Previously, filename must have been provided (`render_book()` is now equivalent to `render_book("index.Rmd")`) (#990).
 
