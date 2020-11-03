@@ -41,6 +41,7 @@
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
 #' @export
+#' @md
 bs4_book <- function(
                      theme = bs4_book_theme(),
                      repo = NULL,

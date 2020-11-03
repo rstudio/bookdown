@@ -17,8 +17,8 @@ bs4_book(
 bs4_book_theme(primary = "#0068D9", ...)
 }
 \arguments{
-\item{theme}{A named list or [bootstraplib::bs_theme()] object.
-The default, `bs4_book_theme()`, resets the base font size to 1rem to
+\item{theme}{A named list or \code{\link[bootstraplib:bs_theme]{bootstraplib::bs_theme()}} object.
+The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
 make reading easier and uses a primary colour with greater constrast
 against the background.}
 
@@ -27,38 +27,34 @@ view source and edit buttons. Currently assumes GitHub and that the book
 is in the root directory of the repo.}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
-[rmarkdown::html_document()].}
+\code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
 }
 \description{
-This output format is built with [bootstrap](https://getbootstrap.com),
+This output format is built with \href{https://getbootstrap.com}{bootstrap},
 using carefully craft features to provide a clean reading experience whether
 your on a phone, tablet, or desktop.
 
 Some of the main features:
-
-* Easy customisation of colours and fonts with
-  [bootstraplib](https://rstudio.github.io/bootstraplib)
-
-* Built in search (broken down by section) that helps you quickly find what
-  you're looking for.
-
-* A sidebar containing a within-chapter table of contents that makes
-  navigation easy and helps provide context about your current position
-  within the chapter.
-
-* Thoughtful typography to make the contents as easy as possible to read,
-  regardless of the size of your device. A sticky header gets out of your
-  way when reading, but is easily accessible if you need it.
-
-* In-line footnotes mean you can read asides next to the next they refer
-  to. This theme is best paired with a reference style that generates
-  footnotes.
-
-* R syntax highlighting and autolinking by
-  [downlit](http://downlit.r-lib.org/) is paired with a accessible
-  colour scheme designed by Alison Hill.
+\itemize{
+\item Easy customisation of colours and fonts with
+\href{https://rstudio.github.io/bootstraplib}{bootstraplib}
+\item Built in search (broken down by section) that helps you quickly find what
+you're looking for.
+\item A sidebar containing a within-chapter table of contents that makes
+navigation easy and helps provide context about your current position
+within the chapter.
+\item Thoughtful typography to make the contents as easy as possible to read,
+regardless of the size of your device. A sticky header gets out of your
+way when reading, but is easily accessible if you need it.
+\item In-line footnotes mean you can read asides next to the next they refer
+to. This theme is best paired with a reference style that generates
+footnotes.
+\item R syntax highlighting and autolinking by
+\href{http://downlit.r-lib.org/}{downlit} is paired with a accessible
+colour scheme designed by Alison Hill.
+}
 
 This theme is designed for books that use one chapter per page.
 }
