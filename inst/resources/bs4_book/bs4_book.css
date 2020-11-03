@@ -160,7 +160,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.container-lg {
+.container-fluid {
   flex: 1 0 auto;
 }
 footer {
