@@ -9,9 +9,11 @@
 #' (\code{new_session = FALSE}) is to merge Rmd files into a single file and
 #' render this file. You can also choose to render each individual Rmd file in a
 #' new R session (\code{new_session = TRUE}).
-#' @param input An input filename (or multiple filenames). If \code{preview =
-#'   TRUE}, only files specified in this argument are rendered, otherwise all R
-#'   Markdown files specified by the book are rendered.
+#' @param input A directory, an input filename or multiple filenames. For a
+#'   directory, \file{index.Rmd} will be used if it exists in this (book)
+#'   project directory. For filenames, if \code{preview = TRUE}, only files
+#'   specified in this argument are rendered, otherwise all R Markdown files
+#'   specified by the book are rendered.
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
 #'   is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
@@ -45,14 +47,32 @@
 #' bookdown::render_book("index.Rmd",  "pdf_book")
 #' # If you pass an output format object, it must have all the options set
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+#'
+#' # will render the book in the current directory
+#' bookdown::render_book()
+#' # this is equivalent to
+#' bookdown::render_book("index.Rmd")
+#' # will render the book living in the specified directory
+#' bookdown::render_book("my_book_project")
 #' }
 render_book = function(
-  input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
+  input = ".", output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
   preview = FALSE, config_file = '_bookdown.yml'
 ) {
 
   verify_rstudio_version()
+
+  # select and check input file(s)
+  if (length(input) == 1L && file_test("-d", input)) {
+    message(sprintf("Rendering book in directory '%s'", input))
+    owd = setwd(input); on.exit(setwd(owd), add = TRUE)
+    input = "index.Rmd"
+  }
+  if (!all(exist <- file_test("-f", input))) {
+    stop("Some files were not found: ",  paste(input[!exist], collapse = ' '))
+  }
+
   format = NULL  # latex or html
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
