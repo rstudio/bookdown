@@ -8,7 +8,7 @@
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bootstraplib](https://rstudio.github.io/bootstraplib)
+#'   [bslib](https://rstudio.github.io/bslib)
 #'
 #' * Built in search (broken down by section) that helps you quickly find what
 #'   you're looking for.
@@ -31,7 +31,7 @@
 #'
 #' This theme is designed for books that use one chapter per page.
 #'
-#' @param theme A named list or [bootstraplib::bs_theme()] object.
+#' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
 #'   make reading easier and uses a primary colour with greater constrast
 #'   against the background.
@@ -50,7 +50,7 @@ bs4_book <- function(
                      pandoc_args = NULL,
                      extra_dependencies = NULL
                      ) {
-  check_packages(c("bootstraplib", "downlit", "jsonlite", "xml2"))
+  check_packages(c("bslib", "downlit", "jsonlite", "xml2"))
   bs4_check_dots(...)
 
   # Allow theme specification in yaml metadata
@@ -93,7 +93,7 @@ bs4_book <- function(
 #' @rdname bs4_book
 #' @param primary Primary colour: used for links and background of footer.
 bs4_book_theme <- function(primary = "#0068D9", ...) {
-  bootstraplib::bs_theme(...,
+  bslib::bs_theme(...,
     primary = primary,
     "font-size-base" = "1rem",
   )
@@ -219,7 +219,7 @@ bs4_book_dependency <- function(theme) {
   assets <- bookdown_file("resources", "bs4_book")
 
   c(
-    bootstraplib::bs_theme_dependencies(theme),
+    bslib::bs_theme_dependencies(theme),
     list(
       htmltools::htmlDependency(
         name = "bs4_book",

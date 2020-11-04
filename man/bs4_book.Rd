@@ -17,7 +17,7 @@ bs4_book(
 bs4_book_theme(primary = "#0068D9", ...)
 }
 \arguments{
-\item{theme}{A named list or \code{\link[bootstraplib:bs_theme]{bootstraplib::bs_theme()}} object.
+\item{theme}{A named list or \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object.
 The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
 make reading easier and uses a primary colour with greater constrast
 against the background.}
@@ -39,7 +39,7 @@ your on a phone, tablet, or desktop.
 Some of the main features:
 \itemize{
 \item Easy customisation of colours and fonts with
-\href{https://rstudio.github.io/bootstraplib}{bootstraplib}
+\href{https://rstudio.github.io/bslib}{bslib}
 \item Built in search (broken down by section) that helps you quickly find what
 you're looking for.
 \item A sidebar containing a within-chapter table of contents that makes
