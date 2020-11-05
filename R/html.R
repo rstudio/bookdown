@@ -1032,7 +1032,7 @@ move_files_html = function(output, lib_dir) {
   f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
   f = gsub('^[.]/', '', f)  # strip the initial ./, e.g. ./foo.png -> foo.png
   f = f[f != '']
-  f = f[!knitr:::is_abs_path(f)]
+  f = f[xfun::is_rel_path(f)]
   if (getOption('bookdown.js.debug', FALSE)) f = c(f, js_min_sources(f))
   # add leaflet images if any used
   f = c(f, grep('png$', list.files(
