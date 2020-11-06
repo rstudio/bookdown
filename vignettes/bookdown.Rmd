@@ -1,0 +1,5 @@
+---
+title: "Get started"
+---
+
+Learn more about how to start using bookdown at <https://bookdown.org/yihui/bookdown/>.

@@ -1,0 +1,44 @@
+- title: "RStudio AI Blog"
+  img: images/rstudio-ai.png
+  href: https://blogs.rstudio.com/ai/
+  showcase: true
+- title: "Piping Hot Data"
+  img: images/piping-hot-data.png
+  href: https://www.pipinghotdata.com/
+  showcase: true
+- title: "Before I Sleep"
+  img: images/miles-mcbain.png
+  href: https://milesmcbain.xyz/
+  showcase: true
+- title: "The Mockup"
+  img: images/mockup.png
+  href: https://themockup.blog
+  showcase: true
+- title: "Michael Clark: Statistics, Data, Science"
+  img: images/m-clark.png
+  href: https://m-clark.github.io/
+  showcase: true
+- title: "Matt Worthington"
+  img: images/mr-worthington.png
+  href: https://www.mrworthington.com/
+  showcase: true
+- title: "Open Source Football"
+  img: images/open-source-football.png
+  href: https://www.opensourcefootball.com/
+  showcase: true
+- title: "Taras Kaduk"
+  img: images/taras-kaduk.png
+  href: https://taraskaduk.com/
+  showcase: true
+- title: "Teaching in Production"
+  img: images/rstudio-tip.png
+  href: https://rstd.io/tip
+  showcase: true
+- title: "Tidyquintro"
+  img: images/tidyquintro.png
+  href: https://athanasiamo.github.io/tidyquintro/
+  showcase: true
+- title: "Tidymodels, Virtually"
+  img: images/tmv.png
+  href: https://tmv.netlify.app/site/
+  showcase: true
