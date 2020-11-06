@@ -1,0 +1,24 @@
+destination: reference
+
+template:
+  package: quillt
+
+development:
+  mode: auto
+
+navbar:
+  title: ~
+  type: default
+  left:
+  - text: Get started
+    href: articles/bookdown.html
+  - text: Examples
+    href: articles/examples.html
+  - text: Reference
+    href: reference/index.html
+  right:
+  - text: News
+    href: news/index.html
+  - icon: fa-github fa-lg
+    href: https://github.com/rstudio/bookdown
+
