@@ -355,9 +355,6 @@ mark {
 pre {
   position: relative;
   overflow: auto;
-  word-wrap: normal;
-  word-break: normal;
-  white-space: pre;
   border: 1px solid #eee;
   padding: 0.5rem;
   margin: 0 -0.5rem 1rem -0.5rem;
@@ -379,6 +376,8 @@ code {
 
 pre code {
   background-color: transparent;
+  word-break: normal; /* force wide blocks to scroll, not wrap */
+  word-wrap: normal;
 }
 
 pre, code {
