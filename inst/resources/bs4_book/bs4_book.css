@@ -256,6 +256,8 @@ h2 {
   font-size: 1.5rem;
 }
 h3 { margin-top: 1.5em; font-size: 1.2rem; }
+h4 { margin-top: 1.5em; font-size: 1.1rem; }
+h5 { margin-top: 1.5em; font-size: 1rem; }
 
 h1, h2, h3, h4, h5 {
   line-height: 1.3;
