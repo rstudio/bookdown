@@ -26,7 +26,7 @@
 #'   a reference style (CSL file) that generates footnotes.
 #'
 #' * R syntax highlighting and autolinking by
-#'   [downlit](http://downlit.r-lib.org/) is paired with an accessible
+#'   [downlit](https://downlit.r-lib.org/) is paired with an accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
