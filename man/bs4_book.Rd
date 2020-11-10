@@ -33,28 +33,75 @@ is in the root directory of the repo.}
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{bootstrap},
-using carefully craft features to provide a clean reading experience whether
-your on a phone, tablet, or desktop.
+using carefully crafted features to provide a clean reading experience whether
+you are on a phone, tablet, or desktop.
 
 Some of the main features:
 \itemize{
 \item Easy customisation of colours and fonts with
-\href{https://rstudio.github.io/bslib}{bslib}
-\item Built in search (broken down by section) that helps you quickly find what
-you're looking for.
+\href{https://rstudio.github.io/bslib}{bslib} (see Customization section).
+\item Built-in search (broken down by section) that helps readers quickly find what
+they are looking for.
 \item A sidebar containing a within-chapter table of contents that makes
 navigation easy and helps provide context about your current position
 within the chapter.
 \item Thoughtful typography to make the contents as easy as possible to read,
 regardless of the size of your device. A sticky header gets out of your
 way when reading, but is easily accessible if you need it.
-\item In-line footnotes mean you can read asides next to the next they refer
-to. This theme is best paired with a reference style that generates
-footnotes.
+\item In-line footnotes mean you can read asides next to the text they refer
+to. If you use a bibliography, this bookdown theme is best paired with
+a reference style (CSL file) that generates footnotes
+(see References/bibliography).
 \item R syntax highlighting and autolinking by
-\href{http://downlit.r-lib.org/}{downlit} is paired with a accessible
+\href{https://downlit.r-lib.org/}{downlit} is paired with an accessible
 colour scheme designed by Alison Hill.
 }
 
 This theme is designed for books that use one chapter per page.
+}
+\section{Customization}{
+To customize the book style you can either use Bootstrap 4 variables or more
+direct CSS tweaks.
+\itemize{
+\item If you want to change say the size of h4 headers, look in the arguments to
+\href{https://rstudio.github.io/bslib/reference/bs_theme.html}{\code{bslib::bs_theme()}},
+e.g. you could set the primary color to \verb{#00008b} via the \code{primary} argument.
+For further tweaks, look in
+\href{https://github.com/rstudio/bslib/blob/master/inst/lib/bootstrap/scss/_variables.scss}{Bootstrap 4 variables}
+to see whether one of them seems to be what you are looking for. In that
+particular case the answer is \code{h4-font-size} so you would write, in \verb{_output.yml},
+}\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  theme:
+    primary: "#00008b"
+    h4-font-size: "1.1rem"
+}\if{html}{\out{</div>}}
+
+That approach can get annoying quite quickly if you are making many tweaks.
+In that case you might prefer to write CSS using usual tools such as your browser
+DevTools, and save it in a CSS file at the
+root of your bookdown project e.g. under \code{style.css}.
+For header font size it could be\if{html}{\out{<div class="css">}}\preformatted{.h4, h4 \{
+font-size: 1.1rem;
+\}
+}\if{html}{\out{</div>}}
+
+And in \verb{_output.yml},\if{html}{\out{<div class="css">}}\preformatted{bookdown::bs4_book:
+  theme:
+    primary: "#00008b"
+  css: style.css
+}\if{html}{\out{</div>}}
+}
+
+\section{References/bibliography}{
+As this theme makes footnotes appear in line, making your citations \emph{footnotes}
+allows readers to read them near the text they are referred in.
+To do that, download a footnote style CSL file
+(e.g. chicago-fullnote-bibliography.csl)
+put this in your index.Rmd:\if{html}{\out{<div class="yaml">}}\preformatted{bibliography: refs.bib
+csl: chicago-fullnote-bibliography.csl
+}\if{html}{\out{</div>}}
+
+And then optionally, if you no longer want a reference section
+at the back of the book:\if{html}{\out{<div class="yaml">}}\preformatted{suppress-bibliography: true
+}\if{html}{\out{</div>}}
 }

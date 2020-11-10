@@ -8,7 +8,7 @@
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib).
+#'   [bslib](https://rstudio.github.io/bslib) (see Customization section).
 #'
 #' * Built-in search (broken down by section) that helps readers quickly find what
 #'   they are looking for.
@@ -22,14 +22,73 @@
 #'   way when reading, but is easily accessible if you need it.
 #'
 #' * In-line footnotes mean you can read asides next to the text they refer
-#'   to. If you use a bibliography, this bookdown theme is best paired with 
-#'   a reference style (CSL file) that generates footnotes.
+#'   to. If you use a bibliography, this bookdown theme is best paired with
+#'   a reference style (CSL file) that generates footnotes
+#'   (see References/bibliography).
 #'
 #' * R syntax highlighting and autolinking by
 #'   [downlit](https://downlit.r-lib.org/) is paired with an accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
+#'
+#' # Customization
+#'
+#' To customize the book style you can either use Bootstrap 4 variables or more
+#'  direct CSS tweaks.
+#'
+#' * If you want to change a few elements, look in the arguments to
+#' [`bslib::bs_theme()`](https://rstudio.github.io/bslib/reference/bs_theme.html),
+#' e.g. you could set the primary color to `#00008b` via the `primary` argument.
+#' For further tweaks such as the size of h4 headers, look in
+#' [Bootstrap 4 variables](https://github.com/rstudio/bslib/blob/master/inst/lib/bootstrap/scss/_variables.scss)
+#' to see whether one of them seems to be what you are looking for. In that
+#' particular case the answer is `h4-font-size` so you would write, in `_output.yml`,
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   theme:
+#'     primary: "#00008b"
+#'     h4-font-size: "1.1rem"
+#' ```
+#'
+#' That approach can get annoying quite quickly if you are making many tweaks.
+#' In that case you might prefer to write CSS using usual tools such as your browser
+#' DevTools, and save it in a CSS file at the
+#' root of your bookdown project e.g. under `style.css`.
+#' For header font size it could be
+#'
+#' ```css
+#' .h4, h4 {
+#'font-size: 1.1rem;
+#'}
+#' ````
+#' And in `_output.yml`,
+#'
+#' ```css
+#' bookdown::bs4_book:
+#'   theme:
+#'     primary: "#00008b"
+#'   css: style.css
+#' ```
+#'
+#' # References/bibliography
+#'
+#' As this theme makes footnotes appear in line, making your citations _footnotes_
+#' allows readers to read them near the text they are referred in.
+#' To do that, download a footnote style CSL file
+#' (e.g. chicago-fullnote-bibliography.csl)
+#' put this in your index.Rmd:
+#' ```yaml
+#'bibliography: refs.bib
+#'csl: chicago-fullnote-bibliography.csl
+#' ```
+#' And then optionally, if you no longer want a reference section
+#' at the back of the book:
+#'
+#' ```yaml
+#' suppress-bibliography: true
+#' ```
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
