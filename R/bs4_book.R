@@ -11,7 +11,7 @@
 #'   [bslib](https://rstudio.github.io/bslib).
 #'
 #' * Built-in search (broken down by section) that helps readers quickly find what
-#'   you're looking for.
+#'   they are looking for.
 #'
 #' * A sidebar containing a within-chapter table of contents that makes
 #'   navigation easy and helps provide context about your current position
