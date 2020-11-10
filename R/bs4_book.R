@@ -2,15 +2,15 @@
 #'
 #' @description
 #' This output format is built with [bootstrap](https://getbootstrap.com),
-#' using carefully craft features to provide a clean reading experience whether
-#' your on a phone, tablet, or desktop.
+#' using carefully crafted features to provide a clean reading experience whether
+#' you are on a phone, tablet, or desktop.
 #'
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib)
+#'   [bslib](https://rstudio.github.io/bslib).
 #'
-#' * Built in search (broken down by section) that helps you quickly find what
+#' * Built-in search (broken down by section) that helps readers quickly find what
 #'   you're looking for.
 #'
 #' * A sidebar containing a within-chapter table of contents that makes
@@ -21,12 +21,12 @@
 #'   regardless of the size of your device. A sticky header gets out of your
 #'   way when reading, but is easily accessible if you need it.
 #'
-#' * In-line footnotes mean you can read asides next to the next they refer
-#'   to. This theme is best paired with a reference style that generates
-#'   footnotes.
+#' * In-line footnotes mean you can read asides next to the text they refer
+#'   to. If you use a bibliography, this bookdown theme is best paired with 
+#'   a reference style (CSL file) that generates footnotes.
 #'
 #' * R syntax highlighting and autolinking by
-#'   [downlit](http://downlit.r-lib.org/) is paired with a accessible
+#'   [downlit](http://downlit.r-lib.org/) is paired with an accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
