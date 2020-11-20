@@ -54,7 +54,9 @@ jobs:
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "18.04"))')
 
       - name: Install phamtomJS for webshot
-        run: webshot::install_phantomjs()
+        run: |
+          remotes::install_cran("webshot")
+          webshot::install_phantomjs()
         shell: Rscript {0}
 
       - name: Install R dependencies for bookdown
