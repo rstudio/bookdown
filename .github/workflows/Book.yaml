@@ -75,7 +75,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Install bookdown package
-        run: xfun::install_dir()
+        run: xfun::install_dir(".")
         shell: Rscript {0}
 
       - name: Cache bookdown results
