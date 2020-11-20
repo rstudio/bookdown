@@ -86,7 +86,7 @@ jobs:
           restore-keys: bookdown-
 
       - name: Build book
-        run: make -c inst/exampes gitbook
+        run: make -C inst/exampes gitbook
 
 
 
