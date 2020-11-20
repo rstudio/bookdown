@@ -91,10 +91,7 @@ jobs:
           restore-keys: bookdown-
 
       - name: Build book
-        run: |
-          BUILD_ALL="$(git log --format=%B --no-merges -n 1 | grep -E "\[build all\]")"
-          cd inst/examples
-          "[ ! -z \"$BUILD_ALL\" ] && make all || make gitbook"
+        run: make -c inst/exampes gitbook
 
 
 
