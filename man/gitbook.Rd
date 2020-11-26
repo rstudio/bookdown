@@ -12,6 +12,7 @@ gitbook(
   pandoc_args = NULL,
   ...,
   template = "default",
+  mathjax = "default",
   split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none"),
   split_bib = TRUE,
   config = list(),
@@ -19,7 +20,7 @@ gitbook(
 )
 }
 \arguments{
-\item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args}{...
+\item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args, mathjax}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
 

@@ -3,7 +3,7 @@
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
+#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args,mathjax ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
@@ -21,7 +21,7 @@
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
+  lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default', mathjax = "default",
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
@@ -37,9 +37,33 @@ gitbook = function(
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
-    template = template, pandoc_args = pandoc_args2(pandoc_args), ...
+    template = template, pandoc_args = pandoc_args2(pandoc_args),
+    mathjax = mathjax, ...
   )
   split_by = match.arg(split_by)
+  pre = config$pre_processor # in case a pre processor have been defined
+  config$pre_processor = function(
+    metadata, input_file, runtime, knit_meta, files_dir, output_dir
+  ) {
+    if (is.function(pre))
+      args = pre(metadata, input_file, runtime, knit_meta, files_dir, output_dir)
+
+    # adjusting mathjax default handling by rmarkdown in pandoc_mathjax_args()
+    # if a custom url is passed
+    if (!is.null(mathjax) && !identical(mathjax, "default")) {
+      # if no mathjax arg, rmarkdown did not included it and it stays that way
+      if(length(i <- grep("--mathjax", args))) {
+        # if local url is inserted by rmarkdown
+        if (identical(mathjax, "local"))
+          mathjax = gsub("^--mathjax=(.*)$", "\\1", args[i])
+        # replacing the mathjax and setting a variable for the gitbook template
+        if (length(i)) args = args[-i]
+        args = c(args, "--mathjax",
+                 "--variable", paste0("mathjax-url:", mathjax))
+      }
+    }
+    args
+  }
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
@@ -284,4 +308,8 @@ download_filenames = function(config) {
     }
   }
   if (length(downloads)) I(downloads)
+}
+
+gitbook_mathjax_arg <- function (mathjax, template, self_contained, files_dir, output_dir)
+{
 }

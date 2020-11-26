@@ -172,7 +172,7 @@ $if(math)$
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "$if(mathjax)$$mathjax$$endif$";
+    var src = "$if(mathjax)$$if(mathjax-url)$$mathjax-url$$else$$mathjax$$endif$$endif$";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
