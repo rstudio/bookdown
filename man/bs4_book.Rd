@@ -24,7 +24,8 @@ against the background.}
 
 \item{repo}{Either link to repository where book is hosted, used to generate
 view source and edit buttons or a list with repository \code{base} link, default
-\code{branch} and \code{subdir} (see Details)}
+\code{branch} and \code{subdir} (see "Specifying the repository"). This only works for
+GitHub and GitLab (self-hosted or not).}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
@@ -76,3 +77,4 @@ If your book is furthermore located in a subdirectory called "book" you can use\
     subdir: book
 }\if{html}{\out{</div>}}
 }
+

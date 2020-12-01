@@ -37,7 +37,8 @@
 #'   against the background.
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
-#'   `branch` and `subdir` (see Details)
+#'   `branch` and `subdir` (see "Specifying the repository"). This only works for
+#'   GitHub and GitLab (self-hosted or not).
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
 #'
