@@ -35,11 +35,35 @@
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
 #'   make reading easier and uses a primary colour with greater constrast
 #'   against the background.
-#' @param repo Link to repository where book is hosted, used to generate
-#'   view source and edit buttons. Currently assumes GitHub and that the book
-#'   is in the root directory of the repo.
+#' @param repo Either link to repository where book is hosted, used to generate
+#'   view source and edit buttons or a list with repository `base` link, default
+#'   `branch` and `subdir` (see Details)
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
+#'
+#' @section Specifying the repository:
+#'
+#' (GitHub or GitLab)
+#'
+#' If your book has a default branch called main you can use
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#' ```
+#'
+#' If your book is furthermore located in a subdirectory called "book" you can use
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#'     subdir: book
+#' ```
+
 #' @export
 #' @md
 bs4_book <- function(
@@ -390,18 +414,37 @@ tweak_tables <- function(html) {
 
 tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) {
 
+  if (!is.null(repo) && length(repo) == 1) {
+    repo <- list(
+      base = repo,
+      branch = "master",
+      subdir = NULL
+    )
+  }
+
   # Source links ------------------------------------------------------------
   if (!is.null(repo) && active %in% names(rmd_index)) {
-    repo_edit <- paste0(repo, "/edit/master/", rmd_index[[active]])
-    repo_view <- paste0(repo, "/blob/master/", rmd_index[[active]])
+
+    if (!is.null(repo$subdir)) {
+      repo$subdir <- paste0(repo$subdir, "/")
+    }
+
+    repo_edit <- paste0(repo$base, "/edit/", repo$branch,"/", repo$subdir, rmd_index[[active]])
+    repo_view <- paste0(repo$base, "/blob/", repo$branch,"/", repo$subdir, rmd_index[[active]])
   } else {
     repo_edit <- NULL
     repo_view <- NULL
   }
 
-  template_link(html, ".//a[@id='book-repo']", repo)
+  template_link(html, ".//a[@id='book-repo']", repo$base)
   template_link(html, ".//a[@id='book-source']", repo_view)
   template_link(html, ".//a[@id='book-edit']", repo_edit)
+
+  if (!grepl("github\\.com", repo$base)) {
+    template_link_icon(html, ".//a[@id='book-repo']", "fab fa-gitlab")
+    template_link_icon(html, ".//a[@id='book-source']", "fab fa-gitlab")
+    template_link_icon(html, ".//a[@id='book-edit']", "fab fa-gitlab")
+  }
 
   # Within chapter nav --------------------------------------------------
   head <- toc[toc$file_name == active & toc$level > 0 & !is.na(toc$id), ]
@@ -513,6 +556,11 @@ template_link <- function(html, xpath, href) {
   } else {
     xml2::xml_attr(node, "href") <- href
   }
+}
+
+template_link_icon <- function(html, xpath, icon) {
+  icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
+  xml2::xml_attr(icon_node, "class") <- icon
 }
 
 # index -------------------------------------------------------------------
