@@ -136,6 +136,29 @@ bs4_book_build <- function(output = "bookdown.html",
     )
   }
 
+  # add 404 page
+  path404 <- gsub("index.html", "404.html", output2)
+  if (file.exists(path404)) file.remove(path404)
+  file.copy(output2, path404)
+  text404 <- xml2::read_html(path404)
+  nav <- xml2::xml_find_all(text404, ".//nav")[[2]]
+  xml2::xml_remove(nav)
+  main <- xml2::xml_find_first(text404, ".//main")
+  xml2::xml_remove(xml2::xml_children(main))
+  xml2::xml_add_child(
+    main,
+    xml2::xml_child(
+      xml2::xml_children(
+        xml2::read_html(
+        '<div id="preamble" class="section level1">
+        <h1>Page not found</h1>
+        <p>Use the table of contents to find your way back!</p>
+        </div>'
+        )
+        )
+      )
+    )
+  xml2::write_html(text404, path404)
   output2
 }
 
