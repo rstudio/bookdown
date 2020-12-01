@@ -437,15 +437,15 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     repo_view <- NULL
   }
 
-  template_link(html, ".//a[@id='book-repo']", repo$base)
-  template_link(html, ".//a[@id='book-source']", repo_view)
-  template_link(html, ".//a[@id='book-edit']", repo_edit)
-
-  if (!grepl("github\\.com", repo$base)) {
+  if (!is.null(repo$base) && !grepl("github\\.com", repo$base)) {
     template_link_icon(html, ".//a[@id='book-repo']", "fab fa-gitlab")
     template_link_icon(html, ".//a[@id='book-source']", "fab fa-gitlab")
     template_link_icon(html, ".//a[@id='book-edit']", "fab fa-gitlab")
   }
+
+  template_link(html, ".//a[@id='book-repo']", repo$base)
+  template_link(html, ".//a[@id='book-source']", repo_view)
+  template_link(html, ".//a[@id='book-edit']", repo_edit)
 
   # Within chapter nav --------------------------------------------------
   head <- toc[toc$file_name == active & toc$level > 0 & !is.na(toc$id), ]
