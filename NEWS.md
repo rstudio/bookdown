@@ -18,6 +18,10 @@
 
 - `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
 
+## MINOR CHANGES
+
+- `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
+
 # CHANGES IN bookdown VERSION 0.21
 
 ## NEW FEATURES
