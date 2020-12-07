@@ -354,6 +354,10 @@ mark {
 
 /* Code ------------------------------------------------ */
 
+div.sourceCode {
+  position: relative;
+}
+
 pre {
   position: relative;
   overflow: auto;
@@ -392,16 +396,24 @@ code a:any-link {
   text-decoration-color: #ccc;
 }
 
-pre .copy {
+.sourceCode .copy {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
 }
-pre .copy button {
+
+.sourceCode .copy button {
   background-color: #fff;
   font-size: 80%;
   padding: 4px 6px;
+  visibility: hidden;
 }
+
+
+.sourceCode:hover > .copy button {
+  visibility: visible;
+}
+
 
 /* https://github.com/rstudio/distill/blob/master/inst/rmarkdown/templates/distill_article/resources/a11y.theme + https://gist.github.com/hadley/f53b6e92df20994fdabe6562d284728a */
 code span.ot {color:#007faa}
