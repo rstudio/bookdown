@@ -398,8 +398,8 @@ code a:any-link {
 
 .sourceCode .copy {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.2rem;
+  right: 0.2rem;
 }
 
 .sourceCode .copy button {
