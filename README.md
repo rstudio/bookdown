@@ -1,7 +1,12 @@
 # bookdown
 
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/rstudio/bookdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/bookdown/actions)
 [![Build Status](https://travis-ci.com/rstudio/bookdown.svg?branch=master)](https://travis-ci.com/rstudio/bookdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/bookdown)](https://cran.r-project.org/package=bookdown)
+<!-- badges: end -->
+
 
 <a href="https://bookdown.org/yihui/bookdown"><img src="https://bookdown.org/yihui/bookdown/images/logo.png" alt="bookdown logo" align="right" /></a>
 

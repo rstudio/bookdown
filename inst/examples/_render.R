@@ -40,6 +40,6 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   writeLines(x, f)
 }
 
-if (length(formats) > 1) bookdown::publish_book()
+if (length(formats) > 1) bookdown::publish_book('bookdown', 'yihui', 'bookdown.org')
 
 setwd(owd)
