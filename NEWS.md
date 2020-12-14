@@ -18,6 +18,8 @@
 
 - `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
 
+- Added the same CSS as in default Pandoc's template used when a CSL is used (#1045).   
+
 # CHANGES IN bookdown VERSION 0.21
 
 ## NEW FEATURES
