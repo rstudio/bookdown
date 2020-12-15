@@ -55,7 +55,12 @@ if (length(formats) > 1) {
   }
   # we'll use by default the account associated with this server
   content_name = Sys.getenv("BOOK_NAME", "bookdown")
-  bookdown::publish_book(content_name, server = 'bookdown.org', render = "none")
+  rsconnect::deploySite(
+    siteName = content_name,
+    server = 'bookdown.org',
+    render = "none", logLevel = "verbose",
+    forceUpdate = TRUE)
+  # bookdown::publish_book(content_name, server = 'bookdown.org', render = "none")
 }
 
 setwd(owd)
