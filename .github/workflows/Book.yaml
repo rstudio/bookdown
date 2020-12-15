@@ -53,8 +53,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install XQuartz on macOS
-        run: brew cask install xquartz
+      - name: Install OS dependencies
+        run: brew cask install xquartz font-source-code-pro
 
       - name: Install phamtomJS for webshot
         run: |
