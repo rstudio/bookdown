@@ -71,6 +71,8 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("sessioninfo")
+          remotes::install_github('yihui/tinytex')
+          tinytex:::refresh_all()
         shell: Rscript {0}
 
       - name: Session info
@@ -107,7 +109,7 @@ jobs:
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
           BOOK_NAME: bookdown-test-deploy
-        run: Rscript --quiet _render.R "bookdown::gitbook" "bookdown::epub_book"
+        run: Rscript --quiet _render.R
         working-directory: inst/examples
 
       - name: Upload book folder for debug
