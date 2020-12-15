@@ -98,6 +98,15 @@ jobs:
 
       - name: Build and Deploy all book
         if: github.event_name == 'push'
-        run: make -C inst/examples all
+        run: |
+          tlmgr install sourcecodepro
+          make -C inst/examples all
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
+
+      - name: Upload book folder for debug
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: book-dir
+          path: inst/examples
