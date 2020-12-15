@@ -55,7 +55,7 @@ jobs:
 
       - name: Install OS dependencies
         run: |
-          brew update
+          brew update --quiet
           brew install --cask xquartz
           brew tap homebrew/cask-fonts
           brew install --cask font-source-code-pro
