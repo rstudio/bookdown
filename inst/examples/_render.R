@@ -50,6 +50,8 @@ if (length(formats) > 1) {
       account = "GHA", server = "bookdown.org",
       apiKey = Sys.getenv("CONNECT_API_KEY")
     )
+    # Always update content on CI
+    options(rsconnect.force.update.apps = TRUE)
   }
   # we'll use by default the account associated with this server
   content_name = Sys.getenv("BOOK_NAME", "bookdown")
