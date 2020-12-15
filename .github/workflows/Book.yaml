@@ -18,6 +18,7 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KNITR_OPTIONS: "knitr.chunk.tidy=TRUE"
 
     steps:
       - name: Checkout Repo
