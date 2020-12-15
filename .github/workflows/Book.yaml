@@ -92,19 +92,12 @@ jobs:
         if: github.event_name == 'pull_request'
         run: make -C inst/examples gitbook
 
-      # - name: Build and Deploy all book
-      #   if: github.event_name == 'push'
-      #   run: make -C inst/examples all
-      #   env:
-      #     CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-
-      - name: Build and Deploy (For now no pdf)
+      - name: Build and Deploy all book
         if: github.event_name == 'push'
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-          CONTENT_ID: 6122
-        run: Rscript --quiet _render.R
-        working-directory: inst/examples
+          CONTENT_ID: 3
+        run: make -C inst/examples all
 
       - name: Upload book folder for debug
         if: failure()
