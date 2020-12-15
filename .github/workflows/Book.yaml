@@ -57,8 +57,6 @@ jobs:
         run: |
           brew update --quiet
           brew install --cask xquartz
-          brew tap homebrew/cask-fonts
-          brew install --cask font-source-code-pro
 
       - name: Install phamtomJS for webshot
         run: |
@@ -71,8 +69,6 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("sessioninfo")
-          remotes::install_github('yihui/tinytex')
-          tinytex:::refresh_all()
         shell: Rscript {0}
 
       - name: Session info
