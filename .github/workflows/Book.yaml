@@ -98,9 +98,7 @@ jobs:
 
       - name: Build and Deploy all book
         if: github.event_name == 'push'
-        run: |
-          tlmgr install sourcecodepro
-          make -C inst/examples all
+        run: make -C inst/examples all
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
 
