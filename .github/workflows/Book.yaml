@@ -54,7 +54,9 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install OS dependencies
-        run: brew cask install xquartz font-source-code-pro
+        run: |
+          brew cask install xquartz
+          brew tap homebrew/cask-fonts && brew cask install font-source-code-pro
 
       - name: Install phamtomJS for webshot
         run: |
