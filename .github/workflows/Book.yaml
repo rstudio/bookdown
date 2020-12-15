@@ -102,7 +102,7 @@ jobs:
         if: github.event_name == 'push'
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-          BOOK_NAME: bookdown-test-deploy
+          CONTENT_ID: 6122
         run: Rscript --quiet _render.R
         working-directory: inst/examples
 

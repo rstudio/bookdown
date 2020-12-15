@@ -44,23 +44,21 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
 # then we publish everything to bookdown.org
 if (length(formats) > 1) {
   if (Sys.getenv("CI", FALSE)) {
-    # On CI connect to server and users using API KEY
-    rsconnect::addConnectServer("https://bookdown.org", "bookdown.org")
+    # On CI connect to server, using API KEY and deploy using appId
+    rsconnect::addConnectServer('https://bookdown.org', 'bookdown.org')
     rsconnect::connectApiUser(
-      account = "GHA", server = "bookdown.org",
-      apiKey = Sys.getenv("CONNECT_API_KEY")
+      account = 'GHA', server = 'bookdown.org',
+      apiKey = Sys.getenv('CONNECT_API_KEY')
     )
-    # Always update content on CI
-    options(rsconnect.force.update.apps = TRUE)
+    rsconnect::deploySite(
+      appId = Sys.getenv('CONTENT_ID'),
+      server = 'bookdown.org',
+      render = 'none', logLevel = 'verbose',
+      forceUpdate = TRUE)
+  } else {
+    # for local deployment when rsconnect/ is available
+    bookdown::publish_book('bookdown', server = 'bookdown.org', render = 'none')
   }
-  # we'll use by default the account associated with this server
-  content_name = Sys.getenv("BOOK_NAME", "bookdown")
-  rsconnect::deploySite(
-    siteName = content_name,
-    server = 'bookdown.org',
-    render = "none", logLevel = "verbose",
-    forceUpdate = TRUE)
-  # bookdown::publish_book(content_name, server = 'bookdown.org', render = "none")
 }
 
 setwd(owd)
