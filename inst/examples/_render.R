@@ -52,7 +52,8 @@ if (length(formats) > 1) {
     )
   }
   # we'll use by default the account associated with this server
-  bookdown::publish_book('bookdown', server = 'bookdown.org', render = "none")
+  content_name <- Sys.getenv("BOOK_NAME", "bookdown")
+  bookdown::publish_book(content_name, server = 'bookdown.org', render = "none")
 }
 
 setwd(owd)
