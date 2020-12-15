@@ -40,6 +40,19 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   writeLines(x, f)
 }
 
-if (length(formats) > 1) bookdown::publish_book('bookdown', 'yihui', 'bookdown.org')
+# When several format are rendered, usually when make all is called
+# then we publish everything to bookdown.org
+if (length(formats) > 1) {
+  if (Sys.getenv("CI", FALSE)) {
+    # On CI connect to server and users using API KEY
+    rsconnect::addConnectServer("https://bookdown.org", "bookdown.org")
+    rsconnect::connectApiUser(
+      account = "GHA", server = "bookdown.org",
+      apiKey = Sys.getenv("CONNECT_API_KEY")
+    )
+  }
+  # we'll use by default the account associated with this server
+  bookdown::publish_book('bookdown', server = 'bookdown.org', render = "none")
+}
 
 setwd(owd)
