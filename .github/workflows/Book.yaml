@@ -96,7 +96,7 @@ jobs:
         if: github.event_name == 'push'
         env:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-          CONTENT_ID: 3
+          CONTENT_ID: 6122
         run: make -C inst/examples all
 
       - name: Upload book folder for debug
