@@ -55,10 +55,10 @@ jobs:
 
       - name: Install OS dependencies
         run: |
-          brew update --quiet
-          brew install --cask xquartz
-          brew tap homebrew/cask-fonts
-          brew install --cask font-source-code-pro
+          sudo brew update --quiet
+          sudo brew install --cask xquartz
+          sudo brew tap homebrew/cask-fonts
+          sudo brew install --cask font-source-code-pro
 
       - name: Install phamtomJS for webshot
         run: |
