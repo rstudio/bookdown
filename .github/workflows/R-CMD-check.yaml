@@ -5,10 +5,14 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'inst/examples/**'
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'inst/examples/**'
 
 name: R-CMD-check
 
