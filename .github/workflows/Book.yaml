@@ -5,10 +5,24 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'inst/examples/**'
+      - 'inst/resources/**'
+      - 'inst/rmarkdown/**'
+      - 'inst/templates/**'
+      - 'R/**'
+      - '.github/workflows/Book.yaml'
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - 'inst/examples/**'
+      - 'inst/resources/**'
+      - 'inst/rmarkdown/**'
+      - 'inst/templates/**'
+      - 'R/**'
+      - '.github/workflows/Book.yaml'
 
 name: Build and deploy book
 
