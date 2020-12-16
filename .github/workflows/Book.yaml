@@ -54,7 +54,9 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install OS dependencies
-        run: brew install --cask xquartz
+        run: |
+          brew install --cask xquartz
+          brew install --cask calibre
 
       - name: Install phamtomJS for webshot
         run: |
