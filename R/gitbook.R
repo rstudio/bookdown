@@ -3,7 +3,7 @@
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown.
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
+#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
@@ -21,7 +21,7 @@
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
+  anchor_sections = TRUE, lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
@@ -36,7 +36,8 @@ gitbook = function(
   }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
-    self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
+    self_contained = self_contained, anchor_sections = anchor_sections,
+    lib_dir = lib_dir, theme = NULL,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   split_by = match.arg(split_by)

@@ -8,6 +8,7 @@ gitbook(
   fig_caption = TRUE,
   number_sections = TRUE,
   self_contained = FALSE,
+  anchor_sections = TRUE,
   lib_dir = "libs",
   pandoc_args = NULL,
   ...,
@@ -19,7 +20,7 @@ gitbook(
 )
 }
 \arguments{
-\item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args}{...
+\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
 

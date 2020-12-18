@@ -18,6 +18,12 @@
 
 - `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
 
+- Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
+
+## MINOR CHANGES
+
+- `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
+
 # CHANGES IN bookdown VERSION 0.21
 
 ## NEW FEATURES

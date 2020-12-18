@@ -10,11 +10,6 @@
   <meta name="author" content="$author-meta$" />
   $endfor$
 
-  <!-- CSS -->
-  $for(css)$
-  <link rel="stylesheet" href="$css$" />
-  $endfor$
-
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script>
@@ -24,6 +19,12 @@
   $endfor$
   <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script>
+
+  <!-- CSS -->
+  $for(css)$
+  <link rel="stylesheet" href="$css$" />
+  $endfor$
+  
 </head>
 
 <body data-spy="scroll" data-target="#toc">
@@ -55,7 +56,7 @@
         <div id="book-toc"></div>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="#">View book source</a></li></p>
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
         </div>
       </nav>
     </div>
@@ -81,8 +82,8 @@ $endfor$
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          <li><a id="book-source" href="#">View source</a></li>
-          <li><a id="book-edit" href="#">Edit this page</a></li>
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
       </div>
     </nav>

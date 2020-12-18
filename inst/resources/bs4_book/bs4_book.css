@@ -97,7 +97,9 @@ main {margin-top: 1rem;}
 }
 .chapter-nav .prev, .chapter-nav .next {
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #eee;
+  border-radius: 0.2rem;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
 }
 .chapter-nav .empty {
   border: none;
@@ -153,6 +155,10 @@ main {margin-top: 1rem;}
   font-size: 0.9rem;
 }
 
+.book-extra i {
+  font-size: 1.2em;
+}
+
 /* Sticky footer ----------------------------------------- */
 html, body {height: 100%}
 
@@ -165,6 +171,8 @@ body {
 }
 footer {
   flex-shrink: 0;
+  font-size: 0.9rem;
+
 }
 footer a {
   text-decoration: underline;
@@ -213,6 +221,7 @@ nav[data-toggle="toc"] .nav .nav > li > a {
 }
 
 .inline-figure {
+  border: solid 2px #f1f1f1;
   margin-bottom: 1rem; /* to match <p> */
 }
 
@@ -247,6 +256,8 @@ h2 {
   font-size: 1.5rem;
 }
 h3 { margin-top: 1.5em; font-size: 1.2rem; }
+h4 { margin-top: 1.5em; font-size: 1.1rem; }
+h5 { margin-top: 1.5em; font-size: 1rem; }
 
 h1, h2, h3, h4, h5 {
   line-height: 1.3;
@@ -346,9 +357,6 @@ mark {
 pre {
   position: relative;
   overflow: auto;
-  word-wrap: normal;
-  word-break: normal;
-  white-space: pre;
   border: 1px solid #eee;
   padding: 0.5rem;
   margin: 0 -0.5rem 1rem -0.5rem;
@@ -370,6 +378,8 @@ code {
 
 pre code {
   background-color: transparent;
+  word-break: normal; /* force wide blocks to scroll, not wrap */
+  word-wrap: normal;
 }
 
 pre, code {
@@ -449,6 +459,10 @@ body {
   margin: 1rem calc(-2px - 0.5em);
   padding: 1rem;
   border: 2px solid #eee;
+}
+
+.rmdnote > *:last-child, .rmdcaution > *:last-child, .rmdimportant > *:last-child, .rmdtip > *:last-child, .rmdwarning > *:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 767.98px) {

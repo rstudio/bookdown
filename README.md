@@ -1,7 +1,12 @@
 # bookdown <img src='man/figures/logo.png' align="right" height="139" />
 
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/rstudio/bookdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/bookdown/actions)
 [![Build Status](https://travis-ci.com/rstudio/bookdown.svg?branch=master)](https://travis-ci.com/rstudio/bookdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/bookdown)](https://cran.r-project.org/package=bookdown)
+<!-- badges: end -->
+
 
 A open-source (GPL-3) R package to facilitate writing books and long-form articles/reports with R Markdown. Features include:
 
