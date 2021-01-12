@@ -85,7 +85,7 @@ render_book = function(
       xfun::Rscript_call(render_book, list(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
         new_session = new_session, preview = preview, config_file = config_file
-      ), fail = "bookdown::render_book() failed to render the output format '", fmt, "'.")
+      ), fail = c("bookdown::render_book() failed to render the output format '", fmt, "'."))
     )))
     format = target_format(output_format)
   }
