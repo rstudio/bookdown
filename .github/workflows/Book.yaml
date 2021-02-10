@@ -81,20 +81,19 @@ jobs:
       - name: Install R dependencies for bookdown
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-          remotes::install_cran("sessioninfo")
+        shell: Rscript {0}
+
+      - name: Install bookdown package
+        run: xfun::install_dir(".")
         shell: Rscript {0}
 
       - name: Session info
         run: |
           options(width = 100)
+          remotes::install_cran("sessioninfo")
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
-        shell: Rscript {0}
-
-      - name: Install bookdown package
-        run: xfun::install_dir(".")
         shell: Rscript {0}
 
       - name: Cache bookdown results
