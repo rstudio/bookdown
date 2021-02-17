@@ -187,10 +187,10 @@ render_cur_session = function(files, main, config, output_format, clean, envir, 
 render_new_session = function(files, main, config, output_format, clean, envir, ...) {
 
   # save a copy of render arguments in a temp file
-  render_args = tempfile('render', '.', '.rds')
+  render_args = tempfile('render', fileext = '.rds')
   on.exit(file.remove(render_args), add = TRUE)
   saveRDS(
-    list(output_format = output_format, ..., clean = FALSE, envir = envir),
+    list(output_format = output_format, ..., clean = clean, envir = envir),
     render_args
   )
   # an RDS file to save all the metadata after compiling each Rmd
@@ -207,6 +207,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   add2 = merge_chapter_script(config, 'after')
   on.exit(unlink(c(add1, add2)), add = TRUE)
   # compile chapters in separate R sessions
+  on.exit(unlink(with_ext(files, '.md')), add = TRUE)
   for (f in files[rerun]) Rscript_render(f, render_args, render_meta, add1, add2)
 
   if (!all(dirname(files_md) == '.'))

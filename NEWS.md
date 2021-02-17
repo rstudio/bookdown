@@ -20,6 +20,8 @@
 
 - Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
 
+- `render_book()` now correctly cleans up intermediate files if a built is interrupted part way through (#986).
+
 ## MINOR CHANGES
 
 - `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
