@@ -15,7 +15,7 @@ navbar:
   - text: Get started
     href: articles/bookdown.html
   - text: Examples
-    href: articles/examples.html
+    href: articles/articles/examples.html
   - text: Reference
     href: reference/index.html
   right:

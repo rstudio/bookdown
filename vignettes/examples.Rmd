@@ -1,5 +1,0 @@
----
-title: "Example books"
----
-
-See a list of featured books built with bookdown here: <https://bookdown.org/>
