@@ -1,57 +1,68 @@
 on:
   push:
     branches: pkgdown-quillt
+  workflow_run:
+    workflows: ["R-CMD-check"]
+    branches: [main,master]
+    types: completed
 
 name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-18.04
     env:
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
+        id: install-r
 
-      - uses: r-lib/actions/setup-pandoc@master
+      - uses: r-lib/actions/setup-pandoc@v1
 
-      - name: Query dependencies
+      - name: Install pak and query dependencies
         run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
         shell: Rscript {0}
 
       - name: Cache R packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
+          restore-keys: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
 
-      - name: Install dependencies
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
         run: |
-          install.packages("remotes")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_github("r-lib/pkgdown")
-          remotes::install_github("apreshill/quillt")
+          pak::local_system_requirements(execute = TRUE)
+          pak::pkg_system_requirements("pkgdown", execute = TRUE)
+        shell: Rscript {0}
+
+      - name: Install package and dependencies
+        run: |
+          pak::local_install_dev_deps(upgrade = TRUE)
+          pak::pkg_install("r-lib/pkgdown")
+          pak::pkg_install("apreshill/quillt")
         shell: Rscript {0}
 
       - name: Install package
         run: R CMD INSTALL .
 
       - name: Build pkgdown site
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          Rscript -e 'pkgdown::build_site(new_process = FALSE)'
+        run: pkgdown::build_site(new_process = FALSE)
+        shell: Rscript {0}
 
       - name: Deploy to Netlify
+        # only deploy on the fork for now
+        if: github.repository_owner == 'apreshill'
         # NETLIFY_AUTH_TOKEN added in the repo's secrets
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          npm install netlify-cli -g
-          netlify deploy --prod --dir reference
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir reference
