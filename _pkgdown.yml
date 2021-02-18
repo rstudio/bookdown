@@ -1,5 +1,7 @@
 destination: reference
 
+url: https://pkgs.rstudio.com/bookdown/
+
 template:
   package: quillt
 
