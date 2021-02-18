@@ -52,6 +52,46 @@ navbar:
         - text: "Version 1.0"
           href: https://blog.rstudio.com/2021/01/18/blogdown-v1.0/
 
+reference:
+- title: Output formats books
+  desc: >
+    These output formats function are for building books content with `render_book()`
+  contents:
+  - gitbook
+  - pdf_book
+  - epub_book
+  - bs4_book
+  - tufte_html_book
+  - html_book
+
+- title: Output formats for using bookdown features in single document format
+  desc: >
+    These output formats allow to use other R Markdown output formats targetting
+    single document (like `rmarkdown::html_document()`) with **bookdown** special
+    features like cross references . There are to be used with `rmarkdown::render()`
+  contents:
+  - ends_with("2")
+
+- title: Previewing and Rendering
+  contents:
+  - render_book
+  - serve_book
+  - preview_chapter
+
+- title: Publish book
+  desc: >
+    This function is to help publish books on <https://bookdown.org> or elsewhere
+  contents:
+  - publish_book
+
+- title: Helper functions
+  desc: These functions are utility functions when working with **bookdown**.
+  contents:
+  - clean_book
+  - bookdown_site
+  - fence_theorems
+  - calibre
+
 authors:
   "Yihui Xie":
     href: https://yihui.org
