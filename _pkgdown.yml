@@ -4,6 +4,13 @@ url: https://pkgs.rstudio.com/bookdown/
 
 template:
   package: quillt
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "R Markdown package"
+    twitter:
+      creator: "@rstudio"
+      card: summary
 
 development:
   mode: auto
