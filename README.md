@@ -3,8 +3,8 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rstudio/bookdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/bookdown/actions)
-[![Build Status](https://travis-ci.com/rstudio/bookdown.svg?branch=master)](https://travis-ci.com/rstudio/bookdown)
-[![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/bookdown)](https://cran.r-project.org/package=bookdown)
+[![CRAN release](https://www.r-pkg.org/badges/version/bookdown)](https://CRAN.R-project.org/package=bookdown)
+[![Codecov test coverage](https://codecov.io/gh/rstudio/bookdown/branch/master/graph/badge.svg)](https://codecov.io/gh/rstudio/bookdown?branch=master)
 <!-- badges: end -->
 
 
