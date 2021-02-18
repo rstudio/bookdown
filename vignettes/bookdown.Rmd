@@ -1,5 +1,61 @@
 ---
-title: "Get started"
+title: "Learn bookdown"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Learn bookdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-Learn more about how to start using bookdown at <https://bookdown.org/yihui/bookdown/>.
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Overview
+
+<a href="https://bookdown.org/yihui/rmarkdown/books.html"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" width="250" style="padding: 0 15px; float: right;"/></a>
+
+If you are new to **bookdown**, we encourage you to start at <https://bookdown.org> which offers a Getting starting section and an overview of book examples made with **bookdown**. 
+
+The specific chapter on _Books_ in [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/books.html) is also a great place to start before going through the [User Guide](#user-guide). This books will also give you a lot of information about R Markdown and its features.
+
+
+# User Guide
+
+<a href="https://bookdown.org/yihui/bookdown/"><img src="https://bookdown.org/yihui/bookdown/images/cover.jpg" alt="bookdown: Authoring Books and Technical Documents with R Markdown" width="250" style="padding: 0 15px; float: right;"/></a>
+
+Written by Yihui Xie, the package author, [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/) provides a short book introducing the R package, bookdown, to change your workflow of writing books. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+
+The book is structured into several chapters to guide the reader into the use of the R package **bookdown** to write books: 
+
+```{r, results='asis', echo = FALSE, eval = FALSE}
+# run this to update the content below
+xfun::pkg_attach2("xml2")
+html <- read_html("https://bookdown.org/yihui/bookdown/")
+chapters <- xml_find_all(html, "//li[@class='chapter']")
+first_level <- chapters[which(purrr::map_lgl(xml_attr(chapters, 'data-level'), ~ grepl('^\\d+$', .x)))]
+titles <- xml_text(xml_find_all(first_level, "a"))
+titles <- gsub("^(\\d+)", "\\1.", titles)
+titles <- gsub("^(.*) \\([*])$", "\\1", titles)
+url <- file.path("https://bookdown.org/yihui/bookdown", xml_attr(first_level, "data-path"))
+formatted <- sprintf("* [%s](%s)", titles, url)
+cat(formatted, sep = "\n")
+```
+
+* [1. Introduction](https://bookdown.org/yihui/bookdown/introduction.html) introduces the package and gives the main information to get starting.
+* [2. Components](https://bookdown.org/yihui/bookdown/components.html) gives detailed information of the elements than can be used in a book from Markdown syntax, to custom blocks, presenting also special features brought by **bookdown** to the R markdown format as Theorem and Proof environments or numbered references.
+* [3. Output Formats](https://bookdown.org/yihui/bookdown/output-formats.html) is the document of the special formats to produce HTML, PDF or EPUB books. 
+* [4. Customization](https://bookdown.org/yihui/bookdown/customization.html) is the documentation of all the configuration option available for customization.
+* [5. Editing](https://bookdown.org/yihui/bookdown/editing.html) explains how to edit, build, preview, and serve the book locally.
+* [6. Publishing](https://bookdown.org/yihui/bookdown/publishing.html) gives information on how to publish early online for feedbacks, or formally publish as either printed copies or e-books.
+
+# Going further wih examples
+
+<https://bookdown.org> is the main place to find examples of books created with **bookdown**
+
+* The [Home](https://bookdown.org/home/) section showcases some featured book available online from which you should be able to look at the source
+* The [Books](https://bookdown.org/home/archive/) section will list all the book published in _bookdown.org_ hosting service.
+* The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [first bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/) launched in 2018.
