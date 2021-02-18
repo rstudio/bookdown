@@ -15,19 +15,43 @@ template:
 development:
   version_tooltip: "Development version"
 
+home:
+  strip_header: false
+  links:
+  - text: Learn more
+    href: https://bookdown.org/
+
 navbar:
   title: ~
   type: default
-  left:
-  - text: Get started
-    href: articles/bookdown.html
-  - text: Examples
-    href: articles/articles/examples.html
-  - text: Reference
-    href: reference/index.html
-  right:
-  - text: News
-    href: news/index.html
-  - icon: fab fa-github fa-lg
-    href: https://github.com/rstudio/bookdown
+  structure:
+    left:  [intro, examples, articles]
+    right: [reference, news, github]
+  components:
+    home: ~
+    examples:
+      text: Examples
+      href: articles/articles/examples.html
+    articles:
+      text: Articles
+      menu:
+        - text: "No vignettes"
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/rstudio/bookdown
+    news:
+      text: News
+      menu:
+        - text: "Changelog"
+          href: news/index.html
+        - text: "------------------"
+        - text: "Blog posts"
+        - text: "Version 1.0"
+          href: https://blog.rstudio.com/2021/01/18/blogdown-v1.0/
 
+authors:
+  "Yihui Xie":
+    href: https://yihui.org
