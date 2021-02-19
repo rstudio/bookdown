@@ -53,9 +53,10 @@ navbar:
           href: https://blog.rstudio.com/2020/12/21/rmd-news/
 
 reference:
-- title: Output formats books
+- title: Book output formats
   desc: >
-    These output formats function are for building books content with `render_book()`
+    These output formats are for building books from single or
+    multiple `.Rmd` documents. They are built with `render_book()`.
   contents:
   - gitbook
   - pdf_book
@@ -64,23 +65,23 @@ reference:
   - tufte_html_book
   - html_book
 
-- title: Output formats for using bookdown features in single document format
+- title: Single document output formats
   desc: >
-    These output formats allow to use other R Markdown output formats targetting
-    single document (like `rmarkdown::html_document()`) with **bookdown** special
-    features like cross references . There are to be used with `rmarkdown::render()`
+    These output formats enable **bookdown's** special
+    features like cross references in single `.Rmd` documents
+    instead of books. There are built with `rmarkdown::render()`.
   contents:
   - ends_with("2")
 
-- title: Previewing and Rendering
+- title: Previewing and rendering books
   contents:
   - render_book
   - serve_book
   - preview_chapter
 
-- title: Publish book
+- title: Publishing books
   desc: >
-    This function is to help publish books on <https://bookdown.org> or elsewhere
+    Publish books on <https://bookdown.org> or elsewhere.
   contents:
   - publish_book
 
