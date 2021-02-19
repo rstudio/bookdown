@@ -49,14 +49,12 @@ This will create a new directory with an example book as template. You can build
 
 You can also run `bookdown::render_book()` in the R console.
 
-See more in the "Get Started" section of <https://bookdown.org/home/about/> to know how to get started with writing a book, including without RStudio IDE.
-
-See also <https://bookdown.org> for more information and featured books as examples.
+Learn more about using bookdown in the [Getting started section](https://pkgs.rstudio.com/bookdown/articles/bookdown.html).
 
 ## Getting help
 
 There are two main places to get help:
 
-1. The [RStudio community](https://community.rstudio.com/c/R-Markdown/10) is a friendly place to ask any questions about **rmarkdown** and the R Markdown family of packages. You can use the tag _bookdown_ with your question
+1. The [RStudio community](https://community.rstudio.com/tags/c/R-Markdown/10/bookdown) is a friendly place to ask any questions about **bookdown**. Be sure to use the `bookdown` tag.
 
-1. [Stack Overflow](https://stackoverflow.com/questions/tagged/r-markdown) is a great source of answers to common **rmarkdown** questions. It is also a great place to get help, on specific package from the R Markdown family. You can use the tags [`[r][bookdown]`](https://stackoverflow.com/questions/tagged/bookdown+r)
+1. [Stack Overflow](https://stackoverflow.com/questions/tagged/bookdown) is a great source of answers to common **bookdown** questions. Use the tags [`[r][bookdown]`](https://stackoverflow.com/questions/tagged/bookdown+r) if you ask a question.
