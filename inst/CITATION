@@ -9,7 +9,7 @@ citEntry(
   author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
   year = year,
   note = vers,
-  url = strsplit(meta$URL, ',')[[1]][1],,
+  url = strsplit(meta$URL, ',')[[1]][1],
   textVersion = paste('Yihui Xie (', year, '). bookdown: ', meta$Title, '. ', vers, '.', sep = '')
 )
 
