@@ -18,16 +18,17 @@ knitr::opts_chunk$set(
 
 <a href="https://bookdown.org/yihui/rmarkdown/books.html"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" width="250" style="padding: 0 15px; float: right;"/></a>
 
-If you are new to **bookdown**, we encourage you to start at <https://bookdown.org> which offers a Getting starting section and an overview of book examples made with **bookdown**. 
+If you are new to **R Markdown**, we recommend you start with [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/books.html) to get an overview. [Part I](https://bookdown.org/yihui/rmarkdown/installation.html) introduces how to install the relevant packages, and provides an overview of R Markdown, including the possible output formats, the Markdown syntax, the R code chunk syntax, and how to use other languages in R Markdown.
 
-The specific chapter on _Books_ in [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/books.html) is also a great place to start before going through the [User Guide](#user-guide). This books will also give you a lot of information about R Markdown and its features.
+Next, the chapter on [_Books_](https://bookdown.org/yihui/rmarkdown/books.html) will help orient you to how the **bookdown** package allows you to use R Markdown to author books, using single or multiple `.Rmd` files to build your content.
 
 
 # User Guide
 
 <a href="https://bookdown.org/yihui/bookdown/"><img src="https://bookdown.org/yihui/bookdown/images/cover.jpg" alt="bookdown: Authoring Books and Technical Documents with R Markdown" width="250" style="padding: 0 15px; float: right;"/></a>
 
-Written by Yihui Xie, the package author, [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/) provides a short book introducing the R package, bookdown, to change your workflow of writing books. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+
+Written by Yihui Xie, the package author, [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/) introduces the R package and how to use it. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
 The book is structured into several chapters to guide the reader into the use of the R package **bookdown** to write books: 
 
@@ -45,17 +46,17 @@ formatted <- sprintf("* [%s](%s)", titles, url)
 cat(formatted, sep = "\n")
 ```
 
-* [1. Introduction](https://bookdown.org/yihui/bookdown/introduction.html) introduces the package and gives the main information to get starting.
-* [2. Components](https://bookdown.org/yihui/bookdown/components.html) gives detailed information of the elements than can be used in a book from Markdown syntax, to custom blocks, presenting also special features brought by **bookdown** to the R markdown format as Theorem and Proof environments or numbered references.
-* [3. Output Formats](https://bookdown.org/yihui/bookdown/output-formats.html) is the document of the special formats to produce HTML, PDF or EPUB books. 
-* [4. Customization](https://bookdown.org/yihui/bookdown/customization.html) is the documentation of all the configuration option available for customization.
+* [1. Introduction](https://bookdown.org/yihui/bookdown/introduction.html) introduces the package and how to get started using it.
+* [2. Components](https://bookdown.org/yihui/bookdown/components.html) introduces elements than can be used while writing a book like Markdown syntax, custom blocks, Theorem and Proof environments, and numbered references.
+* [3. Output Formats](https://bookdown.org/yihui/bookdown/output-formats.html) documents the formats to produce HTML, PDF, and EPUB books. 
+* [4. Customization](https://bookdown.org/yihui/bookdown/customization.html) documents the configuration options available for authors.
 * [5. Editing](https://bookdown.org/yihui/bookdown/editing.html) explains how to edit, build, preview, and serve the book locally.
-* [6. Publishing](https://bookdown.org/yihui/bookdown/publishing.html) gives information on how to publish early online for feedbacks, or formally publish as either printed copies or e-books.
+* [6. Publishing](https://bookdown.org/yihui/bookdown/publishing.html) explains how to publish your book early online for feedback, and how to formally publish as either printed copies or e-books.
 
-# Going further wih examples
+# Going further with examples
 
-<https://bookdown.org> is the main place to find examples of books created with **bookdown**
+<https://bookdown.org> is the place to find examples of books created with **bookdown**.
 
-* The [Home](https://bookdown.org/home/) section showcases some featured book available online from which you should be able to look at the source
-* The [Books](https://bookdown.org/home/archive/) section will list all the book published in _bookdown.org_ hosting service.
-* The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [first bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/) launched in 2018.
+* The [Home](https://bookdown.org/home/) section showcases featured books available online, with links to each book's source code.
+* The [Books](https://bookdown.org/home/archive/) section lists books published using the [_bookdown.org_ hosting service](https://bookdown.org/yihui/bookdown/rstudio-connect.html), provided by [RStudio Connect](https://rstudio.com/products/connect/).
+* The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [2018 bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/).
