@@ -35,7 +35,8 @@ navbar:
     articles:
       text: Articles
       menu:
-        - text: "No vignettes"
+        - text: "About bookdown.org"
+          href: articles/articles/publish.html
     reference:
       text: Reference
       href: reference/index.html

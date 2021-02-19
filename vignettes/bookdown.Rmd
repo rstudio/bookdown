@@ -58,5 +58,7 @@ cat(formatted, sep = "\n")
 <https://bookdown.org> is the place to find examples of books created with **bookdown**.
 
 * The [Home](https://bookdown.org/home/) section showcases featured books available online, with links to each book's source code.
-* The [Books](https://bookdown.org/home/archive/) section lists books published using the [_bookdown.org_ hosting service](https://bookdown.org/yihui/bookdown/rstudio-connect.html), provided by [RStudio Connect](https://rstudio.com/products/connect/).
+* The [Books](https://bookdown.org/home/archive/) section lists books written using **bookdown**.
 * The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [2018 bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/).
+
+See more about how to publish a book or get your book listed on the [About bookdown.org](articles/articles/publish.Rmd) 

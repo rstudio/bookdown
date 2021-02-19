@@ -1,0 +1,13 @@
+---
+title: "About bookdown.org"
+---
+
+The website <https://bookdown.org> is a service provided by RStudio, PBC to host books. It is free for you to publish the static output files of your book, and you hold the full copyright of your own books. 
+
+This service offers: 
+
+* Easy publishing of an HTML version of your book, with the help of the function `bookdown::publish_book()`.
+
+* Listing of books written using **bookdown**. Every book published into this hosting service will be listed on the [_Books_ page](https://bookdown.org/home/archive/) of the website with a description, a cover image and a link to the source repository. A book published online on another hosting service can also be listed on <https://bookdown.org>. 
+
+See more about how to publish a book and get a book listed with the right information on <https://bookdown.org/home/about/>.
