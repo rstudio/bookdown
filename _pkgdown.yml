@@ -7,7 +7,7 @@ template:
   opengraph:
     image:
       src: man/figures/logo.png
-      alt: "R Markdown package"
+      alt: "bookdown package"
     twitter:
       creator: "@rstudio"
       card: summary
