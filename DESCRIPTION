@@ -80,7 +80,7 @@ Suggests:
     tufte,
     xml2,
     webshot
-URL: https://github.com/rstudio/bookdown
+URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
