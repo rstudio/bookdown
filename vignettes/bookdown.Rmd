@@ -62,3 +62,5 @@ cat(formatted, sep = "\n")
 * The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [2018 bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/).
 
 See more about how to publish a book or get your book listed on the [About bookdown.org](articles/articles/publish.Rmd) 
+
+Look also at the [Examples](articles/articles/examples.Rmd) page.
