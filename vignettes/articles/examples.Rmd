@@ -24,7 +24,18 @@ books_info <- books_node %>%
 yaml::write_yaml(books_info, "examples.yml")
 ```
 
+```{r, include=FALSE, eval=FALSE}
+books_info <- yaml::read_yaml("examples.yml") %>%
+  purrr::map(~{
+    .x$showcase <- TRUE
+    if (grepl("yihui|adv-r|rstudio|r4ds|r-pkgs", .x$href)) .x$showcase <- FALSE
+    .x
+  })
+
+yaml::write_yaml(books_info, "examples.yml")
+```
+
 ```{r, echo = FALSE}
-quillt::examples("examples.yml")
+quillt::examples("examples.yml", showcaseOnly = TRUE)
 ```
 

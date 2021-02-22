@@ -9,7 +9,7 @@
 - title: 'bookdown: Authoring Books and Technical Documents with R Markdown'
   img: https://bookdown.org/yihui/bookdown//images/cover.jpg
   href: https://bookdown.org/yihui/bookdown/
-  showcase: yes
+  showcase: no
 - title: Beyond Multiple Linear Regression
   img: https://bookdown.org/roback/bookdown-BeyondMLR/data/book_cover.jpg
   href: https://bookdown.org/roback/bookdown-BeyondMLR/
@@ -21,7 +21,7 @@
 - title: 'blogdown: Creating Websites with R Markdown'
   img: https://bookdown.org/yihui/blogdown//images/cover.png
   href: https://bookdown.org/yihui/blogdown/
-  showcase: yes
+  showcase: no
 - title: Data Science at the Command Line, 1e
   img: https://www.datascienceatthecommandline.com/1e/images/cover.png
   href: https://www.datascienceatthecommandline.com/1e/
@@ -29,7 +29,7 @@
 - title: 'R Markdown: The Definitive Guide'
   img: https://bookdown.org/yihui/rmarkdown//images/cover.png
   href: https://bookdown.org/yihui/rmarkdown/
-  showcase: yes
+  showcase: no
 - title: Engineering Production-Grade Shiny Apps
   img: https://raw.githubusercontent.com/ThinkR-open/engineering-shiny-book/master/img/engineering-shiny.jpg
   href: https://engineering-shiny.org/
@@ -37,7 +37,7 @@
 - title: R Markdown Cookbook
   img: https://bookdown.org/yihui/rmarkdown-cookbook//images/cover.png
   href: https://bookdown.org/yihui/rmarkdown-cookbook/
-  showcase: yes
+  showcase: no
 - title: Efficient R programming
   img: https://csgillespie.github.io/efficientR/figures/f0_web.png
   href: https://csgillespie.github.io/efficientR/
@@ -57,7 +57,7 @@
 - title: Advanced R
   img: https://adv-r.hadley.nz/cover.png
   href: https://adv-r.hadley.nz/
-  showcase: yes
+  showcase: no
 - title: Data Science Live Book
   img: https://livebook.datascienceheroes.com/introduction/data_science_live_book_cover.png
   href: https://livebook.datascienceheroes.com/
@@ -77,12 +77,12 @@
 - title: Hands-On Programming with R
   img: https://rstudio-education.github.io/hopr/cover.png
   href: https://rstudio-education.github.io/hopr/
-  showcase: yes
+  showcase: no
 - title: R for Data Science
   img: https://r4ds.had.co.nz/cover.png
   href: https://r4ds.had.co.nz/
-  showcase: yes
+  showcase: no
 - title: R Packages
   img: https://r-pkgs.org/images/cover.png
   href: https://r-pkgs.org/
-  showcase: yes
+  showcase: no
