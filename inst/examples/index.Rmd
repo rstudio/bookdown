@@ -31,9 +31,16 @@ local({
   options(repos = r)
 })
 
-lapply(c('DT', 'citr', 'formatR', 'svglite', 'rticles'), function(pkg) {
+lapply(c('DT', 'formatR', 'svglite', 'rticles'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
+
+# install from github
+githubs <- c('citr' = 'crsh/citr')
+lapply(names(githubs), function(pkg) {
+  if (system.file(package = pkg) == '') remotes::install_github(githubs[pkg], upgrade = FALSE)
+})
+
 ```
 
 # Preface {-}
