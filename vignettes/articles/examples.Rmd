@@ -2,7 +2,11 @@
 title: "Example books"
 ---
 
-See a full list of featured books built with bookdown here: <https://bookdown.org/>
+The [bookdown contest](https://bookdown.org/home/contest/) is a great place to find a wide range of example books made with **bookdown**. 
+
+See a full list of books built with bookdown here: <https://bookdown.org/>
+
+See below some featured books: 
 
 ```{r, include = FALSE, eval=FALSE}
 # rerun to change the example yml file
