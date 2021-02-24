@@ -32,9 +32,14 @@ yaml::write_yaml(books_info, "examples.yml")
 ```
 
 ```{r, include=FALSE, eval=FALSE}
+# remove some books from showcase
 books_info <- yaml::read_yaml("examples.yml") %>%
   purrr::map(~{
-    if (grepl("yihui|adv-r|rstudio|r4ds|r-pkgs", .x$href)) .x$showcase <- FALSE
+    # some of our books
+    no_show <- grepl("yihui|adv-r|rstudio|r4ds|r-pkgs", .x$href)
+    # books with no source code repo
+    no_source <- is.null(.x$source)
+    if (no_show || no_source) .x$showcase <- FALSE
     .x
   })
 

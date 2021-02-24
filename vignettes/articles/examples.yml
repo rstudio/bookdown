@@ -21,7 +21,7 @@
 - title: Introduction to Data Science
   img: https://images.routledge.com/common/jackets/amazon/978036735/9780367357986.jpg
   href: https://rafalab.github.io/dsbook/
-  showcase: yes
+  showcase: no
 - title: 'blogdown: Creating Websites with R Markdown'
   img: https://bookdown.org/yihui/blogdown//images/cover.png
   href: https://bookdown.org/yihui/blogdown/
@@ -80,11 +80,11 @@
 - title: Data Visualization
   img: https://socviz.co/assets/dv-cover-executive-b.jpg
   href: https://socviz.co/
-  showcase: yes
+  showcase: no
 - title: 'Forecasting: Principles and Practice'
   img: https://Otexts.com/fpp2/fpp2_cover.jpg
   href: https://otexts.com/fpp2/
-  showcase: yes
+  showcase: no
 - title: Fundamentals of Data Visualization
   img: https://clauswilke.com/dataviz/cover.png
   href: https://clauswilke.com/dataviz/
