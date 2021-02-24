@@ -52,6 +52,8 @@ navbar:
         - text: "Blog posts"
         - text: "Version 0.21"
           href: https://blog.rstudio.com/2020/12/21/rmd-news/
+        - text: "Version 0.3"
+          href: https://blog.rstudio.com/2016/12/02/announcing-bookdown/
 
 reference:
 - title: Book output formats
