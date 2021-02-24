@@ -18,12 +18,15 @@ books_node <- html %>%
 
 books_info <- books_node %>%
   purrr::map(~{
-    list(
+    res <- list(
       title = html_node(.x, "h1 > a") %>% html_text(),
       img = html_node(.x, ".thumbnail > a > img") %>% html_attr("src"),
       href = html_node(.x, "h1 > a") %>% html_attr("href"),
+      source = html_node(.x, "a.github-button") %>% html_attr("href"),
       showcase = TRUE
     )
+    res[is.na(res)] <- NULL
+    res
   })
 yaml::write_yaml(books_info, "examples.yml")
 ```
@@ -31,7 +34,6 @@ yaml::write_yaml(books_info, "examples.yml")
 ```{r, include=FALSE, eval=FALSE}
 books_info <- yaml::read_yaml("examples.yml") %>%
   purrr::map(~{
-    .x$showcase <- TRUE
     if (grepl("yihui|adv-r|rstudio|r4ds|r-pkgs", .x$href)) .x$showcase <- FALSE
     .x
   })
