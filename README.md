@@ -58,3 +58,7 @@ There are two main places to get help:
 1. The [RStudio community](https://community.rstudio.com/tags/c/R-Markdown/10/bookdown) is a friendly place to ask any questions about **bookdown**. Be sure to use the `bookdown` tag.
 
 1. [Stack Overflow](https://stackoverflow.com/questions/tagged/bookdown) is a great source of answers to common **bookdown** questions. Use the tags [`[r][bookdown]`](https://stackoverflow.com/questions/tagged/bookdown+r) if you ask a question.
+
+## Code of Conduct
+
+Please note that the bookdown project is released with a [Contributor Code of Conduct](https://pkgs.rstudio.com/bookdown/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
