@@ -80,13 +80,14 @@ Suggests:
     tufte,
     xml2,
     webshot
-URL: https://github.com/rstudio/bookdown
+URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
-Remotes: 
-    rstudio/bslib, 
-    rstudio/rmarkdown,
-    r-lib/downlit
 SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+VignetteBuilder: knitr
+Remotes: 
+    rstudio/bslib, 
+    rstudio/rmarkdown,
+    r-lib/downlit
