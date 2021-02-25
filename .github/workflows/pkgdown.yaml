@@ -1,15 +1,18 @@
 on:
   push:
-    branches: pkgdown-quillt
-  workflow_run:
-    workflows: ["R-CMD-check"]
-    branches: [main,master]
-    types: completed
+    branches:
+     - main
+     - master
+  pull_request:
+    branches:
+     - main
+     - master
 
 name: pkgdown
 
 jobs:
   pkgdown:
+    if: ${{ github.event_name == 'push' || startsWith(github.head_ref, 'pkgdown-') }}
     runs-on: ubuntu-18.04
     env:
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
@@ -57,12 +60,18 @@ jobs:
         shell: Rscript {0}
 
       - name: Deploy to Netlify
-        # only deploy on the fork for now
-        if: github.repository_owner == 'apreshill'
-        # NETLIFY_AUTH_TOKEN added in the repo's secrets
+        id: netlify-deploy
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: 'reference'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message:
+            'Deploy from GHA: ${{ github.event.head_commit.message }} (${{ github.sha }})'
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: true
+          alias: deploy-preview-${{ github.event.number }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --prod --dir reference
