@@ -12,7 +12,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    if: ${{ github.event_name == 'push' || startsWith(github.head_ref, 'pkgdown-') }}
+    if: ${{ github.event_name == 'push' || startsWith(github.head_ref, 'pkgdown/') }}
     runs-on: ubuntu-18.04
     env:
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
