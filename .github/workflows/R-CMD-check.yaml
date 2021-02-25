@@ -7,12 +7,18 @@ on:
       - master
     paths-ignore:
       - 'inst/examples/**'
+      - '_pkgdown.yml'
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yaml'
   pull_request:
     branches:
       - main
       - master
     paths-ignore:
       - 'inst/examples/**'
+      - '_pkgdown.yml'
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yaml'
 
 name: R-CMD-check
 
