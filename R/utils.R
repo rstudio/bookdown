@@ -284,6 +284,12 @@ dir_create = function(path) {
   dir_exists(path) || dir.create(path, recursive = TRUE)
 }
 
+# vectorized version to get relative path of multiple input
+relative_path = function(inputs, dir = ".") {
+  f = Vectorize(xfun::relative_path, "x", USE.NAMES = FALSE)
+  f(x = inputs, dir = dir, use.. = TRUE, error = TRUE)
+}
+
 # a wrapper of file.path to ignore `output_dir` if it is NULL
 output_path = function(...) {
   dir = opts$get('output_dir')
