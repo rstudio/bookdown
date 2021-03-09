@@ -126,9 +126,10 @@ $if(author.name)$
 <p class="author"><em>$author.name$</em></p>
 $if(author.affiliation)$
 <address class="author_afil">
-$author.affiliation$<br>$endif$
+$author.affiliation$<br>
 $if(author.email)$
 <a class="author_email" href="mailto:#">$author.email$</a>
+$endif$
 </address>
 $endif$
 $else$
