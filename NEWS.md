@@ -20,6 +20,8 @@
 
 - Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
 
+- Correctly remove tab prefixed reference (e.g `(#tab:lab)`) in custom table HTML function (like `gt::gt()`)
+
 ## MINOR CHANGES
 
 - `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
