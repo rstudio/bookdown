@@ -20,7 +20,11 @@
 
 - Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
 
-- Correctly remove tab prefixed reference (e.g `(#tab:lab)`) in custom table HTML function (like `gt::gt()`)
+- Properly support multiple authors in the `gitbook()` output format (thanks, @adamvi, #1095).
+
+- No more warnings are thrown when passing several input files to `render_book(preview = TRUE)` (#1091).
+
+- Correctly remove tab prefixed reference (e.g `(#tab:lab)`) in custom table HTML function (like `gt::gt()`) (#1099)
 
 ## MINOR CHANGES
 
