@@ -200,7 +200,7 @@ remove_toc_items = function(x) {
 
 add_toc_bib = function(x) {
   # regex for 'natbib | biblatex'
-  r = '^\\s*\\\\bibliography\\{.+\\}$|^\\s*\\\\printbibliography(?:\\[[^]]\\])?$'
+  r = '^\\s*\\\\bibliography\\{.+\\}$|^\\s*\\\\printbibliography(\\[.*\\])?$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
   i = i[1]
