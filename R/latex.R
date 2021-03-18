@@ -212,7 +212,7 @@ add_toc_bib = function(x) {
     r = '^(\\s*\\\\printbibliography)(\\[.*\\])?$'
     i = grep(r, x)
     if (length(i) == 0) return(x)
-    opts = gsub(r, "\\2", x)
+    opts = gsub(r, "\\2", x[i])
     bibintoc = "heading=bibintoc"
     if (nzchar(opts)) {
       opts2 = gsub("^\\[(.*)\\]$", "\\1", opts)
@@ -220,7 +220,7 @@ add_toc_bib = function(x) {
     } else (
       opts = sprintf("[%s]", bibintoc)
     )
-    x[i] = sprintf('%s%s', gsub(r, "\\1", x), opts)
+    x[i] = sprintf('%s%s', gsub(r, "\\1", x[i]), opts)
   }
   x
 }
