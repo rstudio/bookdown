@@ -6,6 +6,8 @@
 
 - `render_book()` can now take a directory as input, i.e `render_book("book_dir")`, to render in this directory by using the `index.Rmd` file if it exists. The default is now to look for `input.Rmd` is the current working directory. Previously, filename must have been provided (`render_book()` is now equivalent to `render_book("index.Rmd")`) (#990).
 
+- `hypothesis` environment is now supported among [Theorems and Proof](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) (thanks, @shirdekel, #1102).
+
 ## BUG FIXES
 
 - CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).
