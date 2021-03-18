@@ -203,12 +203,14 @@ add_toc_bib = function(x) {
   r = '^\\s*\\\\bibliography\\{.+\\}$'
   i = grep(r, x)
   if (length(i) != 0) {
-    # natbib
+    # natbib - add toc manually using \bibname
+    # e.g adding \addcontentsline{toc}{chapter}{\bibname}
     i = i[1]
     level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
     x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
   } else {
-    # biblatex
+    # biblatex - add heading=bibintoc in options
+    # e.g \printbibliography[title=References,heading=bibintoc]
     r = '^(\\s*\\\\printbibliography)(\\[.*\\])?$'
     i = grep(r, x)
     if (length(i) == 0) return(x)
