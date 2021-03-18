@@ -7,7 +7,7 @@ assert("insert TeX syntax for bib in toc correctly", {
   (add_toc_bib("\\bibliography{bib1.bib,bib2.bib}") %==%
     "\\bibliography{bib1.bib,bib2.bib}\n\\addcontentsline{toc}{section}{\\bibname}")
   (add_toc_bib("\\printbibliography") %==%
-    "\\printbibliography\n\\addcontentsline{toc}{section}{\\bibname}")
+    "\\printbibliography[heading=bibintoc]")
   (add_toc_bib("\\printbibliography[title=References]") %==%
-    "\\printbibliography[title=References]\n\\addcontentsline{toc}{section}{\\bibname}")
+    "\\printbibliography[title=References,heading=bibintoc]")
 })
