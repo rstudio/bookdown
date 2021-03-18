@@ -11,7 +11,8 @@ local theorem_abbr = {
     conjecture = 'cnj',
     definition = 'def',
     example = 'exm',
-    exercise = 'exr'
+    exercise = 'exr',
+    hypothesis = 'hyp'
 }
 
 -- other special proof envs
