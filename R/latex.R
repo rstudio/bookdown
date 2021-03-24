@@ -199,12 +199,31 @@ remove_toc_items = function(x) {
 }
 
 add_toc_bib = function(x) {
-  r = '^\\\\bibliography\\{.+\\}$'
+  # natbib
+  r = '^\\s*\\\\bibliography\\{.+\\}$'
   i = grep(r, x)
-  if (length(i) == 0) return(x)
-  i = i[1]
-  level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
-  x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  if (length(i) != 0) {
+    # natbib - add toc manually using \bibname
+    # e.g adding \addcontentsline{toc}{chapter}{\bibname}
+    i = i[1]
+    level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
+    x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  } else {
+    # biblatex - add heading=bibintoc in options
+    # e.g \printbibliography[title=References,heading=bibintoc]
+    r = '^(\\s*\\\\printbibliography)(\\[.*\\])?$'
+    i = grep(r, x)
+    if (length(i) == 0) return(x)
+    opts = gsub(r, "\\2", x[i])
+    bibintoc = "heading=bibintoc"
+    if (nzchar(opts)) {
+      opts2 = gsub("^\\[(.*)\\]$", "\\1", opts)
+      opts = if (!grepl("heading=", opts2)) sprintf("[%s,%s]", opts2, bibintoc)
+    } else (
+      opts = sprintf("[%s]", bibintoc)
+    )
+    x[i] = sprintf('%s%s', gsub(r, "\\1", x[i]), opts)
+  }
   x
 }
 

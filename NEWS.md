@@ -10,6 +10,8 @@
 
 ## BUG FIXES
 
+- In `pdf_book()`, `toc_bib = TRUE` now works with _natbib_ and _biblatex_ as `citation_package` (thanks, @qifei9, @umarcor, #450).
+
 - CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).
 
 - `fenced_theorems()` now correctly transforms implicit label in chunk header to a fenced divs id. (thanks, @enixam, #982)
