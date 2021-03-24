@@ -13,6 +13,7 @@ articles/reports with R Markdown.
 Useful links:
 \itemize{
   \item \url{https://github.com/rstudio/bookdown}
+  \item \url{https://pkgs.rstudio.com/bookdown/}
   \item Report bugs at \url{https://github.com/rstudio/bookdown/issues}
 }
 
