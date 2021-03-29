@@ -907,7 +907,7 @@ restore_appendix_html = function(x, remove = TRUE) {
 
 # parse reference items so we can move them back to the chapter where they were used
 parse_references = function(x) {
-  i = grep('^<div id="refs" class="references[^"]*">$', x)
+  i = grep('^<div id="refs" class="references[^"]*"[^>]*>$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
   r = '^(<div) id="(ref-[^"]+)"([^>]*>)$'
   k = grep(r, x)
