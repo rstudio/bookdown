@@ -415,9 +415,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     i2 = if (i == n) length(html_body) else idx[i + 1] - 1
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
-    # in order to find references in footnotes, we add footnotes to chapter body
-    a_targets = parse_a_targets(relocate_footnotes(html, fnts, a_targets))
     if (split_bib) {
+      # in order to find references in footnotes, we add footnotes to chapter body
+      a_targets = parse_a_targets(relocate_footnotes(html, fnts, a_targets))
       html = relocate_references(html, refs, ref_title, a_targets, refs_div)
     }
     html = relocate_footnotes(html, fnts, a_targets)
