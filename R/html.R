@@ -416,6 +416,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
     if (split_bib) {
+      # in order to find references in footnotes, we add footnotes to chapter body
+      a_targets = parse_a_targets(relocate_footnotes(html, fnts, a_targets))
       html = relocate_references(html, refs, ref_title, a_targets, refs_div)
     }
     html = relocate_footnotes(html, fnts, a_targets)
@@ -946,7 +948,7 @@ parse_a_targets = function(x) {
   unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
     if (length(target) == 0) return()
     gsub(r, '\\1', target)
-  }))
+  }), use.names = FALSE)
 }
 
 # parse footnotes in the div of class "footnotes"; each footnote is one <li>
