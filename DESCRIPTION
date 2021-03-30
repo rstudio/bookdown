@@ -68,7 +68,7 @@ Imports:
     yaml (>= 2.1.19)
 Suggests:
     bslib (>= 0.2.4),
-    downlit,
+    downlit (>= 0.2.1),
     htmlwidgets,
     jsonlite,
     rstudioapi,
@@ -89,5 +89,4 @@ RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
 Remotes: 
-    rstudio/rmarkdown,
-    r-lib/downlit
+    rstudio/rmarkdown
