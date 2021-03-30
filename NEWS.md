@@ -10,6 +10,8 @@
 
 ## BUG FIXES
 
+- Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)
+
 - When `split_bib = TRUE`, references in footnotes are now also correctly relocated in the chapter (thanks, @jimhshen, #952)
 
 - In `pdf_book()`, `toc_bib = TRUE` now works with _natbib_ and _biblatex_ as `citation_package` (thanks, @qifei9, @umarcor, #450).
