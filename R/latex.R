@@ -238,10 +238,8 @@ restore_block2 = function(x, global = FALSE) {
       lapply(theorem_abbr, label_prefix),
       function(fun) fun(), character(1), USE.NAMES = FALSE)
     theorem_defs = sprintf(
-      '%s\\newtheorem{%s}{%s}%s',
-      theorem_style(names(theorem_abbr)),
-      names(theorem_abbr),
-      str_trim(theorem_label),
+      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)),
+      names(theorem_abbr), str_trim(theorem_label),
       if (global) '' else {
         if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
       }
