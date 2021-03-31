@@ -84,7 +84,6 @@ Suggests:
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
-LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
