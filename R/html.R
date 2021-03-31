@@ -663,13 +663,13 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = paste0(label_prefix(type), num, ': ')
+      labs[[i]] = label_fun(type, sep = ': ')(num)
       k = max(figs[figs <= i])
       content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
-      labs[[i]] = sprintf(
-        '<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': ')
+      labs[[i]] = sprintf('<span id="%s">%s</span>',
+                          lab, label_fun(type, sep = ': ')(num)
       )
     }, eq = {
       labs[[i]] = sprintf('\\tag{%s}', num)
@@ -678,7 +678,7 @@ parse_fig_labels = function(content, global = FALSE) {
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
     }, {
-      labs[[i]] = paste0(label_prefix(type), num, ' ')
+      labs[[i]] = label_fun(type, sep = ' ')(num)
     })
   }
 
