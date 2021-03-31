@@ -165,8 +165,3 @@ assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
   res = fence_theorems(text = old)
   (unclass(res) %==% old)
 })
-
-assert("relative_path is vectorized", {
-  relative_path(c('foo/bar.txt', 'foo/baz.txt'), 'foo/') %==% c("bar.txt", "baz.txt")
-  relative_path('foo/bar.txt', 'foo') %==% "bar.txt"
-})

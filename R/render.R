@@ -113,7 +113,7 @@ render_book = function(
   # store output directory and the initial input Rmd name
   opts$set(
     output_dir = output_dir,
-    input_rmd = relative_path(input),
+    input_rmd = xfun::relative_path(input),
     preview = preview
   )
 

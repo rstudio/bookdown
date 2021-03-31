@@ -63,7 +63,7 @@ Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
     rmarkdown (>= 2.6),
-    xfun (>= 0.19),
+    xfun (>= 0.22),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
