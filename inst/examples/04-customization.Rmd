@@ -245,6 +245,16 @@ language:
     fig: "FIGURE "
 ```
 
-The fields under `ui` are used to specify some terms in the user interface. The `edit` field specifies the text associated with the `edit` link in `_bookdown.yml` (Section \@ref(configuration)). The `chapter_name` field can be either a character string to be prepended to chapter numbers in chapter titles (e.g., `'CHAPTER '`), or an R function that takes the chapter number as the input and returns a string as the new chapter number (e.g., `!expr function(i) paste('Chapter', i)`). If it is a character vector of length 2, the chapter title prefix will be `paste0(chapter_name[1], i, chapter_name[2])`, where `i` is the chapter number. Similarly, the `appendix_name` field will be prepended to appendix counters in appendix titles (e.g., `'Appendix '`). Again, a function can also be used.
+The fields under `ui` are used to specify some terms in the user interface. The `edit` field specifies the text associated with the `edit` link in `_bookdown.yml` (Section \@ref(configuration)). The fields `chapter_name`, `appendix_name`, `fig`, `tab` and `eq` can be either a character string to be prepended to chapter (e.g., `'CHAPTER '`) or reference number (e.g., `'FIGURE '`), or an R function that takes a number (chapter or reference number) as the input and returns a string. (e.g., `!expr function(i) paste('Chapter', i)`). Here is an example for Hungarian:
+
+```yaml
+language:
+  label:
+    fig: !expr function(i) paste(i, 'ábra')
+  ui:
+    chapter_name: !expr function(i) paste0(i, '. fejezet')
+```
+
+For `chapter_name` and `appendix_name` only, if it is a character vector of length 2, the chapter title prefix will be `paste0(chapter_name[1], i, chapter_name[2])`, where `i` is the chapter number.
 
 There is one caveat when you write in a language that uses multibyte characters, such as Chinese, Japanese, and Korean (CJK): Pandoc cannot generate identifiers from section headings that are pure CJK characters, so you will not be able to cross-reference sections (they do not have labels), unless you manually assign identifiers to them by appending `{#identifier}` to the section heading, where `identifier` is an identifier of your choice.
