@@ -696,7 +696,7 @@ parse_fig_labels = function(content, global = FALSE) {
 label_prefix = function(type, dict = label_names, sep = '') {
   label = i18n('label', type, dict)
   supported_type = c('fig', 'tab', 'eq')
-  if (is.function(type)) {
+  if (is.function(label)) {
     if (type %in% supported_type) return(label)
     msg = knitr::combine_words(supported_type)
     stop("Using a function is only supported for ", msg)
