@@ -663,13 +663,13 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = label_fun(type, sep = ': ')(num)
+      labs[[i]] = label_prefix(type, sep = ': ')(num)
       k = max(figs[figs <= i])
       content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf('<span id="%s">%s</span>',
-                          lab, label_fun(type, sep = ': ')(num)
+                          lab, label_prefix(type, sep = ': ')(num)
       )
     }, eq = {
       labs[[i]] = sprintf('\\tag{%s}', num)
@@ -678,7 +678,7 @@ parse_fig_labels = function(content, global = FALSE) {
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
     }, {
-      labs[[i]] = paste0(label_prefix(type), num, ' ')
+      labs[[i]] = label_prefix(type, sep = ' ')(num)
     })
   }
 
@@ -693,11 +693,19 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type, dict = label_names) i18n('label', type, dict)
-label_fun = function(type, sep) {
-  label = label_prefix(type)
-  if (is.function(label)) return(label)
-  function(num) paste0(label, num, sep)
+label_prefix = function(type, dict = label_names, sep = '') {
+  label = i18n('label', type, dict)
+  supported_type = c('fig', 'tab', 'eq')
+  if (is.function(type)) {
+    if (type %in% supported_type) return(label)
+    msg = knitr::combine_words(supported_type)
+    stop("Using a function is only supported for ", msg)
+  }
+  default_fun = function(num = NULL) {
+    if (is.null(num)) return(label)
+    paste0(label, num, sep)
+  }
+  default_fun
 }
 
 ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')

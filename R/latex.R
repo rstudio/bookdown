@@ -234,18 +234,26 @@ restore_block2 = function(x, global = FALSE) {
   # fenced div (\begin) is used
   if (length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
+    theorem_label = vapply(
+      lapply(theorem_abbr, label_prefix),
+      function(fun) fun(), character(1), USE.NAMES = FALSE)
     theorem_defs = sprintf(
-      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
-      str_trim(vapply(theorem_abbr, label_prefix, character(1), USE.NAMES = FALSE)),
+      '%s\\newtheorem{%s}{%s}%s',
+      theorem_style(names(theorem_abbr)),
+      names(theorem_abbr),
+      str_trim(theorem_label),
       if (global) '' else {
         if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
       }
     )
     # the proof environment has already been defined by amsthm
     proof_envs = setdiff(names(label_names_math2), 'proof')
+    proof_labels = vapply(
+      lapply(proof_envs, label_prefix, dict = label_names_math2),
+      function(fun) fun(), character(1), USE.NAMES = FALSE)
     proof_defs = sprintf(
       '%s\\newtheorem*{%s}{%s}', theorem_style(proof_envs), proof_envs,
-      gsub('^\\s+|[.]\\s*$', '', vapply(proof_envs, label_prefix, character(1), label_names_math2))
+      gsub('^\\s+|[.]\\s*$', '', proof_labels)
     )
     x = append(x, c('\\usepackage{amsthm}', theorem_defs, proof_defs), i - 1)
   }
