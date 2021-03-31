@@ -678,7 +678,7 @@ parse_fig_labels = function(content, global = FALSE) {
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
     }, {
-      labs[[i]] = label_fun(type, sep = ' ')(num)
+      labs[[i]] = paste0(label_prefix(type), num, ' ')
     })
   }
 

@@ -117,8 +117,10 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
         if (type %in% theorem_abbr) {
           id = sprintf('<span id="%s"></span>', j)
           sep = ''
+          label = paste0(id, label_prefix(type), ref_table[j], sep, ' ')
+        } else {
+          label = label_fun(type, sep = sep)(ref_table[j])
         }
-        label = label_fun(type, sep = sep)(ref_table[j])
         content[i] = sub(
           m, paste0(id, label, ' '), content[i]
         )
