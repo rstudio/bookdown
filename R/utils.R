@@ -505,7 +505,7 @@ eng_proof = function(options) {
     "The type of proof '", type, "' is not supported yet."
   )
   options$type = type
-  label = label_prefix(type, label_names_math2)
+  label = label_prefix(type, label_names_math2)()
   name = options$name; to_md = output_md()
   if (length(name) == 1) {
     if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
