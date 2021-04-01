@@ -668,8 +668,8 @@ parse_fig_labels = function(content, global = FALSE) {
       content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
-      labs[[i]] = sprintf('<span id="%s">%s</span>',
-                          lab, label_prefix(type, sep = ': ')(num)
+      labs[[i]] = sprintf(
+        '<span id="%s">%s</span>', lab, label_prefix(type, sep = ': ')(num)
       )
     }, eq = {
       labs[[i]] = sprintf('\\tag{%s}', num)
@@ -698,14 +698,13 @@ label_prefix = function(type, dict = label_names, sep = '') {
   supported_type = c('fig', 'tab', 'eq')
   if (is.function(label)) {
     if (type %in% supported_type) return(label)
-    msg = knitr::combine_words(supported_type)
-    stop("Using a function is only supported for ", msg)
+    msg = knitr::combine_words(supported_type, before = "'")
+    stop("Using a label function is only supported for elements of types ", msg)
   }
-  default_fun = function(num = NULL) {
+  function(num = NULL) {
     if (is.null(num)) return(label)
     paste0(label, num, sep)
   }
-  default_fun
 }
 
 ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')

@@ -246,9 +246,9 @@ restore_block2 = function(x, global = FALSE) {
     )
     # the proof environment has already been defined by amsthm
     proof_envs = setdiff(names(label_names_math2), 'proof')
-    proof_labels = vapply(
-      lapply(proof_envs, label_prefix, dict = label_names_math2),
-      function(fun) fun(), character(1), USE.NAMES = FALSE)
+    proof_labels = vapply(proof_envs, function(a) {
+      label_prefix(a, dict = label_names_math2)()
+    }, character(1), USE.NAMES = FALSE)
     proof_defs = sprintf(
       '%s\\newtheorem*{%s}{%s}', theorem_style(proof_envs), proof_envs,
       gsub('^\\s+|[.]\\s*$', '', proof_labels)

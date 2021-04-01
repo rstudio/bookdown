@@ -119,9 +119,7 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
           sep = ''
         }
         label = label_prefix(type, sep = sep)(ref_table[j])
-        content[i] = sub(
-          m, paste0(id, label, ' '), content[i]
-        )
+        content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
       }
     }
