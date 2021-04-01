@@ -32,3 +32,29 @@ assert("biblio references section is correcly found", {
   (parse_references(html)$div %==% html[[4]])
   (length(parse_references(html)$refs) == 1)
 })
+
+assert("i18n config can be retrieved ", {
+  opts$set(config = list())
+  # default
+  (i18n("label", "tab", label_names) %==% "Table ")
+  (i18n("ui", "chapter_name", ui_names) %==% "")
+  (i18n("ui", "dummy", ui_names) %==% NULL)
+  # config set
+  opts$set(config = list(language = list(
+    label = list(tab = "TABLE "),
+    ui = list(chapter_name = "CHAPTER "))
+  ))
+  (i18n("label", "tab") %==% "TABLE ")
+  (i18n("ui", "chapter_name") %==% "CHAPTER ")
+  opts$set(config = list())
+})
+
+assert("label_prefix retrieves correct config", {
+  fun = function(i) paste0("TAB-", i)
+  opts$set(config = list(language = list(label = list(tab = fun))))
+  (label_prefix("tab") %==% fun)
+  (is.function(label_prefix("fig")))
+  (label_prefix("fig")(1) %==% "Figure 1")
+  (label_prefix("fig", sep = ":")(1) %==% "Figure 1:")
+  opts$set(config = list())
+})

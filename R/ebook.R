@@ -114,13 +114,13 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
       if (grepl(m, content[i])) {
         id = ''; sep = ':'
         type = gsub('^([^:]+).*$', '\\1', j)
-        if (type %in% names(theorem_abbr)) {
+        if (type %in% theorem_abbr) {
           id = sprintf('<span id="%s"></span>', j)
           sep = ''
         }
-        label = label_prefix(type)
+        label = label_prefix(type, sep = sep)(ref_table[j])
         content[i] = sub(
-          m, paste0(id, label, ref_table[j], sep, ' '), content[i]
+          m, paste0(id, label, ' '), content[i]
         )
         break
       }
