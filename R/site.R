@@ -46,6 +46,7 @@ bookdown_site = function(input, ...) {
     name = name,
     output_dir = book_dir,
     render = render,
+    subdirs = TRUE,
     clean = clean
   )
 }
