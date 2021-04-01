@@ -234,9 +234,9 @@ restore_block2 = function(x, global = FALSE) {
   # fenced div (\begin) is used
   if (length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
-    theorem_label = vapply(
-      lapply(theorem_abbr, label_prefix),
-      function(fun) fun(), character(1), USE.NAMES = FALSE)
+    theorem_label = vapply(theorem_abbr, function(a) {
+      label_prefix(a)()
+    }, character(1), USE.NAMES = FALSE)
     theorem_defs = sprintf(
       '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)),
       names(theorem_abbr), str_trim(theorem_label),
