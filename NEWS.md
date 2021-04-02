@@ -10,6 +10,8 @@
 
 - In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://bookdown.org/yihui/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
 
+- Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
+
 ## BUG FIXES
 
 - Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)
