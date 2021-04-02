@@ -62,7 +62,7 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
-    rmarkdown (>= 2.6),
+    rmarkdown (>= 2.7.6),
     xfun (>= 0.22),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
@@ -87,3 +87,5 @@ SystemRequirements: Pandoc (>= 1.17.2)
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+Remotes:
+    rstudio/rmarkdown
