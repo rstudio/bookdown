@@ -34,9 +34,29 @@ bookdown_site = function(input, ...) {
     if (is.null(input_file)) {
       in_dir(input, render_book_script(output_format, envir, quiet))
     } else {
-      res = xfun::in_dir(book_proj, {
-        render_book(input_file, output_format, envir = envir, preview = TRUE)
-      })
+      # Input file can be in a subdirectory  of the project. So we need to catch the
+      # message "\Output created: " emitted by render() used by RStudio to preview the html result
+      # to modify it from relative to absolute.
+      msg_render = NULL
+      r = '^\nOutput created: '
+      res = withCallingHandlers(
+        message = function(e) {
+          if (grepl(r, e$message)) {
+            # capture and save the message here, then muffle it
+            msg_render <<- e$message
+            invokeRestart("muffleMessage")
+          }
+        },
+        xfun::in_dir(
+          book_proj,
+          render_book(input_file, output_format, envir = envir, preview = TRUE)
+        )
+      )
+      if (!is.null(msg_render)) {
+        path <- gsub(r, "", msg_render)
+        # capture and save the message here, then muffle it
+        message(paste0("\nOutput created: ", file.path(book_proj, path)))
+      }
       res
     }
   }
