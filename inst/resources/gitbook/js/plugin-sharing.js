@@ -57,7 +57,15 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 e.preventDefault();
                 window.open("http://vkontakte.ru/share.php?url="+encodeURIComponent(location.href));
             }
-        }
+        },
+        'whatsapp': {
+            'label': 'Whatsapp',
+            'icon': 'fa fa-whatsapp',
+            'onClick': function(e) {
+                e.preventDefault();
+                window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(location.href));
+            }
+        },
     };
 
 
