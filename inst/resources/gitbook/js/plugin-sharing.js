@@ -64,7 +64,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             'onClick': function(e) {
                 e.preventDefault();
                 var url = encodeURIComponent(location.href);
-                window.open((isMobile() ? "whatsapp://send" : "https://wa.me/") + "?text=" + url);
+                window.open((isMobile() ? "whatsapp://send" : "https://web.whatsapp.com/send") + "?text=" + url);
             }
         },
     };
