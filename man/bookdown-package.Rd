@@ -59,6 +59,7 @@ Other contributors:
   \item Nathan Werth [contributor]
   \item Noam Ross [contributor]
   \item Peter Hickey [contributor]
+  \item Pedro Rafael D. Marinho (\href{https://orcid.org/0000-0003-1591-8300}{ORCID}) [contributor]
   \item Romain Lesur (\href{https://orcid.org/0000-0002-0721-5595}{ORCID}) [contributor]
   \item Sahir Bhatnagar [contributor]
   \item Shir Dekel (\href{https://orcid.org/0000-0003-1773-2446}{ORCID}) [contributor]

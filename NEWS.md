@@ -12,6 +12,8 @@
 
 - Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
 
+- WhatsApp sharing feature added (#1125)
+
 ## BUG FIXES
 
 - Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)

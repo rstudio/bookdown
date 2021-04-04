@@ -40,6 +40,7 @@ Authors@R: c(
     person("Nathan", "Werth", role = "ctb"),
     person("Noam", "Ross", role = "ctb"),
     person("Peter", "Hickey", role = "ctb"),
+     person("Pedro Rafael", "D. Marinho", role="ctb", comment = c(ORCID = "0000-0003-1591-8300")),
     person("Romain", "Lesur", role = "ctb", comment = c(ORCID = "0000-0002-0721-5595")),
     person("Sahir", "Bhatnagar", role = "ctb"),
     person("Shir", "Dekel", role = "ctb", comment = c(ORCID = "0000-0003-1773-2446")),

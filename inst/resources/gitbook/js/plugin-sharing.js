@@ -63,19 +63,15 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             'icon': 'fa fa-whatsapp',
             'onClick': function(e) {
                 e.preventDefault();
-                if (detectDevice() == "mobile"){
-                    window.open("whatsapp://send?text="+encodeURIComponent(location.href));
-                } else {
-                    window.open("https://wa.me/?text="+encodeURIComponent(location.href));
-                }
+                var url = encodeURIComponent(location.href);
+                window.open((isMobile() ? "whatsapp://send" : "https://wa.me/") + "?text=" + url);
             }
         },
     };
 
-  function detectDevice(){
-    console.log(!!navigator.maxTouchPoints)
-    return !!navigator.maxTouchPoints ? 'mobile' : 'computer'
-  }
+    function isMobile() {
+      return !!navigator.maxTouchPoints;
+    }
 
     gitbook.events.bind("start", function(e, config) {
         var opts = config.sharing;
