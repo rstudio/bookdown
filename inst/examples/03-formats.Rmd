@@ -102,6 +102,7 @@ bookdown::gitbook:
       family: sans
       size: 2
     sharing:
+      whatsapp: yes
       facebook: yes
       github: no
       twitter: yes
@@ -110,7 +111,7 @@ bookdown::gitbook:
       instapaper: no
       vk: no
       whatsapp: no
-      all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
+      all: ['whatsapp', 'facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
     info: yes
 ```
 
