@@ -10,3 +10,6 @@
 .book .book-summary ul.summary li a span {display:inline;padding:initial;overflow:visible;cursor:auto;opacity:1;}
 /* show arrow before summary tag as in bootstrap */
 details > summary {display:list-item;cursor:pointer;}
+/*add whatsapp icon from FA 5.1.1
+TODO: remove when updating fontawesome*/
+.fa-whatsapp:before{content:"\f232"}
