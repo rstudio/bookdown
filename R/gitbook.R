@@ -232,7 +232,8 @@ gitbook_config = function(config = list()) {
     sharing = list(
       github = FALSE, facebook = TRUE, twitter = TRUE,
       linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
-      all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper')
+      whatsapp = FALSE,
+      all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper', 'whatsapp')
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
     edit = list(link = NULL, text = NULL),
