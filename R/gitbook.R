@@ -95,9 +95,9 @@ gitbook_dependency = function(table_css) {
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
-      'style.css', if (table_css) 'plugin-table.css', 'plugin-bookdown.css',
+      'style.css', if (table_css) 'plugin-navbar-style.css', 'plugin-table.css', 'plugin-bookdown.css',
       'plugin-highlight.css', 'plugin-search.css', 'plugin-fontsettings.css',
-      'plugin-clipboard.css', 'plugin-navbar-style.css'
+      'plugin-clipboard.css'
     )),
     script = file.path('js', c(
       app, 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
