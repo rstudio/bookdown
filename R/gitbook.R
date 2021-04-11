@@ -334,14 +334,16 @@ write_navbar_style <- function(cover_image, justify) {
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
 
   css_code <- ""
-  if(!is.null(cover_image)){
-    hex_color <- channel_averages(path_img = cover_image)
-    css_code <- paste0(".book .book-summary ul.summary li a:hover, .book .book-summary ul.summary li.active > a { color: #000000; background: 0 0; text-decoration: none; background-color: ", hex_color, "; } ")
-    css_code <- paste0(css_code, ".book .book-summary ul.summary li a:hover { background-color: #aaaaaa; color: #000000; }")
-  }
+  if(!is.null(cover_image))
+    css_code <- paste0(".book .book-summary ul.summary li a:hover,
+                        .book .book-summary ul.summary li.active > a
+                       { color: #000000; background-color: ",
+                        channel_averages(path_img = cover_image), "; } ",
+                       ".book .book-summary ul.summary li a:hover
+                       { background-color: #aaaaaa; }")
 
   if(is.null(justify) || justify)
-    css_code <- paste0("p { text-align: justify;}", css_code)
+    css_code <- paste0("p { text-align: justify; }", css_code)
 
   write(x = css_code,
         file = file.path("css", "plugin-navbar-style.css"))
