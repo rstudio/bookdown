@@ -66,7 +66,8 @@ Imports:
     rmarkdown (>= 2.6),
     xfun (>= 0.22),
     tinytex (>= 0.12),
-    yaml (>= 2.1.19)
+    yaml (>= 2.1.19),
+    magick (>= 2.7.1)
 Suggests:
     bslib (>= 0.2.4),
     downlit (>= 0.2.1),
