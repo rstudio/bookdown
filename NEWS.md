@@ -10,9 +10,11 @@
 
 - In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://bookdown.org/yihui/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
 
-- Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
+- Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122).
 
-- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, @prdm0, #1125).
+- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, Pedro Rafael, @prdm0, #1125).
+
+- Colorful navigation between sections was added in the sidebar of the `gitbook` format, using `stylish` key in `config`. It is possible to enter a valid RGB system color, in hexadecimal notation or an image (local or url), using in `stylish` the `cover_image` key. In the case of an image, the median of the color channels is considered. `stylish` also has a key `justify` that justifies all the text. (thanks, Pedro Rafael, @prdm0).
 
 ## BUG FIXES
 
