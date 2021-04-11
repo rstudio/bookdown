@@ -14,7 +14,7 @@
 
 - WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, Pedro Rafael, @prdm0, #1125).
 
-- Colorful navigation between sections was added in the sidebar of the `gitbook` format, using `stylish` key in `config`. It is possible to enter a valid RGB system color, in hexadecimal notation or an image (local or url), using in `stylish` the `cover_image` key. In the case of an image, the median of the color channels is considered. `stylish` also has a key `justify` that justifies all the text. (thanks, Pedro Rafael, @prdm0).
+- Colorful navigation between sections was added in the sidebar of the `gitbook` format, using `stylish` key in `config`. It is possible to enter a valid RGB system color, in hexadecimal notation or an image (local or url), using in `stylish` the `cover_image` key. In the case of an image, the median of the color channels is considered. `stylish` also has a key `justify` that justifies all the text. (thanks, Pedro Rafael, @prdm0, #1133).
 
 ## BUG FIXES
 
