@@ -14,7 +14,7 @@ Thanks for taking the time to file a feature request! Please start by searching 
 
 If the feature has not yet been filed, follow these advice to write good feature request: 
 
-- Provide a clear and concise description of the problem this proposed feature would address? For example, I struggle to do `[...]` with blogdown.
+- Provide a clear and concise description of the problem this proposed feature would address? For example, I struggle to do `[...]` with bookdown.
 
 - Try to detail what you want to happen.
 
