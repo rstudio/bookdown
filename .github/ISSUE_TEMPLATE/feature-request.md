@@ -14,8 +14,6 @@ Thanks for taking the time to file a feature request! Please start by searching 
 
 If the feature has not yet been filed, follow these advice to write good feature request: 
 
-- Have you searched for an existing feature request to avoid creating duplicate requests? If you find an existing feature request, please give it a thumbs-up reaction, as we'll use these reactions to help prioritize the implementation of these features in the future.
-
 - Provide a clear and concise description of the problem this proposed feature would address? For example, I struggle to do `[...]` with blogdown.
 
 - Try to detail what you want to happen.
