@@ -29,6 +29,6 @@ When filing a _bug report_, please check the boxes below to confirm that you hav
 
 - [ ] upgraded all your packages to their latest versions (including your versions of R, the RStudio IDE, and relevant R packages)?
 
-- [ ] installed and tested your bug with the development version of the blogdown package using `remotes::install_github()` ?
+- [ ] installed and tested your bug with the development version of the bookdown package using `remotes::install_github("rstudio/bookdown")` ?
 
 -->
