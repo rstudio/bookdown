@@ -18,6 +18,8 @@
 
 - `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
 
+- Fix an issue in `bs4_book()` with encoding on system non-UTF8 by default (#1027).
+
 # CHANGES IN bookdown VERSION 0.21
 
 ## NEW FEATURES
