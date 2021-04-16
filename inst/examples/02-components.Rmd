@@ -390,6 +390,12 @@ Applying Theorem \@ref(thm:chf-sum), we have
 
 $$\varphi _{\bar{X}}(t)=\prod_{i=1}^n \varphi _{X_i}\left(\frac{t}{n}\right)=\left[\varphi _{X}\left(\frac{t}{n}\right)\right]^n.$$
 ```
+  
+```{hypothesis, name="Riemann hypothesis"}
+The Riemann Zeta-function is defined as
+$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
+for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
+```
 
 ### Special headers
 
@@ -407,7 +413,7 @@ There are a few special types of first-level headers that will be processed diff
 # Chapter Three
 ```
 
-A part title should be written right before the first chapter title in this part. You can use `(PART\*)` (the backslash before `*` is required) instead of `(PART)` if a part title should not be numbered.
+A part title should be written right before the first chapter title in this part, both title in the same document. You can use `(PART\*)` (the backslash before `*` is required) instead of `(PART)` if a part title should not be numbered.
 
 The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices\index{appendix}, e.g.,
 

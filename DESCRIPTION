@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.21.4
+Version: 0.21.10
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
@@ -40,8 +40,10 @@ Authors@R: c(
     person("Nathan", "Werth", role = "ctb"),
     person("Noam", "Ross", role = "ctb"),
     person("Peter", "Hickey", role = "ctb"),
+    person("Pedro Rafael D.", "Marinho", role="ctb", comment = c(ORCID = "0000-0003-1591-8300")),
     person("Romain", "Lesur", role = "ctb", comment = c(ORCID = "0000-0002-0721-5595")),
     person("Sahir", "Bhatnagar", role = "ctb"),
+    person("Shir", "Dekel", role = "ctb", comment = c(ORCID = "0000-0003-1773-2446")),
     person("Steve", "Simpson", role = "ctb"),
     person("Thierry", "Onkelinx", role = "ctb", comment = c(ORCID = "0000-0001-8804-4216")),
     person("Vincent", "Fulco", role = "ctb"),
@@ -61,13 +63,13 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.22),
-    rmarkdown (>= 2.4),
-    xfun (>= 0.19),
+    rmarkdown (>= 2.6),
+    xfun (>= 0.22),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
-    bslib,
-    downlit,
+    bslib (>= 0.2.4),
+    downlit (>= 0.2.1),
     htmlwidgets,
     jsonlite,
     rstudioapi,
@@ -80,13 +82,9 @@ Suggests:
     tufte,
     xml2,
     webshot
-URL: https://github.com/rstudio/bookdown
+URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
-Remotes: 
-    rstudio/bslib, 
-    rstudio/rmarkdown,
-    r-lib/downlit
 SystemRequirements: Pandoc (>= 1.17.2)
-LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+VignetteBuilder: knitr

@@ -109,6 +109,7 @@ bookdown::gitbook:
       weibo: no
       instapaper: no
       vk: no
+      whatsapp: no
       all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
     info: yes
 ```

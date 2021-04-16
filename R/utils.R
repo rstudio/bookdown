@@ -395,7 +395,7 @@ first_html_format = function() {
   fallback = 'bookdown::gitbook'
   if (!file.exists('index.Rmd')) return(fallback)
   formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html', formats, value = TRUE)
+  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
   if (length(formats) == 0) fallback else formats[1]
 }
 
@@ -499,7 +499,7 @@ eng_proof = function(options) {
     "The type of proof '", type, "' is not supported yet."
   )
   options$type = type
-  label = label_prefix(type, label_names_math2)
+  label = label_prefix(type, label_names_math2)()
   name = options$name; to_md = output_md()
   if (length(name) == 1) {
     if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
