@@ -42,6 +42,8 @@
 
 - In sepia or night mode, the background color during sidebar transition is now correct and no more white (#1100).
 
+- Fix an issue in `bs4_book()` with encoding on system non-UTF8 by default (#1027).
+
 ## MINOR CHANGES
 
 - `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
