@@ -260,7 +260,7 @@ bs4_chapters_tweak <- function(output,
 }
 
 bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
-  text <- read_utf8_2(path)
+  text <- xfun::file_string(path)
 
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
   text <- gsub("\033", "&#8233;", text, fixed = TRUE, useBytes = TRUE)
@@ -615,12 +615,4 @@ bs4_check_dots <- function(...) {
       call. = FALSE
     )
   }
-}
-
-
-read_utf8_2 <- function(path) {
-  raw <- readBin(path,  "raw", file.size(path))
-  str <- rawToChar(raw)
-  Encoding(str) <- "UTF-8"
-  str
 }
