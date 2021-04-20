@@ -117,10 +117,12 @@ Div = function (div)
 
     -- get the attributes
     local options = div.attributes
-    if (options["data-latex"] ~= nil) then
+    if (not options["data-latex"] or not options["latex"]) then
         -- so that latex-divs.lua in rmarkdown does not activate
-        print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It has been removed.")
-        options["data-latex"] = nil
+        print("[WARNING] data-latex or latex attribute can't be used with one of bookdown custom environment."
+            .." All feature will not work (like referencing)."
+            .." Remove the attributes if you want to use bookdown special environments.")
+        return div
     end
 
     -- create the custom environment
@@ -190,5 +192,6 @@ end
 if (FORMAT:match 'html' or FORMAT:match 'latex') then
     return {{Meta = Meta}, {Div = Div}}
 else
+    print_debug("Lua Filter skipped. Output format not supported:", FORMAT)
     return {}
 end
