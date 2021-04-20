@@ -46,7 +46,7 @@ end
 -- create a unique id for a div with none provided
 local counter = 0
 local function unlabeled_div()
-    counter = counter + 1 
+    counter = counter + 1
     return "unlabeled-div-"..(counter)
 end
 
@@ -63,7 +63,7 @@ local function get_name(format, options)
 end
 
 -- Get metadata specific to bookdown for this filter
-Meta = function(m) 
+Meta = function(m)
     bookdownmeta = m.bookdown
     if (bookdownmeta and bookdownmeta.language and bookdownmeta.language.label) then
         -- For internationalization feature of bookdown
@@ -90,11 +90,11 @@ Div = function (div)
     -- checking if the class is one of the supported custom environment
     local env_type = {type = nil, env = nil}
     for i,v in ipairs(classes) do
-        if (theorem_abbr[v] ~= nil) then 
+        if (theorem_abbr[v] ~= nil) then
             env_type.type = "theorem"
             env_type.env = v
             break
-        elseif (proof_label[v] ~= nil) then 
+        elseif (proof_label[v] ~= nil) then
             env_type.type = "proof"
             env_type.env = v
             break
@@ -117,12 +117,12 @@ Div = function (div)
 
     -- get the attributes
     local options = div.attributes
-    if (options["data-latex"] ~= nil) then 
+    if (options["data-latex"] ~= nil) then
         -- so that latex-divs.lua in rmarkdown does not activate
         print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It has been removed.")
         options["data-latex"] = nil
     end
-    
+
     -- create the custom environment
     local label
     -- Create a label for referencing - only for theorem like env
@@ -133,7 +133,7 @@ Div = function (div)
 
     -- TODO: should we support beamer also ?
     if (FORMAT:match 'latex') then
-        local label_part 
+        local label_part
         if label then
             label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
         end
@@ -149,7 +149,7 @@ Div = function (div)
     elseif (FORMAT:match 'html') then
         local name = get_name('html', options)
 
-        -- if div is already processed by eng_theorem, it would also modify it. 
+        -- if div is already processed by eng_theorem, it would also modify it.
         -- we can ignore knowing how eng_theorem modifies options$html.before2
         -- It can be Plain or Para depending if a name was used or not.
         -- MAYBE NOT VERY RELIABLE THOUGH
@@ -186,4 +186,9 @@ Div = function (div)
     return div
 end
 
-return {{Meta = Meta}, {Div = Div}}
+-- only run filter for supported format
+if (FORMAT:match 'html' or FORMAT:match 'latex') then
+    return {{Meta = Meta}, {Div = Div}}
+else
+    return {}
+end
