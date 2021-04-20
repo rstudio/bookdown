@@ -122,6 +122,7 @@ Div = function (div)
         print("[WARNING] data-latex or latex attribute can't be used with one of bookdown custom environment."
             .." All feature will not work (like referencing)."
             .." Remove the attributes if you want to use bookdown special environments.")
+        print_debug("Exiting early due to attributes")
         return div
     end
 
