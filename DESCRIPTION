@@ -62,7 +62,7 @@ Description: Output formats and utilities for authoring books and technical docu
 License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
-    knitr (>= 1.22),
+    knitr (>= 1.31),
     rmarkdown (>= 2.6),
     xfun (>= 0.22),
     tinytex (>= 0.12),
