@@ -119,11 +119,8 @@ Div = function (div)
     local options = div.attributes
     if (options["data-latex"] ~= nil or options["latex"] ~= nil) then
         -- so that latex-divs.lua in rmarkdown does not activate
-        print("[WARNING] data-latex or latex attribute can't be used with one of bookdown custom environment."
-            .." All feature will not work (like referencing)."
-            .." Remove the attributes if you want to use bookdown special environments.")
-        print_debug("Exiting early due to attributes")
-        return div
+        print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It has been removed.")
+        options["data-latex"] = nil
     end
 
     -- create the custom environment
