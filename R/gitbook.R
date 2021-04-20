@@ -25,6 +25,10 @@ gitbook = function(
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
+
+  write_navbar_style(cover_image = config$stylish$cover_image,
+                     justify = config$stylish$justify)
+
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
       ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css))
@@ -91,7 +95,7 @@ gitbook_dependency = function(table_css) {
   list(jquery_dependency(), htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
-      'style.css', if (table_css) 'plugin-table.css', 'plugin-bookdown.css',
+      'style.css', if (table_css) 'plugin-navbar-style.css', 'plugin-table.css', 'plugin-bookdown.css',
       'plugin-highlight.css', 'plugin-search.css', 'plugin-fontsettings.css',
       'plugin-clipboard.css'
     )),
@@ -241,7 +245,8 @@ gitbook_config = function(config = list()) {
     view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
-    toc = list(collapse = 'subsection')
+    toc = list(collapse = 'subsection'),
+    stylish = list(cover_image = NULL, justify = FALSE)
   )
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript
@@ -287,3 +292,60 @@ download_filenames = function(config) {
   }
   if (length(downloads)) I(downloads)
 }
+
+# This function receives an image (local or url) or a valid color in the RGB
+# system in hexadecimal notation. If an image is passed, the function will
+# return the median color of the image, based on the median of the three color
+# channels of the RGB system.
+#' @importFrom magick image_data image_read
+channel_averages <- function(path_img, alpha = 0.6, probs = 0.5) {
+
+  is_hex <- grepl("^#(\\d|[a-f]){6,8}$", path_img, ignore.case = TRUE)
+
+  if(is_hex) path_img
+  else {
+    img <- as.integer(image_data(image_read(path = path_img)))
+
+    vec_rgb <- "names<-"(vapply(
+      X = 1L:3L,
+      FUN = function(i)
+        quantile(img[, , i], probs = probs) / 255,
+      FUN.VALUE = double(length = 1L)
+    ),
+    c("r", "g", "b"))
+
+    rgb(
+      red = vec_rgb["r"],
+      green = vec_rgb["g"],
+      blue = vec_rgb["b"],
+      alpha = alpha
+    )
+  }
+}
+
+# This function creates, at compile time, the plugin-navbar-style.css file for
+# elegant control of the navigation bar sections with cover_image, which can be
+# an image (local or url) or even a valid color in the RGB system in hexadecimal
+# writing. The informed color or the median of the three color channels of the
+# RGB system of the image considers will be used to highlight the movements
+# between sections in the navigation bar.
+write_navbar_style <- function(cover_image, justify) {
+  assets = bookdown_file('resources', 'gitbook')
+  owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
+
+  css_code <- ""
+  if(!is.null(cover_image))
+    css_code <- paste0(".book .book-summary ul.summary li a:hover,
+                        .book .book-summary ul.summary li.active > a
+                       { color: #000000; background-color: ",
+                        channel_averages(path_img = cover_image), "; } ",
+                       ".book .book-summary ul.summary li a:hover
+                       { background-color: #aaaaaa; }")
+
+  if(is.null(justify) || justify)
+    css_code <- paste0("p { text-align: justify; }", css_code)
+
+  write(x = css_code,
+        file = file.path("css", "plugin-navbar-style.css"))
+}
+

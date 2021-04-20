@@ -632,3 +632,4 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   # return the text or write to output file
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
 }
+
