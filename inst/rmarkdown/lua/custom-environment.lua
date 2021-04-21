@@ -141,9 +141,9 @@ Div = function (div)
         local name = get_name('latex', options)
         local beginEnv = string.format('\\begin{%s}%s\n%s', env_type.env, name, label_part or "")
         local endEnv = string.format('\\end{%s}', env_type.env)
-
-        -- if the first and last div blocks are paragraphs then we can
-        -- bring the environment begin/end closer to the content
+        -- similar to latex-div.lua in rmarkdown:
+        --   if the first and last div blocks are paragraphs then we can
+        --   bring the environment begin/end closer to the content
         if div.content[1].t == "Para" and div.content[#div.content].t == "Para" then
             table.insert(div.content[1].content, 1, pandoc.RawInline('tex', beginEnv))
             table.insert(div.content[#div.content].content, pandoc.RawInline('tex', '\n' .. endEnv))
