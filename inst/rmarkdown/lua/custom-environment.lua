@@ -121,6 +121,7 @@ Div = function (div)
         -- so that latex-divs.lua in rmarkdown does not activate
         print("[WARNING] data-latex attribute can't be used with one of bookdown custom environment. It has been removed.")
         options["data-latex"] = nil
+        options["latex"] = nil
     end
 
     -- create the custom environment
@@ -135,17 +136,21 @@ Div = function (div)
     if (FORMAT:match 'latex' or FORMAT:match 'beamer') then
         local label_part
         if label then
-            label_part = string.format( "\n\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
+            label_part = string.format("\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
         end
         local name = get_name('latex', options)
-        table.insert(
-            div.content, 1,
-            pandoc.RawBlock('tex', string.format('\\begin{%s}%s%s', env_type.env, name, label_part or ""))
-        )
-        table.insert(
-            div.content,
-            pandoc.RawBlock('tex', string.format('\\end{%s}', env_type.env))
-        )
+        local beginEnv = string.format('\\begin{%s}%s\n%s', env_type.env, name, label_part or "")
+        local endEnv = string.format('\\end{%s}', env_type.env)
+
+        -- if the first and last div blocks are paragraphs then we can
+        -- bring the environment begin/end closer to the content
+        if div.content[1].t == "Para" and div.content[#div.content].t == "Para" then
+            table.insert(div.content[1].content, 1, pandoc.RawInline('tex', beginEnv))
+            table.insert(div.content[#div.content].content, pandoc.RawInline('tex', '\n' .. endEnv))
+        else
+            table.insert(div.content, 1, pandoc.RawBlock('tex', beginEnv))
+            table.insert(div.content, pandoc.RawInline('tex', endEnv))
+        end
     elseif (FORMAT:match 'html') then
         local name = get_name('html', options)
 
