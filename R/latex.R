@@ -236,7 +236,7 @@ restore_block2 = function(x, global = FALSE) {
   # environments.
   # An options allow external format to skip this part
   # (useful for rticles see rstudio/bookdown#1001)
-  if (!xfun::isFALSE(getOption("bookdown.theorem.preamble", TRUE)) &&
+  if (getOption("bookdown.theorem.preamble", TRUE) &&
       !knitr::pandoc_to("beamer") &&
       length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
