@@ -8,7 +8,7 @@
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib)
+#'   [bslib](https://rstudio.github.io/bslib/)
 #'
 #' * Built in search (broken down by section) that helps you quickly find what
 #'   you're looking for.
@@ -26,7 +26,7 @@
 #'   footnotes.
 #'
 #' * R syntax highlighting and autolinking by
-#'   [downlit](http://downlit.r-lib.org/) is paired with a accessible
+#'   [downlit](https://downlit.r-lib.org/) is paired with a accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
