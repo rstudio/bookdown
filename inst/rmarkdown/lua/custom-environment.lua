@@ -133,7 +133,7 @@ Div = function (div)
     print_debug("label for reference -> ", label)
 
     -- TODO: should we support beamer also ?
-    if (FORMAT:match 'latex') then
+    if (FORMAT:match 'latex' or FORMAT:match 'beamer') then
         local label_part
         if label then
             label_part = string.format("\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
@@ -192,7 +192,7 @@ Div = function (div)
 end
 
 -- only run filter for supported format
-if (FORMAT:match 'html' or FORMAT:match 'latex') then
+if (FORMAT:match 'html' or FORMAT:match 'latex' or FORMAT:match 'beamer') then
     return {{Meta = Meta}, {Div = Div}}
 else
     print_debug("Lua Filter skipped. Output format not supported:", FORMAT)
