@@ -31,7 +31,7 @@ local function print_debug(label,obj,iter)
     label = "DEBUG (from custom-environment.lua): "..label
     if (debug_mode) then
         if not obj then
-          print(label)
+            print(label.." nil")
         elseif (type(obj) == "string") then
             print(label.." "..obj)
         elseif type(obj) == "table" then
