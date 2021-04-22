@@ -62,6 +62,14 @@ local function get_name(format, options)
     return name
 end
 
+-- Create a label for referencing - only for theorem like env
+local function create_label(env_type, id)
+    if (env_type.type ~= "theorem") then return nil end
+    label = string.format("%s:%s", theorem_abbr[env_type.env], id)
+    print_debug("label for reference -> ", label)
+    return label
+end
+
 -- Get metadata specific to bookdown for this filter
 Meta = function(m)
     bookdownmeta = m.bookdown
@@ -109,8 +117,6 @@ Div = function (div)
 
     -- get the id if it exists - it will we use to build label for reference
     local id = div.identifier
-    -- if no id, one is generated so that bookdown labelling mechanism works
-    if #id == 0 then id = unlabeled_div() end
     print_debug("id -> ", id)
     -- remove unwanted identifier on the div, as it will be on the span
     div.identifier = ""
@@ -124,23 +130,20 @@ Div = function (div)
         options["latex"] = nil
     end
 
-    -- create the custom environment
-    local label
-    -- Create a label for referencing - only for theorem like env
-    if (env_type.type == "theorem") then
-        label = string.format("%s:%s", theorem_abbr[env_type.env], id)
-    end
-    print_debug("label for reference -> ", label)
-
-    -- TODO: should we support beamer also ?
     if (FORMAT:match 'latex' or FORMAT:match 'beamer') then
+        -- build the name
+        local name = get_name('latex', options)
+        -- build the label string for theorem env type
+        -- For LaTeX, only insert \label{} if an id as been provided explicitly
         local label_part
-        if label then
+        if #id ~= 0 and env_type.type == "theorem" then
+            local label = create_label(env_type, id)
             label_part = string.format("\\protect\\hypertarget{%s}{}\\label{%s}", label, label)
         end
-        local name = get_name('latex', options)
+        -- build the env string
         local beginEnv = string.format('\\begin{%s}%s\n%s', env_type.env, name, label_part or "")
         local endEnv = string.format('\\end{%s}', env_type.env)
+
         -- similar to latex-div.lua in rmarkdown:
         --   if the first and last div blocks are paragraphs then we can
         --   bring the environment begin/end closer to the content
@@ -152,8 +155,6 @@ Div = function (div)
             table.insert(div.content, pandoc.RawInline('tex', endEnv))
         end
     elseif (FORMAT:match 'html') then
-        local name = get_name('html', options)
-
         -- if div is already processed by eng_theorem, it would also modify it.
         -- we can ignore knowing how eng_theorem modifies options$html.before2
         -- It can be Plain or Para depending if a name was used or not.
@@ -166,6 +167,13 @@ Div = function (div)
                 end
             end
         end
+
+        -- build the name
+        local name = get_name('html', options)
+        -- if no id, one is generated so that bookdown labelling mechanism works
+        if #id == 0 then id = unlabeled_div() end
+        -- build a label - only used to theorem type
+        local label = create_label(env_type, id)
 
         -- inserted the correct span depending on the environment type
         local span
