@@ -129,13 +129,6 @@ mark_dirs = function(x) {
   x
 }
 
-# TODO: use xfun::del_empty_dir()
-clean_empty_dir = function(dir) {
-  if (is.null(dir) || !dir_exists(dir)) return()
-  files = list.files(dir, all.files = TRUE, recursive = TRUE)
-  if (length(files) == 0) unlink(dir, recursive = TRUE)
-}
-
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
   # in the preview mode, only use some placeholder text instead of the full Rmd
   preview = opts$get('preview'); input = opts$get('input_rmd')
