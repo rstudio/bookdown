@@ -230,9 +230,15 @@ add_toc_bib = function(x) {
 restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
-  # add the necessary definition in the preamble when block2 engine (\BeginKnitrBlock) or pandoc
-  # fenced div (\begin) is used
-  if (length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
+  # add the necessary definition in the preamble when block2 engine
+  # (\BeginKnitrBlock) or pandoc fenced div (\begin) is used if not already
+  # define. But don't do it with beamer and it defines already amsthm
+  # environments.
+  # An options allow external format to skip this part
+  # (useful for rticles see rstudio/bookdown#1001)
+  if (getOption("bookdown.theorem.preamble", TRUE) &&
+      !knitr::pandoc_to("beamer") &&
+      length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
     theorem_label = vapply(theorem_abbr, function(a) {
       label_prefix(a)()
