@@ -86,7 +86,9 @@ jobs:
       - name: Cache R packages
         uses: actions/cache@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
+          path: |
+            ${{ env.R_LIBS_USER }}/*
+            !${{ env.R_LIBS_USER }}/pak
           key: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
           restore-keys: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
 
