@@ -12,19 +12,21 @@
 #' @param metadata The path to the EPUB metadata file.
 #' @param chapter_level The level by which the e-book is split into separate
 #'   \dQuote{chapter} files.
-#' @param epub_version Whether to use version 3 or 2 of EPUB. \code{"epub"} is
-#'   an alias for \code{"epub3"} since Pandoc 2.0 and \code{"epub2"} for earlier
-#'   version.
+#' @param epub_version Whether to use version 3 or 2 of EPUB. This correspond to
+#'   [Pandoc's supported output
+#'   format](https://pandoc.org/MANUAL.html#option--to). `"epub"` is an alias
+#'   for `"epub3"` since Pandoc 2.0 and `"epub2"` for earlier version.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
-#' @param template Pandoc template to use for rendering. Pass \code{"default"}
+#' @param template Pandoc template to use for rendering. Pass `"default"`
 #'   to use Pandoc's built-in template; pass a path to use a custom template.
 #'   The default pandoc template should be sufficient for most use cases. In
 #'   case you want to develop a custom template, we highly recommend to start
 #'   from the default EPUB templates at
-#'   \url{https://github.com/jgm/pandoc-templates/}.
+#'   <https://github.com/jgm/pandoc-templates/>.
 #' @note Figure/table numbers cannot be generated if sections are not numbered
-#'   (\code{number_sections = FALSE}).
+#'   (`number_sections = FALSE`).
+#' @md
 #' @export
 epub_book = function(
   fig_width = 5, fig_height = 4, dev = 'png', fig_caption = TRUE,
