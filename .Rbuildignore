@@ -14,3 +14,4 @@ inst/resources/gitbook/js/app.min.js.map
 ^_pkgdown\.yml$
 ^reference$
 ^pkgdown$
+^tests/manual$

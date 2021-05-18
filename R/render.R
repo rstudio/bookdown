@@ -44,7 +44,7 @@
 #' # will use the default format defined in index.Rmd or _output.yml
 #' bookdown::render_book("index.Rmd")
 #' # will use the options for format defined in YAML metadata
-#' bookdown::render_book("index.Rmd",  "pdf_book")
+#' bookdown::render_book("index.Rmd",  "bookdown::pdf_book")
 #' # If you pass an output format object, it must have all the options set
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
 #'
@@ -108,7 +108,7 @@ render_book = function(
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
-  on.exit(clean_empty_dir(output_dir), add = TRUE)
+  on.exit(xfun::del_empty_dir(output_dir), add = TRUE)
   if (!preview) unlink(ref_keys_path(output_dir))  # clean up reference-keys.txt
   # store output directory and the initial input Rmd name
   opts$set(
