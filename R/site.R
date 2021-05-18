@@ -34,7 +34,7 @@ bookdown_site = function(input, ...) {
     if (is.null(input_file)) {
       in_dir(input, render_book_script(output_format, envir, quiet))
     } else {
-      opts = options('rmarkdown.rstudio.preview' = FALSE)
+      opts = options(rmarkdown.rstudio.preview = FALSE)
       on.exit(options(opts), add = TRUE)
       res = xfun::in_dir(
         book_proj,
