@@ -34,13 +34,11 @@ bookdown_site = function(input, ...) {
     if (is.null(input_file)) {
       in_dir(input, render_book_script(output_format, envir, quiet))
     } else {
-      # Input file can be in a sub-directory  of the project. So we need to
-      # to emit our own message with absolute path
+      opts = options(rmarkdown.rstudio.preview = FALSE)
+      on.exit(options(opts), add = TRUE)
       res = xfun::in_dir(
-          book_proj,
-          suppress_output_message(
-            render_book(input_file, output_format, envir = envir, preview = TRUE)
-          )
+        book_proj,
+        render_book(input_file, output_format, envir = envir, preview = TRUE)
       )
       # emit our own message for IDE preview
       if (!quiet) message(paste0("\nOutput created: ", res))
@@ -91,18 +89,4 @@ find_book_proj = function(input) {
     '^index.Rmd$', '^\\s*site:\\s*bookdown::bookdown_site\\s*$'
   ), ncol = 2, byrow = TRUE, dimnames = list(NULL, c('file', 'pattern')))
   xfun::proj_root(input, rules)
-}
-
-# This function aims at suppressing the message "\nOutput created: <path>" emitted by render()
-# and used by RStudio to preview, so that another one can be emitted
-suppress_output_message <- function(expr, pattern = '^\nOutput created: ') {
-  withCallingHandlers(
-    expr,
-    message = function(e) {
-      if (grepl(pattern, e$message)) {
-        # muffle the message
-        invokeRestart("muffleMessage")
-      }
-    }
-  )
 }
