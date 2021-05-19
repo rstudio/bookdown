@@ -44,7 +44,7 @@
 #' # will use the default format defined in index.Rmd or _output.yml
 #' bookdown::render_book("index.Rmd")
 #' # will use the options for format defined in YAML metadata
-#' bookdown::render_book("index.Rmd",  "pdf_book")
+#' bookdown::render_book("index.Rmd",  "bookdown::pdf_book")
 #' # If you pass an output format object, it must have all the options set
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
 #'
