@@ -665,7 +665,7 @@ parse_fig_labels = function(content, global = FALSE) {
       }
       labs[[i]] = label_prefix(type, sep = ': ')(num)
       k = max(figs[figs <= i])
-      content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
+      content[k] = paste(c(content[k], sprintf('<span style="display:block;" id="%s"></span>', lab)), collapse = '')
     }, tab = {
       if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf(
