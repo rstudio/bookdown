@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.23
 
+- Figure reference links now sent correctly to the top of the figure - the anchor span gained a `display: block;` CSS styling to that effect (thanks, @GuillaumeBiessy, #1155)
+
 - [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
   ````markdown
   ::: {.theorem #label name="My Theorem"}
