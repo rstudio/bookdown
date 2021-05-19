@@ -1,6 +1,6 @@
 # CHANGES IN bookdown VERSION 0.23
 
-- Figure reference links now sent correctly to the top of the figure - the anchor span gained a `display: block;` CSS styling to that effect (thanks, @GuillaumeBiessy, #1155)
+- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
 
 - `epub_version` argument in `epub_book()` can now be set to `epub2` to creat EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
 
