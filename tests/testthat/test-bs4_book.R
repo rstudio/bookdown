@@ -3,9 +3,7 @@ test_that("bs4_book() repo specification works", {
   book <- create_minimal_bs_book(
     path = temp_path,
     output_options = list(
-      repo = list(
-        base = "https://github.com/hadley/ggplot2-book"
-      )
+      repo = "https://github.com/hadley/ggplot2-book"
     )
   )
   html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
