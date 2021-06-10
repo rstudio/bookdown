@@ -695,10 +695,12 @@ create_minimal_bs_book <- function(path,
     file.path(path, "index.Rmd")
   )
 
-  render_book(
-    path,
-    output_format = "bs4_book",
-    output_options = output_options,
-    quiet = TRUE
+  suppressMessages(
+    render_book(
+      path,
+      output_format = "bs4_book",
+      output_options = output_options,
+      quiet = TRUE
+    )
   )
 }
