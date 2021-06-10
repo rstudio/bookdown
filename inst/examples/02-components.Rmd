@@ -397,6 +397,42 @@ $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
 for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
 ```
 
+#### About the old syntax using knitr engine 
+
+Previously a `theorem` environment could be written like this 
+
+````markdown
+```{theorem, pyth, name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+```
+````
+
+It still works so that older projects do not break and so that Theorems and Proofs environment can be used with currently unsupported formats. When possible, we no longer advice to use this syntax and prefer the new one.
+
+This convertion between the two syntax is pretty straightforward. The above should be rewritten this way: 
+
+````markdown
+::: {.theorem #pyth name="Pythagorean theorem"
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+:::
+````
+
+You can use the helper function `bookdown::fence_theorems()` to convert a whole file or a text. This is a one-time operation. We tried to do the conversion from old to new syntax safely but some edge case could have been missed. For safety, the function will not replace inside the `input` file by default and will write into a new file:
+
+```r
+bookdown::fence_theorems("01-intro.Rmd", output = "01-intro-new.Rmd")
+```
+
+Using `output = NULL` will print the result of conversion in R console and is another way to check the conversion. If you are using a control version tool, you can set `output` and `input` to the same value as this will be safe enough for you to revert back if something is not right.
+
+
+
 ### Special headers
 
 There are a few special types of first-level headers that will be processed differently in **bookdown**. The first type is an unnumbered header that starts with the token `(PART)`. This kind of headers are translated to part titles\index{part}. If you are familiar with LaTeX, this basically means `\part{}`. When your book has a large number of chapters, you may want to organize them into parts, e.g.,
