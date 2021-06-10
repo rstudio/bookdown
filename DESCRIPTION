@@ -79,7 +79,9 @@ Suggests:
     testit (>= 0.9),
     tufte,
     xml2,
-    webshot
+    webshot,
+    testthat (>= 3.0.0),
+    withr
 URL: https://github.com/rstudio/bookdown
 BugReports: https://github.com/rstudio/bookdown/issues
 Remotes: 
@@ -90,3 +92,4 @@ SystemRequirements: Pandoc (>= 1.17.2)
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/testthat/edition: 3
