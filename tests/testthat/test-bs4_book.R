@@ -8,10 +8,18 @@ test_that("bs4_book() repo specification works - default case", {
   )
   html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
 
+  repo_a <- xml2::xml_find_first(html, "//a[@id='book-repo']")
+
   expect_equal(
-    xml2::xml_attr(xml2::xml_find_first(html, "//a[@id='book-repo']"), "href"),
+    xml2::xml_attr(xml2::xml_child(repo_a), "class"),
+    "fab fa-github"
+  )
+
+  expect_equal(
+    xml2::xml_attr(repo_a, "href"),
     "https://github.com/hadley/ggplot2-book"
   )
+
   expect_equal(
     xml2::xml_attr(xml2::xml_find_first(html, "//a[@id='book-edit']"), "href"),
     "https://github.com/hadley/ggplot2-book/edit/master/index.Rmd"
@@ -37,15 +45,13 @@ test_that("bs4_book() repo specification works - branch and subdir", {
   )
   html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
 
-  repo_a <- xml2::xml_find_first(html, "//a[@id='book-repo']")
-
   expect_equal(
-    xml2::xml_attr(xml2::xml_child(repo_a), "class"),
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
     "fab fa-github"
   )
 
   expect_equal(
-    xml2::xml_attr(repo_a, "href"),
+    xml2::xml_attr(xml2::xml_find_first(html, "//a[@id='book-repo']"), "href"),
     "https://github.com/hadley/ggplot2-book"
   )
   expect_equal(
