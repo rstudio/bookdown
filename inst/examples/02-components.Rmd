@@ -230,10 +230,13 @@ Theorems\index{theorem} and proofs are commonly used in articles and books in ma
 In **bookdown**, the types of theorem environments supported are in Table \@ref(tab:theorem-envs). To write a theorem, you can use the syntax below:
 
 ````markdown
-`r ''````{theorem}
-Here is my theorem.
-```
+::: {.theorem}
+This is a theorem
+:::
 ````
+
+This syntax is based on Pandoc's [fenced `Div` blocks](https://pandoc.org/MANUAL.html#divs-and-spans) and can already be used in any R Markdown document to write [Custom Block](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). **bookdown** is only offering special handling for Theorems and Proofs environments. One important advantage of this syntax is that it is Pandoc's Markdown and you can write any valid markdown inside the block.
+
 
 (ref:theorem-envs) Theorem environments in **bookdown**.
 
@@ -246,55 +249,47 @@ knitr::kable(data.frame(
 ), caption = '(ref:theorem-envs)', booktabs = TRUE)
 ```
 
-To write other theorem environments, replace ```` ```{theorem} ```` with other environment names in Table \@ref(tab:theorem-envs), e.g., ```` ```{lemma} ````.
+To write other theorem environments, replace `::: {.theorem}` with other environment names in Table \@ref(tab:theorem-envs), e.g., `::: {.lemma}` .
 
 A theorem can have a `name` option so its name will be printed, e.g.,
 
 ````markdown
-`r ''````{theorem, name="Pythagorean theorem"}
+::: {.theorem name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 $$a^2 + b^2 = c^2$$
-```
+:::
 ````
 
-If you want to refer to a theorem, you should label it. The label can be written after ```` ```{theorem````, e.g.,
+If you want to refer to a theorem, you should label it. The label can be written by placing in id in the fenced `Div` after e.g.,
 
 ````markdown
-`r ''````{theorem, label="foo"}
+::: { .theorem #foo }
 A labeled theorem here.
-```
-````
-
-The `label` option can be implicit, e.g., the following theorem has the label `bar`:
-
-````markdown
-`r ''````{theorem, bar}
-A labeled theorem here.
-```
+:::
 ````
 
 After you label a theorem, you can refer to it using the syntax `\@ref(prefix:label)`.\index{cross-reference} See the column `Label Prefix` in Table \@ref(tab:theorem-envs) for the value of `prefix` for each environment. For example, we have a labeled and named theorem below, and `\@ref(thm:pyth)` gives us its theorem number \@ref(thm:pyth):
 
 ````markdown
-`r ''````{theorem, pyth, name="Pythagorean theorem"}
+::: {.theorem #pyth name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 
 $$a^2 + b^2 = c^2$$
-```
+:::
 ````
 
-```{theorem, pyth, name="Pythagorean theorem"}
+::: {.theorem #pyth name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 
 $$a^2 + b^2 = c^2$$
-```
+:::
 
 The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named. The only difference is that since they are unnumbered, you cannot reference them.
 
-We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF, HTML, or EPUB. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package.
+We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF or HTML. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package. If you don't want the default theorem definitions to happen, you can set the option `bookdown.theorem.preamble` to FALSE. This can be useful for example to avoid conflict in [single document project](#a-single-document) using `pdf_book()` with a `base_format` already including **amsmath** definition.
 
 Theorems are numbered by chapters by default. If there are no chapters in your document, they are numbered by sections instead. If the whole document is unnumbered (the output format option `number_sections = FALSE`), all theorems are numbered sequentially from 1, 2, ..., N. LaTeX supports numbering one theorem environment after another, e.g., let theorems and lemmas share the same counter. This is not supported for HTML/EPUB output in **bookdown**. You can change the numbering scheme in the LaTeX preamble by defining your own theorem environments, e.g.,
 
@@ -305,24 +300,16 @@ Theorems are numbered by chapters by default. If there are no chapters in your d
 
 When **bookdown** detects `\newtheorem{theorem}` in your LaTeX preamble, it will not write out its default theorem definitions, which means you have to define all theorem environments by yourself. For the sake of simplicity and consistency, we do not recommend that you do this. It can be confusing when your Theorem 18 in PDF becomes Theorem 2.4 in HTML.
 
-Theorem and proof environments will be hidden if the chunk option `echo` is set to `FALSE`. To make sure they are always shown, you may add the chunk option `echo=TRUE`, e.g.,
-
-````markdown
-`r ''````{theorem, echo=TRUE}
-Here is my theorem.
-```
-````
-
 Below we show more examples^[Some examples are adapted from the Wikipedia page https://en.wikipedia.org/wiki/Characteristic_function_(probability_theory)] of the theorem and proof environments, so you can see the default styles in **bookdown**.
 
-```{definition}
+::: {.definition}
 The characteristic function of a random variable $X$ is defined by
 
 $$\varphi _{X}(t)=\operatorname {E} \left[e^{itX}\right], \; t\in\mathcal{R}$$
-```
+:::
 
 
-```{example}
+::: {.example}
 We derive the characteristic function of $X\sim U(0,1)$ with the probability density function $f(x)=\mathbf{1}_{x \in [0,1]}$.
 
 \begin{equation*}
@@ -339,25 +326,25 @@ We derive the characteristic function of $X\sim U(0,1)$ with the probability den
 \end{equation*}
 
 Note that we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
-```
+:::
 
-```{lemma, chf-pdf}
+::: {.lemma #chf-pdf}
 For any two random variables $X_1$, $X_2$, they both have the same probability distribution if and only if
 
 $$\varphi _{X_1}(t)=\varphi _{X_2}(t)$$
-```
+:::
 
-```{theorem, chf-sum}
+::: {.theorem #chf-sum}
 If $X_1$, ..., $X_n$ are independent random variables, and $a_1$, ..., $a_n$ are some constants, then the characteristic function of the linear combination $S_n=\sum_{i=1}^na_iX_i$ is
 
 $$\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}t)\cdots \varphi _{X_{n}}(a_{n}t)$$
-```
+:::
 
-```{proposition}
+::: {.proposition}
 The distribution of the sum of independent Poisson random variables $X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
-```
+:::
 
-```{proof}
+::: {.proof}
 The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)=e^{\lambda (e^{it}-1)}$. Let $P_n=\sum_{i=1}^nX_i$. We know from Theorem \@ref(thm:chf-sum) that
 
 \begin{equation*}
@@ -369,45 +356,45 @@ The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)
 \end{equation*}
 
 This is the characteristic function of a Poisson random variable with the parameter $\lambda=\sum_{i=1}^n \lambda_i$. From Lemma \@ref(lem:chf-pdf), we know the distribution of $P_n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
-```
+:::
 
-```{remark}
+::: {.remark}
 In some cases, it is very convenient and easy to figure out the distribution of the sum of independent random variables using characteristic functions.
-```
+:::
 
-```{corollary}
+::: {.corollary}
 The characteristic function of the sum of two independent random variables $X_1$ and $X_2$ is the product of characteristic functions of $X_1$ and $X_2$, i.e.,
 
 $$\varphi _{X_1+X_2}(t)=\varphi _{X_1}(t) \varphi _{X_2}(t)$$
-```
+:::
 
-```{exercise, name="Characteristic Function of the Sample Mean"}
+::: {.exercise name="Characteristic Function of the Sample Mean"}
 Let $\bar{X}=\sum_{i=1}^n \frac{1}{n} X_i$ be the sample mean of $n$ independent and identically distributed random variables, each with characteristic function $\varphi _{X}$. Compute the characteristic function of $\bar{X}$. 
-```
+:::
 
-```{solution}
+::: {.solution}
 Applying Theorem \@ref(thm:chf-sum), we have
 
 $$\varphi _{\bar{X}}(t)=\prod_{i=1}^n \varphi _{X_i}\left(\frac{t}{n}\right)=\left[\varphi _{X}\left(\frac{t}{n}\right)\right]^n.$$
-```
+:::
   
-```{hypothesis, name="Riemann hypothesis"}
+::: {.hypothesis name="Riemann hypothesis"}
 The Riemann Zeta-function is defined as
 $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
 for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
-```
+:::
 
 #### About the old syntax using knitr engine 
 
 Previously a `theorem` environment could be written like this 
 
 ````markdown
-```{theorem, pyth, name="Pythagorean theorem"}
+::: {.theorem #pyth name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 
 $$a^2 + b^2 = c^2$$
-```
+:::
 ````
 
 It still works so that older projects do not break and so that Theorems and Proofs environment can be used with currently unsupported formats. When possible, we no longer advice to use this syntax and prefer the new one.
