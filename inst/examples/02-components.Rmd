@@ -268,7 +268,7 @@ $$a^2 + b^2 = c^2$$
 :::
 ````
 
-If you want to refer to a theorem, you should label it. The label can be written by adding an id to the block or the form `#label` e.g.,
+If you want to refer to a theorem, you should label it. The label can be written by adding an id to the block of the form `#label` e.g.,
 
 ````markdown
 ::: {.theorem #foo}
