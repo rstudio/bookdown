@@ -230,20 +230,13 @@ Theorems\index{theorem} and proofs are commonly used in articles and books in ma
 In **bookdown**, the types of theorem environments supported are in Table \@ref(tab:theorem-envs). To write a theorem, you can use the syntax below:
 
 ````markdown
-::: theorem
-This is a `theorem` environment which can contain **any** _markdown_ syntax
-:::
-````
-
-or the longer version
-
-````markdown
 ::: {.theorem}
-This is a second theorem
+This is a `theorem` environment that can contain **any**
+_Markdown_ syntax.
 :::
 ````
 
-This syntax is based on Pandoc's [fenced `Div` blocks](https://pandoc.org/MANUAL.html#divs-and-spans) and can already be used in any R Markdown document to write [Custom Block](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). **bookdown** is only offering special handling for Theorems and Proofs environments. One important advantage of this syntax is that it is Pandoc's Markdown and you can write any valid markdown inside the block.
+This syntax is based on Pandoc's [fenced `Div` blocks](https://pandoc.org/MANUAL.html#divs-and-spans) and can already be used in any R Markdown document to write [custom blocks.](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) **Bookdown** only offers special handling for theorem and proof environments. Since this uses the syntax of Pandoc's Markdown, you can write any valid Markdown text inside the block.
 
 (ref:theorem-envs) Theorem environments in **bookdown**.
 
@@ -256,9 +249,9 @@ knitr::kable(data.frame(
 ), caption = '(ref:theorem-envs)', booktabs = TRUE)
 ```
 
-To write other theorem environments, replace `::: theorem` with other environment names in Table \@ref(tab:theorem-envs), e.g., `::: lemma` .
+To write other theorem environments, replace `::: {.theorem}` with other environment names in Table \@ref(tab:theorem-envs), e.g., `::: {.lemma}`.
 
-A theorem can have a `name` attribute so its name will be printed. In this case, the long version syntax must be used, e.g.,
+A theorem can have a `name` attribute so its name will be printed. For example,
 
 ````markdown
 ::: {.theorem name="Pythagorean theorem"}
@@ -268,7 +261,7 @@ $$a^2 + b^2 = c^2$$
 :::
 ````
 
-If you want to refer to a theorem, you should label it. The label can be written by adding an id to the block of the form `#label` e.g.,
+If you want to refer to a theorem, you should label it. The label can be provided as an ID to the block of the form `#label`. For example,
 
 ````markdown
 ::: {.theorem #foo}
@@ -294,9 +287,9 @@ and $a$ and $b$ denote the lengths of the other two sides, we have
 $$a^2 + b^2 = c^2$$
 :::
 
-The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named using the `name` attribute. The only difference is that since they are unnumbered, you cannot reference them. Setting an id will have not effect.
+The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named using the `name` attribute. The only difference is that since they are unnumbered, you cannot reference them, even if you provide an ID to a proof environment.
 
-We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF or HTML. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package. If you don't want the default theorem definitions to happen, you can set the option `bookdown.theorem.preamble` to FALSE. This can be useful for example to avoid conflict in [single document project](#a-single-document) using `pdf_book()` with a `base_format` already including **amsmath** definition.
+We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF or HTML. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package. If you do not want the default theorem definitions to be automatically added by **bookdown**, you can set `options(bookdown.theorem.preamble = FALSE)`. This can be useful, for example, to avoid conflicts in single documents (Section \@ref(a-single-document)) using the output format `bookdown::pdf_book` with a `base_format` that has already included **amsmath** definitions.
 
 Theorems are numbered by chapters by default. If there are no chapters in your document, they are numbered by sections instead. If the whole document is unnumbered (the output format option `number_sections = FALSE`), all theorems are numbered sequentially from 1, 2, ..., N. LaTeX supports numbering one theorem environment after another, e.g., let theorems and lemmas share the same counter. This is not supported for HTML/EPUB output in **bookdown**. You can change the numbering scheme in the LaTeX preamble by defining your own theorem environments, e.g.,
 
@@ -391,9 +384,9 @@ $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
 for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
 :::
 
-#### About the old syntax using **knitr** engine {#theorem-engine}
+#### A note on the old syntax {#theorem-engine}
 
-Previously a `theorem` environment could be written like this 
+For older versions of **bookdown** (before v0.21), a `theorem` environment could be written like this:
 
 ````markdown
 `r ''````{theorem pyth, name="Pythagorean theorem"}
@@ -404,9 +397,9 @@ $$a^2 + b^2 = c^2$$
 ```
 ````
 
-This syntax still works and still needs to be used with other format than HTML or PDF for now as these custom blocks using Fenced `Div` only work for HTML and PDF. When possible, we no longer advice to use this syntax and prefer the new one. If you can't, know that this is still supported for backward compatibility.
+This syntax still works, but we do not recommend it since the new syntax allows you to write richer content and has a cleaner implementation. However, note that the old syntax has to be used if you want the environment to work with output formats in addition to HTML and PDF, such as EPUB. The fenced `Div` syntax only works for HTML and PDF output at the moment, and we will try to improve it in the future.
 
-This conversion between the two syntax is pretty straightforward. The above should be rewritten this way: 
+This conversion between the two syntaxes is straightforward. The above theorem could be rewritten in this way:
 
 ````markdown
 ::: {.theorem #pyth name="Pythagorean theorem"}
@@ -417,15 +410,13 @@ $$a^2 + b^2 = c^2$$
 :::
 ````
 
-You can use the helper function `bookdown::fence_theorems()` to convert a whole file or a text. This is a one-time operation. We tried to do the conversion from old to new syntax safely but some edge case could have been missed. For safety, the function will not replace inside the `input` file by default and will write into a new file:
+You can use the helper function `bookdown::fence_theorems()` to convert a whole file or a piece of text. This is a one-time operation. We have tried to do the conversion from old to new syntax safely, but we might have missed some edge cases. To make sure you do not overwrite the `input` file by accident, you can write the converted source to a new file, e.g.,
 
 ```r
 bookdown::fence_theorems("01-intro.Rmd", output = "01-intro-new.Rmd")
 ```
 
-Using `output = NULL` will print the result of conversion in R console and is another way to check the conversion. If you are using a control version tool, you can set `output` and `input` to the same value as this will be safe enough for you to revert back if something is not right.
-
-
+Then double check the content of `01-intro-new.Rmd`. Using `output = NULL` will print the result of conversion in the R console, and is another way to check the conversion. If you are using a control version tool, you can set `output` to be the same as `input`, as it should be safe and easy for you to revert the change if anything goes wrong.
 
 ### Special headers
 
