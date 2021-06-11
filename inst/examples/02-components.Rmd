@@ -618,7 +618,7 @@ Cross-references still work even when we refer to an item that is not on the cur
 ## Custom blocks
 
 :::{.rmdimportant latex=true}
-A new syntax is now adviced to create custom blocks. We invite you to refer to [Chapter 9.6 in the R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) [@rmarkdown2020] and no more use the `block` and `block2` engine described below. Those will be deprecated in future version of **bookdown**. Please make the change in your content if you are still using one of this engine directly.
+We recommend that you use the new syntax to create custom blocks, which is introduced in [Section 9.6 in the _R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) [@rmarkdown2020]. We do not recommend using the `block` or `block2` engine described below. Those will be deprecated in a future version of **bookdown**. Please remember to switch to the new syntax for your content if you are still using one of these engines. Thanks for your understanding!
 :::
 
 You can generate custom blocks\index{custom block} using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
