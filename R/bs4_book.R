@@ -668,31 +668,17 @@ bs4_check_dots <- function(...) {
 # test helpers -----------------------------------------------------------------
 
 create_minimal_bs_book <- function(path,
+                                   name = "book",
+                                   title = "Awesome Cookbook",
+                                   author = "Yoda",
                                    metadata = NULL,
-                                   content = NULL,
                                    output_options = NULL) {
-
-  # Default metadata
-  if (is.null(metadata)) {
-    metadata <- list(author = "Someone Inspired", title = "Awesome Cookbook")
-  }
-
-  metadata <- yaml::as.yaml(metadata)
-
-  if (is.null(content)) {
-    content <-  c(
-      "", "# A cool project right", "",
-      "Some more text yippee", "",
-      "```{r}", "plot(1:42)", "```"
-    )
-  }
-
-  writeLines(
-    c(
-      "---", metadata, "---",
-      content
-    ),
-    file.path(path, "index.Rmd")
+  book_skeleton(
+    name = name,
+    title = title,
+    author = author,
+    index_metadata = metadata,
+    path = path
   )
 
   suppressMessages(

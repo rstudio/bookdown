@@ -37,10 +37,12 @@ bookdown_skeleton = function(path) {
 #' @param chapters The chapter titles.
 #' @param documentclass The LaTeX document class.
 #' @param references The title of the references section.
+#' @param path The directory in which to create the book.
 #' @noRd
 book_skeleton = function(
   name, title, author, chapters = c('Preface {-}', 'Introduction'),
-  documentclass = 'book', references = 'References'
+  documentclass = 'book', references = 'References', path = getwd(),
+  index_metadata
 ) {
   rmd_files = gsub('[^-a-zA-Z0-9]', '', gsub('\\s+', '-', c(chapters, references)))
   rmd_files = sprintf('%02d-%s.Rmd', seq_along(rmd_files) - 1, rmd_files)
@@ -54,19 +56,25 @@ book_skeleton = function(
   for (i in seq_along(rmd_files)) {
     content = c(titles[i], '')
     if (i == 1) {
+      default_metadata <- list(
+        title = title,
+        author = author,
+        documentclass = documentclass
+      )
+      index_metadata = modifyList(default_metadata, as.list(index_metadata))
       content = c(
-        '---', sprintf('title: "%s"', title), sprintf('author: "%s"', author),
-        sprintf('documentclass: "%s"', documentclass),
-        'site: bookdown::bookdown_site', '---', '', content,
+        '---', yaml::as.yaml(index_metadata), '---', '',
+        content,
         'Start writing your book here. If you are in RStudio,',
         'Click the Build button to build the book.'
       )
     }
-    write_file(content, rmd_files[i])
+    write_file(content, file.path(path, rmd_files[i]))
   }
   write_file(
-    sprintf('bookdown::%s: default', c('gitbook', 'pdf_book', 'epub_book')), '_output.yml'
+    sprintf('bookdown::%s: default', c('gitbook', 'pdf_book', 'epub_book')),
+    file.path(path, '_output.yml')
   )
-  write_file(sprintf('book_filename: %s', name), '_bookdown.yml')
+  write_file(sprintf('book_filename: %s', name), file.path(path, '_bookdown.yml'))
 }
 
