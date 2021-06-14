@@ -546,8 +546,12 @@ tweak_metadata <- function(html, path) {
       text <- gsub("  ", " ", text)
       text <- gsub("^[[:space:]]+", "", text)
       text <- gsub("[[:space:]]+$", "", text)
-      text <- substr(text, 1, 200)
-      xml2::xml_set_attr(og_description, "content", text)
+      if (nzchar(text)) {
+        words <- unlist(strsplit(text, " "))
+        no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
+        max_n <- max(which(no_char<= 197))
+        xml2::xml_set_attr(og_description, "content", paste0(paste(words[1: max_n], collapse = " "), "..."))
+      }
   }
 }
 }
