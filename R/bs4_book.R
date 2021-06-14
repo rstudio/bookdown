@@ -37,14 +37,11 @@
 #'   against the background.
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
-#'   `branch` and `subdir` (see "Specifying the repository"). This only works for
-#'   GitHub and GitLab (self-hosted or not).
+#'   `branch` and `subdir` (see "Specifying the repository").
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
 #'
 #' @section Specifying the repository:
-#'
-#' (GitHub or GitLab)
 #'
 #' If your book has a default branch called main you can use
 #'
@@ -64,7 +61,20 @@
 #'     branch: main
 #'     subdir: book
 #' ```
-
+#'
+#' By default if the repo URL contains "github" it will get a GitHub font-awesome
+#' icon, and otherwise a GitLab font-awesome icon.
+#' To use another icon, specify it (Font Awesome 5.15.3).
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#'     subdir: book
+#'     icon: "fas fa-air-freshener"
+#' ```
+#'
 #' @export
 #' @md
 bs4_book <- function(
@@ -438,9 +448,12 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   }
 
   if (!is.null(repo$base) && !grepl("github\\.com", repo$base)) {
-    template_link_icon(html, ".//a[@id='book-repo']", "fab fa-gitlab")
-    template_link_icon(html, ".//a[@id='book-source']", "fab fa-gitlab")
-    template_link_icon(html, ".//a[@id='book-edit']", "fab fa-gitlab")
+
+    icon <-repo$icon %||% "fab fa-gitlab"
+
+    template_link_icon(html, ".//a[@id='book-repo']", icon)
+    template_link_icon(html, ".//a[@id='book-source']", icon)
+    template_link_icon(html, ".//a[@id='book-edit']", icon)
   }
 
   template_link(html, ".//a[@id='book-repo']", repo$base)
@@ -663,6 +676,13 @@ bs4_check_dots <- function(...) {
       call. = FALSE
     )
   }
+}
+
+`%||%` <- function(x, y) {
+  if (!is.null(x)) {
+    return(x)
+  }
+  y
 }
 
 # test helpers -----------------------------------------------------------------

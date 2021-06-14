@@ -64,7 +64,6 @@ test_that("bs4_book() repo specification works - branch and subdir", {
   )
 })
 
-
 test_that("bs4_book() repo specification works - GitLab", {
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
@@ -78,5 +77,24 @@ test_that("bs4_book() repo specification works - GitLab", {
   expect_equal(
     xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
     "fab fa-gitlab"
+  )
+})
+
+test_that("bs4_book() repo specification works - custom icon", {
+  temp_path <- withr::local_tempdir()
+  book <- create_minimal_bs_book(
+    path = temp_path,
+    output_options = list(
+      repo = list(
+        base = "https://gitlab.com/hadley/ggplot2-book",
+        icon = "fas fa-air-freshener"
+      )
+    )
+  )
+  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
+    "fas fa-air-freshener"
   )
 })
