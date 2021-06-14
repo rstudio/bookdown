@@ -272,6 +272,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
   tweak_footnotes(html)
   tweak_part_screwup(html)
   tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
+  tweak_metadata(html, path)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -513,6 +514,46 @@ template_link <- function(html, xpath, href) {
   } else {
     xml2::xml_attr(node, "href") <- href
   }
+}
+
+tweak_metadata <- function(html, path) {
+  file <- basename(path)
+  if (file == "index.html") {
+    return(invisible())
+  } else {
+    # Fix og:url
+    og_url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
+    base_url <- xml2::xml_attr(og_url, "content")
+    if (!grepl("/$", base_url)) {
+      base_url <- paste0(base_url, "/")
+    }
+    xml2::xml_set_attr(og_url, "content", paste0(base_url, file))
+    # Fix description
+    og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+
+    if (file == "table-of-contents.html") {
+      xml2::xml_set_attr(
+        og_description,
+        "content",
+        paste("Table of contents;", xml2::xml_attr(og_description, "content"))
+      )
+    } else {
+      contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
+      xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
+      xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
+      text <- xml2::xml_text(contents)
+      text <- gsub("\\\n", " ", text)
+      text <- gsub("  ", " ", text)
+      text <- gsub("^[[:space:]]+", "", text)
+      text <- gsub("[[:space:]]+$", "", text)
+      text <- substr(text, 1, 200)
+      xml2::xml_set_attr(og_description, "content", text)
+  }
+}
+}
+# https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
+copy_html <- function(html) {
+  xml2::read_html(as.character(html))
 }
 
 # index -------------------------------------------------------------------
