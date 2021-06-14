@@ -24,7 +24,7 @@ against the background.}
 
 \item{repo}{Either link to repository where book is hosted, used to generate
 view source and edit buttons or a list with repository \code{base} link, default
-\code{branch} and \code{subdir} (see "Specifying the repository").}
+\code{branch}, \code{subdir} and \code{icon} (see "Specifying the repository").}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
