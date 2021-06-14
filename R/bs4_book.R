@@ -550,7 +550,11 @@ tweak_metadata <- function(html, path) {
         words <- unlist(strsplit(text, " "))
         no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
         max_n <- max(which(no_char<= 197))
-        xml2::xml_set_attr(og_description, "content", paste0(paste(words[1: max_n], collapse = " "), "..."))
+        desc <- paste(words[1: max_n], collapse = " ")
+        if (max_n != length(words)) {
+          desc <- paste0(desc, "...")
+        }
+        xml2::xml_set_attr(og_description, "content", desc)
       }
   }
 }
