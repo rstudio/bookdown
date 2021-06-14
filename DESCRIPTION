@@ -84,8 +84,6 @@ Suggests:
     webshot,
     testthat (>= 3.0.0),
     withr
-URL: https://github.com/rstudio/bookdown
-    webshot
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
