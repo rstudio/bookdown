@@ -8,7 +8,7 @@
 <meta property="og:title" content="$pagetitle$" />
 <meta property="og:type" content="book" />
 $if(url)$<meta property="og:url" content="$url$" />$endif$
-$if(cover-image)$<meta property="og:image" content="$url$$cover-image$" />$endif$
+$if(cover-image)$<meta property="og:image" content="$url$/$cover-image$" />$endif$
 $if(description)$<meta property="og:description" content="$description$" />$endif$
 $if(github-repo)$<meta name="github-repo" content="$github-repo$" />$endif$
 
@@ -86,6 +86,34 @@ $if(abstract)$
 </style>
 $endif$
 
+$if(csl-css)$
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+$if(csl-entry-spacing)$
+  margin-bottom: $csl-entry-spacing$;
+$endif$
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+$endif$
+
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
@@ -104,6 +132,12 @@ code {
 img {
   max-width:100%;
   height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if boostrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
 }
 </style>
 $endif$

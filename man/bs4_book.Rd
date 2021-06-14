@@ -39,7 +39,7 @@ your on a phone, tablet, or desktop.
 Some of the main features:
 \itemize{
 \item Easy customisation of colours and fonts with
-\href{https://rstudio.github.io/bslib}{bslib}
+\href{https://rstudio.github.io/bslib/}{bslib}
 \item Built in search (broken down by section) that helps you quickly find what
 you're looking for.
 \item A sidebar containing a within-chapter table of contents that makes
@@ -52,7 +52,7 @@ way when reading, but is easily accessible if you need it.
 to. This theme is best paired with a reference style that generates
 footnotes.
 \item R syntax highlighting and autolinking by
-\href{http://downlit.r-lib.org/}{downlit} is paired with a accessible
+\href{https://downlit.r-lib.org/}{downlit} is paired with a accessible
 colour scheme designed by Alison Hill.
 }
 

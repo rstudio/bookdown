@@ -2,6 +2,7 @@ bookdown_skeleton = function(path) {
 
   # ensure directory exists
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  path = xfun::normalize_path(path)
 
   # copy 'resources' folder to path
   resources = bookdown_file('rstudio', 'templates', 'project', 'resources')
@@ -10,6 +11,7 @@ bookdown_skeleton = function(path) {
 
   source = file.path(resources, files)
   target = file.path(path, files)
+  lapply(unique(dirname(target)), dir_create)
   file.copy(source, target)
 
   # add book_filename to _bookdown.yml and default to the base path name

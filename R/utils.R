@@ -129,13 +129,6 @@ mark_dirs = function(x) {
   x
 }
 
-# TODO: use xfun::del_empty_dir()
-clean_empty_dir = function(dir) {
-  if (is.null(dir) || !dir_exists(dir)) return()
-  files = list.files(dir, all.files = TRUE, recursive = TRUE)
-  if (length(files) == 0) unlink(dir, recursive = TRUE)
-}
-
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
   # in the preview mode, only use some placeholder text instead of the full Rmd
   preview = opts$get('preview'); input = opts$get('input_rmd')
@@ -395,7 +388,7 @@ first_html_format = function() {
   fallback = 'bookdown::gitbook'
   if (!file.exists('index.Rmd')) return(fallback)
   formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html', formats, value = TRUE)
+  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
   if (length(formats) == 0) fallback else formats[1]
 }
 
@@ -499,7 +492,7 @@ eng_proof = function(options) {
     "The type of proof '", type, "' is not supported yet."
   )
   options$type = type
-  label = label_prefix(type, label_names_math2)
+  label = label_prefix(type, label_names_math2)()
   name = options$name; to_md = output_md()
   if (length(name) == 1) {
     if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))

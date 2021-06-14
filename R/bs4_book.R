@@ -8,7 +8,7 @@
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib)
+#'   [bslib](https://rstudio.github.io/bslib/)
 #'
 #' * Built in search (broken down by section) that helps you quickly find what
 #'   you're looking for.
@@ -26,7 +26,7 @@
 #'   footnotes.
 #'
 #' * R syntax highlighting and autolinking by
-#'   [downlit](http://downlit.r-lib.org/) is paired with a accessible
+#'   [downlit](https://downlit.r-lib.org/) is paired with a accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
@@ -295,9 +295,10 @@ bs4_chapters_tweak <- function(output,
 }
 
 bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
-  text <- readChar(path, file.size(path))
+  text <- xfun::file_string(path)
+
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
-  text <- gsub("\033", "&#8233;", text, fixed = TRUE)
+  text <- gsub("\033", "&#8233;", text, fixed = TRUE, useBytes = TRUE)
   html <- xml2::read_html(text, encoding = "UTF-8")
 
   tweak_tables(html)

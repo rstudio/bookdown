@@ -48,7 +48,7 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
   }
 
   # number sections now works in markdown_document2
-  content <- readLines("rmd/number-sections.md")
+  content = readLines("rmd/number-sections.md")
   if (!any(grepl("(## )?1.1 subsection 1", content)) ||
       !any(grepl("<a href=.*>2.1</a>", content))) {
     stop("Something wrong in number-sections.Rmd")
