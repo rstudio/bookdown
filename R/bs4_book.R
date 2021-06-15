@@ -535,13 +535,18 @@ tweak_metadata <- function(html, path) {
     set_content(og_url, paste0(base_url, file))
     # Fix descriptions
     og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
-    general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')``
+    general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
 
     if (file == "table-of-contents.html") {
-      description_string <- paste(
-        "Table of contents;",
-        xml2::xml_attr(og_description, "content")
-      )
+      description_string <- if (!is.na(xml2::xml_attr(og_description, "content"))) {
+        paste(
+          "Table of contents;",
+          xml2::xml_attr(og_description, "content")
+        )
+      } else {
+        "Table of contents"
+      }
+
       set_content(og_description, description_string)
       set_content(general_description, description_string)
     } else {
