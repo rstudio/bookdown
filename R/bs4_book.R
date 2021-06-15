@@ -452,8 +452,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
 
     icon <- if (grepl("github\\.com", repo$base)) {
       repo$icon %n% "fab fa-github"
-    }
-    else {
+    } else {
       repo$icon %n% "fab fa-gitlab"
     }
 
