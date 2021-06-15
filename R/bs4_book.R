@@ -521,22 +521,29 @@ tweak_metadata <- function(html, path) {
   if (file == "index.html") {
     return(invisible())
   } else {
+    # Fix generator
+    generator <- xml2::xml_find_first(html, '//meta[@property="generator"]')
+    bookdown_string <- sprintf("bookdown %s, bs4_book()", packageVersion("bookdown"))
+    set_content(generator, bookdown_string)
+
     # Fix og:url
     og_url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
     base_url <- xml2::xml_attr(og_url, "content")
     if (!grepl("/$", base_url)) {
       base_url <- paste0(base_url, "/")
     }
-    xml2::xml_set_attr(og_url, "content", paste0(base_url, file))
-    # Fix description
+    set_content(og_url, paste0(base_url, file))
+    # Fix descriptions
     og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+    general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')``
 
     if (file == "table-of-contents.html") {
-      xml2::xml_set_attr(
-        og_description,
-        "content",
-        paste("Table of contents;", xml2::xml_attr(og_description, "content"))
+      description_string <- paste(
+        "Table of contents;",
+        xml2::xml_attr(og_description, "content")
       )
+      set_content(og_description, description_string)
+      set_content(general_description, description_string)
     } else {
       contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
       xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
@@ -550,11 +557,12 @@ tweak_metadata <- function(html, path) {
         words <- unlist(strsplit(text, " "))
         no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
         max_n <- max(which(no_char<= 197))
-        desc <- paste(words[1: max_n], collapse = " ")
+        description_string <- paste(words[1: max_n], collapse = " ")
         if (max_n != length(words)) {
-          desc <- paste0(desc, "...")
+          description_string <- paste0(desc, "...")
         }
-        xml2::xml_set_attr(og_description, "content", desc)
+        set_content(og_description, description_string)
+        set_content(general_description, description_string)
       }
   }
 }
@@ -663,4 +671,8 @@ bs4_check_dots <- function(...) {
       call. = FALSE
     )
   }
+}
+
+set_content <- function(node, content) {
+  xml2::xml_set_attr(node, "content", content)
 }
