@@ -564,7 +564,7 @@ tweak_metadata <- function(html, path) {
         max_n <- max(which(no_char<= 197))
         description_string <- paste(words[1: max_n], collapse = " ")
         if (max_n != length(words)) {
-          description_string <- paste0(desc, "...")
+          description_string <- paste0(description_string, "...")
         }
         set_content(og_description, description_string)
         set_content(general_description, description_string)
