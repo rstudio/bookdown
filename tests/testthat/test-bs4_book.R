@@ -33,6 +33,7 @@ test_that("bs4_book() repo specification works - default case", {
 })
 
 test_that("bs4_book() repo specification works - branch and subdir", {
+  skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
     path = temp_path,
@@ -66,6 +67,7 @@ test_that("bs4_book() repo specification works - branch and subdir", {
 })
 
 test_that("bs4_book() repo specification works - GitLab", {
+  skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
     path = temp_path,
@@ -82,6 +84,7 @@ test_that("bs4_book() repo specification works - GitLab", {
 })
 
 test_that("bs4_book() repo specification works - custom icon", {
+  skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
     path = temp_path,
@@ -101,6 +104,7 @@ test_that("bs4_book() repo specification works - custom icon", {
 })
 
 test_that("bs4_book() repo specification works - custom icon GitHub", {
+  skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
     path = temp_path,
