@@ -1,4 +1,5 @@
 test_that("bs4_book() repo specification works - default case", {
+  skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
   book <- create_minimal_bs_book(
     path = temp_path,

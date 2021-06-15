@@ -85,7 +85,7 @@ bs4_book <- function(
                      pandoc_args = NULL,
                      extra_dependencies = NULL
                      ) {
-  check_packages(c("bslib", "downlit", "jsonlite", "xml2"))
+  check_packages(bs4_book_deps())
   bs4_check_dots(...)
 
   # Allow theme specification in yaml metadata
@@ -689,4 +689,8 @@ bs4_check_dots <- function(...) {
     return(x)
   }
   y
+}
+
+bs4_book_deps <- function() {
+  c("bslib", "downlit", "jsonlite", "xml2")
 }

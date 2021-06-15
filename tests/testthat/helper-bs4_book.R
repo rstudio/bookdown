@@ -1,3 +1,6 @@
+skip_if_bs4_book_deps_missing <- function() {
+  purrr::map_lgl(c(bs4_book_deps(), "withr"), testthat::skip_if_not_installed)
+}
 
 create_minimal_bs_book <- function(path,
                                    name = "book",
