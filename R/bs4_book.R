@@ -64,7 +64,7 @@
 #'
 #' By default if the repo URL contains "github" it will get a GitHub font-awesome
 #' icon, and otherwise a GitLab font-awesome icon.
-#' To use another icon, specify it (Font Awesome 5.15.3).
+#' To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) (Font Awesome 5).
 #'
 #' ```yaml
 #' bookdown::bs4_book:
