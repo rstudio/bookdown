@@ -1,7 +1,7 @@
 test_that("bs4_book() repo specification works - default case", {
   skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs_book(
+  book <- create_minimal_bs4_book(
     path = temp_path,
     output_options = list(
       repo = "https://github.com/hadley/ggplot2-book"
@@ -35,7 +35,7 @@ test_that("bs4_book() repo specification works - default case", {
 test_that("bs4_book() repo specification works - branch and subdir", {
   skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs_book(
+  book <- create_minimal_bs4_book(
     path = temp_path,
     output_options = list(
       repo = list(
@@ -69,7 +69,7 @@ test_that("bs4_book() repo specification works - branch and subdir", {
 test_that("bs4_book() repo specification works - GitLab", {
   skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs_book(
+  book <- create_minimal_bs4_book(
     path = temp_path,
     output_options = list(
       repo = "https://gitlab.com/hadley/ggplot2-book"
@@ -86,7 +86,7 @@ test_that("bs4_book() repo specification works - GitLab", {
 test_that("bs4_book() repo specification works - custom icon", {
   skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs_book(
+  book <- create_minimal_bs4_book(
     path = temp_path,
     output_options = list(
       repo = list(
@@ -106,7 +106,7 @@ test_that("bs4_book() repo specification works - custom icon", {
 test_that("bs4_book() repo specification works - custom icon GitHub", {
   skip_if_bs4_book_deps_missing()
   temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs_book(
+  book <- create_minimal_bs4_book(
     path = temp_path,
     output_options = list(
       repo = list(

@@ -2,7 +2,7 @@ skip_if_bs4_book_deps_missing <- function() {
   unlist(lapply(c(bs4_book_deps(), "withr"), testthat::skip_if_not_installed))
 }
 
-create_minimal_bs_book <- function(path,
+create_minimal_bs4_book <- function(path,
                                    name = "book",
                                    title = "Awesome Cookbook",
                                    author = "Yoda",
