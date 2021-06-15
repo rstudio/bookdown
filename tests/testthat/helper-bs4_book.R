@@ -2,11 +2,14 @@ skip_if_bs4_book_deps_missing <- function() {
   unlist(lapply(c(bs4_book_deps(), "withr"), testthat::skip_if_not_installed))
 }
 
-create_minimal_bs4_book <- function(path,
-                                   name = "book",
-                                   title = "Awesome Cookbook",
-                                   author = "Yoda",
-                                   output_options = NULL) {
+local_bs4_book <- function(name = "book",
+                           title = "Awesome Cookbook",
+                           author = "Yoda",
+                           output_options = NULL,
+                           env = parent.frame()) {
+
+  path <- withr::local_tempdir(.local_envir = env)
+
   book_skeleton(
     name = name,
     title = title,
@@ -22,4 +25,6 @@ create_minimal_bs4_book <- function(path,
       quiet = TRUE
     )
   )
+
+  return(path)
 }

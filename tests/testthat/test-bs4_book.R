@@ -1,13 +1,11 @@
 test_that("bs4_book() repo specification works - default case", {
   skip_if_bs4_book_deps_missing()
-  temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs4_book(
-    path = temp_path,
+  book <- local_bs4_book(
     output_options = list(
       repo = "https://github.com/hadley/ggplot2-book"
     )
   )
-  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
 
   repo_a <- xml2::xml_find_first(html, "//a[@id='book-repo']")
 
@@ -34,9 +32,7 @@ test_that("bs4_book() repo specification works - default case", {
 
 test_that("bs4_book() repo specification works - branch and subdir", {
   skip_if_bs4_book_deps_missing()
-  temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs4_book(
-    path = temp_path,
+  book <- local_bs4_book(
     output_options = list(
       repo = list(
         base = "https://github.com/hadley/ggplot2-book",
@@ -45,7 +41,7 @@ test_that("bs4_book() repo specification works - branch and subdir", {
       )
     )
   )
-  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
 
   expect_equal(
     xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
@@ -68,14 +64,12 @@ test_that("bs4_book() repo specification works - branch and subdir", {
 
 test_that("bs4_book() repo specification works - GitLab", {
   skip_if_bs4_book_deps_missing()
-  temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs4_book(
-    path = temp_path,
+  book <- local_bs4_book(
     output_options = list(
       repo = "https://gitlab.com/hadley/ggplot2-book"
     )
   )
-  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
 
   expect_equal(
     xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
@@ -85,9 +79,7 @@ test_that("bs4_book() repo specification works - GitLab", {
 
 test_that("bs4_book() repo specification works - custom icon", {
   skip_if_bs4_book_deps_missing()
-  temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs4_book(
-    path = temp_path,
+  book <- local_bs4_book(
     output_options = list(
       repo = list(
         base = "https://gitlab.com/hadley/ggplot2-book",
@@ -95,7 +87,7 @@ test_that("bs4_book() repo specification works - custom icon", {
       )
     )
   )
-  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
 
   expect_equal(
     xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
@@ -105,9 +97,7 @@ test_that("bs4_book() repo specification works - custom icon", {
 
 test_that("bs4_book() repo specification works - custom icon GitHub", {
   skip_if_bs4_book_deps_missing()
-  temp_path <- withr::local_tempdir()
-  book <- create_minimal_bs4_book(
-    path = temp_path,
+  book <- local_bs4_book(
     output_options = list(
       repo = list(
         base = "https://github.com/hadley/ggplot2-book",
@@ -115,7 +105,7 @@ test_that("bs4_book() repo specification works - custom icon GitHub", {
       )
     )
   )
-  html <- xml2::read_html(file.path(temp_path, "_book", "index.html"))
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
 
   expect_equal(
     xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
