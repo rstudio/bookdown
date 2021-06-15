@@ -451,10 +451,10 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   if (!is.null(repo$base)) {
 
     icon <- if (grepl("github\\.com", repo$base)) {
-      repo$icon %||% "fab fa-github"
+      repo$icon %n% "fab fa-github"
     }
     else {
-      repo$icon %||% "fab fa-gitlab"
+      repo$icon %n% "fab fa-gitlab"
     }
 
     template_link_icon(html, ".//a[@id='book-repo']", icon)
@@ -684,12 +684,6 @@ bs4_check_dots <- function(...) {
   }
 }
 
-`%||%` <- function(x, y) {
-  if (!is.null(x)) {
-    return(x)
-  }
-  y
-}
 
 bs4_book_deps <- function() {
   c("bslib", "downlit", "jsonlite", "xml2")
