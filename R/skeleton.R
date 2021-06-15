@@ -43,8 +43,7 @@ bookdown_skeleton = function(path) {
 #' @noRd
 book_skeleton = function(
   name, title, author, chapters = c('Preface {-}', 'Introduction'),
-  documentclass = 'book', references = 'References', path = getwd(),
-  index_metadata
+  documentclass = 'book', references = 'References', path = getwd()
 ) {
   rmd_files = gsub('[^-a-zA-Z0-9]', '', gsub('\\s+', '-', c(chapters, references)))
   rmd_files = sprintf('%02d-%s.Rmd', seq_along(rmd_files) - 1, rmd_files)
@@ -58,12 +57,12 @@ book_skeleton = function(
   for (i in seq_along(rmd_files)) {
     content = c(titles[i], '')
     if (i == 1) {
-      default_metadata <- list(
+      index_metadata <- list(
         title = title,
         author = author,
-        documentclass = documentclass
+        documentclass = documentclass,
+        site = "bookdown::bookdown_site"
       )
-      index_metadata = modifyList(default_metadata, as.list(index_metadata))
       content = c(
         '---', yaml::as.yaml(index_metadata), '---', '',
         content,
