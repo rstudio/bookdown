@@ -49,7 +49,7 @@ interactively explore the R objects in the book. The downside of
 compiled from a fresh R session, because the state of the current R session
 may not be clean.
 
-For \code{in_sesion = FALSE}, you do not have access to objects in the book
+For \code{in_session = FALSE}, you do not have access to objects in the book
 from the current R session, but the output is more likely to be reproducible
 since everything is created from new R sessions. Since this function is only
 for previewing purposes, the cleanness of the R session may not be a big
