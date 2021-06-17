@@ -1,5 +1,6 @@
 gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
+    var fuse = null;
     var $searchInput, $searchLabel, $searchForm;
     var $highlighted = [], hi, hiOpts = { className: 'search-highlight' };
     var collapse = false, toc_visible = [];
@@ -19,6 +20,30 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
           this.field('title', { boost: 10 });
           this.field('body');
         });
+        fuse = new Fuse(data.map((_data => {
+            return {
+                url: _data[0],
+                title: _data[1],
+                body: _data[2]
+            };
+        })), {
+            // isCaseSensitive: false,
+            includeScore: true,
+            // shouldSort: true,
+            // includeMatches: false,
+            // findAllMatches: false,
+            // minMatchCharLength: 1,
+            // location: 0,
+            // threshold: 0.6,
+            distance: Math.max(...data.map(_data => _data.map(s => s.length)).flat()),
+            // useExtendedSearch: false,
+            // ignoreLocation: false,
+            // ignoreFieldNorm: false,
+            keys: [
+                "title",
+                "body"
+            ]
+        });
         data.map(function(item) {
           index.add({
             url: item[0],
@@ -36,7 +61,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
     // Search for a term and return results
     function search(q) {
-        if (!index) return;
+        if (!index || !fuse) return;
 
         var results = _.chain(index.search(q))
         .map(function(result) {
@@ -48,12 +73,21 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         })
         .value();
 
+        var fuseResults = fuse.search(q).map(function(result) {
+            var parts = result.item.url.split('#');
+            return {
+                path: parts[0],
+                hash: parts[1]
+            };
+        });
+
         // [Yihui] Highlight the search keyword on current page
-        $highlighted = results.length === 0 ? [] : $('.page-inner')
+        $highlighted = fuseResults.length === 0 ? [] : $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
         scrollToHighlighted(0);
 
-        return results;
+        console.log({results, fuseResults});
+        return fuseResults;
     }
 
     // [Yihui] Scroll the chapter body to the i-th highlighted string
