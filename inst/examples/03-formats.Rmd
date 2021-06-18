@@ -96,7 +96,9 @@ bookdown::gitbook:
       position: fixed
     edit : null
     download: null
-    search: yes
+    search:
+      engine: lunr # available options are ['lunr', 'fuse'], default to 'lunr'
+      opts: null # options to control/tune search engine behaviour (e.g fuse.js refer to https://fusejs.io/api/options.html)
     fontsettings:
       theme: white
       family: sans

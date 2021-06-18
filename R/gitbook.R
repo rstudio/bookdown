@@ -241,6 +241,7 @@ gitbook_config = function(config = list()) {
     view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
+    search = list(engine='lunr', opts=NULL)
     toc = list(collapse = 'subsection')
   )
   config = utils::modifyList(default, config, keep.null = TRUE)

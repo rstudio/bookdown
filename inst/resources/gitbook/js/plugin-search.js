@@ -1,9 +1,23 @@
 gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     var index = null;
     var fuse = null;
+    var _search = {engine: 'lunr', opts: {}};
     var $searchInput, $searchLabel, $searchForm;
     var $highlighted = [], hi, hiOpts = { className: 'search-highlight' };
     var collapse = false, toc_visible = [];
+
+    function init(config) {
+        // Instantiate search settings
+        _search = gitbook.storage.get("search", {
+            engine: config.search.engine || 'lunr',
+            opts: config.search.opts || {},
+        });
+    };
+
+    // Save current search settings
+    function saveSearchSettings() {
+        gitbook.storage.set("search", _search);
+    }
 
     // Use a specific index
     function loadIndex(data) {
@@ -26,24 +40,27 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 title: _data[1],
                 body: _data[2]
             };
-        })), {
-            // isCaseSensitive: false,
-            includeScore: true,
-            // shouldSort: true,
-            // includeMatches: false,
-            // findAllMatches: false,
-            // minMatchCharLength: 1,
-            // location: 0,
-            // threshold: 0.6,
-            distance: Math.max(...data.map(_data => _data.map(s => s.length)).flat()),
-            // useExtendedSearch: false,
-            // ignoreLocation: false,
-            // ignoreFieldNorm: false,
-            keys: [
-                "title",
-                "body"
-            ]
-        });
+        })), Object.assign(
+            {
+                // isCaseSensitive: false,
+                includeScore: true,
+                // shouldSort: true,
+                // includeMatches: false,
+                // findAllMatches: false,
+                // minMatchCharLength: 1,
+                // location: 0,
+                // threshold: 0.6,
+                distance: Math.max(...data.map(_data => _data.map(s => s.length)).flat()),
+                // useExtendedSearch: false,
+                // ignoreLocation: false,
+                // ignoreFieldNorm: false,
+                keys: [
+                    "title",
+                    "body"
+                ]
+            },
+            search.engine === 'fuse' ? search.opts : {}
+        ));
         data.map(function(item) {
           index.add({
             url: item[0],
@@ -61,33 +78,37 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
     // Search for a term and return results
     function search(q) {
-        if (!index || !fuse) return;
-
-        var results = _.chain(index.search(q))
-        .map(function(result) {
-            var parts = result.ref.split("#");
-            return {
-                path: parts[0],
-                hash: parts[1]
-            };
-        })
-        .value();
-
-        var fuseResults = fuse.search(q).map(function(result) {
-            var parts = result.item.url.split('#');
-            return {
-                path: parts[0],
-                hash: parts[1]
-            };
-        });
+        let results = [];
+        switch (_search.engine) {
+            case 'fuse':
+                if (!fuse) return;
+                results = fuse.search(q).map(function(result) {
+                    var parts = result.item.url.split('#');
+                    return {
+                        path: parts[0],
+                        hash: parts[1]
+                    };
+                });
+                break;
+            case 'lunr':
+            default:
+                if (!index) return;
+                results = _.chain(index.search(q)).map(function(result) {
+                    var parts = result.ref.split("#");
+                    return {
+                        path: parts[0],
+                        hash: parts[1]
+                    };
+                })
+                .value();
+        }
 
         // [Yihui] Highlight the search keyword on current page
-        $highlighted = fuseResults.length === 0 ? [] : $('.page-inner')
+        $highlighted = results.length === 0 ? [] : $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
         scrollToHighlighted(0);
 
-        console.log({results, fuseResults});
-        return fuseResults;
+        return results;
     }
 
     // [Yihui] Scroll the chapter body to the i-th highlighted string
@@ -206,6 +227,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     gitbook.events.bind("start", function(e, config) {
         // [Yihui] disable search
         if (config.search === false) return;
+        init(config);
         collapse = !config.toc || config.toc.collapse === 'section' ||
           config.toc.collapse === 'subsection';
 
