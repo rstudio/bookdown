@@ -59,7 +59,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                     "body"
                 ]
             },
-            search.engine === 'fuse' ? search.opts : {}
+            _search.engine === 'fuse' ? _search.opts : {}
         ));
         data.map(function(item) {
           index.add({
