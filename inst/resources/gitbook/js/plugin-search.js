@@ -49,7 +49,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 // findAllMatches: false,
                 // minMatchCharLength: 1,
                 // location: 0,
-                // threshold: 0.6,
+                threshold: 1,
                 distance: Math.max(...data.map(_data => _data.map(s => s.length)).flat()),
                 // useExtendedSearch: false,
                 // ignoreLocation: false,
