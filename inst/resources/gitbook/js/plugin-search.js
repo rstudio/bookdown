@@ -10,7 +10,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         // Instantiate search settings
         _search = gitbook.storage.get("search", {
             engine: config.search.engine || 'lunr',
-            opts: config.search.opts || {},
+            opts: config.search.options || {},
         });
     };
 
