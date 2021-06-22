@@ -29,11 +29,21 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         // lunr cannot handle non-English text very well, e.g. the default
         // tokenizer cannot deal with Chinese text, so we may want to replace
         // lunr with a dumb simple text matching approach.
-        index = lunr(function () {
-          this.ref('url');
-          this.field('title', { boost: 10 });
-          this.field('body');
-        });
+        if (_search.engine === 'lunr') {
+          index = lunr(function () {
+            this.ref('url');
+            this.field('title', { boost: 10 });
+            this.field('body');
+          });
+          data.map(function(item) {
+            index.add({
+              url: item[0],
+              title: item[1],
+              body: item[2]
+            });
+          });
+          return;
+        }
         fuse = new Fuse(data.map((_data => {
             return {
                 url: _data[0],
@@ -42,32 +52,13 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             };
         })), Object.assign(
             {
-                // isCaseSensitive: false,
                 includeScore: true,
-                // shouldSort: true,
-                // includeMatches: false,
-                // findAllMatches: false,
-                // minMatchCharLength: 1,
-                // location: 0,
                 threshold: 0.1,
-                // distance: 100 // Math.max(...data.map(_data => _data.map(s => s.length)).flat()),
-                // useExtendedSearch: false,
                 ignoreLocation: true,
-                // ignoreFieldNorm: false,
-                keys: [
-                    "title",
-                    "body"
-                ]
+                keys: ["title", "body"]
             },
-            _search.engine === 'fuse' ? _search.opts : {}
+            _search.opts
         ));
-        data.map(function(item) {
-          index.add({
-            url: item[0],
-            title: item[1],
-            body: item[2]
-          });
-        });
     }
 
     // Fetch the search index
