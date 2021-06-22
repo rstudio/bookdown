@@ -95,7 +95,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         }
 
         // [Yihui] Highlight the search keyword on current page
-        $highlighted = results.length === 0 ? [] : $('.page-inner')
+        $highlighted = $('.page-inner')
           .unhighlight(hiOpts).highlight(q, hiOpts).find('span.search-highlight');
         scrollToHighlighted(0);
 
