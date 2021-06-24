@@ -83,7 +83,7 @@ Suggests:
     xml2,
     webshot,
     testthat (>= 3.0.0),
-    withr
+    withr (>= 2.3.0)
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
