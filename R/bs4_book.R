@@ -48,7 +48,8 @@ bs4_book <- function(
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
-                     extra_dependencies = NULL
+                     extra_dependencies = NULL,
+                     split_bib = split_bib
                      ) {
   check_packages(c("bslib", "downlit", "jsonlite", "xml2"))
   bs4_check_dots(...)
@@ -77,7 +78,8 @@ bs4_book <- function(
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir)
+    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir,
+                              split_bib = split_bib)
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
@@ -102,7 +104,8 @@ bs4_book_theme <- function(primary = "#0068D9", ...) {
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
-                           output_dir = opts$get("output_dir")
+                           output_dir = opts$get("output_dir"),
+                           split_bib = split_bib
                            ) {
   move_files_html(output, lib_dir)
 
@@ -112,7 +115,7 @@ bs4_book_build <- function(output = "bookdown.html",
     build = function(...) bs4_book_page(..., rmd_index = rmd_index),
     number_sections = TRUE,
     split_by = "chapter",
-    split_bib = FALSE
+    split_bib = split_bib
   )
 
   move_files_html(output2, lib_dir)
