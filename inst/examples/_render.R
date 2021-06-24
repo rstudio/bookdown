@@ -1,6 +1,5 @@
 quiet = "--quiet" %in% commandArgs(FALSE)
 formats = commandArgs(TRUE)
-travis = !is.na(Sys.getenv("CI", NA)) && !is.na(Sys.getenv('TRAVIS', NA))
 
 src = (function() {
   attr(body(sys.function()), 'srcfile')
