@@ -61,13 +61,13 @@ This theme is designed for books that use one chapter per page.
 \section{Specifying the repository}{
 
 
-If your book has a default branch called main you can use\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{bookdown::bs4_book:
+If your book has a default branch called main you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
   repo:
     base: https://github.com/hadley/ggplot2-book
     branch: main
 }\if{html}{\out{</div>}}
 
-If your book is furthermore located in a subdirectory called "book" you can use\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{bookdown::bs4_book:
+If your book is furthermore located in a subdirectory called "book" you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
   repo:
     base: https://github.com/hadley/ggplot2-book
     branch: main
@@ -76,7 +76,7 @@ If your book is furthermore located in a subdirectory called "book" you can use\
 
 By default if the repo URL contains "github" it will get a GitHub font-awesome
 icon, and otherwise a GitLab font-awesome icon.
-To use another icon, specify it with the correct prefix (\code{fas}, \code{fab}, ...) (Font Awesome 5).\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{bookdown::bs4_book:
+To use another icon, specify it with the correct prefix (\code{fas}, \code{fab}, ...) (Font Awesome 5).\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
   repo:
     base: https://github.com/hadley/ggplot2-book
     branch: main
@@ -84,4 +84,3 @@ To use another icon, specify it with the correct prefix (\code{fas}, \code{fab},
     icon: "fas fa-air-freshener"
 }\if{html}{\out{</div>}}
 }
-
