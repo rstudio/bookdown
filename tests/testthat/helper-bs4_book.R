@@ -1,5 +1,7 @@
+# TODO: Replace if helper in testthat gets vectorised
 skip_if_bs4_book_deps_missing <- function() {
-  unlist(lapply(c(bs4_book_deps(), "withr"), testthat::skip_if_not_installed))
+  check <- vapply(bs4_book_deps(), skip_if_not_installed, logical(1L), USE.NAMES = FALSE)
+  invisible(check)
 }
 
 local_bs4_book <- function(name = "book",
