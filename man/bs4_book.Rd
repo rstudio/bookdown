@@ -22,9 +22,9 @@ The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
 make reading easier and uses a primary colour with greater constrast
 against the background.}
 
-\item{repo}{Link to repository where book is hosted, used to generate
-view source and edit buttons. Currently assumes GitHub and that the book
-is in the root directory of the repo.}
+\item{repo}{Either link to repository where book is hosted, used to generate
+view source and edit buttons or a list with repository \code{base} link, default
+\code{branch}, \code{subdir} and \code{icon} (see "Specifying the repository").}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
@@ -57,4 +57,30 @@ colour scheme designed by Alison Hill.
 }
 
 This theme is designed for books that use one chapter per page.
+}
+\section{Specifying the repository}{
+
+
+If your book has a default branch called main you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+}\if{html}{\out{</div>}}
+
+If your book is furthermore located in a subdirectory called "book" you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+}\if{html}{\out{</div>}}
+
+By default if the repo URL contains "github" it will get a GitHub font-awesome
+icon, and otherwise a GitLab font-awesome icon.
+To use another icon, specify it with the correct prefix (\code{fas}, \code{fab}, ...) (Font Awesome 5).\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+    icon: "fas fa-air-freshener"
+}\if{html}{\out{</div>}}
 }
