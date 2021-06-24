@@ -77,14 +77,12 @@
 #'
 #' @export
 #' @md
-bs4_book <- function(
-                     theme = bs4_book_theme(),
+bs4_book <- function(theme = bs4_book_theme(),
                      repo = NULL,
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
-                     extra_dependencies = NULL
-                     ) {
+                     extra_dependencies = NULL) {
   check_packages(bs4_book_deps())
   bs4_check_dots(...)
 
@@ -137,8 +135,7 @@ bs4_book_theme <- function(primary = "#0068D9", ...) {
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
-                           output_dir = opts$get("output_dir")
-                           ) {
+                           output_dir = opts$get("output_dir")) {
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
@@ -156,7 +153,7 @@ bs4_book_build <- function(output = "bookdown.html",
     output_dir <- "_book"
   }
 
-  if (isTRUE(opts$get('preview'))) {
+  if (isTRUE(opts$get("preview"))) {
     bs4_chapter_tweak(
       output2,
       repo = repo,
@@ -214,8 +211,8 @@ build_toc <- function(output) {
   if (any(is_appendix)) {
     app <- toc[
       seq_along(is_appendix) > which(is_appendix)[[1]] &
-      toc$level == 1 &
-      !is.na(toc$num),
+        toc$level == 1 &
+        !is.na(toc$num),
     ]
     app$label <- LETTERS[seq_len(nrow(app))]
     # TODO: make less of a hack
@@ -237,17 +234,17 @@ build_toc <- function(output) {
   toc
 }
 
-bs4_book_page = function(head,
-                         toc,
-                         chapter,
-                         link_prev,
-                         link_next,
-                         rmd_cur,
-                         html_cur,
-                         foot,
-                         rmd_index = NULL) {
+bs4_book_page <- function(head,
+                          toc,
+                          chapter,
+                          link_prev,
+                          link_next,
+                          rmd_cur,
+                          html_cur,
+                          foot,
+                          rmd_index = NULL) {
   rmd_index[[html_cur]] <- rmd_cur
-  paste(c(head, toc, chapter, foot), collapse = '\n')
+  paste(c(head, toc, chapter, foot), collapse = "\n")
 }
 
 bs4_book_dependency <- function(theme) {
@@ -274,7 +271,6 @@ bs4_chapters_tweak <- function(output,
                                rmd_index = NULL,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
-
   toc <- build_toc(output)
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
@@ -318,7 +314,6 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
     chapter = h1,
     path = basename(path)
   )
-
 }
 
 tweak_chapter <- function(html) {
@@ -425,7 +420,6 @@ tweak_tables <- function(html) {
 }
 
 tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) {
-
   if (!is.null(repo) && length(repo) == 1) {
     repo <- list(
       base = repo,
@@ -436,20 +430,18 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
 
   # Source links ------------------------------------------------------------
   if (!is.null(repo) && active %in% names(rmd_index)) {
-
     if (!is.null(repo$subdir)) {
       repo$subdir <- paste0(repo$subdir, "/")
     }
 
-    repo_edit <- paste0(repo$base, "/edit/", repo$branch,"/", repo$subdir, rmd_index[[active]])
-    repo_view <- paste0(repo$base, "/blob/", repo$branch,"/", repo$subdir, rmd_index[[active]])
+    repo_edit <- paste0(repo$base, "/edit/", repo$branch, "/", repo$subdir, rmd_index[[active]])
+    repo_view <- paste0(repo$base, "/blob/", repo$branch, "/", repo$subdir, rmd_index[[active]])
   } else {
     repo_edit <- NULL
     repo_view <- NULL
   }
 
   if (!is.null(repo$base)) {
-
     icon <- if (grepl("github\\.com", repo$base)) {
       repo$icon %n% "fab fa-github"
     } else {
@@ -585,7 +577,8 @@ template_link_icon <- function(html, xpath, icon) {
 # index -------------------------------------------------------------------
 
 bs4_index_data <- function(node, chapter, path) {
-  children <- xml2::xml_find_all(node,
+  children <- xml2::xml_find_all(
+    node,
     "./*[not(self::div and contains(@class, 'section'))]"
   )
   if (length(children) == 0 || !is_heading(children[[1]])) {
