@@ -442,12 +442,8 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
   }
 
   if (!is.null(repo$base)) {
-    icon <- if (grepl("github\\.com", repo$base)) {
-      repo$icon %n% "fab fa-github"
-    } else {
-      repo$icon %n% "fab fa-gitlab"
-    }
-
+    icon <- repo$icon %n%
+      ifelse(grepl("github\\.com", repo$base), "fab fa-github", "fab fa-gitlab")
     template_link_icon(html, ".//a[@id='book-repo']", icon)
     template_link_icon(html, ".//a[@id='book-source']", icon)
     template_link_icon(html, ".//a[@id='book-edit']", icon)
