@@ -56,13 +56,11 @@ book_skeleton = function(
   titles = paste('#', titles)
   for (i in seq_along(rmd_files)) {
     content = c(titles[i], '')
+    # special handling for file which will be index.Rmd
     if (i == 1) {
-      index_metadata <- list(
-        title = title,
-        author = author,
-        documentclass = documentclass,
-        site = "bookdown::bookdown_site"
-      )
+      index_metadata = list(title = title, author = author,
+                            documentclass = documentclass,
+                            site = 'bookdown::bookdown_site')
       content = c(
         '---', yaml::as.yaml(index_metadata), '---', '',
         content,
@@ -73,7 +71,7 @@ book_skeleton = function(
     write_file(content, file.path(path, rmd_files[i]))
   }
   write_file(
-    sprintf('bookdown::%s: default', c('gitbook', 'pdf_book', 'epub_book')),
+    sprintf('bookdown::%s: default', c('gitbook', 'pdf_book', 'epub_book', 'bs4_book')),
     file.path(path, '_output.yml')
   )
   write_file(sprintf('book_filename: %s', name), file.path(path, '_bookdown.yml'))
