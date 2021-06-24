@@ -672,7 +672,9 @@ bs4_check_dots <- function(...) {
   }
 }
 
-
+# these dependencies are required to use bs4_book() but are suggested deps
+# of bookdown. Hence the need to check they are available
+# TODO: remove this and the check in bs4_book when we add them as Imports (if we do it)
 bs4_book_deps <- function() {
   c("bslib", "downlit", "jsonlite", "xml2")
 }
