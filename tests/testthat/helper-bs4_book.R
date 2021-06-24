@@ -11,6 +11,9 @@ local_bs4_book <- function(name = "book",
                            output_options = NULL,
                            env = parent.frame()) {
 
+  # don't run test using this book skeleton when Pandoc is not available
+  skip_if_not_pandoc()
+
   path <- withr::local_tempdir(.local_envir = env)
 
   book_skeleton(

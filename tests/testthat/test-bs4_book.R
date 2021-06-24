@@ -1,3 +1,8 @@
+# All tests below require Pandoc
+skip_if_not_pandoc()
+# test for bs4_book() needs to be run only if deps are installed
+skip_if_bs4_book_deps_missing()
+
 test_that("bs4_book() repo specification works - default case", {
   skip_if_bs4_book_deps_missing()
   book <- local_bs4_book(
