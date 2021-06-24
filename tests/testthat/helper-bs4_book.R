@@ -22,7 +22,7 @@ local_bs4_book <- function(name = "book",
   suppressMessages(
     render_book(
       path,
-      output_format = "bs4_book",
+      output_format = "bookdown::bs4_book",
       output_options = output_options,
       quiet = TRUE
     )
