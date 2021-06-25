@@ -137,6 +137,7 @@ for (let popover of popovers){
   	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
   	MathJax.Hub.Queue(function(){
       popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
   	})
   }
 }
