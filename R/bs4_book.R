@@ -610,12 +610,13 @@ tweak_metadata <- function(html, path) {
       set_content(general_description, description_string)
     }
 
+  }
 }
 # https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
 copy_html <- function(html) {
   xml2::read_html(as.character(html))
 }
-  
+
 template_link_icon <- function(html, xpath, icon) {
   icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
   xml2::xml_attr(icon_node, "class") <- icon
@@ -726,7 +727,7 @@ bs4_check_dots <- function(...) {
 set_content <- function(node, content) {
   xml2::xml_set_attr(node, "content", content)
 }
-  
+
 # these dependencies are required to use bs4_book() but are suggested deps
 # of bookdown. Hence the need to check they are available
 # TODO: remove this and the check in bs4_book when we add them as Imports (if we do it)
