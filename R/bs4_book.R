@@ -575,7 +575,7 @@ tweak_metadata <- function(html, path) {
   set_content(generator, bookdown_string)
 
   # Check there are descriptions, add them if not
-  general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
+  general_description <- xml2::xml_find_first(html, '//meta[@name="description"]')
 
   # Add the nodes if they were missing by default
   if (length(general_description) == 0) {
