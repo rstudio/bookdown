@@ -118,3 +118,53 @@ test_that("bs4_book() repo specification works - custom icon GitHub", {
   )
 })
 
+test_that("bs4_book() metadata tweaking works -- index", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
+  # No test for the whole string as it contains bookdown version
+  expect_true(grepl("bs4_book", get_meta_content(generator)))
+
+  url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
+  expect_equal(get_meta_content(url), "https://example.com/")
+
+  description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+  expect_equal(
+    get_meta_content(description),
+    "A very nice book."
+  )
+
+})
+
+
+test_that("bs4_book() metadata tweaking works -- not index", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
+  html <- xml2::read_html(file.path(book, "_book", "introduction.html"))
+
+  generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
+  # No test for the whole string as it contains bookdown version
+  expect_true(grepl("bs4_book", get_meta_content(generator)))
+
+  url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
+  expect_equal(get_meta_content(url), "https://example.com/introduction.html")
+
+  description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+  expect_equal(
+    get_meta_content(description),
+    "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7..."
+  )
+
+})
+
+
+
+test_that("bs4_book() messages if description missing", {
+  skip_if_bs4_book_deps_missing()
+  expect_message(
+    local_bs4_book(url = 'https://example.com/', verbose = TRUE),
+    "TODO: Add a description field in the YAML metadata of index.Rmd."
+  )
+})
