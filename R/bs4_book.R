@@ -574,6 +574,19 @@ tweak_metadata <- function(html, path) {
   bookdown_string <- sprintf("bookdown %s, bs4_book()", packageVersion("bookdown"))
   set_content(generator, bookdown_string)
 
+  # Check there are descriptions, add them if not
+  general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
+
+  # Add the nodes if they were missing by default
+  if (length(general_description) == 0) {
+    head <- xml2::xml_find_first(html, '//head')
+    default_description <- "A book created with bookdown."
+    if (file == "index.html") message("Add a description field in the YAML metadata of index.Rmd.")
+    xml2 <- xml2::xml_add_child(head, "meta", property = "description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", property = "og:description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", property = "twitter:description", content = default_description)
+  }
+
   if (file == "index.html") {
     return(invisible())
   } else {
@@ -586,9 +599,10 @@ tweak_metadata <- function(html, path) {
     set_content(og_url, paste0(base_url, file))
 
     # Fix descriptions if possible
-    og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
-    twitter_description <- xml2::xml_find_first(html, '//meta[@property="twitter:description"]')
     general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
+    twitter_description <- xml2::xml_find_first(html, '//meta[@property="twitter:description"]')
+    og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+
     contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
     xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
     xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
