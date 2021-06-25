@@ -33,15 +33,15 @@ view source and edit buttons or a list with repository \code{base} link, default
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{bootstrap},
-using carefully craft features to provide a clean reading experience whether
-your on a phone, tablet, or desktop.
+using carefully crafted features to provide a clean reading experience whether
+you are on a phone, tablet, or desktop.
 
 Some of the main features:
 \itemize{
 \item Easy customisation of colours and fonts with
 \href{https://rstudio.github.io/bslib/}{bslib}
-\item Built in search (broken down by section) that helps you quickly find what
-you're looking for.
+\item Built-in search (broken down by section) that helps readers quickly find what
+they are looking for.
 \item A sidebar containing a within-chapter table of contents that makes
 navigation easy and helps provide context about your current position
 within the chapter.
@@ -84,3 +84,4 @@ To use another icon, specify it with the correct prefix (\code{fas}, \code{fab},
     icon: "fas fa-air-freshener"
 }\if{html}{\out{</div>}}
 }
+

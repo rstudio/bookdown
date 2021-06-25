@@ -2,16 +2,16 @@
 #'
 #' @description
 #' This output format is built with [bootstrap](https://getbootstrap.com),
-#' using carefully craft features to provide a clean reading experience whether
-#' your on a phone, tablet, or desktop.
+#' using carefully crafted features to provide a clean reading experience whether
+#' you are on a phone, tablet, or desktop.
 #'
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
 #'   [bslib](https://rstudio.github.io/bslib/)
 #'
-#' * Built in search (broken down by section) that helps you quickly find what
-#'   you're looking for.
+#' * Built-in search (broken down by section) that helps readers quickly find what
+#'   they are looking for.
 #'
 #' * A sidebar containing a within-chapter table of contents that makes
 #'   navigation easy and helps provide context about your current position
