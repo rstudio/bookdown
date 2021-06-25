@@ -571,7 +571,7 @@ tweak_metadata <- function(html, path) {
 
   # Fix generator
   generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
-  bookdown_string <- sprintf("bookdown %s, bs4_book()", packageVersion("bookdown"))
+  bookdown_string <- sprintf("bookdown %s with bs4_book()", packageVersion("bookdown"))
   set_content(generator, bookdown_string)
 
   # Check there are descriptions, add them if not
