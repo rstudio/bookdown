@@ -363,11 +363,6 @@ pre {
   background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
 }
 
-/* Make code blocks full width in rmdnote */
-.rmdcaution pre, .rmdimportant pre, .rmdnote pre, .rmdtip pre, .rmdwarning pre {
-margin: 0 -1rem 1rem -1rem;
-}
-
 @media (max-width: 767.98px) {
   /* Make background span full width on mobile */
   .section > .sourceCode > pre {
@@ -460,6 +455,8 @@ body {
   font-variant: small-caps;
 }
 
+/* special callout blocks */
+
 .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
   margin: 1rem calc(-2px - 0.5em);
   padding: 1rem;
@@ -491,6 +488,12 @@ body {
 }
 .rmdtip {
   border-color: var(--info);
+}
+
+.rmdcaution pre, .rmdimportant pre, .rmdnote pre, .rmdtip pre, .rmdwarning pre {
+  /* Make code blocks full width in rmdnote */
+  margin: 0 -1rem 1rem -1rem;
+  padding: 1rem;
 }
 
 main ul {
