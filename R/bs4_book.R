@@ -537,6 +537,7 @@ tweak_metadata <- function(html, path) {
 
     # Fix descriptions if possible
     og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+    twitter_description <- xml2::xml_find_first(html, '//meta[@property="twitter:description"]')
     general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
     contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
     xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
@@ -555,6 +556,7 @@ tweak_metadata <- function(html, path) {
         description_string <- paste0(description_string, "...")
       }
       set_content(og_description, description_string)
+      set_content(twitter_description, description_string)
       set_content(general_description, description_string)
     }
 
