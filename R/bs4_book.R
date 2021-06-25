@@ -518,14 +518,15 @@ template_link <- function(html, xpath, href) {
 
 tweak_metadata <- function(html, path) {
   file <- basename(path)
+
+  # Fix generator
+  generator <- xml2::xml_find_first(html, '//meta[@property="generator"]')
+  bookdown_string <- sprintf("bookdown %s, bs4_book()", packageVersion("bookdown"))
+  set_content(generator, bookdown_string)
+
   if (file == "index.html") {
     return(invisible())
   } else {
-    # Fix generator
-    generator <- xml2::xml_find_first(html, '//meta[@property="generator"]')
-    bookdown_string <- sprintf("bookdown %s, bs4_book()", packageVersion("bookdown"))
-    set_content(generator, bookdown_string)
-
     # Fix og:url
     og_url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
     base_url <- xml2::xml_attr(og_url, "content")
@@ -533,43 +534,30 @@ tweak_metadata <- function(html, path) {
       base_url <- paste0(base_url, "/")
     }
     set_content(og_url, paste0(base_url, file))
-    # Fix descriptions
+
+    # Fix descriptions if possible
     og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
     general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
-
-    if (file == "table-of-contents.html") {
-      description_string <- if (!is.na(xml2::xml_attr(og_description, "content"))) {
-        paste(
-          "Table of contents;",
-          xml2::xml_attr(og_description, "content")
-        )
-      } else {
-        "Table of contents"
+    contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
+    xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
+    xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
+    text <- xml2::xml_text(contents)
+    text <- gsub("\\\n", " ", text)
+    text <- gsub("  ", " ", text)
+    text <- gsub("^[[:space:]]+", "", text)
+    text <- gsub("[[:space:]]+$", "", text)
+    if (nzchar(text)) {
+      words <- unlist(strsplit(text, " "))
+      no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
+      max_n <- max(which(no_char<= 197))
+      description_string <- paste(words[1: max_n], collapse = " ")
+      if (max_n != length(words)) {
+        description_string <- paste0(description_string, "...")
       }
-
       set_content(og_description, description_string)
       set_content(general_description, description_string)
-    } else {
-      contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
-      xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
-      xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
-      text <- xml2::xml_text(contents)
-      text <- gsub("\\\n", " ", text)
-      text <- gsub("  ", " ", text)
-      text <- gsub("^[[:space:]]+", "", text)
-      text <- gsub("[[:space:]]+$", "", text)
-      if (nzchar(text)) {
-        words <- unlist(strsplit(text, " "))
-        no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
-        max_n <- max(which(no_char<= 197))
-        description_string <- paste(words[1: max_n], collapse = " ")
-        if (max_n != length(words)) {
-          description_string <- paste0(description_string, "...")
-        }
-        set_content(og_description, description_string)
-        set_content(general_description, description_string)
-      }
-  }
+    }
+
 }
 }
 # https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
