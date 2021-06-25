@@ -10,3 +10,8 @@ inst/resources/gitbook/js/app.min.js.map
 .*/rsconnect
 ^\.github$
 ^NEWS\.md$
+^vignettes/articles$
+^_pkgdown\.yml$
+^reference$
+^pkgdown$
+^tests/manual$

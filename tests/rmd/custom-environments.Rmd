@@ -6,6 +6,8 @@ output:
   bookdown::pdf_document2: default
 ---
 
+# Examples 
+
 We can use Pandoc fenced div syntax now
 
 ::: {.definition}
@@ -89,4 +91,10 @@ Let $\bar{X}=\sum_{i=1}^n \frac{1}{n} X_i$ be the sample mean of $n$ independent
 Applying Theorem \@ref(thm:chf-sum), we have
 
 $$\varphi _{\bar{X}}(t)=\prod_{i=1}^n \varphi _{X_i}\left(\frac{t}{n}\right)=\left[\varphi _{X}\left(\frac{t}{n}\right)\right]^n.$$
+:::
+
+::: {.hypothesis name="Riemann hypothesis"}
+The Riemann Zeta-function is defined as
+$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
+for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
 :::

@@ -96,7 +96,11 @@ bookdown::gitbook:
       position: fixed
     edit : null
     download: null
-    search: yes
+    search:
+      engine: lunr # or fuse
+      # options to control/tune search engine behaviour (for
+      # fuse.js, refer to https://fusejs.io/api/options.html)
+      options: null
     fontsettings:
       theme: white
       family: sans
@@ -109,6 +113,7 @@ bookdown::gitbook:
       weibo: no
       instapaper: no
       vk: no
+      whatsapp: no
       all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
     info: yes
 ```

@@ -1,3 +1,36 @@
+# CHANGES IN bookdown VERSION 0.23
+
+- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
+
+- The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
+
+  ```yaml
+  output:
+    bookdown::gitbook:
+      config:
+        search:
+          engine: fuse
+  ```
+
+  Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
+
+- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
+
+- `epub_version` argument in `epub_book()` can now be set to `epub2` to creat EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
+
+- [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
+  ````markdown
+  ::: {.theorem #label name="My Theorem"}
+  Content
+  :::
+  ````
+  
+  However, as _beamer_ defines its own LaTeX throem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
+
+  This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
+
+- When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
+
 # CHANGES IN bookdown VERSION 0.22
 
 ## NEW FEATURES
@@ -6,7 +39,21 @@
 
 - `render_book()` can now take a directory as input, i.e `render_book("book_dir")`, to render in this directory by using the `index.Rmd` file if it exists. The default is now to look for `input.Rmd` is the current working directory. Previously, filename must have been provided (`render_book()` is now equivalent to `render_book("index.Rmd")`) (#990).
 
+- `hypothesis` environment is now supported among [Theorems and Proof](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) (thanks, @shirdekel, #1102).
+
+- In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://bookdown.org/yihui/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
+
+- Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
+
+- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, @prdm0, #1125).
+
 ## BUG FIXES
+
+- Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)
+
+- When `split_bib = TRUE`, references in footnotes are now also correctly relocated in the chapter (thanks, @jimhshen, #952)
+
+- In `pdf_book()`, `toc_bib = TRUE` now works with _natbib_ and _biblatex_ as `citation_package` (thanks, @qifei9, @umarcor, #450).
 
 - CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).
 
@@ -17,6 +64,22 @@
 - The new syntax for theorem and proof environments introduced in **bookdown** requires Pandoc >= 2.3 instead of 2.0 (thanks, @markhymers, #979 #980).
 
 - `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
+
+- Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
+
+- Properly support multiple authors in the `gitbook()` output format (thanks, @adamvi, #1095).
+
+- No more warnings are thrown when passing several input files to `render_book(preview = TRUE)` (#1091).
+
+- Correctly remove reference IDs of tables (e.g `(#tab:lab)`) generated by custom function (like `gt::gt()`) (#1099).
+
+- In sepia or night mode, the background color during sidebar transition is now correct and no more white (#1100).
+
+- Fix an issue in `bs4_book()` with encoding on system non-UTF8 by default (#1027).
+
+## MINOR CHANGES
+
+- `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
 
 # CHANGES IN bookdown VERSION 0.21
 

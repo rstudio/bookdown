@@ -11,8 +11,6 @@ colorlinks: yes
 lot: yes
 lof: yes
 fontsize: 12pt
-monofont: "Source Code Pro"
-monofontoptions: "Scale=0.7"
 site: bookdown::bookdown_site
 description: "A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)."
 url: 'https\://bookdown.org/yihui/bookdown/'
@@ -33,9 +31,16 @@ local({
   options(repos = r)
 })
 
-lapply(c('DT', 'citr', 'formatR', 'svglite'), function(pkg) {
+lapply(c('DT', 'formatR', 'svglite', 'rticles'), function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
+
+# install from github
+githubs <- c('citr' = 'crsh/citr')
+lapply(names(githubs), function(pkg) {
+  if (system.file(package = pkg) == '') remotes::install_github(githubs[pkg], upgrade = FALSE)
+})
+
 ```
 
 # Preface {-}

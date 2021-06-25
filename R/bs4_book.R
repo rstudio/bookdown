@@ -8,7 +8,7 @@
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib)
+#'   [bslib](https://rstudio.github.io/bslib/)
 #'
 #' * Built in search (broken down by section) that helps you quickly find what
 #'   you're looking for.
@@ -26,7 +26,7 @@
 #'   footnotes.
 #'
 #' * R syntax highlighting and autolinking by
-#'   [downlit](http://downlit.r-lib.org/) is paired with a accessible
+#'   [downlit](https://downlit.r-lib.org/) is paired with a accessible
 #'   colour scheme designed by Alison Hill.
 #'
 #' This theme is designed for books that use one chapter per page.
@@ -35,22 +35,55 @@
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
 #'   make reading easier and uses a primary colour with greater constrast
 #'   against the background.
-#' @param repo Link to repository where book is hosted, used to generate
-#'   view source and edit buttons. Currently assumes GitHub and that the book
-#'   is in the root directory of the repo.
+#' @param repo Either link to repository where book is hosted, used to generate
+#'   view source and edit buttons or a list with repository `base` link, default
+#'   `branch`, `subdir` and `icon` (see "Specifying the repository").
 #' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
 #'   [rmarkdown::html_document()].
+#'
+#' @section Specifying the repository:
+#'
+#' If your book has a default branch called main you can use
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#' ```
+#'
+#' If your book is furthermore located in a subdirectory called "book" you can use
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#'     subdir: book
+#' ```
+#'
+#' By default if the repo URL contains "github" it will get a GitHub font-awesome
+#' icon, and otherwise a GitLab font-awesome icon.
+#' To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) (Font Awesome 5).
+#'
+#' ```yaml
+#' bookdown::bs4_book:
+#'   repo:
+#'     base: https://github.com/hadley/ggplot2-book
+#'     branch: main
+#'     subdir: book
+#'     icon: "fas fa-air-freshener"
+#' ```
+#'
 #' @export
 #' @md
-bs4_book <- function(
-                     theme = bs4_book_theme(),
+bs4_book <- function(theme = bs4_book_theme(),
                      repo = NULL,
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
-                     extra_dependencies = NULL
-                     ) {
-  check_packages(c("bslib", "downlit", "jsonlite", "xml2"))
+                     extra_dependencies = NULL) {
+  check_packages(bs4_book_deps())
   bs4_check_dots(...)
 
   # Allow theme specification in yaml metadata
@@ -102,8 +135,7 @@ bs4_book_theme <- function(primary = "#0068D9", ...) {
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
-                           output_dir = opts$get("output_dir")
-                           ) {
+                           output_dir = opts$get("output_dir")) {
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
@@ -121,7 +153,7 @@ bs4_book_build <- function(output = "bookdown.html",
     output_dir <- "_book"
   }
 
-  if (isTRUE(opts$get('preview'))) {
+  if (isTRUE(opts$get("preview"))) {
     bs4_chapter_tweak(
       output2,
       repo = repo,
@@ -179,8 +211,8 @@ build_toc <- function(output) {
   if (any(is_appendix)) {
     app <- toc[
       seq_along(is_appendix) > which(is_appendix)[[1]] &
-      toc$level == 1 &
-      !is.na(toc$num),
+        toc$level == 1 &
+        !is.na(toc$num),
     ]
     app$label <- LETTERS[seq_len(nrow(app))]
     # TODO: make less of a hack
@@ -202,17 +234,17 @@ build_toc <- function(output) {
   toc
 }
 
-bs4_book_page = function(head,
-                         toc,
-                         chapter,
-                         link_prev,
-                         link_next,
-                         rmd_cur,
-                         html_cur,
-                         foot,
-                         rmd_index = NULL) {
+bs4_book_page <- function(head,
+                          toc,
+                          chapter,
+                          link_prev,
+                          link_next,
+                          rmd_cur,
+                          html_cur,
+                          foot,
+                          rmd_index = NULL) {
   rmd_index[[html_cur]] <- rmd_cur
-  paste(c(head, toc, chapter, foot), collapse = '\n')
+  paste(c(head, toc, chapter, foot), collapse = "\n")
 }
 
 bs4_book_dependency <- function(theme) {
@@ -239,7 +271,6 @@ bs4_chapters_tweak <- function(output,
                                rmd_index = NULL,
                                repo = NULL,
                                output_dir = opts$get("output_dir")) {
-
   toc <- build_toc(output)
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
@@ -260,9 +291,10 @@ bs4_chapters_tweak <- function(output,
 }
 
 bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
-  text <- readChar(path, file.size(path))
+  text <- xfun::file_string(path)
+
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
-  text <- gsub("\033", "&#8233;", text, fixed = TRUE)
+  text <- gsub("\033", "&#8233;", text, fixed = TRUE, useBytes = TRUE)
   html <- xml2::read_html(text, encoding = "UTF-8")
 
   tweak_tables(html)
@@ -283,7 +315,6 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
     chapter = h1,
     path = basename(path)
   )
-
 }
 
 tweak_chapter <- function(html) {
@@ -390,17 +421,36 @@ tweak_tables <- function(html) {
 }
 
 tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) {
+  if (!is.null(repo) && length(repo) == 1) {
+    repo <- list(
+      base = repo,
+      branch = "master",
+      subdir = NULL
+    )
+  }
 
   # Source links ------------------------------------------------------------
   if (!is.null(repo) && active %in% names(rmd_index)) {
-    repo_edit <- paste0(repo, "/edit/master/", rmd_index[[active]])
-    repo_view <- paste0(repo, "/blob/master/", rmd_index[[active]])
+    if (!is.null(repo$subdir)) {
+      repo$subdir <- paste0(repo$subdir, "/")
+    }
+
+    repo_edit <- paste0(repo$base, "/edit/", repo$branch, "/", repo$subdir, rmd_index[[active]])
+    repo_view <- paste0(repo$base, "/blob/", repo$branch, "/", repo$subdir, rmd_index[[active]])
   } else {
     repo_edit <- NULL
     repo_view <- NULL
   }
 
-  template_link(html, ".//a[@id='book-repo']", repo)
+  if (!is.null(repo$base)) {
+    icon <- repo$icon %n%
+      ifelse(grepl("github\\.com", repo$base), "fab fa-github", "fab fa-gitlab")
+    template_link_icon(html, ".//a[@id='book-repo']", icon)
+    template_link_icon(html, ".//a[@id='book-source']", icon)
+    template_link_icon(html, ".//a[@id='book-edit']", icon)
+  }
+
+  template_link(html, ".//a[@id='book-repo']", repo$base)
   template_link(html, ".//a[@id='book-source']", repo_view)
   template_link(html, ".//a[@id='book-edit']", repo_edit)
 
@@ -561,16 +611,21 @@ tweak_metadata <- function(html, path) {
     }
 
 }
-}
 # https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
 copy_html <- function(html) {
   xml2::read_html(as.character(html))
+}
+  
+template_link_icon <- function(html, xpath, icon) {
+  icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
+  xml2::xml_attr(icon_node, "class") <- icon
 }
 
 # index -------------------------------------------------------------------
 
 bs4_index_data <- function(node, chapter, path) {
-  children <- xml2::xml_find_all(node,
+  children <- xml2::xml_find_all(
+    node,
     "./*[not(self::div and contains(@class, 'section'))]"
   )
   if (length(children) == 0 || !is_heading(children[[1]])) {
@@ -670,4 +725,11 @@ bs4_check_dots <- function(...) {
 
 set_content <- function(node, content) {
   xml2::xml_set_attr(node, "content", content)
+}
+  
+# these dependencies are required to use bs4_book() but are suggested deps
+# of bookdown. Hence the need to check they are available
+# TODO: remove this and the check in bs4_book when we add them as Imports (if we do it)
+bs4_book_deps <- function() {
+  c("bslib", "downlit", "jsonlite", "xml2")
 }

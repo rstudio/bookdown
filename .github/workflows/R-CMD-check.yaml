@@ -5,10 +5,20 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'inst/examples/**'
+      - '_pkgdown.yml'
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yaml'
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'inst/examples/**'
+      - '_pkgdown.yml'
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yaml'
 
 name: R-CMD-check
 
@@ -24,7 +34,7 @@ jobs:
           - {os: windows-latest, pandoc: '2.7.3',   r: 'release'}
           - {os: macOS-latest,   pandoc: '2.7.3',   r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest",  http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
           - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
           - {os: ubuntu-18.04,   pandoc: 'devel', r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
@@ -38,8 +48,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@v1
+        id: install-r
         with:
           r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+
+      - name: change temp dir
+        if: runner.os == 'Windows'
+        run: echo "TMPDIR=${{ runner.temp }}" >> $GITHUB_ENV
+        shell: bash
 
       - uses: r-lib/actions/setup-pandoc@v1
         if: matrix.config.pandoc != 'devel'
@@ -49,48 +66,51 @@ jobs:
       - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
         if: matrix.config.pandoc == 'devel'
 
-      # TODO: Use next tag once this commit is in a release
-      - uses: r-lib/actions/setup-tinytex@5f1c134
+      - uses: r-lib/actions/setup-tinytex@v1
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
 
-      - name: Query dependencies
+      - name: Add some R options for later steps
         run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+          cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+          cat(readLines("~/.Rprofile"), sep = "\n")
+        shell: Rscript {0}
+
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps_tree("local::.", dependencies = TRUE), ".github/r-depends.rds")
         shell: Rscript {0}
 
       - name: Cache R packages
-        if: runner.os != 'Windows'
         uses: actions/cache@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          path: |
+            ${{ env.R_LIBS_USER }}/*
+            !${{ env.R_LIBS_USER }}/pak
+          key: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
+          restore-keys: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "18.04"))')
+        run: Rscript -e 'pak::local_system_requirements(execute = TRUE)'
 
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-          remotes::install_cran("sessioninfo")
+          pak::local_install_dev_deps(upgrade = TRUE)
+          pak::pkg_install("rcmdcheck")
+          pak::pkg_install("sessioninfo")
         shell: Rscript {0}
 
       - name: Session info
         run: |
           options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
+          pkgs <- .packages(TRUE)
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
+          tinytex::tlmgr("--version")
+          tinytex::tl_pkgs()
         shell: Rscript {0}
 
       - name: Check
@@ -105,3 +125,10 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Test coverage
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.7.3'
+        run: |
+          pak::pkg_install('covr')
+          covr::codecov()
+        shell: Rscript {0}
