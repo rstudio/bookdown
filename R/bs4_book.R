@@ -625,6 +625,7 @@ tweak_metadata <- function(html, path) {
 
 }
 # https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
+# TODO: replace by xml_clone() when it exists (https://github.com/r-lib/xml2/issues/341)
 copy_html <- function(html) {
   xml2::read_html(as.character(html))
 }
