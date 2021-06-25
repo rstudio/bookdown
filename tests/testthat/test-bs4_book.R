@@ -182,13 +182,3 @@ test_that("bs4_book() metadata tweaking works -- not index", {
   )
 
 })
-
-
-
-test_that("bs4_book() messages if description missing", {
-  skip_if_bs4_book_deps_missing()
-  expect_message(
-    local_bs4_book(url = 'https://example.com/', verbose = TRUE),
-    "TODO: Add a description field in the YAML metadata of index.Rmd."
-  )
-})

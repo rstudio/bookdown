@@ -36,13 +36,7 @@ local_bs4_book <- function(name = "book",
     file.path(path, "01-Introduction.Rmd")
   )
 
-  fun <- if (verbose) {
-    identity
-  } else {
-    suppressMessages
-  }
-
-  fun(
+  suppressMessages(
     render_book(
       path,
       output_format = "bookdown::bs4_book",
