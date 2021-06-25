@@ -570,12 +570,12 @@ tweak_metadata <- function(html, path) {
   file <- basename(path)
 
   # Fix generator
-  generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
+  generator <- xml_find_meta_name(html, 'generator')
   bookdown_string <- sprintf("bookdown %s with bs4_book()", packageVersion("bookdown"))
   set_content(generator, bookdown_string)
 
   # Check there are descriptions, add them if not
-  general_description <- xml2::xml_find_first(html, '//meta[@name="description"]')
+  general_description <- xml_find_meta_name(html, 'description')
 
   # Add the nodes if they were missing by default
   if (length(general_description) == 0) {
@@ -584,24 +584,22 @@ tweak_metadata <- function(html, path) {
     if (file == "index.html") message("TODO: Add a description field in the YAML metadata of index.Rmd.")
     xml2 <- xml2::xml_add_child(head, "meta", name= "description", content = default_description)
     xml2 <- xml2::xml_add_child(head, "meta", property = "og:description", content = default_description)
-    xml2 <- xml2::xml_add_child(head, "meta", property = "twitter:description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", name = "twitter:description", content = default_description)
   }
 
   if (file == "index.html") {
     return(invisible())
   } else {
     # Fix og:url
-    og_url <- xml2::xml_find_first(html, '//meta[@property="og:url"]')
+    og_url <- xml_find_meta_property(html, 'og:url')
     base_url <- xml2::xml_attr(og_url, "content")
-    if (!grepl("/$", base_url)) {
-      base_url <- paste0(base_url, "/")
-    }
+     if (!grepl("/$", base_url)) base_url <- paste0(base_url, "/")
     set_content(og_url, paste0(base_url, file))
 
     # Fix descriptions if possible
-    general_description <- xml2::xml_find_first(html, '//meta[@property="description"]')
-    twitter_description <- xml2::xml_find_first(html, '//meta[@property="twitter:description"]')
-    og_description <- xml2::xml_find_first(html, '//meta[@property="og:description"]')
+    general_description <- xml_find_meta_name(html, 'description')
+    twitter_description <- xml_find_meta_name(html, 'twitter:description')
+    og_description <- xml_find_meta_property(html, 'og:description')
 
     contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
     xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
@@ -740,6 +738,14 @@ bs4_check_dots <- function(...) {
 
 set_content <- function(node, content) {
   xml2::xml_set_attr(node, "content", content)
+}
+
+xml_find_meta_property <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@property="%s"]', property))
+}
+
+xml_find_meta_name <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@name="%s"]', property))
 }
 
 # these dependencies are required to use bs4_book() but are suggested deps
