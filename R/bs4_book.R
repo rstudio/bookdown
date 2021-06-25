@@ -49,7 +49,7 @@ bs4_book <- function(
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
-                     split_bib = split_bib
+                     split_bib = FALSE
                      ) {
   check_packages(c("bslib", "downlit", "jsonlite", "xml2"))
   bs4_check_dots(...)
