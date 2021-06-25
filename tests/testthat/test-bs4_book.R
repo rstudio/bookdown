@@ -125,7 +125,7 @@ test_that("bs4_book() metadata tweaking works -- index", {
 
   generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
   # No test for the whole string as it contains bookdown version
-  expect_true(grepl("bs4_book", get_meta_content(generator)))
+  expect_match(get_meta_content(generator), "bs4_book")
 
   url <- xml_find_meta_property(html, 'og:url')
   expect_equal(get_meta_content(url), "https://example.com/")
@@ -158,7 +158,7 @@ test_that("bs4_book() metadata tweaking works -- not index", {
 
   generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
   # No test for the whole string as it contains bookdown version
-  expect_true(grepl("bs4_book", get_meta_content(generator)))
+  expect_match(get_meta_content(generator), "bs4_book")
 
   url <- xml_find_meta_property(html, 'og:url')
   expect_equal(get_meta_content(url), "https://example.com/introduction.html")
