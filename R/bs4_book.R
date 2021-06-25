@@ -75,6 +75,26 @@
 #'     icon: "fas fa-air-freshener"
 #' ```
 #'
+#' @section References/Bibliography:
+#'
+#' As this theme makes footnotes appear in line, making your citations _footnotes_
+#' allows readers to read them near the text they are referred in.
+#' To do that, download a footnote style CSL file
+#' (e.g. chicago-fullnote-bibliography.csl)
+#' put this in your index.Rmd:
+#' ```yaml
+#'bibliography: refs.bib
+#'csl: chicago-fullnote-bibliography.csl
+#' ```
+#' And then optionally, if you no longer want a reference section
+#' at the back of the book:
+#'
+#' ```yaml
+#' suppress-bibliography: true
+#' ```
+#'
+#'
+#'
 #' @export
 #' @md
 bs4_book <- function(theme = bs4_book_theme(),

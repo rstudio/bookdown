@@ -85,3 +85,19 @@ To use another icon, specify it with the correct prefix (\code{fas}, \code{fab},
 }\if{html}{\out{</div>}}
 }
 
+\section{References/Bibliography}{
+
+
+As this theme makes footnotes appear in line, making your citations \emph{footnotes}
+allows readers to read them near the text they are referred in.
+To do that, download a footnote style CSL file
+(e.g. chicago-fullnote-bibliography.csl)
+put this in your index.Rmd:\if{html}{\out{<div class="yaml">}}\preformatted{bibliography: refs.bib
+csl: chicago-fullnote-bibliography.csl
+}\if{html}{\out{</div>}}
+
+And then optionally, if you no longer want a reference section
+at the back of the book:\if{html}{\out{<div class="yaml">}}\preformatted{suppress-bibliography: true
+}\if{html}{\out{</div>}}
+}
+
