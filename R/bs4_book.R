@@ -587,9 +587,8 @@ tweak_metadata <- function(html, path) {
     xml2 <- xml2::xml_add_child(head, "meta", name = "twitter:description", content = default_description)
   }
 
-  if (file == "index.html") {
-    return(invisible())
-  }
+  # index page is the only one not modified - yaml provided description by user is used.
+  if (file == "index.html") return(invisible())
 
   # Fix og:url
   og_url <- xml_find_meta_property(html, 'og:url')
@@ -624,6 +623,7 @@ tweak_metadata <- function(html, path) {
   }
 
 }
+
 # https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
 # TODO: replace by xml_clone() when it exists (https://github.com/r-lib/xml2/issues/341)
 copy_html <- function(html) {
