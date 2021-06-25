@@ -38,7 +38,7 @@
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
 #'   `branch`, `subdir` and `icon` (see "Specifying the repository").
-#' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
+#' @param lib_dir,pandoc_args,extra_dependencies,split_bib... Passed on to
 #'   [rmarkdown::html_document()].
 #'
 #' @section Specifying the repository:
