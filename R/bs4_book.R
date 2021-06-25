@@ -582,7 +582,7 @@ tweak_metadata <- function(html, path) {
     head <- xml2::xml_find_first(html, '//head')
     default_description <- "A book created with bookdown."
     if (file == "index.html") message("TODO: Add a description field in the YAML metadata of index.Rmd.")
-    xml2 <- xml2::xml_add_child(head, "meta", property = "description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", name= "description", content = default_description)
     xml2 <- xml2::xml_add_child(head, "meta", property = "og:description", content = default_description)
     xml2 <- xml2::xml_add_child(head, "meta", property = "twitter:description", content = default_description)
   }
