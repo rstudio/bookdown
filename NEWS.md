@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.23
 
+- In `bs4_book`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+
 - `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
 - The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
