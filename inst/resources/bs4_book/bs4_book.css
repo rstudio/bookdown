@@ -455,6 +455,8 @@ body {
   font-variant: small-caps;
 }
 
+/* special callout blocks */
+
 .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
   margin: 1rem calc(-2px - 0.5em);
   padding: 1rem;
@@ -486,6 +488,12 @@ body {
 }
 .rmdtip {
   border-color: var(--info);
+}
+
+.rmdcaution pre, .rmdimportant pre, .rmdnote pre, .rmdtip pre, .rmdwarning pre {
+  /* Make code blocks full width in rmdnote */
+  margin: 0 -1rem 1rem -1rem;
+  padding: 1rem;
 }
 
 main ul {

@@ -2,16 +2,16 @@
 #'
 #' @description
 #' This output format is built with [bootstrap](https://getbootstrap.com),
-#' using carefully craft features to provide a clean reading experience whether
-#' your on a phone, tablet, or desktop.
+#' using carefully crafted features to provide a clean reading experience whether
+#' you are on a phone, tablet, or desktop.
 #'
 #' Some of the main features:
 #'
 #' * Easy customisation of colours and fonts with
 #'   [bslib](https://rstudio.github.io/bslib/)
 #'
-#' * Built in search (broken down by section) that helps you quickly find what
-#'   you're looking for.
+#' * Built-in search (broken down by section) that helps readers quickly find what
+#'   they are looking for.
 #'
 #' * A sidebar containing a within-chapter table of contents that makes
 #'   navigation easy and helps provide context about your current position
@@ -74,6 +74,26 @@
 #'     subdir: book
 #'     icon: "fas fa-air-freshener"
 #' ```
+#'
+#' @section References/Bibliography:
+#'
+#' As this theme makes footnotes appear in line, making your citations _footnotes_
+#' allows readers to read them near the text they are referred in.
+#' To do that, download a footnote style CSL file
+#' (e.g. chicago-fullnote-bibliography.csl)
+#' put this in your index.Rmd:
+#' ```yaml
+#'bibliography: refs.bib
+#'csl: chicago-fullnote-bibliography.csl
+#' ```
+#' And then optionally, if you no longer want a reference section
+#' at the back of the book:
+#'
+#' ```yaml
+#' suppress-bibliography: true
+#' ```
+#'
+#'
 #'
 #' @export
 #' @md
@@ -347,7 +367,7 @@ tweak_footnotes <- function(html) {
   id <- xml2::xml_attr(footnotes, "id")
   xml2::xml_remove(xml2::xml_find_all(footnotes, "//a[@class='footnote-back']"))
   contents <- vapply(footnotes, FUN.VALUE = character(1), function(x) {
-    as.character(xml2::xml_children(x))
+    paste0(as.character(xml2::xml_children(x)), collapse = "")
   })
 
   # Add popover attributes to links
