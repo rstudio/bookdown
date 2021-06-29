@@ -25,12 +25,12 @@ gitbook = function(
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
+  gb_config = config
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css))
+      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css, gb_config))
     )
   }
-  gb_config = config
   if (identical(template, 'default')) {
     template = bookdown_file('templates', 'gitbook.html')
   }
@@ -84,11 +84,18 @@ write_search_data = function() {
   write_utf8(x, output_path('search_index.json'))
 }
 
-gitbook_dependency = function(table_css) {
+gitbook_dependency = function(table_css, config = list()) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  list(jquery_dependency(), htmltools::htmlDependency(
+  # TODO: use fuse by default in the future
+  lunr = !identical(config$search$engine, 'fuse')
+  # TODO: download and a local copy of fuse.js?
+  fuse = if (!lunr) htmltools::htmlDependency(
+    'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
+    script = 'dist/fuse.min.js'
+  )
+  list(jquery_dependency(), fuse, htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
       'style.css', if (table_css) 'plugin-table.css', 'plugin-bookdown.css',
@@ -96,7 +103,7 @@ gitbook_dependency = function(table_css) {
       'plugin-clipboard.css'
     )),
     script = file.path('js', c(
-      app, 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
+      app, if (lunr) 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
       'plugin-fontsettings.js', 'plugin-bookdown.js', 'jquery.highlight.js',
       'plugin-clipboard.js'
     ))
@@ -241,6 +248,7 @@ gitbook_config = function(config = list()) {
     view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
+    search = list(engine = 'lunr', options = NULL),
     toc = list(collapse = 'subsection')
   )
   config = utils::modifyList(default, config, keep.null = TRUE)

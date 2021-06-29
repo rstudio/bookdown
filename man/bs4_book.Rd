@@ -22,9 +22,9 @@ The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
 make reading easier and uses a primary colour with greater constrast
 against the background.}
 
-\item{repo}{Link to repository where book is hosted, used to generate
-view source and edit buttons. Currently assumes GitHub and that the book
-is in the root directory of the repo.}
+\item{repo}{Either link to repository where book is hosted, used to generate
+view source and edit buttons or a list with repository \code{base} link, default
+\code{branch}, \code{subdir} and \code{icon} (see "Specifying the repository").}
 
 \item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
@@ -33,15 +33,15 @@ is in the root directory of the repo.}
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{bootstrap},
-using carefully craft features to provide a clean reading experience whether
-your on a phone, tablet, or desktop.
+using carefully crafted features to provide a clean reading experience whether
+you are on a phone, tablet, or desktop.
 
 Some of the main features:
 \itemize{
 \item Easy customisation of colours and fonts with
 \href{https://rstudio.github.io/bslib/}{bslib}
-\item Built in search (broken down by section) that helps you quickly find what
-you're looking for.
+\item Built-in search (broken down by section) that helps readers quickly find what
+they are looking for.
 \item A sidebar containing a within-chapter table of contents that makes
 navigation easy and helps provide context about your current position
 within the chapter.
@@ -58,3 +58,46 @@ colour scheme designed by Alison Hill.
 
 This theme is designed for books that use one chapter per page.
 }
+\section{Specifying the repository}{
+
+
+If your book has a default branch called main you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+}\if{html}{\out{</div>}}
+
+If your book is furthermore located in a subdirectory called "book" you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+}\if{html}{\out{</div>}}
+
+By default if the repo URL contains "github" it will get a GitHub font-awesome
+icon, and otherwise a GitLab font-awesome icon.
+To use another icon, specify it with the correct prefix (\code{fas}, \code{fab}, ...) (Font Awesome 5).\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+    icon: "fas fa-air-freshener"
+}\if{html}{\out{</div>}}
+}
+
+\section{References/Bibliography}{
+
+
+As this theme makes footnotes appear in line, making your citations \emph{footnotes}
+allows readers to read them near the text they are referred in.
+To do that, download a footnote style CSL file
+(e.g. chicago-fullnote-bibliography.csl)
+put this in your index.Rmd:\if{html}{\out{<div class="yaml">}}\preformatted{bibliography: refs.bib
+csl: chicago-fullnote-bibliography.csl
+}\if{html}{\out{</div>}}
+
+And then optionally, if you no longer want a reference section
+at the back of the book:\if{html}{\out{<div class="yaml">}}\preformatted{suppress-bibliography: true
+}\if{html}{\out{</div>}}
+}
+
