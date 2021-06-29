@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.23
 
-- In `bs4_book`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
+
+- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
 
 - `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
