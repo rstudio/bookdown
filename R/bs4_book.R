@@ -92,8 +92,53 @@
 #' ```yaml
 #' suppress-bibliography: true
 #' ```
+#' @section HTML metadata:
 #'
+#' HTML `<meta>` tag will be set based on Pandoc's variables set in `index.Rmd`:
 #'
+#'  * `pagetitle` (or `title` if unset) will be used as `og:title`
+#'  and `twitter:title` content.
+#'  * `description` will be used as `description`, `og:description` and
+#'  `twitter:description` content.
+#'  * `url` will be used as `og:url` and as base for `cover-image`
+#'  * `cover-image` is the path to your local cover image, and will be used as
+#'  `og:image`, appended to `url` value.
+#'  * `twitter-handle` will be used as `twitter:site` content.
+#'
+#' Some value are not configurable:
+#'
+#' * `twitter:card` will be set as `summary`.
+#' * `og:type` will be set as `book`.
+#'
+#' A YAML header in `index.Rmd` would look like this:
+#'
+#' ```yaml
+#' ---
+#' title: "A Minimal Book Example"
+#' author: "John Doe"
+#' date: "`r Sys.Date()`"
+#' site: bookdown::bookdown_site
+#' output: bookdown::bs4_book
+#' url: https://bookdown.org/johndoe/bookdown-demo
+#' cover-image: cover.png
+#' description: |
+#'   This is a minimal example of using the bookdown package to write a book.
+#'   The output format for this example is bookdown::bs4_book
+#' ---
+#' ````
+#'
+#' If this values are set, then the associated `<meta>` tag will be set in the
+#' resulting HTML file. The provided values will be used asis in `index.html`.
+#' They will then be tweaked for each chapter to produce different metadata for each
+#' page as expected by social media:
+#'
+#' * All `description` related meta will be auto generated from page content,
+#' * `og:url` will be set to the specific HTML page url,
+#' * All the other `<meta>` will stay the same.
+#'
+#' You can have a look at [`bs4_book()` HTML
+#' template](https://github.com/maelle/bookdown/blob/master/inst/templates/bs4_book.html)
+#' for details on how these variables are used.
 #'
 #' @export
 #' @md
