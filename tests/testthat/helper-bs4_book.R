@@ -9,6 +9,9 @@ local_bs4_book <- function(name = "book",
                            title = "Awesome Cookbook",
                            author = "Yoda",
                            output_options = NULL,
+                           description = NULL,
+                           url = NULL,
+                           verbose = FALSE,
                            env = parent.frame()) {
 
   # don't run test using this book skeleton when Pandoc is not available
@@ -20,7 +23,17 @@ local_bs4_book <- function(name = "book",
     name = name,
     title = title,
     author = author,
-    path = path
+    path = path,
+    description = description,
+    url = url
+  )
+
+  # Add text to Introduction
+
+  intro <- readLines(file.path(path, "01-Introduction.Rmd"))
+  writeLines(
+    c(intro, paste0(rep(0:9, 42), collapse = " ")),
+    file.path(path, "01-Introduction.Rmd")
   )
 
   suppressMessages(
@@ -33,4 +46,8 @@ local_bs4_book <- function(name = "book",
   )
 
   return(path)
+}
+
+get_meta_content <- function(node) {
+  xml2::xml_attr(node, "content")
 }

@@ -92,8 +92,53 @@
 #' ```yaml
 #' suppress-bibliography: true
 #' ```
+#' @section HTML metadata:
 #'
+#' HTML `<meta>` tag will be set based on Pandoc's variables set in `index.Rmd`:
 #'
+#'  * `pagetitle` (or `title` if unset) will be used as `og:title`
+#'  and `twitter:title` content.
+#'  * `description` will be used as `description`, `og:description` and
+#'  `twitter:description` content.
+#'  * `url` will be used as `og:url` and as base for `cover-image`
+#'  * `cover-image` is the path to your local cover image, and will be used as
+#'  `og:image`, appended to `url` value.
+#'  * `twitter-handle` will be used as `twitter:site` content.
+#'
+#' Some value are not configurable:
+#'
+#' * `twitter:card` will be set as `summary`.
+#' * `og:type` will be set as `book`.
+#'
+#' A YAML header in `index.Rmd` would look like this:
+#'
+#' ```yaml
+#' ---
+#' title: "A Minimal Book Example"
+#' author: "John Doe"
+#' date: "`r Sys.Date()`"
+#' site: bookdown::bookdown_site
+#' output: bookdown::bs4_book
+#' url: https://bookdown.org/johndoe/bookdown-demo
+#' cover-image: cover.png
+#' description: |
+#'   This is a minimal example of using the bookdown package to write a book.
+#'   The output format for this example is bookdown::bs4_book
+#' ---
+#' ````
+#'
+#' If this values are set, then the associated `<meta>` tag will be set in the
+#' resulting HTML file. The provided values will be used asis in `index.html`.
+#' They will then be tweaked for each chapter to produce different metadata for each
+#' page as expected by social media:
+#'
+#' * All `description` related meta will be auto generated from page content,
+#' * `og:url` will be set to the specific HTML page url,
+#' * All the other `<meta>` will stay the same.
+#'
+#' You can have a look at [`bs4_book()` HTML
+#' template](https://github.com/maelle/bookdown/blob/master/inst/templates/bs4_book.html)
+#' for details on how these variables are used.
 #'
 #' @export
 #' @md
@@ -324,6 +369,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
   tweak_footnotes(html)
   tweak_part_screwup(html)
   tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
+  tweak_metadata(html, path)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -585,6 +631,70 @@ template_link <- function(html, xpath, href) {
   }
 }
 
+tweak_metadata <- function(html, path) {
+  file <- basename(path)
+
+  # Fix generator
+  generator <- xml_find_meta_name(html, 'generator')
+  bookdown_string <- sprintf("bookdown %s with bs4_book()", packageVersion("bookdown"))
+  set_content(generator, bookdown_string)
+
+  # Check there are descriptions, add them if not
+  general_description <- xml_find_meta_name(html, 'description')
+
+  # Add the nodes if they were missing by default
+  if (length(general_description) == 0) {
+    head <- xml2::xml_find_first(html, '//head')
+    default_description <- "A book created with bookdown."
+    if (file == "index.html") message("TODO: Add a description field in the YAML metadata of index.Rmd.")
+    xml2 <- xml2::xml_add_child(head, "meta", name= "description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", property = "og:description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", name = "twitter:description", content = default_description)
+  }
+
+  # index page is the only one not modified - yaml provided description by user is used.
+  if (file == "index.html") return(invisible())
+
+  # Fix og:url
+  og_url <- xml_find_meta_property(html, 'og:url')
+  base_url <- xml2::xml_attr(og_url, "content")
+   if (!grepl("/$", base_url)) base_url <- paste0(base_url, "/")
+  set_content(og_url, paste0(base_url, file))
+
+  # Fix descriptions if possible
+  general_description <- xml_find_meta_name(html, 'description')
+  twitter_description <- xml_find_meta_name(html, 'twitter:description')
+  og_description <- xml_find_meta_property(html, 'og:description')
+
+  contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
+  xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
+  xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
+  text <- xml2::xml_text(contents)
+  text <- gsub("\\\n", " ", text)
+  text <- gsub("  ", " ", text)
+  text <- gsub("^[[:space:]]+", "", text)
+  text <- gsub("[[:space:]]+$", "", text)
+  if (nzchar(text)) {
+    words <- unlist(strsplit(text, " "))
+    no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
+    max_n <- max(which(no_char<= 197))
+    description_string <- paste(words[1: max_n], collapse = " ")
+    if (max_n != length(words)) {
+      description_string <- paste0(description_string, "...")
+    }
+    set_content(og_description, description_string)
+    set_content(twitter_description, description_string)
+    set_content(general_description, description_string)
+  }
+
+}
+
+# https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
+# TODO: replace by xml_clone() when it exists (https://github.com/r-lib/xml2/issues/341)
+copy_html <- function(html) {
+  xml2::read_html(as.character(html))
+}
+
 template_link_icon <- function(html, xpath, icon) {
   icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
   xml2::xml_attr(icon_node, "class") <- icon
@@ -690,6 +800,18 @@ bs4_check_dots <- function(...) {
       call. = FALSE
     )
   }
+}
+
+set_content <- function(node, content) {
+  xml2::xml_set_attr(node, "content", content)
+}
+
+xml_find_meta_property <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@property="%s"]', property))
+}
+
+xml_find_meta_name <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@name="%s"]', property))
 }
 
 # these dependencies are required to use bs4_book() but are suggested deps
