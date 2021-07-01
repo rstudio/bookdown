@@ -433,16 +433,34 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  html_404 = c("<div id=\"preamble\" class=\"section level1\">",
-           "<h1>Page not found</h1>",
-           "<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>",
-           "<p>You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.</p>",
-           "</div>")
+  md_404 = "_404.md"
   path_404 = "404.html"
-  html_404 = build(
-    prepend_chapter_title(html_head, html_404), html_toc, html_404,
-    NULL, NULL, NULL, path_404, html_foot, ...)
-  write_utf8(html_404, path_404)
+  # create 404 page if it does not exist
+  if (!file.exists(path_404)) {
+    if (file.exists(md_404)) {
+      xfun::Rscript_call(function(path) {
+        rmarkdown::render(md_404,
+                          rmarkdown::html_fragment(
+                            pandoc_args = c("--metadata","title=404")
+                          ),
+                          quiet = TRUE,
+                          output_file = path_404)
+      })
+      html_404 = xfun::read_utf8(path_404)
+      html_404 = Filter(nzchar, html_404)
+    } else {
+      # default content for 404 page
+      html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
+                   "<h1>Page not found</h1>",
+                   "<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>",
+                   "<p>You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.</p>",
+                   "</div>")
+    }
+    html_404 = build(
+      prepend_chapter_title(html_head, html_404), html_toc, html_404,
+      NULL, NULL, NULL, path_404, html_foot, ...)
+    write_utf8(html_404, path_404)
+  }
 
   nms = move_to_output_dir(c(nms, path_404))
 
