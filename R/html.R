@@ -437,17 +437,17 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   path_404 = "404.html"
   # create 404 page if it does not exist
   if (!file.exists(path_404)) {
-    if (file.exists(md_404)) {
-      xfun::Rscript_call(function(path) {
-        rmarkdown::render(md_404,
+    if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
+      xfun::Rscript_call(function() {
+        rmarkdown::render(found,
                           rmarkdown::html_fragment(
                             pandoc_args = c("--metadata","title=404")
                           ),
-                          quiet = TRUE,
-                          output_file = path_404)
+                          output_file = path_404,
+                          quiet = TRUE
+        )
       })
-      html_404 = xfun::read_utf8(path_404)
-      html_404 = Filter(nzchar, html_404)
+      html_404 = Filter(nzchar, xfun::read_utf8(path_404)) # remove empty line
     } else {
       # default content for 404 page
       html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
