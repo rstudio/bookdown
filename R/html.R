@@ -446,8 +446,10 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
 build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
   path_404 = "404.html"
-  if (file.exists(path_404)) return(path_404)
-  # create 404 page if it does not exist
+  # if a 404 page already exist, we do nothing specific and assume
+  # user has already a workflow in place
+  if (file.exists(path_404)) return()
+  # We create 404 page if it does not exist
   if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
     rmd_cur = found
     xfun::Rscript_call(function() {
