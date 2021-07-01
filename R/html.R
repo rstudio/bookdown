@@ -431,7 +431,19 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     write_utf8(html, nms[i])
   }
-  nms = move_to_output_dir(nms)
+
+  # add a 404 page
+  html = c('<div id="preamble" class="section level1">',
+           '<h1>Page not found</h1>',
+           '<p>Use the table of contents to find your way back!</p>',
+           '</div>')
+  path_404 = "404.html"
+  html = build(
+    prepend_chapter_title(html_head, html), html_toc, html,
+    NULL, NULL, NULL, "path_404", html_foot, ...)
+  write_utf8(html, path_404)
+
+  nms = move_to_output_dir(c(nms, path_404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
