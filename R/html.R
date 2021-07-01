@@ -433,15 +433,15 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  html = c('<div id="preamble" class="section level1">',
+  html_404 = c('<div id="preamble" class="section level1">',
            '<h1>Page not found</h1>',
            '<p>Use the table of contents to find your way back!</p>',
            '</div>')
   path_404 = "404.html"
-  html = build(
-    prepend_chapter_title(html_head, html), html_toc, html,
-    NULL, NULL, NULL, "path_404", html_foot, ...)
-  write_utf8(html, path_404)
+  html_404 = build(
+    prepend_chapter_title(html_head, html_404), html_toc, html_404,
+    NULL, NULL, NULL, path_404, html_foot, ...)
+  write_utf8(html_404, path_404)
 
   nms = move_to_output_dir(c(nms, path_404))
 
