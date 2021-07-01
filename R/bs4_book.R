@@ -233,31 +233,6 @@ bs4_book_build <- function(output = "bookdown.html",
     )
   }
 
-  # add 404 page
-  path404 <- gsub("index.html", "404.html", output2)
-  if (!file.exists(path404)) {
-    file.copy(output2, path404)
-    text404 <- xml2::read_html(path404)
-    nav <- xml2::xml_find_all(text404, ".//nav")[[2]]
-    xml2::xml_remove(nav)
-    main <- xml2::xml_find_first(text404, ".//main")
-    xml2::xml_remove(xml2::xml_children(main))
-    xml2::xml_add_child(
-      main,
-      xml2::xml_child(
-        xml2::xml_children(
-          xml2::read_html(
-            '<div id="preamble" class="section level1">
-        <h1>Page not found</h1>
-        <p>Use the table of contents to find your way back!</p>
-        </div>'
-          )
-        )
-      )
-    )
-    xml2::write_html(text404, path404)
-  }
-
   output2
 }
 
@@ -370,6 +345,12 @@ bs4_chapters_tweak <- function(output,
     path <- files$path[[i]]
     message("Tweaking ", path)
     index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo)
+  }
+  # tweak 404.html ---
+  path_404 <- file.path(output_dir, "404.html")
+  if (file.exists(path_404)) {
+    message("Tweaking ", path_404)
+    bs4_chapter_tweak(path_404, toc, rmd_index = rmd_index, repo = repo)
   }
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
 
