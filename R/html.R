@@ -433,7 +433,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  path_404 = build_404_page(build, html_head, html_toc, html_foot)
+  path_404 = build_404_page(html_head, html_toc, html_foot, build, ...)
 
   nms = move_to_output_dir(c(nms, path_404))
 
@@ -444,7 +444,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   nms[j]
 }
 
-build_404_page <- function(build, html_head, html_toc, html_foot) {
+build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
   path_404 = "404.html"
   if (file.exists(path_404)) return(path_404)
   # create 404 page if it does not exist
