@@ -1,0 +1,107 @@
+- title: R Graphics Cookbook, 2nd edition
+  img: https://r-graphics.org/cover.jpg
+  href: https://r-graphics.org/
+  source: https://github.com/wch/rgcookbook
+  showcase: yes
+- title: Geocomputation with R
+  img: https://geocompr.robinlovelace.net/images/cover.png
+  href: https://geocompr.robinlovelace.net/
+  source: https://github.com/Robinlovelace/geocompr
+  showcase: yes
+- title: 'bookdown: Authoring Books and Technical Documents with R Markdown'
+  img: https://bookdown.org/yihui/bookdown//images/cover.jpg
+  href: https://bookdown.org/yihui/bookdown/
+  source: https://github.com/rstudio/bookdown
+  showcase: no
+- title: Beyond Multiple Linear Regression
+  img: https://bookdown.org/roback/bookdown-BeyondMLR/data/book_cover.jpg
+  href: https://bookdown.org/roback/bookdown-BeyondMLR/
+  source: https://github.com/proback/BeyondMLR
+  showcase: yes
+- title: Introduction to Data Science
+  img: https://images.routledge.com/common/jackets/amazon/978036735/9780367357986.jpg
+  href: https://rafalab.github.io/dsbook/
+  showcase: no
+- title: 'blogdown: Creating Websites with R Markdown'
+  img: https://bookdown.org/yihui/blogdown//images/cover.png
+  href: https://bookdown.org/yihui/blogdown/
+  source: https://github.com/rstudio/blogdown
+  showcase: no
+- title: Data Science at the Command Line, 1e
+  img: https://www.datascienceatthecommandline.com/1e/images/cover.png
+  href: https://www.datascienceatthecommandline.com/1e/
+  source: https://github.com/jeroenjanssens/data-science-at-the-command-line
+  showcase: yes
+- title: 'R Markdown: The Definitive Guide'
+  img: https://bookdown.org/yihui/rmarkdown//images/cover.png
+  href: https://bookdown.org/yihui/rmarkdown/
+  source: https://github.com/rstudio/rmarkdown-book
+  showcase: no
+- title: Engineering Production-Grade Shiny Apps
+  img: https://raw.githubusercontent.com/ThinkR-open/engineering-shiny-book/master/img/engineering-shiny.jpg
+  href: https://engineering-shiny.org/
+  source: https://github.com/ThinkR-open/building-shiny-apps-workflow
+  showcase: yes
+- title: R Markdown Cookbook
+  img: https://bookdown.org/yihui/rmarkdown-cookbook//images/cover.png
+  href: https://bookdown.org/yihui/rmarkdown-cookbook/
+  source: https://github.com/yihui/rmarkdown-cookbook
+  showcase: no
+- title: Efficient R programming
+  img: https://csgillespie.github.io/efficientR/figures/f0_web.png
+  href: https://csgillespie.github.io/efficientR/
+  source: https://github.com/csgillespie/efficientR
+  showcase: yes
+- title: Text Mining with R
+  img: https://www.tidytextmining.com/images/cover.png
+  href: https://tidytextmining.com/
+  source: https://github.com/dgrtwo/tidy-text-mining
+  showcase: yes
+- title: R Programming for Data Science
+  img: https://bookdown.org/rdpeng/rprogdatascience/cover_sm.png
+  href: https://bookdown.org/rdpeng/rprogdatascience/
+  source: https://github.com/rdpeng/rprogdatascience
+  showcase: yes
+- title: Statistical Inference via Data Science
+  img: https://moderndive.com/images/logos/book_cover.png
+  href: https://moderndive.com/
+  source: https://github.com/moderndive/ModernDive_book
+  showcase: yes
+- title: Advanced R
+  img: https://adv-r.hadley.nz/cover.png
+  href: https://adv-r.hadley.nz/
+  source: https://github.com/hadley/adv-r
+  showcase: no
+- title: Data Science Live Book
+  img: https://livebook.datascienceheroes.com/introduction/data_science_live_book_cover.png
+  href: https://livebook.datascienceheroes.com/
+  source: https://github.com/pablo14/data-science-live-book
+  showcase: yes
+- title: Data Visualization
+  img: https://socviz.co/assets/dv-cover-executive-b.jpg
+  href: https://socviz.co/
+  showcase: no
+- title: 'Forecasting: Principles and Practice'
+  img: https://Otexts.com/fpp2/fpp2_cover.jpg
+  href: https://otexts.com/fpp2/
+  showcase: no
+- title: Fundamentals of Data Visualization
+  img: https://clauswilke.com/dataviz/cover.png
+  href: https://clauswilke.com/dataviz/
+  source: https://github.com/clauswilke/dataviz
+  showcase: yes
+- title: Hands-On Programming with R
+  img: https://rstudio-education.github.io/hopr/cover.png
+  href: https://rstudio-education.github.io/hopr/
+  source: https://github.com/rstudio-education/hopr
+  showcase: no
+- title: R for Data Science
+  img: https://r4ds.had.co.nz/cover.png
+  href: https://r4ds.had.co.nz/
+  source: https://github.com/hadley/r4ds
+  showcase: no
+- title: R Packages
+  img: https://r-pkgs.org/images/cover.png
+  href: https://r-pkgs.org/
+  source: https://github.com/hadley/r-pkgs
+  showcase: no

@@ -5,10 +5,24 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'inst/examples/**'
+      - 'inst/resources/**'
+      - 'inst/rmarkdown/**'
+      - 'inst/templates/**'
+      - 'R/**'
+      - '.github/workflows/Book.yaml'
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - 'inst/examples/**'
+      - 'inst/resources/**'
+      - 'inst/rmarkdown/**'
+      - 'inst/templates/**'
+      - 'R/**'
+      - '.github/workflows/Book.yaml'
 
 name: Build and deploy book
 
@@ -18,6 +32,7 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KNITR_OPTIONS: "knitr.chunk.tidy=TRUE"
 
     steps:
       - name: Checkout Repo
@@ -31,9 +46,8 @@ jobs:
         with:
           pandoc-version: '2.7.3'
 
-      # TODO: Use next tag once this commit is in a release
       - name: Install TinyTeX
-        uses: r-lib/actions/setup-tinytex@5f1c134
+        uses: r-lib/actions/setup-tinytex@v1
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
@@ -52,13 +66,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
+      - name: Install OS dependencies
         run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "18.04"))')
+          brew update
+          brew install --cask xquartz
+          brew install --cask calibre
 
       - name: Install phamtomJS for webshot
         run: |
@@ -69,20 +81,19 @@ jobs:
       - name: Install R dependencies for bookdown
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-          remotes::install_cran("sessioninfo")
+        shell: Rscript {0}
+
+      - name: Install bookdown package
+        run: xfun::install_dir(".")
         shell: Rscript {0}
 
       - name: Session info
         run: |
           options(width = 100)
+          remotes::install_cran("sessioninfo")
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
-        shell: Rscript {0}
-
-      - name: Install bookdown package
-        run: xfun::install_dir(".")
         shell: Rscript {0}
 
       - name: Cache bookdown results
@@ -92,9 +103,20 @@ jobs:
           key: bookdown-${{ hashFiles('inst/examples/*Rmd') }}
           restore-keys: bookdown-
 
-      - name: Build book
+      - name: Build Gitbook
+        if: github.event_name == 'pull_request'
         run: make -C inst/examples gitbook
 
+      - name: Build and Deploy all book
+        if: github.event_name == 'push'
+        env:
+          CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
+          CONTENT_ID: 3
+        run: make -C inst/examples all
 
-
-
+      - name: Upload book folder for debug
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: book-dir
+          path: inst/examples

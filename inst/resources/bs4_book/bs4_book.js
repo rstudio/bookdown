@@ -92,7 +92,6 @@ async function searchFuse(query, callback) {
       .map((x) => x.item);
   }
 
-  console.log(results);
   callback(items);
 }
 

@@ -1,9 +1,21 @@
-We welcome contributions to the **bookdown** package. To submit a contribution:
+# Contributing to bookdown
 
-1. [Fork](https://github.com/rstudio/bookdown/fork) the repository and make your changes, or just edit a file in this repository using the `Edit` button on Github if the change is simple enough.
+We welcome contributions to the **bookdown** package. 
 
-2. Ensure that you have signed the [individual](http://www.rstudio.com/wp-content/uploads/2014/06/RStudioIndividualContributorAgreement.pdf) or [corporate](http://www.rstudio.com/wp-content/uploads/2014/06/RStudioCorporateContributorAgreement.pdf) contributor agreement as appropriate. You can send the signed copy to jj@rstudio.com.
+You can contribute in many ways: 
 
-3. Submit a [pull request](https://help.github.com/articles/using-pull-requests).
+* By opening issues to give feedback and share ideas.
+* By fixing typos in documentations
+* By submitting Pull Request (PR) to fix some opened issues
+* By submitting Pull Request (PR) to suggest some new features. (It is considered good practice to open issues before to discuss ideas)
+
+
+## To submit a contribution using a Pull Request:
+
+1.  [Fork](https://github.com/rstudio/bookdown/fork) the repository and make your changes in a new branch specific to the PR. It is ok to edit a file in this repository using the `Edit` button on Github if the change is simple enough.
+
+2.  For significant changes (e.g not required for fixing typos), ensure that you have signed the [individual](https://rstudioblog.files.wordpress.com/2017/05/rstudio_individual_contributor_agreement.pdf) or [corporate](https://rstudioblog.files.wordpress.com/2017/05/rstudio_corporate_contributor_agreement.pdf) contributor agreement as appropriate. You can send the signed copy to <jj@rstudio.com>. 
+
+3.  Submit the [pull request](https://help.github.com/articles/using-pull-requests). It is ok to submit as draft in your are still working on it but would like some feedback from us. It always good to share in the open that you are working on it.
 
 We'll try to be as responsive as possible in reviewing and accepting pull requests. Appreciate your contributions very much!

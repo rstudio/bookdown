@@ -16,7 +16,7 @@ epub_book(
   cover_image = NULL,
   metadata = NULL,
   chapter_level = 1,
-  epub_version = c("epub3", "epub"),
+  epub_version = c("epub3", "epub", "epub2"),
   md_extensions = NULL,
   pandoc_args = NULL,
   template = "default"
@@ -40,7 +40,9 @@ applied to the eBook.}
 \item{chapter_level}{The level by which the e-book is split into separate
 \dQuote{chapter} files.}
 
-\item{epub_version}{Whether to use version 3 or 2 of EPUB.}
+\item{epub_version}{Whether to use version 3 or 2 of EPUB. This correspond to
+\href{https://pandoc.org/MANUAL.html#option--to}{Pandoc's supported output format}. \code{"epub"} is an alias
+for \code{"epub3"} since Pandoc 2.0 and \code{"epub2"} for earlier version.}
 
 \item{md_extensions}{A character string of Pandoc Markdown extensions.}
 
@@ -59,5 +61,5 @@ many readers, such as Amazon Kindle Fire and iBooks on Apple devices.
 }
 \note{
 Figure/table numbers cannot be generated if sections are not numbered
-  (\code{number_sections = FALSE}).
+(\code{number_sections = FALSE}).
 }
