@@ -449,6 +449,7 @@ build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
   if (file.exists(path_404)) return(path_404)
   # create 404 page if it does not exist
   if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
+    rmd_cur = found
     xfun::Rscript_call(function() {
       rmarkdown::render(found,
                         rmarkdown::html_fragment(
@@ -460,6 +461,7 @@ build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
     })
     html_404 = Filter(nzchar, xfun::read_utf8(path_404)) # remove empty line
   } else {
+    rmd_cur = NULL
     # default content for 404 page
     html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
                  "<h1>Page not found</h1>",
@@ -469,7 +471,7 @@ build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
   }
   html_404 = build(
     prepend_chapter_title(html_head, html_404), html_toc, html_404,
-    NULL, NULL, NULL, path_404, html_foot, ...)
+    NULL, NULL, rmd_cur, path_404, html_foot, ...)
   write_utf8(html_404, path_404)
   path_404
 }
