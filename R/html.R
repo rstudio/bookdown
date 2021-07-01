@@ -433,34 +433,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  md_404 = "_404.md"
-  path_404 = "404.html"
-  # create 404 page if it does not exist
-  if (!file.exists(path_404)) {
-    if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
-      xfun::Rscript_call(function() {
-        rmarkdown::render(found,
-                          rmarkdown::html_fragment(
-                            pandoc_args = c("--metadata","title=404")
-                          ),
-                          output_file = path_404,
-                          quiet = TRUE
-        )
-      })
-      html_404 = Filter(nzchar, xfun::read_utf8(path_404)) # remove empty line
-    } else {
-      # default content for 404 page
-      html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
-                   "<h1>Page not found</h1>",
-                   "<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>",
-                   "<p>You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.</p>",
-                   "</div>")
-    }
-    html_404 = build(
-      prepend_chapter_title(html_head, html_404), html_toc, html_404,
-      NULL, NULL, NULL, path_404, html_foot, ...)
-    write_utf8(html_404, path_404)
-  }
+  path_404 = build_404_page(build, html_head, html_toc, html_foot)
 
   nms = move_to_output_dir(c(nms, path_404))
 
@@ -469,6 +442,36 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+build_404_page <- function(build, html_head, html_toc, html_foot) {
+  path_404 = "404.html"
+  if (file.exists(path_404)) return(path_404)
+  # create 404 page if it does not exist
+  if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
+    xfun::Rscript_call(function() {
+      rmarkdown::render(found,
+                        rmarkdown::html_fragment(
+                          pandoc_args = c("--metadata","title=404")
+                        ),
+                        output_file = path_404,
+                        quiet = TRUE
+      )
+    })
+    html_404 = Filter(nzchar, xfun::read_utf8(path_404)) # remove empty line
+  } else {
+    # default content for 404 page
+    html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
+                 "<h1>Page not found</h1>",
+                 "<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>",
+                 "<p>You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.</p>",
+                 "</div>")
+  }
+  html_404 = build(
+    prepend_chapter_title(html_head, html_404), html_toc, html_404,
+    NULL, NULL, NULL, path_404, html_foot, ...)
+  write_utf8(html_404, path_404)
+  path_404
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
