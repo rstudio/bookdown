@@ -725,7 +725,7 @@ bs4_index_data <- function(node, chapter, path) {
   }
 
   all <- function(...) paste0("descendant-or-self::", c(...), collapse = "|")
-  text_path <- all("p", "li", "caption", "figcaption", "dt", "dd")
+  text_path <- all("p", "li", "caption", "figcaption", "dt", "dd", "div[contains(@class, 'line-block')]")
   code_path <- all("pre")
 
   code <- xml2::xml_find_all(children, code_path)
