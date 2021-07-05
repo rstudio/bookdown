@@ -24,6 +24,8 @@
 
   Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
 
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
+
 - Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
 
 - `epub_version` argument in `epub_book()` can now be set to `epub2` to creat EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).

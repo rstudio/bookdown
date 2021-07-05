@@ -17,24 +17,8 @@ local_bs4_book <- function(name = "book",
   # don't run test using this book skeleton when Pandoc is not available
   skip_if_not_pandoc()
 
-  path <- withr::local_tempdir(.local_envir = env)
-
-  book_skeleton(
-    name = name,
-    title = title,
-    author = author,
-    path = path,
-    description = description,
-    url = url
-  )
-
-  # Add text to Introduction
-
-  intro <- readLines(file.path(path, "01-Introduction.Rmd"))
-  writeLines(
-    c(intro, paste0(rep(0:9, 42), collapse = " ")),
-    file.path(path, "01-Introduction.Rmd")
-  )
+  path <- local_book(name = name, title = title, author = author,
+    description = description, url = url, verbose = verbose, env = env)
 
   suppressMessages(
     render_book(
