@@ -378,8 +378,9 @@ code {
 
 pre code {
   background-color: transparent;
-  word-break: normal; /* force wide blocks to scroll, not wrap */
-  word-wrap: normal;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 pre, code {
@@ -395,9 +396,7 @@ code a:any-link {
 /* copy button */
 
 pre .copy {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  float: right;
 }
 
 pre .copy button {

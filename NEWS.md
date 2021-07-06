@@ -2,6 +2,12 @@
 
 - For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
 
+- In `bs4_book()`, improvement regarding copy button:
+  * It has now a light icon instead of a text with white background (#1192). 
+  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
+  * For code block with very long line, it will now wrap in the code block with no more x-scroll bar, and it will wraps around the copy button icon so that text is not hidden (#1187). 
+  If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
+
 - In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
 - Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 

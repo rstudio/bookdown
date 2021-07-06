@@ -108,14 +108,14 @@ $(document).ready(function() {
   if(ClipboardJS.isSupported()) {
     // Insert copy buttons
     var copyButton = "<div class='copy'><button type='button' class='btn btn-copy' title='Copy to clipboard' aria-label='Copy to clipboard' data-toggle='popover' data-placement='top' data-trigger='hover'><i class='bi'></i></button></div>";
-    $(copyButton).appendTo("pre");
+    $(copyButton).prependTo("pre.sourceCode");
     // Initialize tooltips:
     $('.btn-copy').tooltip({container: 'body', boundary: 'window'});
 
     // Initialize clipboard:
     var clipboard = new ClipboardJS('.btn-copy', {
       text: function(trigger) {
-        return trigger.parentNode.previousSibling.textContent;
+        return trigger.parentNode.nextSibling.textContent;
       }
     });
 
