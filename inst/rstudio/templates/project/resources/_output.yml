@@ -1,5 +1,10 @@
+# for bs4_book only
 bookdown::bs4_book:
   css: bs4_style.css
+  theme:
+    primary: "#096B72"
+  repo: https://github.com/rstudio/bookdown
+# for gitbook only
 bookdown::gitbook:
   css: style.css
   config:
