@@ -2,9 +2,11 @@
 yaml: goes here
 ---
 
-# Installation
+# Prerequisites
 
 This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+
+## Installation
 
 The **bookdown** package can be installed from CRAN or Github:
 
@@ -15,7 +17,7 @@ install.packages("bookdown")
 ```
 
 
-# Usage 
+## Usage 
 
 Each .Rmd file contains one and only one chapter. Each chapter *must* start with a first-level heading, which means a single hash sign `#` followed by the chapter's name.
 
