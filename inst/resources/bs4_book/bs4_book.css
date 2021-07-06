@@ -396,9 +396,7 @@ code a:any-link {
 /* copy button */
 
 pre .copy {
-float: right;
-margin-left: 1rem;
-margin-bottom: 1rem;
+  float: right;
 }
 
 pre .copy button {
