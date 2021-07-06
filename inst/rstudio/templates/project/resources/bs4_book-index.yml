@@ -1,0 +1,14 @@
+title: "A Minimal Book Example"
+author: "John Doe"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+url: https://bookdown.org/johndoe/bookdown-demo
+cover-image: cover.png
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The output format for this example is bookdown::bs4_book,
+  set in the _output.yml file.
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
