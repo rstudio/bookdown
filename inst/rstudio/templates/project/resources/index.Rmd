@@ -2,9 +2,9 @@
 yaml: goes here
 ---
 
-# Prerequisites
+# About
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
 
 ## Installation
 
@@ -16,10 +16,12 @@ install.packages("bookdown")
 # devtools::install_github("rstudio/bookdown")
 ```
 
-
 ## Usage 
 
-Each .Rmd file contains one and only one chapter. Each chapter *must* start with a first-level heading, which means a single hash sign `#` followed by the chapter's name.
+Each chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. Each chapter *must* start with a first-level heading: `# A good chapter`.
+
+You'll want to decide on at least one **bookdown** output format - your format(s) of choice go in the `_output.yml` file (you may have more than one). Here are the possible format options:
+https://pkgs.rstudio.com/bookdown/reference/index.html#section-book-output-formats
 
 You can build the HTML version of this example book without changing anything:
 
@@ -33,7 +35,20 @@ You can also build the book from the R console:
 bookdown::render_book()
 ```
 
+You can also start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+
+```{r eval=FALSE}
+bookdown::serve_book()
+```
+
 To compile this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+
+## Resources
+
+The **bookdown** book: https://bookdown.org/yihui/bookdown/
+
+The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
