@@ -115,7 +115,7 @@ $(document).ready(function() {
     // Initialize clipboard:
     var clipboard = new ClipboardJS('.btn-copy', {
       text: function(trigger) {
-        return trigger.parentNode.previousSibling.textContent;
+        return trigger.parentNode.nextSibling.textContent;
       }
     });
 
