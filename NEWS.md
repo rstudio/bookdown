@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.23
 
-- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
+- In `bs4_book()`, improvement regarding copy button:
+  * It has now a light icon instead of a text with white background (#1192). 
+  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
 
 - Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
