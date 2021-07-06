@@ -10,21 +10,34 @@
   <meta name="author" content="$author-meta$" />
   $endfor$
 
+   $if(description)$<meta name="description" content="$description$" />$endif$
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="$pagetitle$" />
+  <meta property="og:type" content="book" />
+  $if(url)$<meta property="og:url" content="$url$" />$endif$
+  $if(cover-image)$<meta property="og:image" content="$url$/$cover-image$" />$endif$
+  $if(description)$<meta property="og:description" content="$description$" />$endif$
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="$pagetitle$" />
+  $if(twitter-handle)$<meta name="twitter:site" content="@$twitter-handle$" />$endif$
+  $if(description)$<meta name="twitter:description" content="$description$" />$endif$
+  $if(cover-image)$<meta name="twitter:image" content="$url$/$cover-image$" />$endif$
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
   $for(header-includes)$
   $header-includes$
   $endfor$
-  <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
 
   <!-- CSS -->
   $for(css)$
   <link rel="stylesheet" href="$css$" />
   $endfor$
-  
+
 </head>
 
 <body data-spy="scroll" data-target="#toc">
@@ -121,6 +134,23 @@ $if(math)$
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 $endif$
 </body>

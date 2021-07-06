@@ -118,3 +118,67 @@ test_that("bs4_book() repo specification works - custom icon GitHub", {
   )
 })
 
+test_that("bs4_book() metadata tweaking works -- index", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
+  # No test for the whole string as it contains bookdown version
+  expect_match(get_meta_content(generator), "bs4_book")
+
+  url <- xml_find_meta_property(html, 'og:url')
+  expect_equal(get_meta_content(url), "https://example.com/")
+
+  description <- xml_find_meta_property(html, 'og:description')
+  expect_equal(
+    get_meta_content(description),
+    "A very nice book."
+  )
+
+  twitter_description <- xml_find_meta_name(html, 'twitter:description')
+  expect_equal(
+    get_meta_content(twitter_description),
+    "A very nice book."
+  )
+
+  description <- xml_find_meta_name(html, 'description')
+  expect_equal(
+    get_meta_content(description),
+    "A very nice book."
+  )
+
+})
+
+
+test_that("bs4_book() metadata tweaking works -- not index", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
+  html <- xml2::read_html(file.path(book, "_book", "introduction.html"))
+
+  generator <- xml2::xml_find_first(html, '//meta[@name="generator"]')
+  # No test for the whole string as it contains bookdown version
+  expect_match(get_meta_content(generator), "bs4_book")
+
+  url <- xml_find_meta_property(html, 'og:url')
+  expect_equal(get_meta_content(url), "https://example.com/introduction.html")
+
+  og_description <- xml_find_meta_property(html, 'og:description')
+  expect_equal(
+    get_meta_content(og_description),
+    "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7..."
+  )
+
+  twitter_description <- xml_find_meta_name(html, 'twitter:description')
+  expect_equal(
+    get_meta_content(twitter_description),
+    "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7..."
+  )
+
+  description <- xml_find_meta_name(html, 'description')
+  expect_equal(
+    get_meta_content(description),
+    "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7..."
+  )
+
+})

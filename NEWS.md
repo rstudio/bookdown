@@ -1,5 +1,15 @@
 # CHANGES IN bookdown VERSION 0.23
 
+- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
+
+- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
+
+- `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
+
+- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
+
+- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+
 - `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
 - The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
@@ -13,6 +23,8 @@
   ```
 
   Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
+
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
 
 - Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
 

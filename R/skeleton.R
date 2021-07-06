@@ -40,10 +40,13 @@ bookdown_skeleton = function(path) {
 #' @param documentclass The LaTeX document class.
 #' @param references The title of the references section.
 #' @param path The directory in which to create the book.
+#' @param description The description of the book.
+#' @param url The URL of the book.
 #' @noRd
 book_skeleton = function(
   name, title, author, chapters = c('Preface {-}', 'Introduction'),
-  documentclass = 'book', references = 'References', path = getwd()
+  documentclass = 'book', references = 'References', path = getwd(),
+  description = NULL, url = NULL
 ) {
   rmd_files = gsub('[^-a-zA-Z0-9]', '', gsub('\\s+', '-', c(chapters, references)))
   rmd_files = sprintf('%02d-%s.Rmd', seq_along(rmd_files) - 1, rmd_files)
@@ -60,7 +63,9 @@ book_skeleton = function(
     if (i == 1) {
       index_metadata = list(title = title, author = author,
                             documentclass = documentclass,
-                            site = 'bookdown::bookdown_site')
+                            site = 'bookdown::bookdown_site',
+                            description = description, url = url)
+      index_metadata = Filter(length, index_metadata)
       content = c(
         '---', yaml::as.yaml(index_metadata), '---', '',
         content,
