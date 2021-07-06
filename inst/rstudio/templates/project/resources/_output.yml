@@ -1,3 +1,5 @@
+bookdown::bs4_book:
+  css: bs4_style.css
 bookdown::gitbook:
   css: style.css
   config:
