@@ -121,6 +121,7 @@ $(document).ready(function() {
 
     clipboard.on('success', function(e) {
       const btn = e.trigger;
+      changeTooltipMessage(btn, 'Copied!');
       btn.classList.add('btn-copy-checked');
       setTimeout(function() {
         btn.classList.remove('btn-copy-checked');
