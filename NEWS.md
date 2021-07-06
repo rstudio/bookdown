@@ -2,6 +2,7 @@
 
 - For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
 
+- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
 - Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
 - `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
@@ -23,6 +24,8 @@
   ```
 
   Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
+
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
 
 - Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
 
