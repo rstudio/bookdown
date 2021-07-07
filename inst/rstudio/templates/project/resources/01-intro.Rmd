@@ -1,16 +1,12 @@
 # Introduction {#intro}
 
-All chapters start with a first-level heading followed by your chapter title, like the line above.
+All chapters start with a first-level heading followed by your chapter title, like the line above. 
 
-## Chapter sections {#a-section}
-
-All chapter sections start with a second-level or higher heading followed by your section title, like the sections above and below.
+All chapter sections start with a second-level or higher heading followed by your section title, like the section below.
 
 ## Heading labels
 
-You can add a label to any heading using `{#nice-label}`, where `nice-label` is a placeholder. This chapter and the first section inside it are both labeled.
-
-Heading labels let you reference a chapter or section from text elsewhere in your book with a clickable jump to that heading: Please review Chapter \@ref(intro). 
+You can add a label to any heading using `{#nice-label}`, where `nice-label` is a placeholder: for example, we can reference Chapter \@ref(intro). 
 
 If you do not add manual labels (like in the current section), automatically valid labels are created based on the chapter name: See \@ref(heading-labels).
 
