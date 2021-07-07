@@ -1,25 +1,75 @@
-bookdown_skeleton = function(path) {
+# this is the function used for the RStudio project template
+bookdown_skeleton = function(path, output_format) {
 
   # ensure directory exists
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
   path = xfun::normalize_path(path)
 
-  # copy 'resources' folder to path
+  # Get correct resources
   resources = bookdown_file('rstudio', 'templates', 'project', 'resources')
-
   files = list.files(resources, recursive = TRUE, include.dirs = FALSE)
-
+  files = files[grepl("^.*(?<!-index[.]yml)$", files, perl = TRUE)]
+  files = files[grepl("^.*(?<!-output[.]yml)$", files, perl = TRUE)]
+  yaml_index = sprintf("%s-index.yml", output_format)
+  yaml_output = sprintf("%s-output.yml", output_format)
+  files = c(yaml_index, yaml_output, files)
+  # copy them to path
   source = file.path(resources, files)
   target = file.path(path, files)
   lapply(unique(dirname(target)), dir_create)
   file.copy(source, target)
 
-  # add book_filename to _bookdown.yml and default to the base path name
-  f = file.path(path, '_bookdown.yml')
-  x = read_utf8(f)
-  write_utf8(c(sprintf('book_filename: "%s"', basename(path)), x), f)
+  # tweak files
+  xfun::in_dir(path, {
+    # build index.Rmd
+    index = xfun::read_utf8("index.Rmd")
+    placeholder = grep("yaml: goes here", index, fixed = FALSE)
+    yml = xfun::read_utf8(yaml_index)
+    index = c(index[seq_len(placeholder - 1)], yml, index[seq.int(placeholder + 1, length(index))])
+    xfun::write_utf8(index, "index.Rmd")
+    unlink(yaml_index)
+
+    # build _output.yaml
+    f = "_output.yml"
+    x = xfun::read_utf8(f)
+    yml = xfun::read_utf8(yaml_output)
+    xfun::write_utf8(c(yml, x), f)
+    unlink(yaml_output)
+
+    # tweak _bookdown.yml
+    f = '_bookdown.yml'
+    x = read_utf8(f)
+    # add book_filename to _bookdown.yml and default to the base path name
+    prepend = sprintf('book_filename: "%s"', basename(path))
+    # add new_session to _bookdown.yml if bs4_book
+    if (output_format == "bs4_book") {
+      prepend = c(prepend, 'new_session: true', 'before_chapter_script: _common.R')
+    }
+    write_utf8(c(prepend, x), f)
+  })
 
   TRUE
+}
+
+activate_rstudio_project <- function(dir) {
+  if (xfun::pkg_available("rstudioapi") && rstudioapi::isAvailable("1.1.287")) {
+    rstudioapi::initializeProject(dir)
+  }
+}
+
+create_gitbook = function(path) {
+  create_html_book(path, output_format = "gitbook")
+  activate_rstudio_project(path)
+}
+
+create_bs4_book = function(path) {
+  create_html_book(path, output_format = "bs4_book")
+  activate_rstudio_project(path)
+}
+
+create_html_book = function(path, output_format = c("gitbook", "bs4_book")) {
+  output_format = match.arg(output_format)
+  bookdown_skeleton(path, output_format)
 }
 
 #' Create a book skeleton

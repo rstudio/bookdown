@@ -1,7 +1,4 @@
 delete_merged_file: true
-# for bs4_book only
-new_session: true
-before_chapter_script: _common.R
 language:
   ui:
     chapter_name: "Chapter "
