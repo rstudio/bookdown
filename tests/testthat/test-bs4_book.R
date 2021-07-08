@@ -184,6 +184,7 @@ test_that("bs4_book() metadata tweaking works -- not index", {
 })
 
 test_that("tweaking file keeps encoding", {
+  skip_on_cran()
   skip_if_bs4_book_deps_missing()
   book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
   withr::local_dir(book)
