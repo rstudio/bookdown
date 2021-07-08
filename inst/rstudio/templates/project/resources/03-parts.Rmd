@@ -1,0 +1,9 @@
+# Parts
+
+You can add parts to create groups of chapters. This text can be inserted at the top of the .Rmd file containing that part's first chapter.
+
+Add a numbered part: `# (PART) Act one {-}`
+
+Add an unnumbered part: `# (PART\*) Act one {-}`
+
+Add an appendix as a special kind of un-numbered part: `# (APPENDIX) Other stuff {-}`

@@ -6,42 +6,36 @@ yaml: goes here
 
 This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
 
-## Installation
-
-The **bookdown** package can be installed from CRAN or Github:
-
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
-```
-
 ## Usage 
 
-Each chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. Each chapter *must* start with a first-level heading: `# A good chapter`.
+Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading - use sub-headings within chapters: `## A short section`.
 
-You'll want to decide on at least one **bookdown** output format - your format(s) of choice go in the `_output.yml` file (you may have more than one). Here are the possible format options:
-https://pkgs.rstudio.com/bookdown/reference/index.html#section-book-output-formats
+The index.Rmd file is required, and is also your first book chapter. It will be the homepage when you render the book.
 
-You can build the HTML version of this example book without changing anything:
+## Render book
+
+You can render the HTML version of this example book without changing anything:
 
 1. Find the **Build** pane in the RStudio IDE, and
 
 1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
 
-You can also build the book from the R console:
+Or build the book from the R console:
 
 ```{r, eval=FALSE}
 bookdown::render_book()
 ```
 
-You can also start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
+To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+
+## Preview book
+
+As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
 
 ```{r eval=FALSE}
 bookdown::serve_book()
 ```
 
-To compile this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
 
 ## Resources
 

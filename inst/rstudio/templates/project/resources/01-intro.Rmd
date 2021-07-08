@@ -1,37 +1,9 @@
-# Introduction {#intro}
+# Hello bookdown 
 
 All chapters start with a first-level heading followed by your chapter title, like the line above. 
 
 All chapter sections start with a second-level or higher heading followed by your section title, like the section below.
 
-## Heading labels
+## An unnumbered section {-}
 
-You can add a label to any heading using `{#nice-label}`, where `nice-label` is a placeholder: for example, we can reference Chapter \@ref(intro). 
-
-If you do not add manual labels (like in the current section), automatically valid labels are created based on the chapter name: See \@ref(heading-labels).
-
-If you prefer text instead of numbered references, you can customize the link text: [any text you want can go here](#methods).
-
-## Figures, tables, and captions
-
-Like heading labels, figures and tables *with captions* can also be cross-referenced from elsewhere in your book using the `figure` and `table` environments, respectively.
-
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center', fig.alt='Plot with connected points showing that vapor pressure of mercury increases exponentially as temperature increases.'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
-
-Reference a captioned figure using Figure \@ref(fig:nice-fig) in your text, where `fig:` is the required prefix and `nice-fig` is a placeholder for any code chunk label you want that produces a figure.
-
-Similarly, you can reference tables generated from `knitr::kable()` using Table \@ref(tab:nice-tab), where `tab:` is the required prefix.
-
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(pressure, 10), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
-
-## Citations
-
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] (check out the last code chunk in index.Rmd to see how this citation key was added) in this sample book, which was built on top of R Markdown and **knitr** [@xie2015] (this citation was added in the external file book.bib).
+Chapters and sections are numbered by default. To un-number a heading, add a `{-}` at the end of the heading, like in this section.
