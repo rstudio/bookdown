@@ -1,4 +1,10 @@
 Title: Book Project using bookdown
-Binding: bookdown_skeleton
 OpenFiles: README.md, _bookdown.yml, _output.yml, index.Rmd
 Icon: book.png
+Binding: bookdown_skeleton
+Parameter: output_format
+Widget: SelectInput
+Label: HTML book format
+Fields: gitbook, bs4_book
+Default: gitbook
+Position: left
