@@ -182,3 +182,17 @@ test_that("bs4_book() metadata tweaking works -- not index", {
   )
 
 })
+
+test_that("tweaking file keeps encoding", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(description = "A very nice book.", url = 'https://example.com/')
+  withr::local_dir(book)
+  x <- "Let’s try !"
+  x <- enc2utf8(x)
+  xfun::write_utf8(c(xfun::read_utf8("index.Rmd"), "", x), "index.Rmd")
+  res <- suppressMessages(render_book(".", output_format = "bookdown::bs4_book", quiet = TRUE))
+  html <- xml2::read_html(res, encoding = "UTF-8")
+  last_p <- xml2::xml_text(xml2::xml_find_all(html, ".//main/div/p[last()]"))
+  expect_equal(Encoding(last_p), "UTF-8")
+  expect_equal(last_p, x)
+})
