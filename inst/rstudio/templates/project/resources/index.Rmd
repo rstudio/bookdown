@@ -1,5 +1,13 @@
 --- 
-yaml: goes here
+title: "A Minimal Book Example"
+author: "John Doe"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+url: https://bookdown.org/johndoe/bookdown-demo
+cover-image: cover.png
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
 ---
 
 # About
