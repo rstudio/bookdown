@@ -8,7 +8,7 @@ There are two steps to cross-reference a heading:
 
 1. Label the heading: `# Hello world {#nice-label}`. 
     - Leave the label off if you like the automated heading generated based on your heading title: for example, `# Hello world` is the same as `# Hello world {#hello-world}`.
-    - To label an unnumbered heading, use: `# Hello world {-#nice-label}`
+    - To label an unnumbered heading, use: `# Hello world {-#nice-label}` or `{# Hello world .unnumbered}`.
 
 1. Next, reference the labeled heading anywhere in the text using `\@ref(nice-label)`; for example, please see Chapter \@ref(cross). 
     - If you prefer text as the link instead of a numbered reference use: [any text you want can go here](#cross).
