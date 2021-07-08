@@ -360,6 +360,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
 
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
   text <- gsub("\033", "&#8233;", text, fixed = TRUE, useBytes = TRUE)
+  Encoding(text) <- "UTF-8" # gsub with useBytes inhibits marked encoding
   html <- xml2::read_html(text, encoding = "UTF-8")
 
   tweak_tables(html)
