@@ -11,4 +11,4 @@ description: |
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
-link-citations: yes
+csl: chicago-fullnote-bibliography.csl

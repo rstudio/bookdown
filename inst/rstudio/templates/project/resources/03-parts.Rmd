@@ -1,6 +1,8 @@
-# Parts
+# (PART) Act one {-}
 
-You can add parts to create groups of chapters. This text can be inserted at the top of the .Rmd file containing that part's first chapter.
+# Part
+
+You can add parts to organize one or more book chapters together. This text can be inserted at the top of the .Rmd file containing that part's first chapter. No text can go between the part and the first-level header that is the chapter title.
 
 Add a numbered part: `# (PART) Act one {-}`
 

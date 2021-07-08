@@ -8,9 +8,11 @@ This is a _sample_ book written in **Markdown**. You can use anything that Pando
 
 ## Usage 
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading - use sub-headings within chapters: `## A short section`.
+Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
 
-The index.Rmd file is required, and is also your first book chapter. It will be the homepage when you render the book.
+Use sub-headings within chapters like: `## A short section`.
+
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
 
 ## Render book
 
@@ -35,13 +37,6 @@ As you work, you may start a local server to live preview this HTML book. This p
 ```{r eval=FALSE}
 bookdown::serve_book()
 ```
-
-
-## Resources
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
 
 
 ```{r include=FALSE}
