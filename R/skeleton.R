@@ -71,8 +71,8 @@ bookdown_skeleton_build_bookdown_yml = function(path, format_dir) {
   bookdown_skeleton_append_yml(main_file, child_file, prepend)
 }
 
-bookdown_skeleton_get_dir = function() {
-  bookdown_file('rstudio', 'templates', 'project', 'resources')
+bookdown_skeleton_get_dir = function(...) {
+  bookdown_file('rstudio', 'templates', 'project', 'resources', ...)
 }
 
 bookdown_skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
