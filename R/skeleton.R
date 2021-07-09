@@ -21,6 +21,9 @@ bookdown_skeleton = function(path, output_format) {
   bookdown_skeleton_build_output_yml(path, output_format)
   bookdown_skeleton_build_bookdown_yml(path, output_format)
 
+  # move left format files
+  move_dir(file.path(path, output_format), path)
+
   invisible(TRUE)
 }
 
@@ -28,7 +31,10 @@ bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yam
   index = xfun::read_utf8(index_rmd)
   pos = grep(placeholder, index, fixed = FALSE)
   if (length(pos) <= 0) return(invisible(FALSE))
-  yml = if (file.exists(index_yml)) xfun::read_utf8(index_yml)
+  yml = if (file.exists(index_yml)) {
+    xfun::read_utf8(index_yml)
+    on.exit(unlink(index_yml), add = TRUE)
+  }
   index = c(index[seq_len(pos - 1)], yml, index[seq.int(pos + 1, length(index))])
   xfun::write_utf8(index, index_rmd)
   invisible(TRUE)
@@ -44,6 +50,7 @@ bookdown_skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
   yml_main = xfun::read_utf8(main_yml)
   if (!file.exists(child_yml)) return(invisible(FALSE))
   yml_child = xfun::read_utf8(child_yml)
+  on.exit(unlink(child_yml), add = TRUE)
   prepend = c(prepend, yml_child)
   xfun::write_utf8(c(prepend, yml_main), main_yml)
   invisible(TRUE)
