@@ -38,4 +38,6 @@ head(beaver1, n = 5)
 
 :::
 
+It is up to the user to define the appearance of these blocks for LaTeX output. 
+
 <!--bs4_book:end-->
