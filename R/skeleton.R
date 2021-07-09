@@ -85,12 +85,14 @@ activate_rstudio_project <- function(dir) {
 create_gitbook = function(path) {
   create_html_book(path, output_format = "gitbook")
   activate_rstudio_project(path)
+  path
 }
 
 #' @export
 create_bs4_book = function(path) {
   create_html_book(path, output_format = "bs4_book")
   activate_rstudio_project(path)
+  path
 }
 
 create_html_book = function(path, output_format = c("gitbook", "bs4_book")) {
