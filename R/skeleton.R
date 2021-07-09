@@ -120,6 +120,24 @@ activate_rstudio_project = function(dir) {
   }
 }
 
+#' Create a bookdown projet
+#'
+#' Create a basic bookdown project for an HTML book. This will create a folder
+#' with file structure for a bookdown project, and example files with
+#' information on how to start. This template book can be built directly
+#'
+#' The book created will use one of the HTML book format available:
+#'
+#' * Use `create_gitbook()` to use `bookdown::gitbook()` output format
+#' * Use `create_bs4_book()` to use a `bookdown::bs4èbook()` output format
+#'
+#'
+#' @param path Path where to create the bookdown project. In RStudio IDE,
+#'   if \pkg{rstudioapi} package available, a RStudio project will be created.
+#' @name create_book
+#' @md
+
+#' @rdname create_book
 #' @export
 create_gitbook = function(path) {
   create_html_book(path, output_format = "gitbook")
@@ -127,6 +145,7 @@ create_gitbook = function(path) {
   path
 }
 
+#' @rdname create_book
 #' @export
 create_bs4_book = function(path) {
   create_html_book(path, output_format = "bs4_book")
