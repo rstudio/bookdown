@@ -5,50 +5,74 @@ bookdown_skeleton = function(path, output_format) {
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
   path = xfun::normalize_path(path)
 
-  # Get correct resources
-  resources = bookdown_file('rstudio', 'templates', 'project', 'resources')
-  files = list.files(resources, recursive = TRUE, include.dirs = FALSE)
-  files = files[grepl("^.*(?<!-index[.]yml)$", files, perl = TRUE)]
-  files = files[grepl("^.*(?<!-output[.]yml)$", files, perl = TRUE)]
-  yaml_index = sprintf("%s-index.yml", output_format)
-  yaml_output = sprintf("%s-output.yml", output_format)
-  files = c(yaml_index, yaml_output, files)
+  # Get common resources
+  files = bookdown_skeleton_get_files("common")
+  files_format = bookdown_skeleton_get_files(output_format)
   # copy them to path
-  source = file.path(resources, files)
-  target = file.path(path, files)
+  source = file.path(bookdown_skeleton_get_dir(), c(files, files_format))
+  # common resource are copied without folder
+  target = file.path(path, c(xfun::relative_path(files, "common"), files_format))
+
   lapply(unique(dirname(target)), dir_create)
   file.copy(source, target)
 
-  # tweak files
-  xfun::in_dir(path, {
-    # build index.Rmd
-    index = xfun::read_utf8("index.Rmd")
-    placeholder = grep("yaml: goes here", index, fixed = FALSE)
-    yml = xfun::read_utf8(yaml_index)
-    index = c(index[seq_len(placeholder - 1)], yml, index[seq.int(placeholder + 1, length(index))])
-    xfun::write_utf8(index, "index.Rmd")
-    unlink(yaml_index)
+  # Tweak template file
+  bookdown_skeleton_build_index(path, output_format)
+  bookdown_skeleton_build_output_yml(path, output_format)
+  bookdown_skeleton_build_bookdown_yml(path, output_format)
 
-    # build _output.yaml
-    f = "_output.yml"
-    x = xfun::read_utf8(f)
-    yml = xfun::read_utf8(yaml_output)
-    xfun::write_utf8(c(yml, x), f)
-    unlink(yaml_output)
+  invisible(TRUE)
+}
 
-    # tweak _bookdown.yml
-    f = '_bookdown.yml'
-    x = read_utf8(f)
-    # add book_filename to _bookdown.yml and default to the base path name
-    prepend = sprintf('book_filename: "%s"', basename(path))
-    # add new_session to _bookdown.yml if bs4_book
-    if (output_format == "bs4_book") {
-      prepend = c(prepend, 'new_session: true', 'before_chapter_script: _common.R')
-    }
-    write_utf8(c(prepend, x), f)
-  })
+bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yaml: goes here") {
+  index = xfun::read_utf8(index_rmd)
+  pos = grep(placeholder, index, fixed = FALSE)
+  yml = if (file.exists(index_yml)) xfun::read_utf8(index_yml)
+  index = c(index[seq_len(pos - 1)], yml, index[seq.int(pos + 1, length(index))])
+  xfun::write_utf8(index, index_rmd)
+  invisible(TRUE)
+}
 
-  TRUE
+bookdown_skeleton_build_index = function(path, format_dir) {
+  index_file = file.path(path, "index.Rmd")
+  index_format_yml = file.path(path, format_dir, "index.yml")
+  bookdown_skeleton_insert_yml(index_file, index_format_yml)
+}
+
+bookdown_skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
+  yml_main = xfun::read_utf8(main_yml)
+  if (!file.exists(child_yml)) return(invisible(FALSE))
+  yml_child = xfun::read_utf8(child_yml)
+  prepend = c(prepend, yml_child)
+  xfun::write_utf8(c(prepend, yml_main), main_yml)
+  invisible(TRUE)
+}
+
+bookdown_skeleton_build_output_yml = function(path, format_dir) {
+  file = "_output.yml"
+  main_file = file.path(path, file)
+  child_file = file.path(path, format_dir, file)
+  bookdown_skeleton_append_yml(main_file, child_file)
+}
+
+bookdown_skeleton_build_bookdown_yml = function(path, format_dir) {
+  file = "_bookdown.yml"
+  main_file = file.path(path, file)
+  child_file = file.path(path, format_dir, file)
+  prepend = sprintf('book_filename: "%s"', basename(path))
+  bookdown_skeleton_append_yml(main_file, child_file, prepend)
+}
+
+bookdown_skeleton_get_dir = function() {
+  bookdown_file('rstudio', 'templates', 'project', 'resources')
+}
+
+bookdown_skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
+  resources = bookdown_skeleton_get_dir()
+  subdir = file.path(resources, subdir %n% "")
+  if (!dir.exists(subdir)) return(NULL)
+  files = list.files(subdir, recursive = TRUE, include.dirs = FALSE, full.names = TRUE)
+  if (relative) xfun::relative_path(files, resources) else files
 }
 
 activate_rstudio_project <- function(dir) {
