@@ -32,8 +32,8 @@ bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yam
   pos = grep(placeholder, index, fixed = FALSE)
   if (length(pos) <= 0) return(invisible(FALSE))
   yml = if (file.exists(index_yml)) {
-    xfun::read_utf8(index_yml)
     on.exit(unlink(index_yml), add = TRUE)
+    xfun::read_utf8(index_yml)
   }
   index = c(index[seq_len(pos - 1)], yml, index[seq.int(pos + 1, length(index))])
   xfun::write_utf8(index, index_rmd)
