@@ -76,6 +76,10 @@ reference:
   contents:
   - ends_with("2")
 
+- title: Create a book
+  contents:
+  - starts_with("create_")
+
 - title: Previewing and rendering books
   contents:
   - render_book
