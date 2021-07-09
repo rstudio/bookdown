@@ -83,7 +83,7 @@ bookdown_skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
   if (relative) xfun::relative_path(files, resources) else files
 }
 
-activate_rstudio_project <- function(dir) {
+activate_rstudio_project = function(dir) {
   if (xfun::pkg_available("rstudioapi") && rstudioapi::isAvailable("1.1.287")) {
     rstudioapi::initializeProject(dir)
   }
