@@ -4,25 +4,27 @@
 \alias{create_book}
 \alias{create_gitbook}
 \alias{create_bs4_book}
-\title{Create a bookdown projet}
+\title{Create a bookdown project}
 \usage{
 create_gitbook(path)
 
 create_bs4_book(path)
 }
 \arguments{
-\item{path}{Path where to create the bookdown project. In RStudio IDE,
-if \pkg{rstudioapi} package available, a RStudio project will be created.}
+\item{path}{Absolute path to an empty directory in which to create the bookdown project.
+In the RStudio IDE, if \pkg{rstudioapi} package available,
+an RStudio project will be created.}
 }
 \description{
-Create a basic bookdown project for an HTML book. This will create a folder
-with file structure for a bookdown project, and example files with
-information on how to start. This template book can be built directly
+Create a bookdown project with multiple book output formats,
+including HTML. Choose one of two HTML book output formats:
 }
 \details{
-The book created will use one of the HTML book format available:
 \itemize{
 \item Use \code{create_gitbook()} to use \code{bookdown::gitbook()} output format
-\item Use \code{create_bs4_book()} to use a \code{bookdown::bs4èbook()} output format
+\item Use \code{create_bs4_book()} to use a \code{bookdown::bs4_book()} output format
 }
+
+The function will create a folder with file structure for a bookdown project,
+and example files with information on how to start.
 }
