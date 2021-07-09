@@ -25,7 +25,7 @@ $$a^2 + b^2 = c^2$$
 Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html>.
 
 
-<!--bs4_book-->
+<!--bs4_book:start-->
 
 ## Custom `rmdnote` callout block
 
@@ -38,4 +38,4 @@ head(beaver1, n = 5)
 
 :::
 
-<!--end-->
+<!--bs4_book:end-->

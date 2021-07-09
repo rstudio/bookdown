@@ -20,11 +20,42 @@ bookdown_skeleton = function(path, output_format) {
   bookdown_skeleton_build_index(path, output_format)
   bookdown_skeleton_build_output_yml(path, output_format)
   bookdown_skeleton_build_bookdown_yml(path, output_format)
-
-  # move left format files
-  move_dir(file.path(path, output_format), path)
+  move_dir(file.path(path, output_format), path) # move left format files
+  bookdown_skeleton_remove_blocks(path, output_format)
 
   invisible(TRUE)
+}
+
+bookdown_skeleton_remove_blocks = function(path, output_format) {
+  rmd_files = list.files(path, "[.]Rmd$", recursive = TRUE, full.names = TRUE)
+  unkept_format = setdiff(bookdown_skeleton_formats(), output_format)
+  for (file in rmd_files) {
+    content = xfun::read_utf8(file)
+
+    # remove block
+    r1 = sprintf("<!--(%s):start-->", paste(unkept_format, collapse = "|"))
+    s_remove = grep(r1, content)
+    r3 = sprintf("<!--(%s):end-->", paste(unkept_format, collapse = "|"))
+    e_remove = grep(r3, content)
+    if (length(s_remove) != 0 && length(s_remove) == length(e_remove)) {
+      block = unlist(mapply(function(s, e) seq.int(s, e), s = s_remove, e = e_remove))
+      content = content[-block]
+    }
+
+    # remove magick comment only
+    r2 = sprintf("<!--(%s):start-->", output_format)
+    s_keep = grep(r2, content)
+    r4 = sprintf("<!--(%s):end-->", output_format)
+    e_keep = grep(r4, content)
+    if (length(s_keep) > 0) content = content[-c(s_keep, e_keep)]
+
+    xfun::write_utf8(content, file)
+  }
+  invisible(TRUE)
+}
+
+bookdown_skeleton_formats = function() {
+  c("gitbook", "bs4_book")
 }
 
 bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yaml: goes here") {
@@ -103,7 +134,7 @@ create_bs4_book = function(path) {
   path
 }
 
-create_html_book = function(path, output_format = c("gitbook", "bs4_book")) {
+create_html_book = function(path, output_format = bookdown_skeleton_formats()) {
   output_format = match.arg(output_format)
   bookdown_skeleton(path, output_format)
 }
