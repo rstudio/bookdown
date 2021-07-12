@@ -394,18 +394,17 @@ code a:any-link {
 
 /* copy button */
 
-pre .copy {
+div.sourceCode {
+  position: relative;
+}
+
+.btn-copy {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0rem;
+  right: 0rem;
 }
 
-pre .copy button {
-  font-size: 80%;
-  padding: 4px 6px;
-}
-
-pre .copy > button > i.bi::before {
+div.sourceCode > button > i.bi::before {
   display: inline-block;
   height: 1rem;
   width: 1rem;
@@ -416,7 +415,7 @@ pre .copy > button > i.bi::before {
   background-size: 1rem 1rem;
 }
 
-pre .copy > button.btn-copy-checked > .bi::before {
+div.sourceCode > button.btn-copy-checked > .bi::before {
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
 }
 
