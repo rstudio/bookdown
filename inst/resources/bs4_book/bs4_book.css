@@ -404,6 +404,14 @@ div.sourceCode {
   right: 0rem;
 }
 
+div.sourceCode > button {
+  filter: opacity(40%);
+}
+
+div.sourceCode > button:hover {
+  filter: opacity(100%);
+}
+
 div.sourceCode > button > i.bi::before {
   display: inline-block;
   height: 1rem;
