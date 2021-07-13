@@ -19,7 +19,7 @@ bs4_book_theme(primary = "#0068D9", ...)
 \arguments{
 \item{theme}{A named list or \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object.
 The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
-make reading easier and uses a primary colour with greater constrast
+make reading easier and uses a primary colour with greater contrast
 against the background.}
 
 \item{repo}{Either link to repository where book is hosted, used to generate
@@ -146,7 +146,6 @@ page as expected by social media:
 \item All the other \verb{<meta>} will stay the same.
 }
 
-You can have a look at \href{https://github.com/maelle/bookdown/blob/master/inst/templates/bs4_book.html}{\code{bs4_book()} HTML template}
+You can have a look at \href{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}{\code{bs4_book()} HTML template}
 for details on how these variables are used.
 }
-

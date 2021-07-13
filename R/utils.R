@@ -419,8 +419,11 @@ files_cache_dirs = function(dir = '.') {
 # everything from `from` to `to`, and delete `from`
 move_dir = function(from, to) {
   if (!dir_exists(to)) return(file.rename(from, to))
-  if (file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
-    unlink(from, recursive = TRUE)
+  to_copy = list.files(from, full.names = TRUE)
+  if (length(to_copy) == 0 ||
+      any(file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
+  ) unlink(from, recursive = TRUE)
+  invisible(TRUE)
 }
 
 move_dirs = function(from, to) mapply(move_dir, from, to)
