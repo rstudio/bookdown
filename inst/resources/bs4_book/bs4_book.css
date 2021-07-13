@@ -520,6 +520,11 @@ body {
   padding: 1rem;
 }
 
+.rmdcaution .btn-copy, .rmdimportant .btn-copy, .rmdnote .btn-copy, .rmdtip .btn-copy, .rmdwarning .btn-copy {
+  /* Needs to be set according to margin in callout pre block */
+  right: -1rem;
+}
+
 main ul {
  list-style-type: square;
 }
