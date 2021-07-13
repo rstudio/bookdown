@@ -405,7 +405,7 @@ div.sourceCode {
 }
 
 div.sourceCode > button {
-  filter: opacity(40%);
+  filter: opacity(50%);
 }
 
 div.sourceCode > button:hover {
