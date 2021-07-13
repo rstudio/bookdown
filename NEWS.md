@@ -3,6 +3,7 @@
 - In `bs4_book()`, improvement regarding copy button:
   * It has now a light icon instead of a text with white background (#1192). 
   * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
+  * It will now be placed correctly on the right side of the code block, with a light color which gets darker on hover so that it is less obtrusive when ovelapping text in block with long lines  (#1204). If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
 
 - Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
