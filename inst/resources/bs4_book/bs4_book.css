@@ -401,7 +401,7 @@ div.sourceCode {
 .btn-copy {
   position: absolute;
   top: 0rem;
-  right: 0rem;
+  right: -0.5rem; /* coherent with pre margin rule */
 }
 
 div.sourceCode > button {
