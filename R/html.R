@@ -433,9 +433,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  path_404 = build_404_page(html_head, html_toc, html_foot, build, ...)
+  p404 = build_404_page(html_head, html_toc, html_foot, build, ...)
 
-  nms = move_to_output_dir(c(nms, path_404))
+  nms = move_to_output_dir(c(nms, p404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
@@ -444,38 +444,39 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   nms[j]
 }
 
-build_404_page <- function(html_head, html_toc, html_foot, build, ...) {
-  path_404 = "404.html"
+build_404_page = function(html_head, html_toc, html_foot, build, ...) {
+  p404 = '404.html'
   # if a 404 page already exist, we do nothing specific and assume
   # user has already a workflow in place
-  if (file.exists(path_404)) return()
+  if (file.exists(p404)) return()
   # We create 404 page if it does not exist
-  if (file.exists(found <- "_404.md") || file.exists(found <- "_404.Rmd")) {
+  if (file.exists(found <- '_404.md') || file.exists(found <- '_404.Rmd')) {
     rmd_cur = found
     xfun::Rscript_call(function() {
-      rmarkdown::render(found,
-                        rmarkdown::html_fragment(
-                          pandoc_args = c("--metadata","title=404")
-                        ),
-                        output_file = path_404,
-                        quiet = TRUE
+      rmarkdown::render(
+        found, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+        output_file = p404, quiet = TRUE
       )
     })
-    html_404 = Filter(nzchar, xfun::read_utf8(path_404)) # remove empty line
+    h404 = Filter(nzchar, xfun::read_utf8(p404)) # remove empty line
   } else {
     rmd_cur = NULL
     # default content for 404 page
-    html_404 = c("<div id=\"page-not-found\" class=\"section level1\">",
-                 "<h1>Page not found</h1>",
-                 "<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>",
-                 "<p>You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.</p>",
-                 "</div>")
+    h404 = c(
+      '<div id="page-not-found" class="section level1">',
+      '<h1>Page not found</h1>',
+      '<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>',
+      '<p>You may want to try searching to find the page\'s new location, or use',
+      'the table of contents to find the page you are looking for.</p>',
+      '</div>'
+    )
   }
-  html_404 = build(
-    prepend_chapter_title(html_head, html_404), html_toc, html_404,
-    NULL, NULL, rmd_cur, path_404, html_foot, ...)
-  write_utf8(html_404, path_404)
-  path_404
+  h404 = build(
+    prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL, rmd_cur,
+    p404, html_foot, ...
+  )
+  write_utf8(h404, p404)
+  p404
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
