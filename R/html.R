@@ -450,10 +450,9 @@ build_404_page = function(html_head, html_toc, html_foot, build, ...) {
   # user has already a workflow in place
   if (file.exists(p404)) return()
   # We create 404 page if it does not exist
-  if (file.exists(found <- '_404.md') || file.exists(found <- '_404.Rmd')) {
-    rmd_cur = found
+  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
     xfun::Rscript_call(rmarkdown::render, list(
-      found, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+      rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
       output_file = p404, quiet = TRUE
     ))
     h404 = Filter(nzchar, xfun::read_utf8(p404)) # remove empty line
