@@ -433,7 +433,15 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   }
 
   # add a 404 page
-  p404 = build_404_page(html_head, html_toc, html_foot, build, ...)
+  r404 = build_404()
+  p404 = r404$path; h404 = r404$html
+  if (!is.null(h404)) {
+    h404 = build(
+      prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL,
+      r404$rmd_cur, p404, html_foot, ...
+    )
+    write_utf8(h404, p404)
+  }
 
   nms = move_to_output_dir(c(nms, p404))
 
@@ -444,11 +452,11 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   nms[j]
 }
 
-build_404_page = function(html_head, html_toc, html_foot, build, ...) {
+build_404 = function() {
   p404 = '404.html'
   # if a 404 page already exist, we do nothing specific and assume
   # user has already a workflow in place
-  if (file.exists(p404)) return()
+  if (file.exists(p404)) return(list(path = p404))
   # We create 404 page if it does not exist
   if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
     xfun::Rscript_call(rmarkdown::render, list(
@@ -468,12 +476,7 @@ build_404_page = function(html_head, html_toc, html_foot, build, ...) {
       '</div>'
     )
   }
-  h404 = build(
-    prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL, rmd_cur,
-    p404, html_foot, ...
-  )
-  write_utf8(h404, p404)
-  p404
+  list(path = p404, html = h404, rmd_cur = rmd_cur)
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
