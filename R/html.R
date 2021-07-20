@@ -456,7 +456,7 @@ build_404 = function() {
   p404 = '404.html'
   # if a 404 page already exist, we do nothing specific and assume
   # user has already a workflow in place
-  if (file.exists(p404)) return(list(path = p404))
+  if (file.exists(p404)) return()
   # We create 404 page if it does not exist
   if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
     xfun::Rscript_call(rmarkdown::render, list(
