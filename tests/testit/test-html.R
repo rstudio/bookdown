@@ -49,12 +49,16 @@ assert("i18n config can be retrieved ", {
   opts$set(config = list())
 })
 
+assert("label_prefix can set text to bold", {
+  (is.function(label_prefix("fig")))
+  (label_prefix("fig")(1) %==% "Figure 1")
+  (label_prefix("fig", bold = TRUE)(1) %==% "**Figure 1**")
+  (label_prefix("fig", sep = ":")(1) %==% "Figure 1:")
+})
+
 assert("label_prefix retrieves correct config", {
   fun = function(i) paste0("TAB-", i)
   opts$set(config = list(language = list(label = list(tab = fun))))
   (label_prefix("tab") %==% fun)
-  (is.function(label_prefix("fig")))
-  (label_prefix("fig")(1) %==% "Figure 1")
-  (label_prefix("fig", sep = ":")(1) %==% "Figure 1:")
   opts$set(config = list())
 })

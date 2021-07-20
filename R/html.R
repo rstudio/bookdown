@@ -693,7 +693,7 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type, dict = label_names, sep = '') {
+label_prefix = function(type, dict = label_names, sep = '', bold = FALSE) {
   label = i18n('label', type, dict)
   supported_type = c('fig', 'tab', 'eq')
   if (is.function(label)) {
@@ -703,7 +703,8 @@ label_prefix = function(type, dict = label_names, sep = '') {
   }
   function(num = NULL) {
     if (is.null(num)) return(label)
-    paste0(label, num, sep)
+    label = paste0(label, num, sep)
+    if (bold) sprintf("**%s**", label) else label
   }
 }
 
