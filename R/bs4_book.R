@@ -346,6 +346,13 @@ bs4_chapters_tweak <- function(output,
     message("Tweaking ", path)
     index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo)
   }
+  # tweak 404.html ---
+  path_404 <- file.path(output_dir, "404.html")
+  if (file.exists(path_404)) {
+    message("Tweaking ", path_404)
+    bs4_chapter_tweak(path_404, toc, rmd_index = rmd_index, repo = repo)
+
+  }
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
 
   jsonlite::write_json(
@@ -371,6 +378,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
   tweak_part_screwup(html)
   tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
   tweak_metadata(html, path)
+  if (basename(path) == "404.html") tweak_404(html)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -381,6 +389,11 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
     chapter = h1,
     path = basename(path)
   )
+}
+
+tweak_404 <- function(html) {
+  sidebar_toc <- xml2::xml_find_all(html, ".//div[contains(@class, 'sidebar')]/nav[@id='toc']")
+  xml2::xml_remove(sidebar_toc)
 }
 
 tweak_chapter <- function(html) {

@@ -182,3 +182,29 @@ test_that("bs4_book() metadata tweaking works -- not index", {
   )
 
 })
+
+test_that("bs4_book() and 404 -- page is tweaked", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book()
+  withr::local_dir(book)
+  expect_true(file.exists("_book/404.html"))
+  html <- xml2::read_html("_book/404.html")
+  expect_length(xml2::xml_find_all(html, ".//nav[@id = 'toc']"), 0L)
+})
+
+test_that("bs4_book() and 404 -- custom 404 page", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book()
+  withr::local_dir(book)
+  xfun::write_utf8(c("# Page not found", "", "I am created with _404.Rmd"), "_404.Rmd")
+  suppressMessages(render_book(".", "bookdown::bs4_book", quiet = TRUE))
+  expect_true(file.exists("_book/404.html"))
+  html <- xml2::read_html("_book/404.html")
+  expect_match(xml2::xml_text(xml2::xml_find_first(html, ".//main/div/p")), "_404.Rmd", fixed = TRUE)
+  unlink("_404.Rmd")
+  xfun::write_utf8(c("# Page not found", "", "I am created with _404.md"), "_404.md")
+  suppressMessages(render_book(".", "bookdown::bs4_book", quiet = TRUE))
+  expect_true(file.exists("_book/404.html"))
+  html <- xml2::read_html("_book/404.html")
+  expect_match(xml2::xml_text(xml2::xml_find_first(html, ".//main/div/p")), "_404.md", fixed = TRUE)
+})
