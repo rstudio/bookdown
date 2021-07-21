@@ -463,7 +463,7 @@ build_404 = function() {
       rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
       output_file = p404, quiet = TRUE
     ))
-    h404 = Filter(nzchar, xfun::read_utf8(p404)) # remove empty line
+    h404 = xfun::read_utf8(p404)
   } else {
     rmd_cur = NULL
     # default content for 404 page
