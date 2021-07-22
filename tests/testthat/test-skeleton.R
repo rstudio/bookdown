@@ -69,6 +69,6 @@ test_that("Created bs4_book template works", {
   skip_if_bs4_book_deps_missing()
   dir <- withr::local_tempdir()
   create_bs4_book(dir)
-  res <- suppressMessages(render_book(dir, quiet = TRUE))
+  res <- suppressMessages(render_book(dir, new_session = FALSE, quiet = TRUE))
   expect_true(file.exists(res))
 })
