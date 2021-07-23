@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.23
 
+- `bs4_book(splib_bib = TRUE)` can now be specified to have the same effect as in `gitbook()`. References will be shown at the end of each chapter and not only at the end of the book. This is useful with `bs4_book()` when a citation style not supporting footnotes is used because in that case, references are not shown inline in popups (thanks, @shirdekel, #1185).
+
 - For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
 
 - In `bs4_book()`, improvement regarding copy button:
