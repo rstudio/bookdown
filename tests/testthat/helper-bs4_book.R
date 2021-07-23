@@ -9,19 +9,16 @@ local_bs4_book <- function(name = "book",
                            title = "Awesome Cookbook",
                            author = "Yoda",
                            output_options = NULL,
+                           description = NULL,
+                           url = NULL,
+                           verbose = FALSE,
                            env = parent.frame()) {
 
   # don't run test using this book skeleton when Pandoc is not available
   skip_if_not_pandoc()
 
-  path <- withr::local_tempdir(.local_envir = env)
-
-  book_skeleton(
-    name = name,
-    title = title,
-    author = author,
-    path = path
-  )
+  path <- local_book(name = name, title = title, author = author,
+    description = description, url = url, verbose = verbose, env = env)
 
   suppressMessages(
     render_book(
@@ -33,4 +30,8 @@ local_bs4_book <- function(name = "book",
   )
 
   return(path)
+}
+
+get_meta_content <- function(node) {
+  xml2::xml_attr(node, "content")
 }

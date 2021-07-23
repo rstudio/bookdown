@@ -431,13 +431,52 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     write_utf8(html, nms[i])
   }
-  nms = move_to_output_dir(nms)
+
+  # add a 404 page
+  r404 = build_404()
+  p404 = r404$path; h404 = r404$html
+  if (!is.null(h404)) {
+    h404 = build(
+      prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL,
+      r404$rmd_cur, p404, html_foot, ...
+    )
+    write_utf8(h404, p404)
+  }
+
+  nms = move_to_output_dir(c(nms, p404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+build_404 = function() {
+  p404 = '404.html'
+  # if a 404 page already exist, we do nothing specific and assume
+  # user has already a workflow in place
+  if (file.exists(p404)) return()
+  # We create 404 page if it does not exist
+  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
+    xfun::Rscript_call(rmarkdown::render, list(
+      rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+      output_file = p404, quiet = TRUE
+    ))
+    h404 = xfun::read_utf8(p404)
+  } else {
+    rmd_cur = NULL
+    # default content for 404 page
+    h404 = c(
+      '<div id="page-not-found" class="section level1">',
+      '<h1>Page not found</h1>',
+      '<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>',
+      '<p>You may want to try searching to find the page\'s new location, or use',
+      'the table of contents to find the page you are looking for.</p>',
+      '</div>'
+    )
+  }
+  list(path = p404, html = h404, rmd_cur = rmd_cur)
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
@@ -451,6 +490,12 @@ clean_meta_tags = function(x) {
   x3 = sub(r, '\\3', x[i])
   x2 = gsub('<[^>]+>', '', x2)
   x[i] = paste0(x1, x2, x3)
+  # then fix URLs in meta: https://github.com/rstudio/bookdown/pull/969#issuecomment-885252698
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content=")[^"]*?/(https?://[^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
+  # remove the unnecessary extra slash introduced in #969
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content="https?://[^"]+?/)/([^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
   x
 }
 
