@@ -6,10 +6,10 @@ bookdown_skeleton = function(path, output_format) {
   path = xfun::normalize_path(path)
 
   # Get common resources
-  files = bookdown_skeleton_get_files("common")
-  files_format = bookdown_skeleton_get_files(output_format)
+  files = skeleton_get_files("common")
+  files_format = skeleton_get_files(output_format)
   # copy them to path
-  source = file.path(bookdown_skeleton_get_dir(), c(files, files_format))
+  source = file.path(skeleton_get_dir(), c(files, files_format))
   # common resource are copied without folder
   target = file.path(path, c(xfun::relative_path(files, "common"), files_format))
 
@@ -17,18 +17,18 @@ bookdown_skeleton = function(path, output_format) {
   file.copy(source, target)
 
   # Tweak template file
-  bookdown_skeleton_build_index(path, output_format)
-  bookdown_skeleton_build_output_yml(path, output_format)
-  bookdown_skeleton_build_bookdown_yml(path, output_format)
+  skeleton_build_index(path, output_format)
+  skeleton_build_output_yml(path, output_format)
+  skeleton_build_bookdown_yml(path, output_format)
   move_dir(file.path(path, output_format), path) # move left format files
-  bookdown_skeleton_remove_blocks(path, output_format)
+  skeleton_remove_blocks(path, output_format)
 
   invisible(TRUE)
 }
 
-bookdown_skeleton_remove_blocks = function(path, output_format) {
+skeleton_remove_blocks = function(path, output_format) {
   rmd_files = list.files(path, "[.]Rmd$", recursive = TRUE, full.names = TRUE)
-  unkept_format = setdiff(bookdown_skeleton_formats(), output_format)
+  unkept_format = setdiff(skeleton_formats(), output_format)
   for (file in rmd_files) {
     content = xfun::read_utf8(file)
 
@@ -54,11 +54,11 @@ bookdown_skeleton_remove_blocks = function(path, output_format) {
   invisible(TRUE)
 }
 
-bookdown_skeleton_formats = function() {
+skeleton_formats = function() {
   c("gitbook", "bs4_book")
 }
 
-bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder) {
+skeleton_insert_yml = function(index_rmd, index_yml, placeholder) {
   index = xfun::read_utf8(index_rmd)
   pos = grep(placeholder, index, fixed = FALSE)
   if (length(pos) <= 0) return(invisible(FALSE))
@@ -71,13 +71,13 @@ bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder) {
   invisible(TRUE)
 }
 
-bookdown_skeleton_build_index = function(path, format_dir) {
+skeleton_build_index = function(path, format_dir) {
   index_file = file.path(path, "index.Rmd")
   index_format_yml = file.path(path, format_dir, "index.yml")
-  bookdown_skeleton_insert_yml(index_file, index_format_yml, "# additional yaml goes here")
+  skeleton_insert_yml(index_file, index_format_yml, "# additional yaml goes here")
 }
 
-bookdown_skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
+skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
   yml_main = xfun::read_utf8(main_yml)
   if (!file.exists(child_yml)) return(invisible(FALSE))
   yml_child = xfun::read_utf8(child_yml)
@@ -87,27 +87,27 @@ bookdown_skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
   invisible(TRUE)
 }
 
-bookdown_skeleton_build_output_yml = function(path, format_dir) {
+skeleton_build_output_yml = function(path, format_dir) {
   file = "_output.yml"
   main_file = file.path(path, file)
   child_file = file.path(path, format_dir, file)
-  bookdown_skeleton_append_yml(main_file, child_file)
+  skeleton_append_yml(main_file, child_file)
 }
 
-bookdown_skeleton_build_bookdown_yml = function(path, format_dir) {
+skeleton_build_bookdown_yml = function(path, format_dir) {
   file = "_bookdown.yml"
   main_file = file.path(path, file)
   child_file = file.path(path, format_dir, file)
   prepend = sprintf('book_filename: "%s"', basename(path))
-  bookdown_skeleton_append_yml(main_file, child_file, prepend)
+  skeleton_append_yml(main_file, child_file, prepend)
 }
 
-bookdown_skeleton_get_dir = function(...) {
+skeleton_get_dir = function(...) {
   bookdown_file('rstudio', 'templates', 'project', 'resources', ...)
 }
 
-bookdown_skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
-  resources = bookdown_skeleton_get_dir()
+skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
+  resources = skeleton_get_dir()
   subdir = file.path(resources, subdir %n% "")
   if (!dir.exists(subdir)) return(NULL)
   files = list.files(subdir, recursive = TRUE, include.dirs = FALSE, full.names = TRUE)
@@ -153,7 +153,7 @@ create_bs4_book = function(path) {
   path
 }
 
-create_html_book = function(path, output_format = bookdown_skeleton_formats()) {
+create_html_book = function(path, output_format = skeleton_formats()) {
   output_format = match.arg(output_format)
   bookdown_skeleton(path, output_format)
 }

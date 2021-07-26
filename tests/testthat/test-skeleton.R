@@ -1,21 +1,21 @@
 test_that("Get resources files for formats", {
   expect_identical(
-    bookdown_skeleton_get_files(),
-    list.files(bookdown_skeleton_get_dir(), recursive = TRUE)
+    skeleton_get_files(),
+    list.files(skeleton_get_dir(), recursive = TRUE)
   )
   expect_identical(
-    bookdown_skeleton_get_files("gitbook", relative = FALSE),
-    list.files(bookdown_skeleton_get_dir("gitbook"), recursive = TRUE, full.names = TRUE)
+    skeleton_get_files("gitbook", relative = FALSE),
+    list.files(skeleton_get_dir("gitbook"), recursive = TRUE, full.names = TRUE)
   )
 })
 
-test_that("bookdown_skeleton_insert_yml()", {
+test_that("skeleton_insert_yml()", {
   dir <- withr::local_tempdir()
   book_skeleton("dummybook", "for test", "CD", chapters = NULL, path = dir)
   withr::local_dir(dir)
   xfun::gsub_file("index.Rmd", pattern = "^(title:.*)$", replacement = "\\1\n# placeholder")
   xfun::write_utf8(c("name: doe", "job: none"), "child.yml")
-  bookdown_skeleton_insert_yml("index.Rmd", "child.yml", "# placeholder")
+  skeleton_insert_yml("index.Rmd", "child.yml", "# placeholder")
   expect_false(file.exists("child.yml"))
   content <- xfun::read_utf8("index.Rmd")
   pos <- grep("title:", content)
@@ -23,12 +23,12 @@ test_that("bookdown_skeleton_insert_yml()", {
   expect_match(content[pos + 2], "job: none")
 })
 
-test_that("bookdown_skeleton_append_yml()", {
+test_that("skeleton_append_yml()", {
   dir <- withr::local_tempdir()
   book_skeleton("dummybook", "for test", "CD", chapters = NULL, path = dir)
   withr::local_dir(dir)
   xfun::write_utf8(c("name: doe", "job: none"), "child.yml")
-  bookdown_skeleton_append_yml("_bookdown.yml", "child.yml")
+  skeleton_append_yml("_bookdown.yml", "child.yml")
   expect_false(file.exists("child.yml"))
   content <- xfun::read_utf8("_bookdown.yml")
   expect_match(content[1], "name: doe")
@@ -36,22 +36,22 @@ test_that("bookdown_skeleton_append_yml()", {
   expect_match(content[3], "^book_filename")
 })
 
-test_that("bookdown_skeleton_remove_blocks()", {
+test_that("skeleton_remove_blocks()", {
   dir <- withr::local_tempdir()
   withr::local_dir(dir)
   content1 <- c("to keep1", "<!--gitbook:start-->", "to remove", "<!--gitbook:end-->")
   xfun::write_utf8(content1, "test.Rmd")
-  bookdown_skeleton_remove_blocks(".", "bs4_book")
+  skeleton_remove_blocks(".", "bs4_book")
   expect_identical(xfun::read_utf8("test.Rmd"), "to keep1")
   content2 <- c("to keep2", "<!--bs4_book:start-->", "to keep3", "<!--bs4_book:end-->")
   xfun::write_utf8(c(content1, content2), "test.Rmd")
-  bookdown_skeleton_remove_blocks(".", "bs4_book")
+  skeleton_remove_blocks(".", "bs4_book")
   expect_identical(xfun::read_utf8("test.Rmd"), paste0("to keep", 1:3))
   xfun::write_utf8(c(content1, content2), "test.Rmd")
-  bookdown_skeleton_remove_blocks(".", "notinfile")
+  skeleton_remove_blocks(".", "notinfile")
   expect_identical(xfun::read_utf8("test.Rmd"), paste0("to keep", 1:2))
   xfun::write_utf8(paste0("to keep", 1:2), "test.Rmd")
-  bookdown_skeleton_remove_blocks(".", "gitbook")
+  skeleton_remove_blocks(".", "gitbook")
   expect_identical(xfun::read_utf8("test.Rmd"), paste0("to keep", 1:2))
 })
 
