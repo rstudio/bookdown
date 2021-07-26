@@ -58,7 +58,7 @@ bookdown_skeleton_formats = function() {
   c("gitbook", "bs4_book")
 }
 
-bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yaml: goes here") {
+bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder) {
   index = xfun::read_utf8(index_rmd)
   pos = grep(placeholder, index, fixed = FALSE)
   if (length(pos) <= 0) return(invisible(FALSE))
@@ -74,7 +74,7 @@ bookdown_skeleton_insert_yml = function(index_rmd, index_yml, placeholder = "yam
 bookdown_skeleton_build_index = function(path, format_dir) {
   index_file = file.path(path, "index.Rmd")
   index_format_yml = file.path(path, format_dir, "index.yml")
-  bookdown_skeleton_insert_yml(index_file, index_format_yml)
+  bookdown_skeleton_insert_yml(index_file, index_format_yml, "# additional yaml goes here")
 }
 
 bookdown_skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
