@@ -3,10 +3,10 @@ title: "A Minimal Book Example"
 author: "John Doe"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-url: https://bookdown.org/username/bookdown-demo
-cover-image: your-social-sharing-image.png
 documentclass: book
 bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
 # additional yaml goes here
 ---
 
