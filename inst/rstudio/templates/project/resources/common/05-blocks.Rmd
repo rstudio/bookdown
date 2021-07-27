@@ -24,7 +24,7 @@ $$a^2 + b^2 = c^2$$
 
 Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html>.
 
-## Custom blocks
+## Callout blocks
 
 <!--bs4_book:start-->
 
