@@ -149,8 +149,34 @@ create_gitbook = function(path) {
 #' @export
 create_bs4_book = function(path) {
   create_html_book(path, output_format = "bs4_book")
+  xfun::in_dir(path, {
+    try_download_asset(
+      "https://www.zotero.org/styles/chicago-fullnote-bibliography",
+      "chicago-fullnote-bibliography.csl"
+    )
+  })
   activate_rstudio_project(path)
   path
+}
+
+
+try_download_asset <- function(url, asset_name) {
+  msg <- tryCatch({
+    xfun::download_file(url, output = asset_name, quiet = TRUE)
+    NULL
+  },
+  warning = function(w) invokeRestart("muffleWarning"),
+  error = function(e) {
+    c(">>> ",
+      sQuote(asset_name),
+      " can't be downloaded. Please retrieve it manually at ",
+      sQuote(url),
+      " or remove its usage from the template."
+    )
+  }
+  )
+  if (!is.null(msg)) message(msg)
+  invisible(NULL)
 }
 
 create_html_book = function(path, output_format = skeleton_formats()) {
