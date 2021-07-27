@@ -22,6 +22,7 @@ bookdown_skeleton = function(path, output_format) {
   skeleton_build_bookdown_yml(path, output_format)
   move_dir(file.path(path, output_format), path) # move left format files
   skeleton_remove_blocks(path, output_format)
+  skeleton_get_cover(path)
 
   invisible(TRUE)
 }
@@ -114,6 +115,19 @@ skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
   if (relative) xfun::relative_path(files, resources) else files
 }
 
+skeleton_get_cover = function(path) {
+  # we use logo as example cover image
+  cover1 = system.file("help/figures/logo.png", package = 'bookdown', mustWork = FALSE)
+  # To work in dev when help/ is still man/
+  cover2 = system.file("man/figures/logo.png", package = 'bookdown', mustWork = FALSE)
+
+  cover = existing_files(c(cover1, cover2), first = TRUE)
+  if (length(cover) == 1L) {
+    file.copy(cover, file.path(path, "cover.png"))
+  }
+  invisible(TRUE)
+}
+
 activate_rstudio_project = function(dir) {
   if (xfun::pkg_available("rstudioapi") && rstudioapi::isAvailable("1.1.287")) {
     rstudioapi::initializeProject(dir)
@@ -158,7 +172,6 @@ create_bs4_book = function(path) {
   activate_rstudio_project(path)
   path
 }
-
 
 try_download_asset = function(url, asset_name) {
   msg = tryCatch({
