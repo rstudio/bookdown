@@ -11,7 +11,8 @@ bs4_book(
   ...,
   lib_dir = "libs",
   pandoc_args = NULL,
-  extra_dependencies = NULL
+  extra_dependencies = NULL,
+  split_bib = FALSE
 )
 
 bs4_book_theme(primary = "#0068D9", ...)
@@ -26,7 +27,7 @@ against the background.}
 view source and edit buttons or a list with repository \code{base} link, default
 \code{branch}, \code{subdir} and \code{icon} (see "Specifying the repository").}
 
-\item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
+\item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
