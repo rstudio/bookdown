@@ -24,13 +24,14 @@ $$a^2 + b^2 = c^2$$
 
 Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html>.
 
+## Custom blocks
 
 <!--bs4_book:start-->
 
-## Custom `rmdnote` callout block
+The `bs4_book` theme also includes an `.rmdnote` callout block, like this one.
 
 ::: {.rmdnote}
-The `bs4_book` theme also includes an `.rmdnote` callout block like this one.
+You can use **markdown** inside a block.
 
 ```{r collapse=TRUE}
 head(beaver1, n = 5)
@@ -41,3 +42,5 @@ head(beaver1, n = 5)
 It is up to the user to define the appearance of these blocks for LaTeX output. 
 
 <!--bs4_book:end-->
+
+The R Markdown Cookbook provides more help on how to use custom blocks: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html
