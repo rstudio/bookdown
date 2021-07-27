@@ -28,7 +28,7 @@ Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookd
 
 <!--bs4_book:start-->
 
-The `bs4_book` theme also includes an `.rmdnote` callout block, like this one.
+The `bs4_book` theme also includes special callout blocks, like this `.rmdnote`.
 
 ::: {.rmdnote}
 You can use **markdown** inside a block.
@@ -40,6 +40,8 @@ head(beaver1, n = 5)
 :::
 
 It is up to the user to define the appearance of these blocks for LaTeX output. 
+
+You may also use: `.rmdcaution`, `.rmdimportant`, `.rmdtip`, or `.rmdwarning` as the block name.
 
 <!--bs4_book:end-->
 
