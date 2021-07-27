@@ -14,6 +14,8 @@ Bookdown HTML books will provide HTML metadata for social sharing on platforms l
 
 <!--bs4_book:start-->
 
+This `bs4_book` provides enhanced metadata for social sharing, so that each chapter shared will have a unique description, auto-generated based on the content.
+
 Specify your book's source repository on GitHub as the `repo` in the `_output.yml` file, which allows users to view each chapter's source file or suggest an edit. Read more about the features of this output format here:
 
 https://pkgs.rstudio.com/bookdown/reference/bs4_book.html
@@ -29,6 +31,8 @@ library(bookdown)
 <!--bs4_book:end-->
 
 <!--gitbook:start-->
+
+This `gitbook` uses the same social sharing data across all chapters in your book- all links shared will look the same.
 
 Specify your book's source repository on GitHub using the `edit` key under the configuration options in the `_output.yml` file, which allows users to suggest an edit by linking to a chapter's source file. 
 
