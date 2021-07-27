@@ -160,8 +160,8 @@ create_bs4_book = function(path) {
 }
 
 
-try_download_asset <- function(url, asset_name) {
-  msg <- tryCatch({
+try_download_asset = function(url, asset_name) {
+  msg = tryCatch({
     xfun::download_file(url, output = asset_name, quiet = TRUE)
     NULL
   },
