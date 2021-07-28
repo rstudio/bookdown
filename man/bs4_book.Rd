@@ -15,7 +15,7 @@ bs4_book(
   split_bib = FALSE
 )
 
-bs4_book_theme(primary = "#0068D9", ...)
+bs4_book_theme(primary = "#0068D9", version = 4, ...)
 }
 \arguments{
 \item{theme}{A named list or \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object.
@@ -150,3 +150,4 @@ page as expected by social media:
 You can have a look at \href{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}{\code{bs4_book()} HTML template}
 for details on how these variables are used.
 }
+
