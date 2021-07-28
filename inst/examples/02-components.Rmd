@@ -850,3 +850,15 @@ knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
 Again, you will see a live app if you are reading an HTML version of this book, and a static screenshot if you are reading other types of formats. The above Shiny app was created using the **miniUI** package [@R-miniUI], which provides layout functions that are particularly nice for Shiny apps on small screens. If you use normal Shiny layout functions, you are likely to see vertical and/or horizontal scrollbars in the iframes because the page size is too big to fit in an iframe. When the default width of the iframe is too small, you may use the chunk option `out.width` to change it. For the height of the iframe, use the `height` argument of `include_url()`/`include_app()`.
 
 Shiny apps may take even longer to load than usual URLs. You may want to use a conservative value for the `delay` option, e.g., 10. Needless to say, `include_url()` and `include_app()` require a working Internet connection, unless you have previously cached the chunk (but web pages inside iframes still will not work without an Internet connection).
+
+## HTML 404 pages {#html-404}
+
+By default, both the `gitbook()` (Section \@ref(gitbook-style)) and `bs4_book()` (Section \@ref(bs4-book)) HTML output formats include a 404 page for readers who try to access a page in your book that cannot be found. The default 404.html is created using simple content (a header, and a body of 2 paragraphs). 
+
+```{r 404-page, fig.alt='Screenshot of an example 404 page for an HTML book built with bs4_book.', fig.align='center', echo=FALSE}
+knitr::include_graphics('images/404.png')
+```
+
+To customize the 404 page instead of using the default, you may add either a `_404.Rmd` or a `_404.md` file to your project root. If either file is found when you render the book, the content will be rendered as an `html_fragment` and will be included as the body of the 404 page. This means that the overall structure of your book's website (including navbar, footer, sidebars, etc.) and the CSS styling will be preserved on the 404 page.
+
+If a 404.html file already exists in the main repo at the root level with the `.Rmd` files, then **bookdown** will leave that file as is and will not overwrite it.
