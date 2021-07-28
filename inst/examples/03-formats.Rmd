@@ -218,6 +218,190 @@ favicon: "favicon.ico"
 
 A nice effect of setting `description` and `cover-image` is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.
 
+### Bootstrap 4 style
+
+The `bs4_book` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
+knitr::include_graphics('images/bs4_book.png', dpi = NA)
+```
+
+This output format builds upon the Bootstrap CSS framework. Bootstrap is a library of reusable chunks of HTML, CSS, and JavaScript code that you can call on to modify your book without writing that code yourself. It is a free and open source project, and you can view the repository on GitHub: <https://github.com/twbs/bootstrap>. Bootstrap versions do get updated periodically; this format uses version 4 (<https://getbootstrap.com/docs/4.0/>).
+
+The output format function in **bookdown** is `bs4_book()`. Here are its arguments:
+
+```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
+```
+
+In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
+
+- Easy customisation of colours and fonts with
+  the bslib package (<https://pkgs.rstudio.com/bslib/>)
+
+- Built-in search (broken down by section) that helps readers quickly find t
+  they are looking for.
+
+- A sidebar containing a within-chapter table of contents that makes
+  navigation easy and helps provide context about your current position
+  within the chapter.
+
+- Thoughtful typography to make the contents as easy as possible to read,
+  regardless of the size of your device. A sticky header gets out of your
+  way when reading, but is easily accessible if you need it.
+
+- In-line footnotes mean you can read asides next to the next they refer
+  to. This theme is best paired with a reference style that generates
+  footnotes.
+
+- R syntax highlighting and autolinking by
+  the downlit package (<https://downlit.r-lib.org/>) is paired with a accessible
+  colour scheme designed by Alison Hill.
+  
+- Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter's content.
+
+- Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
+
+#### Writing a `bs4_book`
+
+This theme is designed for books that use one chapter per page. 
+This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one (and only one) chapter. 
+A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading. 
+
+Use second-level and higher headings within chapters like: 
+
+```md
+#   A good chapter
+
+##  A short section
+
+### An even shorter section
+```
+
+The first- and second-level headings will appear in that chapter's sidebar on the upper right as a "sticky" within-chapter table of contents that stays in place as you scroll down. In the sidebar, when a section is navigated to, subheadings will auto-expand such that third-level headings like "An even shorter section" are visible.
+
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+
+A YAML header in `index.Rmd` for a `bs4_book` would look like this:
+
+```yaml
+---
+title: "A Minimal Book Example"
+author: "John Doe"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::bs4_book
+url: https://bookdown.org/johndoe/bookdown-demo
+cover-image: cover.png
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The output format for this example is bookdown::bs4_book.
+---
+```
+
+#### Callout blocks
+
+The `bs4_book` theme also includes special callout blocks, like this `.rmdnote`.
+
+::: {.rmdnote}
+You can use **markdown** inside a block.
+
+```{r collapse=TRUE}
+head(beaver1, n = 5)
+```
+
+:::
+
+You may also use: `.rmdcaution`, `.rmdimportant`, `.rmdtip`, or `.rmdwarning` as the block name.
+
+
+It is up to the user to define the appearance of these blocks for LaTeX output. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
+
+
+#### HTML metadata
+
+HTML `<meta>` tags will be set based on Pandoc's variables set in `index.Rmd`:
+
+ * `pagetitle` (or `title` if unset) will be used as `og:title`
+ and `twitter:title` content.
+ * `description` will be used as `description`, `og:description` and
+ `twitter:description` content.
+ * `url` will be used as `og:url` and as base for `cover-image`
+ * `cover-image` is the path to your local cover image, and will be used as
+ `og:image`, appended to `url` value.
+ * `twitter-handle` will be used as `twitter:site` content.
+
+If these values are set, then the associated `<meta>` tag will be set in the
+resulting HTML file. The provided values will be used asis in `index.html`.
+They will then be tweaked for each chapter to produce different metadata for h
+page as expected by social media:
+
+* All `description` related meta will be auto generated from page content,
+* `og:url` will be set to the specific HTML page url,
+* All the other `<meta>` will stay the same.
+
+You can have a look at [`bs4_book()` HTML
+template](https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_b.html) for details on how these variables are used.
+
+These values are not configurable:
+
+* `twitter:card` will be set as `summary`.
+* `og:type` will be set as `book`.
+
+#### References/Bibliography
+
+The `bs4_book` format makes footnotes appear inline when you click on them. 
+Making your citations _footnotes_
+allows readers to read them near the text they are referred in.
+To do that, download a footnote style CSL file
+(e.g. chicago-fullnote-bibliography.csl; we recommend: https://www.zotero.org/styles/), then
+put this in your `index.Rmd`:
+
+```yaml
+bibliography: refs.bib
+csl: chicago-fullnote-bibliography.csl
+```
+
+And then optionally, if you no longer want a reference section
+at the back of the book:
+
+```yaml
+suppress-bibliography: true
+```
+
+#### Specifying the repository
+
+If your book has a default branch called main you can use:
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+```
+
+If your book is furthermore located in a subdirectory called "book" you can use:
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+```
+
+By default if the repo URL contains "github" it will get a GitHub [Font Awesome
+icon](https://fontawesome.com), and otherwise a GitLab Font Awesome icon.
+To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) ([Font Awesome 5](https://fontawesome.com/v5.0/how-to-use/on-the-web/referencing-icons/basic-use)).
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+    icon: "fas fa-air-freshener"
+```
+
 ### Bootstrap style
 
 If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
