@@ -33,7 +33,7 @@
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
-#'   make reading easier and uses a primary colour with greater constrast
+#'   make reading easier and uses a primary colour with greater contrast
 #'   against the background.
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
@@ -137,7 +137,7 @@
 #' * All the other `<meta>` will stay the same.
 #'
 #' You can have a look at [`bs4_book()` HTML
-#' template](https://github.com/maelle/bookdown/blob/master/inst/templates/bs4_book.html)
+#' template](https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html)
 #' for details on how these variables are used.
 #'
 #' @export
