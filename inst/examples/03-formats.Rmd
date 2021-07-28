@@ -40,11 +40,24 @@ In this case, all formats should be at the top level, instead of under an `outpu
 
 ## HTML
 
-The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default --- normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: the GitBook style (\@ref(gitbook-style), the Bootstrap 4 style (\@ref(bs4-book)), the Bootstrap style (\@ref(bootstrap-style)), and the Tufte style ((\@ref(tufte-style)).
+The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default --- normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: 
+
+- the GitBook style (Section \@ref(gitbook-style)), 
+- the Bootstrap 4 style (Section \@ref(bs4-book)), 
+- the Bootstrap style (Section \@ref(bootstrap-style)), and 
+- the Tufte style (Section\@ref(tufte-style)).
 
 ### GitBook style {#gitbook-style}
 
 The GitBook style was borrowed from GitBook\index{GitBook}, a project launched by Friendcode, Inc. (https://www.gitbook.com) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.
+
+The easiest way to get started writing a new `gitbook` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `gitbook` from the dropdown menu: 
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.alt="Screenshot of the RStudio Project Wizard for creating a new gitbook project."}
+knitr::include_graphics('images/gitbook.png', dpi = NA)
+```
+
+If you don't use RStudio or prefer a function, you can create the same project template with `bookdown::create_gitbook()` from your R console. See `?create_gitbook` for help.
 
 We have made several improvements over the original GitBook project. The most significant one is that we replaced the Markdown engine with R Markdown v2 based on Pandoc, so that there are a lot more features for you to use when writing a book:
 
@@ -222,16 +235,11 @@ A nice effect of setting `description` and `cover-image` is that when you share 
 
 The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://mastering-shiny.org/', fig.alt="Screenshot of a bs4_book landing page to show the basic site layout"}
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
 ```
 
 This output format builds upon the Bootstrap CSS framework. Bootstrap is a library of reusable chunks of HTML, CSS, and JavaScript code that you can call on to modify your book without writing that code yourself. It is a free and open source project, and you can view the repository on GitHub: <https://github.com/twbs/bootstrap>. Bootstrap versions do get updated periodically; this format uses version 4 (<https://getbootstrap.com/docs/4.0/>).
-
-The output format function in **bookdown** is `bs4_book()`. Here are its arguments:
-
-```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
-```
 
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
@@ -261,7 +269,22 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
 
 - Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
 
+The output format function in **bookdown** is `bs4_book()`. Here are its arguments:
+
+```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
+```
+
+This format also requires extra dependencies that you'll be prompted to install: `r knitr::combine_words(bookdown:::bs4_book_deps())`.
+
 #### Writing a `bs4_book`
+
+The easiest way to get started writing a new `bs4_book` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `bs4_book` from the dropdown menu: 
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.alt="Screenshot of the RStudio Project Wizard for creating a new bs4_book project."}
+knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
+```
+
+If you don't use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
 
 This theme is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one (and only one) chapter. 
