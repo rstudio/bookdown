@@ -326,7 +326,7 @@ HTML `<meta>` tags will be set based on Pandoc's variables set in `index.Rmd`:
  `twitter:description` content.
  * `url` will be used as `og:url` and as base for `cover-image`
  * `cover-image` is the path to your local cover image, and will be used as
- `og:image`, appended to `url` value.
+ `og:image`, appended to `url` value. `cover-image` can also take an absolute url.
  * `twitter-handle` will be used as `twitter:site` content.
 
 If these values are set, then the associated `<meta>` tag will be set in the
