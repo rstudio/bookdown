@@ -327,14 +327,20 @@ The `bs4_book` theme also includes special callout blocks with predefined styles
 
 You need to use the following syntax to use them: 
 
+````markdown
 ::: {.rmdnote}
-You can use **markdown** inside a block.
-
+The `bs4_book` theme also includes an `.rmdnote` callout block like this one.
 ```{r collapse=TRUE}
 head(beaver1, n = 5)
 ```
-
 :::
+````
+
+You may use Markdown syntax and inline code inside a block. When knitted, this will render as:
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.alt="A special rmd-note callout block."}
+knitr::include_graphics('images/rmd-note.png', dpi = NA)
+```
 
 For LaTeX output, only the content of these blocks will be shown with no special styling as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
 
