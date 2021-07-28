@@ -32,8 +32,8 @@ view source and edit buttons or a list with repository \code{base} link, default
 
 \item{primary}{Primary colour: used for links and background of footer.}
 
-\item{version}{Passed to `bslib::bs_theme()`. This should not be changed as
-`bs4_book()` has been designed to work with Bootstrap version 4 for now.}
+\item{version}{Passed to \code{\link[bslib:bs_theme]{bslib::bs_theme()}}. This should not be changed as
+\code{\link[=bs4_book]{bs4_book()}} has been designed to work with Bootstrap version 4 for now.}
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{bootstrap},
