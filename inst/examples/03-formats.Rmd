@@ -313,10 +313,7 @@ head(beaver1, n = 5)
 
 :::
 
-You may also use: `.rmdcaution`, `.rmdimportant`, `.rmdtip`, or `.rmdwarning` as the block name.
-
-
-It is up to the user to define the appearance of these blocks for LaTeX output. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
+For LaTeX output, only the content of these blocks will be shown with no special styling as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
 
 
 #### HTML metadata
