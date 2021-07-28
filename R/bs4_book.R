@@ -4,7 +4,7 @@
 #' This output format is built with [Bootstrap](https://getbootstrap.com),
 #' using carefully crafted features to provide a clean reading experience whether
 #' you are on a phone, tablet, or desktop. To read more about this format, see:
-#' https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style
+#' <https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style>
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
