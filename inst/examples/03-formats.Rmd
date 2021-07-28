@@ -246,7 +246,7 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
 - Easy customisation of colours and fonts with
   the **bslib** package (<https://pkgs.rstudio.com/bslib/>)
 
-- Built-in search (broken down by section) that helps readers quickly find t
+- Built-in search (broken down by section) that helps readers quickly find what
   they are looking for.
 
 - A sidebar containing a within-chapter table of contents that makes
