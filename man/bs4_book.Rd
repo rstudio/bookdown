@@ -31,6 +31,9 @@ view source and edit buttons or a list with repository \code{base} link, default
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
+
+\item{version}{Passed to `bslib::bs_theme()`. This should not be changed as
+`bs4_book()` has been designed to work with Bootstrap version 4 for now.}
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{bootstrap},
