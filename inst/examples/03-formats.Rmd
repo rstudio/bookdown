@@ -236,7 +236,7 @@ The output format function in **bookdown** is `bs4_book()`. Here are its argumen
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
 - Easy customisation of colours and fonts with
-  the bslib package (<https://pkgs.rstudio.com/bslib/>)
+  the **bslib** package (<https://pkgs.rstudio.com/bslib/>)
 
 - Built-in search (broken down by section) that helps readers quickly find t
   they are looking for.
