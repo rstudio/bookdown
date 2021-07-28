@@ -1,6 +1,6 @@
 # this is the function used for the RStudio project template
-bookdown_skeleton = function(path, output_format) {
-
+bookdown_skeleton = function(path, output_format = skeleton_formats()) {
+  output_format = match.arg(output_format)
   # ensure directory exists
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
   path = xfun::normalize_path(path)
@@ -22,6 +22,11 @@ bookdown_skeleton = function(path, output_format) {
   skeleton_build_bookdown_yml(path, output_format)
   move_dir(file.path(path, output_format), path) # move left format files
   skeleton_remove_blocks(path, output_format)
+
+  # Get missing assets
+  if (output_format == "bs4_book") {
+    skeleton_get_csl(path, "chicago-fullnote-bibliography")
+  }
 
   invisible(TRUE)
 }
@@ -106,12 +111,21 @@ skeleton_get_dir = function(...) {
   bookdown_file('rstudio', 'templates', 'project', 'resources', ...)
 }
 
-skeleton_get_files <- function(subdir = NULL, relative = TRUE) {
+skeleton_get_files = function(subdir = NULL, relative = TRUE) {
   resources = skeleton_get_dir()
   subdir = file.path(resources, subdir %n% "")
   if (!dir.exists(subdir)) return(NULL)
   files = list.files(subdir, recursive = TRUE, include.dirs = FALSE, full.names = TRUE)
   if (relative) xfun::relative_path(files, resources) else files
+}
+
+skeleton_get_csl = function(path, csl) {
+  xfun::in_dir(path, {
+    try_download_asset(
+      sprintf("https://www.zotero.org/styles/%s", csl),
+      xfun::with_ext(csl, "csl")
+    )
+  })
 }
 
 activate_rstudio_project = function(dir) {
@@ -140,7 +154,7 @@ activate_rstudio_project = function(dir) {
 #' @rdname create_book
 #' @export
 create_gitbook = function(path) {
-  create_html_book(path, output_format = "gitbook")
+  bookdown_skeleton(path, output_format = "gitbook")
   activate_rstudio_project(path)
   path
 }
@@ -148,18 +162,13 @@ create_gitbook = function(path) {
 #' @rdname create_book
 #' @export
 create_bs4_book = function(path) {
-  create_html_book(path, output_format = "bs4_book")
-  xfun::in_dir(path, {
-    try_download_asset(
-      "https://www.zotero.org/styles/chicago-fullnote-bibliography",
-      "chicago-fullnote-bibliography.csl"
-    )
-  })
+  bookdown_skeleton(path, output_format = "bs4_book")
   activate_rstudio_project(path)
   path
 }
 
-
+# Trying download because in case of offline usage we still want the skeleton
+# project to be created without error
 try_download_asset = function(url, asset_name) {
   msg = tryCatch({
     xfun::download_file(url, output = asset_name, quiet = TRUE)
@@ -179,10 +188,6 @@ try_download_asset = function(url, asset_name) {
   invisible(NULL)
 }
 
-create_html_book = function(path, output_format = skeleton_formats()) {
-  output_format = match.arg(output_format)
-  bookdown_skeleton(path, output_format)
-}
 
 #' Create a book skeleton
 #'
