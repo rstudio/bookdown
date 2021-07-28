@@ -192,8 +192,9 @@ bs4_book <- function(theme = bs4_book_theme(),
 #' @export
 #' @rdname bs4_book
 #' @param primary Primary colour: used for links and background of footer.
-bs4_book_theme <- function(primary = "#0068D9", ...) {
+bs4_book_theme <- function(primary = "#0068D9", version = 4, ...) {
   bslib::bs_theme(...,
+    version = 4,
     primary = primary,
     "font-size-base" = "1rem",
   )
