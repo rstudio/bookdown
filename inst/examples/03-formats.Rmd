@@ -404,7 +404,9 @@ bookdown::bs4_book:
 
 ### Bootstrap style
 
-If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
+If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
+
+In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
 
 ```{r html-chapters-usage, eval=FALSE, code=formatR::usage(bookdown::html_chapters, output=FALSE, fail='none')}
 ```
@@ -496,7 +498,10 @@ As a matter of fact, you can get rid of the Bootstrap style in `html_document()`
 
 ### Tufte style
 
-Like the Bootstrap style, the Tufte\index{Tufte style} style is provided by an output format `tufte_html_book()`, which is also a special case of `html_chapters()` using `tufte::tufte_html()` as the base format. Please see the **tufte** package [@R-tufte] if you are not familiar with the Tufte style. Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.
+Like the Bootstrap style, the Tufte\index{Tufte style} style is provided by an output format `tufte_html_book()`, which is also a special case of `html_chapters()` using `tufte::tufte_html()` as the base format. Please see the **tufte** package [@R-tufte] if you are not familiar with the Tufte style. You can read an example `tufte_html_book()` here: <https://bookdown.org/yihui/bookdown-demo3/>
+
+
+Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.
 
 All arguments of `tufte_html_book()` have exactly the same meanings as `html_book()`, e.g., you can also customize the CSS via the `css` option. There are a few elements that are specific to the Tufte style, though, such as margin notes, margin figures, and full-width figures. These elements require special syntax to generate; please see the documentation of the **tufte** package. Note that you do not need to do anything special to footnotes and references (just use the normal Markdown syntax `^[footnote]` and `[@citation]`), since they will be automatically put in the margin. A brief YAML example of the `tufte_html_book` format:
 
