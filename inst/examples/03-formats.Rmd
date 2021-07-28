@@ -323,7 +323,7 @@ description: |
 
 #### Callout blocks
 
-The `bs4_book` theme also includes special callout blocks with predefined styles. Available blocks `.rmdnote`, `.rmdcaution`, `.rmdimportant`, `.rmdtip`, and `.rmdwarning`. 
+The `bs4_book` theme also includes special callout blocks with predefined styles. Available blocks are: `.rmdnote`, `.rmdcaution`, `.rmdimportant`, `.rmdtip`, and `.rmdwarning`. 
 
 You need to use the following syntax to use them: 
 
