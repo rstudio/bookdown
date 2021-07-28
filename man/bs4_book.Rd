@@ -15,7 +15,7 @@ bs4_book(
   split_bib = FALSE
 )
 
-bs4_book_theme(primary = "#0068D9", ...)
+bs4_book_theme(primary = "#0068D9", version = 4, ...)
 }
 \arguments{
 \item{theme}{A named list or \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object.
@@ -31,6 +31,9 @@ view source and edit buttons or a list with repository \code{base} link, default
 \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
+
+\item{version}{Passed to \code{\link[bslib:bs_theme]{bslib::bs_theme()}}. This should not be changed as
+\code{\link[=bs4_book]{bs4_book()}} has been designed to work with Bootstrap version 4 for now.}
 }
 \description{
 This output format is built with \href{https://getbootstrap.com}{Bootstrap},
@@ -38,3 +41,4 @@ using carefully crafted features to provide a clean reading experience whether
 you are on a phone, tablet, or desktop. To read more about this format, see:
 https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style
 }
+
