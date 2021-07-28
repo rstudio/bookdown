@@ -218,7 +218,7 @@ favicon: "favicon.ico"
 
 A nice effect of setting `description` and `cover-image` is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.
 
-### Bootstrap 4 style
+### Bootstrap 4 style {#bs4-book}
 
 The `bs4_book` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
 
