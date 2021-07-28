@@ -220,7 +220,7 @@ A nice effect of setting `description` and `cover-image` is that when you share 
 
 ### Bootstrap 4 style {#bs4-book}
 
-The `bs4_book` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
+The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
