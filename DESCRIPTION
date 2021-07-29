@@ -64,6 +64,7 @@ Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.31),
     rmarkdown (>= 2.9),
+    jquerylib,
     xfun (>= 0.22),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)

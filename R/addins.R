@@ -1,8 +1,5 @@
 jquery_dependency = function() {
-  htmltools::htmlDependency(
-    'jquery', '3.3.1', bookdown_file('resources', 'jquery'),
-    script = 'jquery.min.js'
-  )
+  jquerylib::jquery_core()
 }
 
 mathquill = function() {
