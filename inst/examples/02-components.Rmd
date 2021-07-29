@@ -863,6 +863,6 @@ knitr::include_graphics('images/404.png')
 
 As you can see, this 404 page is embedded within the book so that readers can quickly find their way back to the book's content. The overall structure of the book's website (including navbar, footer, sidebars, etc.) and the CSS styling are preserved on the 404 page.
 
-To customize the 404 page instead of using the one **bookdown** provides, you may add either a `_404.Rmd` or a `_404.md` file to your project root. If either file is found when you render the book, the content will be rendered as an `html_fragment()` and will be included as the body of the 404 page embedded within the book structure.
+To customize the 404 page instead of using the one **bookdown** provides, you may add either a `_404.Rmd` or a `_404.md` file to your project root. If either file is found when you render the book, the content will be rendered and included as the body of the 404 page embedded within the book structure.
 
 If a 404.html file already exists in the main repo at the root level (alongside the book's `.Rmd` files), then **bookdown** will leave that file as is and will not overwrite it. This is because we assume you already have a mechanism in place in your publishing workflow to use this custom `404.html`.
