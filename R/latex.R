@@ -199,32 +199,65 @@ remove_toc_items = function(x) {
 }
 
 add_toc_bib = function(x) {
-  r = '^\\\\bibliography\\{.+\\}$'
+  # natbib
+  r = '^\\s*\\\\bibliography\\{.+\\}$'
   i = grep(r, x)
-  if (length(i) == 0) return(x)
-  i = i[1]
-  level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
-  x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  if (length(i) != 0) {
+    # natbib - add toc manually using \bibname
+    # e.g adding \addcontentsline{toc}{chapter}{\bibname}
+    i = i[1]
+    level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
+    x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  } else {
+    # biblatex - add heading=bibintoc in options
+    # e.g \printbibliography[title=References,heading=bibintoc]
+    r = '^(\\s*\\\\printbibliography)(\\[.*\\])?$'
+    i = grep(r, x)
+    if (length(i) == 0) return(x)
+    opts = gsub(r, "\\2", x[i])
+    bibintoc = "heading=bibintoc"
+    if (nzchar(opts)) {
+      opts2 = gsub("^\\[(.*)\\]$", "\\1", opts)
+      opts = if (!grepl("heading=", opts2)) sprintf("[%s,%s]", opts2, bibintoc)
+    } else (
+      opts = sprintf("[%s]", bibintoc)
+    )
+    x[i] = sprintf('%s%s', gsub(r, "\\1", x[i]), opts)
+  }
   x
 }
 
 restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
-  if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
+  # add the necessary definition in the preamble when block2 engine
+  # (\BeginKnitrBlock) or pandoc fenced div (\begin) is used if not already
+  # define. But don't do it with beamer and it defines already amsthm
+  # environments.
+  # An options allow external format to skip this part
+  # (useful for rticles see rstudio/bookdown#1001)
+  if (getOption("bookdown.theorem.preamble", TRUE) &&
+      !knitr::pandoc_to("beamer") &&
+      length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
+    theorem_label = vapply(theorem_abbr, function(a) {
+      label_prefix(a)()
+    }, character(1), USE.NAMES = FALSE)
     theorem_defs = sprintf(
-      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
-      str_trim(vapply(theorem_abbr, label_prefix, character(1), USE.NAMES = FALSE)),
+      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)),
+      names(theorem_abbr), str_trim(theorem_label),
       if (global) '' else {
         if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
       }
     )
     # the proof environment has already been defined by amsthm
     proof_envs = setdiff(names(label_names_math2), 'proof')
+    proof_labels = vapply(proof_envs, function(a) {
+      label_prefix(a, dict = label_names_math2)()
+    }, character(1), USE.NAMES = FALSE)
     proof_defs = sprintf(
       '%s\\newtheorem*{%s}{%s}', theorem_style(proof_envs), proof_envs,
-      gsub('^\\s+|[.]\\s*$', '', vapply(proof_envs, label_prefix, character(1), label_names_math2))
+      gsub('^\\s+|[.]\\s*$', '', proof_labels)
     )
     x = append(x, c('\\usepackage{amsthm}', theorem_defs, proof_defs), i - 1)
   }
@@ -248,7 +281,7 @@ restore_block2 = function(x, global = FALSE) {
   x
 }
 
-style_definition = c('definition', 'example', 'exercise')
+style_definition = c('definition', 'example', 'exercise', 'hypothesis')
 style_remark = c('remark')
 # which styles of theorem environments to use
 theorem_style = function(env) {

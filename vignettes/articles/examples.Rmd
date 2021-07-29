@@ -1,0 +1,52 @@
+---
+title: "Example books"
+---
+
+The [bookdown contest](https://bookdown.org/home/contest/) is a great place to find a wide range of example books made with **bookdown**. 
+
+See a full list of books built with bookdown here: <https://bookdown.org/>
+
+See below some featured books: 
+
+```{r, include = FALSE, eval=FALSE}
+# rerun to change the example yml file
+library(rvest)
+url <- "https://bookdown.org/home"
+html <- read_html(url)
+books_node <- html %>%
+  html_nodes(".article-list")
+
+books_info <- books_node %>%
+  purrr::map(~{
+    res <- list(
+      title = html_node(.x, "h1 > a") %>% html_text(),
+      img = html_node(.x, ".thumbnail > a > img") %>% html_attr("src"),
+      href = html_node(.x, "h1 > a") %>% html_attr("href"),
+      source = html_node(.x, "a.github-button") %>% html_attr("href"),
+      showcase = TRUE
+    )
+    res[is.na(res)] <- NULL
+    res
+  })
+yaml::write_yaml(books_info, "examples.yml")
+```
+
+```{r, include=FALSE, eval=FALSE}
+# remove some books from showcase
+books_info <- yaml::read_yaml("examples.yml") %>%
+  purrr::map(~{
+    # some of our books
+    no_show <- grepl("yihui|adv-r|rstudio|r4ds|r-pkgs", .x$href)
+    # books with no source code repo
+    no_source <- is.null(.x$source)
+    if (no_show || no_source) .x$showcase <- FALSE
+    .x
+  })
+
+yaml::write_yaml(books_info, "examples.yml")
+```
+
+```{r, echo = FALSE}
+quillt::examples("examples.yml", showcaseOnly = TRUE)
+```
+

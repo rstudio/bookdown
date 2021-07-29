@@ -96,7 +96,11 @@ bookdown::gitbook:
       position: fixed
     edit : null
     download: null
-    search: yes
+    search:
+      engine: lunr # or fuse
+      # options to control/tune search engine behaviour (for
+      # fuse.js, refer to https://fusejs.io/api/options.html)
+      options: null
     fontsettings:
       theme: white
       family: sans
@@ -109,6 +113,7 @@ bookdown::gitbook:
       weibo: no
       instapaper: no
       vk: no
+      whatsapp: no
       all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
     info: yes
 ```
@@ -143,7 +148,15 @@ The first button on the toolbar can toggle the visibility of the sidebar. You ca
 
 The second button on the toolbar is the search button. Its keyboard shortcut is `F` (Find). When the button is clicked, you will see a search box at the top of the sidebar. As you type in the box, the TOC will be filtered to display the sections that match the search keyword. Now you can use the arrow keys `Up`/`Down` to highlight the previous/next match in the search results. When you click the search button again (or hit `F` outside the search box), the search keyword will be emptied and the search box will be hidden. To disable searching, set the option `search: no` in `config`.
 
-The third button is for font/theme settings. You can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (`White`, `Sepia`, or `Night`). These settings can be changed via the `fontsettings` option. The button can be removed from the toolbar by setting `fontsettings: null` (or `no`).
+The third button is for font/theme settings. The reader can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (`White`, `Sepia`, or `Night`). You can set the initial value of these settings via the `fontsettings` option. Font size is measured on a scale of 0-4; the initial value can be set to 1, 2 (default), 3, or 4. The button can be removed from the toolbar by setting `fontsettings: null` (or `no`).
+
+```yaml
+# changing the default
+    fontsettings:
+      theme: night
+      family: serif
+      size: 3
+```
 
 The `edit` option is the same as the option mentioned in Section \@ref(configuration). If it is not empty, an edit button will be added to the toolbar. This was designed for potential contributors to the book to contribute by editing the book on GitHub after clicking the button and sending pull requests.  The `history` and `view` options work the same
 way.
@@ -362,9 +375,7 @@ There are several EPUB readers available, including Calibre (https://www.calibre
 
 ### MOBI
 
-MOBI e-books can be read on Amazon's Kindle devices. Pandoc does not support MOBI output natively, but Amazon has provided a tool named KindleGen (https://www.amazon.com/gp/feature.html?docId=1000765211) to create MOBI books from other formats, including EPUB and HTML. We have provided a simple wrapper function `kindlegen()` in **bookdown** to call KindleGen to convert an EPUB book to MOBI. This requires you to download KindleGen first, and make sure the KindleGen executable can be found via the system environment variable `PATH`.
-
-Another tool to convert EPUB to MOBI is provided by Calibre\index{Calibre}. Unlike KindleGen, Calibre is open-source and free, and supports conversion among many more formats. For example, you can convert HTML to EPUB, Word documents to MOBI, and so on. The function `calibre()` in **bookdown** is a wrapper function of the command-line utility `ebook-convert` in Calibre. Similarly, you need to make sure that the executable `ebook-convert` can be found via the environment variable `PATH`. If you use OS X, you can install both KindleGen and Calibre via Homebrew-Cask (https://caskroom.github.io), so you do not need to worry about the `PATH` issue.
+MOBI e-books can be read on Amazon's Kindle devices. Pandoc does not support MOBI output natively, but you may use third-party tools to convert EPUB to MOBI. One possible tool is Calibre\index{Calibre}. Calibre is open-source and free, and supports conversion among many more formats. For example, you can convert HTML to EPUB, Word documents to MOBI, and so on. The function `calibre()` in **bookdown** is a wrapper function of the command-line utility `ebook-convert` in Calibre. You need to make sure that the executable `ebook-convert` can be found via the environment variable `PATH`. If you use macOS, you can install Calibre with Homebrew (https://brew.sh) via the command `brew cask install calibre`, so you do not need to worry about the `PATH` issue.
 
 ## A single document
 

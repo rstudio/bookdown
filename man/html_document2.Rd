@@ -50,6 +50,7 @@ tufte_handout2(...)
 tufte_book2(...)
 
 markdown_document2(
+  number_sections = TRUE,
   fig_caption = TRUE,
   md_extensions = NULL,
   pandoc_args = NULL,
@@ -92,16 +93,17 @@ An R Markdown output format object to be passed to
 These are simple wrappers of the output format functions like
 \code{rmarkdown::\link{html_document}()}, and they added the capability of
 numbering figures/tables/equations/theorems and cross-referencing them. See
-References for the syntax. Note you can also cross-reference sections by
-their ID's using the same syntax when sections are numbered. In case you want
-to enable cross reference in other formats, use \code{markdown_document2} with
-\code{base_format} argument.
+\sQuote{References} for the syntax. Note you can also cross-reference
+sections by their ID's using the same syntax when sections are numbered. In
+case you want to enable cross reference in other formats, use
+\code{markdown_document2} with \code{base_format} argument.
 }
 \note{
-These function are expected to work with a single R Markdown document
-  instead of multiple documents of a book, so they are to be passed to
-  \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
-  functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
+These output formats are used to generate single output files, such as
+  a single HTML output file (unlike \code{gitbook}, which generates multiple
+  HTML output files by default).
+
+  The functions \samp{tufte_*()} are wrappers of functions in the \pkg{tufte}
   package.
 }
 \references{

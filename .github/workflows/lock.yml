@@ -1,0 +1,31 @@
+# From https://github.com/marketplace/actions/lock-threads
+name: 'Lock threads'
+
+on:
+  schedule:
+    - cron: '10 5 * * 3'
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@v2.0.1
+        with:
+          github-token: ${{ github.token }}
+          issue-lock-inactive-days: '180'
+          # issue-exclude-created-before: ''
+          # issue-exclude-labels: ''
+          # issue-lock-labels: ''
+          issue-lock-comment: >
+            This old thread has been automatically locked. If you think you have
+            found something related to this, please open a new issue by following
+            the issue guide (<https://yihui.org/issue/>), and link to this
+            old issue if necessary.
+          issue-lock-reason: 'resolved'
+          pr-lock-inactive-days: '180'
+          # pr-exclude-created-before: ''
+          # pr-exclude-labels: ''
+          # pr-lock-labels: ''
+          # pr-lock-comment: ''
+          # pr-lock-reason: ''
+          # process-only: ''

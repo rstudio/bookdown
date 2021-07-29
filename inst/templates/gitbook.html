@@ -11,7 +11,7 @@
   <meta property="og:title" content="$pagetitle$" />
   <meta property="og:type" content="book" />
   $if(url)$<meta property="og:url" content="$url$" />$endif$
-  $if(cover-image)$<meta property="og:image" content="$url$$cover-image$" />$endif$
+  $if(cover-image)$<meta property="og:image" content="$url$/$cover-image$" />$endif$
   $if(description)$<meta property="og:description" content="$description$" />$endif$
   $if(github-repo)$<meta name="github-repo" content="$github-repo$" />$endif$
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="$pagetitle$" />
   $if(twitter-handle)$<meta name="twitter:site" content="@$twitter-handle$" />$endif$
   $if(description)$<meta name="twitter:description" content="$description$" />$endif$
-  $if(cover-image)$<meta name="twitter:image" content="$url$$cover-image$" />$endif$
+  $if(cover-image)$<meta name="twitter:image" content="$url$/$cover-image$" />$endif$
 
 $for(author-meta)$
 <meta name="author" content="$author-meta$" />
@@ -77,6 +77,34 @@ $highlighting-css$
 </style>
 $endif$
 
+$if(csl-css)$
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+$if(csl-entry-spacing)$
+  margin-bottom: $csl-entry-spacing$;
+$endif$
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+$endif$
+
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
@@ -95,12 +123,13 @@ $if(subtitle)$
 $endif$
 $for(author)$
 $if(author.name)$
-<p class="author"><em>$author.name$</em></p>
+<p class="author" style="margin: 0.5em 0 -0.5em 0;"><em>$author.name$</em></p>
 $if(author.affiliation)$
 <address class="author_afil">
-$author.affiliation$<br>$endif$
+$author.affiliation$<br>
 $if(author.email)$
 <a class="author_email" href="mailto:#">$author.email$</a>
+$endif$
 </address>
 $endif$
 $else$
@@ -108,7 +137,7 @@ $else$
 $endif$
 $endfor$
 $if(date)$
-<p class="date"><em>$date$</em></p>
+<p class="date" style="margin-top: 1.5em;"><em>$date$</em></p>
 $endif$
 $if(abstract)$
 <div class="abstract">

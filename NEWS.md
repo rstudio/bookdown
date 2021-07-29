@@ -1,3 +1,134 @@
+# CHANGES IN bookdown VERSION 0.23
+
+- This version has a brand new template project to start a HTML book in one of available format. Template project can be created using the RStudio IDE _New Project..._, or using one of the two new functions, `create_gitbook()` and `create_bs4_book()`, to easily create the template you want to start with from within the R Console (#225, #1123, #1201).
+
+- `bs4_book(splib_bib = TRUE)` can now be specified to have the same effect as in `gitbook()`. References will be shown at the end of each chapter and not only at the end of the book. This is useful with `bs4_book()` when a citation style not supporting footnotes is used because in that case, references are not shown inline in popups (thanks, @shirdekel, #1185).
+
+- For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
+
+- In `bs4_book()`, improvement regarding copy button:
+  * It has now a light icon instead of a text with white background (#1192). 
+  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
+  * It will now be placed correctly on the right side of the code block, with a light color which gets darker on hover so that it is less obtrusive when ovelapping text in block with long lines  (#1204). If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
+
+- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
+- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
+
+- `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
+
+- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
+
+- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+
+- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
+
+- The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
+
+  ```yaml
+  output:
+    bookdown::gitbook:
+      config:
+        search:
+          engine: fuse
+  ```
+
+  Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
+
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
+
+- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
+
+- `epub_version` argument in `epub_book()` can now be set to `epub2` to creat EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
+
+- [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
+  ````markdown
+  ::: {.theorem #label name="My Theorem"}
+  Content
+  :::
+  ````
+  
+  However, as _beamer_ defines its own LaTeX throem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
+
+  This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
+
+- When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
+
+# CHANGES IN bookdown VERSION 0.22
+
+## NEW FEATURES
+
+- New `bs4_book()` theme - see `?bs4_book` for details about this new format (thanks, @hadley, #996).
+
+- `render_book()` can now take a directory as input, i.e `render_book("book_dir")`, to render in this directory by using the `index.Rmd` file if it exists. The default is now to look for `input.Rmd` is the current working directory. Previously, filename must have been provided (`render_book()` is now equivalent to `render_book("index.Rmd")`) (#990).
+
+- `hypothesis` environment is now supported among [Theorems and Proof](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) (thanks, @shirdekel, #1102).
+
+- In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://bookdown.org/yihui/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
+
+- Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
+
+- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, @prdm0, #1125).
+
+## BUG FIXES
+
+- Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)
+
+- When `split_bib = TRUE`, references in footnotes are now also correctly relocated in the chapter (thanks, @jimhshen, #952)
+
+- In `pdf_book()`, `toc_bib = TRUE` now works with _natbib_ and _biblatex_ as `citation_package` (thanks, @qifei9, @umarcor, #450).
+
+- CSS dependencies like `url('truetype/Spectral-ExtraLight.ttf')` (with single quotes) are now correctly identified and moved (thanks, @RLesur, #991).
+
+- `fenced_theorems()` now correctly transforms implicit label in chunk header to a fenced divs id. (thanks, @enixam, #982)
+
+- References are now correctly relocated with Pandoc 2.11 when `split_bib = TRUE` in `gitbook()`. New citation processing in Pandoc 2.11 will also add new classes to the divs, and these are preserved when relocating. This allows for references styling using CSS (#981).
+
+- The new syntax for theorem and proof environments introduced in **bookdown** requires Pandoc >= 2.3 instead of 2.0 (thanks, @markhymers, #979 #980).
+
+- `serve_book()` will refresh correctly now when using subdirectories with `rmd_subdir` (thanks, @shenfei, #834).
+
+- Added the same CSS as in default Pandoc's template for when a CSL is used (#1045).   
+
+- Properly support multiple authors in the `gitbook()` output format (thanks, @adamvi, #1095).
+
+- No more warnings are thrown when passing several input files to `render_book(preview = TRUE)` (#1091).
+
+- Correctly remove reference IDs of tables (e.g `(#tab:lab)`) generated by custom function (like `gt::gt()`) (#1099).
+
+- In sepia or night mode, the background color during sidebar transition is now correct and no more white (#1100).
+
+- Fix an issue in `bs4_book()` with encoding on system non-UTF8 by default (#1027).
+
+## MINOR CHANGES
+
+- `anchor_sections = TRUE` becomes the default for `bookdown::gitbook()`.
+
+# CHANGES IN bookdown VERSION 0.21
+
+## NEW FEATURES
+
+- Add the `number_sections` argument to `markdown_document2()` and its family. This allows to have now figure references numbered by chapters in these formats, like `word_document2()` or `odt_document2()` for example. This argument default to `TRUE` like `html_document2()` and  `pdf_document2()`. Set it to `number_sections = FALSE` to get the same output as previous version without numbered chapters (thanks, @atusy, #756). 
+
+- Provided an alternative way to create theorem and proof environments using Pandoc's fenced Divs. Previously, **bookdown** supports theorems and proofs in special code chunks like ```` ```{theorem}````. Now you can use the new syntax ```::: {.theorem}```. You may use the helper function `bookdown::fence_theorems()` to convert the former syntax to the latter. The main benefit of using fenced Divs is that you can write arbitrary content in a theorem environment (here "theorem" includes other environments such as lemma, corollary, and definition, etc.), such as R code chunks and inline R code, which was not possible previously. Note that this feature is only supported for LaTeX and HTML output formats at the moment. To learn more about the fenced Divs in general, you may read this section in _R Markdown Cookbook_: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html (thanks, @tchevri #924, @cderv #940).
+
+## BUG FIXES
+
+- Correctly encode the document title when creating the Twitter sharing link from a bookdown chapter (thanks, @maelle, #934).
+
+- Make sure `search_index.json` contains valid characters for the JSON format (thanks, @wlandau, #913).
+
+## MAJOR CHANGES
+
+- The `--file-scope` behavior introduced in bookdown v0.20 is now disabled by default. This is due to broken TOC links for duplicate section names (e.g., "Exercises"; see #909) that have automatically generated identifiers.
+
+- The `clean_envir` argument of `bookdown::render_book()` has been deprecated and will be removed in the future (thanks, @jenslaufer, #932).
+
+- The function `kindlegen()` has been deprecated, since Amazon no longer provides KindleGen. Please consider using `bookdown::calibre()` instead if you want `.mobi` output (#973).
+
+## MINOR CHANGES
+
+- Updated documentation for `render_book()` to make it clearer how options are set for the `output_format` parameter (thanks, @jonathan-g, #958 #930).
+
 # CHANGES IN bookdown VERSION 0.20
 
 ## NEW FEATURES
@@ -8,7 +139,11 @@
 
 ## BUG FIXES
 
-- When the config `chapter_name` in `_bookdown.yml` is a function, the value passed to its argument `i` should be numeric instead of character (thanks, @AzureRabbit, #899).
+- Fixed a JS issue in `gitbook` when it is used with jQuery 3.x (thanks, @afkegel, #895).
+
+## MINOR CHANGES
+
+- Removed the `encoding` argument from `bookdown::render_book()`. This argument has always been ignored in **bookdown**.
 
 # CHANGES IN bookdown VERSION 0.19
 
@@ -250,7 +385,7 @@
 
 ## NEW FEATURES
 
-- Added special syntax for unnumbered part headers: `# (PART\*)`. Numbered parts should be written after `# (PART)` as before (thanks, @brooksambrose, http://stackoverflow.com/q/43688902/559676).
+- Added special syntax for unnumbered part headers: `# (PART\*)`. Numbered parts should be written after `# (PART)` as before (thanks, @brooksambrose, https://stackoverflow.com/q/43688902/559676).
 
 - The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
 
@@ -260,7 +395,7 @@
 
 ## BUG FIXES
 
-- The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (http://stackoverflow.com/q/40976073/559676).
+- The HTML output file is not moved to the output directory when `split_by = 'none'` in `bookdown::gitbook` or `bookdown::html_book` (https://stackoverflow.com/q/40976073/559676).
 
 - The YAML option `includes: before_body` works correctly for `gitbook` output now (thanks, @benmarwick, #267).
 
@@ -314,7 +449,7 @@
 
 ## MINOR CHANGES
 
-- The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (http://stackoverflow.com/q/38883222/559676).
+- The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (https://stackoverflow.com/q/38883222/559676).
 
 - The configurations `edit: text` and `chapter_name` have been moved from the top-level options to the sub-options of `language: ui` in `_bookdown.yml`. See https://bookdown.org/yihui/bookdown/internationalization.html
 
@@ -330,7 +465,7 @@
 
 - Footnotes of multiple paragraphs are not displayed on the current page (thanks, @axitdn, #234).
 
-- The output format `pdf_document2()` also works with articles now when an R Markdown document contains bookdown-specific headers, such as parts or appendix headers (http://stackoverflow.com/q/40529798/559676).
+- The output format `pdf_document2()` also works with articles now when an R Markdown document contains bookdown-specific headers, such as parts or appendix headers (https://stackoverflow.com/q/40529798/559676).
 
 # CHANGES IN bookdown VERSION 0.1
 

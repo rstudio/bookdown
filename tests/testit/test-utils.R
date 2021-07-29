@@ -52,21 +52,6 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
       '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
 })
 
-assert('correctly clean empty dir if required', {
-  # do nothing is NULL (#857)
-  (clean_empty_dir(NULL) %==% NULL)
-  # remove if empty
-  dir.create(temp_dir <- tempfile())
-  clean_empty_dir(temp_dir)
-  (dir_exists(temp_dir) %==% FALSE)
-  # do not remove if not empty
-  dir.create(temp_dir <- tempfile())
-  writeLines('test', tempfile(tmpdir = temp_dir))
-  (clean_empty_dir(temp_dir) %==% NULL)
-  (dir_exists(temp_dir) %==% TRUE)
-  unlink(temp_dir, recursive = TRUE)
-})
-
 assert('source_files() handles several configurations correcly', {
   get_files = function(files = NULL, dirs = NULL, ...) {
     source_files(config = list(rmd_files = files, rmd_subdir = dirs), ...)
@@ -113,4 +98,94 @@ assert('source_files() handles several configurations correcly', {
   setwd(old); rm(old)
 
   TRUE
+})
+
+assert('lua_filter() works as expected', {
+  (basename(lua_filter("custom-environment.lua")) %==% "custom-environment.lua")
+})
+
+if (pandoc2.0()) assert("bookdown_yml_arg() passes _bookdown.yml to Pandoc as the 'bookdown' field", {
+  p = tempfile(); d = list(book_filename = 'cool'); a = bookdown_yml_arg(d, p)
+  ("--metadata-file" %in% a)
+  (yaml::read_yaml(p) %==% list(bookdown = d))
+  unlink(p)
+})
+
+assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
+  old = c(
+    "```{theorem, label = \"thm\", name = \"My Theorem\"}",
+    "Some text",
+    "```",
+    "",
+    "# A header",
+    "",
+    "```{remark, name = \"My Remark\"}",
+    "Some text",
+    "```",
+    "",
+    "```{lemma, my-lem}",
+    "Some text",
+    "```",
+    "```{proof, label = \"my-proof\", name = \"A proof\" , eval = TRUE}",
+    "Some text",
+    "```",
+    "```{solution my-sol, name = \"My Solution\"}",
+    "Some text",
+    "```")
+  new = c(
+    "::: {.theorem #thm name=\"My Theorem\"}",
+    "Some text",
+    ":::",
+    "",
+    "# A header",
+    "",
+    "::: {.remark name=\"My Remark\"}",
+    "Some text",
+    ":::",
+    "",
+    "::: {.lemma #my-lem}",
+    "Some text",
+    ":::",
+    "::: {.proof #my-proof name=\"A proof\" eval=TRUE}",
+    "Some text",
+    ":::",
+    "::: {.solution #my-sol name=\"My Solution\"}",
+    "Some text",
+    ":::")
+
+  res = fence_theorems(text = old)
+  (unclass(res) %==% new)
+
+  old = "# A header\n\nSome text"
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
+
+  # other chunk are not changed
+  old = c("```{r, lab, echo=FALSE}", "1+1", "```")
+  res = fence_theorems(text = old)
+  (unclass(res) %==% old)
+})
+
+assert("move_dir works", {
+  # work in temp dir
+  dir.create(tmp_dir <- tempfile())
+  owd = setwd(tmp_dir)
+
+  # empty dir is not moved but deleted
+  dir.create("dest")
+  dir.create("empty")
+  move_dir("empty", "dest")
+  (dir.exists("empty") %==% FALSE)
+
+  # files are moved correctly
+  dir.create("filled")
+  dummy_files = c("dummy1", "dummy2")
+  file.create(file.path("filled", dummy_files))
+  move_dir("filled", "dest")
+  (dir.exists("filled") %==% FALSE)
+  (list.files("dest") %==% dummy_files)
+
+  # remove temp dir
+  setwd(owd)
+  unlink(tmp_dir, recursive = TRUE)
 })

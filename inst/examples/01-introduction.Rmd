@@ -34,7 +34,7 @@ The easiest way for beginners to get started with writing a book with R Markdown
     # stable version on CRAN
     install.packages('bookdown')
     # or development version on GitHub
-    # devtools::install_github('rstudio/bookdown')
+    # remotes::install_github('rstudio/bookdown')
     ```
 
 1. Open the `bookdown-demo` repository you downloaded in RStudio by clicking `bookdown-demo.Rproj`.

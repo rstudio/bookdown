@@ -1,6 +1,8 @@
 quiet = "--quiet" %in% commandArgs(FALSE)
 formats = commandArgs(TRUE)
-travis = !is.na(Sys.getenv('CI', NA))
+# travis is still use for github page deployment
+# TODO: Remove github page deployment
+travis = !is.na(Sys.getenv("CI", NA)) && !is.na(Sys.getenv('TRAVIS', NA))
 
 src = (function() {
   attr(body(sys.function()), 'srcfile')
@@ -15,13 +17,14 @@ if (length(formats) == 0) formats = c(
 # render the book to all formats unless they are specified via command-line args
 for (fmt in formats) {
   cmd = sprintf("bookdown::render_book('index.Rmd', '%s', quiet = %s)", fmt, quiet)
-  res = bookdown:::Rscript(c('-e', shQuote(cmd)))
+  res = xfun::Rscript(c('-e', shQuote(cmd)))
   if (res != 0) stop('Failed to compile the book to ', fmt)
   if (!travis && fmt == 'bookdown::epub_book')
     bookdown::calibre('_book/bookdown.epub', 'mobi')
 }
 unlink('bookdown.log')
 
+# tweak the generated html files
 r = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
 for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   x = readLines(f)
@@ -40,6 +43,25 @@ for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   writeLines(x, f)
 }
 
-if (length(formats) > 1) bookdown::publish_book()
+# When several format are rendered, usually when make all is called,
+# then we publish everything to bookdown.org
+if (length(formats) > 1) {
+  if (!is.na(Sys.getenv("CI", NA))) {
+    # On CI connect to server, using API KEY and deploy using appId
+    rsconnect::addConnectServer('https://bookdown.org', 'bookdown.org')
+    rsconnect::connectApiUser(
+      account = 'GHA', server = 'bookdown.org',
+      apiKey = Sys.getenv('CONNECT_API_KEY')
+    )
+    rsconnect::deploySite(
+      appId = Sys.getenv('CONTENT_ID'),
+      server = 'bookdown.org',
+      render = 'none', logLevel = 'verbose',
+      forceUpdate = TRUE)
+  } else {
+    # for local deployment when rsconnect/ is available
+    bookdown::publish_book('bookdown', server = 'bookdown.org', render = 'none')
+  }
+}
 
 setwd(owd)

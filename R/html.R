@@ -7,8 +7,8 @@
 #' @inheritParams pdf_book
 #' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
 #'   \code{rmarkdown::\link{html_document}},
-#'   \code{tufte::\link[tufte]{tufte_html}}, or the documentation of the
-#'   \code{base_format} function.
+#'   \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
+#'   of the \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}. For
 #'   \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
 #'   \code{html_chapters()}.
@@ -97,10 +97,10 @@ tufte_html_book = function(...) {
 #' These are simple wrappers of the output format functions like
 #' \code{rmarkdown::\link{html_document}()}, and they added the capability of
 #' numbering figures/tables/equations/theorems and cross-referencing them. See
-#' References for the syntax. Note you can also cross-reference sections by
-#' their ID's using the same syntax when sections are numbered. In case you want
-#' to enable cross reference in other formats, use \code{markdown_document2} with
-#' \code{base_format} argument.
+#' \sQuote{References} for the syntax. Note you can also cross-reference
+#' sections by their ID's using the same syntax when sections are numbered. In
+#' case you want to enable cross reference in other formats, use
+#' \code{markdown_document2} with \code{base_format} argument.
 #' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
 #'   specific output format function. For a function \code{foo2()}, its
 #'   arguments are passed to \code{foo()}, e.g. \code{...} of
@@ -114,10 +114,11 @@ tufte_html_book = function(...) {
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
-#' @note These function are expected to work with a single R Markdown document
-#'   instead of multiple documents of a book, so they are to be passed to
-#'   \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
-#'   functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
+#' @note These output formats are used to generate single output files, such as
+#'   a single HTML output file (unlike \code{gitbook}, which generates multiple
+#'   HTML output files by default).
+#'
+#'   The functions \samp{tufte_*()} are wrappers of functions in the \pkg{tufte}
 #'   package.
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
@@ -138,7 +139,7 @@ html_document2 = function(
     write_utf8(x, output)
     output
   }
-  config = common_format_config(config, 'html', file_scope = FALSE)
+  config = common_format_config(config, 'html')
   config
 }
 
@@ -347,7 +348,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
   if (split_bib) {
     # parse and remove the references chapter
     res = parse_references(html_body)
-    refs = res$refs; html_body = res$html; ref_title = res$title
+    refs = res$refs; html_body = res$html
+    ref_title = res$title; refs_div = res$div
   }
   # parse and remove footnotes (will reassign them to relevant pages later)
   res = parse_footnotes(html_body)
@@ -414,7 +416,9 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
     if (split_bib) {
-      html = relocate_references(html, refs, ref_title, a_targets)
+      # in order to find references in footnotes, we add footnotes to chapter body
+      a_targets = parse_a_targets(relocate_footnotes(html, fnts, a_targets))
+      html = relocate_references(html, refs, ref_title, a_targets, refs_div)
     }
     html = relocate_footnotes(html, fnts, a_targets)
     html = restore_links(html, html_body, idx, nms)
@@ -427,13 +431,52 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     write_utf8(html, nms[i])
   }
-  nms = move_to_output_dir(nms)
+
+  # add a 404 page
+  r404 = build_404()
+  p404 = r404$path; h404 = r404$html
+  if (!is.null(h404)) {
+    h404 = build(
+      prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL,
+      r404$rmd_cur, p404, html_foot, ...
+    )
+    write_utf8(h404, p404)
+  }
+
+  nms = move_to_output_dir(c(nms, p404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+build_404 = function() {
+  p404 = '404.html'
+  # if a 404 page already exist, we do nothing specific and assume
+  # user has already a workflow in place
+  if (file.exists(p404)) return()
+  # We create 404 page if it does not exist
+  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
+    xfun::Rscript_call(rmarkdown::render, list(
+      rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+      output_file = p404, quiet = TRUE
+    ))
+    h404 = xfun::read_utf8(p404)
+  } else {
+    rmd_cur = NULL
+    # default content for 404 page
+    h404 = c(
+      '<div id="page-not-found" class="section level1">',
+      '<h1>Page not found</h1>',
+      '<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>',
+      '<p>You may want to try searching to find the page\'s new location, or use',
+      'the table of contents to find the page you are looking for.</p>',
+      '</div>'
+    )
+  }
+  list(path = p404, html = h404, rmd_cur = rmd_cur)
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
@@ -447,6 +490,12 @@ clean_meta_tags = function(x) {
   x3 = sub(r, '\\3', x[i])
   x2 = gsub('<[^>]+>', '', x2)
   x[i] = paste0(x1, x2, x3)
+  # then fix URLs in meta: https://github.com/rstudio/bookdown/pull/969#issuecomment-885252698
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content=")[^"]*?/(https?://[^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
+  # remove the unnecessary extra slash introduced in #969
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content="https?://[^"]+?/)/([^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
   x
 }
 
@@ -523,7 +572,13 @@ source_link_setting = function(config, type) {
 #' @export
 #' @keywords internal
 #' @examples library(bookdown)
-#' resolve_refs_html(c('<caption>(#tab:foo) A nice table.</caption>', '<p>See Table @ref(tab:foo).</p>'), TRUE)
+#' resolve_refs_html(
+#'   c(
+#'     '<caption>(#tab:foo) A nice table.</caption>',
+#'     '<p>See Table @ref(tab:foo).</p>'
+#'   ),
+#'   global = TRUE
+#' )
 resolve_refs_html = function(content, global = FALSE) {
   content = resolve_ref_links_html(content)
 
@@ -560,7 +615,7 @@ ref_to_number = function(ref, ref_table, backslash) {
       warning('The label(s) ', paste(lab[i], collapse = ', '), ' not found', call. = FALSE)
     num[i] = '<strong>??</strong>'
   }
-  # equation references should include paratheses
+  # equation references should include parentheses
   i = grepl('^eq:', ref)
   num[i] = paste0('(', num[i], ')')
   res = sprintf('<a href="#%s">%s</a>', ref, num)
@@ -583,11 +638,12 @@ label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # prefixes for theorem environments
 theorem_abbr = c(
   theorem = 'thm', lemma = 'lem', corollary = 'cor', proposition = 'prp', conjecture = 'cnj',
-  definition = 'def', example = 'exm', exercise = 'exr'
+  definition = 'def', example = 'exm', exercise = 'exr', hypothesis = 'hyp'
 )
 # numbered math environments
 label_names_math = setNames(list(
-  'Theorem ', 'Lemma ', 'Corollary ', 'Proposition ', 'Conjecture ', 'Definition ', 'Example ', 'Exercise '
+  'Theorem ', 'Lemma ', 'Corollary ', 'Proposition ', 'Conjecture ', 'Definition ', 'Example ', 'Exercise ',
+  'Hypothesis '
 ), theorem_abbr)
 # unnumbered math environments
 label_names_math2 = list(proof = 'Proof. ', remark = 'Remark. ', solution = 'Solution. ')
@@ -652,13 +708,13 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = paste0(label_prefix(type), num, ': ')
+      labs[[i]] = label_prefix(type, sep = ': ')(num)
       k = max(figs[figs <= i])
-      content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
+      content[k] = paste(c(content[k], sprintf('<span style="display:block;" id="%s"></span>', lab)), collapse = '')
     }, tab = {
-      if (length(grep('^<caption', content[i - 0:1])) == 0) next
+      if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf(
-        '<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': ')
+        '<span id="%s">%s</span>', lab, label_prefix(type, sep = ': ')(num)
       )
     }, eq = {
       labs[[i]] = sprintf('\\tag{%s}', num)
@@ -667,12 +723,13 @@ parse_fig_labels = function(content, global = FALSE) {
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
     }, {
-      labs[[i]] = paste0(label_prefix(type), num, ' ')
+      labs[[i]] = label_prefix(type, sep = ' ')(num)
     })
   }
 
   regmatches(content, m) = labs
 
+  write_ref_keys(names(arry))
   # remove labels in figure alt text (it will contain \ like (\#fig:label))
   content = gsub('"\\(\\\\#(fig:[-/[:alnum:]]+)\\)', '"', content)
 
@@ -681,7 +738,19 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type, dict = label_names) i18n('label', type, dict)
+label_prefix = function(type, dict = label_names, sep = '') {
+  label = i18n('label', type, dict)
+  supported_type = c('fig', 'tab', 'eq')
+  if (is.function(label)) {
+    if (type %in% supported_type) return(label)
+    msg = knitr::combine_words(supported_type, before = "'")
+    stop("Using a label function is only supported for elements of types ", msg)
+  }
+  function(num = NULL) {
+    if (is.null(num)) return(label)
+    paste0(label, num, sep)
+  }
+}
 
 ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
@@ -705,6 +774,7 @@ parse_section_labels = function(content) {
       sub(sec_ids, '\\1', content[i - 1])
     ))
   }
+  write_ref_keys(names(arry))
   arry
 }
 
@@ -818,7 +888,7 @@ add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
     x1 = gsub(r_chap, '\\1', h)
     x2 = gsub(r_chap, '\\2', h)
     x3 = gsub(r_chap, '\\3', h)
-    content[i] = paste0(x1, chapter_fun(as.integer(x2)), x3)
+    content[i] = paste0(x1, chapter_fun(x2), x3)
   }
   content
 }
@@ -896,15 +966,15 @@ restore_appendix_html = function(x, remove = TRUE) {
 
 # parse reference items so we can move them back to the chapter where they were used
 parse_references = function(x) {
-  i = grep('^<div id="refs" class="references[^"]*">$', x)
+  i = grep('^<div id="refs" class="references[^"]*"[^>]*>$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
-  r = '^<div id="(ref-[^"]+)">$'
+  r = '^(<div) id="(ref-[^"]+)"([^>]*>)$'
   k = grep(r, x)
   k = k[k > i]
   n = length(k)
   if (n == 0) return(list(refs = character(), html = x))
 
-  ids = gsub(r, '\\1', x[k])
+  ids = gsub(r, '\\2', x[k])
   ref = x[k + 1]
   # replace 3 em-dashes with author names
   dashes = paste0('^<p>', intToUtf8(rep(8212, 3)), '[.]')
@@ -914,18 +984,19 @@ parse_references = function(x) {
   ref = paste(x[k], ref, x[k + 2], sep = '\n')  # add <div id=ref-...></div>
   title = if (grepl('^<h1[^>]*>', x[i - 2]) && grepl('^<div ', x[i - 3]))
     gsub('<span class="header-section-number">[.0-9]+</span>', '', x[i - 2])
-  x[k] = '<div>'  # remove the div id's
+  x[k] = gsub(r, "\\1\\3", x[k])  # remove the div id's
 
-  list(refs = setNames(ref, ids), html = x, title = title)
+  list(refs = setNames(ref, ids), html = x, title = title, div = x[i])
 }
 
 # move references back to the relevant chapter
-relocate_references = function(x, refs, title, ids) {
+relocate_references = function(x, refs, title, ids, div) {
   if (length(refs) == 0) return(x)
   ids = intersect(names(refs), ids)
   if (length(ids) == 0) return(x)
   title = if (is.null(title)) '<h3>References</h3>' else gsub('h1>', 'h3>', title)
-  c(x, title, '<div id="refs" class="references">', refs[ids], '</div>')
+  if (is.null(div)) div = '<div id="refs" class="references">'
+  c(x, title, div , refs[ids], '</div>')
 }
 
 # extract relative links from text
@@ -934,7 +1005,7 @@ parse_a_targets = function(x) {
   unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
     if (length(target) == 0) return()
     gsub(r, '\\1', target)
-  }))
+  }), use.names = FALSE)
 }
 
 # parse footnotes in the div of class "footnotes"; each footnote is one <li>
@@ -1011,7 +1082,7 @@ move_files_html = function(output, lib_dir) {
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
     d = dirname(z)
     z = read_utf8(z)
-    r = 'url\\("?([^")]+)"?\\)'
+    r = 'url\\((?:"|\')?([^")\']+)(?:"|\')?\\)'
     lapply(regmatches(z, gregexpr(r, z)), function(s) {
       s = local_resources(gsub(r, '\\1', s))
       file.path(d, s)
@@ -1021,7 +1092,7 @@ move_files_html = function(output, lib_dir) {
   f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
   f = gsub('^[.]/', '', f)  # strip the initial ./, e.g. ./foo.png -> foo.png
   f = f[f != '']
-  f = f[!knitr:::is_abs_path(f)]
+  f = f[xfun::is_rel_path(f)]
   if (getOption('bookdown.js.debug', FALSE)) f = c(f, js_min_sources(f))
   # add leaflet images if any used
   f = c(f, grep('png$', list.files(

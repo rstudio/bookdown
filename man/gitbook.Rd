@@ -8,6 +8,7 @@ gitbook(
   fig_caption = TRUE,
   number_sections = TRUE,
   self_contained = FALSE,
+  anchor_sections = TRUE,
   lib_dir = "libs",
   pandoc_args = NULL,
   ...,
@@ -19,7 +20,7 @@ gitbook(
 )
 }
 \arguments{
-\item{fig_caption, number_sections, self_contained, lib_dir, pandoc_args}{...
+\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
 
@@ -54,7 +55,7 @@ the citations are actually used.}
 the font/theme settings.}
 
 \item{table_css}{\code{TRUE} to load gitbook's default CSS for tables. Choose
-\code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+\code{FALSE} to unload and use customized CSS (for example, bootstrap) via
 the \code{css} option. Default is \code{TRUE}.}
 }
 \description{
