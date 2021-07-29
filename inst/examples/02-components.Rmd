@@ -853,7 +853,7 @@ Shiny apps may take even longer to load than usual URLs. You may want to use a c
 
 ## HTML 404 pages {#html-404}
 
-If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each browser has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it. 
+If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each web server has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it. 
 
 For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).  
 
