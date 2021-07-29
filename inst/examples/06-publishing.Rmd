@@ -19,41 +19,102 @@ bookdown::publish_book(render = 'local')
 
 If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
 
-## GitHub
+## GitHub Pages {#github}
 
-You can host your book on GitHub\index{GitHub} for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. The key is to create a hidden file `.nojekyll` that tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. 
+You can host your book on GitHub\index{GitHub} for free via GitHub Pages (<https://pages.github.com>).^[See the [GitHub Pages Help documents](http://bit.ly/2cvloKV) for more information.] The simplest approach is to publish your book as a [GitHub Project Page](https://help.github.com/en/articles/user-organization-and-project-pages#project-pages-sites) from a `/docs` folder on your `main` branch, which will then be available at `https://<USER>.github.io/<REPO>` (unless you provide a custom domain name). The main benefit to this approach is its simplicity, and the fact that you can track the source files for your book and the published HTML files in the same branch.
 
-```bash
-# assume you have initialized the git repository,
-# and are under the directory of the book repository now
+### The build-and-deploy pipeline sequence
 
-# create a hidden file .nojekyll
-touch .nojekyll
-# add to git here because will not show up in RStudio
-git add .nojekyll
+This publishing approach sets up the following flow of events:
+
+1. You create a local **bookdown** project in a GIT repository that is connected to a GitHub repository. The below steps assume you are on your `main` branch.
+1. You change the output directory of your rendered book to a folder named `"docs"`.
+1. You tell GitHub Pages to bypass using Jekyll to build your site.
+1. You build your book locally, then push to send your local changes online to GitHub.
+1. The push to the `main` branch triggers GitHub Pages to publish your book at: `https://<USER>.github.io/<REPO>`.
+1. Rinse and repeat! Every push to `main` triggers the online version of your book to update.
+
+The above is an overview- read on for step-by-step instructions.
+
+### Before you begin
+
+1. You need a GitHub (<https://github.com/>) account.^[If you are not familiar with GitHub, we suggest you read through the free online book "Happy Git with R" (<https://happygitwithr.com/>) first before working through these instructions.]
+
+1. Start with a **bookdown** project linked to a remote GitHub repository that you can push/pull to from your local copy. 
+    
+:::{.rmdimportant latex=true}
+
+If you don't have an existing book, you can create a simple **bookdown** HTML book to practice with instead:
+
++ Make a new repository on GitHub (<https://happygitwithr.com/new-github-first.html#make-a-repo-on-github-2>),
++ Make a new RStudio Project via git clone: (<https://happygitwithr.com/new-github-first.html#new-rstudio-project-via-git-clone>),
++ From your RStudio Project, run this command in your R console: `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` (depending on the HTML output format you want),
++ Change anything you want (or change nothing) and commit (<https://happygitwithr.com/new-github-first.html#make-local-changes-save-commit-1>),
++ Push your local changes to GitHub (<https://happygitwithr.com/new-github-first.html#push-your-local-changes-to-github>).
+
+:::
+
+
+### Change the output directory of your book
+
+In your local **bookdown** project, open the `_bookdown.yml` file and change the output directory of your book to be `/docs` by adding this line:
+
+```yaml
+output_dir: "docs"
 ```
 
-If you are on Windows, you may not have the `touch` command, and you can create the file in R using `file.create('.nojekyll')`.
+Save this file and close it.
 
-One approach is to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help.](http://bit.ly/2cvloKV) First, set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder". In this case, the `.nojekyll` file has to be in the `/docs` folder. 
+### Tell GitHub Pages to bypass Jekyll
 
-An alternative approach is to create a `gh-pages` branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository. If your book repository does not have the `gh-pages` branch, you may use the following commands to create one:
+Create a hidden, empty file named `.nojekyll` from within R in your **bookdown** project root directory:
 
-```bash
-# assume you have initialized the git repository,
-# and are under the directory of the book repository now
-
-# create a branch named gh-pages and clean up everything
-git checkout --orphan gh-pages
-git rm -rf .
-
-# create a hidden file .nojekyll
-touch .nojekyll
-git add .nojekyll
-
-git commit -m"Initial commit"
-git push origin gh-pages
 ```
+file.create(".nojekyll")
+```
+
+If you are using RStudio, you may need to refresh the viewer pane to see this new file. You can also use the terminal to create this file with the command `touch .nojekyll`.
+
+This file is [necessary](https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/) because GitHub Pages supports Jekyll ([jekyllrb.com](http://jekyllrb.com)), a static website builder, by default. You need the `.nojekyll` file because bookdown sites uses files or directories that start with underscores, and these files have a special status within the Jekyll framework. Because the **bookdown** HTML output is a static, standalone website, you need to tell GitHub that your website should *not* be built via Jekyll. 
+
+### Build your book, push to GitHub
+
+Use whichever method from Chapter \@ref(build-the-book) you prefer, then push to send your local changes online to GitHub.
+
+:::{.rmdwarning latex=true}
+
+If you have previously added directories like `_book` and `_bookdown_files` to your remote GitHub repository, you'll want to take a few more steps to remove them:
+
+* Delete the folders locally
+
+* From the terminal: 
+  * `git rm -r --cache _book/`
+  * `git rm -r --cache _bookdown_files/`
+  * `git commit -m 'Remove the rendered book files'`
+  * `git push origin main`
+
+:::
+
+
+### GitHub Pages Setup
+
+In a browser, navigate to your repository on GitHub at `https://github.com/<USER>/<REPO>`. Then:
+
+1. Confirm that you see a `/docs` folder and a `.nojekyll` file. 
+
+1. Navigate to the repository's settings at `https://github.com/<USER>/<REPO>/settings/pages` and under *Pages* and change the *Source* to be the `main` branch and the `/docs` folder (check the box to enforce HTTPS): 
+
+    ```{r github-pages, echo=FALSE, fig.align='center', fig.alt="Screenshot of selecting main branch `/docs` folder for GitHub Pages"}
+    knitr::include_graphics("images/ghpages.png")
+    ```
+  
+1. Save, and then wait. It can sometimes take quite awhile (even up to 20 minutes) for your site link to work. Be patient!
+
+### Drawbacks and alternatives
+
+The main drawback to this approach is that you store the rendered book (i.e., the `/docs` folder) on GitHub in your `main` branch. Although it is relatively straight-forward approach to publish your book from a folder on your `main` branch, it means that you always need to build the book locally first, then push to send the built book online to GitHub. It can be very handy to instead automate the publishing process even more by building the book using a cloud service. Once set up, all you have to do is edit the `.Rmd` source files and push them to GitHub, and your book will be automatically built and published from the server side. 
+
+## Using Travis
 
 After you have set up GIT, the rest of work can be automated via a script (Shell, R, or Makefile, depending on your preference). Basically, you compile the book to HTML, then run git commands to push the files to GitHub, but you probably do not want to do this over and over again manually and locally. It can be very handy to automate the publishing process completely on the cloud, so once it is set up correctly, all you have to do next is write the book and push the Rmd source files to GitHub, and your book will always be automatically built and published from the server side.
 
@@ -66,7 +127,7 @@ The next question is, how to publish the book built on Travis to GitHub? Basical
 e.g `travis encrypt GITHUB_PAT=TOKEN`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via https://travis-ci.com/user/repo/settings where `user` is your GitHub ID, and `repo` is the name of the repository.
 1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
 
-Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
+Assume you are in the `main` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
 
 ```bash
 # configure your name and email if you have not done so
@@ -85,7 +146,7 @@ git commit -m"Update the book"
 git push -q origin gh-pages
 ```
 
-The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
+The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `main` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
 
 ```yaml
 language: r
@@ -231,4 +292,4 @@ The book was compiled to PDF through `xelatex` to make it easier for us to use c
 
 All above settings except the `VF` environment and the `\VA{}` command can be applied to any other LaTeX document classes.
 
-In case you want to work with Chapman & Hall as well, you may start with the copy of `krantz.cls` in our repository (https://github.com/rstudio/bookdown/tree/master/inst/examples) instead of the copy you get from your editor. We have worked with the LaTeX help desk to fix quite a few issues with this LaTeX class, so hopefully it will work well for your book if you use **bookdown**.
+In case you want to work with Chapman & Hall as well, you may start with the copy of `krantz.cls` in our repository (https://github.com/rstudio/bookdown/tree/main/inst/examples) instead of the copy you get from your editor. We have worked with the LaTeX help desk to fix quite a few issues with this LaTeX class, so hopefully it will work well for your book if you use **bookdown**.
