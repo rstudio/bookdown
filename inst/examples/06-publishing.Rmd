@@ -2,38 +2,6 @@
 
 As you develop the book, you make the draft book available to the public to get early feedback from readers, e.g., publish it to a website. After you finish writing the book, you need to think about options to formally publish it as either printed copies or e-books.
 
-## Features for HTML publishing
-
-### HTML 404 pages {#html-404}
-
-If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each web server has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it. 
-
-For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).  
-
-```{r 404-page, fig.alt="Screenshot showing an online bs4_book with the sidebar, footer, and CSS styling in place. The text reads: Page not found. The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.", fig.align='center', echo=FALSE, fig.cap= "Screenshot of an example 404 page for an HTML book built with bs4_book."}
-knitr::include_graphics('images/404.png')
-```
-
-As you can see, this 404 page is embedded within the book so that readers can quickly find their way back to the book's content. The overall structure of the book's website (including navbar, footer, sidebars, etc.) and the CSS styling are preserved on the 404 page.
-
-To customize the 404 page instead of using the one **bookdown** provides, you may add either a `_404.Rmd` or a `_404.md` file to your project root. If either file is found when you render the book, the content will be rendered and included as the body of the 404 page embedded within the book structure.
-
-If a 404.html file already exists in the main repo at the root level (alongside the book's `.Rmd` files), then **bookdown** will leave that file as is and will not overwrite it. This is because we assume you already have a mechanism in place in your publishing workflow to use this custom `404.html`.
-
-### Metadata for sharing
-
-Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To setup, set the `url` for your book and the path to your `cover-image` file. The path may be either to an absolute URL, or to a relative image file located in your project. Your book's `title` and `description` are also used. A nice effect of setting these options is that when readers share the link of your book on social network websites, the link will be automatically expanded to a card with the cover image and description of the book.
-
-```{r social, out.width='49%', fig.alt="When a link is shared on social media, the auto-preview shows the cover-image, title, and description in a summary card layout.", fig.show='hold', echo=FALSE, fig.cap= "Screenshots showing cover-image, title, and description of an HTML book when the link is shared on Facebook and LinkedIn (left), and on Twitter (right)."}
-knitr::include_graphics(c('images/social-og.png', 'images/social-twitter.png'))
-```
-
-Whichever method you use to publish your HTML book, you may check your metadata using <https://www.opengraph.xyz/>, which shows you previews of how your link will look when shared across platforms. You may also use a platform-specific developer tool:
-
-* Facebook: <https://developers.facebook.com/tools/debug/>
-* LinkedIn: <https://www.linkedin.com/post-inspector/>
-* Twitter: <https://cards-dev.twitter.com/validator>
-
 ## RStudio Connect
 
 In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free.\index{bookdown.org} This website is built on top of ["RStudio Connect",](https://www.rstudio.com/products/connect/)\index{RStudio Connect} an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
@@ -165,6 +133,38 @@ If your book is very time-consuming to build, you may use the above configuratio
 All above scripts and configurations can be found in the `bookdown-demo` repository: https://github.com/rstudio/bookdown-demo/. If you copy them to your own repository, please remember to change the `secure` key in `.travis.yml` using your own encrypted variable `GITHUB_PAT`.
 
 GitHub and Travis CI are certainly not the only choices to build and publish your book. You are free to store and publish the book on your own server.
+
+## Features for HTML publishing
+
+### HTML 404 pages {#html-404}
+
+If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each web server has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it. 
+
+For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).  
+
+```{r 404-page, fig.alt="Screenshot showing an online bs4_book with the sidebar, footer, and CSS styling in place. The text reads: Page not found. The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.", fig.align='center', echo=FALSE, fig.cap= "Screenshot of an example 404 page for an HTML book built with bs4_book."}
+knitr::include_graphics('images/404.png')
+```
+
+As you can see, this 404 page is embedded within the book so that readers can quickly find their way back to the book's content. The overall structure of the book's website (including navbar, footer, sidebars, etc.) and the CSS styling are preserved on the 404 page.
+
+To customize the 404 page instead of using the one **bookdown** provides, you may add either a `_404.Rmd` or a `_404.md` file to your project root. If either file is found when you render the book, the content will be rendered and included as the body of the 404 page embedded within the book structure.
+
+If a 404.html file already exists in the main repo at the root level (alongside the book's `.Rmd` files), then **bookdown** will leave that file as is and will not overwrite it. This is because we assume you already have a mechanism in place in your publishing workflow to use this custom `404.html`.
+
+### Metadata for sharing
+
+Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To setup, set the `url` for your book and the path to your `cover-image` file. The path may be either to an absolute URL, or to a relative image file located in your project. Your book's `title` and `description` are also used. A nice effect of setting these options is that when readers share the link of your book on social network websites, the link will be automatically expanded to a card with the cover image and description of the book.
+
+```{r social, out.width='49%', fig.alt="When a link is shared on social media, the auto-preview shows the cover-image, title, and description in a summary card layout.", fig.show='hold', echo=FALSE, fig.cap= "Screenshots showing cover-image, title, and description of an HTML book when the link is shared on Facebook and LinkedIn (left), and on Twitter (right)."}
+knitr::include_graphics(c('images/social-og.png', 'images/social-twitter.png'))
+```
+
+Whichever method you use to publish your HTML book, you may check your metadata using <https://www.opengraph.xyz/>, which shows you previews of how your link will look when shared across platforms. You may also use a platform-specific developer tool:
+
+* Facebook: <https://developers.facebook.com/tools/debug/>
+* LinkedIn: <https://www.linkedin.com/post-inspector/>
+* Twitter: <https://cards-dev.twitter.com/validator>
 
 ## Publishers
 
