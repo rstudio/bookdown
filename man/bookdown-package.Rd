@@ -71,8 +71,6 @@ Other contributors:
   \item  RStudio, PBC [copyright holder]
   \item Bartek Szopka (The jQuery Highlight plugin) [contributor]
   \item Zeno Rocha (clipboard.js library) [copyright holder]
-  \item  jQuery Foundation (jQuery library) [copyright holder]
-  \item  jQuery contributors (jQuery library; authors listed in inst/resources/AUTHORS) [contributor, copyright holder]
   \item  MathQuill contributors (The MathQuill library; authors listed in inst/resources/AUTHORS) [contributor]
   \item  FriendCode Inc (The gitbook style, with modifications) [copyright holder, contributor]
 }

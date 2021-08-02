@@ -51,6 +51,8 @@
 
   This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
 
+- Updated the jQuery library to v3.x, which was imported from the R package **jquerylib** (thanks, @mterente #693, @cooknl #882).
+
 - When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
 
 # CHANGES IN bookdown VERSION 0.22
