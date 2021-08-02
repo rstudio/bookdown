@@ -619,7 +619,7 @@ Cross-references still work even when we refer to an item that is not on the cur
 
 Custom blocks are often used in technical books to create salient boxes of code and/or narrative that call the reader's attention. For example, custom blocks may be used to highlight a note or a warning. These can be included in multiple **bookdown** output formats using Pandoc's syntax for fenced `Div` blocks (https://pandoc.org/MANUAL.html#divs-and-spans). Section 9.6 in the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) [@rmarkdown2020] for instructions.
 
-The `bs4_book()` HTML output format includes styling for select custom blocks; see Section \@ref(bs4-book).
+The `bs4_book()` HTML output format includes styling for selected custom blocks; see Section \@ref(bs4-book).
 
 ## Citations {#citations}
 
