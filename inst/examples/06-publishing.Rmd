@@ -142,8 +142,8 @@ If a reader tries to access a page in your book that cannot be found, a browser 
 
 For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).  
 
-```{r 404-page, fig.alt="Screenshot showing an online bs4_book with the sidebar, footer, and CSS styling in place. The text reads: Page not found. The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.", fig.align='center', echo=FALSE, fig.cap= "Screenshot of an example 404 page for an HTML book built with bs4_book."}
-knitr::include_graphics('images/404.png')
+```{r 404-page, fig.alt="Screenshot showing an online bs4_book with the sidebar, footer, and CSS styling in place. The text reads: Page not found. The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.", fig.align='center', echo=FALSE, fig.cap= "Screenshot of an example 404 page."}
+knitr::include_graphics('images/404.png', dpi = NA)
 ```
 
 As you can see, this 404 page is embedded within the book so that readers can quickly find their way back to the book's content. The overall structure of the book's website (including navbar, footer, sidebars, etc.) and the CSS styling are preserved on the 404 page.
@@ -154,17 +154,17 @@ If a 404.html file already exists in the main repo at the root level (alongside 
 
 ### Metadata for sharing
 
-Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To setup, set the `url` for your book and the path to your `cover-image` file. The path may be either to an absolute URL, or to a relative image file located in your project. Your book's `title` and `description` are also used. A nice effect of setting these options is that when readers share the link of your book on social network websites, the link will be automatically expanded to a card with the cover image and description of the book.
+Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To set up, set the `url` for your book and the path to your `cover-image` file. The path may be either to an absolute URL, or to a relative image file located in your project. Your book's `title` and `description` are also used. A nice effect of setting these options is that when readers share the link of your book on social network websites, the link will be automatically expanded to a card with the cover image and description of the book.
 
-```{r social, out.width='49%', fig.alt="When a link is shared on social media, the auto-preview shows the cover-image, title, and description in a summary card layout.", fig.show='hold', echo=FALSE, fig.cap= "Screenshots showing cover-image, title, and description of an HTML book when the link is shared on Facebook and LinkedIn (left), and on Twitter (right)."}
-knitr::include_graphics(c('images/social-og.png', 'images/social-twitter.png'))
+```{r social, out.width=c('47.55%','51.45%'), fig.alt="When a link is shared on social media, the auto-preview shows the cover-image, title, and description in a summary card layout.", fig.show='hold', echo=FALSE, fig.cap= "Screenshots showing cover-image, title, and description of an HTML book when the link is shared on Facebook and LinkedIn (left), and on Twitter (right)."}
+knitr::include_graphics(c('images/social-og.png', 'images/social-twitter.png'), dpi = NA)
 ```
 
-Whichever method you use to publish your HTML book, you may check your metadata using <https://www.opengraph.xyz/>, which shows you previews of how your link will look when shared across platforms. You may also use a platform-specific developer tool:
+Whichever method you use to publish your HTML book, you may check your metadata using <https://www.opengraph.xyz>, which shows you previews of how your link will look when shared across platforms. You may also use a platform-specific developer tool:
 
-* Facebook: <https://developers.facebook.com/tools/debug/>
-* LinkedIn: <https://www.linkedin.com/post-inspector/>
-* Twitter: <https://cards-dev.twitter.com/validator>
+- Facebook: <https://developers.facebook.com/tools/debug/>
+- LinkedIn: <https://www.linkedin.com/post-inspector/>
+- Twitter: <https://cards-dev.twitter.com/validator>
 
 ## Publishers
 
