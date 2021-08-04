@@ -53,9 +53,9 @@ From your **bookdown** project, build your book locally using whichever method f
 
 ### Deploy your site
 
-Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you should see a box like this:
+Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you should see a box like this, as shown in Figure \@ref(fig:netlify-drop).
 
-```{r echo=FALSE, fig.align='center', fig.alt="Screenshot of drag & drop deploy box on Netlify"}
+```{r netlify-drop, echo=FALSE, fig.align='center', fig.alt="Screenshot of drag & drop deploy box on Netlify"}
 knitr::include_graphics("images/netlify-drop.png")
 ```
 
@@ -66,10 +66,6 @@ You'll also see a notice that unclaimed sites are deleted after 24 hours. You ca
 ### *Optional: Sign up for Netlify*
 
 Click on the *Sign Up for Netlify* link. Sign up with *GitHub* to connect your GitHub and Netlify accounts (as shown below). If you use a different version control service, select GitLab or BitBucket instead.
-
-```{r echo=FALSE, fig.align='center', fig.alt="Screenshot for signing up for Netlify through GitHub"}
-knitr::include_graphics("images/netlify-sign-up.png")
-```
 
 ### *Optional: Update your site*
 
@@ -151,7 +147,7 @@ cd book-output
 git rm -rf *
 cp -r ../_book/* ./
 git add --all *
-git commit -m"Update the book"
+git commit -m "Update the book"
 git push -q origin gh-pages
 ```
 
