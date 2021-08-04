@@ -53,7 +53,7 @@ The GitBook style was borrowed from GitBook\index{GitBook}, a project launched b
 
 The easiest way to get started writing a new `gitbook` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `gitbook` from the dropdown menu: 
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.alt="Screenshot of the RStudio Project Wizard for creating a new gitbook project."}
+```{r fig.align='center', echo=FALSE, fig.alt="Screenshot of the RStudio Project Wizard for creating a new gitbook project."}
 knitr::include_graphics('images/gitbook.png', dpi = NA)
 ```
 
