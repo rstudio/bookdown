@@ -300,7 +300,7 @@ Use second-level and lower-level headings within chapters like:
 ### A subsection
 ```
 
-The first- and second-level headings will appear in that chapter's sidebar on the upper right as a "sticky" within-chapter table of contents that stays in place as you scroll down. In the sidebar, when a section is navigated to, subheadings will auto-expand such that third-level headings like "An even shorter section" are visible.
+The first- and second-level headings will appear in that chapter's sidebar on the upper right as a "sticky" within-chapter table of contents that stays in place as you scroll down. In the sidebar, when a section is navigated to, subheadings will auto-expand such that third-level headings like "A subsection" are visible.
 
 The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
 
@@ -309,11 +309,11 @@ A YAML header in `index.Rmd` for a `bs4_book` would look like this:
 ```yaml
 ---
 title: "A Minimal Book Example"
-author: "John Doe"
+author: "Jane Doe"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
-url: https://bookdown.org/johndoe/bookdown-demo
+url: https://bookdown.org/janedoe/bookdown-demo
 cover-image: cover.png
 description: |
   This is a minimal example of using the bookdown package to write a book.
@@ -342,7 +342,9 @@ bookdown::bs4_book:
     base_font: 
       google: Sen
     heading_font:
-      google: Bitter
+      google:
+        family: Bitter
+        wght: 200
     code_font:
       google: 
         # arguments to sass::font_google() 
@@ -394,15 +396,15 @@ The `bs4_book` format makes footnotes appear inline when you click on them.
 Making your citations _footnotes_
 allows readers to read them near the text they are referred in.
 To do that, download a footnote style CSL file
-(e.g. chicago-fullnote-bibliography.csl; we recommend: https://www.zotero.org/styles/), then
-put this in your `index.Rmd`:
+like `chicago-fullnote-bibliography.csl` (we recommend: <https://www.zotero.org/styles/>), then
+add this to your `index.Rmd`:
 
 ```yaml
 bibliography: refs.bib
 csl: chicago-fullnote-bibliography.csl
 ```
 
-And then optionally, if you no longer want a reference section
+Optionally, if you no longer want a reference section
 at the back of the book, add this line to your `index.Rmd`:
 
 ```yaml
@@ -419,6 +421,8 @@ bookdown::bs4_book:
 The result will be that your bibliography will be split and relevant citation items put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.
 
 #### Specifying the repository
+
+Specify a source repository for your book to give your readers the option to easily view each chapter's source file or suggest an edit.
 
 If your book has a default branch called "main," you can use:
 
