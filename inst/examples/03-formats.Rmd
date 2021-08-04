@@ -398,7 +398,7 @@ suppress-bibliography: true
 
 #### Specifying the repository
 
-If your book has a default branch called main you can use:
+If your book has a default branch called "main," you can use:
 
 ```yaml
 bookdown::bs4_book:
