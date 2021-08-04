@@ -57,7 +57,7 @@ The easiest way to get started writing a new `gitbook` is to use the RStudio Pro
 knitr::include_graphics('images/gitbook.png', dpi = NA)
 ```
 
-If you don't use RStudio or prefer a function, you can create the same project template with `bookdown::create_gitbook()` from your R console. See `?create_gitbook` for help.
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_gitbook()` from your R console. See `?create_gitbook` for help.
 
 We have made several improvements over the original GitBook project. The most significant one is that we replaced the Markdown engine with R Markdown v2 based on Pandoc, so that there are a lot more features for you to use when writing a book:
 
@@ -235,15 +235,15 @@ A nice effect of setting `description` and `cover-image` is that when you share 
 
 The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. The layout includes three columns of content so readers can quickly see the book chapters as links on the left-hand side, and within-chapter content links in the right-hand sidebar. You can read an example book here: <https://mastering-shiny.org/>
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://mastering-shiny.org/', fig.alt="Screenshot of a bs4_book landing page to show the basic site layout"}
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://mastering-shiny.org/', fig.alt="Home page for a bs4_book showing the layout with a table of contents on the left, main chapter content in the center, and an 'on this page' sidebar on the right."}
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
 ```
 
-This output format builds upon the Bootstrap CSS framework, an open source library of reusable chunks of HTML, CSS, and JavaScript code. This format uses version 4 of Bootstrap (<https://getbootstrap.com/docs/4.0/>).
+This output format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code.
 
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
-- Easy customisation of colours and fonts with
+- Easy customization of colors and fonts with
   the **bslib** package (<https://pkgs.rstudio.com/bslib/>).
 
 - Built-in search (broken down by section) that helps readers quickly find what
@@ -284,16 +284,16 @@ The easiest way to get started writing a new `bs4_book` is to use the RStudio Pr
 knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 ```
 
-If you don't use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
 
 This theme is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one (and only one) chapter. 
-A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading. 
+A chapter *must* start with a first-level heading: `# A chapter`, and can contain one (and only one) first-level heading. 
 
 Use second-level and lower-level headings within chapters like: 
 
 ```md
-#   A good chapter
+#   A chapter
 
 ##  A section
 
@@ -321,11 +321,38 @@ description: |
 ---
 ```
 
+#### Styling & customization
+
+This output format allows for easy customization of colors and fonts with the **bslib** package (<https://pkgs.rstudio.com/bslib/>).
+
+You can use the `theme` option to add a `primary` color in hexidecimal format (<https://en.wikipedia.org/wiki/Web_colors>), which will change the color of all links in your book and the background color of the footer.
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   
+```
+
+For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import Google Font files (<https://fonts.google.com/>). By default, `google:` will bundle font files with your book, so that when you share it with someone else, the fonts are guaranteed to render, even without an internet connection (`local: false` imports files via URL instead of serving them locally). Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   
+    base_font: 
+      google: Sen
+    heading_font:
+      google: Bitter
+    code_font:
+      google: 
+        # arguments to sass::font_google() 
+        family: DM Mono
+        local: false
+```
+
 #### Callout blocks
 
-The `bs4_book` theme also includes special callout blocks with predefined styles. Available blocks are: `.rmdnote`, `.rmdcaution`, `.rmdimportant`, `.rmdtip`, and `.rmdwarning`. 
-
-You need to use the following syntax to create them: 
+The `bs4_book` theme also includes special callout blocks with predefined styles, which will include a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block: 
 
 ````markdown
 ::: {.rmdnote}
@@ -342,7 +369,19 @@ You may use Markdown syntax and inline code inside a block. When knitted, this w
 knitr::include_graphics('images/rmd-note.png', dpi = NA)
 ```
 
-For LaTeX output, only the content of these blocks will be shown with no special styling as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
+Available blocks are: `.rmdnote`, `.rmdcaution`, `.rmdimportant`, `.rmdtip`, and `.rmdwarning`. The colors used will be based on the default colors provided by Bootstrap, but can be also be customized in your `_output.yml` file:
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   # default .rmdnote = blue
+    danger:  "#dc3545"   # default .rmdcaution = red
+    success: "#198754"   # default .rmdimportant = green
+    info:    "#0dcaf0"   # default .rmdtip = cyan
+    warning: "#ffc107"   # default .rmdwarning = yellow
+```
+
+For LaTeX output, only the content of these blocks will be shown with no colored outline as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
 
 #### HTML metadata
 
@@ -369,6 +408,8 @@ at the back of the book:
 ```yaml
 suppress-bibliography: true
 ```
+
+If you would like to use a bibliography style that does not support inline footnotes, you may wish to 
 
 #### Specifying the repository
 
