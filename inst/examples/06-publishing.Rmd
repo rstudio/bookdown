@@ -83,7 +83,7 @@ Edit your book, build it locally again, then drag and drop the output directory 
 
 ### *Optional: change the default subdomain* {#netlify-subdomain} 
 
-Navigate to your site's landing page on Netlify.com (<https://www.netlify.com/>), click on *Overview > Site Settings*. Under *Site information*, click on *Change site name* and update to `http(s)://<SUBDOMAIN-YOU-WANT-HERE>.netlify.com`. If you want to use a different domain, you need to configure some DNS records of the domain to point it to the Netlify server. 
+Navigate to your site's landing page on Netlify.com (<https://app.netlify.com>), click on *Overview > Site Settings*. Under *Site information*, click on *Change site name* and update it to a name that you want. If you want to use your own domain instead of Netlify's subdomain, please read the documentation at https://docs.netlify.com/domains-https/custom-domains/. 
 
 ### Drawbacks and alternatives
 
