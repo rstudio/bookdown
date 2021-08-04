@@ -59,7 +59,7 @@ Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you 
 knitr::include_graphics("images/netlify-drop.png")
 ```
 
-Then drag and drop the output directory from your **bookdown** project (`_book` by default, unless you changed this in your `_bookdown.yml` file). You should see your book deploy quickly with a random subdomain name of the form `http(s)://random-word-12345.netlify.com`.
+Then drag and drop the output directory from your **bookdown** project (`_book/` by default, unless you changed this in your `_bookdown.yml` file). You should see your book deploy quickly with a random subdomain name of the form `https://random-word-12345.netlify.com`.
 
 You'll also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently.
 
