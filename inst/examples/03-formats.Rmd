@@ -239,7 +239,7 @@ The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.co
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
 ```
 
-This output format builds upon the Bootstrap CSS framework. Bootstrap is a library of reusable chunks of HTML, CSS, and JavaScript code that you can call on to modify your book without writing that code yourself. It is a free and open source project, and you can view the repository on GitHub: <https://github.com/twbs/bootstrap>. Bootstrap versions do get updated periodically; this format uses version 4 (<https://getbootstrap.com/docs/4.0/>).
+This output format builds upon the Bootstrap CSS framework, an open source library of reusable chunks of HTML, CSS, and JavaScript code. This format uses version 4 of Bootstrap (<https://getbootstrap.com/docs/4.0/>).
 
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
