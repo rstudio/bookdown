@@ -403,13 +403,20 @@ csl: chicago-fullnote-bibliography.csl
 ```
 
 And then optionally, if you no longer want a reference section
-at the back of the book:
+at the back of the book, add this line to your `index.Rmd`:
 
 ```yaml
 suppress-bibliography: true
 ```
 
-If you would like to use a bibliography style that does not support inline footnotes, you may wish to 
+If you would like to use a citation style that does not support footnotes, references will not be shown inline in popups. In this case, you may wish to add the `split_bib` option to your `_output.yml`:
+
+```yaml
+bookdown::bs4_book:
+  split_bib: true
+```
+
+The result will be that your bibliography will be split and relevant citation items put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.
 
 #### Specifying the repository
 
