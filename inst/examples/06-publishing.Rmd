@@ -43,7 +43,7 @@ If you don't have an existing book, you can create a simple **bookdown** HTML bo
 
 + Create a new project with the RStudio Project Wizard by doing *File > New Project > New Directory > Book Project using bookdown*. Choose either `gitbook` or `bs4_book` from the dropdown menu.
 
-+ Alternately, you may use the function `create_gitbook()` or `create_bs4_book()` from your R console.
++ Alternately, you may use the function `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` from your R console.
 :::
 
 
