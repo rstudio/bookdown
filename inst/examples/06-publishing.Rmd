@@ -53,23 +53,15 @@ From your **bookdown** project, build your book locally using whichever method f
 
 ### Deploy your site
 
-Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you should see a box like this, as shown in Figure \@ref(fig:netlify-drop).
+Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you should see a box that tells you to "Drag and drop your site folder here."
 
-```{r netlify-drop, echo=FALSE, fig.align='center', fig.alt="Screenshot of drag & drop deploy box on Netlify"}
-knitr::include_graphics("images/netlify-drop.png")
-```
+Next, drag and drop the output directory from your **bookdown** project (`_book/` by default, unless you changed this in your `_bookdown.yml` file) into that box in your web browser. You should see your book deploy quickly with a random subdomain name of the form `https://random-word-12345.netlify.com`.
 
-Then drag and drop the output directory from your **bookdown** project (`_book/` by default, unless you changed this in your `_bookdown.yml` file). You should see your book deploy quickly with a random subdomain name of the form `https://random-word-12345.netlify.com`.
-
-You'll also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently.
-
-### *Optional: Sign up for Netlify*
-
-Click on the *Sign Up for Netlify* link. Sign up with *GitHub* to connect your GitHub and Netlify accounts (as shown below). If you use a different version control service, select GitLab or BitBucket instead.
+You'll also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently. If you do decide to sign up for a Netlify account, we recommend signing up with *GitHub* to connect your GitHub and Netlify accounts. If you use a different version control service, select GitLab or BitBucket instead.
 
 ### *Optional: Update your site*
 
-After signing up for Netlify, you *can* update this kind of site, but it is a manual update. Go to Netlify.com (<https://www.netlify.com/>) and navigate to find your site, then click on *Deploys*. You should see this box (you may need to scroll to the bottom of this page):
+After signing up for Netlify, you *can* update this kind of site, but it is a manual update. Go to Netlify.com (<https://www.netlify.com/>) and navigate to find your site, then click on *Deploys*. You should see a box indicating you may drag and drop your site folder to update your site (you may need to scroll to the bottom of this page):
 
 ```{r echo=FALSE, fig.align='center', fig.alt="Screenshot of drag and drop deploy update box on Netlify"}
 knitr::include_graphics("images/netlify-drag-drop-update.png")
