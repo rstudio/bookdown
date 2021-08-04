@@ -359,7 +359,7 @@ HTML `<meta>` tags will be set based on Pandoc's variables set in `index.Rmd`:
  * `twitter-handle` will be used as `twitter:site` content.
 
 If these values are set, then the associated `<meta>` tags will be set in the
-resulting HTML file. The provided values will be used asis in `index.html`.
+resulting HTML file. The provided values will be used as is in `index.html`.
 They will then be tweaked for each chapter to produce different metadata for h
 page as expected by social media:
 
