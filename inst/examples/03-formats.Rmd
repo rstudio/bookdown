@@ -358,7 +358,7 @@ HTML `<meta>` tags will be set based on Pandoc's variables set in `index.Rmd`:
  `og:image`, appended to `url` value. `cover-image` can also take an absolute url.
  * `twitter-handle` will be used as `twitter:site` content.
 
-If these values are set, then the associated `<meta>` tag will be set in the
+If these values are set, then the associated `<meta>` tags will be set in the
 resulting HTML file. The provided values will be used asis in `index.html`.
 They will then be tweaked for each chapter to produce different metadata for h
 page as expected by social media:
