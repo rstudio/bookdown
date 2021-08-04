@@ -28,7 +28,7 @@ Netlify (<https://netlify.com>) is a platform that offers cloud hosting and serv
 This publishing approach sets up the following flow of events:
 
 1. You start with a local **bookdown** project.
-1. You build your book locally to an output directory of choice (`_book` by default).
+1. You build your book locally to an output directory of choice (`_book/` by default).
 1. You go to Netlify Drop (<https://app.netlify.com/drop>), and drag & drop the output directory into the Netlify browser-based user interface.
 1. You make changes to your book, rebuild locally, then drag & drop the output directory again into Netlify to update.
 
