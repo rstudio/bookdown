@@ -153,4 +153,3 @@ page as expected by social media:
 You can have a look at \href{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}{\code{bs4_book()} HTML template}
 for details on how these variables are used.
 }
-

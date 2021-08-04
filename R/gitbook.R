@@ -16,7 +16,7 @@
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @param table_css \code{TRUE} to load gitbook's default CSS for tables. Choose
-#' \code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+#' \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
 #' the \code{css} option. Default is \code{TRUE}.
 #' @export
 gitbook = function(
