@@ -231,9 +231,9 @@ favicon: "favicon.ico"
 
 A nice effect of setting `description` and `cover-image` is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.
 
-### Bootstrap 4 style {#bs4-book}
+### Three-column Bootstrap style {#bs4-book}
 
-The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. You can read an example book here: <https://mastering-shiny.org/>
+The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. The basic layout includes three columns of content so readers can quickly see the book's table of contents on the left-hand side, and a chapter's contents in the sidebar on the right. You can read an example book here: <https://mastering-shiny.org/>
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://mastering-shiny.org/', fig.alt="Screenshot of a bs4_book landing page to show the basic site layout"}
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
@@ -280,7 +280,7 @@ This format also requires extra dependencies that you'll be prompted to install:
 
 The easiest way to get started writing a new `bs4_book` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `bs4_book` from the dropdown menu: 
 
-```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.alt="Screenshot of the RStudio Project Wizard for creating a new bs4_book project."}
+```{r fig.align='center', echo=FALSE, fig.alt="Screenshot of the RStudio Project Wizard for creating a new bs4_book project."}
 knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 ```
 
@@ -429,7 +429,7 @@ bookdown::bs4_book:
     icon: "fas fa-air-freshener"
 ```
 
-### Bootstrap style
+### Two-column Bootstrap style {#bootstrap-style}
 
 If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
 
