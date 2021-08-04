@@ -290,7 +290,7 @@ This theme is designed for books that use one chapter per page.
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one (and only one) chapter. 
 A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading. 
 
-Use second-level and higher headings within chapters like: 
+Use second-level and lower-level headings within chapters like: 
 
 ```md
 #   A good chapter
