@@ -295,9 +295,9 @@ Use second-level and higher headings within chapters like:
 ```md
 #   A good chapter
 
-##  A short section
+##  A section
 
-### An even shorter section
+### A subsection
 ```
 
 The first- and second-level headings will appear in that chapter's sidebar on the upper right as a "sticky" within-chapter table of contents that stays in place as you scroll down. In the sidebar, when a section is navigated to, subheadings will auto-expand such that third-level headings like "An even shorter section" are visible.
