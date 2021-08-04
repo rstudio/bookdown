@@ -407,7 +407,7 @@ bookdown::bs4_book:
     branch: main
 ```
 
-If your book is furthermore located in a subdirectory called "book" you can use:
+If your book is furthermore located in a subdirectory called "book," you can use:
 
 ```yaml
 bookdown::bs4_book:
