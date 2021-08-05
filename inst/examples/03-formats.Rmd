@@ -268,7 +268,7 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
 
 - Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
 
-The output format function is `bookdown::bs4_book`. Here are its arguments:
+The output format function is `bookdown::bs4_book` (<https://pkgs.rstudio.com/bookdown/reference/bs4_book.html>). Here are its arguments:
 
 ```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
 ```
