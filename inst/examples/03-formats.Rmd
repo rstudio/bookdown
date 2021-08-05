@@ -288,7 +288,7 @@ If you do not use RStudio or prefer a function, you can create the same project 
 
 This theme is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
-A chapter *must* start with a first-level heading: `# A chapter`, and can contain one (and only one) first-level heading. 
+That means each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file. 
 
 Use second-level and lower-level headings within chapters like: 
 
