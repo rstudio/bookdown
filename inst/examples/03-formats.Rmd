@@ -233,13 +233,12 @@ A nice effect of setting `description` and `cover-image` is that when you share 
 
 ### Three-column Bootstrap style {#bs4-book}
 
-The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. On a full-size screen, the layout includes three columns of content so readers can quickly see all chapters on the left, the current chapter in the middle, and sections withinthe the current chapter on the right. You can read an example book here: <https://mastering-shiny.org/>
+The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. On a full-size screen, the layout includes three columns of content so readers can quickly see all chapters on the left, the current chapter in the middle, and sections within the the current chapter on the right. You can read an example book here: <https://mastering-shiny.org/>
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://mastering-shiny.org/', fig.alt="Home page for a bs4_book showing the layout with a table of contents on the left, main chapter content in the center, and an 'on this page' sidebar on the right."}
 knitr::include_graphics('images/bs4_book.png', dpi = NA)
 ```
 
-This output format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code.
 
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
@@ -286,9 +285,9 @@ knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 
 If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
 
-This theme is designed for books that use one chapter per page. 
+This style is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
-That means each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file. 
+Each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file. 
 
 Use second-level and lower-level headings within chapters like: 
 
@@ -300,9 +299,9 @@ Use second-level and lower-level headings within chapters like:
 ### A subsection
 ```
 
-The first- and second-level headings will appear in that chapter's sidebar on the upper right as a "sticky" within-chapter table of contents that stays in place as you scroll down. In the sidebar, when a section is navigated to, subheadings will auto-expand such that third-level headings like "A subsection" are visible.
+The first- and second-level headings appear in the current chapter's sidebar, which sticks to the top of the page as you scroll down. When a section is navigated to, third-level subheadings like "A subsection" will auto-expand.
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the R Markdown Cookbook for instructions: <https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html>.
 
 A YAML header in `index.Rmd` for a `bs4_book` would look like this:
 
@@ -323,7 +322,7 @@ description: |
 
 #### Styling & customization
 
-This output format allows for easy customization of colors and fonts with the **bslib** package (<https://pkgs.rstudio.com/bslib/>).
+This output format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package (<https://pkgs.rstudio.com/bslib/>).
 
 You can use the `theme` option to add a `primary` color in hexidecimal format (<https://en.wikipedia.org/wiki/Web_colors>), which will change the color of all links in your book and the background color of the footer.
 
@@ -333,7 +332,7 @@ bookdown::bs4_book:
     primary: "#0d6efd"   
 ```
 
-For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import Google Font files (<https://fonts.google.com/>). By default, `google:` will bundle font files with your book, so that when you share it with someone else, the fonts are guaranteed to render, even without an internet connection (`local: false` imports files via URL instead of serving them locally). Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
+For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import Google Font files (<https://fonts.google.com/>). Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
 
 ```yaml
 bookdown::bs4_book:
@@ -352,13 +351,17 @@ bookdown::bs4_book:
         local: false
 ```
 
+By default, `google:` will bundle font files with your book, so it downloads, caches, and serves the relevant font file(s) locally. This means that when you share it with someone else, the fonts are guaranteed to render, even without an internet connection (`local: false` imports files via URL instead of serving them locally).
+
+You may also use non-Google fonts that you serve locally using [`sass::font_face()`](https://rstudio.github.io/sass/reference/font_face.html#serving-non-google-fonts-locally).
+
 #### Callout blocks
 
-The `bs4_book` theme also includes special callout blocks with predefined styles, which will include a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block: 
+Callout blocks can be used to make certain portions of content stand out from the rest of your narrative. The `bs4_book` style includes special callout blocks with predefined styles for adding a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block: 
 
 ````markdown
 ::: {.rmdnote}
-The `bs4_book` theme also includes an `.rmdnote` callout block like this one.
+The `bs4_book` style also includes an `.rmdnote` callout block like this one.
 ```{r collapse=TRUE}
 head(beaver1, n = 5)
 ```
@@ -393,8 +396,8 @@ template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.
 #### References/Bibliography
 
 Making your citations _footnotes_ allows readers to read them near the text where they're used because `bs4_book` makes footnotes appear inline when clicked. 
-To do that, download a footnote style CSL file
-like `chicago-fullnote-bibliography.csl` (we recommend: <https://www.zotero.org/styles/>), then
+To do that, download a footnote style CSL file. We recommend <https://www.zotero.org/styles/> for downloading.
+For example, you could download the `chicago-fullnote-bibliography.csl` from Zotero (<https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography>), then
 add this to your `index.Rmd`:
 
 ```yaml
