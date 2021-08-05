@@ -283,7 +283,7 @@ The easiest way to get started writing a new `bs4_book` is to use the RStudio Pr
 knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 ```
 
-If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` or the onlin documentation (<https://pkgs.rstudio.com/bookdown/reference/create_book.html>) for help.
 
 This style is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
@@ -322,7 +322,7 @@ description: |
 
 #### Styling & customization
 
-This output format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package (<https://pkgs.rstudio.com/bslib/>).
+The `bs4_book()` format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package (<https://pkgs.rstudio.com/bslib/>).
 
 You can use the `theme` option to add a `primary` color in hexidecimal format (<https://en.wikipedia.org/wiki/Web_colors>), which will change the color of all links in your book and the background color of the footer.
 
@@ -396,7 +396,7 @@ template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.
 #### References/Bibliography
 
 Making your citations _footnotes_ allows readers to read them near the text where they're used because `bs4_book` makes footnotes appear inline when clicked. 
-To do that, download a footnote style CSL file. We recommend <https://www.zotero.org/styles/> for downloading.
+To do that, download a footnote style CSL file; we recommend <https://www.zotero.org/styles/>.
 For example, you could download the `chicago-fullnote-bibliography.csl` from Zotero (<https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography>), then
 add this to your `index.Rmd`:
 
