@@ -287,7 +287,7 @@ knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` for help.
 
 This theme is designed for books that use one chapter per page. 
-This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one (and only one) chapter. 
+This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
 A chapter *must* start with a first-level heading: `# A chapter`, and can contain one (and only one) first-level heading. 
 
 Use second-level and lower-level headings within chapters like: 
