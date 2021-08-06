@@ -107,7 +107,7 @@ bookdown::gitbook:
     download: null
     search:
       engine: lunr # or fuse
-      # options to control/tune search engine behaviour (for
+      # options to control/tune search engine behavior (for
       # fuse.js, refer to https://fusejs.io/api/options.html)
       options: null
     fontsettings:
