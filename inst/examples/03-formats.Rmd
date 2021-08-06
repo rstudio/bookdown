@@ -256,7 +256,7 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
   footnotes.
 
 - R syntax highlighting and autolinking by
-  the **downlit** package (<https://downlit.r-lib.org/>) is paired with an accessible
+  the **downlit** package (<https://downlit.r-lib.org>) is paired with an accessible
   color scheme designed by Alison Hill.
   
 - Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter's content.
@@ -267,8 +267,6 @@ The output format function is `bookdown::bs4_book` (<https://pkgs.rstudio.com/bo
 
 ```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
 ```
-
-This format also requires extra dependencies that you'll be prompted to install: `r knitr::combine_words(bookdown:::bs4_book_deps())`.
 
 #### Writing a `bs4_book`
 
