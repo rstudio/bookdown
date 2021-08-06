@@ -315,7 +315,7 @@ description: |
 
 #### Styling & customization
 
-The `bs4_book()` format builds upon the Bootstrap CSS framework (version 4: <https://getbootstrap.com/docs/4.0/>), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package (<https://pkgs.rstudio.com/bslib/>).
+The `bs4_book()` format builds upon the Bootstrap CSS framework ([version 4](https://getbootstrap.com/docs/4.0/)), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via [the **bslib** R package.](https://pkgs.rstudio.com/bslib/)
 
 You can use the `theme` option to add a `primary` color in hexidecimal format (<https://en.wikipedia.org/wiki/Web_colors>), which will change the color of all links in your book and the background color of the footer.
 
@@ -325,7 +325,7 @@ bookdown::bs4_book:
     primary: "#0d6efd"   
 ```
 
-For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import Google Font files (<https://fonts.google.com/>). Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
+For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import [Google Font files.](https://fonts.google.com) Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
 
 ```yaml
 bookdown::bs4_book:
@@ -344,9 +344,9 @@ bookdown::bs4_book:
         local: false
 ```
 
-By default, `google:` will bundle font files with your book, so it downloads, caches, and serves the relevant font file(s) locally. This means that when you share it with someone else, the fonts are guaranteed to render, even without an internet connection (`local: false` imports files via URL instead of serving them locally).
+By default, `google:` will bundle font files with your book, so it downloads, caches, and serves the relevant font file(s) locally. This means that when you share it with someone else, the fonts are guaranteed to render, even without an Internet connection (`local: false` imports files via URL instead of serving them locally).
 
-You may also use non-Google fonts that you serve locally using [`sass::font_face()`](https://rstudio.github.io/sass/reference/font_face.html#serving-non-google-fonts-locally).
+You may also use non-Google fonts that you serve locally using [`sass::font_face()`.](https://rstudio.github.io/sass/reference/font_face.html#serving-non-google-fonts-locally)
 
 #### Callout blocks
 
