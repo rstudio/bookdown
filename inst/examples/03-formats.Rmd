@@ -384,7 +384,7 @@ For LaTeX output, only the content of these blocks will be shown with no colored
 
 #### HTML metadata
 
-Bookdown will generate HTML `<meta>` tags based on Pandoc's variables set in `index.Rmd`, described in \@ref(metadata-for-sharing). Additionally, `bs4_book()` will create unique chapter descriptions auto-generated from the chapter's contents. You can have a look at [`bs4_book()` HTML
+Bookdown will generate HTML `<meta>` tags based on Pandoc's variables set in `index.Rmd`, described in \@ref(metadata-for-sharing). Additionally, `bs4_book()` will create unique chapter descriptions auto-generated from the chapter's contents. You can have a look at [the `bs4_book` HTML
 template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.html) for details on how these variables are used.
 
 #### References/Bibliography
