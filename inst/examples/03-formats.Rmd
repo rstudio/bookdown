@@ -276,7 +276,7 @@ The easiest way to get started writing a new `bs4_book` is to use the RStudio Pr
 knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 ```
 
-If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?create_bs4_book` or the onlin documentation (<https://pkgs.rstudio.com/bookdown/reference/create_book.html>) for help.
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?bookdown::create_bs4_book` or [the online documentation](https://pkgs.rstudio.com/bookdown/reference/create_book.html) for help.
 
 This style is designed for books that use one chapter per page. 
 This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
