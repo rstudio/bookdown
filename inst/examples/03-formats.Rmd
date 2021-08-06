@@ -391,7 +391,7 @@ template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.
 
 Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes footnotes appear inline when clicked. 
 To do that, download a footnote style CSL file; we recommend <https://www.zotero.org/styles/>.
-For example, you could download the `chicago-fullnote-bibliography.csl` from Zotero (<https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography>), then
+For example, you could download the `chicago-fullnote-bibliography.csl` from [Zotero,](https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography) then
 add this to your `index.Rmd`:
 
 ```yaml
