@@ -440,7 +440,7 @@ bookdown::bs4_book:
 ```
 
 By default, if the repo URL contains "github," it will get a GitHub [Font Awesome](https://fontawesome.com) icon, otherwise it gets a GitLab icon.
-To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) ([Font Awesome 5](https://fontawesome.com/v5.0/how-to-use/on-the-web/referencing-icons/basic-use)).
+To use another icon, specify it with the correct prefix such as `fas`, `fab`, and so on ([Font Awesome 5](https://fontawesome.com/v5.0/how-to-use/on-the-web/referencing-icons/basic-use)).
 
 ```yaml
 bookdown::bs4_book:
