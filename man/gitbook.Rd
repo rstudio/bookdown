@@ -60,5 +60,6 @@ the \code{css} option. Default is \code{TRUE}.}
 }
 \description{
 This output format function ported a style provided by GitBook
-(\url{https://www.gitbook.com}) for R Markdown.
+(\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+\url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
 }

@@ -40,11 +40,20 @@ In this case, all formats should be at the top level, instead of under an `outpu
 
 ## HTML
 
-The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default --- normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: the GitBook style, the Bootstrap style, and the Tufte style.
+The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default---normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: 
+
+- the GitBook style (Section \@ref(gitbook-style)), 
+- the three-column Bootstrap style (Section \@ref(bs4-book)), 
+- the default Bootstrap style (Section \@ref(bootstrap-style)), and 
+- the Tufte style (Section \@ref(tufte-style)).
 
 ### GitBook style {#gitbook-style}
 
 The GitBook style was borrowed from GitBook\index{GitBook}, a project launched by Friendcode, Inc. (https://www.gitbook.com) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.
+
+The easiest way to get started writing a new `gitbook` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `gitbook` from the dropdown menu (see Figure \@ref(fig:new-bs4-book)).
+
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_gitbook()` from your R console. See `?bookdown::create_gitbook` for help.
 
 We have made several improvements over the original GitBook project. The most significant one is that we replaced the Markdown engine with R Markdown v2 based on Pandoc, so that there are a lot more features for you to use when writing a book:
 
@@ -98,7 +107,7 @@ bookdown::gitbook:
     download: null
     search:
       engine: lunr # or fuse
-      # options to control/tune search engine behaviour (for
+      # options to control/tune search engine behavior (for
       # fuse.js, refer to https://fusejs.io/api/options.html)
       options: null
     fontsettings:
@@ -218,9 +227,235 @@ favicon: "favicon.ico"
 
 A nice effect of setting `description` and `cover-image` is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.
 
-### Bootstrap style
+### Three-column Bootstrap style {#bs4-book}
 
-If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
+The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. On a full-size screen, the layout includes three columns of content so readers can quickly see all chapters on the left, the current chapter in the middle, and sections within the the current chapter on the right. You can read an example book here: <https://mastering-shiny.org>
+
+```{r fig.align='center', echo=FALSE, fig.link='https://mastering-shiny.org', fig.cap="Home page of a book with the three-column Bootstrap style."}
+knitr::include_graphics('images/bs4-book.png', dpi = NA)
+```
+
+In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
+
+- Easy customization of colors and fonts with
+  [the **bslib** package.](https://pkgs.rstudio.com/bslib/)
+
+- Built-in search (broken down by section) that helps readers quickly find what
+  they are looking for.
+
+- A sidebar containing a within-chapter table of contents that makes
+  navigation easy and helps provide context about your current position
+  within the chapter.
+
+- Thoughtful typography to make the contents as easy as possible to read,
+  regardless of the size of your device. A sticky header gets out of your
+  way when reading, but is easily accessible if you need it.
+
+- In-line footnotes mean you can read asides next to the next they refer
+  to. This theme is best paired with a reference style that generates
+  footnotes.
+
+- R syntax highlighting and autolinking by
+  [the **downlit** package](https://downlit.r-lib.org) is paired with an accessible
+  color scheme designed by Alison Hill.
+  
+- Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter's content.
+
+- Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
+
+The output format function is [`bookdown::bs4_book`.](https://pkgs.rstudio.com/bookdown/reference/bs4_book.html) Here are its arguments:
+
+```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
+```
+
+#### Writing a `bs4_book`
+
+The easiest way to get started writing a new `bs4_book` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `bs4_book` from the dropdown menu (see Figure \@ref(fig:new-bs4-book)).
+
+```{r new-bs4-book, fig.align='center', echo=FALSE, fig.cap="Screenshot of the RStudio Project Wizard for creating a new bookdown project."}
+knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
+```
+
+If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?bookdown::create_bs4_book` or [the online documentation](https://pkgs.rstudio.com/bookdown/reference/create_book.html) for help.
+
+This style is designed for books that use one chapter per page. 
+This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
+Each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file. 
+
+Use second-level and lower-level headings within chapters like: 
+
+```md
+#   A chapter
+
+##  A section
+
+### A subsection
+```
+
+The first- and second-level headings appear in the current chapter's sidebar, which sticks to the top of the page as you scroll down. When a section is navigated to, third-level subheadings like "A subsection" will auto-expand.
+
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html) for instructions.
+
+A YAML header in `index.Rmd` for a `bs4_book` would look like this:
+
+```yaml
+---
+title: "A Minimal Book Example"
+author: "Jane Doe"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::bs4_book
+url: https://bookdown.org/janedoe/bookdown-demo
+cover-image: cover.png
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The output format for this example is bookdown::bs4_book.
+---
+```
+
+#### Styling & customization
+
+The `bs4_book()` format builds upon the Bootstrap CSS framework ([version 4](https://getbootstrap.com/docs/4.0/)), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package.
+
+You can use the `theme` option to add a `primary` color in [hexidecimal format,](https://en.wikipedia.org/wiki/Web_colors) which will change the color of all links in your book and the background color of the footer.
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   
+```
+
+For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import [Google Font files.](https://fonts.google.com) Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   
+    base_font: 
+      google: Sen
+    heading_font:
+      google:
+        family: Bitter
+        wght: 200
+    code_font:
+      google: 
+        # arguments to sass::font_google() 
+        family: DM Mono
+        local: false
+```
+
+By default, `google:` will bundle font files with your book, so it downloads, caches, and serves the relevant font file(s) locally. This means that when you share it with someone else, the fonts are guaranteed to render, even without an Internet connection (`local: false` imports files via URL instead of serving them locally).
+
+You may also use non-Google fonts that you serve locally using [`sass::font_face()`.](https://rstudio.github.io/sass/reference/font_face.html#serving-non-google-fonts-locally)
+
+#### Callout blocks
+
+Callout blocks can be used to make certain portions of content stand out from the rest of your narrative. The `bs4_book` style includes special callout blocks with predefined styles for adding a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block: 
+
+````markdown
+::: {.rmdnote}
+The `bs4_book` style also includes an `.rmdnote` callout block
+like this one.
+
+```{r collapse=TRUE}`r ''``
+head(beaver1, n = 5)
+```
+:::
+````
+
+You may use Markdown syntax and inline code inside a block. When knitted, the output will look like Figure \@ref(fig:bs4-note).
+
+```{r bs4-note, fig.align='center', echo=FALSE, fig.cap="A special callout block."}
+knitr::include_graphics('images/rmd-note.png', dpi = NA)
+```
+
+Available blocks are: `.rmdnote`, `.rmdcaution`, `.rmdimportant`, `.rmdtip`, and `.rmdwarning`. The colors used will be based on the default colors provided by Bootstrap, but can be also be customized in your `_output.yml` file:
+
+```yaml
+bookdown::bs4_book:
+  theme:
+    primary: "#0d6efd"   # default .rmdnote = blue
+    danger:  "#dc3545"   # default .rmdcaution = red
+    success: "#198754"   # default .rmdimportant = green
+    info:    "#0dcaf0"   # default .rmdtip = cyan
+    warning: "#ffc107"   # default .rmdwarning = yellow
+```
+
+For LaTeX output, only the content of these blocks will be shown with no colored outline as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) for a how-to.
+
+#### HTML metadata
+
+Bookdown will generate HTML `<meta>` tags based on Pandoc's variables set in `index.Rmd`, described in \@ref(metadata-for-sharing). Additionally, `bs4_book()` will create unique chapter descriptions auto-generated from the chapter's contents. You can have a look at [the `bs4_book` HTML
+template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.html) for details on how these variables are used.
+
+#### References/Bibliography
+
+Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes footnotes appear inline when clicked. 
+To do that, download a footnote style CSL file; we recommend <https://www.zotero.org/styles/>.
+For example, you could download the `chicago-fullnote-bibliography.csl` from [Zotero,](https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography) then
+add this to your `index.Rmd`:
+
+```yaml
+bibliography: refs.bib
+csl: chicago-fullnote-bibliography.csl
+```
+
+Optionally, if you no longer want a reference section
+at the back of the book, add this line to your `index.Rmd`:
+
+```yaml
+suppress-bibliography: true
+```
+
+If you would like to use a citation style that does not support footnotes, references will not be shown inline in popups. In this case, you may wish to add the `split_bib` option to your `_output.yml`:
+
+```yaml
+bookdown::bs4_book:
+  split_bib: true
+```
+
+Then your bibliography will be split and relevant citation items will be put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.
+
+#### Specifying the repository
+
+Specify a source repository for your book to give your readers the option to easily view each chapter's source file or suggest an edit.
+
+If your book has a default branch called "main," you can use:
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+```
+
+If your book is furthermore located in a subdirectory called "book," you can use:
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+```
+
+By default, if the repo URL contains "github," it will get a GitHub [Font Awesome](https://fontawesome.com) icon, otherwise it gets a GitLab icon.
+To use another icon, specify it with the correct prefix such as `fas`, `fab`, and so on ([Font Awesome 5](https://fontawesome.com/v5.0/how-to-use/on-the-web/referencing-icons/basic-use)).
+
+```yaml
+bookdown::bs4_book:
+  repo:
+    base: https://github.com/hadley/ggplot2-book
+    branch: main
+    subdir: book
+    icon: "fas fa-air-freshener"
+```
+
+### The default Bootstrap style {#bootstrap-style}
+
+If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (https://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
+
+In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
 
 ```{r html-chapters-usage, eval=FALSE, code=formatR::usage(bookdown::html_chapters, output=FALSE, fail='none')}
 ```
@@ -312,7 +547,10 @@ As a matter of fact, you can get rid of the Bootstrap style in `html_document()`
 
 ### Tufte style
 
-Like the Bootstrap style, the Tufte\index{Tufte style} style is provided by an output format `tufte_html_book()`, which is also a special case of `html_chapters()` using `tufte::tufte_html()` as the base format. Please see the **tufte** package [@R-tufte] if you are not familiar with the Tufte style. Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.
+Like the Bootstrap style, the Tufte\index{Tufte style} style is provided by an output format `tufte_html_book()`, which is also a special case of `html_chapters()` using `tufte::tufte_html()` as the base format. Please see the **tufte** package [@R-tufte] if you are not familiar with the Tufte style. You can read an example `tufte_html_book()` here: <https://bookdown.org/yihui/bookdown-demo3/>
+
+
+Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.
 
 All arguments of `tufte_html_book()` have exactly the same meanings as `html_book()`, e.g., you can also customize the CSS via the `css` option. There are a few elements that are specific to the Tufte style, though, such as margin notes, margin figures, and full-width figures. These elements require special syntax to generate; please see the documentation of the **tufte** package. Note that you do not need to do anything special to footnotes and references (just use the normal Markdown syntax `^[footnote]` and `[@citation]`), since they will be automatically put in the margin. A brief YAML example of the `tufte_html_book` format:
 

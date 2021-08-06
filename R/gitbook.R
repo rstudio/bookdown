@@ -1,7 +1,10 @@
 #' The GitBook output format
 #'
+#' @description
 #' This output format function ported a style provided by GitBook
-#' (\url{https://www.gitbook.com}) for R Markdown.
+#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+#' \url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
+#'
 #' @inheritParams html_chapters
 #' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}

@@ -1,35 +1,10 @@
 #' HTML book built with bootstrap4
 #'
 #' @description
-#' This output format is built with [bootstrap](https://getbootstrap.com),
+#' This output format is built with [Bootstrap](https://getbootstrap.com),
 #' using carefully crafted features to provide a clean reading experience whether
-#' you are on a phone, tablet, or desktop.
-#'
-#' Some of the main features:
-#'
-#' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib/)
-#'
-#' * Built-in search (broken down by section) that helps readers quickly find what
-#'   they are looking for.
-#'
-#' * A sidebar containing a within-chapter table of contents that makes
-#'   navigation easy and helps provide context about your current position
-#'   within the chapter.
-#'
-#' * Thoughtful typography to make the contents as easy as possible to read,
-#'   regardless of the size of your device. A sticky header gets out of your
-#'   way when reading, but is easily accessible if you need it.
-#'
-#' * In-line footnotes mean you can read asides next to the next they refer
-#'   to. This theme is best paired with a reference style that generates
-#'   footnotes.
-#'
-#' * R syntax highlighting and autolinking by
-#'   [downlit](https://downlit.r-lib.org/) is paired with a accessible
-#'   colour scheme designed by Alison Hill.
-#'
-#' This theme is designed for books that use one chapter per page.
+#' you are on a phone, tablet, or desktop. To read more about this format, see:
+#' \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
@@ -37,108 +12,10 @@
 #'   against the background.
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
-#'   `branch`, `subdir` and `icon` (see "Specifying the repository").
+#'   `branch`, `subdir` and `icon`
+#'   (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).
 #' @param lib_dir,pandoc_args,extra_dependencies,split_bib,... Passed on to
 #'   [rmarkdown::html_document()].
-#'
-#' @section Specifying the repository:
-#'
-#' If your book has a default branch called main you can use
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#' ```
-#'
-#' If your book is furthermore located in a subdirectory called "book" you can use
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#'     subdir: book
-#' ```
-#'
-#' By default if the repo URL contains "github" it will get a GitHub font-awesome
-#' icon, and otherwise a GitLab font-awesome icon.
-#' To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) (Font Awesome 5).
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#'     subdir: book
-#'     icon: "fas fa-air-freshener"
-#' ```
-#'
-#' @section References/Bibliography:
-#'
-#' As this theme makes footnotes appear in line, making your citations _footnotes_
-#' allows readers to read them near the text they are referred in.
-#' To do that, download a footnote style CSL file
-#' (e.g. chicago-fullnote-bibliography.csl)
-#' put this in your index.Rmd:
-#' ```yaml
-#'bibliography: refs.bib
-#'csl: chicago-fullnote-bibliography.csl
-#' ```
-#' And then optionally, if you no longer want a reference section
-#' at the back of the book:
-#'
-#' ```yaml
-#' suppress-bibliography: true
-#' ```
-#' @section HTML metadata:
-#'
-#' HTML `<meta>` tag will be set based on Pandoc's variables set in `index.Rmd`:
-#'
-#'  * `pagetitle` (or `title` if unset) will be used as `og:title`
-#'  and `twitter:title` content.
-#'  * `description` will be used as `description`, `og:description` and
-#'  `twitter:description` content.
-#'  * `url` will be used as `og:url` and as base for `cover-image`
-#'  * `cover-image` is the path to your local cover image, and will be used as
-#'  `og:image`, appended to `url` value.
-#'  * `twitter-handle` will be used as `twitter:site` content.
-#'
-#' Some value are not configurable:
-#'
-#' * `twitter:card` will be set as `summary`.
-#' * `og:type` will be set as `book`.
-#'
-#' A YAML header in `index.Rmd` would look like this:
-#'
-#' ```yaml
-#' ---
-#' title: "A Minimal Book Example"
-#' author: "John Doe"
-#' date: "`r Sys.Date()`"
-#' site: bookdown::bookdown_site
-#' output: bookdown::bs4_book
-#' url: https://bookdown.org/johndoe/bookdown-demo
-#' cover-image: cover.png
-#' description: |
-#'   This is a minimal example of using the bookdown package to write a book.
-#'   The output format for this example is bookdown::bs4_book
-#' ---
-#' ````
-#'
-#' If this values are set, then the associated `<meta>` tag will be set in the
-#' resulting HTML file. The provided values will be used asis in `index.html`.
-#' They will then be tweaked for each chapter to produce different metadata for each
-#' page as expected by social media:
-#'
-#' * All `description` related meta will be auto generated from page content,
-#' * `og:url` will be set to the specific HTML page url,
-#' * All the other `<meta>` will stay the same.
-#'
-#' You can have a look at [`bs4_book()` HTML
-#' template](https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html)
-#' for details on how these variables are used.
 #'
 #' @export
 #' @md
