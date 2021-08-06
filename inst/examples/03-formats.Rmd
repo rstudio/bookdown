@@ -413,7 +413,7 @@ bookdown::bs4_book:
   split_bib: true
 ```
 
-The result will be that your bibliography will be split and relevant citation items put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.
+Then your bibliography will be split and relevant citation items will be put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.
 
 #### Specifying the repository
 
