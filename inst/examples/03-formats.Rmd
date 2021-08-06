@@ -45,7 +45,7 @@ The main difference between rendering a book (using **bookdown**) with rendering
 - the GitBook style (Section \@ref(gitbook-style)), 
 - the Bootstrap 4 style (Section \@ref(bs4-book)), 
 - the Bootstrap style (Section \@ref(bootstrap-style)), and 
-- the Tufte style (Section\@ref(tufte-style)).
+- the Tufte style (Section \@ref(tufte-style)).
 
 ### GitBook style {#gitbook-style}
 
