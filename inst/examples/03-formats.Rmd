@@ -238,7 +238,7 @@ knitr::include_graphics('images/bs4-book.png', dpi = NA)
 In addition to the basic **bookdown** components (Section \@ref(components)), the main features of `bs4_book` are:
 
 - Easy customization of colors and fonts with
-  the **bslib** package (<https://pkgs.rstudio.com/bslib/>).
+  [the **bslib** package.](https://pkgs.rstudio.com/bslib/)
 
 - Built-in search (broken down by section) that helps readers quickly find what
   they are looking for.
@@ -256,14 +256,14 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
   footnotes.
 
 - R syntax highlighting and autolinking by
-  the **downlit** package (<https://downlit.r-lib.org>) is paired with an accessible
+  [the **downlit** package](https://downlit.r-lib.org) is paired with an accessible
   color scheme designed by Alison Hill.
   
 - Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter's content.
 
 - Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
 
-The output format function is `bookdown::bs4_book` (<https://pkgs.rstudio.com/bookdown/reference/bs4_book.html>). Here are its arguments:
+The output format function is [`bookdown::bs4_book`.](https://pkgs.rstudio.com/bookdown/reference/bs4_book.html) Here are its arguments:
 
 ```{r bs4-book-args, code=formatR::usage(bookdown::bs4_book, output=FALSE, fail='none'), eval=FALSE, R.options=list(width=50)}
 ```
@@ -294,7 +294,7 @@ Use second-level and lower-level headings within chapters like:
 
 The first- and second-level headings appear in the current chapter's sidebar, which sticks to the top of the page as you scroll down. When a section is navigated to, third-level subheadings like "A subsection" will auto-expand.
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the _R Markdown Cookbook_ for instructions: <https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html>.
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html) for instructions.
 
 A YAML header in `index.Rmd` for a `bs4_book` would look like this:
 
@@ -315,9 +315,9 @@ description: |
 
 #### Styling & customization
 
-The `bs4_book()` format builds upon the Bootstrap CSS framework ([version 4](https://getbootstrap.com/docs/4.0/)), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via [the **bslib** R package.](https://pkgs.rstudio.com/bslib/)
+The `bs4_book()` format builds upon the Bootstrap CSS framework ([version 4](https://getbootstrap.com/docs/4.0/)), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package.
 
-You can use the `theme` option to add a `primary` color in hexidecimal format (<https://en.wikipedia.org/wiki/Web_colors>), which will change the color of all links in your book and the background color of the footer.
+You can use the `theme` option to add a `primary` color in [hexidecimal format,](https://en.wikipedia.org/wiki/Web_colors) which will change the color of all links in your book and the background color of the footer.
 
 ```yaml
 bookdown::bs4_book:
@@ -453,7 +453,7 @@ bookdown::bs4_book:
 
 ### The default Bootstrap style {#bootstrap-style}
 
-If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
+If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (https://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
 
 In fact, there is a more general format `html_chapters()` in **bookdown** and `html_book()` is just its special case:
 
