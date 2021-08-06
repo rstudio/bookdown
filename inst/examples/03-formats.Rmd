@@ -294,7 +294,7 @@ Use second-level and lower-level headings within chapters like:
 
 The first- and second-level headings appear in the current chapter's sidebar, which sticks to the top of the page as you scroll down. When a section is navigated to, third-level subheadings like "A subsection" will auto-expand.
 
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the R Markdown Cookbook for instructions: <https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html>.
+The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the **knitr** `include` chunk option with the `knitr::is_html_output()` function. See the _R Markdown Cookbook_ for instructions: <https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html>.
 
 A YAML header in `index.Rmd` for a `bs4_book` would look like this:
 
