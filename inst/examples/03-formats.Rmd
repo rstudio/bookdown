@@ -380,7 +380,7 @@ bookdown::bs4_book:
     warning: "#ffc107"   # default .rmdwarning = yellow
 ```
 
-For LaTeX output, only the content of these blocks will be shown with no colored outline as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See this section in The R Markdown Cookbook: <https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html> for a how-to.
+For LaTeX output, only the content of these blocks will be shown with no colored outline as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) for a how-to.
 
 #### HTML metadata
 
