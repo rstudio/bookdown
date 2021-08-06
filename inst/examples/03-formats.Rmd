@@ -51,11 +51,7 @@ The main difference between rendering a book (using **bookdown**) with rendering
 
 The GitBook style was borrowed from GitBook\index{GitBook}, a project launched by Friendcode, Inc. (https://www.gitbook.com) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.
 
-The easiest way to get started writing a new `gitbook` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `gitbook` from the dropdown menu: 
-
-```{r fig.align='center', echo=FALSE, fig.alt="Screenshot of the RStudio Project Wizard for creating a new gitbook project."}
-knitr::include_graphics('images/gitbook.png', dpi = NA)
-```
+The easiest way to get started writing a new `gitbook` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `gitbook` from the dropdown menu (see Figure \@ref(fig:new-bs4-book)).
 
 If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_gitbook()` from your R console. See `?create_gitbook` for help.
 
