@@ -354,7 +354,8 @@ Callout blocks can be used to make certain portions of content stand out from th
 
 ````markdown
 ::: {.rmdnote}
-The `bs4_book` style also includes an `.rmdnote` callout block like this one.
+The `bs4_book` style also includes an `.rmdnote` callout block
+like this one.
 
 ```{r collapse=TRUE}`r ''``
 head(beaver1, n = 5)
