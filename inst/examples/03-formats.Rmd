@@ -43,8 +43,8 @@ In this case, all formats should be at the top level, instead of under an `outpu
 The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default---normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: 
 
 - the GitBook style (Section \@ref(gitbook-style)), 
-- the Bootstrap 4 style (Section \@ref(bs4-book)), 
-- the Bootstrap style (Section \@ref(bootstrap-style)), and 
+- the three-column Bootstrap style (Section \@ref(bs4-book)), 
+- the default Bootstrap style (Section \@ref(bootstrap-style)), and 
 - the Tufte style (Section \@ref(tufte-style)).
 
 ### GitBook style {#gitbook-style}
@@ -450,7 +450,7 @@ bookdown::bs4_book:
     icon: "fas fa-air-freshener"
 ```
 
-### Two-column Bootstrap style {#bootstrap-style}
+### The default Bootstrap style {#bootstrap-style}
 
 If you have used R Markdown before, you should be familiar with the Bootstrap\index{Bootstrap style} style (http://getbootstrap.com), which is the default style of the HTML output of R Markdown. The output format function in **rmarkdown** is `html_document()`, and we have a corresponding format `html_book()` in **bookdown** using `html_document()` as the base format. You can read an example `html_book()` here: <https://bookdown.org/yihui/bookdown-demo2>
 
