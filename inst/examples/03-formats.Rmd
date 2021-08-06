@@ -272,9 +272,9 @@ This format also requires extra dependencies that you'll be prompted to install:
 
 #### Writing a `bs4_book`
 
-The easiest way to get started writing a new `bs4_book` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `bs4_book` from the dropdown menu: 
+The easiest way to get started writing a new `bs4_book` is to use the RStudio Project Wizard (*File > New Project > New Directory > Book project using bookdown*) and select `bs4_book` from the dropdown menu (see Figure \@ref(fig:new-bs4-book)).
 
-```{r fig.align='center', echo=FALSE, fig.alt="Screenshot of the RStudio Project Wizard for creating a new bs4_book project."}
+```{r new-bs4-book, fig.align='center', echo=FALSE, fig.cap="Screenshot of the RStudio Project Wizard for creating a new bookdown project."}
 knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 ```
 
