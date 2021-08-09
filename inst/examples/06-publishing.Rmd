@@ -46,11 +46,11 @@ From your **bookdown** project, build your book locally using whichever method f
 
 ### Deploy your site
 
-Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)) where you should see a box that tells you to "Drag and drop your site folder here."
+Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)), where you should see a box that tells you to "Drag and drop your site folder here."
 
 Next, drag and drop the output directory from your **bookdown** project (`_book/` by default, unless you changed this in your `_bookdown.yml` file) into that box in your web browser. You should see your book deploy quickly with a random subdomain name of the form `https://random-word-12345.netlify.com`.
 
-You'll also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently. If you do decide to sign up for a Netlify account, we recommend signing up with *GitHub* to connect your GitHub and Netlify accounts. If you use a different version control service, select GitLab or BitBucket instead.
+You will also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently.
 
 ### *Optional: Update your site*
 
