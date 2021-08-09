@@ -14,7 +14,7 @@ output:
       toolbar:
         position: static
   bookdown::pdf_book:
-    keep_tex: yes
+    keep_tex: true
   bookdown::html_book:
     css: toc.css
 documentclass: book
@@ -31,7 +31,7 @@ bookdown::gitbook:
     toolbar:
       position: static
 bookdown::pdf_book:
-  keep_tex: yes
+  keep_tex: true
 bookdown::html_book:
   css: toc.css
 ```
@@ -98,7 +98,7 @@ bookdown::gitbook:
   config:
     toc:
       collapse: subsection
-      scroll_highlight: yes
+      scroll_highlight: true
       before: null
       after: null
     toolbar:
@@ -115,16 +115,16 @@ bookdown::gitbook:
       family: sans
       size: 2
     sharing:
-      facebook: yes
-      github: no
-      twitter: yes
-      linkedin: no
-      weibo: no
-      instapaper: no
-      vk: no
-      whatsapp: no
+      facebook: true
+      github: false
+      twitter: true
+      linkedin: false
+      weibo: false
+      instapaper: false
+      vk: false
+      whatsapp: false
       all: ['facebook', 'twitter', 'linkedin', 'weibo', 'instapaper']
-    info: yes
+    info: true
 ```
 
 The `toc` option controls the behavior of the table of contents (TOC). You can collapse some items initially when a page is loaded via the `collapse` option. Its possible values are `subsection`, `section`, `none` (or `null`). This option can be helpful if your TOC is very long and has more than three levels of headings: `subsection` means collapsing all TOC items for subsections (X.X.X), `section` means those items for sections (X.X) so only the top-level headings are displayed initially, and `none` means not collapsing any items in the TOC. For those collapsed TOC items, you can toggle their visibility by clicking their parent TOC items. For example, you can click a chapter title in the TOC to show/hide its sections.
@@ -155,7 +155,7 @@ The GitBook style has a toolbar (Figure \@ref(fig:gitbook-toolbar)) at the top o
 
 The first button on the toolbar can toggle the visibility of the sidebar. You can also hit the `S` key on your keyboard to do the same thing. The GitBook style can remember the visibility status of the sidebar, e.g., if you closed the sidebar, it will remain closed the next time you open the book. In fact, the GitBook style remembers many other settings as well, such as the search keyword and the font settings.
 
-The second button on the toolbar is the search button. Its keyboard shortcut is `F` (Find). When the button is clicked, you will see a search box at the top of the sidebar. As you type in the box, the TOC will be filtered to display the sections that match the search keyword. Now you can use the arrow keys `Up`/`Down` to highlight the previous/next match in the search results. When you click the search button again (or hit `F` outside the search box), the search keyword will be emptied and the search box will be hidden. To disable searching, set the option `search: no` in `config`.
+The second button on the toolbar is the search button. Its keyboard shortcut is `F` (Find). When the button is clicked, you will see a search box at the top of the sidebar. As you type in the box, the TOC will be filtered to display the sections that match the search keyword. Now you can use the arrow keys `Up`/`Down` to highlight the previous/next match in the search results. When you click the search button again (or hit `F` outside the search box), the search keyword will be emptied and the search box will be hidden. To disable searching, set the option `search: false` in `config`.
 
 The third button is for font/theme settings. The reader can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (`White`, `Sepia`, or `Night`). You can set the initial value of these settings via the `fontsettings` option. Font size is measured on a scale of 0-4; the initial value can be set to 1, 2 (default), 3, or 4. The button can be removed from the toolbar by setting `fontsettings: null` (or `no`).
 
@@ -177,7 +177,7 @@ If your book has other output formats for readers to download, you may provide t
     download: ["pdf", "epub", "mobi"]
 ```
 
-When you only provide the filename extensions, the filename is derived from the book filename of the configuration file `_bookdown.yml` (Section \@ref(configuration)). When `download` is `null`, `gitbook()` will look for PDF, EPUB, and MOBI files in the book output directory, and automatically add them to the `download` option. If you just want to suppress the download button, use `download: no`. All files for readers to download will be displayed in a drop-down menu, and the filename extensions are used as the menu text. When the only available format for readers to download is PDF, the download button will be a single PDF button instead of a drop-down menu.
+When you only provide the filename extensions, the filename is derived from the book filename of the configuration file `_bookdown.yml` (Section \@ref(configuration)). When `download` is `null`, `gitbook()` will look for PDF, EPUB, and MOBI files in the book output directory, and automatically add them to the `download` option. If you just want to suppress the download button, use `download: false`. All files for readers to download will be displayed in a drop-down menu, and the filename extensions are used as the menu text. When the only available format for readers to download is PDF, the download button will be a single PDF button instead of a drop-down menu.
 
 An alternative form for the value of the `download` option is a list of length-2 vectors, e.g.,
 
@@ -197,7 +197,7 @@ Each vector in the list consists of the filename and the text to be displayed in
 
 On the right of the toolbar, there are some buttons to share the link on social network websites such as Twitter, Facebook, and Linkedin. You can use the `sharing` option to decide which buttons to enable. If you want to get rid of these buttons entirely, use `sharing: null` (or `no`).
 
-Another button shown on the toolbar is the information ('i') button that lists keyboard shortcuts available to navigate the document. This button can be hidden by setting `info: no`.
+Another button shown on the toolbar is the information ('i') button that lists keyboard shortcuts available to navigate the document. This button can be hidden by setting `info: false`.
 
 Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
 
@@ -536,7 +536,7 @@ You may copy this file to the root directory of your book, and apply it to the H
 ---
 output:
   bookdown::html_book:
-    toc: yes
+    toc: true
     css: toc.css
 ---
 ```
@@ -558,7 +558,7 @@ All arguments of `tufte_html_book()` have exactly the same meanings as `html_boo
 ---
 output:
   bookdown::tufte_html_book:
-    toc: yes
+    toc: true
     css: toc.css
 ---
 ```
