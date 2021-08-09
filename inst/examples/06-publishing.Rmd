@@ -36,16 +36,9 @@ The above is an overview---read on for step-by-step instructions.
 
 ### Before you begin
 
-Start with a local **bookdown** project (it does not need to be in GitHub or another version-controlled repository). 
+Start with a local **bookdown** project. It does not need to be in GitHub or another version-controlled repository. 
 
-:::{.rmdimportant latex=true}
-If you don't have an existing book, you can create a simple **bookdown** HTML book to practice with instead:
-
-+ Create a new project with the RStudio Project Wizard by doing *File > New Project > New Directory > Book Project using bookdown*. Choose either `gitbook` or `bs4_book` from the dropdown menu.
-
-+ Alternately, you may use the function `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` from your R console.
-:::
-
+If you do not have an existing book, you can create a simple **bookdown** HTML book to practice with instead. See Figure \@ref(fig:new-bs4-book) for how to create a new book in RStudio, or use the function `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` from your R console if you do not use RStudio.
 
 ### Build your book
 
