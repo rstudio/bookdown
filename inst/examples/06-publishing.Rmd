@@ -54,10 +54,10 @@ You will also see a notice that unclaimed sites are deleted after 24 hours. You 
 
 ### *Optional: Update your site*
 
-After signing up for Netlify, you *can* update this kind of site, but it is a manual update. Go to Netlify.com (<https://www.netlify.com/>) and navigate to find your site, then click on *Deploys*. You should see a box indicating you may drag and drop your site folder to update your site (you may need to scroll to the bottom of this page):
+After signing up for Netlify, you *can* update this kind of site, but it is a manual update. Go to Netlify.com and navigate to find your site, then click on "Deploys." You should see a box as shown in Figure \@ref(fig:netlify-drag-drop), indicating you may drag and drop your site folder to update your site (you may need to scroll to the bottom of this page).
 
-```{r echo=FALSE, fig.align='center', fig.alt="Screenshot of drag and drop deploy update box on Netlify"}
-knitr::include_graphics("images/netlify-drag-drop-update.png")
+```{r netlify-drag-drop, echo=FALSE, fig.align='center', fig.cap="Screenshot of drag and drop deploy update box on Netlify."}
+knitr::include_graphics("images/netlify-drag-drop-update.png", dpi = NA)
 ```
 
 Edit your book, build it locally again, then drag and drop the output directory here again. 
