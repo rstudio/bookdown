@@ -19,6 +19,57 @@ bookdown::publish_book(render = 'local')
 
 If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
 
+## Netlify Drop
+
+Netlify (<https://netlify.com>) is a platform that offers cloud hosting and serverless backend services for static websites. Netlify offers both free and paid tiers for service, but they also offer a service called Netlify Drop (<https://app.netlify.com/drop>), which is a free publishing option that does not require a Netlify account to start. This option does not rely on your **bookdown** project being in a version-controlled repository. All you need is a **bookdown** project that you can build locally.
+
+### The build-and-deploy pipeline sequence
+
+This publishing approach sets up the following flow of events:
+
+1. You start with a local **bookdown** project.
+1. You build your book locally to an output directory of choice (`_book/` by default).
+1. You go to Netlify Drop (<https://app.netlify.com/drop>), and drag & drop the output directory into the Netlify browser-based user interface.
+1. You make changes to your book, rebuild locally, then drag & drop the output directory again into Netlify to update.
+
+The above is an overview---read on for step-by-step instructions.
+
+### Before you begin
+
+Start with a local **bookdown** project. It does not need to be in GitHub or another version-controlled repository. 
+
+If you do not have an existing book, you can create a simple **bookdown** HTML book to practice with instead. See Figure \@ref(fig:new-bs4-book) for how to create a new book in RStudio, or use the function `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` from your R console if you do not use RStudio.
+
+### Build your book
+
+From your **bookdown** project, build your book locally using whichever method from Chapter \@ref(build-the-book) you prefer.
+
+### Deploy your site
+
+Go to Netlify Drop ([netlify.com/drop](https://app.netlify.com/drop)), where you should see a box that tells you to "Drag and drop your site folder here."
+
+Next, drag and drop the output directory from your **bookdown** project (`_book/` by default, unless you changed this in your `_bookdown.yml` file) into that box in your web browser. You should see your book deploy quickly with a random subdomain name of the form `https://random-word-12345.netlify.com`.
+
+You will also see a notice that unclaimed sites are deleted after 24 hours. You can sign up for a Netlify account to claim your site and keep it online permanently.
+
+### *Optional: Update your site*
+
+After signing up for Netlify, you *can* update this kind of site, but it is a manual update. Go to Netlify.com and navigate to find your site, then click on "Deploys." You should see a box as shown in Figure \@ref(fig:netlify-drag-drop), indicating you may drag and drop your site folder to update your site (you may need to scroll to the bottom of this page).
+
+```{r netlify-drag-drop, echo=FALSE, fig.align='center', fig.cap="Screenshot of drag and drop deploy update box on Netlify."}
+knitr::include_graphics("images/netlify-drag-drop-update.png", dpi = NA)
+```
+
+Edit your book, build it locally again, then drag and drop the output directory here again. 
+
+### *Optional: change the default subdomain* {#netlify-subdomain} 
+
+Navigate to your site's landing page on Netlify.com (<https://app.netlify.com>), click on *Overview > Site Settings*. Under *Site information*, click on *Change site name* and update it to a name that you want. If you want to use your own domain instead of Netlify's subdomain, please read the documentation at https://docs.netlify.com/domains-https/custom-domains/. 
+
+### Drawbacks and alternatives
+
+This workflow is great to quickly share a book prototype. However, if you opt to not claim your site, the link will expire in 24 hours. Even if you do claim your site and set up a Netlify account, this workflow is not ideal for books you are actively editing or collaborating on because every time you update your local version of the book, you need to manually upload the book to Netlify. You are also not reaping the benefits of version control with this approach. 
+
 ## GitHub
 
 You can host your book on GitHub\index{GitHub} for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. The key is to create a hidden file `.nojekyll` that tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. 
@@ -81,7 +132,7 @@ cd book-output
 git rm -rf *
 cp -r ../_book/* ./
 git add --all *
-git commit -m"Update the book"
+git commit -m "Update the book"
 git push -q origin gh-pages
 ```
 
