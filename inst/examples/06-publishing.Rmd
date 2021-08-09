@@ -21,7 +21,7 @@ If you have set up your own RStudio Connect server, you can certainly publish th
 
 ## Netlify Drop
 
-Netlify (<https://netlify.com>) is a platform that offers cloud hosting and serverless backend services for static websites. Netlify offers both free and paid tiers for service, but they also offer a service called Netlify Drop (<https://app.netlify.com/drop>), which is a free publishing option that does not require a Netlify account to start. This option does not rely on your **bookdown** project being in a version-controlled repository. All you need is a **bookdown** project that you can build locally. Watch a quick video introduction here: <https://youtu.be/-LRlQ_jaLAU>
+Netlify (<https://netlify.com>) is a platform that offers cloud hosting and serverless backend services for static websites. Netlify offers both free and paid tiers for service, but they also offer a service called Netlify Drop (<https://app.netlify.com/drop>), which is a free publishing option that does not require a Netlify account to start. This option does not rely on your **bookdown** project being in a version-controlled repository. All you need is a **bookdown** project that you can build locally.
 
 ### The build-and-deploy pipeline sequence
 
