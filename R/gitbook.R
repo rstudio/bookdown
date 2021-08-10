@@ -1,6 +1,5 @@
 #' The GitBook output format
 #'
-#' @description
 #' This output format function ported a style provided by GitBook
 #' (\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
 #' \url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
@@ -24,7 +23,8 @@
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  anchor_sections = TRUE, lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
+  anchor_sections = TRUE, lib_dir = 'libs', global_numbering = !number_sections,
+  pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
@@ -57,7 +57,7 @@ gitbook = function(
 
     move_files_html(output, lib_dir)
     output2 = split_chapters(
-      output, gitbook_page, number_sections, split_by, split_bib, gb_config, split_by
+      output, gitbook_page, global_numbering, split_by, split_bib, gb_config, split_by
     )
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
     move_files_html(output2, lib_dir)
