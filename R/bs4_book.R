@@ -91,7 +91,7 @@ bs4_book_build <- function(output = "bookdown.html",
   output2 <- split_chapters(
     output = output,
     build = function(...) bs4_book_page(..., rmd_index = rmd_index),
-    number_sections = TRUE,
+    global_numbering = FALSE,
     split_by = "chapter",
     split_bib = split_bib
   )
