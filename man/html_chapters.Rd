@@ -12,6 +12,7 @@ html_chapters(
   fig_caption = TRUE,
   lib_dir = "libs",
   template = bookdown_file("templates/default.html"),
+  global_numbering = !number_sections,
   pandoc_args = NULL,
   ...,
   base_format = rmarkdown::html_document,
@@ -29,6 +30,13 @@ tufte_html_book(...)
 \code{rmarkdown::\link{html_document}},
 \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
 of the \code{base_format} function.}
+
+\item{global_numbering}{If \code{TRUE}, number figures and tables globally
+throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+FALSE} will not work with \code{number_sections = FALSE} because sections
+are not numbered.}
 
 \item{...}{Other arguments to be passed to \code{base_format}. For
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to

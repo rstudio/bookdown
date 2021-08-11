@@ -5,6 +5,7 @@
 #' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
 #' functions of \code{html_chapter()} using a specific base output format.
 #' @inheritParams pdf_book
+#' @inheritParams html_document2
 #' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
 #'   \code{rmarkdown::\link{html_document}},
 #'   \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
@@ -50,7 +51,8 @@
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
-  template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
+  template = bookdown_file('templates/default.html'),
+  global_numbering = !number_sections, pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
@@ -64,7 +66,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    output2 = split_chapters(output, page_builder, number_sections, split_by, split_bib)
+    output2 = split_chapters(output, page_builder, global_numbering, split_by, split_bib)
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
     move_files_html(output2, lib_dir)
     output2
@@ -111,6 +113,12 @@ tufte_html_book = function(...) {
 #'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 #'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
 #'   section headers in this case.
+#' @param global_numbering If \code{TRUE}, number figures and tables globally
+#'   throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+#'   number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+#'   ..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+#'   FALSE} will not work with \code{number_sections = FALSE} because sections
+#'   are not numbered.
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
@@ -123,7 +131,8 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, global_numbering = !number_sections,
+  pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
@@ -135,7 +144,7 @@ html_document2 = function(
     x = clean_html_tags(x)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
-    x = resolve_refs_html(x, global = !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     write_utf8(x, output)
     output
   }
@@ -240,7 +249,9 @@ build_chapter = function(
 
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
 
-split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
+split_chapters = function(
+  output, build = build_chapter, global_numbering, split_by, split_bib, ...
+) {
 
   use_rmd_names = split_by == 'rmd'
   split_level = switch(
@@ -311,7 +322,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
-    x = resolve_refs_html(x, !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     x = add_chapter_prefix(x)
     write_utf8(x, output)
     return(output)
@@ -333,7 +344,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
   )
 
-  html_body = resolve_refs_html(html_body, !number_sections)
+  html_body = resolve_refs_html(html_body, global_numbering)
 
   # do not split the HTML file
   if (split_level == 0) {
