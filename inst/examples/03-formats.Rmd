@@ -251,7 +251,7 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
   regardless of the size of your device. A sticky header gets out of your
   way when reading, but is easily accessible if you need it.
 
-- In-line footnotes mean you can read asides next to the next they refer
+- In-line footnotes mean you can read asides next to the text they refer
   to. This theme is best paired with a reference style that generates
   footnotes.
 
