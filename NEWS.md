@@ -57,6 +57,8 @@
 
 - When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
 
+- The figure/table labels are no longer duplicated in Word output generated from Pandoc 2.14.1 (thanks, @dewittpe, #1223).
+
 # CHANGES IN bookdown VERSION 0.22
 
 ## NEW FEATURES
