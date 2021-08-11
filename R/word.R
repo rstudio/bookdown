@@ -11,6 +11,17 @@ markdown_document2 = function(
     number_sections = number_sections, fig_caption = fig_caption,
     md_extensions = md_extensions, pandoc_args = pandoc_args, ...
   ))
+
+  # for docx, Pandoc 2.14.1 numbers figures/tables globally from 1 to n (#1223)
+  if (!global_numbering && rmarkdown::pandoc_available('2.14.1') &&
+      identical(base_format, rmarkdown::word_document)) {
+    if (!missing(global_numbering)) warning(
+      "'global_numbering = FALSE' does not work for Word output with Pandoc >= 2.14.1; ",
+      "Using 'TRUE' instead."
+    )
+    global_numbering = TRUE
+  }
+
   pre = config$pre_processor
   config$pre_processor = function(metadata, input_file, ...) {
     process_markdown(input_file, from, pandoc_args, global_numbering)
