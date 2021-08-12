@@ -123,15 +123,7 @@ $if(subtitle)$
 $endif$
 $for(author)$
 $if(author.name)$
-<style type="text/css">
-  p.author {
-    margin: 1em 0 0 0;
-  }
-  p.date {
-    margin-top: 1.5em;
-  }
-</style>
-<p class="author"><em>$author.name$</em></p>
+<p class="author multi-author"><em>$author.name$</em></p>
 $if(author.affiliation)$
 <address class="author_afil">
 $author.affiliation$<br>
