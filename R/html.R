@@ -395,7 +395,7 @@ split_chapters = function(
         paste(c(num, id), collapse = '-')
       } else id
       if (is.null(nm)) stop('The heading ', x2, ' must have an id')
-      gsub('[^[:alnum:]]+', '-', nm)
+      nm
     })
     if (anyDuplicated(nms)) (if (isTRUE(opts$get('preview'))) warning else stop)(
       'Automatically generated filenames contain duplicated ones: ',
