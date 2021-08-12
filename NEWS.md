@@ -52,6 +52,8 @@
 
 ## BUG FIXES
 
+- Removed the requirement for `.html` filenames to be alphanumeric, which fixes a common error "Automatically generated filenames contain duplicated ones: -" (thanks, @psychelzh #605, @AzureRabbit #902, @carloslederman #1000, Ritsu Kitagawa https://stackoverflow.com/q/60014350/559676, Shrek Tan).
+
 - Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
 
 - Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
