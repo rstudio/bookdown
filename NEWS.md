@@ -1,28 +1,12 @@
 # CHANGES IN bookdown VERSION 0.23
 
+## NEW FEATURES
+
 - This version has a brand new template project to start a HTML book in one of available format. Template project can be created using the RStudio IDE _New Project..._, or using one of the two new functions, `create_gitbook()` and `create_bs4_book()`, to easily create the template you want to start with from within the R Console (#225, #1123, #1201).
 
 - Added an argument `global_numbering` to most output format functions in this package to control the figure/table numbering scheme (thanks, @elfunesto #948, @Kodiologist #1057). If `TRUE`, number figures and tables globally throughout a document (e.g., Figure 1, Figure 2, ...). If `FALSE`, number them sequentially within sections (e.g., Figure 1.1, Figure 1.2, ..., Figure 5.1, Figure 5.2, ...). Previously, this numbering scheme was hard-coded internally according to the `number_sections` argument (`global_numbering = !number_sections`). Now the two arguments have become independent, e.g., you can use `global_numbering = TRUE` with `number_sections = TRUE`.
 
-- `bs4_book(splib_bib = TRUE)` can now be specified to have the same effect as in `gitbook()`. References will be shown at the end of each chapter and not only at the end of the book. This is useful with `bs4_book()` when a citation style not supporting footnotes is used because in that case, references are not shown inline in popups (thanks, @shirdekel, #1185).
-
 - For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
-
-- In `bs4_book()`, improvement regarding copy button:
-  * It has now a light icon instead of a text with white background (#1192). 
-  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
-  * It will now be placed correctly on the right side of the code block, with a light color which gets darker on hover so that it is less obtrusive when overlapping text in block with long lines  (#1204). If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
-
-- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
-- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
-
-- `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
-
-- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
-
-- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
-
-- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
 - The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
 
@@ -36,9 +20,18 @@
 
   Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
 
-- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
+- `bs4_book(splib_bib = TRUE)` can now be specified to have the same effect as in `gitbook()`. References will be shown at the end of each chapter and not only at the end of the book. This is useful with `bs4_book()` when a citation style not supporting footnotes is used because in that case, references are not shown inline in popups (thanks, @shirdekel, #1185).
 
-- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
+- In `bs4_book()`, improvement regarding copy button:
+  * It has now a light icon instead of a text with white background (#1192). 
+  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
+  * It will now be placed correctly on the right side of the code block, with a light color which gets darker on hover so that it is less obtrusive when overlapping text in block with long lines  (#1204). If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
+
+- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
+
+- `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
+
+- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
 - `epub_version` argument in `epub_book()` can now be set to `epub2` to create EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
 
@@ -53,13 +46,27 @@
 
   This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
 
+## MINOR CHANGES
+
 - Updated the jQuery library to v3.x, which was imported from the R package **jquerylib** (thanks, @mterente #693, @cooknl #882).
+
+## BUG FIXES
+
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
+
+- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
 
 - When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
 
 - The figure/table labels are no longer duplicated in Word output generated from Pandoc 2.14.1 (thanks, @dewittpe, #1223).
 
 - When a book has multiple authors, the CSS styles for each author were inlined in the `<p>` tags, and hence are hard to override. Now the class `multi-author` is applied to each individual author's `<p>` tag, and the CSS rules are defined on this class instead (thanks, @robjhyndman, #1170).
+
+- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
+
+- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+
+- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
 # CHANGES IN bookdown VERSION 0.22
 
