@@ -59,6 +59,8 @@
 
 - The figure/table labels are no longer duplicated in Word output generated from Pandoc 2.14.1 (thanks, @dewittpe, #1223).
 
+- When a book has multiple authors, the CSS styles for each author were inlined in the `<p>` tags, and hence are hard to override. Now the class `multi-author` is applied to each individual author's `<p>` tag, and the CSS rules are defined on this class instead (thanks, @robjhyndman, #1170).
+
 # CHANGES IN bookdown VERSION 0.22
 
 ## NEW FEATURES
