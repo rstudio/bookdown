@@ -1,4 +1,6 @@
 test_that("build_404 creates correct 404 page", {
+  skip_if_not_pandoc()
+
   tmp_dir <- withr::local_tempdir()
   withr::local_dir(tmp_dir)
 
