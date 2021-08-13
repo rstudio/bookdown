@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- This version has a brand new template project to start a HTML book in one of available format. Template project can be created using the RStudio IDE _New Project..._, or using one of the two new functions, `create_gitbook()` and `create_bs4_book()`, to easily create the template you want to start with from within the R Console (#225, #1123, #1201).
+- This version has included a new RStudio template project to start an HTML book in `bookdown::gitbook` or `bookdown::bs4_book`. Template projects can be created using the RStudio IDE menu "New Project", or using one of the two new functions, `create_gitbook()` or `create_bs4_book()`, to easily create the template that you want to start with from within the R console (#225, #1123, #1201).
 
 - Added an argument `global_numbering` to most output format functions in this package to control the figure/table numbering scheme (thanks, @elfunesto #948, @Kodiologist #1057). If `TRUE`, number figures and tables globally throughout a document (e.g., Figure 1, Figure 2, ...). If `FALSE`, number them sequentially within sections (e.g., Figure 1.1, Figure 1.2, ..., Figure 5.1, Figure 5.2, ...). Previously, this numbering scheme was hard-coded internally according to the `number_sections` argument (`global_numbering = !number_sections`). Now the two arguments have become independent, e.g., you can use `global_numbering = TRUE` with `number_sections = TRUE`.
 
