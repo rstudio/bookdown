@@ -112,9 +112,6 @@ process_markdown = function(
 }
 
 resolve_refs_md = function(content, ref_table, to_md = output_md()) {
-  # for docx output with pandoc 2.14.1, don't add the label prefix (#1223)
-  omit_prefix = knitr::pandoc_to('docx') && rmarkdown::pandoc_available('2.14.1')
-
   ids = names(ref_table)
   # replace (\#fig:label) with Figure x.x:
   for (i in grep('^(<p class="caption|<caption>|Table:|\\\\BeginKnitrBlock)|(!\\[.*?\\]\\(.+?\\))', content)) {
@@ -127,9 +124,7 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
           id = sprintf('<span id="%s"></span>', j)
           sep = ''
         }
-        label = if (omit_prefix && type %in% c('fig', 'tab')) '' else {
-          label_prefix(type, sep = sep)(ref_table[j])
-        }
+        label = label_prefix(type, sep = sep)(ref_table[j])
         content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
       }

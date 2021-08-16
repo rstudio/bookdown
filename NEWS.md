@@ -1,6 +1,8 @@
 # CHANGES IN bookdown VERSION 0.24
 
+## MINOR CHANGES
 
+- Reverted the fix for #1223 since it only affects a specific version of Pandoc (2.14.1). If this issue affects you, please see #1223 for workarounds.
 
 # CHANGES IN bookdown VERSION 0.23
 
