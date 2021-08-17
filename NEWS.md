@@ -39,7 +39,7 @@
 
 - `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
 
-- `epub_version` argument in `epub_book()` can now be set to `epub2` to create EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
+- `epub_version` argument in `epub_book()` can now be set to `epub2` to create EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, @jtbayly, #1150).
 
 - [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
   ````markdown
@@ -54,7 +54,7 @@
 
 ## MINOR CHANGES
 
-- Updated the jQuery library to v3.x, which was imported from the R package **jquerylib** (thanks, @mterente #693, @cooknl #882).
+- Updated the jQuery library to v3.x, which is now imported from the R package **jquerylib** (thanks, @mterente #693, @cooknl #882).
 
 ## BUG FIXES
 
