@@ -152,7 +152,7 @@ Div = function (div)
             table.insert(div.content[#div.content].content, pandoc.RawInline('tex', '\n' .. endEnv))
         else
             table.insert(div.content, 1, pandoc.RawBlock('tex', beginEnv))
-            table.insert(div.content, pandoc.RawInline('tex', endEnv))
+            table.insert(div.content, pandoc.RawBlock('tex', endEnv))
         end
     elseif (FORMAT:match 'html') then
         -- if div is already processed by eng_theorem, it would also modify it.

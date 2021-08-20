@@ -4,6 +4,10 @@
 
 - Reverted the fix for #1223 since it only affects a specific version of Pandoc (2.14.1). If this issue affects you, please see #1223 for workarounds.
 
+## BUG FIXES
+
+- Fix an issue with Fenced Divs for Theorem & Proof env in the Lua filter.
+
 # CHANGES IN bookdown VERSION 0.23
 
 ## NEW FEATURES
