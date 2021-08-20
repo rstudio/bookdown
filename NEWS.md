@@ -6,7 +6,7 @@
 
 ## BUG FIXES
 
-- Fix an issue with Fenced Divs for Theorem & Proof env in the Lua filter.
+- Fix an issue with Fenced Divs for Theorem & Proof environments in the Lua filter (thanks, @tchevri, #1233).
 
 # CHANGES IN bookdown VERSION 0.23
 
