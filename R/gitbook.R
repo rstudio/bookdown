@@ -91,17 +91,17 @@ gitbook_dependency = function(table_css, config = list()) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
+  # TODO: download and a local copy of fuse.js?
+  fuse = htmltools::htmlDependency(
+    'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
+    script = 'dist/fuse.min.js'
+  )
   if (is.logical(config$search)) {
-    lunr = config$search
-    fuse = NULL
+    lunr = FALSE
+    if (!config$search) fuse = NULL
   } else {
-    # TODO: use fuse by default in the future
-    lunr = !identical(config$search$engine, 'fuse')
-    # TODO: download and a local copy of fuse.js?
-    fuse = if (!lunr) htmltools::htmlDependency(
-      'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
-      script = 'dist/fuse.min.js'
-    )
+    # use fuse as the search engine by default
+    lunr = identical(config$search$engine, 'lunr')
   }
   list(jquery_dependency(), fuse, htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
@@ -256,7 +256,7 @@ gitbook_config = function(config = list()) {
     view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
-    search = list(engine = 'lunr', options = NULL),
+    search = list(engine = 'fuse', options = NULL),
     toc = list(collapse = 'subsection')
   )
   if (isTRUE(config$search)) config$search = NULL

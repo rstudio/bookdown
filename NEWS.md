@@ -1,5 +1,17 @@
 # CHANGES IN bookdown VERSION 0.24
 
+## MAJOR CHANGES
+
+- The default search engine for `gitbook` has been changed from `lunr` to `fuse`. If you want to switch back to `lunr`, you may set:
+
+  ```yaml
+  output:
+    bookdown::gitbook:
+      config:
+        search:
+          engine: lunr
+  ```
+
 ## MINOR CHANGES
 
 - Reverted the fix for #1223 since it only affects a specific version of Pandoc (2.14.1). If this issue affects you, please see #1223 for workarounds.
