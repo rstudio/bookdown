@@ -8,6 +8,8 @@
 
 - Fix an issue with Fenced Divs for Theorem & Proof environments in the Lua filter (thanks, @tchevri, #1233).
 
+- `gitbook(self_contained = TRUE)` was slow when the output contains base64-encoded images (thanks, @king2bob, #1236).
+
 # CHANGES IN bookdown VERSION 0.23
 
 ## NEW FEATURES

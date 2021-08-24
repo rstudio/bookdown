@@ -1086,7 +1086,9 @@ move_files_html = function(output, lib_dir) {
     if (length(z) == 0) z else gsub(r, '\\2', z)
   }))
   f = c(f, parse_cover_image(x))
-  f = vapply(f, utils::URLdecode, FUN.VALUE = character(1))
+  f = vapply(f, function(x) {
+    if (grepl('^data:', x)) x else URLdecode(x)
+  }, FUN.VALUE = character(1))
   Encoding(f) = 'UTF-8'
   f = local_resources(unique(f[file.exists(f)]))
   # detect resources in CSS
