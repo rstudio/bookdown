@@ -91,13 +91,18 @@ gitbook_dependency = function(table_css, config = list()) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  # TODO: use fuse by default in the future
-  lunr = !identical(config$search$engine, 'fuse')
-  # TODO: download and a local copy of fuse.js?
-  fuse = if (!lunr) htmltools::htmlDependency(
-    'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
-    script = 'dist/fuse.min.js'
-  )
+  if (is.logical(config$search)) {
+    lunr = config$search
+    fuse = NULL
+  } else {
+    # TODO: use fuse by default in the future
+    lunr = !identical(config$search$engine, 'fuse')
+    # TODO: download and a local copy of fuse.js?
+    fuse = if (!lunr) htmltools::htmlDependency(
+      'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
+      script = 'dist/fuse.min.js'
+    )
+  }
   list(jquery_dependency(), fuse, htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
@@ -254,6 +259,8 @@ gitbook_config = function(config = list()) {
     search = list(engine = 'lunr', options = NULL),
     toc = list(collapse = 'subsection')
   )
+  if (isTRUE(config$search)) config$search = NULL
+  if (xfun::isFALSE(config$search)) default$search = FALSE
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript
   config$toc$before = NULL; config$toc$after = NULL

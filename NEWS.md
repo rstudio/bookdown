@@ -10,6 +10,8 @@
 
 - `gitbook(self_contained = TRUE)` was slow when the output contains base64-encoded images (thanks, @king2bob, #1236).
 
+- The search config `search: true` or `search: false` for `gitbook` throws a misleading error (thanks, @GegznaV, #1238).
+
 # CHANGES IN bookdown VERSION 0.23
 
 ## NEW FEATURES
