@@ -50,6 +50,8 @@ navbar:
           href: news/index.html
         - text: "------------------"
         - text: "Blog posts"
+        - text: "Version 0.23"
+          href: https://blog.rstudio.com/2021/08/18/announcing-bookdown-v0.23/
         - text: "Version 0.21"
           href: https://blog.rstudio.com/2020/12/21/rmd-news/
         - text: "Version 0.3"
