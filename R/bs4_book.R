@@ -14,9 +14,14 @@
 #'   view source and edit buttons or a list with repository `base` link, default
 #'   `branch`, `subdir` and `icon`
 #'   (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).
-#' @param lib_dir,pandoc_args,extra_dependencies,split_bib,... Passed on to
-#'   [rmarkdown::html_document()].
-#'
+#' @param lib_dir,pandoc_args,extra_dependencies,split_bib,... Passed on to [rmarkdown::html_document()].
+#' @param template Pandoc template to use for rendering. Pass `"default"` to use
+#'   the bookdown default template; pass a path to use a custom template. The
+#'   default template should be sufficient for most use cases. For advanced user
+#'   only, in case you want to develop a custom template, we highly recommend to
+#'   start from the default template:
+#'   <https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html>.
+#'   Otherwise, some feature may not work anymore.
 #' @export
 #' @md
 bs4_book <- function(theme = bs4_book_theme(),
@@ -25,6 +30,7 @@ bs4_book <- function(theme = bs4_book_theme(),
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
+                     template = 'default',
                      split_bib = FALSE) {
   check_packages(bs4_book_deps())
   bs4_check_dots(...)
@@ -34,13 +40,18 @@ bs4_book <- function(theme = bs4_book_theme(),
     theme <- do.call(bs4_book_theme, theme)
   }
 
+  # check for custom template
+  if (identical(template, 'default')) {
+    template <- bookdown_file('templates', 'bs4_book.html')
+  }
+
   config <- rmarkdown::html_document(
     toc = FALSE,
     number_sections = TRUE,
     anchor_sections = FALSE,
     self_contained = FALSE,
     theme = NULL,
-    template = bookdown_file("templates", "bs4_book.html"),
+    template = template,
     pandoc_args = pandoc_args2(pandoc_args),
     lib_dir = lib_dir,
     extra_dependencies = c(bs4_book_dependency(theme), extra_dependencies),
@@ -679,7 +690,6 @@ bs4_check_dots <- function(...) {
     "anchor_sections",
     "number_sections",
     "self_contained",
-    "template",
     "toc"
   )
   for (arg in fixed) {

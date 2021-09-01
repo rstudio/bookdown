@@ -12,6 +12,7 @@ bs4_book(
   lib_dir = "libs",
   pandoc_args = NULL,
   extra_dependencies = NULL,
+  template = "default",
   split_bib = FALSE
 )
 
@@ -28,8 +29,15 @@ view source and edit buttons or a list with repository \code{base} link, default
 \code{branch}, \code{subdir} and \code{icon}
 (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).}
 
-\item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to
-\code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
+\item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
+
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"} to use
+the bookdown default template; pass a path to use a custom template. The
+default template should be sufficient for most use cases. For advanced user
+only, in case you want to develop a custom template, we highly recommend to
+start from the default template:
+\url{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}.
+Otherwise, some feature may not work anymore.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
 
