@@ -31,7 +31,7 @@ gitbook = function(
   gb_config = config
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css, gb_config))
+      ..., extra_dependencies = c(gitbook_dependency(table_css, gb_config), extra_dependencies)
     )
   }
   if (identical(template, 'default')) {

@@ -20,6 +20,8 @@
 
 ## BUG FIXES
 
+- `extra_dependencies` in `gitbook()` will now be appended after Gitbook's dependencies so that it does not get overridden (thanks, @ThierryO, @linogaliana, #1101, #1248).
+
 - Fix an issue with Fenced Divs for Theorem & Proof environments in the Lua filter (thanks, @tchevri, #1233).
 
 - `gitbook(self_contained = TRUE)` was slow when the output contains base64-encoded images (thanks, @king2bob, #1236).
