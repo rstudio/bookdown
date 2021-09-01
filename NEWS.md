@@ -16,6 +16,8 @@
 
 - Reverted the fix for #1223 since it only affects a specific version of Pandoc (2.14.1). If this issue affects you, please see #1223 for workarounds.
 
+- `bs4_book()` now has the `template` argument like `gitbook()` (thanks, @shinneuro, #1247).
+
 ## BUG FIXES
 
 - Fix an issue with Fenced Divs for Theorem & Proof environments in the Lua filter (thanks, @tchevri, #1233).
