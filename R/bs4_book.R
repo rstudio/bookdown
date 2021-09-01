@@ -25,6 +25,7 @@ bs4_book <- function(theme = bs4_book_theme(),
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
+                     template = 'default',
                      split_bib = FALSE) {
   check_packages(bs4_book_deps())
   bs4_check_dots(...)
@@ -34,13 +35,18 @@ bs4_book <- function(theme = bs4_book_theme(),
     theme <- do.call(bs4_book_theme, theme)
   }
 
+  # check for custom template
+  if (identical(template, 'default')) {
+    template = bookdown_file('templates', 'bs4_book.html')
+  }
+
   config <- rmarkdown::html_document(
     toc = FALSE,
     number_sections = TRUE,
     anchor_sections = FALSE,
     self_contained = FALSE,
     theme = NULL,
-    template = bookdown_file("templates", "bs4_book.html"),
+    template = template,
     pandoc_args = pandoc_args2(pandoc_args),
     lib_dir = lib_dir,
     extra_dependencies = c(bs4_book_dependency(theme), extra_dependencies),
@@ -679,7 +685,7 @@ bs4_check_dots <- function(...) {
     "anchor_sections",
     "number_sections",
     "self_contained",
-    "template",
+    # "template",
     "toc"
   )
   for (arg in fixed) {
