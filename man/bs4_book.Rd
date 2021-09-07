@@ -8,6 +8,7 @@
 bs4_book(
   theme = bs4_book_theme(),
   repo = NULL,
+  fn_gitbook = FALSE,
   ...,
   lib_dir = "libs",
   pandoc_args = NULL,
