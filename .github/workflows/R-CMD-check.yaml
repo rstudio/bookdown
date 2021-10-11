@@ -2,18 +2,14 @@
 # https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths-ignore:
       - 'inst/examples/**'
       - '_pkgdown.yml'
       - 'pkgdown/**'
       - '.github/workflows/pkgdown.yaml'
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths-ignore:
       - 'inst/examples/**'
       - '_pkgdown.yml'
@@ -33,25 +29,24 @@ jobs:
         config:
           - {os: windows-latest, pandoc: '2.7.3',   r: 'release'}
           - {os: macOS-latest,   pandoc: '2.7.3',   r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest",  http-user-agent: "R/4.0.0 (ubuntu-16.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions" }
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          - {os: ubuntu-18.04,   pandoc: 'devel', r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: 'devel', r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
 
     steps:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@v1
-        id: install-r
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
       - name: change temp dir
         if: runner.os == 'Windows'
@@ -77,31 +72,11 @@ jobs:
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
-      - name: Install pak and query dependencies
-        run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
-          saveRDS(pak::pkg_deps_tree("local::.", dependencies = TRUE), ".github/r-depends.rds")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          path: |
-            ${{ env.R_LIBS_USER }}/*
-            !${{ env.R_LIBS_USER }}/pak
-          key: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
-          restore-keys: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: Rscript -e 'pak::local_system_requirements(execute = TRUE)'
-
-      - name: Install dependencies
-        run: |
-          pak::local_install_dev_deps(upgrade = TRUE)
-          pak::pkg_install("rcmdcheck")
-          pak::pkg_install("sessioninfo")
-        shell: Rscript {0}
+          extra-packages: |
+            rcmdcheck
+            sessioninfo
 
       - name: Session info
         run: |
@@ -113,11 +88,7 @@ jobs:
           tinytex::tl_pkgs()
         shell: Rscript {0}
 
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
+      - uses: r-lib/actions/check-r-package@v1
 
       - name: Upload check results
         if: failure()
