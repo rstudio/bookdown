@@ -2,9 +2,7 @@
 # https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths:
       - 'inst/examples/**'
       - 'inst/resources/**'
@@ -13,9 +11,7 @@ on:
       - 'R/**'
       - '.github/workflows/Book.yaml'
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths:
       - 'inst/examples/**'
       - 'inst/resources/**'
@@ -52,19 +48,12 @@ jobs:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          extra-packages: |
+            webshot
+            sessioninfo
+          needs: website
 
       - name: Install OS dependencies
         run: |
@@ -74,13 +63,7 @@ jobs:
 
       - name: Install phamtomJS for webshot
         run: |
-          remotes::install_cran("webshot")
           webshot::install_phantomjs()
-        shell: Rscript {0}
-
-      - name: Install R dependencies for bookdown
-        run: |
-          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Install bookdown package
@@ -90,7 +73,6 @@ jobs:
       - name: Session info
         run: |
           options(width = 100)
-          remotes::install_cran("sessioninfo")
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
