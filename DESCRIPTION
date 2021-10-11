@@ -88,5 +88,6 @@ BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/Needs/book: remotes, webshot
 Config/testthat/edition: 3
 VignetteBuilder: knitr

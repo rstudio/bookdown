@@ -51,9 +51,8 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: |
-            webshot
             sessioninfo
-          needs: website
+          needs: book
 
       - name: Install OS dependencies
         run: |
