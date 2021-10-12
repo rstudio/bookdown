@@ -195,7 +195,7 @@ Note that for HTML output, **bookdown** requires some additional comment tokens 
 
 ## Configuration
 
-We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optional) settings you can configure for a book in `_bookdown.yml`\index{\_bookdown.yml}^[For the [`bs4_book`](#bs4-book) format, the edit, history, and view pages are specified with the [repo](#specifying-the-repository) element.]:
+We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optional) settings you can configure for a book in `_bookdown.yml`\index{\_bookdown.yml}^[For the [`bs4_book()`](#bs4-book) format, the `edit`, `history`, and `view` fields have no effect and similar configuration can be specified with the [repo](#specifying-the-repository) argument of the output function.]:
 
 - `book_filename`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`.
 - `delete_merged_file`: whether to delete the main Rmd file after the book is successfully rendered.
