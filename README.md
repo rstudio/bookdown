@@ -22,7 +22,7 @@ A open-source (GPL-3) R package to facilitate writing books and long-form articl
 
 ## Book
 
-<a href="https://bookdown.org/yihui/bookdown/"><img src="https://bookdown.org/yihui/bookdown/images/cover.jpg" alt = "bookdown: Authoring Books and Technical Documents with R Markdown" height="400"></a>
+<a href="https://bookdown.org/yihui/bookdown/"><img class="book" src="https://bookdown.org/yihui/bookdown/images/cover.jpg" alt = "bookdown: Authoring Books and Technical Documents with R Markdown" height="400"></a>
 
 ## Installation
 
