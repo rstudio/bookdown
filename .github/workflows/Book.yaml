@@ -22,8 +22,8 @@ on:
   workflow_dispatch:
     inputs:
       ghpages:
-        description: 'Deploy gitbook to gh-page for checking differences'
-        required: true
+        description: 'Build gitbook with pandoc devel and deploy gitbook to gh-page for checking differences'
+        required: false
         default: true
 
 name: Build and deploy book
@@ -44,9 +44,14 @@ jobs:
         uses: r-lib/actions/setup-r@v1
 
       - name: Install Pandoc
+        if: !github.event.inputs.ghpages
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.7.3'
+
+      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
+        # install nightly when checking on gh-pages
+        if: github.event.inputs.ghpages
 
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v1
