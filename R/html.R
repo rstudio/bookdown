@@ -247,7 +247,7 @@ build_chapter = function(
 }
 
 add_toc_class = function(toc) {
-  gsub('^(<li>)(.+)(?<!<\\/li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
+  gsub('^(<li>)(.+)(?<!</li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
 }
 
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
