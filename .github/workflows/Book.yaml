@@ -44,7 +44,7 @@ jobs:
         uses: r-lib/actions/setup-r@v1
 
       - name: Install Pandoc
-        if: !github.event.inputs.ghpages
+        if: ${{ ! github.event.inputs.ghpages }}
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.7.3'
