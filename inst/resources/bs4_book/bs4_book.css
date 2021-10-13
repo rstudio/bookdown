@@ -392,15 +392,39 @@ code a:any-link {
   text-decoration-color: #ccc;
 }
 
-pre .copy {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+/* copy button */
+
+div.sourceCode {
+  position: relative;
 }
-pre .copy button {
-  background-color: #fff;
-  font-size: 80%;
-  padding: 4px 6px;
+
+.btn-copy {
+  position: absolute;
+  top: 0rem;
+  right: -0.5rem; /* coherent with pre margin rule */
+}
+
+div.sourceCode > button {
+  filter: opacity(50%);
+}
+
+div.sourceCode > button:hover {
+  filter: opacity(100%);
+}
+
+div.sourceCode > button > i.bi::before {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  content: "";
+  vertical-align: -0.125em;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>');
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+}
+
+div.sourceCode > button.btn-copy-checked > .bi::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>');
 }
 
 /* https://github.com/rstudio/distill/blob/master/inst/rmarkdown/templates/distill_article/resources/a11y.theme + https://gist.github.com/hadley/f53b6e92df20994fdabe6562d284728a */
@@ -455,6 +479,8 @@ body {
   font-variant: small-caps;
 }
 
+/* special callout blocks */
+
 .rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
   margin: 1rem calc(-2px - 0.5em);
   padding: 1rem;
@@ -486,6 +512,17 @@ body {
 }
 .rmdtip {
   border-color: var(--info);
+}
+
+.rmdcaution pre, .rmdimportant pre, .rmdnote pre, .rmdtip pre, .rmdwarning pre {
+  /* Make code blocks full width in rmdnote */
+  margin: 0 -1rem 1rem -1rem;
+  padding: 1rem;
+}
+
+.rmdcaution .btn-copy, .rmdimportant .btn-copy, .rmdnote .btn-copy, .rmdtip .btn-copy, .rmdwarning .btn-copy {
+  /* Needs to be set according to margin in callout pre block */
+  right: -1rem;
 }
 
 main ul {

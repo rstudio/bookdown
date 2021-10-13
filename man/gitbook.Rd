@@ -10,6 +10,7 @@ gitbook(
   self_contained = FALSE,
   anchor_sections = TRUE,
   lib_dir = "libs",
+  global_numbering = !number_sections,
   pandoc_args = NULL,
   ...,
   template = "default",
@@ -23,6 +24,13 @@ gitbook(
 \item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
+
+\item{global_numbering}{If \code{TRUE}, number figures and tables globally
+throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+FALSE} will not work with \code{number_sections = FALSE} because sections
+are not numbered.}
 
 \item{...}{Other arguments to be passed to \code{base_format}. For
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to
@@ -55,10 +63,11 @@ the citations are actually used.}
 the font/theme settings.}
 
 \item{table_css}{\code{TRUE} to load gitbook's default CSS for tables. Choose
-\code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+\code{FALSE} to unload and use customized CSS (for example, bootstrap) via
 the \code{css} option. Default is \code{TRUE}.}
 }
 \description{
 This output format function ported a style provided by GitBook
-(\url{https://www.gitbook.com}) for R Markdown.
+(\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+\url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
 }

@@ -1,6 +1,45 @@
+# CHANGES IN bookdown VERSION 0.25
+
+
+# CHANGES IN bookdown VERSION 0.24
+
+## MAJOR CHANGES
+
+- The default search engine for `gitbook` has been changed from `lunr` to `fuse`. If you want to switch back to `lunr`, you may set:
+
+  ```yaml
+  output:
+    bookdown::gitbook:
+      config:
+        search:
+          engine: lunr
+  ```
+
+## MINOR CHANGES
+
+- Reverted the fix for #1223 since it only affects a specific version of Pandoc (2.14.1). If this issue affects you, please see #1223 for workarounds.
+
+- `bs4_book()` now has the `template` argument like `gitbook()` (thanks, @shinneuro, #1247).
+
+## BUG FIXES
+
+- `extra_dependencies` in `gitbook()` will now be appended after Gitbook's dependencies so that it does not get overridden (thanks, @ThierryO, @linogaliana, #1101, #1248).
+
+- Fix an issue with Fenced Divs for Theorem & Proof environments in the Lua filter (thanks, @tchevri, #1233).
+
+- `gitbook(self_contained = TRUE)` was slow when the output contains base64-encoded images (thanks, @king2bob, #1236).
+
+- The search config `search: true` or `search: false` for `gitbook` throws a misleading error (thanks, @GegznaV, #1238).
+
 # CHANGES IN bookdown VERSION 0.23
 
-- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
+## NEW FEATURES
+
+- This version has included a new RStudio template project to start an HTML book in `bookdown::gitbook` or `bookdown::bs4_book`. Template projects can be created using the RStudio IDE menu "New Project", or using one of the two new functions, `create_gitbook()` or `create_bs4_book()`, to easily create the template that you want to start with from within the R console (#225, #1123, #1201).
+
+- Added an argument `global_numbering` to most output format functions in this package to control the figure/table numbering scheme (thanks, @elfunesto #948, @Kodiologist #1057). If `TRUE`, number figures and tables globally throughout a document (e.g., Figure 1, Figure 2, ...). If `FALSE`, number them sequentially within sections (e.g., Figure 1.1, Figure 1.2, ..., Figure 5.1, Figure 5.2, ...). Previously, this numbering scheme was hard-coded internally according to the `number_sections` argument (`global_numbering = !number_sections`). Now the two arguments have become independent, e.g., you can use `global_numbering = TRUE` with `number_sections = TRUE`.
+
+- For HTML book formats, a default `404.html` page will now be created if none exists already. This page can be customized by adding a `_404.md` or `_404.Rmd` file which will be rendered to HTML and inserted in the book. Most web serving platforms (e.g. Netlify, GH Pages, etc.) will use this file named `404.html` in the root as a custom error page. Otherwise, like browsers do, a default 404 page is shown. For context, a 404 error indicates that the file can’t be found, and it happens when a browser can’t find a requested web page. This could happen with your online book if you shared a link to a section but change the name of this section leading to a change in url (#1035).
 
 - The `bookdown::gitbook` output format now supports an alternative search engine, namely `fuse.js`, which has several advantages over `lunr.js`, the previous search engine for `gitbook`. Using `fuse.js` will fix a number of long-standing issues such as #734, #735, and #792. To enable `fuse.js`, set the search engine to be `fuse` in `gitbook`'s config in YAML, e.g.,
 
@@ -14,9 +53,20 @@
 
   Depending on user feedback, we may set `fuse` to be the default search engine in a future version of **bookdown**. We will appreciate your testing and feedback!
 
-- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
+- `bs4_book(splib_bib = TRUE)` can now be specified to have the same effect as in `gitbook()`. References will be shown at the end of each chapter and not only at the end of the book. This is useful with `bs4_book()` when a citation style not supporting footnotes is used because in that case, references are not shown inline in popups (thanks, @shirdekel, #1185).
 
-- `epub_version` argument in `epub_book()` can now be set to `epub2` to creat EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, jtbayly, #1150).
+- In `bs4_book()`, improvement regarding copy button:
+  * It has now a light icon instead of a text with white background (#1192). 
+  * It will no more show on output block code when knitr's option is `collapse = FALSE` (#1197).
+  * It will now be placed correctly on the right side of the code block, with a light color which gets darker on hover so that it is less obtrusive when overlapping text in block with long lines  (#1204). If you want to customize part of the UI to change this default behavior, you can do it using a custom css with `bs4_book()`.
+
+- In `bs4_book()`, copy button has now a light icon instead of a text with white background (#1192). 
+
+- `bs4_book()` has now some `<meta>` tags that allows sharing a published book on social media. `cover-image`, `url`, `title` and `description` set in YAML will be used in `index.html` and then modified to be adapted per HTML page (#1034). 
+
+- `repo` specification in `bs4_book()` can now be done in a more flexible way: base url, branch name, subdir and icon can be specify. See `?bookdown::bs4_book()` for details (thanks, @maelle, #1036).
+
+- `epub_version` argument in `epub_book()` can now be set to `epub2` to create EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, @jtbayly, #1150).
 
 - [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
   ````markdown
@@ -25,11 +75,33 @@
   :::
   ````
   
-  However, as _beamer_ defines its own LaTeX throem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
+  However, as _beamer_ defines its own LaTeX theorem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
 
   This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
 
+## MINOR CHANGES
+
+- Updated the jQuery library to v3.x, which is now imported from the R package **jquerylib** (thanks, @mterente #693, @cooknl #882).
+
+## BUG FIXES
+
+- Removed the requirement for `.html` filenames to be alphanumeric, which fixes a common error "Automatically generated filenames contain duplicated ones: -" (thanks, @psychelzh #605, @AzureRabbit #902, @carloslederman #1000, Ritsu Kitagawa https://stackoverflow.com/q/60014350/559676, Shrek Tan).
+
+- Fix an issue with `bookdown_site()` where the comment in `site:` line key was not supported (thanks, @LDSamson, #1194).
+
+- Figure reference links now point correctly to the top of figures (thanks, @GuillaumeBiessy, #1155).
+
 - When the `site` field is quoted in `index.Rmd`'s YAML data (i.e., `site: "bookdown::bookdown_site"`), **bookdown** fails to identify the root directory of the book (thanks, @dchiu911, #1160).
+
+- The figure/table labels are no longer duplicated in Word output generated from Pandoc 2.14.1 (thanks, @dewittpe, #1223).
+
+- When a book has multiple authors, the CSS styles for each author were inlined in the `<p>` tags, and hence are hard to override. Now the class `multi-author` is applied to each individual author's `<p>` tag, and the CSS rules are defined on this class instead (thanks, @robjhyndman, #1170).
+
+- Style change in `bs4_book()` where code block inside callout blocks will have their background fill the whole width of the bordered block (#1175).
+
+- In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
+
+- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
 # CHANGES IN bookdown VERSION 0.22
 
@@ -45,11 +117,11 @@
 
 - Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
 
-- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in Whatsapp on Mobile and on Desktop (thanks, @prdm0, #1125).
+- WhatsApp sharing feature has been added for `gitbook()` using `sharing` key  in `config`. This enables sharing the bookdown URL in WhatsApp on Mobile and on Desktop (thanks, @prdm0, #1125).
 
 ## BUG FIXES
 
-- Adapt CSS in `gitbook()` and `html_book()` for correct diplaying of `<details><summary>` content (thanks, @maelle, #971)
+- Adapt CSS in `gitbook()` and `html_book()` for correct displaying of `<details><summary>` content (thanks, @maelle, #971)
 
 - When `split_bib = TRUE`, references in footnotes are now also correctly relocated in the chapter (thanks, @jimhshen, #952)
 
@@ -167,7 +239,7 @@
 
 - For the sake of backward-compatibility, prevent the commands `\frontmatter`, `\mainmatter`, and `\backmatter` from being automatically added to the LaTeX output when the Pandoc version is higher than 2.7, because **bookdown** users may have added these commands by themselves (thanks, @remlapmot, rstudio/rmarkdown#1721).
 
-- Fixed the issues yihui/bookdown-chinese#29 and yihui/bookdown-chinese#30. Such issues can occurr on Windows when there are multibyte characters in the section headers, and users will run into the error "Error in file.exists(f): file name conversion problem - name too long?" (thanks, @kongdd @JiaxiangBU @gaospecial and other users who reported the same issue such as https://twitter.com/matsuchiy/status/1186653559405727744 and https://d.cosx.org/d/420961).
+- Fixed the issues yihui/bookdown-chinese#29 and yihui/bookdown-chinese#30. Such issues can occur on Windows when there are multibyte characters in the section headers, and users will run into the error "Error in file.exists(f): file name conversion problem - name too long?" (thanks, @kongdd @JiaxiangBU @gaospecial and other users who reported the same issue such as https://twitter.com/matsuchiy/status/1186653559405727744 and https://d.cosx.org/d/420961).
 
 ## MINOR CHANGES
 
@@ -415,7 +487,7 @@
 
 ## NEW FEATURES
 
-- Added arguemnts `toc_unnumberred`, `toc_appendix`, `toc_bib`, and `quote_footer` to `pdf_book()`.
+- Added arguments `toc_unnumberred`, `toc_appendix`, `toc_bib`, and `quote_footer` to `pdf_book()`.
 
 - Added support for cross-referencing equations in multi-page HTML output and EPUB; see https://bookdown.org/yihui/bookdown/ for the syntax (thanks, @deleeuw, #85).
 

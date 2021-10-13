@@ -2,6 +2,7 @@
 #'
 #' Convert a book to the EPUB format, which is is an e-book format supported by
 #' many readers, such as Amazon Kindle Fire and iBooks on Apple devices.
+#' @inheritParams html_document2
 #' @param fig_width,fig_height,dev,fig_caption Figure options (width, height,
 #'   the graphical device, and whether to render figure captions).
 #' @param number_sections Whether to number sections.
@@ -32,7 +33,8 @@ epub_book = function(
   fig_width = 5, fig_height = 4, dev = 'png', fig_caption = TRUE,
   number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL,
   cover_image = NULL, metadata = NULL, chapter_level = 1,
-  epub_version = c('epub3', 'epub', 'epub2'), md_extensions = NULL, pandoc_args = NULL,
+  epub_version = c('epub3', 'epub', 'epub2'), md_extensions = NULL,
+  global_numbering = !number_sections, pandoc_args = NULL,
   template = 'default'
 ) {
   epub_version = match.arg(epub_version)
@@ -57,7 +59,7 @@ epub_book = function(
     knitr = rmarkdown::knitr_options_html(fig_width, fig_height, NULL, FALSE, dev),
     pandoc = rmarkdown::pandoc_options(epub_version, from, args, ext = '.epub'),
     pre_processor = function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
-      process_markdown(input_file, from, args, !number_sections)
+      process_markdown(input_file, from, args, global_numbering)
       NULL
     },
     post_processor = function(metadata, input, output, clean, verbose) {

@@ -11,76 +11,42 @@ bs4_book(
   ...,
   lib_dir = "libs",
   pandoc_args = NULL,
-  extra_dependencies = NULL
+  extra_dependencies = NULL,
+  template = "default",
+  split_bib = FALSE
 )
 
-bs4_book_theme(primary = "#0068D9", ...)
+bs4_book_theme(primary = "#0068D9", version = 4, ...)
 }
 \arguments{
 \item{theme}{A named list or \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object.
 The default, \code{bs4_book_theme()}, resets the base font size to 1rem to
-make reading easier and uses a primary colour with greater constrast
+make reading easier and uses a primary colour with greater contrast
 against the background.}
 
 \item{repo}{Either link to repository where book is hosted, used to generate
 view source and edit buttons or a list with repository \code{base} link, default
-\code{branch}, \code{subdir} and \code{icon} (see "Specifying the repository").}
+\code{branch}, \code{subdir} and \code{icon}
+(see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).}
 
-\item{lib_dir, pandoc_args, extra_dependencies, ...}{Passed on to
-\code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
+\item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
+
+\item{template}{Pandoc template to use for rendering. Pass \code{"default"} to use
+the bookdown default template; pass a path to use a custom template. The
+default template should be sufficient for most use cases. For advanced user
+only, in case you want to develop a custom template, we highly recommend to
+start from the default template:
+\url{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}.
+Otherwise, some feature may not work anymore.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
+
+\item{version}{Passed to \code{\link[bslib:bs_theme]{bslib::bs_theme()}}. This should not be changed as
+\code{\link[=bs4_book]{bs4_book()}} has been designed to work with Bootstrap version 4 for now.}
 }
 \description{
-This output format is built with \href{https://getbootstrap.com}{bootstrap},
-using carefully craft features to provide a clean reading experience whether
-your on a phone, tablet, or desktop.
-
-Some of the main features:
-\itemize{
-\item Easy customisation of colours and fonts with
-\href{https://rstudio.github.io/bslib/}{bslib}
-\item Built in search (broken down by section) that helps you quickly find what
-you're looking for.
-\item A sidebar containing a within-chapter table of contents that makes
-navigation easy and helps provide context about your current position
-within the chapter.
-\item Thoughtful typography to make the contents as easy as possible to read,
-regardless of the size of your device. A sticky header gets out of your
-way when reading, but is easily accessible if you need it.
-\item In-line footnotes mean you can read asides next to the next they refer
-to. This theme is best paired with a reference style that generates
-footnotes.
-\item R syntax highlighting and autolinking by
-\href{https://downlit.r-lib.org/}{downlit} is paired with a accessible
-colour scheme designed by Alison Hill.
-}
-
-This theme is designed for books that use one chapter per page.
-}
-\section{Specifying the repository}{
-
-
-If your book has a default branch called main you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
-  repo:
-    base: https://github.com/hadley/ggplot2-book
-    branch: main
-}\if{html}{\out{</div>}}
-
-If your book is furthermore located in a subdirectory called "book" you can use\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
-  repo:
-    base: https://github.com/hadley/ggplot2-book
-    branch: main
-    subdir: book
-}\if{html}{\out{</div>}}
-
-By default if the repo URL contains "github" it will get a GitHub font-awesome
-icon, and otherwise a GitLab font-awesome icon.
-To use another icon, specify it with the correct prefix (\code{fas}, \code{fab}, ...) (Font Awesome 5).\if{html}{\out{<div class="yaml">}}\preformatted{bookdown::bs4_book:
-  repo:
-    base: https://github.com/hadley/ggplot2-book
-    branch: main
-    subdir: book
-    icon: "fas fa-air-freshener"
-}\if{html}{\out{</div>}}
+This output format is built with \href{https://getbootstrap.com}{Bootstrap},
+using carefully crafted features to provide a clean reading experience whether
+you are on a phone, tablet, or desktop. To read more about this format, see:
+\url{https://bookdown.org/yihui/bookdown/html.html#bs4-book}
 }

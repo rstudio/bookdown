@@ -1,80 +1,27 @@
 #' HTML book built with bootstrap4
 #'
 #' @description
-#' This output format is built with [bootstrap](https://getbootstrap.com),
-#' using carefully craft features to provide a clean reading experience whether
-#' your on a phone, tablet, or desktop.
-#'
-#' Some of the main features:
-#'
-#' * Easy customisation of colours and fonts with
-#'   [bslib](https://rstudio.github.io/bslib/)
-#'
-#' * Built in search (broken down by section) that helps you quickly find what
-#'   you're looking for.
-#'
-#' * A sidebar containing a within-chapter table of contents that makes
-#'   navigation easy and helps provide context about your current position
-#'   within the chapter.
-#'
-#' * Thoughtful typography to make the contents as easy as possible to read,
-#'   regardless of the size of your device. A sticky header gets out of your
-#'   way when reading, but is easily accessible if you need it.
-#'
-#' * In-line footnotes mean you can read asides next to the next they refer
-#'   to. This theme is best paired with a reference style that generates
-#'   footnotes.
-#'
-#' * R syntax highlighting and autolinking by
-#'   [downlit](https://downlit.r-lib.org/) is paired with a accessible
-#'   colour scheme designed by Alison Hill.
-#'
-#' This theme is designed for books that use one chapter per page.
+#' This output format is built with [Bootstrap](https://getbootstrap.com),
+#' using carefully crafted features to provide a clean reading experience whether
+#' you are on a phone, tablet, or desktop. To read more about this format, see:
+#' \url{https://bookdown.org/yihui/bookdown/html.html#bs4-book}
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
-#'   make reading easier and uses a primary colour with greater constrast
+#'   make reading easier and uses a primary colour with greater contrast
 #'   against the background.
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
-#'   `branch`, `subdir` and `icon` (see "Specifying the repository").
-#' @param lib_dir,pandoc_args,extra_dependencies,... Passed on to
-#'   [rmarkdown::html_document()].
-#'
-#' @section Specifying the repository:
-#'
-#' If your book has a default branch called main you can use
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#' ```
-#'
-#' If your book is furthermore located in a subdirectory called "book" you can use
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#'     subdir: book
-#' ```
-#'
-#' By default if the repo URL contains "github" it will get a GitHub font-awesome
-#' icon, and otherwise a GitLab font-awesome icon.
-#' To use another icon, specify it with the correct prefix (`fas`, `fab`, ...) (Font Awesome 5).
-#'
-#' ```yaml
-#' bookdown::bs4_book:
-#'   repo:
-#'     base: https://github.com/hadley/ggplot2-book
-#'     branch: main
-#'     subdir: book
-#'     icon: "fas fa-air-freshener"
-#' ```
-#'
+#'   `branch`, `subdir` and `icon`
+#'   (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).
+#' @param lib_dir,pandoc_args,extra_dependencies,split_bib,... Passed on to [rmarkdown::html_document()].
+#' @param template Pandoc template to use for rendering. Pass `"default"` to use
+#'   the bookdown default template; pass a path to use a custom template. The
+#'   default template should be sufficient for most use cases. For advanced user
+#'   only, in case you want to develop a custom template, we highly recommend to
+#'   start from the default template:
+#'   <https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html>.
+#'   Otherwise, some feature may not work anymore.
 #' @export
 #' @md
 bs4_book <- function(theme = bs4_book_theme(),
@@ -82,7 +29,9 @@ bs4_book <- function(theme = bs4_book_theme(),
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
-                     extra_dependencies = NULL) {
+                     extra_dependencies = NULL,
+                     template = 'default',
+                     split_bib = FALSE) {
   check_packages(bs4_book_deps())
   bs4_check_dots(...)
 
@@ -91,13 +40,18 @@ bs4_book <- function(theme = bs4_book_theme(),
     theme <- do.call(bs4_book_theme, theme)
   }
 
+  # check for custom template
+  if (identical(template, 'default')) {
+    template <- bookdown_file('templates', 'bs4_book.html')
+  }
+
   config <- rmarkdown::html_document(
     toc = FALSE,
     number_sections = TRUE,
     anchor_sections = FALSE,
     self_contained = FALSE,
     theme = NULL,
-    template = bookdown_file("templates", "bs4_book.html"),
+    template = template,
     pandoc_args = pandoc_args2(pandoc_args),
     lib_dir = lib_dir,
     extra_dependencies = c(bs4_book_dependency(theme), extra_dependencies),
@@ -110,7 +64,8 @@ bs4_book <- function(theme = bs4_book_theme(),
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir)
+    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir,
+                              split_bib = split_bib)
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
@@ -125,8 +80,12 @@ bs4_book <- function(theme = bs4_book_theme(),
 #' @export
 #' @rdname bs4_book
 #' @param primary Primary colour: used for links and background of footer.
-bs4_book_theme <- function(primary = "#0068D9", ...) {
+#' @param version Passed to [bslib::bs_theme()]. This should not be changed as
+#'  [bs4_book()] has been designed to work with Bootstrap version 4 for now.
+#' @md
+bs4_book_theme <- function(primary = "#0068D9", version = 4, ...) {
   bslib::bs_theme(...,
+    version = 4,
     primary = primary,
     "font-size-base" = "1rem",
   )
@@ -135,16 +94,17 @@ bs4_book_theme <- function(primary = "#0068D9", ...) {
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
                            lib_dir = "libs",
-                           output_dir = opts$get("output_dir")) {
+                           output_dir = opts$get("output_dir"),
+                           split_bib = split_bib) {
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
   output2 <- split_chapters(
     output = output,
     build = function(...) bs4_book_page(..., rmd_index = rmd_index),
-    number_sections = TRUE,
+    global_numbering = FALSE,
     split_by = "chapter",
-    split_bib = FALSE
+    split_bib = split_bib
   )
 
   move_files_html(output2, lib_dir)
@@ -281,6 +241,13 @@ bs4_chapters_tweak <- function(output,
     message("Tweaking ", path)
     index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo)
   }
+  # tweak 404.html ---
+  path_404 <- file.path(output_dir, "404.html")
+  if (file.exists(path_404)) {
+    message("Tweaking ", path_404)
+    bs4_chapter_tweak(path_404, toc, rmd_index = rmd_index, repo = repo)
+
+  }
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
 
   jsonlite::write_json(
@@ -295,6 +262,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
 
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
   text <- gsub("\033", "&#8233;", text, fixed = TRUE, useBytes = TRUE)
+  Encoding(text) <- "UTF-8" # gsub with useBytes inhibits marked encoding
   html <- xml2::read_html(text, encoding = "UTF-8")
 
   tweak_tables(html)
@@ -304,6 +272,8 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
   tweak_footnotes(html)
   tweak_part_screwup(html)
   tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
+  tweak_metadata(html, path)
+  if (basename(path) == "404.html") tweak_404(html)
   downlit::downlit_html_node(html)
 
   xml2::write_html(html, path, format = FALSE)
@@ -314,6 +284,11 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL) {
     chapter = h1,
     path = basename(path)
   )
+}
+
+tweak_404 <- function(html) {
+  sidebar_toc <- xml2::xml_find_all(html, ".//div[contains(@class, 'sidebar')]/nav[@id='toc']")
+  xml2::xml_remove(sidebar_toc)
 }
 
 tweak_chapter <- function(html) {
@@ -346,7 +321,7 @@ tweak_footnotes <- function(html) {
   id <- xml2::xml_attr(footnotes, "id")
   xml2::xml_remove(xml2::xml_find_all(footnotes, "//a[@class='footnote-back']"))
   contents <- vapply(footnotes, FUN.VALUE = character(1), function(x) {
-    as.character(xml2::xml_children(x))
+    paste0(as.character(xml2::xml_children(x)), collapse = "")
   })
 
   # Add popover attributes to links
@@ -565,6 +540,70 @@ template_link <- function(html, xpath, href) {
   }
 }
 
+tweak_metadata <- function(html, path) {
+  file <- basename(path)
+
+  # Fix generator
+  generator <- xml_find_meta_name(html, 'generator')
+  bookdown_string <- sprintf("bookdown %s with bs4_book()", packageVersion("bookdown"))
+  set_content(generator, bookdown_string)
+
+  # Check there are descriptions, add them if not
+  general_description <- xml_find_meta_name(html, 'description')
+
+  # Add the nodes if they were missing by default
+  if (length(general_description) == 0) {
+    head <- xml2::xml_find_first(html, '//head')
+    default_description <- "A book created with bookdown."
+    if (file == "index.html") message("TODO: Add a description field in the YAML metadata of index.Rmd.")
+    xml2 <- xml2::xml_add_child(head, "meta", name= "description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", property = "og:description", content = default_description)
+    xml2 <- xml2::xml_add_child(head, "meta", name = "twitter:description", content = default_description)
+  }
+
+  # index page is the only one not modified - yaml provided description by user is used.
+  if (file == "index.html") return(invisible())
+
+  # Fix og:url
+  og_url <- xml_find_meta_property(html, 'og:url')
+  base_url <- xml2::xml_attr(og_url, "content")
+   if (!grepl("/$", base_url)) base_url <- paste0(base_url, "/")
+  set_content(og_url, paste0(base_url, file))
+
+  # Fix descriptions if possible
+  general_description <- xml_find_meta_name(html, 'description')
+  twitter_description <- xml_find_meta_name(html, 'twitter:description')
+  og_description <- xml_find_meta_property(html, 'og:description')
+
+  contents <- copy_html(xml2::xml_find_first(html, "//main[@id='content']"))
+  xml2::xml_remove(xml2::xml_find_first(contents, "//h1"))
+  xml2::xml_remove(xml2::xml_find_first(contents, "//div[@class='chapter-nav']"))
+  text <- xml2::xml_text(contents)
+  text <- gsub("\\\n", " ", text)
+  text <- gsub("  ", " ", text)
+  text <- gsub("^[[:space:]]+", "", text)
+  text <- gsub("[[:space:]]+$", "", text)
+  if (nzchar(text)) {
+    words <- unlist(strsplit(text, " "))
+    no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
+    max_n <- max(which(no_char<= 197))
+    description_string <- paste(words[1: max_n], collapse = " ")
+    if (max_n != length(words)) {
+      description_string <- paste0(description_string, "...")
+    }
+    set_content(og_description, description_string)
+    set_content(twitter_description, description_string)
+    set_content(general_description, description_string)
+  }
+
+}
+
+# https://github.com/ropensci/tinkr/blob/935ed21439230228f07f26161a507812d0fc76c3/R/to_md.R#L68
+# TODO: replace by xml_clone() when it exists (https://github.com/r-lib/xml2/issues/341)
+copy_html <- function(html) {
+  xml2::read_html(as.character(html))
+}
+
 template_link_icon <- function(html, xpath, icon) {
   icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
   xml2::xml_attr(icon_node, "class") <- icon
@@ -582,7 +621,7 @@ bs4_index_data <- function(node, chapter, path) {
   }
 
   all <- function(...) paste0("descendant-or-self::", c(...), collapse = "|")
-  text_path <- all("p", "li", "caption", "figcaption", "dt", "dd")
+  text_path <- all("p", "li", "caption", "figcaption", "dt", "dd", "div[contains(@class, 'line-block')]")
   code_path <- all("pre")
 
   code <- xml2::xml_find_all(children, code_path)
@@ -651,7 +690,6 @@ bs4_check_dots <- function(...) {
     "anchor_sections",
     "number_sections",
     "self_contained",
-    "template",
     "toc"
   )
   for (arg in fixed) {
@@ -670,6 +708,18 @@ bs4_check_dots <- function(...) {
       call. = FALSE
     )
   }
+}
+
+set_content <- function(node, content) {
+  xml2::xml_set_attr(node, "content", content)
+}
+
+xml_find_meta_property <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@property="%s"]', property))
+}
+
+xml_find_meta_name <- function(html, property){
+    xml2::xml_find_first(html, sprintf('//meta[@name="%s"]', property))
 }
 
 # these dependencies are required to use bs4_book() but are suggested deps

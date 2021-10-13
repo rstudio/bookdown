@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.22.5
+Version: 0.24.1
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
@@ -52,8 +52,6 @@ Authors@R: c(
     person(family = "RStudio, PBC", role = "cph"),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person("Zeno", "Rocha", role = "cph", comment = "clipboard.js library"),
-    person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"),
-    person(family = "jQuery contributors", role = c("ctb", "cph"), comment = "jQuery library; authors listed in inst/resources/AUTHORS"),
     person(family = "MathQuill contributors", role = "ctb", comment = "The MathQuill library; authors listed in inst/resources/AUTHORS"),
     person(family = "FriendCode Inc", role = c("cph", "ctb"), comment = "The gitbook style, with modifications")
     )
@@ -64,6 +62,7 @@ Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.31),
     rmarkdown (>= 2.9),
+    jquerylib,
     xfun (>= 0.22),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
@@ -89,5 +88,6 @@ BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/Needs/book: remotes, webshot
 Config/testthat/edition: 3
 VignetteBuilder: knitr

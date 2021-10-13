@@ -18,7 +18,7 @@
 #'   \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
 #' @param base_format An output format function to be used as the base format.
-#' @param toc_unnumbered Whether to add unnumberred headers to the table of
+#' @param toc_unnumbered Whether to add unnumbered headers to the table of
 #'   contents.
 #' @param toc_appendix Whether to add the appendix to the table of contents.
 #' @param toc_bib Whether to add the bibliography section to the table of

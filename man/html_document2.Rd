@@ -25,6 +25,7 @@ figures/tables/equations}
 html_document2(
   ...,
   number_sections = TRUE,
+  global_numbering = !number_sections,
   pandoc_args = NULL,
   base_format = rmarkdown::html_document
 )
@@ -53,6 +54,7 @@ markdown_document2(
   number_sections = TRUE,
   fig_caption = TRUE,
   md_extensions = NULL,
+  global_numbering = !number_sections,
   pandoc_args = NULL,
   ...,
   base_format = rmarkdown::md_document
@@ -82,6 +84,13 @@ current first-level section number, and \code{i} is an incremental number
 (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
+
+\item{global_numbering}{If \code{TRUE}, number figures and tables globally
+throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+FALSE} will not work with \code{number_sections = FALSE} because sections
+are not numbered.}
 
 \item{base_format}{An output format function to be used as the base format.}
 }

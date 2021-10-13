@@ -5,6 +5,7 @@
 #' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
 #' functions of \code{html_chapter()} using a specific base output format.
 #' @inheritParams pdf_book
+#' @inheritParams html_document2
 #' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
 #'   \code{rmarkdown::\link{html_document}},
 #'   \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
@@ -50,7 +51,8 @@
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
-  template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
+  template = bookdown_file('templates/default.html'),
+  global_numbering = !number_sections, pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
@@ -64,7 +66,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    output2 = split_chapters(output, page_builder, number_sections, split_by, split_bib)
+    output2 = split_chapters(output, page_builder, global_numbering, split_by, split_bib)
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
     move_files_html(output2, lib_dir)
     output2
@@ -111,6 +113,12 @@ tufte_html_book = function(...) {
 #'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 #'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
 #'   section headers in this case.
+#' @param global_numbering If \code{TRUE}, number figures and tables globally
+#'   throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+#'   number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+#'   ..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+#'   FALSE} will not work with \code{number_sections = FALSE} because sections
+#'   are not numbered.
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
@@ -123,7 +131,8 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, global_numbering = !number_sections,
+  pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
@@ -135,7 +144,7 @@ html_document2 = function(
     x = clean_html_tags(x)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
-    x = resolve_refs_html(x, global = !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     write_utf8(x, output)
     output
   }
@@ -240,7 +249,9 @@ build_chapter = function(
 
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
 
-split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
+split_chapters = function(
+  output, build = build_chapter, global_numbering, split_by, split_bib, ...
+) {
 
   use_rmd_names = split_by == 'rmd'
   split_level = switch(
@@ -311,7 +322,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
-    x = resolve_refs_html(x, !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     x = add_chapter_prefix(x)
     write_utf8(x, output)
     return(output)
@@ -333,7 +344,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
   )
 
-  html_body = resolve_refs_html(html_body, !number_sections)
+  html_body = resolve_refs_html(html_body, global_numbering)
 
   # do not split the HTML file
   if (split_level == 0) {
@@ -384,7 +395,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
         paste(c(num, id), collapse = '-')
       } else id
       if (is.null(nm)) stop('The heading ', x2, ' must have an id')
-      gsub('[^[:alnum:]]+', '-', nm)
+      nm
     })
     if (anyDuplicated(nms)) (if (isTRUE(opts$get('preview'))) warning else stop)(
       'Automatically generated filenames contain duplicated ones: ',
@@ -431,13 +442,52 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     write_utf8(html, nms[i])
   }
-  nms = move_to_output_dir(nms)
+
+  # add a 404 page
+  r404 = build_404()
+  p404 = r404$path; h404 = r404$html
+  if (!is.null(h404)) {
+    h404 = build(
+      prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL,
+      r404$rmd_cur, p404, html_foot, ...
+    )
+    write_utf8(h404, p404)
+  }
+
+  nms = move_to_output_dir(c(nms, p404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+build_404 = function() {
+  p404 = '404.html'
+  # if a 404 page already exist, we do nothing specific and assume
+  # user has already a workflow in place
+  if (file.exists(p404)) return()
+  # We create 404 page if it does not exist
+  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
+    xfun::Rscript_call(rmarkdown::render, list(
+      rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+      output_file = p404, quiet = TRUE
+    ))
+    h404 = xfun::read_utf8(p404)
+  } else {
+    rmd_cur = NULL
+    # default content for 404 page
+    h404 = c(
+      '<div id="page-not-found" class="section level1">',
+      '<h1>Page not found</h1>',
+      '<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>',
+      '<p>You may want to try searching to find the page\'s new location, or use',
+      'the table of contents to find the page you are looking for.</p>',
+      '</div>'
+    )
+  }
+  list(path = p404, html = h404, rmd_cur = rmd_cur)
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
@@ -451,6 +501,12 @@ clean_meta_tags = function(x) {
   x3 = sub(r, '\\3', x[i])
   x2 = gsub('<[^>]+>', '', x2)
   x[i] = paste0(x1, x2, x3)
+  # then fix URLs in meta: https://github.com/rstudio/bookdown/pull/969#issuecomment-885252698
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content=")[^"]*?/(https?://[^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
+  # remove the unnecessary extra slash introduced in #969
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content="https?://[^"]+?/)/([^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
   x
 }
 
@@ -1030,7 +1086,9 @@ move_files_html = function(output, lib_dir) {
     if (length(z) == 0) z else gsub(r, '\\2', z)
   }))
   f = c(f, parse_cover_image(x))
-  f = vapply(f, utils::URLdecode, FUN.VALUE = character(1))
+  f = vapply(f, function(x) {
+    if (grepl('^data:', x)) x else URLdecode(x)
+  }, FUN.VALUE = character(1))
   Encoding(f) = 'UTF-8'
   f = local_resources(unique(f[file.exists(f)]))
   # detect resources in CSS
