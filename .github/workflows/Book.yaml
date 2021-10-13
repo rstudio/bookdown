@@ -54,6 +54,7 @@ jobs:
         if: github.event.inputs.ghpages
 
       - name: Install TinyTeX
+        if: github.event_name == 'push'
         uses: r-lib/actions/setup-tinytex@v1
         env:
           # install full prebuilt version
