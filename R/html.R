@@ -222,7 +222,7 @@ tufte_html2 = function(..., number_sections = FALSE) {
 build_chapter = function(
   head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot
 ) {
-  toc = gsub('^(<li>)(.+)(?<!<\\/li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
+  toc = add_toc_class(toc)
   paste(c(
     head,
     '<div class="row">',
@@ -244,6 +244,10 @@ build_chapter = function(
     '</div>',
     foot
   ), collapse = '\n')
+}
+
+add_toc_class = function(toc) {
+  gsub('^(<li>)(.+)(?<!<\\/li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
 }
 
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'

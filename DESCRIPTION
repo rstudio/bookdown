@@ -81,7 +81,7 @@ Suggests:
     tufte,
     xml2,
     webshot,
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.0),
     withr (>= 2.3.0)
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
