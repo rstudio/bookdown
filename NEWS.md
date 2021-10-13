@@ -1,5 +1,8 @@
 # CHANGES IN bookdown VERSION 0.25
 
+## BUG FIXES
+
+- Fix an issue with `html_book()` and `toc.css` not working correctly with recent pandoc (thanks, @florisvdh, #1268).
 
 # CHANGES IN bookdown VERSION 0.24
 
