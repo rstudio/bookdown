@@ -19,6 +19,12 @@ on:
       - 'inst/templates/**'
       - 'R/**'
       - '.github/workflows/Book.yaml'
+  workflow_dispatch:
+    inputs:
+      ghpages:
+        description: 'Deploy gitbook to gh-page for checking differences'
+        required: true
+        default: true
 
 name: Build and deploy book
 
@@ -94,6 +100,19 @@ jobs:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
           CONTENT_ID: 3
         run: make -C inst/examples all
+
+      - name: Build Gitbook only
+        if: github.event_name == 'workflow_dispatch'
+        run: make -C inst/examples gitbook
+
+      - name: Deploy Gitbook
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.ghpages
+        env:
+          DEPLOY_GH_PAGES: ${{ github.event.inputs.ghpages }}
+        uses: JamesIves/github-pages-deploy-action@4.1
+        with:
+          branch: gh-pages
+          folder: _book
 
       - name: Upload book folder for debug
         if: failure()
