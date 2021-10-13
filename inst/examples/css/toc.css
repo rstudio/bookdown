@@ -70,14 +70,13 @@
   background: #070707;
   background: linear-gradient(to bottom, #262626 0%, #070707 100%);
 }
-#TOC .has-sub {
-  z-index: 1;
-}
+
 #TOC .has-sub:hover > ul {
   display: block;
 }
 #TOC .has-sub ul {
   display: none;
+  z-index: 1;
   position: absolute;
   width: 200px;
   top: 100%;
