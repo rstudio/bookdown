@@ -110,14 +110,14 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: make -C inst/examples gitbook
 
-      - name: Deploy Gitbook
+      - name: Deploy Gitbook to gh-pages
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.ghpages
         env:
           DEPLOY_GH_PAGES: ${{ github.event.inputs.ghpages }}
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: _book
+          folder: bookdown
 
       - name: Upload book folder for debug
         if: failure()
