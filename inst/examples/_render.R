@@ -32,10 +32,10 @@ unlink('bookdown.log')
 message(">> Tweaking HTML gitbook")
 for (f in list.files('_book', '[.]html$', full.names = TRUE)) {
   x = readLines(f)
-  # patch HTML files when published to gh-pages to redirect to bookdown.org
-  if (ghpages) x[i[1]] = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
 
   if (length(i <- grep('^\\s*<body>\\s*$', x)) == 0) next
+  # patch HTML files when published to gh-pages to redirect to bookdown.org
+  if (ghpages) x[i[1]] = '<body onload="window.location = \'https://bookdown.org/yihui\'+location.pathname">'
   i = grep('<i class="fa fa-circle-o-notch fa-spin"></i><a href="./">.+</a>', x)[1]
   # shorter title on the toolbar
   if (!is.na(i)) x[i] = gsub('bookdown: ', '', x[i], fixed = TRUE)
