@@ -8,6 +8,7 @@ on:
       - '_pkgdown.yml'
       - 'pkgdown/**'
       - '.github/workflows/pkgdown.yaml'
+      - '.github/workflows/Book.yaml'
   pull_request:
     branches: [main, master]
     paths-ignore:
@@ -15,6 +16,7 @@ on:
       - '_pkgdown.yml'
       - 'pkgdown/**'
       - '.github/workflows/pkgdown.yaml'
+      - '.github/workflows/Book.yaml'
 
 name: R-CMD-check
 
@@ -89,6 +91,11 @@ jobs:
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v1
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
 
       - name: Upload check results
         if: failure()

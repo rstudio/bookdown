@@ -19,6 +19,12 @@ on:
       - 'inst/templates/**'
       - 'R/**'
       - '.github/workflows/Book.yaml'
+  workflow_dispatch:
+    inputs:
+      ghpages:
+        description: 'Build gitbook with pandoc devel and deploy gitbook to gh-page for checking differences'
+        required: false
+        default: true
 
 name: Build and deploy book
 
@@ -38,9 +44,14 @@ jobs:
         uses: r-lib/actions/setup-r@v1
 
       - name: Install Pandoc
+        if: ${{ ! github.event.inputs.ghpages }}
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.7.3'
+
+      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
+        # install nightly when checking on gh-pages
+        if: github.event.inputs.ghpages
 
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v1
@@ -84,9 +95,9 @@ jobs:
           key: bookdown-${{ hashFiles('inst/examples/*Rmd') }}
           restore-keys: bookdown-
 
-      - name: Build Gitbook
+      - name: Test build of HTML books
         if: github.event_name == 'pull_request'
-        run: make -C inst/examples gitbook
+        run: make -C inst/examples gitbook bs4_book
 
       - name: Build and Deploy all book
         if: github.event_name == 'push'
@@ -94,6 +105,19 @@ jobs:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
           CONTENT_ID: 3
         run: make -C inst/examples all
+
+      - name: Build Gitbook only
+        env:
+          DEPLOY_GH_PAGES: ${{ github.event.inputs.ghpages }}
+        if: github.event_name == 'workflow_dispatch'
+        run: make -C inst/examples gitbook
+
+      - name: Deploy Gitbook to gh-pages
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.ghpages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: inst/examples/_book
 
       - name: Upload book folder for debug
         if: failure()
