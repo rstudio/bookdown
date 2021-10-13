@@ -114,7 +114,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.ghpages
         env:
           DEPLOY_GH_PAGES: ${{ github.event.inputs.ghpages }}
-        uses: JamesIves/github-pages-deploy-action@4.1
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
           folder: _book
