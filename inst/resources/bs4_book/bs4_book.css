@@ -553,3 +553,13 @@ img.cover {
     margin: 0 auto 1rem auto;
   }
 }
+
+/* Bibliography / references */
+.csl-entry {
+  margin-top: 1em;
+}
+
+.hanging-indent .csl-entry {
+  padding-left: 1em;
+  text-indent: -1em;
+}
