@@ -2,6 +2,8 @@
 
 ## BUG FIXES
 
+- Fix an issue with Pandoc 2.15 and footnote relocation in each chapter (#1275).
+
 - Fix an issue with `html_book()` and `toc.css` not working correctly with recent pandoc (thanks, @florisvdh, #1268).
 
 # CHANGES IN bookdown VERSION 0.24

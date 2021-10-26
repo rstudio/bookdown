@@ -28,7 +28,7 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
 
   # footnotes are parsed and moved correctly
   ## deleted from last section
-  if (any(readLines("rmd/subsection-footnotes-2.html") == '<div class="footnotes">')) {
+  if (any(grepl('<div class="footnotes[^"]*">', readLines("rmd/subsection-footnotes-2.html")))) {
     stop('Failed to parse and delete the footnotes in parse-footnotes.Rmd')
   }
   ## footnote one is moved to first section
