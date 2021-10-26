@@ -1025,7 +1025,7 @@ parse_a_targets = function(x) {
 # parse footnotes in the div of class "footnotes"; each footnote is one <li>
 # with id fnX and a link back to the text
 parse_footnotes = function(x) {
-  i = which(x == '<div class="footnotes">')
+  i = grep('<div class="footnotes[^"]*">', x)
   if (length(i) == 0) return(list(items = character(), range = integer()))
   j = which(x == '</div>')
   j = min(j[j > i])
