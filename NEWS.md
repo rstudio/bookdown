@@ -2,7 +2,7 @@
 
 ## NEW FEATURES
 
-- Set option `bookdown.theorem.use = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.use = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
+- Set option `bookdown.theorem.enabled = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.enabled = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
 
 ## BUG FIXES
 

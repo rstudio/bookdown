@@ -33,7 +33,7 @@ common_format_config = function(
   if (file_scope) config$file_scope = md_chapter_splitter
 
   # prepend the custom-environment filter unless opt-out
-  if (getOption("bookdown.theorem.use", TRUE)) {
+  if (getOption("bookdown.theorem.enabled", TRUE)) {
     config$pandoc$lua_filters = c(
       lua_filter("custom-environment.lua"),
       config$pandoc$lua_filters
