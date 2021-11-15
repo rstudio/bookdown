@@ -29,13 +29,17 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, pandoc: '2.7.3',   r: 'release'}
-          - {os: macOS-latest,   pandoc: '2.7.3',   r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: 'devel', r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel'}
+          - {os: windows-latest, pandoc: '2.16.1',   r: 'release'} # IDE daily
+          - {os: windows-latest, pandoc: '2.14.0.3', r: 'release'} # IDE release
+          - {os: macOS-latest,   pandoc: '2.16.1',   r: 'release'} # IDE daily
+          - {os: macOS-latest,   pandoc: '2.14.0.3', r: 'release'} # IDE release
+          - {os: ubuntu-18.04,   pandoc: 'devel',    r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.16.1',   r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',   r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.4',   r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',    r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.16.1',   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',    r: 'oldrel'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -78,14 +82,9 @@ jobs:
         with:
           extra-packages: |
             rcmdcheck
-            sessioninfo
 
-      - name: Session info
+      - name: LaTeX info
         run: |
-          options(width = 100)
-          pkgs <- .packages(TRUE)
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-          rmarkdown::find_pandoc()
           tinytex::tlmgr("--version")
           tinytex::tl_pkgs()
         shell: Rscript {0}
