@@ -32,10 +32,13 @@ common_format_config = function(
   # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
-  # prepend the custom-environment filter
-  config$pandoc$lua_filters = c(
-    lua_filter("custom-environment.lua"), config$pandoc$lua_filters
-  )
+  # prepend the custom-environment filter unless opt-out
+  if (getOption("bookdown.theorem.enabled", TRUE)) {
+    config$pandoc$lua_filters = c(
+      lua_filter("custom-environment.lua"),
+      config$pandoc$lua_filters
+    )
+  }
   # and add bookdown metadata file for the filter to work
   config$pandoc$args = c(bookdown_yml_arg(), config$pandoc$args)
 

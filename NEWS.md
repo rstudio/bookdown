@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.25
 
+## NEW FEATURES
+
+- Set option `bookdown.theorem.enabled = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.enabled = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
+
 ## BUG FIXES
 
 - Fix an issue with Pandoc 2.15 and footnote relocation in each chapter (#1275).
