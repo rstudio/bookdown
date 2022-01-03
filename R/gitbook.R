@@ -1,9 +1,11 @@
 #' The GitBook output format
 #'
 #' This output format function ported a style provided by GitBook
-#' (\url{https://www.gitbook.com}) for R Markdown.
+#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+#' \url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
+#'
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,lib_dir,pandoc_args ...
+#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args ...
 #'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 #'   (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
@@ -16,27 +18,29 @@
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @param table_css \code{TRUE} to load gitbook's default CSS for tables. Choose
-#' \code{FALSE} to unload and use customized CSS (for exmaple, bootstrap) via
+#' \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
 #' the \code{css} option. Default is \code{TRUE}.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
-  lib_dir = 'libs', pandoc_args = NULL, ..., template = 'default',
+  anchor_sections = TRUE, lib_dir = 'libs', global_numbering = !number_sections,
+  pandoc_args = NULL, ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
+  gb_config = config
   html_document2 = function(..., extra_dependencies = list()) {
     rmarkdown::html_document(
-      ..., extra_dependencies = c(extra_dependencies, gitbook_dependency(table_css))
+      ..., extra_dependencies = c(gitbook_dependency(table_css, gb_config), extra_dependencies)
     )
   }
-  gb_config = config
   if (identical(template, 'default')) {
     template = bookdown_file('templates', 'gitbook.html')
   }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
-    self_contained = self_contained, lib_dir = lib_dir, theme = NULL,
+    self_contained = self_contained, anchor_sections = anchor_sections,
+    lib_dir = lib_dir, theme = NULL,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   split_by = match.arg(split_by)
@@ -53,7 +57,7 @@ gitbook = function(
 
     move_files_html(output, lib_dir)
     output2 = split_chapters(
-      output, gitbook_page, number_sections, split_by, split_bib, gb_config, split_by
+      output, gitbook_page, global_numbering, split_by, split_bib, gb_config, split_by
     )
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
     move_files_html(output2, lib_dir)
@@ -83,11 +87,23 @@ write_search_data = function() {
   write_utf8(x, output_path('search_index.json'))
 }
 
-gitbook_dependency = function(table_css) {
+gitbook_dependency = function(table_css, config = list()) {
   assets = bookdown_file('resources', 'gitbook')
   owd = setwd(assets); on.exit(setwd(owd), add = TRUE)
   app = if (file.exists('js/app.min.js')) 'app.min.js' else 'app.js'
-  list(jquery_dependency(), htmltools::htmlDependency(
+  # TODO: download and a local copy of fuse.js?
+  fuse = htmltools::htmlDependency(
+    'fuse', '6.4.6', c(href = 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.6'),
+    script = 'dist/fuse.min.js'
+  )
+  if (is.logical(config$search)) {
+    lunr = FALSE
+    if (!config$search) fuse = NULL
+  } else {
+    # use fuse as the search engine by default
+    lunr = identical(config$search$engine, 'lunr')
+  }
+  list(jquery_dependency(), fuse, htmltools::htmlDependency(
     'gitbook', '2.6.7', src = assets,
     stylesheet = file.path('css', c(
       'style.css', if (table_css) 'plugin-table.css', 'plugin-bookdown.css',
@@ -95,7 +111,7 @@ gitbook_dependency = function(table_css) {
       'plugin-clipboard.css'
     )),
     script = file.path('js', c(
-      app, 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
+      app, if (lunr) 'lunr.js', 'clipboard.min.js', 'plugin-search.js', 'plugin-sharing.js',
       'plugin-fontsettings.js', 'plugin-bookdown.js', 'jquery.highlight.js',
       'plugin-clipboard.js'
     ))
@@ -231,6 +247,7 @@ gitbook_config = function(config = list()) {
     sharing = list(
       github = FALSE, facebook = TRUE, twitter = TRUE,
       linkedin = FALSE, weibo = FALSE, instapaper = FALSE, vk = FALSE,
+      whatsapp = FALSE,
       all = c('facebook', 'twitter', 'linkedin', 'weibo', 'instapaper')
     ),
     fontsettings = list(theme = 'white', family = 'sans', size = 2),
@@ -239,8 +256,11 @@ gitbook_config = function(config = list()) {
     view = list(link = NULL, text = NULL),
     download = NULL,
     # toolbar = list(position = 'static'),
+    search = list(engine = 'fuse', options = NULL),
     toc = list(collapse = 'subsection')
   )
+  if (isTRUE(config$search)) config$search = NULL
+  if (xfun::isFALSE(config$search)) default$search = FALSE
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript
   config$toc$before = NULL; config$toc$after = NULL

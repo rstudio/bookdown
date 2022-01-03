@@ -4,3 +4,4 @@
 **/rsconnect/
 .DS_Store
 **/*.min.js.map
+reference

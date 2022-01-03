@@ -5,6 +5,7 @@
 #' Functions \code{html_book()} and \code{tufte_html_book()} are simple wrapper
 #' functions of \code{html_chapter()} using a specific base output format.
 #' @inheritParams pdf_book
+#' @inheritParams html_document2
 #' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
 #'   \code{rmarkdown::\link{html_document}},
 #'   \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
@@ -50,7 +51,8 @@
 #' @export
 html_chapters = function(
   toc = TRUE, number_sections = TRUE, fig_caption = TRUE, lib_dir = 'libs',
-  template = bookdown_file('templates/default.html'), pandoc_args = NULL, ...,
+  template = bookdown_file('templates/default.html'),
+  global_numbering = !number_sections, pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
   split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
 ) {
@@ -64,7 +66,7 @@ html_chapters = function(
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     move_files_html(output, lib_dir)
-    output2 = split_chapters(output, page_builder, number_sections, split_by, split_bib)
+    output2 = split_chapters(output, page_builder, global_numbering, split_by, split_bib)
     if (file.exists(output) && !same_path(output, output2)) file.remove(output)
     move_files_html(output2, lib_dir)
     output2
@@ -111,6 +113,12 @@ tufte_html_book = function(...) {
 #'   (the i-th figure/table); if \code{FALSE}, figures/tables will be numbered
 #'   sequentially in the document from 1, 2, ..., and you cannot cross-reference
 #'   section headers in this case.
+#' @param global_numbering If \code{TRUE}, number figures and tables globally
+#'   throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+#'   number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+#'   ..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+#'   FALSE} will not work with \code{number_sections = FALSE} because sections
+#'   are not numbered.
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
 #'   \code{rmarkdown::\link{render}()}.
@@ -123,7 +131,8 @@ tufte_html_book = function(...) {
 #' @references \url{https://bookdown.org/yihui/bookdown/}
 #' @export
 html_document2 = function(
-  ..., number_sections = TRUE, pandoc_args = NULL, base_format = rmarkdown::html_document
+  ..., number_sections = TRUE, global_numbering = !number_sections,
+  pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   config = get_base_format(base_format, list(
     ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
@@ -135,7 +144,7 @@ html_document2 = function(
     x = clean_html_tags(x)
     x = restore_appendix_html(x, remove = FALSE)
     x = restore_part_html(x, remove = FALSE)
-    x = resolve_refs_html(x, global = !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     write_utf8(x, output)
     output
   }
@@ -213,8 +222,7 @@ tufte_html2 = function(..., number_sections = FALSE) {
 build_chapter = function(
   head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot
 ) {
-  # add a has-sub class to the <li> items that has sub lists
-  toc = gsub('^(<li>)(.+<ul>)$', '<li class="has-sub">\\2', toc)
+  toc = add_toc_class(toc)
   paste(c(
     head,
     '<div class="row">',
@@ -238,9 +246,15 @@ build_chapter = function(
   ), collapse = '\n')
 }
 
+add_toc_class = function(toc) {
+  gsub('^(<li>)(.+)(?<!</li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
+}
+
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
 
-split_chapters = function(output, build = build_chapter, number_sections, split_by, split_bib, ...) {
+split_chapters = function(
+  output, build = build_chapter, global_numbering, split_by, split_bib, ...
+) {
 
   use_rmd_names = split_by == 'rmd'
   split_level = switch(
@@ -311,7 +325,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
 
   # no (or not enough) tokens found in the template
   if (any(c(i1, i2, i3, i4, i5, i6) == 0)) {
-    x = resolve_refs_html(x, !number_sections)
+    x = resolve_refs_html(x, global_numbering)
     x = add_chapter_prefix(x)
     write_utf8(x, output)
     return(output)
@@ -333,7 +347,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     ' first-level heading(s). Did you forget first-level headings in certain Rmd files?'
   )
 
-  html_body = resolve_refs_html(html_body, !number_sections)
+  html_body = resolve_refs_html(html_body, global_numbering)
 
   # do not split the HTML file
   if (split_level == 0) {
@@ -384,7 +398,7 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
         paste(c(num, id), collapse = '-')
       } else id
       if (is.null(nm)) stop('The heading ', x2, ' must have an id')
-      gsub('[^[:alnum:]]+', '-', nm)
+      nm
     })
     if (anyDuplicated(nms)) (if (isTRUE(opts$get('preview'))) warning else stop)(
       'Automatically generated filenames contain duplicated ones: ',
@@ -416,6 +430,8 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     html = c(if (i == 1) html_title, html_body[i1:i2])
     a_targets = parse_a_targets(html)
     if (split_bib) {
+      # in order to find references in footnotes, we add footnotes to chapter body
+      a_targets = parse_a_targets(relocate_footnotes(html, fnts, a_targets))
       html = relocate_references(html, refs, ref_title, a_targets, refs_div)
     }
     html = relocate_footnotes(html, fnts, a_targets)
@@ -429,13 +445,52 @@ split_chapters = function(output, build = build_chapter, number_sections, split_
     )
     write_utf8(html, nms[i])
   }
-  nms = move_to_output_dir(nms)
+
+  # add a 404 page
+  r404 = build_404()
+  p404 = r404$path; h404 = r404$html
+  if (!is.null(h404)) {
+    h404 = build(
+      prepend_chapter_title(html_head, h404), html_toc, h404, NULL, NULL,
+      r404$rmd_cur, p404, html_foot, ...
+    )
+    write_utf8(h404, p404)
+  }
+
+  nms = move_to_output_dir(c(nms, p404))
 
   # find the HTML output file corresponding to the Rmd file passed to render_book()
   if (is.null(input) || length(nms_chaps) == 0) j = 1 else {
     if (is.na(j <- match(input[1], nms_chaps))) j = 1
   }
   nms[j]
+}
+
+build_404 = function() {
+  p404 = '404.html'
+  # if a 404 page already exist, we do nothing specific and assume
+  # user has already a workflow in place
+  if (file.exists(p404)) return()
+  # We create 404 page if it does not exist
+  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
+    xfun::Rscript_call(rmarkdown::render, list(
+      rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
+      output_file = p404, quiet = TRUE
+    ))
+    h404 = xfun::read_utf8(p404)
+  } else {
+    rmd_cur = NULL
+    # default content for 404 page
+    h404 = c(
+      '<div id="page-not-found" class="section level1">',
+      '<h1>Page not found</h1>',
+      '<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>',
+      '<p>You may want to try searching to find the page\'s new location, or use',
+      'the table of contents to find the page you are looking for.</p>',
+      '</div>'
+    )
+  }
+  list(path = p404, html = h404, rmd_cur = rmd_cur)
 }
 
 # clean HTML tags inside <meta>, which can be introduced by certain YAML
@@ -449,6 +504,12 @@ clean_meta_tags = function(x) {
   x3 = sub(r, '\\3', x[i])
   x2 = gsub('<[^>]+>', '', x2)
   x[i] = paste0(x1, x2, x3)
+  # then fix URLs in meta: https://github.com/rstudio/bookdown/pull/969#issuecomment-885252698
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content=")[^"]*?/(https?://[^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
+  # remove the unnecessary extra slash introduced in #969
+  r = '^(\\s*<meta (property="og:image"|name="twitter:image") content="https?://[^"]+?/)/([^"]+" />\\s*)$'
+  x = gsub(r, '\\1\\3', x)
   x
 }
 
@@ -525,7 +586,13 @@ source_link_setting = function(config, type) {
 #' @export
 #' @keywords internal
 #' @examples library(bookdown)
-#' resolve_refs_html(c('<caption>(#tab:foo) A nice table.</caption>', '<p>See Table @ref(tab:foo).</p>'), TRUE)
+#' resolve_refs_html(
+#'   c(
+#'     '<caption>(#tab:foo) A nice table.</caption>',
+#'     '<p>See Table @ref(tab:foo).</p>'
+#'   ),
+#'   global = TRUE
+#' )
 resolve_refs_html = function(content, global = FALSE) {
   content = resolve_ref_links_html(content)
 
@@ -585,11 +652,12 @@ label_names = list(fig = 'Figure ', tab = 'Table ', eq = 'Equation ')
 # prefixes for theorem environments
 theorem_abbr = c(
   theorem = 'thm', lemma = 'lem', corollary = 'cor', proposition = 'prp', conjecture = 'cnj',
-  definition = 'def', example = 'exm', exercise = 'exr'
+  definition = 'def', example = 'exm', exercise = 'exr', hypothesis = 'hyp'
 )
 # numbered math environments
 label_names_math = setNames(list(
-  'Theorem ', 'Lemma ', 'Corollary ', 'Proposition ', 'Conjecture ', 'Definition ', 'Example ', 'Exercise '
+  'Theorem ', 'Lemma ', 'Corollary ', 'Proposition ', 'Conjecture ', 'Definition ', 'Example ', 'Exercise ',
+  'Hypothesis '
 ), theorem_abbr)
 # unnumbered math environments
 label_names_math2 = list(proof = 'Proof. ', remark = 'Remark. ', solution = 'Solution. ')
@@ -654,13 +722,13 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = paste0(label_prefix(type), num, ': ')
+      labs[[i]] = label_prefix(type, sep = ': ')(num)
       k = max(figs[figs <= i])
-      content[k] = paste(c(content[k], sprintf('<span id="%s"></span>', lab)), collapse = '')
+      content[k] = paste(c(content[k], sprintf('<span style="display:block;" id="%s"></span>', lab)), collapse = '')
     }, tab = {
-      if (length(grep('^<caption', content[i - 0:1])) == 0) next
+      if (length(grep('^\\s*<caption', content[i - 0:1])) == 0) next
       labs[[i]] = sprintf(
-        '<span id="%s">%s</span>', lab, paste0(label_prefix(type), num, ': ')
+        '<span id="%s">%s</span>', lab, label_prefix(type, sep = ': ')(num)
       )
     }, eq = {
       labs[[i]] = sprintf('\\tag{%s}', num)
@@ -669,7 +737,7 @@ parse_fig_labels = function(content, global = FALSE) {
         '(<span class="math display")', sprintf('\\1 id="%s"', lab), content[k]
       )
     }, {
-      labs[[i]] = paste0(label_prefix(type), num, ' ')
+      labs[[i]] = label_prefix(type, sep = ' ')(num)
     })
   }
 
@@ -684,7 +752,19 @@ parse_fig_labels = function(content, global = FALSE) {
 
 
 # given a label, e.g. fig:foo, figure out the appropriate prefix
-label_prefix = function(type, dict = label_names) i18n('label', type, dict)
+label_prefix = function(type, dict = label_names, sep = '') {
+  label = i18n('label', type, dict)
+  supported_type = c('fig', 'tab', 'eq')
+  if (is.function(label)) {
+    if (type %in% supported_type) return(label)
+    msg = knitr::combine_words(supported_type, before = "'")
+    stop("Using a label function is only supported for elements of types ", msg)
+  }
+  function(num = NULL) {
+    if (is.null(num)) return(label)
+    paste0(label, num, sep)
+  }
+}
 
 ui_names = list(edit = 'Edit', chapter_name = '', appendix_name = '')
 ui_language = function(key, dict = ui_names) i18n('ui', key, ui_names)
@@ -900,7 +980,7 @@ restore_appendix_html = function(x, remove = TRUE) {
 
 # parse reference items so we can move them back to the chapter where they were used
 parse_references = function(x) {
-  i = grep('^<div id="refs" class="references[^"]*">$', x)
+  i = grep('^<div id="refs" class="references[^"]*"[^>]*>$', x)
   if (length(i) != 1) return(list(refs = character(), html = x))
   r = '^(<div) id="(ref-[^"]+)"([^>]*>)$'
   k = grep(r, x)
@@ -939,13 +1019,13 @@ parse_a_targets = function(x) {
   unlist(lapply(regmatches(x, gregexpr(r, x)), function(target) {
     if (length(target) == 0) return()
     gsub(r, '\\1', target)
-  }))
+  }), use.names = FALSE)
 }
 
 # parse footnotes in the div of class "footnotes"; each footnote is one <li>
 # with id fnX and a link back to the text
 parse_footnotes = function(x) {
-  i = which(x == '<div class="footnotes">')
+  i = grep('<div class="footnotes[^"]*">', x)
   if (length(i) == 0) return(list(items = character(), range = integer()))
   j = which(x == '</div>')
   j = min(j[j > i])
@@ -1009,14 +1089,16 @@ move_files_html = function(output, lib_dir) {
     if (length(z) == 0) z else gsub(r, '\\2', z)
   }))
   f = c(f, parse_cover_image(x))
-  f = vapply(f, utils::URLdecode, FUN.VALUE = character(1))
+  f = vapply(f, function(x) {
+    if (grepl('^data:', x)) x else URLdecode(x)
+  }, FUN.VALUE = character(1))
   Encoding(f) = 'UTF-8'
   f = local_resources(unique(f[file.exists(f)]))
   # detect resources in CSS
   css = lapply(grep('[.]css$', f, ignore.case = TRUE, value = TRUE), function(z) {
     d = dirname(z)
     z = read_utf8(z)
-    r = 'url\\("?([^")]+)"?\\)'
+    r = 'url\\((?:"|\')?([^")\']+)(?:"|\')?\\)'
     lapply(regmatches(z, gregexpr(r, z)), function(s) {
       s = local_resources(gsub(r, '\\1', s))
       file.path(d, s)
@@ -1026,7 +1108,7 @@ move_files_html = function(output, lib_dir) {
   f = gsub('[?#].+$', '', f)  # strip the #/? part in links, e.g. a.html#foo
   f = gsub('^[.]/', '', f)  # strip the initial ./, e.g. ./foo.png -> foo.png
   f = f[f != '']
-  f = f[!knitr:::is_abs_path(f)]
+  f = f[xfun::is_rel_path(f)]
   if (getOption('bookdown.js.debug', FALSE)) f = c(f, js_min_sources(f))
   # add leaflet images if any used
   f = c(f, grep('png$', list.files(

@@ -27,7 +27,7 @@ pdf_book(
 
 \item{base_format}{An output format function to be used as the base format.}
 
-\item{toc_unnumbered}{Whether to add unnumberred headers to the table of
+\item{toc_unnumbered}{Whether to add unnumbered headers to the table of
 contents.}
 
 \item{toc_appendix}{Whether to add the appendix to the table of contents.}

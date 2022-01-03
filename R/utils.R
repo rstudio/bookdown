@@ -32,10 +32,13 @@ common_format_config = function(
   # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
-  # prepend the custom-environment filter
-  config$pandoc$lua_filters = c(
-    lua_filter("custom-environment.lua"), config$pandoc$lua_filters
-  )
+  # prepend the custom-environment filter unless opt-out
+  if (getOption("bookdown.theorem.enabled", TRUE)) {
+    config$pandoc$lua_filters = c(
+      lua_filter("custom-environment.lua"),
+      config$pandoc$lua_filters
+    )
+  }
   # and add bookdown metadata file for the filter to work
   config$pandoc$args = c(bookdown_yml_arg(), config$pandoc$args)
 
@@ -127,13 +130,6 @@ mark_dirs = function(x) {
   i = dir_exists(x)
   x[i] = paste0(x[i], '/')
   x
-}
-
-# TODO: use xfun::del_empty_dir()
-clean_empty_dir = function(dir) {
-  if (is.null(dir) || !dir_exists(dir)) return()
-  files = list.files(dir, all.files = TRUE, recursive = TRUE)
-  if (length(files) == 0) unlink(dir, recursive = TRUE)
 }
 
 merge_chapters = function(files, to, before = NULL, after = NULL, orig = files) {
@@ -328,7 +324,7 @@ ref_keys_path = function(d = opts$get('output_dir')) {
 #' compiled from a fresh R session, because the state of the current R session
 #' may not be clean.
 #'
-#' For \code{in_sesion = FALSE}, you do not have access to objects in the book
+#' For \code{in_session = FALSE}, you do not have access to objects in the book
 #' from the current R session, but the output is more likely to be reproducible
 #' since everything is created from new R sessions. Since this function is only
 #' for previewing purposes, the cleanness of the R session may not be a big
@@ -395,7 +391,7 @@ first_html_format = function() {
   fallback = 'bookdown::gitbook'
   if (!file.exists('index.Rmd')) return(fallback)
   formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html', formats, value = TRUE)
+  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
   if (length(formats) == 0) fallback else formats[1]
 }
 
@@ -426,8 +422,11 @@ files_cache_dirs = function(dir = '.') {
 # everything from `from` to `to`, and delete `from`
 move_dir = function(from, to) {
   if (!dir_exists(to)) return(file.rename(from, to))
-  if (file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
-    unlink(from, recursive = TRUE)
+  to_copy = list.files(from, full.names = TRUE)
+  if (length(to_copy) == 0 ||
+      any(file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
+  ) unlink(from, recursive = TRUE)
+  invisible(TRUE)
 }
 
 move_dirs = function(from, to) mapply(move_dir, from, to)
@@ -499,7 +498,7 @@ eng_proof = function(options) {
     "The type of proof '", type, "' is not supported yet."
   )
   options$type = type
-  label = label_prefix(type, label_names_math2)
+  label = label_prefix(type, label_names_math2)()
   name = options$name; to_md = output_md()
   if (length(name) == 1) {
     if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))

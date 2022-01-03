@@ -28,7 +28,7 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
 
   # footnotes are parsed and moved correctly
   ## deleted from last section
-  if (any(readLines("rmd/subsection-footnotes-2.html") == '<div class="footnotes">')) {
+  if (any(grepl('<div class="footnotes[^"]*">', readLines("rmd/subsection-footnotes-2.html")))) {
     stop('Failed to parse and delete the footnotes in parse-footnotes.Rmd')
   }
   ## footnote one is moved to first section
@@ -48,8 +48,9 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
   }
 
   # number sections now works in markdown_document2
-  if (!any(readLines("rmd/number-sections.md") == "1.1 subsection 1") ||
-      !any(grepl("<a href=.*>2.1</a>", readLines("rmd/number-sections.md")))) {
+  content = readLines("rmd/number-sections.md")
+  if (!any(grepl("(## )?1.1 subsection 1", content)) ||
+      !any(grepl("<a href=.*>2.1</a>", content))) {
     stop("Something wrong in number-sections.Rmd")
   }
 

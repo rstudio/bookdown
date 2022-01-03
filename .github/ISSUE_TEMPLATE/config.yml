@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Issue guide
+    url: https://yihui.org/issue/
+    about: First time here or need a refresh ? Please consult the issue guide before posting.
+  - name: Ask a question on RStudio Community
+    url: https://community.rstudio.com/c/R-Markdown/10
+    about: Please ask and answer questions here.
+  - name: Ask a question on Stack Overflow
+    url: https://stackoverflow.com/questions/tagged/r+bookdown
+    about: Please ask and answer questions here.

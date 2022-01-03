@@ -6,7 +6,7 @@
 \title{Render multiple R Markdown documents into a book}
 \usage{
 render_book(
-  input,
+  input = ".",
   output_format = NULL,
   ...,
   clean = TRUE,
@@ -21,9 +21,11 @@ render_book(
 preview_chapter(..., envir = parent.frame())
 }
 \arguments{
-\item{input}{An input filename (or multiple filenames). If \code{preview =
-TRUE}, only files specified in this argument are rendered, otherwise all R
-Markdown files specified by the book are rendered.}
+\item{input}{A directory, an input filename or multiple filenames. For a
+directory, \file{index.Rmd} will be used if it exists in this (book)
+project directory. For filenames, if \code{preview = TRUE}, only files
+specified in this argument are rendered, otherwise all R Markdown files
+specified by the book are rendered.}
 
 \item{output_format, ..., clean, envir}{Arguments to be passed to
 \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
@@ -72,8 +74,15 @@ if (file.exists("index.Rmd")) bookdown::render_book("index.Rmd")
 # will use the default format defined in index.Rmd or _output.yml
 bookdown::render_book("index.Rmd")
 # will use the options for format defined in YAML metadata
-bookdown::render_book("index.Rmd", "pdf_book")
+bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 # If you pass an output format object, it must have all the options set
 bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+
+# will render the book in the current directory
+bookdown::render_book()
+# this is equivalent to
+bookdown::render_book("index.Rmd")
+# will render the book living in the specified directory
+bookdown::render_book("my_book_project")
 }
 }

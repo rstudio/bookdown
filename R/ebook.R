@@ -2,6 +2,7 @@
 #'
 #' Convert a book to the EPUB format, which is is an e-book format supported by
 #' many readers, such as Amazon Kindle Fire and iBooks on Apple devices.
+#' @inheritParams html_document2
 #' @param fig_width,fig_height,dev,fig_caption Figure options (width, height,
 #'   the graphical device, and whether to render figure captions).
 #' @param number_sections Whether to number sections.
@@ -12,23 +13,28 @@
 #' @param metadata The path to the EPUB metadata file.
 #' @param chapter_level The level by which the e-book is split into separate
 #'   \dQuote{chapter} files.
-#' @param epub_version Whether to use version 3 or 2 of EPUB.
+#' @param epub_version Whether to use version 3 or 2 of EPUB. This correspond to
+#'   [Pandoc's supported output
+#'   format](https://pandoc.org/MANUAL.html#option--to). `"epub"` is an alias
+#'   for `"epub3"` since Pandoc 2.0 and `"epub2"` for earlier version.
 #' @param md_extensions A character string of Pandoc Markdown extensions.
 #' @param pandoc_args A vector of additional Pandoc arguments.
-#' @param template Pandoc template to use for rendering. Pass \code{"default"}
+#' @param template Pandoc template to use for rendering. Pass `"default"`
 #'   to use Pandoc's built-in template; pass a path to use a custom template.
 #'   The default pandoc template should be sufficient for most use cases. In
 #'   case you want to develop a custom template, we highly recommend to start
 #'   from the default EPUB templates at
-#'   \url{https://github.com/jgm/pandoc-templates/}.
+#'   <https://github.com/jgm/pandoc-templates/>.
 #' @note Figure/table numbers cannot be generated if sections are not numbered
-#'   (\code{number_sections = FALSE}).
+#'   (`number_sections = FALSE`).
+#' @md
 #' @export
 epub_book = function(
   fig_width = 5, fig_height = 4, dev = 'png', fig_caption = TRUE,
   number_sections = TRUE, toc = FALSE, toc_depth = 3, stylesheet = NULL,
   cover_image = NULL, metadata = NULL, chapter_level = 1,
-  epub_version = c('epub3', 'epub'), md_extensions = NULL, pandoc_args = NULL,
+  epub_version = c('epub3', 'epub', 'epub2'), md_extensions = NULL,
+  global_numbering = !number_sections, pandoc_args = NULL,
   template = 'default'
 ) {
   epub_version = match.arg(epub_version)
@@ -53,7 +59,7 @@ epub_book = function(
     knitr = rmarkdown::knitr_options_html(fig_width, fig_height, NULL, FALSE, dev),
     pandoc = rmarkdown::pandoc_options(epub_version, from, args, ext = '.epub'),
     pre_processor = function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
-      process_markdown(input_file, from, args, !number_sections)
+      process_markdown(input_file, from, args, global_numbering)
       NULL
     },
     post_processor = function(metadata, input, output, clean, verbose) {
@@ -114,14 +120,12 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
       if (grepl(m, content[i])) {
         id = ''; sep = ':'
         type = gsub('^([^:]+).*$', '\\1', j)
-        if (type %in% names(theorem_abbr)) {
+        if (type %in% theorem_abbr) {
           id = sprintf('<span id="%s"></span>', j)
           sep = ''
         }
-        label = label_prefix(type)
-        content[i] = sub(
-          m, paste0(id, label, ref_table[j], sep, ' '), content[i]
-        )
+        label = label_prefix(type, sep = sep)(ref_table[j])
+        content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
       }
     }

@@ -9,9 +9,11 @@
 #' (\code{new_session = FALSE}) is to merge Rmd files into a single file and
 #' render this file. You can also choose to render each individual Rmd file in a
 #' new R session (\code{new_session = TRUE}).
-#' @param input An input filename (or multiple filenames). If \code{preview =
-#'   TRUE}, only files specified in this argument are rendered, otherwise all R
-#'   Markdown files specified by the book are rendered.
+#' @param input A directory, an input filename or multiple filenames. For a
+#'   directory, \file{index.Rmd} will be used if it exists in this (book)
+#'   project directory. For filenames, if \code{preview = TRUE}, only files
+#'   specified in this argument are rendered, otherwise all R Markdown files
+#'   specified by the book are rendered.
 #' @param output_format,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
 #'   is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
@@ -42,17 +44,35 @@
 #' # will use the default format defined in index.Rmd or _output.yml
 #' bookdown::render_book("index.Rmd")
 #' # will use the options for format defined in YAML metadata
-#' bookdown::render_book("index.Rmd",  "pdf_book")
+#' bookdown::render_book("index.Rmd",  "bookdown::pdf_book")
 #' # If you pass an output format object, it must have all the options set
 #' bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+#'
+#' # will render the book in the current directory
+#' bookdown::render_book()
+#' # this is equivalent to
+#' bookdown::render_book("index.Rmd")
+#' # will render the book living in the specified directory
+#' bookdown::render_book("my_book_project")
 #' }
 render_book = function(
-  input, output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
+  input = ".", output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
   preview = FALSE, config_file = '_bookdown.yml'
 ) {
 
   verify_rstudio_version()
+
+  # select and check input file(s)
+  if (length(input) == 1L && file_test("-d", input)) {
+    message(sprintf("Rendering book in directory '%s'", input))
+    owd = setwd(input); on.exit(setwd(owd), add = TRUE)
+    input = "index.Rmd"
+  }
+  if (!all(exist <- file_test("-f", input))) {
+    stop("Some files were not found: ",  paste(input[!exist], collapse = ' '))
+  }
+
   format = NULL  # latex or html
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
@@ -61,12 +81,12 @@ render_book = function(
     if (identical(output_format, 'all')) {
       output_format = rmarkdown::all_output_formats(input)
     }
-    if (length(output_format) > 1) {
-      return(unlist(lapply(output_format, function(fmt) xfun::Rscript_call(render_book, list(
+    if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
+      xfun::Rscript_call(render_book, list(
         input, fmt, ..., clean = clean, envir = envir, output_dir = output_dir,
         new_session = new_session, preview = preview, config_file = config_file
-      )))))
-    }
+      ), fail = c("bookdown::render_book() failed to render the output format '", fmt, "'."))
+    )))
     format = target_format(output_format)
   }
 
@@ -88,11 +108,13 @@ render_book = function(
   on.exit(opts$restore(), add = TRUE)
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
-  on.exit(clean_empty_dir(output_dir), add = TRUE)
+  on.exit(xfun::del_empty_dir(output_dir), add = TRUE)
   if (!preview) unlink(ref_keys_path(output_dir))  # clean up reference-keys.txt
   # store output directory and the initial input Rmd name
   opts$set(
-    output_dir = output_dir, input_rmd = input, preview = preview
+    output_dir = output_dir,
+    input_rmd = xfun::relative_path(input),
+    preview = preview
   )
 
   aux_diro = '_bookdown_files'
