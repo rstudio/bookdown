@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 
-A open-source (GPL-3) R package to facilitate writing books and long-form articles/reports with R Markdown. Features include:
+A open-source (GPAL-3) R package to facilitate writing books and long-form articles/reports with R Markdown. Features include:
 
 - Generate printer-ready books and ebooks from R Markdown documents
 - A markup language easier to learn than LaTeX, and to write elements such as section headers, lists, quotes, figures, tables, and citations
