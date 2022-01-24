@@ -6,9 +6,11 @@
 
 ## BUG FIXES
 
-- Fix an issue with Pandoc 2.15 and footnote relocation in each chapter (#1275).
-
 - Fix an issue with Pandoc 2.17 and internationalization of Proof-like environment (#1302).
+
+- Fix an issue with Pandoc 2.17 and cross referencing sections in non HTML format (thanks, @N0rbert, #7862).
+
+- Fix an issue with Pandoc 2.15 and footnote relocation in each chapter (#1275).
 
 - Fix an issue with `html_book()` and `toc.css` not working correctly with recent pandoc (thanks, @florisvdh, #1268).
 
