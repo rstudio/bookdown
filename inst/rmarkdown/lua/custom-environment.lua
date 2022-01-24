@@ -4,7 +4,7 @@
 
 -- REQUIREMENTS: Load shared lua function - see `shared.lua` in rmarkdown for more details.
 --  * pandocAvailable()
---  * backward compatible type() function
+--  * pandoc_type() function (backward compatible type() after 2.17 changes)
 --  * print_debug()
 dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
 
