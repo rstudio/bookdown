@@ -5,6 +5,6 @@ test_that("process_markdown() correctly resolves reference", {
     "# Theory {#theory}", "", "see \\@ref(label1)", "",
     "## Some other header {#label1}", "", "Content"
   )
-  out <- local_render(rmd, output_format = markdown_document2())
-  expect_snapshot_file(out, "md-resolve-ref.md")
+  content <- .render_and_read(rmd, output_format = markdown_document2())
+  expect_match(content, 'see <a href="#label1">1.1</a>', fixed = TRUE, all = FALSE)
 })

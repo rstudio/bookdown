@@ -38,7 +38,7 @@ local_render <- function(input, ..., .env = parent.frame()) {
 
 .render_and_read <- function(input, ...) {
   skip_if_not_pandoc()
-  res <- local_render()
+  res <- local_render(input, ...)
   xfun::read_utf8(res)
 }
 
