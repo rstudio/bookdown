@@ -86,7 +86,8 @@ process_markdown = function(
   on.exit(file.remove(intermediate_html), add = TRUE)
   rmarkdown::pandoc_convert(
     input_file, 'html', from, intermediate_html, TRUE,
-    c(pandoc_args, '--section-divs', '--mathjax', '--number-sections')
+    c(pandoc_args, '--section-divs', '--mathjax', '--number-sections',
+      if (rmarkdown::pandoc_available("2.17")) c('--wrap', 'none'))
   )
   x = read_utf8(intermediate_html)
   x = clean_html_tags(x)
