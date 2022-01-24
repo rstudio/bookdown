@@ -2,6 +2,20 @@
      A Pandoc 2 lua filter to deal with custom environment in bookdown
 --]]
 
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` in rmarkdown for more details.
+dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+]]
+if (not pandocAvailable {2,1}) then
+    io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
+    return {}
+end
+
+-- START OF THE FILTER'S FUNCTIONS --
+
 -- theorem types available to be used
 local theorem_abbr = {
     theorem = 'thm',
