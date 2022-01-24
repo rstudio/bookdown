@@ -90,7 +90,7 @@ Meta = function(m)
     if (bookdownmeta and bookdownmeta.language and bookdownmeta.language.label) then
         -- For internationalization feature of bookdown
         for k,v in pairs(bookdownmeta.language.label) do
-            if (type(v) == 'table' and v.t == 'MetaInlines' and proof_label[k] ~= nil) then
+            if (type(v) == 'Inlines' and proof_label[k] ~= nil) then
                 -- remove any undesired space (3 or less)
                 proof_label[k] = pandoc.utils.stringify(v):gsub("%.?%s?%s?%s?$", "")
                 print_debug("Translation-> "..k..":", proof_label[k])
