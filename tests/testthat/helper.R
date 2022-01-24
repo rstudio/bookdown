@@ -24,6 +24,23 @@ skip_if_pandoc <- function(ver = NULL) {
   }
 }
 
+local_rmd_file <- function(..., .env = parent.frame()) {
+  path <- withr::local_tempfile(.local_envir = .env, fileext = ".Rmd")
+  xfun::write_utf8(c(...), path)
+  path
+}
+
+local_render <- function(input, ..., .env = parent.frame()) {
+  skip_if_not_pandoc()
+  output_file <- withr::local_tempfile(.local_envir = .env)
+  rmarkdown::render(input, output_file = output_file, quiet = TRUE, ...)
+}
+
+.render_and_read <- function(input, ...) {
+  skip_if_not_pandoc()
+  res <- local_render()
+  xfun::read_utf8(res)
+}
 
 local_book <- function(name = "book",
                        title = "Awesome Cookbook",
