@@ -68,7 +68,7 @@ Imports:
     yaml (>= 2.1.19)
 Suggests:
     bslib (>= 0.2.4),
-    downlit (>= 0.2.1),
+    downlit (>= 0.4.0),
     htmlwidgets,
     jsonlite,
     rstudioapi,
