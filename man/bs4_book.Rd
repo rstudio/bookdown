@@ -8,13 +8,13 @@
 bs4_book(
   theme = bs4_book_theme(),
   repo = NULL,
-  fn_gitbook = FALSE,
   ...,
   lib_dir = "libs",
   pandoc_args = NULL,
   extra_dependencies = NULL,
   template = "default",
-  split_bib = FALSE
+  split_bib = FALSE,
+  footnotes_inline = TRUE
 )
 
 bs4_book_theme(primary = "#0068D9", version = 4, ...)
@@ -30,8 +30,6 @@ view source and edit buttons or a list with repository \code{base} link, default
 \code{branch}, \code{subdir} and \code{icon}
 (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).}
 
-\item{fn_gitbook}{Boolean, if TRUE add standard footnotes at the end of the page accessible via click on the footnote number.}
-
 \item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
 \item{template}{Pandoc template to use for rendering. Pass \code{"default"} to use
@@ -41,6 +39,10 @@ only, in case you want to develop a custom template, we highly recommend to
 start from the default template:
 \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}.
 Otherwise, some feature may not work anymore.}
+
+\item{footnotes_inline}{By default, footnotes will be set inline and shown on
+hover. Set to \code{FALSE} to keep footnotes at the bottom of the page with
+links.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
 

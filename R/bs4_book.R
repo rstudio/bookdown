@@ -22,19 +22,21 @@
 #'   start from the default template:
 #'   <https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html>.
 #'   Otherwise, some feature may not work anymore.
-#' @param fn_gitbook A boolean to switch to gitbook-variant of dealing with footnotes
+#' @param footnotes_inline By default, footnotes will be set inline and shown on
+#'   hover. Set to `FALSE` to keep footnotes at the bottom of the page with
+#'   links.
 #'
 #' @export
 #' @md
 bs4_book <- function(theme = bs4_book_theme(),
                      repo = NULL,
-                     fn_gitbook = FALSE,
                      ...,
                      lib_dir = "libs",
                      pandoc_args = NULL,
                      extra_dependencies = NULL,
                      template = 'default',
-                     split_bib = FALSE) {
+                     split_bib = FALSE,
+                     footnotes_inline = TRUE) {
   check_packages(bs4_book_deps())
   bs4_check_dots(...)
 
@@ -67,8 +69,8 @@ bs4_book <- function(theme = bs4_book_theme(),
       output <- post(metadata, input, output, clean, verbose)
     }
 
-    output2 <- bs4_book_build(output, repo = repo, fn_gitbook = fn_gitbook, lib_dir = lib_dir,
-                              split_bib = split_bib)
+    output2 <- bs4_book_build(output, repo = repo, lib_dir = lib_dir,
+                              split_bib = split_bib, footnotes_inline = footnotes_inline)
 
     if (clean && file.exists(output) && !same_path(output, output2)) {
       file.remove(output)
@@ -96,10 +98,10 @@ bs4_book_theme <- function(primary = "#0068D9", version = 4, ...) {
 
 bs4_book_build <- function(output = "bookdown.html",
                            repo = NULL,
-                           fn_gitbook = fn_gitbook,
                            lib_dir = "libs",
                            output_dir = opts$get("output_dir"),
-                           split_bib = split_bib) {
+                           split_bib = FALSE,
+                           footnotes_inline = TRUE) {
   move_files_html(output, lib_dir)
 
   rmd_index <- new.env(parent = emptyenv())
@@ -121,16 +123,16 @@ bs4_book_build <- function(output = "bookdown.html",
     bs4_chapter_tweak(
       output2,
       repo = repo,
-      fn_gitbook = fn_gitbook,
       rmd_index = setNames(opts$get("input_rmd"), output2),
-      toc = build_toc(output2)
+      toc = build_toc(output2),
+      footnotes_inline = footnotes_inline
     )
   } else {
     bs4_chapters_tweak(output,
       repo = repo,
-      fn_gitbook = fn_gitbook,
       rmd_index = unlist(as.list(rmd_index)),
-      output_dir = output_dir
+      output_dir = output_dir,
+      footnotes_inline = footnotes_inline
     )
   }
 
@@ -236,8 +238,8 @@ bs4_book_dependency <- function(theme) {
 bs4_chapters_tweak <- function(output,
                                rmd_index = NULL,
                                repo = NULL,
-                               fn_gitbook = FALSE,
-                               output_dir = opts$get("output_dir")) {
+                               output_dir = opts$get("output_dir"),
+                               footnotes_inline = TRUE) {
   toc <- build_toc(output)
   files <- toc[!duplicated(toc$file_name) & !is.na(toc$file_name), ]
   files$path <- file.path(output_dir, files$file_name)
@@ -246,13 +248,13 @@ bs4_chapters_tweak <- function(output,
   for (i in seq_len(nrow(files))) {
     path <- files$path[[i]]
     message("Tweaking ", path)
-    index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo, fn_gitbook = fn_gitbook)
+    index[[i]] <- bs4_chapter_tweak(path, toc, rmd_index = rmd_index, repo = repo, footnotes_inline = footnotes_inline)
   }
   # tweak 404.html ---
   path_404 <- file.path(output_dir, "404.html")
   if (file.exists(path_404)) {
     message("Tweaking ", path_404)
-    bs4_chapter_tweak(path_404, toc, rmd_index = rmd_index, repo = repo, fn_gitbook = fn_gitbook)
+    bs4_chapter_tweak(path_404, toc, rmd_index = rmd_index, repo = repo, footnotes_inline = footnotes_inline)
 
   }
   index <- unlist(index, recursive = FALSE, use.names = FALSE)
@@ -264,7 +266,7 @@ bs4_chapters_tweak <- function(output,
   )
 }
 
-bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL, fn_gitbook = FALSE) {
+bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL, footnotes_inline = TRUE) {
   text <- xfun::file_string(path)
 
   # Convert ANSI escape to \u2029 since control characters are ignored in XML2
@@ -276,7 +278,7 @@ bs4_chapter_tweak <- function(path, toc, rmd_index = NULL, repo = NULL, fn_gitbo
   tweak_chapter(html)
   tweak_anchors(html)
   tweak_chunks(html)
-  tweak_footnotes(html, fn_gitbook)
+  if (isTRUE(footnotes_inline)) tweak_footnotes(html)
   tweak_part_screwup(html)
   tweak_navbar(html, toc, basename(path), rmd_index = rmd_index, repo = repo)
   tweak_metadata(html, path)
@@ -317,10 +319,8 @@ tweak_part_screwup <- function(html) {
   xml2::xml_remove(sidebar)
 }
 
-tweak_footnotes <- function(html, fn_gitbook = FALSE) {
-  
-if (fn_gitbook == FALSE) {
-     
+tweak_footnotes <- function(html) {
+
   container <- xml2::xml_find_all(html, ".//div[@class='footnotes']")
   if (length(container) != 1) {
     return()
@@ -346,10 +346,6 @@ if (fn_gitbook == FALSE) {
 
   # Delete container
   xml2::xml_remove(container)
- } else {
-   return()
- }
-  
 }
 
 tweak_chunks <- function(html) {
