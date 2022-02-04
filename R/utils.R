@@ -50,6 +50,12 @@ common_format_config = function(
   # when the output is LaTeX, force LaTeX tables instead of default Pandoc tables
   # http://tex.stackexchange.com/q/276699/9128
   config$knitr$opts_knit$kable.force.latex = TRUE
+
+  # deactivate header attributes handling from rmarkdown
+  # as done in bookdown::clean_html_tag()
+  opts <- options(rmarkdown.html_dependency.header_attr = FALSE)
+  config$on_exit <- function() options(opts)
+
   config
 }
 

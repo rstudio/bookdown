@@ -16,6 +16,8 @@
 
 - Fix an issue with `html_book()` and `toc.css` not working correctly with recent pandoc (thanks, @florisvdh, #1268).
 
+- Fix an issue with unneeded `header-attr.js` inserted by **rmarkdown** while **bookdown** already cleans attributes (thanks, @salim-b, #865).
+
 # CHANGES IN bookdown VERSION 0.24
 
 ## MAJOR CHANGES
