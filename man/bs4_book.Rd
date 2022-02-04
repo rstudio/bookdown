@@ -53,5 +53,5 @@ links.}
 This output format is built with \href{https://getbootstrap.com}{Bootstrap},
 using carefully crafted features to provide a clean reading experience whether
 you are on a phone, tablet, or desktop. To read more about this format, see:
-\url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}
+\url{https://bookdown.org/yihui/bookdown/html.html#bs4-book}
 }

@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.24.1
+Version: 0.24.7
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
@@ -61,14 +61,14 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.31),
-    rmarkdown (>= 2.9),
+    rmarkdown (>= 2.11.12),
     jquerylib,
-    xfun (>= 0.22),
+    xfun (>= 0.29),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
     bslib (>= 0.2.4),
-    downlit (>= 0.2.1),
+    downlit (>= 0.4.0),
     htmlwidgets,
     jsonlite,
     rstudioapi,
@@ -81,12 +81,14 @@ Suggests:
     tufte,
     xml2,
     webshot,
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.0),
     withr (>= 2.3.0)
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
+Config/Needs/book: remotes, webshot
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Remotes: rstudio/rmarkdown

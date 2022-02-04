@@ -2,9 +2,7 @@
 # https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths:
       - 'inst/examples/**'
       - 'inst/resources/**'
@@ -13,9 +11,7 @@ on:
       - 'R/**'
       - '.github/workflows/Book.yaml'
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
     paths:
       - 'inst/examples/**'
       - 'inst/resources/**'
@@ -23,6 +19,12 @@ on:
       - 'inst/templates/**'
       - 'R/**'
       - '.github/workflows/Book.yaml'
+  workflow_dispatch:
+    inputs:
+      ghpages:
+        description: 'Build gitbook with pandoc devel and deploy gitbook to gh-page for checking differences'
+        required: false
+        default: true
 
 name: Build and deploy book
 
@@ -42,9 +44,14 @@ jobs:
         uses: r-lib/actions/setup-r@v1
 
       - name: Install Pandoc
+        if: ${{ ! github.event.inputs.ghpages }}
         uses: r-lib/actions/setup-pandoc@v1
         with:
           pandoc-version: '2.7.3'
+
+      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
+        # install nightly when checking on gh-pages
+        if: github.event.inputs.ghpages
 
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v1
@@ -52,19 +59,11 @@ jobs:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          extra-packages: |
+            sessioninfo
+          needs: book
 
       - name: Install OS dependencies
         run: |
@@ -74,13 +73,7 @@ jobs:
 
       - name: Install phamtomJS for webshot
         run: |
-          remotes::install_cran("webshot")
           webshot::install_phantomjs()
-        shell: Rscript {0}
-
-      - name: Install R dependencies for bookdown
-        run: |
-          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Install bookdown package
@@ -90,7 +83,6 @@ jobs:
       - name: Session info
         run: |
           options(width = 100)
-          remotes::install_cran("sessioninfo")
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
@@ -103,9 +95,9 @@ jobs:
           key: bookdown-${{ hashFiles('inst/examples/*Rmd') }}
           restore-keys: bookdown-
 
-      - name: Build Gitbook
+      - name: Test build of HTML books
         if: github.event_name == 'pull_request'
-        run: make -C inst/examples gitbook
+        run: make -C inst/examples gitbook bs4_book
 
       - name: Build and Deploy all book
         if: github.event_name == 'push'
@@ -113,6 +105,19 @@ jobs:
           CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
           CONTENT_ID: 3
         run: make -C inst/examples all
+
+      - name: Build Gitbook only
+        env:
+          DEPLOY_GH_PAGES: ${{ github.event.inputs.ghpages }}
+        if: github.event_name == 'workflow_dispatch'
+        run: make -C inst/examples gitbook
+
+      - name: Deploy Gitbook to gh-pages
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.ghpages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: inst/examples/_book
 
       - name: Upload book folder for debug
         if: failure()

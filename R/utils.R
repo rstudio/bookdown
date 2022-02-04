@@ -32,10 +32,13 @@ common_format_config = function(
   # provide file_scope if requested
   if (file_scope) config$file_scope = md_chapter_splitter
 
-  # prepend the custom-environment filter
-  config$pandoc$lua_filters = c(
-    lua_filter("custom-environment.lua"), config$pandoc$lua_filters
-  )
+  # prepend the custom-environment filter unless opt-out
+  if (getOption("bookdown.theorem.enabled", TRUE)) {
+    config$pandoc$lua_filters = c(
+      lua_filter("custom-environment.lua"),
+      config$pandoc$lua_filters
+    )
+  }
   # and add bookdown metadata file for the filter to work
   config$pandoc$args = c(bookdown_yml_arg(), config$pandoc$args)
 
@@ -428,11 +431,7 @@ move_dir = function(from, to) {
 
 move_dirs = function(from, to) mapply(move_dir, from, to)
 
-existing_files = function(x, first = FALSE) {
-  x = x[file.exists(x)]
-  if (first) head(x, 1) else x
-}
-
+#' @importFrom xfun existing_files
 existing_r = function(base, first = FALSE) {
   x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
   existing_files(x, first)

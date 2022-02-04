@@ -222,8 +222,7 @@ tufte_html2 = function(..., number_sections = FALSE) {
 build_chapter = function(
   head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot
 ) {
-  # add a has-sub class to the <li> items that has sub lists
-  toc = gsub('^(<li>)(.+<ul>)$', '<li class="has-sub">\\2', toc)
+  toc = add_toc_class(toc)
   paste(c(
     head,
     '<div class="row">',
@@ -245,6 +244,10 @@ build_chapter = function(
     '</div>',
     foot
   ), collapse = '\n')
+}
+
+add_toc_class = function(toc) {
+  gsub('^(<li>)(.+)(?<!</li>)$', '<li class="has-sub">\\2', toc, perl = TRUE)
 }
 
 r_chap_pattern = '^<!--chapter:end:(.+)-->$'
@@ -469,7 +472,7 @@ build_404 = function() {
   # user has already a workflow in place
   if (file.exists(p404)) return()
   # We create 404 page if it does not exist
-  if (length(rmd_cur <- existing_files(c('_404.md', '_404.Rmd'), TRUE))) {
+  if (length(rmd_cur <- head(existing_files(c('_404.md', '_404.Rmd')), 1))) {
     xfun::Rscript_call(rmarkdown::render, list(
       rmd_cur, rmarkdown::html_fragment(pandoc_args = c('--metadata', 'title=404')),
       output_file = p404, quiet = TRUE
@@ -1022,7 +1025,7 @@ parse_a_targets = function(x) {
 # parse footnotes in the div of class "footnotes"; each footnote is one <li>
 # with id fnX and a link back to the text
 parse_footnotes = function(x) {
-  i = which(x == '<div class="footnotes">')
+  i = grep('<div class="footnotes[^"]*">', x)
   if (length(i) == 0) return(list(items = character(), range = integer()))
   j = which(x == '</div>')
   j = min(j[j > i])
