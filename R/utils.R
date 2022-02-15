@@ -438,9 +438,9 @@ move_dir = function(from, to) {
 move_dirs = function(from, to) mapply(move_dir, from, to)
 
 #' @importFrom xfun existing_files
-existing_r = function(base, first = FALSE) {
+existing_r = function(base) {
   x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
-  existing_files(x, first)
+  existing_files(x)
 }
 
 target_format = function(format) {
