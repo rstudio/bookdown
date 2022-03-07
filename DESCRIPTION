@@ -89,6 +89,7 @@ SystemRequirements: Pandoc (>= 1.17.2)
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 Config/Needs/book: remotes, webshot
+Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Remotes: rstudio/rmarkdown
