@@ -1,9 +1,16 @@
 destination: reference
 
+# website will be referenced on https://pkgs.rstudio.com/
+# Open a PR in https://github.com/rstudio/pkgs.rstudio.com
 url: https://pkgs.rstudio.com/bookdown/
 
 template:
-  package: quillt
+  package: tidytemplate
+  bootstrap: 5
+  bslib:
+    primary: "#096B72"
+    navbar-background: "#e6f3fc"
+  trailing_slash_redirect: true
   opengraph:
     image:
       src: man/figures/logo.png
@@ -16,46 +23,43 @@ development:
   version_tooltip: "Development version"
 
 home:
-  strip_header: false
   links:
-  - text: Learn more
-    href: https://bookdown.org/
+  - text: Learn more about R Markdown
+    href: "https://rmarkdown.rstudio.com"
 
-navbar:
-  title: ~
-  type: default
+# custom footer for rmarkdown ecosystem
+footer:
   structure:
-    left:  [intro, examples, articles]
-    right: [reference, news, github]
+    left: [rmd]
+    right: [developed_by, p, built_with]
   components:
-    home: ~
+      p: "\n\n"
+      rmd: |
+        **bookdown** is a part of the **R Markdown** ecosystem of packages for creating
+        computational documents in R.<br>Learn more at
+        [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
+
+# structure of website themed for R Markdown ecosystem
+navbar:
+  structure:
+    left:  [intro, examples, articles, reference, news]
+  components:
     examples:
       text: Examples
-      href: articles/articles/examples.html
-    articles:
-      text: Articles
-      menu:
-        - text: "About bookdown.org"
-          href: articles/articles/publish.html
-    reference:
-      text: Reference
-      href: reference/index.html
-    github:
-      icon: fab fa-github fa-lg
-      href: https://github.com/rstudio/bookdown
-    news:
-      text: News
-      menu:
-        - text: "Changelog"
-          href: news/index.html
-        - text: "------------------"
-        - text: "Blog posts"
-        - text: "Version 0.23"
-          href: https://blog.rstudio.com/2021/08/18/announcing-bookdown-v0.23/
-        - text: "Version 0.21"
-          href: https://blog.rstudio.com/2020/12/21/rmd-news/
-        - text: "Version 0.3"
-          href: https://blog.rstudio.com/2016/12/02/announcing-bookdown/
+      href: articles/examples.html
+
+# Add articles menu using
+# https://pkgdown.r-lib.org/dev/reference/build_articles.html#index-and-navbar
+# articles:
+
+news:
+  releases:
+  - text: "Version 0.23"
+    href: https://blog.rstudio.com/2021/08/18/announcing-bookdown-v0.23/
+  - text: "Version 0.21"
+    href: https://blog.rstudio.com/2020/12/21/rmd-news/
+  - text: "Version 0.3"
+    href: https://blog.rstudio.com/2016/12/02/announcing-bookdown/
 
 reference:
 - title: Book output formats
@@ -101,7 +105,3 @@ reference:
   - bookdown_site
   - fence_theorems
   - calibre
-
-authors:
-  "Yihui Xie":
-    href: https://yihui.org
