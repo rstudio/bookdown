@@ -388,9 +388,18 @@ For LaTeX output, only the content of these blocks will be shown with no colored
 Bookdown will generate HTML `<meta>` tags based on Pandoc's variables set in `index.Rmd`, described in \@ref(metadata-for-sharing). Additionally, `bs4_book()` will create unique chapter descriptions auto-generated from the chapter's contents. You can have a look at [the `bs4_book` HTML
 template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.html) for details on how these variables are used.
 
+#### Inline Footnotes {#bs4-book-footnotes}
+
+`bs4_book` makes any footnotes to show inline on hover instead of a linked item at the bottom of the page. You can set `footnotes_inline = FALSE` to opt-out this behavior and keep the footnotes at the bottom. 
+
+```yaml
+bookdown::bs4_book:
+  footnotes_inline: false
+```
+
 #### References/Bibliography
 
-Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes footnotes appear inline when clicked. 
+Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes by default footnotes appear inline when clicked. 
 To do that, download a footnote style CSL file; we recommend <https://www.zotero.org/styles/>.
 For example, you could download the `chicago-fullnote-bibliography.csl` from [Zotero,](https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography) then
 add this to your `index.Rmd`:

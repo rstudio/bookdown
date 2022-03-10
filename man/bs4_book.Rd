@@ -13,7 +13,8 @@ bs4_book(
   pandoc_args = NULL,
   extra_dependencies = NULL,
   template = "default",
-  split_bib = FALSE
+  split_bib = FALSE,
+  footnotes_inline = TRUE
 )
 
 bs4_book_theme(primary = "#0068D9", version = 4, ...)
@@ -38,6 +39,10 @@ only, in case you want to develop a custom template, we highly recommend to
 start from the default template:
 \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/bs4_book.html}.
 Otherwise, some feature may not work anymore.}
+
+\item{footnotes_inline}{By default, footnotes will be set inline and shown on
+hover. Set to \code{FALSE} to keep footnotes at the bottom of the page with
+links.}
 
 \item{primary}{Primary colour: used for links and background of footer.}
 

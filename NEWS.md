@@ -1,10 +1,22 @@
 # CHANGES IN bookdown VERSION 0.25
 
+## NEW FEATURES
+
+- Set option `bookdown.theorem.enabled = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.enabled = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
+
+- `bs4_book()` gains a `footnotes_inline` argument. Set to `FALSE` to opt-out the default behavior of moving footnotes inline to show on hover (thanks, @Pindar777, #1253).
+
 ## BUG FIXES
+
+- Fix an issue with Pandoc 2.17 and internationalization of Proof-like environment (#1302).
+
+- Fix an issue with Pandoc 2.17 and cross referencing sections in non HTML format (thanks, @N0rbert, #1301).
 
 - Fix an issue with Pandoc 2.15 and footnote relocation in each chapter (#1275).
 
 - Fix an issue with `html_book()` and `toc.css` not working correctly with recent pandoc (thanks, @florisvdh, #1268).
+
+- Fix an issue with unneeded `header-attr.js` inserted by **rmarkdown** while **bookdown** already cleans attributes (thanks, @salim-b, #865).
 
 # CHANGES IN bookdown VERSION 0.24
 

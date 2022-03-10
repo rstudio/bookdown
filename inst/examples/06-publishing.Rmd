@@ -15,7 +15,7 @@ The only argument of `publish_book()` that you may want to touch is `render`. It
 
 ```{r eval=FALSE}
 bookdown::publish_book(render = 'local')
-````
+```
 
 If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
 
