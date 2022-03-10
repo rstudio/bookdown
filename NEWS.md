@@ -8,6 +8,8 @@
 
 ## BUG FIXES
 
+- Fix styling of bibliography for `bs4_book()` (thanks, @Selbosh, #1277).
+
 - Fix an issue with Pandoc 2.17 and internationalization of Proof-like environment (#1302).
 
 - Fix an issue with Pandoc 2.17 and cross referencing sections in non HTML format (thanks, @N0rbert, #1301).
