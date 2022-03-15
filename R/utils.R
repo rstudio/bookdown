@@ -475,22 +475,11 @@ eng_theorem = function(options) {
   if (!(type %in% names(theorem_abbr))) stop(
     "The type of theorem '", type, "' is not supported yet."
   )
-  options$type = type
-  label = paste(theorem_abbr[type], options$label, sep = ':')
-  html.before2 = sprintf('(\\#%s) ', label)
-  name = options$name; to_md = output_md()
-  if (length(name) == 1) {
-    if (to_md) {
-      html.before2 = paste(html.before2, sprintf('(%s) ', name))
-    } else {
-      options$latex.options = sprintf('[%s]', name)
-      html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
-    }
-  }
-  options$html.before2 = sprintf(
-    '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
-  )
-  process_block(options, to_md)
+  label = paste0('#', options$label)
+  name = sprintf('name="%s"', options$name)
+  # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
+  res = paste(c(paste0('.', type), label, name), collapse = ' ')
+  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
 }
 
 # a proof engine for unnumbered math environments
@@ -499,38 +488,10 @@ eng_proof = function(options) {
   if (!(type %in% names(label_names_math2))) stop(
     "The type of proof '", type, "' is not supported yet."
   )
-  options$type = type
-  label = label_prefix(type, label_names_math2)()
-  name = options$name; to_md = output_md()
-  if (length(name) == 1) {
-    if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
-    r = '^(.+?)([[:punct:][:space:]]+)$'  # "Remark. " -> "Remark (Name). "
-    if (grepl(r, label)) {
-      label1 = gsub(r, '\\1', label)
-      label2 = paste0(' (', name, ')', gsub(r, '\\2', label))
-    } else {
-      label1 = label; label2 = ''
-    }
-    label = sprintf('<em>%s</em>%s', label1, label2)
-  } else {
-    label = sprintf('<em>%s</em>', label)
-  }
-  options$html.before2 = sprintf(
-    '<span class="%s">%s</span> ', type, label
-  )
-  if (!to_md) options$html.before2 = paste('\\iffalse{}', options$html.before2, '\\fi{}')
-  process_block(options, to_md)
-}
-
-process_block = function(options, md) {
-  if (md) {
-    code = options$code
-    code = knitr:::pandoc_fragment(code)
-    r = '^<p>(.+)</p>$'
-    if (length(code) > 0 && grepl(r, code[1])) code[1] = gsub(r, '\\1', code[1])
-    options$code = code
-  }
-  knitr:::eng_block2(options)
+  name = sprintf('name="%s"', options$name)
+  # TODO: use knitr:::fenced_block()
+  res = paste(c(paste0('.', type), name), collapse = ' ')
+  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
 }
 
 register_eng_math = function(envs, engine) {

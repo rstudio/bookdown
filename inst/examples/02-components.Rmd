@@ -397,7 +397,7 @@ $$a^2 + b^2 = c^2$$
 ```
 ````
 
-This syntax still works, but we do not recommend it since the new syntax allows you to write richer content and has a cleaner implementation. However, note that the old syntax has to be used if you want the environment to work with output formats in addition to HTML and PDF, such as EPUB. The fenced `Div` syntax only works for HTML and PDF output at the moment, and we will try to improve it in the future.
+This syntax still works, but we do not recommend it since the new syntax allows you to write richer content and has a cleaner implementation.
 
 This conversion between the two syntaxes is straightforward. The above theorem could be rewritten in this way:
 

@@ -22,6 +22,8 @@
 
 ## MAJOR CHANGES
 
+- The `theorem` and `proof` **knitr** engines no longer use the `block2` **knitr** engine to create theorem/proof environments, but write out fenced `Div`s instead, which is [the new syntax](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) for these environments. Note that this means these environments are no longer supported in EPUB output (they work only in HTML and PDF), but hopefully the support will be back in the future (thanks, @deleeuw, #1178).
+
 - The tag `<meta property="og:url">` has been removed from the default HTML template and the `gitbook` template (thanks, @jtbayly, #970).
 
 # CHANGES IN bookdown VERSION 0.24
