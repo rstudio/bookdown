@@ -20,6 +20,10 @@
 
 - Fix an issue with unneeded `header-attr.js` inserted by **rmarkdown** while **bookdown** already cleans attributes (thanks, @salim-b, #865).
 
+## MAJOR CHANGES
+
+- The tag `<meta property="og:url">` has been removed from the default HTML template and the `gitbook` template (thanks, @jtbayly, #970).
+
 # CHANGES IN bookdown VERSION 0.24
 
 ## MAJOR CHANGES
