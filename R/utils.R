@@ -50,6 +50,12 @@ common_format_config = function(
   # when the output is LaTeX, force LaTeX tables instead of default Pandoc tables
   # http://tex.stackexchange.com/q/276699/9128
   config$knitr$opts_knit$kable.force.latex = TRUE
+
+  # deactivate header attributes handling from rmarkdown
+  # as done in bookdown::clean_html_tag()
+  opts <- options(rmarkdown.html_dependency.header_attr = FALSE)
+  config$on_exit <- function() options(opts)
+
   config
 }
 
@@ -431,14 +437,10 @@ move_dir = function(from, to) {
 
 move_dirs = function(from, to) mapply(move_dir, from, to)
 
-existing_files = function(x, first = FALSE) {
-  x = x[file.exists(x)]
-  if (first) head(x, 1) else x
-}
-
-existing_r = function(base, first = FALSE) {
+#' @importFrom xfun existing_files
+existing_r = function(base) {
   x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
-  existing_files(x, first)
+  existing_files(x)
 }
 
 target_format = function(format) {
