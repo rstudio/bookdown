@@ -15,7 +15,7 @@ local_bs4_book <- function(name = "book",
                            env = parent.frame()) {
 
   # don't run test using this book skeleton when Pandoc is not available
-  skip_if_not_pandoc()
+  skip_if_not_pandoc('2.0')
 
   path <- local_book(name = name, title = title, author = author,
     description = description, url = url, verbose = verbose, env = env)
