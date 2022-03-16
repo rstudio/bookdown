@@ -59,7 +59,7 @@ cat(formatted, sep = "\n")
 
 * The [Home](https://bookdown.org/home/) section showcases featured books available online, with links to each book's source code.
 * The [Books](https://bookdown.org/home/archive/) section lists books written using **bookdown**.
-* The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [2018 bookdown contest](https://blog.rstudio.com/2018/07/27/first-bookdown-contest/).
+* The [Contest](https://bookdown.org/home/contest/) section showcases the award recipients and their bookdown applications from the [2018 bookdown contest](https://www.rstudio.com/blog/first-bookdown-contest/).
 
 See more about how to publish a book or get your book listed on the [About bookdown.org](https://bookdown.org/home/about/). 
 

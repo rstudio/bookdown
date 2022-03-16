@@ -4,7 +4,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rstudio/bookdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/bookdown/actions)
 [![CRAN release](https://www.r-pkg.org/badges/version/bookdown)](https://CRAN.R-project.org/package=bookdown)
-[![Codecov test coverage](https://codecov.io/gh/rstudio/bookdown/branch/master/graph/badge.svg)](https://codecov.io/gh/rstudio/bookdown?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/rstudio/bookdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rstudio/bookdown?branch=main)
 <!-- badges: end -->
 
 
