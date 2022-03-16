@@ -269,22 +269,8 @@ calibre = function(input, output, options = '') {
 #' @export
 #' @keywords internal
 kindlegen = function(epub, exec = Sys.which('kindlegen')) {
-  warning(
-    'Since Amazon no longer provides KindleGen, this function has been deprecated ',
-    'and will be removed in a future version of bookdown. Please consider using ',
-    'bookdonw::calibre() instead.'
+  stop(
+    'Since Amazon no longer provides KindleGen, this function is no longer supported. ',
+    'Please consider using bookdonw::calibre() instead.'
   )
-  if (exec == '') stop('Cannot find the executable KindleGen.')
-  if (missing(epub)) {
-    on.exit(opts$restore(), add = TRUE)
-    config = load_config()
-    main = with_ext(book_filename(config), 'epub')
-    epub = file.path(output_dirname(NULL, config), main)
-  }
-  if (!file.exists(epub)) stop('The EPUB file ', epub, ' does not exist')
-  mobi = with_ext(epub, 'mobi')
-  unlink(mobi)
-  system2(exec, shQuote(epub))
-  if (!file.exists(mobi)) stop('Failed to convert epub to mobi')
-  mobi
 }

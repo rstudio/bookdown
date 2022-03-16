@@ -1,3 +1,7 @@
+# CHANGES IN bookdown VERSION 0.26
+
+- `kindlegen()` is defunct now.
+
 # CHANGES IN bookdown VERSION 0.25
 
 ## NEW FEATURES
