@@ -470,37 +470,89 @@ str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
 output_md = function() getOption('bookdown.output.markdown', FALSE)
 
 # a theorem engine for knitr (can also be used for lemmas, definitions, etc)
-eng_theorem = function(options) {
-  type = options$type %n% 'theorem'
-  if (!(type %in% names(theorem_abbr))) stop(
-    "The type of theorem '", type, "' is not supported yet."
-  )
-  label = paste0('#', options$label)
-  name = sprintf('name="%s"', options$name)
-  # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
-  res = paste(c(paste0('.', type), label, name), collapse = ' ')
-  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+eng_theorem = function(type, env) {
+  function(options) {
+    v = if (knitr::pandoc_to(c('epub', 'docx', 'pptx'))) '1' else '2'
+    i = sprintf('eng_%s%s', env, v)
+    f = eng_funcs[[i]]
+    f(type, options)
+  }
 }
-
-# a proof engine for unnumbered math environments
-eng_proof = function(options) {
-  type = options$type %n% 'proof'
-  if (!(type %in% names(label_names_math2))) stop(
-    "The type of proof '", type, "' is not supported yet."
-  )
-  name = sprintf('name="%s"', options$name)
-  # TODO: use knitr:::fenced_block()
-  res = paste(c(paste0('.', type), name), collapse = ' ')
-  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
-}
-
-register_eng_math = function(envs, engine) {
-  knitr::knit_engines$set(setNames(lapply(envs, function(env) {
-    function(options) {
-      options$type = env
-      engine(options)
+# TODO: remove eng_theorem1(), eng_proof1(), and process_block() when
+# https://github.com/rstudio/bookdown/issues/1179 is resolved
+eng_funcs = list(
+  eng_theorem1 = function(type, options) {
+    options$type = type
+    label = paste(theorem_abbr[type], options$label, sep = ':')
+    html.before2 = sprintf('(\\#%s) ', label)
+    name = options$name; to_md = output_md()
+    if (length(name) == 1) {
+      if (to_md) {
+        html.before2 = paste(html.before2, sprintf('(%s) ', name))
+      } else {
+        options$latex.options = sprintf('[%s]', name)
+        html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
+      }
     }
-  }), envs))
+    options$html.before2 = sprintf(
+      '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
+    )
+    process_block(options, to_md)
+  },
+  eng_theorem2 = function(type, options) {
+    label = paste0('#', options$label)
+    name = sprintf('name="%s"', options$name)
+    # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
+    res = paste(c(paste0('.', type), label, name), collapse = ' ')
+    paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+  },
+  eng_proof1 = function(type, options) {
+    options$type = type
+    label = label_prefix(type, label_names_math2)()
+    name = options$name; to_md = output_md()
+    if (length(name) == 1) {
+      if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
+      r = '^(.+?)([[:punct:][:space:]]+)$'  # "Remark. " -> "Remark (Name). "
+      if (grepl(r, label)) {
+        label1 = gsub(r, '\\1', label)
+        label2 = paste0(' (', name, ')', gsub(r, '\\2', label))
+      } else {
+        label1 = label; label2 = ''
+      }
+      label = sprintf('<em>%s</em>%s', label1, label2)
+    } else {
+      label = sprintf('<em>%s</em>', label)
+    }
+    options$html.before2 = sprintf(
+      '<span class="%s">%s</span> ', type, label
+    )
+    if (!to_md) options$html.before2 = paste('\\iffalse{}', options$html.before2, '\\fi{}')
+    process_block(options, to_md)
+  },
+  eng_proof2 = function(type, options) {
+    name = sprintf('name="%s"', options$name)
+    # TODO: use knitr:::fenced_block()
+    res = paste(c(paste0('.', type), name), collapse = ' ')
+    paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+  }
+)
+
+process_block = function(options, md) {
+  if (md) {
+    code = options$code
+    code = knitr:::pandoc_fragment(code)
+    r = '^<p>(.+)</p>$'
+    if (length(code) > 0 && grepl(r, code[1])) code[1] = gsub(r, '\\1', code[1])
+    options$code = code
+  }
+  knitr:::eng_block2(options)
+}
+
+register_eng_math = function() {
+  for (env in c('theorem', 'proof')) {
+    envs = names(if (env == 'theorem') theorem_abbr else label_names_math2)
+    knitr::knit_engines$set(setNames(lapply(envs, eng_theorem, env = env), envs))
+  }
 }
 
 pandoc2.0 = function() rmarkdown::pandoc_available('2.0')

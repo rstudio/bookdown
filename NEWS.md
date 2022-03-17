@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.26
 
+- Added support for theorem/proof environments back for Word/EPUB output (thanks, @N0rbert, #1313).
+
 - `kindlegen()` is defunct now.
 
 # CHANGES IN bookdown VERSION 0.25
