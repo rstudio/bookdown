@@ -549,10 +549,10 @@ process_block = function(options, md) {
 }
 
 register_eng_math = function() {
-  for (env in c('theorem', 'proof')) {
+  lapply(c('theorem', 'proof'), function(env) {
     envs = names(if (env == 'theorem') theorem_abbr else label_names_math2)
     knitr::knit_engines$set(setNames(lapply(envs, eng_theorem, env = env), envs))
-  }
+  })
 }
 
 pandoc2.0 = function() rmarkdown::pandoc_available('2.0')
