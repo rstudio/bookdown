@@ -472,7 +472,7 @@ output_md = function() getOption('bookdown.output.markdown', FALSE)
 # a theorem engine for knitr (can also be used for lemmas, definitions, etc)
 eng_theorem = function(type, env) {
   function(options) {
-    v = if (knitr::pandoc_to(c('epub', 'docx', 'pptx', 'odt'))) '1' else '2'
+    v = if (knitr::pandoc_to(c('epub', 'epub2', 'epub3', 'docx', 'pptx', 'odt'))) '1' else '2'
     i = sprintf('eng_%s%s', env, v)
     f = eng_funcs[[i]]
     f(type, options)
