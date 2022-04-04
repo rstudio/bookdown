@@ -166,7 +166,7 @@ render_book = function(
   )
 
   res = if (new_session) {
-    render_new_session(files, main, config, output_format, output_options, output_options = output_options, clean, envir, ...)
+    render_new_session(files, main, config, output_format, output_options, clean, envir, output_options = output_options, ...)
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, output_options = output_options, ...)
   }
