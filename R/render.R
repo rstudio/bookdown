@@ -79,9 +79,9 @@ render_book = function(
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.null(output_format) || is.character(output_format)) {
     if (is.null(output_format) || identical(output_format, 'all')) {
-      output_format = rmarkdown::all_output_formats(input)
+      all_formats = rmarkdown::all_output_formats(input)
       # when no format provided, return name of the first resolved
-      if (is.null(output_format)) output_format = output_format[[1]]
+      output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
     }
     if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
       xfun::Rscript_call(render_book, list(
