@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.26
 
+- Fix an issue with per-format `rmd_files` config when no `output_format` was provided in `render_book()` (thanks, @ellessenne, #1323).
+
 - Added support for theorem/proof environments back for Word/EPUB/ODT output (thanks, @N0rbert, #1313).
 
 - `kindlegen()` is defunct now.
