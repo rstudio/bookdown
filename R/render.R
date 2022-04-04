@@ -14,7 +14,7 @@
 #'   project directory. For filenames, if \code{preview = TRUE}, only files
 #'   specified in this argument are rendered, otherwise all R Markdown files
 #'   specified by the book are rendered.
-#' @param output_format,...,clean,envir Arguments to be passed to
+#' @param output_format,output_options,...,clean,envir Arguments to be passed to
 #'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
 #'   is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
 #'   and \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the
@@ -56,7 +56,7 @@
 #' bookdown::render_book("my_book_project")
 #' }
 render_book = function(
-  input = ".", output_format = NULL, ..., clean = TRUE, envir = parent.frame(),
+  input = ".", output_format = NULL, output_options = NULL, ..., clean = TRUE, envir = parent.frame(),
   clean_envir = !interactive(), output_dir = NULL, new_session = NA,
   preview = FALSE, config_file = '_bookdown.yml'
 ) {
@@ -74,6 +74,11 @@ render_book = function(
   }
 
   format = NULL  # latex or html
+  if (is.null(output_format)) {
+    output_format = rmarkdown::resolve_output_format(
+      input, output_format = output_format, output_options = output_options
+    )
+  }
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
