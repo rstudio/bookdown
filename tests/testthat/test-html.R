@@ -47,10 +47,7 @@ test_that("add_toc_class() works for all pandoc versions", {
                             options = c("--toc", "-s", rmarkdown::pandoc_metadata_arg("title", "test")),
                             output = html)
   res <- add_toc_class(xfun::read_utf8(html))
-  xml2::write_html(xml2::xml_find_first(
-    xml2::read_html(paste(res, collapse = "\n")),
-    "//div[@id = 'TOC']"
-  ), html)
-  pandoc_version <- ifelse(rmarkdown::pandoc_available("2.8"), "post2.8", "pre2.8")
-  expect_snapshot_file(html, name = "toc-has-sub.html", variant = pandoc_version, compare = compare_file_text)
+  content <- xml2::read_html(paste(res, collapse = "\n"))
+  TOC <- xml2::xml_find_all(content, "//div[@id = 'TOC']/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("has-sub", NA, "has-sub"))
 })
