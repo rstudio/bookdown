@@ -944,11 +944,11 @@ restore_part_html = function(x, remove = TRUE) {
     )
   }
 
-  r = '^<li><a href="[^"]*">\\(PART\\*\\) (.+)</a>(.+)$'
+  r = '^<li><a href="[^"]*"[^>]*>\\(PART\\*\\) (.+)</a>(.+)$'
   i = grep(r, x)
   x[i] = gsub(r, '<li class="part"><span><b>\\1</b></span>\\2', x[i])
 
-  r = '^<li><a href="[^"]*">\\(PART\\) (.+)</a>(.+)$'
+  r = '^<li><a href="[^"]*"[^>]*>\\(PART\\) (.+)</a>(.+)$'
   i = grep(r, x)
   if (length(i) == 0) return(x)
   x[i] = mapply(
