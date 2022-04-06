@@ -203,7 +203,7 @@ gitbook_toc = function(x, cur, config) {
   toc[i] = sub(' data-path="">', paste0(' data-path="', with_ext(cur, '.html'), '">'), toc[i])
 
   # unnumbered sections
-  r = '^<li><a href="([^#]*)(#[^"]+)">([^<]+</a>.*)$'
+  r = '^<li><a href="([^#]*)(#[^"]+)">((.+)</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
     r,
