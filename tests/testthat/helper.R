@@ -36,6 +36,14 @@ local_render <- function(input, ..., .env = parent.frame()) {
   rmarkdown::render(input, output_file = output_file, quiet = TRUE, ...)
 }
 
+local_render_book <- function(input, ..., .env = parent.frame()) {
+  skip_if_not_pandoc()
+  proj <- withr::local_tempdir(.local_envir = .env)
+  file.copy(normalizePath(input), proj)
+  withr::local_dir(proj)
+  render_book(basename(input), quiet = TRUE, ...)
+}
+
 .render_and_read <- function(input, ...) {
   skip_if_not_pandoc()
   res <- local_render(input, ...)

@@ -1,3 +1,31 @@
+test_that("PART feature correctly works in HTML without anchor sections", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+  rmd <- local_rmd_file(c("---", "title: test", "---", "",
+                          "# (PART) T1 {-}", "", "# CHAP1", "",
+                          "# (PART\\*) T2 {-}", "", "# CHAP2"))
+  res <- local_render_book(rmd, output_format = gitbook(anchor_sections = FALSE))
+  content <- xml2::read_html(res)
+  TOC <- xml2::xml_find_all(content, "//div[@class='book-summary']/nav/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("part", "chapter", "part", "chapter"))
+  expect_equal(xml2::xml_text(TOC), c("I T1", "1 CHAP1", "T2", "2 CHAP2"))
+})
+
+test_that("PART feature correctly works in HTML with anchor sections", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+  rmd <- local_rmd_file(c("---", "title: test", "---", "",
+                          "# (PART) T1 {-}", "", "# CHAP1", "",
+                          "# (PART\\*) T2 {-}", "", "# CHAP2"))
+  res <- local_render_book(rmd, output_format = gitbook(anchor_sections = TRUE))
+  content <- xml2::read_html(res)
+  TOC <- xml2::xml_find_all(content, "//div[@class='book-summary']/nav/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("part", "chapter", "part", "chapter"))
+  expect_equal(xml2::xml_text(TOC), c("I T1", "1 CHAP1", "T2", "2 CHAP2"))
+})
+
 test_that("build_404 creates correct 404 page", {
   skip_on_cran()
   skip_if_not_pandoc()
