@@ -35,5 +35,5 @@ test_that("gitbook_toc correctly process pandoc html with anchor section", {
   H2 <- xml2::xml_find_all(TOC, ".//li/a")
   expect_equal(xml2::xml_text(H2), c("1.1 CHAP1", "1.2 CHAP2"))
   # no empty spans https://github.com/rstudio/bookdown/issues/1326
-  expect_false(all(xml2::xml_find_lgl(TOC, "boolean(./a/span/text())")))
+  expect_true(all(xml2::xml_find_lgl(TOC, "not(boolean(./a/span[count(node()) = 0]))")))
 })
