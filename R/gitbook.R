@@ -193,7 +193,7 @@ gitbook_toc = function(x, cur, config) {
   toc = x[(i1 + 1):(i2 - 1)]
 
   # Remove possible empty span due to anchor section
-  toc = gsub("<span></span>(?=</a>)", "", toc, perl = TRUE)
+  toc = gsub("<span></span>(?=</[ab]>)", "", toc, perl = TRUE)
 
   # numbered sections
   r = '^<li><a href="([^#]*)(#[^"]+)"[^>]*><span class="toc-section-number">([.A-Z0-9]+)</span>(.+)(</a>.*)$'
