@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.27
+
+
 # CHANGES IN bookdown VERSION 0.26
 
 - Fix issues with TOC in `gitbook()` and Pandoc 2.18 (thanks, @avraam-inside, #1326, #1329).
