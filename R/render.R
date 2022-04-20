@@ -79,7 +79,9 @@ render_book = function(
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.null(output_format) || is.character(output_format)) {
     if (is.null(output_format) || identical(output_format, 'all')) {
-      all_formats = rmarkdown::all_output_formats(input)
+      # formats can safely be guess when considering index.Rmd and its expected frontmatter
+      # and not another Rmd file which has no expected YAML frontmatter
+      all_formats = rmarkdown::all_output_formats("index.Rmd")
       # when no format provided, return name of the first resolved
       output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
     }
