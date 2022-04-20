@@ -129,8 +129,6 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
   dir
 }
 
-dir_exists = function(x) utils::file_test('-d', x)
-
 # mark directories with trailing slashes
 mark_dirs = function(x) {
   i = dir_exists(x)
@@ -444,11 +442,15 @@ existing_r = function(base) {
 }
 
 target_format = function(format) {
-  if (grepl('(html|gitbook)', format)) return('html')
+  if (grepl('(html|gitbook|bs4)', format)) return('html')
   if (grepl('pdf', format)) return('latex')
+  if (grepl('beamer_', format)) return('latex')
   if (grepl('epub_', format)) return('epub')
   if (grepl('word_', format)) return('docx')
-  switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
+  if (grepl('powerpoint_', format)) return('pptx')
+  switch(format,
+         tufte_book2 = 'latex', `bookdown::tufte_book2` = 'latex',
+         tufte_handout2 = 'latex', `bookdown::tufte_handout2` = "latex")
 }
 
 verify_rstudio_version = function() {
@@ -645,4 +647,11 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   text[block_end] = ":::"
   # return the text or write to output file
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
+}
+
+
+stop_if_not_exists = function(inputs) {
+  if (!all(exist <- xfun::file_exists(inputs))) {
+    stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
+  }
 }

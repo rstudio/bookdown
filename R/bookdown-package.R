@@ -4,3 +4,8 @@
 #' articles/reports with R Markdown.
 #' @keywords internal
 "_PACKAGE"
+
+## usethis namespace: start
+#' @importFrom xfun dir_exists
+## usethis namespace: end
+NULL

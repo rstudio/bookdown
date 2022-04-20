@@ -64,14 +64,13 @@ render_book = function(
   verify_rstudio_version()
 
   # select and check input file(s)
-  if (length(input) == 1L && file_test("-d", input)) {
+  if (length(input) == 1L && dir_exists(input)) {
     message(sprintf("Rendering book in directory '%s'", input))
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
     input = "index.Rmd"
   }
-  if (!all(exist <- file_test("-f", input))) {
-    stop("Some files were not found: ",  paste(input[!exist], collapse = ' '))
-  }
+
+  stop_if_not_exists(input)
 
   format = NULL  # latex or html
   if (is.list(output_format)) {
@@ -79,7 +78,10 @@ render_book = function(
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
   } else if (is.null(output_format) || is.character(output_format)) {
     if (is.null(output_format) || identical(output_format, 'all')) {
-      all_formats = rmarkdown::all_output_formats(input)
+      # formats can safely be guess when considering index.Rmd and its expected frontmatter
+      # and not another Rmd file which has no expected YAML frontmatter
+      stop_if_not_exists("index.Rmd")
+      all_formats = rmarkdown::all_output_formats("index.Rmd")
       # when no format provided, return name of the first resolved
       output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
     }

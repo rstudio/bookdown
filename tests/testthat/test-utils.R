@@ -1,0 +1,21 @@
+test_that("stop_if_not_exists()", {
+  expect_error(stop_if_not_exists("dummy"))
+  f <- withr::local_tempfile()
+  file.create(f)
+  expect_error(stop_if_not_exists(f), regexp = NA)
+  expect_error(stop_if_not_exists(c(f, "dummy")))
+})
+
+test_that("target_formats() detects type from string", {
+  expect_identical(target_format("html"), "html")
+  expect_identical(target_format("bookdown::gitbook"), "html")
+  expect_identical(target_format("bookdown::bs4_book"), "html")
+  expect_identical(target_format("bookdown::pdf_book"), "latex")
+  expect_identical(target_format("bookdown::tufte_book2"), "latex")
+  expect_identical(target_format("bookdown::tufte_handout2"), "latex")
+  expect_identical(target_format("bookdown::tufte_html_book"), "html")
+  expect_identical(target_format("bookdown::epub_book"), "epub")
+  expect_identical(target_format("bookdown::word_document2"), "docx")
+  expect_identical(target_format("bookdown::powerpoint_presentation2"), "pptx")
+  expect_identical(target_format("bookdown::beamer_presentation2"), "latex")
+})
