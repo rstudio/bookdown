@@ -646,3 +646,10 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   # return the text or write to output file
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
 }
+
+
+stop_if_not_exists <- function(inputs) {
+  if (!all(exist <- xfun::file_exists(inputs))) {
+    stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
+  }
+}

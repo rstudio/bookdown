@@ -69,9 +69,8 @@ render_book = function(
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
     input = "index.Rmd"
   }
-  if (!all(exist <- file_test("-f", input))) {
-    stop("Some files were not found: ",  paste(input[!exist], collapse = ' '))
-  }
+
+  stop_if_not_exists(input)
 
   format = NULL  # latex or html
   if (is.list(output_format)) {
@@ -81,6 +80,7 @@ render_book = function(
     if (is.null(output_format) || identical(output_format, 'all')) {
       # formats can safely be guess when considering index.Rmd and its expected frontmatter
       # and not another Rmd file which has no expected YAML frontmatter
+      stop_if_not_exists("index.Rmd")
       all_formats = rmarkdown::all_output_formats("index.Rmd")
       # when no format provided, return name of the first resolved
       output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
