@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.27
 
+- Fix an issue with guessing output format when no `output_format` is provided in `render_book()` for files in a `rmd_subdir` folder (thanks, @shivam7898, #1331).
+
 
 # CHANGES IN bookdown VERSION 0.26
 
