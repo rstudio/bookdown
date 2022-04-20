@@ -646,7 +646,7 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
 }
 
 
-stop_if_not_exists <- function(inputs) {
+stop_if_not_exists = function(inputs) {
   if (!all(exist <- xfun::file_exists(inputs))) {
     stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
   }
