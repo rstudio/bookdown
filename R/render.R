@@ -64,7 +64,7 @@ render_book = function(
   verify_rstudio_version()
 
   # select and check input file(s)
-  if (length(input) == 1L && file_test("-d", input)) {
+  if (length(input) == 1L && dir_exists(input)) {
     message(sprintf("Rendering book in directory '%s'", input))
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
     input = "index.Rmd"

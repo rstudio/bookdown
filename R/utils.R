@@ -129,8 +129,6 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
   dir
 }
 
-dir_exists = function(x) utils::file_test('-d', x)
-
 # mark directories with trailing slashes
 mark_dirs = function(x) {
   i = dir_exists(x)

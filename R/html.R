@@ -1115,7 +1115,7 @@ move_files_html = function(output, lib_dir) {
     list.files(lib_dir, '^leaflet', full.names = TRUE),
     full.names = TRUE, recursive = TRUE
   ), value = TRUE))
-  f = unique(f[file_test('-f', f)])
+  f = unique(f[xfun::file_exists(f)])
   lapply(file.path(o, setdiff(dirname(f), '.')), dir_create)
   f2 = file.path(o, f)
   i = !same_path(f, f2)
