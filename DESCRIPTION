@@ -61,7 +61,7 @@ License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.31),
-    rmarkdown (>= 2.13.6),
+    rmarkdown (>= 2.14),
     jquerylib,
     xfun (>= 0.29),
     tinytex (>= 0.12),
@@ -92,4 +92,3 @@ Config/Needs/book: remotes, webshot
 Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-Remotes: rstudio/rmarkdown
