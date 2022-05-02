@@ -2,6 +2,7 @@
 
 - Fix an issue with guessing output format when no `output_format` is provided in `render_book()` for files in a `rmd_subdir` folder (thanks, @shivam7898, #1331).
 
+- Fix the issue of the invisible `gitbook` toolbar on iPad (thanks, @mpereira-dev, #60).
 
 # CHANGES IN bookdown VERSION 0.26
 
