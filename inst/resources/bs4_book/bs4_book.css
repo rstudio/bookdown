@@ -440,14 +440,14 @@ code span.er {color:#ff0000;}
 code span.bn {color:#a1024a}
 code span.al {color:#ff0000;}
 code span.va {color:#19177c}
-code span.bu {}
+code span.bu {color: #007faa;}
 code span.ex {}
 code span.pp {color:#bc7a00}
 code span.in {color:#545454;}
 code span.vs {color:#008000}
 code span.wa {color:#545454; font-style: italic}
 code span.do {color:#ba2121; font-style: italic}
-code span.im {}
+code span.im {color:#007faa; font-weight: bold;}
 code span.ch {color:#008000}
 code span.dt {color:#aa5d00}
 code span.fl {color:#a1024a}
@@ -456,7 +456,7 @@ code span.cv {color:#545454; font-style: italic}
 code span.cn {color:#d91e18}
 code span.sc {color:#008000}
 code span.dv {color:#a1024a}
-code span.kw {color:#007faa;}
+code span.kw {color:#007faa}
 
 /* Misc typography ---------------------------------------------- */
 
