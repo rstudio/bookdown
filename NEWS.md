@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.27
 
+- Fix `fence_theorems()` so that `output` is not ignored anymore. With previous version, when `output` was different than `NULL`, the result was written to `input`, ignoring `output` value. From now on, set `input` and `output` to the same file if you want to overwrite (thanks, @Scinawa, #1342). 
+
 - Tweak `bs4_book()` default CSS for better support of python chunk highlighting (thanks, @briandk, #1333).
 
 - Fix an issue with guessing output format when no `output_format` is provided in `render_book()` for files in a `rmd_subdir` folder (thanks, @shivam7898, #1331).
