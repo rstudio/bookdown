@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.14.1
+Version: 0.26.3
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("JJ", "Allaire", role = "ctb"),
@@ -26,6 +26,7 @@ Authors@R: c(
     person("Jennifer", "Bryan", role = "ctb"),
     person("Jonathan", "McPhers", role = "ctb"),
     person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Joyce", "Robbins", role = "ctb"),
     person("Junwen", "Huang", role = "ctb"),
     person("Kevin", "Cheung", role = "ctb"),
     person("Kevin", "Ushey", role = "ctb"),
@@ -36,20 +37,21 @@ Authors@R: c(
     person("Maximilian", "Held", role = "ctb"),
     person("Michael", "Sachs", role = "ctb"),
     person("Michal", "Bojanowski", role = "ctb"),
+    person("Nathan", "Werth", role = "ctb"),
     person("Noam", "Ross", role = "ctb"),
     person("Peter", "Hickey", role = "ctb"),
+    person("Pedro Rafael D.", "Marinho", role="ctb", comment = c(ORCID = "0000-0003-1591-8300")),
     person("Romain", "Lesur", role = "ctb", comment = c(ORCID = "0000-0002-0721-5595")),
     person("Sahir", "Bhatnagar", role = "ctb"),
+    person("Shir", "Dekel", role = "ctb", comment = c(ORCID = "0000-0003-1773-2446")),
     person("Steve", "Simpson", role = "ctb"),
     person("Thierry", "Onkelinx", role = "ctb", comment = c(ORCID = "0000-0001-8804-4216")),
     person("Vincent", "Fulco", role = "ctb"),
     person("Yixuan", "Qiu", role = "ctb"),
     person("Zhuoer", "Dong", role = "ctb"),
-    person(family = "RStudio Inc", role = "cph"),
+    person(family = "RStudio, PBC", role = "cph"),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person("Zeno", "Rocha", role = "cph", comment = "clipboard.js library"),
-    person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"),
-    person(family = "jQuery contributors", role = c("ctb", "cph"), comment = "jQuery library; authors listed in inst/resources/AUTHORS"),
     person(family = "MathQuill contributors", role = "ctb", comment = "The MathQuill library; authors listed in inst/resources/AUTHORS"),
     person(family = "FriendCode Inc", role = c("cph", "ctb"), comment = "The gitbook style, with modifications")
     )
@@ -58,23 +60,35 @@ Description: Output formats and utilities for authoring books and technical docu
 License: GPL-3
 Imports:
     htmltools (>= 0.3.6),
-    knitr (>= 1.22),
-    rmarkdown (>= 1.12),
-    xfun (>= 0.6),
-    tinytex (>= 0.12)
+    knitr (>= 1.31),
+    rmarkdown (>= 2.14),
+    jquerylib,
+    xfun (>= 0.29),
+    tinytex (>= 0.12),
+    yaml (>= 2.1.19)
 Suggests:
+    bslib (>= 0.2.4),
+    downlit (>= 0.4.0),
     htmlwidgets,
+    jsonlite,
     rstudioapi,
     miniUI,
     rsconnect (>= 0.4.3),
     servr (>= 0.13),
     shiny,
+    tibble,
     testit (>= 0.9),
     tufte,
-    webshot
-URL: https://github.com/rstudio/bookdown
+    xml2,
+    webshot,
+    testthat (>= 3.1.0),
+    withr (>= 2.3.0)
+URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
-LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
+Config/Needs/book: remotes, webshot
+Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
+Config/testthat/edition: 3
+VignetteBuilder: knitr

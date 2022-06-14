@@ -2,39 +2,75 @@
 % Please edit documentation in R/html.R, R/latex.R, R/word.R
 \name{html_document2}
 \alias{html_document2}
+\alias{html_fragment2}
+\alias{html_notebook2}
+\alias{html_vignette2}
+\alias{ioslides_presentation2}
+\alias{slidy_presentation2}
 \alias{tufte_html2}
 \alias{pdf_document2}
+\alias{beamer_presentation2}
 \alias{tufte_handout2}
 \alias{tufte_book2}
 \alias{markdown_document2}
-\alias{word_document2}
+\alias{context_document2}
+\alias{github_document2}
 \alias{odt_document2}
 \alias{powerpoint_presentation2}
 \alias{rtf_document2}
+\alias{word_document2}
 \title{Output formats that allow numbering and cross-referencing
 figures/tables/equations}
 \usage{
-html_document2(..., number_sections = TRUE, pandoc_args = NULL,
-  base_format = rmarkdown::html_document)
+html_document2(
+  ...,
+  number_sections = TRUE,
+  global_numbering = !number_sections,
+  pandoc_args = NULL,
+  base_format = rmarkdown::html_document
+)
+
+html_fragment2(..., number_sections = FALSE)
+
+html_notebook2(..., number_sections = FALSE)
+
+html_vignette2(..., number_sections = FALSE)
+
+ioslides_presentation2(..., number_sections = FALSE)
+
+slidy_presentation2(..., number_sections = FALSE)
 
 tufte_html2(..., number_sections = FALSE)
 
 pdf_document2(...)
 
+beamer_presentation2(..., number_sections = FALSE)
+
 tufte_handout2(...)
 
 tufte_book2(...)
 
-markdown_document2(fig_caption = TRUE, md_extensions = NULL,
-  pandoc_args = NULL, ..., base_format)
+markdown_document2(
+  number_sections = TRUE,
+  fig_caption = TRUE,
+  md_extensions = NULL,
+  global_numbering = !number_sections,
+  pandoc_args = NULL,
+  ...,
+  base_format = rmarkdown::md_document
+)
 
-word_document2(...)
+context_document2(...)
+
+github_document2(...)
 
 odt_document2(...)
 
 powerpoint_presentation2(...)
 
 rtf_document2(...)
+
+word_document2(...)
 }
 \arguments{
 \item{..., fig_caption, md_extensions, pandoc_args}{Arguments to be passed to a
@@ -49,6 +85,13 @@ current first-level section number, and \code{i} is an incremental number
 sequentially in the document from 1, 2, ..., and you cannot cross-reference
 section headers in this case.}
 
+\item{global_numbering}{If \code{TRUE}, number figures and tables globally
+throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+FALSE} will not work with \code{number_sections = FALSE} because sections
+are not numbered.}
+
 \item{base_format}{An output format function to be used as the base format.}
 }
 \value{
@@ -59,16 +102,17 @@ An R Markdown output format object to be passed to
 These are simple wrappers of the output format functions like
 \code{rmarkdown::\link{html_document}()}, and they added the capability of
 numbering figures/tables/equations/theorems and cross-referencing them. See
-References for the syntax. Note you can also cross-reference sections by
-their ID's using the same syntax when sections are numbered. In case you want
-to enable cross reference in other formats, use \code{markdown_document2} with
-\code{base_format} argument.
+\sQuote{References} for the syntax. Note you can also cross-reference
+sections by their ID's using the same syntax when sections are numbered. In
+case you want to enable cross reference in other formats, use
+\code{markdown_document2} with \code{base_format} argument.
 }
 \note{
-These function are expected to work with a single R Markdown document
-  instead of multiple documents of a book, so they are to be passed to
-  \code{rmarkdown::render()} instead of \code{bookdown::render_book()}. The
-  functions \samp{tufte_*()} are wrappers of funtions in the \pkg{tufte}
+These output formats are used to generate single output files, such as
+  a single HTML output file (unlike \code{gitbook}, which generates multiple
+  HTML output files by default).
+
+  The functions \samp{tufte_*()} are wrappers of functions in the \pkg{tufte}
   package.
 }
 \references{

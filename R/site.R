@@ -10,8 +10,9 @@ bookdown_site = function(input, ...) {
 
   on.exit(opts$restore(), add = TRUE)
 
-  # need to switch to the input directory for computing the config
-  oldwd = setwd(input)
+  # need to switch to the project directory for computing the config
+  book_proj = find_book_proj(input)
+  oldwd = setwd(book_proj)
   on.exit(setwd(oldwd), add = TRUE)
 
   # load the config for the input directory
@@ -33,7 +34,15 @@ bookdown_site = function(input, ...) {
     if (is.null(input_file)) {
       in_dir(input, render_book_script(output_format, envir, quiet))
     } else {
-      render_book(input_file, output_format, envir = envir, preview = TRUE)
+      opts = options(rmarkdown.rstudio.preview = FALSE)
+      on.exit(options(opts), add = TRUE)
+      res = xfun::in_dir(
+        book_proj,
+        render_book(input_file, output_format, envir = envir, preview = TRUE)
+      )
+      # emit our own message for IDE preview
+      if (!quiet) message(paste0("\nOutput created: ", res))
+      res
     }
   }
 
@@ -46,6 +55,7 @@ bookdown_site = function(input, ...) {
     name = name,
     output_dir = book_dir,
     render = render,
+    subdirs = TRUE,
     clean = clean
   )
 }
@@ -53,7 +63,7 @@ bookdown_site = function(input, ...) {
 # render the book via _render.R or Makefile, or fallback to render_book()
 render_book_script = function(output_format = NULL, envir = globalenv(), quiet = TRUE) {
   result = 0
-  if (length(script <- existing_r('_render', TRUE))) {
+  if (length(script <- head(existing_r('_render'), 1))) {
     result = Rscript(c(if (quiet) '--quiet', script, shQuote(output_format)))
   } else if (file.exists('Makefile')) {
     result = system2('make')
@@ -71,4 +81,12 @@ find_book_dir = function(config) {
 find_book_name = function(config, default) {
   name = with_ext(book_filename(config, fallback = FALSE), '')
   if (is.null(name)) default else name
+}
+
+find_book_proj = function(input) {
+  # if bookdown_site() is executed it is because site: has been set in index.Rmd
+  rules = matrix(c(
+    '^index.Rmd$', '^\\s*site:\\s*["\']?bookdown::bookdown_site["\']?\\s*(?:#.*)?$'
+  ), ncol = 2, byrow = TRUE, dimnames = list(NULL, c('file', 'pattern')))
+  xfun::proj_root(input, rules)
 }

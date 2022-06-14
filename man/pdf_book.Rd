@@ -4,10 +4,19 @@
 \alias{pdf_book}
 \title{Convert R Markdown to a PDF book}
 \usage{
-pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
-  pandoc_args = NULL, ..., base_format = rmarkdown::pdf_document,
-  toc_unnumbered = TRUE, toc_appendix = FALSE, toc_bib = FALSE,
-  quote_footer = NULL, highlight_bw = FALSE)
+pdf_book(
+  toc = TRUE,
+  number_sections = TRUE,
+  fig_caption = TRUE,
+  pandoc_args = NULL,
+  ...,
+  base_format = rmarkdown::pdf_document,
+  toc_unnumbered = TRUE,
+  toc_appendix = FALSE,
+  toc_bib = FALSE,
+  quote_footer = NULL,
+  highlight_bw = FALSE
+)
 }
 \arguments{
 \item{toc, number_sections, fig_caption, pandoc_args}{See
@@ -18,7 +27,7 @@ pdf_book(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
 
 \item{base_format}{An output format function to be used as the base format.}
 
-\item{toc_unnumbered}{Whether to add unnumberred headers to the table of
+\item{toc_unnumbered}{Whether to add unnumbered headers to the table of
 contents.}
 
 \item{toc_appendix}{Whether to add the appendix to the table of contents.}

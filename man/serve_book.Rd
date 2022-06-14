@@ -2,10 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{serve_book}
 \alias{serve_book}
-\title{Continously preview the HTML output of a book using the \pkg{servr} package}
+\title{Continuously preview the HTML output of a book using the \pkg{servr} package}
 \usage{
-serve_book(dir = ".", output_dir = "_book", preview = TRUE,
-  in_session = TRUE, quiet = FALSE, ...)
+serve_book(
+  dir = ".",
+  output_dir = "_book",
+  preview = TRUE,
+  in_session = TRUE,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{dir}{The root directory of the book (containing the Rmd source files).}
@@ -23,14 +29,14 @@ the book directory.}
 \item{quiet}{Whether to suppress output (e.g., the knitting progress) in the
 console.}
 
-\item{...}{Other arguments passed to \code{servr::\link[servr]{httw}()} (not
-including the \code{handler} argument, which has been set internally).}
+\item{...}{Other arguments passed to \code{servr::\link[servr:httd]{httw}()}
+(not including the \code{handler} argument, which has been set internally).}
 }
 \description{
 When any files are modified or added to the book directory, the book will be
 automatically recompiled, and the current HTML page in the browser will be
-refreshed. This function is based on \code{servr::\link[servr]{httw}()} to
-continuously watch a directory.
+refreshed. This function is based on \code{servr::\link[servr:httd]{httw}()}
+to continuously watch a directory.
 }
 \details{
 For \code{in_session = TRUE}, you will have access to all objects created in
@@ -43,7 +49,7 @@ interactively explore the R objects in the book. The downside of
 compiled from a fresh R session, because the state of the current R session
 may not be clean.
 
-For \code{in_sesion = FALSE}, you do not have access to objects in the book
+For \code{in_session = FALSE}, you do not have access to objects in the book
 from the current R session, but the output is more likely to be reproducible
 since everything is created from new R sessions. Since this function is only
 for previewing purposes, the cleanness of the R session may not be a big

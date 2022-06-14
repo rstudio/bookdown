@@ -230,10 +230,13 @@ Theorems\index{theorem} and proofs are commonly used in articles and books in ma
 In **bookdown**, the types of theorem environments supported are in Table \@ref(tab:theorem-envs). To write a theorem, you can use the syntax below:
 
 ````markdown
-`r ''````{theorem}
-Here is my theorem.
-```
+::: {.theorem}
+This is a `theorem` environment that can contain **any**
+_Markdown_ syntax.
+:::
 ````
+
+This syntax is based on Pandoc's [fenced `Div` blocks](https://pandoc.org/MANUAL.html#divs-and-spans) and can already be used in any R Markdown document to write [custom blocks.](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) **Bookdown** only offers special handling for theorem and proof environments. Since this uses the syntax of Pandoc's Markdown, you can write any valid Markdown text inside the block.
 
 (ref:theorem-envs) Theorem environments in **bookdown**.
 
@@ -246,55 +249,47 @@ knitr::kable(data.frame(
 ), caption = '(ref:theorem-envs)', booktabs = TRUE)
 ```
 
-To write other theorem environments, replace ```` ```{theorem} ```` with other environment names in Table \@ref(tab:theorem-envs), e.g., ```` ```{lemma} ````.
+To write other theorem environments, replace `::: {.theorem}` with other environment names in Table \@ref(tab:theorem-envs), e.g., `::: {.lemma}`.
 
-A theorem can have a `name` option so its name will be printed, e.g.,
+A theorem can have a `name` attribute so its name will be printed. For example,
 
 ````markdown
-`r ''````{theorem, name="Pythagorean theorem"}
+::: {.theorem name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 $$a^2 + b^2 = c^2$$
-```
+:::
 ````
 
-If you want to refer to a theorem, you should label it. The label can be written after ```` ```{theorem````, e.g.,
+If you want to refer to a theorem, you should label it. The label can be provided as an ID to the block of the form `#label`. For example,
 
 ````markdown
-`r ''````{theorem, label="foo"}
+::: {.theorem #foo}
 A labeled theorem here.
-```
-````
-
-The `label` option can be implicit, e.g., the following theorem has the label `bar`:
-
-````markdown
-`r ''````{theorem, bar}
-A labeled theorem here.
-```
+:::
 ````
 
 After you label a theorem, you can refer to it using the syntax `\@ref(prefix:label)`.\index{cross-reference} See the column `Label Prefix` in Table \@ref(tab:theorem-envs) for the value of `prefix` for each environment. For example, we have a labeled and named theorem below, and `\@ref(thm:pyth)` gives us its theorem number \@ref(thm:pyth):
 
 ````markdown
-`r ''````{theorem, pyth, name="Pythagorean theorem"}
+::: {.theorem #pyth name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 
 $$a^2 + b^2 = c^2$$
-```
+:::
 ````
 
-```{theorem, pyth, name="Pythagorean theorem"}
+::: {.theorem #pyth name="Pythagorean theorem"}
 For a right triangle, if $c$ denotes the length of the hypotenuse
 and $a$ and $b$ denote the lengths of the other two sides, we have
 
 $$a^2 + b^2 = c^2$$
-```
+:::
 
-The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named. The only difference is that since they are unnumbered, you cannot reference them.
+The proof environments currently supported are `r knitr::combine_words(names(bookdown:::label_names_math2), before = '\x60')`. The syntax is similar to theorem environments, and proof environments can also be named using the `name` attribute. The only difference is that since they are unnumbered, you cannot reference them, even if you provide an ID to a proof environment.
 
-We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF, HTML, or EPUB. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package.
+We have tried to make all these theorem and proof environments work out of the box, no matter if your output is PDF or HTML. If you are a LaTeX or HTML expert, you may want to customize the style of these environments anyway (see Chapter \@ref(customization)). Customization in HTML is easy with CSS, and each environment is enclosed in `<div></div>` with the CSS class being the environment name, e.g., `<div class="lemma"></div>`. For LaTeX output, we have predefined the style to be `definition` for environments `r knitr::combine_words(bookdown:::style_definition, before='\x60')`, and `remark` for environments `r knitr::combine_words(c('proof', bookdown:::style_remark), before='\x60')`. All other environments use the `plain` style. The style definition is done through the `\theoremstyle{}` command of the **amsthm** package. If you do not want the default theorem definitions to be automatically added by **bookdown**, you can set `options(bookdown.theorem.preamble = FALSE)`. This can be useful, for example, to avoid conflicts in single documents (Section \@ref(a-single-document)) using the output format `bookdown::pdf_book` with a `base_format` that has already included **amsmath** definitions.
 
 Theorems are numbered by chapters by default. If there are no chapters in your document, they are numbered by sections instead. If the whole document is unnumbered (the output format option `number_sections = FALSE`), all theorems are numbered sequentially from 1, 2, ..., N. LaTeX supports numbering one theorem environment after another, e.g., let theorems and lemmas share the same counter. This is not supported for HTML/EPUB output in **bookdown**. You can change the numbering scheme in the LaTeX preamble by defining your own theorem environments, e.g.,
 
@@ -305,24 +300,16 @@ Theorems are numbered by chapters by default. If there are no chapters in your d
 
 When **bookdown** detects `\newtheorem{theorem}` in your LaTeX preamble, it will not write out its default theorem definitions, which means you have to define all theorem environments by yourself. For the sake of simplicity and consistency, we do not recommend that you do this. It can be confusing when your Theorem 18 in PDF becomes Theorem 2.4 in HTML.
 
-Theorem and proof environments will be hidden if the chunk option `echo` is set to `FALSE`. To make sure they are always shown, you may add the chunk option `echo=TRUE`, e.g.,
-
-````markdown
-`r ''````{theorem, echo=TRUE}
-Here is my theorem.
-```
-````
-
 Below we show more examples^[Some examples are adapted from the Wikipedia page https://en.wikipedia.org/wiki/Characteristic_function_(probability_theory)] of the theorem and proof environments, so you can see the default styles in **bookdown**.
 
-```{definition}
+::: {.definition}
 The characteristic function of a random variable $X$ is defined by
 
 $$\varphi _{X}(t)=\operatorname {E} \left[e^{itX}\right], \; t\in\mathcal{R}$$
-```
+:::
 
 
-```{example}
+::: {.example}
 We derive the characteristic function of $X\sim U(0,1)$ with the probability density function $f(x)=\mathbf{1}_{x \in [0,1]}$.
 
 \begin{equation*}
@@ -339,25 +326,25 @@ We derive the characteristic function of $X\sim U(0,1)$ with the probability den
 \end{equation*}
 
 Note that we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
-```
+:::
 
-```{lemma, chf-pdf}
+::: {.lemma #chf-pdf}
 For any two random variables $X_1$, $X_2$, they both have the same probability distribution if and only if
 
 $$\varphi _{X_1}(t)=\varphi _{X_2}(t)$$
-```
+:::
 
-```{theorem, chf-sum}
+::: {.theorem #chf-sum}
 If $X_1$, ..., $X_n$ are independent random variables, and $a_1$, ..., $a_n$ are some constants, then the characteristic function of the linear combination $S_n=\sum_{i=1}^na_iX_i$ is
 
 $$\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}t)\cdots \varphi _{X_{n}}(a_{n}t)$$
-```
+:::
 
-```{proposition}
+::: {.proposition}
 The distribution of the sum of independent Poisson random variables $X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
-```
+:::
 
-```{proof}
+::: {.proof}
 The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)=e^{\lambda (e^{it}-1)}$. Let $P_n=\sum_{i=1}^nX_i$. We know from Theorem \@ref(thm:chf-sum) that
 
 \begin{equation*}
@@ -369,27 +356,67 @@ The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)
 \end{equation*}
 
 This is the characteristic function of a Poisson random variable with the parameter $\lambda=\sum_{i=1}^n \lambda_i$. From Lemma \@ref(lem:chf-pdf), we know the distribution of $P_n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
-```
+:::
 
-```{remark}
+::: {.remark}
 In some cases, it is very convenient and easy to figure out the distribution of the sum of independent random variables using characteristic functions.
-```
+:::
 
-```{corollary}
+::: {.corollary}
 The characteristic function of the sum of two independent random variables $X_1$ and $X_2$ is the product of characteristic functions of $X_1$ and $X_2$, i.e.,
 
 $$\varphi _{X_1+X_2}(t)=\varphi _{X_1}(t) \varphi _{X_2}(t)$$
-```
+:::
 
-```{exercise, name="Characteristic Function of the Sample Mean"}
+::: {.exercise name="Characteristic Function of the Sample Mean"}
 Let $\bar{X}=\sum_{i=1}^n \frac{1}{n} X_i$ be the sample mean of $n$ independent and identically distributed random variables, each with characteristic function $\varphi _{X}$. Compute the characteristic function of $\bar{X}$. 
-```
+:::
 
-```{solution}
+::: {.solution}
 Applying Theorem \@ref(thm:chf-sum), we have
 
 $$\varphi _{\bar{X}}(t)=\prod_{i=1}^n \varphi _{X_i}\left(\frac{t}{n}\right)=\left[\varphi _{X}\left(\frac{t}{n}\right)\right]^n.$$
+:::
+  
+::: {.hypothesis name="Riemann hypothesis"}
+The Riemann Zeta-function is defined as
+$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
+for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
+:::
+
+#### A note on the old syntax {#theorem-engine}
+
+For older versions of **bookdown** (before v0.21), a `theorem` environment could be written like this:
+
+````markdown
+`r ''````{theorem pyth, name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
 ```
+````
+
+This syntax still works, but we do not recommend it since the new syntax allows you to write richer content and has a cleaner implementation.
+
+This conversion between the two syntaxes is straightforward. The above theorem could be rewritten in this way:
+
+````markdown
+::: {.theorem #pyth name="Pythagorean theorem"}
+For a right triangle, if $c$ denotes the length of the hypotenuse
+and $a$ and $b$ denote the lengths of the other two sides, we have
+
+$$a^2 + b^2 = c^2$$
+:::
+````
+
+You can use the helper function `bookdown::fence_theorems()` to convert a whole file or a piece of text. This is a one-time operation. We have tried to do the conversion from old to new syntax safely, but we might have missed some edge cases. To make sure you do not overwrite the `input` file by accident, you can write the converted source to a new file, e.g.,
+
+```r
+bookdown::fence_theorems("01-intro.Rmd", output = "01-intro-new.Rmd")
+```
+
+Then double check the content of `01-intro-new.Rmd`. Using `output = NULL` will print the result of conversion in the R console, and is another way to check the conversion. If you are using a control version tool, you can set `output` to be the same as `input`, as it should be safe and easy for you to revert the change if anything goes wrong.
 
 ### Special headers
 
@@ -407,7 +434,7 @@ There are a few special types of first-level headers that will be processed diff
 # Chapter Three
 ```
 
-A part title should be written right before the first chapter title in this part. You can use `(PART\*)` (the backslash before `*` is required) instead of `(PART)` if a part title should not be numbered.
+A part title should be written right before the first chapter title in this part, both title in the same document. You can use `(PART\*)` (the backslash before `*` is required) instead of `(PART)` if a part title should not be numbered.
 
 The second type is an unnumbered header that starts with `(APPENDIX)`, indicating that all chapters after this header are appendices\index{appendix}, e.g.,
 
@@ -461,7 +488,7 @@ plot(dist ~ speed, cars)  # a scatterplot
 ```
 ````
 
-To learn more about **knitr** chunk options, see @xie2015 or the web page <http://yihui.name/knitr/options>. For books, additional R code can be executed before/after each chapter; see `before_chapter_script` and `after_chapter_script` in Section \@ref(configuration).
+To learn more about **knitr** chunk options, see @xie2015 or the web page <http://yihui.org/knitr/options>. For books, additional R code can be executed before/after each chapter; see `before_chapter_script` and `after_chapter_script` in Section \@ref(configuration).
 
 ## Figures {#figures}
 
@@ -571,7 +598,7 @@ If you decide to use other R packages to generate tables, you have to make sure 
 
 ## Cross-references
 
-We have explained how cross-references\index{cross-reference} work for equations (Section \@ref(equations)), theorems (Section \@ref(theorems)), figures (Section \@ref(figures)), and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.  Further attributes of section headers can be set using standard [Pandoc syntax](http://pandoc.org/MANUAL.html#header-identifiers).
+We have explained how cross-references\index{cross-reference} work for equations (Section \@ref(equations)), theorems (Section \@ref(theorems)), figures (Section \@ref(figures)), and tables (Section \@ref(tables)). In fact, you can also reference sections using the same syntax `\@ref(label)`, where `label` is the section ID. By default, Pandoc will generate an ID for all section headers, e.g., a section `# Hello World` will have an ID `hello-world`. We recommend you to manually assign an ID to a section header to make sure you do not forget to update the reference label after you change the section header. To assign an ID to a section header, simply add `{#id}` to the end of the section header.  Further attributes of section headers can be set using standard [Pandoc syntax](http://pandoc.org/MANUAL.html#heading-identifiers).
 
 When a referenced label cannot be found, you will see two question marks like \@ref(fig:does-not-exist), as well as a warning message in the R console when rendering the book.
 
@@ -590,108 +617,34 @@ Cross-references still work even when we refer to an item that is not on the cur
 
 ## Custom blocks
 
-You can generate custom blocks\index{custom block} using the `block` engine in **knitr**, i.e., the chunk option `engine = 'block'`, or the more compact syntax ```` ```{block} ````. This engine should be used in conjunction with the chunk option `type`, which takes a character string. When the `block` engine is used, it generates a `<div>` to wrap the chunk content if the output format is HTML, and a LaTeX environment if the output is LaTeX. The `type` option specifies the class of the `<div>` and the name of the LaTeX environment. For example, the HTML output of this chunk
+Custom blocks are often used in technical books to create salient boxes of code and/or narrative that call the reader's attention. For example, custom blocks may be used to highlight a note or a warning. These can be included in multiple **bookdown** output formats using Pandoc's syntax for fenced `Div` blocks (https://pandoc.org/MANUAL.html#divs-and-spans). Section 9.6 in the [_R Markdown Cookbook_](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) [@rmarkdown2020] for instructions.
 
-````markdown
-`r ''````{block, type='FOO'}
-Some text for this block.
-```
-````
-
-will be this:
-
-```html
-<div class="FOO">
-Some text for this block.
-</div>
-```
-
-and the LaTeX output will be this:
-
-```latex
-\begin{FOO}
-Some text for this block.
-\end{FOO}
-```
-
-It is up to the book author how to define the style of the block. You can define the style of the `<div>` in CSS and include it in the output via the `includes` option in the YAML metadata. Similarly, you may define the LaTeX environment via `\newenvironment` and include the definition in the LaTeX output via the `includes` option. For example, we may save the following style in a CSS file, say, `style.css`:
-
-```css
-div.FOO {
-  font-weight: bold;
-  color: red;
-}
-```
-
-And the YAML metadata of the R Markdown document can be:
-
-```yaml
----
-output:
-  bookdown::html_book:
-    includes:
-      in_header: style.css
----
-```
-
-We have defined a few types of blocks for this book to show notes, tips, and warnings, etc. Below are some examples:
-
-```{block2, note-text, type='rmdnote'}
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under the terms of the
-GNU General Public License versions 2 or 3.
-For more information about these matters see
-http://www.gnu.org/licenses/.
-```
-
-```{block2, note-text, type='rmdcaution'}
-```
-
-
-```{block2, note-text, type='rmdimportant'}
-```
-
-```{block2, note-text, type='rmdtip'}
-```
-
-```{block2, note-text, type='rmdwarning'}
-```
-
-The **knitr** `block` engine was designed to display simple content (typically a paragraph of plain text). You can use simple formatting syntax such as making certain words bold or italic, but more advanced syntax such as citations and cross-references will not work. However, there is an alternative engine named `block2` that supports arbitrary Markdown syntax, e.g.,
-
-````markdown
-`r ''````{block2, type='FOO'}
-Some text for this block [@citation-key].
-
-- a list item
-- another item
-
-More text.
-```
-````
-
-The `block2` engine should also be faster than the `block` engine if you have a lot of custom blocks in the document, but its implementation was based on [a hack,](https://github.com/jgm/pandoc/issues/2453) so we are not 100% sure if it is always going to work in the future. We have not seen problems with Pandoc v1.17.2 yet.
-
-One more caveat for the `block2` engine: if the last element in the block is not an ordinary paragraph, you must leave a blank line at the end, e.g.,
-
-````markdown
-`r ''````{block2, type='FOO'}
-Some text for this block [@citation-key].
-
-- a list item
-- another item
-- end the list with a blank line
-
-```
-````
-
-The theorem and proof environments in Section \@ref(theorems) are actually implemented through the `block2` engine.
-
-For all custom blocks based on the `block` or `block2` engine, there is one chunk option `echo` that you can use to show (`echo = TRUE`) or hide (`echo = FALSE`) the blocks.
+The `bs4_book()` HTML output format includes styling for selected custom blocks; see Section \@ref(bs4-book).
 
 ## Citations {#citations}
 
-Although Pandoc supports multiple ways of writing citations\index{citation}, we recommend you to use BibTeX\index{BibTeX} databases because they work best with LaTeX/PDF output. Pandoc can process other types of bibliography databases with the utility `pandoc-citeproc` (<https://github.com/jgm/pandoc-citeproc>), but it may not render certain bibliography items correctly (especially in case of multiple authors per item), and BibTeX can do a better job when the output format is LaTeX. With BibTeX databases, you will be able to define the bibliography style if it is required by a certain publisher or journal.
+Pandoc offers two methods for managing citations\index{citation} and bibliographic references in a document.
+
+1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
+
+1. Users may also choose to use either [**natbib**](https://ctan.org/pkg/natbib) (based on `bibtex`) or [**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package". In this case, the bibliographic data files need to be in the `bibtex` or `biblatex` format, and the document output format is limited to PDF. Again, various bibliographic styles are available (please consult the documentation of these packages).
+
+    To use **natbib** or **biblatex** to process references, you can set the `citation_package` option of the R Markdown output format, e.g.,
+  
+    ```yaml
+    output:
+      pdf_document:
+        citation_package: natbib
+      bookdown::pdf_book:
+        citation_package: biblatex
+    ```
+
+Even if you choose `natbib` or `biblatex` for PDF output, all other output formats will be using `pandoc-citeproc`. If you use matching styles (e.g., `biblio-style: apa` for `biblatex` along with `csl: apa.csl` for `pandoc-citeproc`), output to PDF and to non-PDF formats will be very similar, though not necessarily identical.
+
+For any non-PDF output format, `pandoc-citeproc` is the only available option. If consistency across PDF and non-PDF output
+formats is important, use `pandoc-citeproc` throughout.
+
+The bibliographic data can be in several formats. We have only shown examples of BibTeX databases in this section, and please see the ["Citations"](https://pandoc.org/MANUAL.html#citations) section of the Pandoc manual for other possible formats.
 
 A BibTeX database is a plain-text file (with the conventional filename extension `.bib`) that consists of bibliography entries like this:
 
@@ -711,7 +664,7 @@ A bibliography entry starts with `@type{`, where `type` may be `article`, `book`
 
 There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
 
-There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages. Note that it only generates one BibTeX entry for the package itself at the moment, whereas a package may contain multiple entries in the `CITATION` file, and some entries are about the publications related to the package. These entries are ignored by `write_bib()`.
+There is a helper function `write_bib()` in **knitr** to generate BibTeX entries automatically for R packages, e.g.,
 
 ```{r write-bib, comment='', warning=FALSE}
 # the second argument can be a .bib file
@@ -730,11 +683,13 @@ link-citations: true
 
 The field `link-citations` can be used to add internal links from the citation text of the author-year style to the bibliography entry in the HTML output.
 
-When the output format is LaTeX, citations will be automatically put in a chapter or section. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
+When the output format is LaTeX, the list of references will be automatically put in a chapter or section at the end of the document. For non-LaTeX output, you can add an empty chapter as the last chapter of your book. For example, if your last chapter is the Rmd file `06-references.Rmd`, its content can be an inline R expression:
 
 ```markdown
 `r "\x60r if (knitr::is_html_output()) '# References {-}'\x60"`
 ```
+
+For more detailed instructions and further examples on how to use citations, please see the "Citations" section of the Pandoc manual.
 
 ## Index {#latex-index}
 
@@ -772,7 +727,7 @@ There are a number of **knitr** chunk options related to screen-capturing. First
 
 Second, sometimes you may want to force **knitr** to use static screenshots instead of rendering the actual widgets even on HTML pages. In this case, you can set the chunk option `screenshot.force = TRUE`, and widgets will always be rendered as static images. Note that you can still choose to use automatic or custom screenshots.
 
-Third, **webshot** has some options to control the automatic screenshots, and you may specify these options via the chunk option `screenshot.opts`, which takes a list like `list(delay = 2, cliprect = 'viewport')`. See the help page `?webshot::webshot` for the full list of possible options, and the [package vignette](https://cran.rstudio.com/web/packages/webshot/vignettes/intro.html) `vignette('intro', package = 'webshot')` illustrates the effect of these options. Here the `delay` option can be important for widgets that take long time to render: `delay` specifies the number of seconds to wait before PhantomJS takes the screenshot. If you see an incomplete screenshot, you may want to specify a longer delay (the default is 0.2 seconds).
+Third, **webshot** has some options to control the automatic screenshots, and you may specify these options via the chunk option `screenshot.opts`, which takes a list like `list(delay = 2, cliprect = 'viewport')`. See the help page [`?webshot::webshot`](https://wch.github.io/webshot/reference/webshot.html) for the full list of possible options, and the [package introduction](https://wch.github.io/webshot/articles/intro.html) for an illustration of the effect of some of these options. Here the `delay` option can be important for widgets that take long time to render: `delay` specifies the number of seconds to wait before PhantomJS takes the screenshot. If you see an incomplete screenshot, you may want to specify a longer delay (the default is 0.2 seconds).
 
 Fourth, if you feel it is slow to capture the screenshots, or do not want to do it every time the code chunk is executed, you may use the chunk option `cache = TRUE` to cache the chunk. Caching works for both HTML and non-HTML output formats.
 

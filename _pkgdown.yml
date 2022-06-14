@@ -1,0 +1,107 @@
+destination: reference
+
+# website will be referenced on https://pkgs.rstudio.com/
+# Open a PR in https://github.com/rstudio/pkgs.rstudio.com
+url: https://pkgs.rstudio.com/bookdown/
+
+template:
+  package: tidytemplate
+  bootstrap: 5
+  bslib:
+    primary: "#096B72"
+    navbar-background: "#e6f3fc"
+  trailing_slash_redirect: true
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "bookdown package"
+    twitter:
+      creator: "@rstudio"
+      card: summary
+
+development:
+  version_tooltip: "Development version"
+
+home:
+  links:
+  - text: Learn more about R Markdown
+    href: "https://rmarkdown.rstudio.com"
+
+# custom footer for rmarkdown ecosystem
+footer:
+  structure:
+    left: [rmd]
+    right: [developed_by, p, built_with]
+  components:
+      p: "\n\n"
+      rmd: |
+        **bookdown** is a part of the **R Markdown** ecosystem of packages for creating
+        computational documents in R.<br>Learn more at
+        [rmarkdown.rstudio.com](https://rmarkdown.rstudio.com/).
+
+# structure of website themed for R Markdown ecosystem
+navbar:
+  structure:
+    left:  [intro, examples, articles, reference, news]
+  components:
+    examples:
+      text: Examples
+      href: articles/examples.html
+
+# Add articles menu using
+# https://pkgdown.r-lib.org/dev/reference/build_articles.html#index-and-navbar
+# articles:
+
+news:
+  releases:
+  - text: "Version 0.23"
+    href: https://blog.rstudio.com/2021/08/18/announcing-bookdown-v0.23/
+  - text: "Version 0.21"
+    href: https://blog.rstudio.com/2020/12/21/rmd-news/
+  - text: "Version 0.3"
+    href: https://blog.rstudio.com/2016/12/02/announcing-bookdown/
+
+reference:
+- title: Book output formats
+  desc: >
+    These output formats are for building books from single or
+    multiple `.Rmd` documents. They are built with `render_book()`.
+  contents:
+  - gitbook
+  - pdf_book
+  - epub_book
+  - bs4_book
+  - tufte_html_book
+  - html_book
+
+- title: Single document output formats
+  desc: >
+    These output formats enable **bookdown's** special
+    features like cross references in single `.Rmd` documents
+    instead of books. There are built with `rmarkdown::render()`.
+  contents:
+  - ends_with("2")
+
+- title: Create a book
+  contents:
+  - starts_with("create_")
+
+- title: Previewing and rendering books
+  contents:
+  - render_book
+  - serve_book
+  - preview_chapter
+
+- title: Publishing books
+  desc: >
+    Publish books on <https://bookdown.org> or elsewhere.
+  contents:
+  - publish_book
+
+- title: Helper functions
+  desc: These functions are utility functions when working with **bookdown**.
+  contents:
+  - clean_book
+  - bookdown_site
+  - fence_theorems
+  - calibre

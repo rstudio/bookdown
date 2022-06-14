@@ -5,25 +5,38 @@
 \alias{preview_chapter}
 \title{Render multiple R Markdown documents into a book}
 \usage{
-render_book(input, output_format = NULL, ..., clean = TRUE,
-  envir = parent.frame(), clean_envir = !interactive(),
-  output_dir = NULL, new_session = NA, preview = FALSE,
-  encoding = "UTF-8", config_file = "_bookdown.yml")
+render_book(
+  input = ".",
+  output_format = NULL,
+  ...,
+  clean = TRUE,
+  envir = parent.frame(),
+  clean_envir = !interactive(),
+  output_dir = NULL,
+  new_session = NA,
+  preview = FALSE,
+  config_file = "_bookdown.yml"
+)
 
 preview_chapter(..., envir = parent.frame())
 }
 \arguments{
-\item{input}{An input filename (or multiple filenames). If \code{preview =
-TRUE}, only files specified in this argument are rendered, otherwise all R
-Markdown files specified by the book are rendered.}
+\item{input}{A directory, an input filename or multiple filenames. For a
+directory, \file{index.Rmd} will be used if it exists in this (book)
+project directory. For filenames, if \code{preview = TRUE}, only files
+specified in this argument are rendered, otherwise all R Markdown files
+specified by the book are rendered.}
 
 \item{output_format, ..., clean, envir}{Arguments to be passed to
-\code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
-\code{...} is passed to \code{render_book()}.}
+\code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
+is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
+and \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the
+bookdown reference book} for details on how output formatting options are
+set from YAML or parameters supplied by the user when calling
+\code{render_book()}.}
 
-\item{clean_envir}{Whether to clean up the environment \code{envir} before
-rendering the book. By default, the environment is cleaned when rendering
-the book in a non-interactive R session.}
+\item{clean_envir}{This argument has been deprecated and will be removed in
+future versions of \pkg{bookdown}.}
 
 \item{output_dir}{The output directory. If \code{NULL}, a field named
 \code{output_dir} in the configuration file \file{_bookdown.yml} will be
@@ -39,9 +52,6 @@ files (if not provided, the value of the \code{new_session} option in
 \code{input} argument. Previewing a certain chapter may save compilation
 time as you actively work on this chapter, but the output may not be
 accurate (e.g. cross-references to other chapters will not work).}
-
-\item{encoding}{Ignored. The character encoding of all input files is
-supposed to be UTF-8.}
 
 \item{config_file}{The book configuration file.}
 }
@@ -60,4 +70,19 @@ new R session (\code{new_session = TRUE}).
 \examples{
 # see https://bookdown.org/yihui/bookdown for the full documentation
 if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
+\dontrun{
+# will use the default format defined in index.Rmd or _output.yml
+bookdown::render_book("index.Rmd")
+# will use the options for format defined in YAML metadata
+bookdown::render_book("index.Rmd",  "bookdown::pdf_book")
+# If you pass an output format object, it must have all the options set
+bookdown::render_book("index.Rmd", bookdown::pdf_book(toc = FALSE))
+
+# will render the book in the current directory
+bookdown::render_book()
+# this is equivalent to
+bookdown::render_book("index.Rmd")
+# will render the book living in the specified directory
+bookdown::render_book("my_book_project")
+}
 }

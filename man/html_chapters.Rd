@@ -6,12 +6,21 @@
 \alias{tufte_html_book}
 \title{Build book chapters into separate HTML files}
 \usage{
-html_chapters(toc = TRUE, number_sections = TRUE, fig_caption = TRUE,
-  lib_dir = "libs", template = bookdown_file("templates/default.html"),
-  pandoc_args = NULL, ..., base_format = rmarkdown::html_document,
-  split_bib = TRUE, page_builder = build_chapter,
-  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("",
-  "+number"), paste0)))
+html_chapters(
+  toc = TRUE,
+  number_sections = TRUE,
+  fig_caption = TRUE,
+  lib_dir = "libs",
+  template = bookdown_file("templates/default.html"),
+  global_numbering = !number_sections,
+  pandoc_args = NULL,
+  ...,
+  base_format = rmarkdown::html_document,
+  split_bib = TRUE,
+  page_builder = build_chapter,
+  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("", "+number"),
+    paste0))
+)
 
 html_book(...)
 
@@ -20,8 +29,15 @@ tufte_html_book(...)
 \arguments{
 \item{toc, number_sections, fig_caption, lib_dir, template, pandoc_args}{See
 \code{rmarkdown::\link{html_document}},
-\code{tufte::\link[tufte]{tufte_html}}, or the documentation of the
-\code{base_format} function.}
+\code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
+of the \code{base_format} function.}
+
+\item{global_numbering}{If \code{TRUE}, number figures and tables globally
+throughout a document (e.g., Figure 1, Figure 2, ...). If \code{FALSE},
+number them sequentially within sections (e.g., Figure 1.1, Figure 1.2,
+..., Figure 5.1, Figure 5.2, ...). Note that \code{global_numbering =
+FALSE} will not work with \code{number_sections = FALSE} because sections
+are not numbered.}
 
 \item{...}{Other arguments to be passed to \code{base_format}. For
 \code{html_book()} and \code{tufte_html_book()}, \code{...} is passed to

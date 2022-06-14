@@ -195,14 +195,15 @@ Note that for HTML output, **bookdown** requires some additional comment tokens 
 
 ## Configuration
 
-We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optional) settings you can configure for a book in `_bookdown.yml`\index{\_bookdown.yml}:
+We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optional) settings you can configure for a book in `_bookdown.yml`\index{\_bookdown.yml}^[For the [`bs4_book()`](#bs4-book) format, the `edit`, `history`, and `view` fields have no effect and similar configuration can be specified with the [repo](#specifying-the-repository) argument of the output function.]:
 
 - `book_filename`: the filename of the main Rmd file, i.e., the Rmd file that is merged from all chapters; by default, it is named `_main.Rmd`.
-- `delete_merged_file`: whether to delete the main Rmd file if it exists.
+- `delete_merged_file`: whether to delete the main Rmd file after the book is successfully rendered.
 - `before_chapter_script`: one or multiple R scripts to be executed before each chapter, e.g., you may want to clear the workspace before compiling each chapter, in which case you can use `rm(list = ls(all = TRUE))` in the R script.
 - `after_chapter_script`: similar to `before_chapter_script`, and the R script is executed after each chapter.
 - `edit`: a link that collaborators can click to edit the Rmd source document of the current page; this was designed primarily for GitHub repositories, since it is easy to edit arbitrary plain-text files on GitHub even in other people's repositories (if you do not have write access to the repository, GitHub will automatically fork it and let you submit a pull request after you finish editing the file). This link should have `%s` in it, which will be substituted by the actual Rmd filename for each page.
 -  `history`: similar to `edit`, a link to the edit/commit history of the current page.
+-  `view`: similar to `edit`, a link to source code of the current page. 
 - `rmd_subdir`: whether to search for book source Rmd files in subdirectories (by default, only the root directory is searched). This may be either a boolean (e.g. `true` will search for book source Rmd files in the project directory and all subdirectories) or list of paths if you want to search for book source Rmd files in a subset of subdirectories.
 - `output_dir`: the output directory of the book (`_book` by default); this setting is read and used by `render_book()`.
 - `clean`: a vector of files and directories to be cleaned by the `clean_book()` function.
@@ -211,8 +212,10 @@ Here is a sample `_bookdown.yml`:
 
 ```yaml
 book_filename: "my-book.Rmd"
+delete_merged_file: true
 before_chapter_script: ["script1.R", "script2.R"]
 after_chapter_script: "script3.R"
+view: https://github.com/rstudio/bookdown-demo/blob/master/%s
 edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
 output_dir: "book-output"
 clean: ["my-book.bbl", "R-packages.bib"]
@@ -242,6 +245,16 @@ language:
     fig: "FIGURE "
 ```
 
-The fields under `ui` are used to specify some terms in the user interface. The `edit` field specifies the text associated with the `edit` link in `_bookdown.yml` (Section \@ref(configuration)). The `chapter_name` field can be either a character string to be prepended to chapter numbers in chapter titles (e.g., `'CHAPTER '`), or an R function that takes the chapter number as the input and returns a string as the new chapter number (e.g., `!expr function(i) paste('Chapter', i)`). If it is a character vector of length 2, the chapter title prefix will be `paste0(chapter_name[1], i, chapter_name[2])`, where `i` is the chapter number.
+The fields under `ui` are used to specify some terms in the user interface. The `edit` field specifies the text associated with the `edit` link in `_bookdown.yml` (Section \@ref(configuration)). The fields `chapter_name`, `appendix_name`, `fig`, `tab` and `eq` can be either a character string to be prepended to chapter (e.g., `'CHAPTER '`) or reference number (e.g., `'FIGURE '`), or an R function that takes a number (chapter or reference number) as the input and returns a string. (e.g., `!expr function(i) paste('Chapter', i)`). Here is an example for Hungarian:
+
+```yaml
+language:
+  label:
+    fig: !expr function(i) paste(i, 'ábra')
+  ui:
+    chapter_name: !expr function(i) paste0(i, '. fejezet')
+```
+
+For `chapter_name` and `appendix_name` only, if it is a character vector of length 2, the chapter title prefix will be `paste0(chapter_name[1], i, chapter_name[2])`, where `i` is the chapter number.
 
 There is one caveat when you write in a language that uses multibyte characters, such as Chinese, Japanese, and Korean (CJK): Pandoc cannot generate identifiers from section headings that are pure CJK characters, so you will not be able to cross-reference sections (they do not have labels), unless you manually assign identifiers to them by appending `{#identifier}` to the section heading, where `identifier` is an identifier of your choice.

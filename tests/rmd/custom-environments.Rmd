@@ -1,0 +1,100 @@
+---
+title: "Testing Theroem and Proof environments with lua"
+author: "C. DERVIEUX"
+output:
+  bookdown::html_document2: default
+  bookdown::pdf_document2: default
+---
+
+# Examples 
+
+We can use Pandoc fenced div syntax now
+
+::: {.definition}
+The characteristic function of a random variable $X$ is defined by
+
+$$\varphi _{X}(t)=\operatorname {E} \left[e^{itX}\right], \; t\in\mathcal{R}$$
+:::
+
+
+::: {.example}
+We derive the characteristic function of $X\sim U(0,1)$ with the probability density function $f(x)=\mathbf{1}_{x \in [0,1]}$.
+
+\begin{equation*}
+\begin{split}
+\varphi _{X}(t) &= \operatorname {E} \left[e^{itX}\right]\\
+ & =\int e^{itx}f(x)dx\\
+ & =\int_{0}^{1}e^{itx}dx\\
+ & =\int_{0}^{1}\left(\cos(tx)+i\sin(tx)\right)dx\\
+ & =\left.\left(\frac{\sin(tx)}{t}-i\frac{\cos(tx)}{t}\right)\right|_{0}^{1}\\
+ & =\frac{\sin(t)}{t}-i\left(\frac{\cos(t)-1}{t}\right)\\
+ & =\frac{i\sin(t)}{it}+\frac{\cos(t)-1}{it}\\
+ & =\frac{e^{it}-1}{it}
+\end{split}
+\end{equation*}
+
+Note that we used the fact $e^{ix}=\cos(x)+i\sin(x)$ twice.
+:::
+
+We can include some Mardown syntax and R code
+
+::: {.lemma #chf-pdf}
+For any two random variables `x`, `y`, you can add then using **+**, and for example
+```{r}
+x = 1
+y = 1
+x+y
+```
+:::
+
+::: {.theorem #chf-sum}
+If $X_1$, ..., $X_n$ are independent random variables, and $a_1$, ..., $a_n$ are some constants, then the characteristic function of the linear combination $S_n=\sum_{i=1}^na_iX_i$ is
+
+$$\varphi _{S_{n}}(t)=\prod_{i=1}^n\varphi _{X_i}(a_{i}t)=\varphi _{X_{1}}(a_{1}t)\cdots \varphi _{X_{n}}(a_{n}t)$$
+:::
+
+::: {.proposition}
+The distribution of the sum of independent Poisson random variables $X_i \sim \mathrm{Pois}(\lambda_i),\: i=1,2,\cdots,n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
+:::
+
+::: {.proof}
+The characteristic function of $X\sim\mathrm{Pois}(\lambda)$ is $\varphi _{X}(t)=e^{\lambda (e^{it}-1)}$. Let $P_n=\sum_{i=1}^nX_i$. We know from Theorem \@ref(thm:chf-sum) that
+
+\begin{equation*}
+\begin{split}
+\varphi _{P_{n}}(t) & =\prod_{i=1}^n\varphi _{X_i}(t) \\
+& =\prod_{i=1}^n e^{\lambda_i (e^{it}-1)} \\
+& = e^{\sum_{i=1}^n \lambda_i (e^{it}-1)}
+\end{split}
+\end{equation*}
+
+This is the characteristic function of a Poisson random variable with the parameter $\lambda=\sum_{i=1}^n \lambda_i$. From Lemma \@ref(lem:chf-pdf), we know the distribution of $P_n$ is $\mathrm{Pois}(\sum_{i=1}^n\lambda_i)$.
+:::
+
+::: {.remark}
+In some cases, it is very _convenient_ and easy to figure out the distribution of the sum of independent random variables using characteristic functions. See \@ref(thm:chf-sum)
+:::
+
+::: {.corollary}
+The characteristic function of the sum of two independent random variables $X_1$ and $X_2$ is the product of characteristic functions of $X_1$ and $X_2$, i.e.,
+
+$$\varphi _{X_1+X_2}(t)=\varphi _{X_1}(t) \varphi _{X_2}(t)$$
+:::
+
+And a name can be added
+
+::: {.exercise name="Characteristic Function of the Sample Mean"}
+Let $\bar{X}=\sum_{i=1}^n \frac{1}{n} X_i$ be the sample mean of $n$ independent and identically distributed random variables, each with characteristic function $\varphi _{X}$. Compute the characteristic function of $\bar{X}$. 
+:::
+
+::: {.solution}
+Applying Theorem \@ref(thm:chf-sum), we have
+
+$$\varphi _{\bar{X}}(t)=\prod_{i=1}^n \varphi _{X_i}\left(\frac{t}{n}\right)=\left[\varphi _{X}\left(\frac{t}{n}\right)\right]^n.$$
+:::
+
+::: {.hypothesis name="Riemann hypothesis"}
+The Riemann Zeta-function is defined as
+$$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}$$
+for complex values of $s$ and which converges when the real part of $s$ is greater than 1. The Riemann hypothesis is that the Riemann zeta function has its zeros only at the negative even integers and complex numbers with real part $1/2$.
+:::

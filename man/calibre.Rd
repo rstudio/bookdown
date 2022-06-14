@@ -22,5 +22,5 @@ The output filename.
 }
 \description{
 This function calls the command \command{ebook-convert} in Calibre
-(\url{http://calibre-ebook.com}) to convert e-books.
+(\url{https://calibre-ebook.com}) to convert e-books.
 }

@@ -10,10 +10,12 @@ bookdown::gitbook:
       after: |
         <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
     download: [pdf, epub, mobi]
-    edit: https://github.com/rstudio/bookdown/edit/master/inst/examples/%s
+    edit: https://github.com/rstudio/bookdown/edit/main/inst/examples/%s
     sharing:
       github: yes
       facebook: no
+    search:
+      engine: fuse
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:

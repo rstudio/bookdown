@@ -18,7 +18,7 @@
 #'   \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
 #' @param base_format An output format function to be used as the base format.
-#' @param toc_unnumbered Whether to add unnumberred headers to the table of
+#' @param toc_unnumbered Whether to add unnumbered headers to the table of
 #'   contents.
 #' @param toc_appendix Whether to add the appendix to the table of contents.
 #' @param toc_bib Whether to add the bibliography section to the table of
@@ -36,23 +36,23 @@ pdf_book = function(
   base_format = rmarkdown::pdf_document, toc_unnumbered = TRUE,
   toc_appendix = FALSE, toc_bib = FALSE, quote_footer = NULL, highlight_bw = FALSE
 ) {
-  base_format = get_base_format(base_format)
-  config = base_format(
+  config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     pandoc_args = pandoc_args2(pandoc_args), ...
-  )
+  ))
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
     if (is.function(post)) output = post(metadata, input, output, clean, verbose)
     f = with_ext(output, '.tex')
-    x = resolve_refs_latex(read_utf8(f))
+    x = read_utf8(f)
+    x = restore_block2(x, !number_sections)
+    x = resolve_refs_latex(x)
     x = resolve_ref_links_latex(x)
     x = restore_part_latex(x)
     x = restore_appendix_latex(x, toc_appendix)
     if (!toc_unnumbered) x = remove_toc_items(x)
     if (toc_bib) x = add_toc_bib(x)
-    x = restore_block2(x, !number_sections)
     if (!is.null(quote_footer)) {
       if (length(quote_footer) != 2 || !is.character(quote_footer)) warning(
         "The 'quote_footer' argument should be a character vector of length 2"
@@ -81,10 +81,12 @@ pdf_book = function(
   # always enable tables (use packages booktabs, longtable, ...)
   pre = config$pre_processor
   config$pre_processor = function(...) {
-    c(if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone')
+    c(
+      if (is.function(pre)) pre(...), '--variable', 'tables=yes', '--standalone',
+      if (rmarkdown::pandoc_available('2.7.1')) '-Mhas-frontmatter=false'
+    )
   }
-  config$bookdown_output_format = 'latex'
-  config = set_opts_knit(config)
+  config = common_format_config(config, 'latex')
   config
 }
 
@@ -92,6 +94,12 @@ pdf_book = function(
 #' @export
 pdf_document2 = function(...) {
   pdf_book(..., base_format = rmarkdown::pdf_document)
+}
+
+#' @rdname html_document2
+#' @export
+beamer_presentation2 = function(..., number_sections = FALSE) {
+  pdf_book(..., base_format = rmarkdown::beamer_presentation)
 }
 
 #' @rdname html_document2
@@ -191,43 +199,80 @@ remove_toc_items = function(x) {
 }
 
 add_toc_bib = function(x) {
-  r = '^\\\\bibliography\\{.+\\}$'
+  # natbib
+  r = '^\\s*\\\\bibliography\\{.+\\}$'
   i = grep(r, x)
-  if (length(i) == 0) return(x)
-  i = i[1]
-  level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
-  x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  if (length(i) != 0) {
+    # natbib - add toc manually using \bibname
+    # e.g adding \addcontentsline{toc}{chapter}{\bibname}
+    i = i[1]
+    level = if (length(grep('^\\\\chapter\\*?\\{', x))) 'chapter' else 'section'
+    x[i] = sprintf('%s\n\\addcontentsline{toc}{%s}{\\bibname}', x[i], level)
+  } else {
+    # biblatex - add heading=bibintoc in options
+    # e.g \printbibliography[title=References,heading=bibintoc]
+    r = '^(\\s*\\\\printbibliography)(\\[.*\\])?$'
+    i = grep(r, x)
+    if (length(i) == 0) return(x)
+    opts = gsub(r, "\\2", x[i])
+    bibintoc = "heading=bibintoc"
+    if (nzchar(opts)) {
+      opts2 = gsub("^\\[(.*)\\]$", "\\1", opts)
+      opts = if (!grepl("heading=", opts2)) sprintf("[%s,%s]", opts2, bibintoc)
+    } else (
+      opts = sprintf("[%s]", bibintoc)
+    )
+    x[i] = sprintf('%s%s', gsub(r, "\\1", x[i]), opts)
+  }
   x
 }
 
 restore_block2 = function(x, global = FALSE) {
   i = grep('^\\\\begin\\{document\\}', x)[1]
   if (is.na(i)) return(x)
-  if (length(grep('\\\\(Begin|End)KnitrBlock', tail(x, -i))))
-    x = append(x, '\\let\\BeginKnitrBlock\\begin \\let\\EndKnitrBlock\\end', i - 1)
-  if (length(grep(sprintf('^\\\\BeginKnitrBlock\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
+  # add the necessary definition in the preamble when block2 engine
+  # (\BeginKnitrBlock) or pandoc fenced div (\begin) is used if not already
+  # define. But don't do it with beamer and it defines already amsthm
+  # environments.
+  # An options allow external format to skip this part
+  # (useful for rticles see rstudio/bookdown#1001)
+  if (getOption("bookdown.theorem.preamble", TRUE) &&
+      !knitr::pandoc_to("beamer") &&
+      length(grep(sprintf('^\\\\(BeginKnitrBlock|begin)\\{(%s)\\}', paste(all_math_env, collapse = '|')), x)) &&
       length(grep('^\\s*\\\\newtheorem\\{theorem\\}', head(x, i))) == 0) {
+    theorem_label = vapply(theorem_abbr, function(a) {
+      label_prefix(a)()
+    }, character(1), USE.NAMES = FALSE)
     theorem_defs = sprintf(
-      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)), names(theorem_abbr),
-      str_trim(vapply(theorem_abbr, label_prefix, character(1), USE.NAMES = FALSE)),
+      '%s\\newtheorem{%s}{%s}%s', theorem_style(names(theorem_abbr)),
+      names(theorem_abbr), str_trim(theorem_label),
       if (global) '' else {
         if (length(grep('^\\\\chapter[*]?', x))) '[chapter]' else '[section]'
       }
     )
     # the proof environment has already been defined by amsthm
     proof_envs = setdiff(names(label_names_math2), 'proof')
+    proof_labels = vapply(proof_envs, function(a) {
+      label_prefix(a, dict = label_names_math2)()
+    }, character(1), USE.NAMES = FALSE)
     proof_defs = sprintf(
       '%s\\newtheorem*{%s}{%s}', theorem_style(proof_envs), proof_envs,
-      gsub('^\\s+|[.]\\s*$', '', vapply(proof_envs, label_prefix, character(1), label_names_math2))
+      gsub('^\\s+|[.]\\s*$', '', proof_labels)
     )
     x = append(x, c('\\usepackage{amsthm}', theorem_defs, proof_defs), i - 1)
   }
   # remove the empty lines around the block2 environments
-  i3 = if (length(i1 <- grep('^\\\\BeginKnitrBlock\\{', x))) (i1 + 1)[x[i1 + 1] == '']
-  i3 = c(i3, if (length(i2 <- grep('^\\\\EndKnitrBlock\\{', x))) (i2 - 1)[x[i2 - 1] == ''])
+  i3 = c(
+    if (length(i1 <- grep(r1 <- '^(\\\\)BeginKnitrBlock(\\{)', x)))
+      (i1 + 1)[x[i1 + 1] == ''],
+    if (length(i2 <- grep(r2 <- '(\\\\)EndKnitrBlock(\\{[^}]+})$', x)))
+      (i2 - 1)[x[i2 - 1] == '']
+  )
+  x[i1] = gsub(r1, '\\1begin\\2', x[i1])
+  x[i2] = gsub(r2, '\\1end\\2',   x[i2])
   if (length(i3)) x = x[-i3]
 
-  r = '^(.*\\\\BeginKnitrBlock\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
+  r = '^(.*\\\\begin\\{[^}]+\\})(\\\\iffalse\\{-)([-0-9]+)(-\\}\\\\fi\\{\\})(.*)$'
   if (length(i <- grep(r, x)) == 0) return(x)
   opts = sapply(strsplit(gsub(r, '\\3', x[i]), '-'), function(z) {
     intToUtf8(as.integer(z))
@@ -236,7 +281,7 @@ restore_block2 = function(x, global = FALSE) {
   x
 }
 
-style_definition = c('definition', 'example', 'exercise')
+style_definition = c('definition', 'example', 'exercise', 'hypothesis')
 style_remark = c('remark')
 # which styles of theorem environments to use
 theorem_style = function(env) {
