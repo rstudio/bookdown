@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.28
+
+
 # CHANGES IN bookdown VERSION 0.27
 
 - Fix `fence_theorems()` so that `output` is not ignored anymore. With previous version, when `output` was different than `NULL`, the result was written to `input`, ignoring `output` value. From now on, set `input` and `output` to the same file if you want to overwrite (thanks, @Scinawa, #1342). 

@@ -504,7 +504,6 @@ eng_funcs = list(
   eng_theorem2 = function(type, options) {
     label = paste0('#', options$label)
     name = sprintf('name="%s"', options$name)
-    # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
     res = paste(c(paste0('.', type), label, name), collapse = ' ')
     paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
   },
@@ -533,7 +532,6 @@ eng_funcs = list(
   },
   eng_proof2 = function(type, options) {
     name = sprintf('name="%s"', options$name)
-    # TODO: use knitr:::fenced_block()
     res = paste(c(paste0('.', type), name), collapse = ' ')
     paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
   }
