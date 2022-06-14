@@ -18,7 +18,7 @@ html_chapters(
   base_format = rmarkdown::html_document,
   split_bib = TRUE,
   page_builder = build_chapter,
-  split_by = c("none", "rmd", outer(c("chapter", "section", 0:7), c("", "+number"),
+  split_by = c("none", "rmd", outer(c("chapter", "section", 1:6), c("", "+number"),
     paste0))
 )
 
@@ -57,11 +57,12 @@ uses the base filenames of the input Rmd files to create the HTML
 filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
 \code{none} means do not split the HTML file (the book will be a single
 HTML file); \code{chapter} means split the file by the first-level headers;
-\code{section} means the second-level headers. For \code{chapter} and
-\code{section}, the HTML filenames will be determined by the header ID's,
+\code{section} means the second-level headers, \code{1}-\code{6} means split the file by the [1-7]-level headers (1: chapter).
+For \code{chapter}, \code{section} and \code{1}-\code{6}, the HTML filenames will be determined by the header ID's,
 e.g. the filename for the first chapter with a chapter title \code{#
-Introduction} will be \file{introduction.html}; for \code{chapter+number}
-and \code{section+number}, the chapter/section numbers will be prepended to
+Introduction} will be \file{introduction.html}; for \code{chapter+number},
+\code{section+number} and \code{[1-6]+number} the chapter/section
+(and higher level section) numbers will be prepended to
 the HTML filenames, e.g. \file{1-introduction.html} and
 \file{2-1-literature.html}.}
 }
