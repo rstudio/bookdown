@@ -403,10 +403,30 @@ get_index_file <- function() {
 # can only preview HTML output via servr, so look for the first HTML format
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
-  if (!file.exists('index.Rmd')) return(fallback)
-  formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
-  if (length(formats) == 0) fallback else formats[1]
+  html_format = function(f) grep('gitbook|html|bs4_book', f, value = TRUE)
+  get_output_formats(fallback, html_format, first = TRUE)
+}
+
+get_output_formats <- function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
+  # Use index files if one exists
+  index = get_index_file()
+  # Use fallback file unless no YAML
+  if (!nzchar(index)) {
+    if (!is.null(fallback_index) &&
+        xfun::file_exists(fallback_index) &&
+        length(rmarkdown::yaml_front_matter(fallback_index)) != 0
+    ) {
+      index = fallback_index
+    } else {
+      return(fallback_format)
+    }
+  }
+  # Retrieve output formats
+  formats = rmarkdown::all_output_formats(index)
+  formats = filter(formats)
+  if (length(formats) == 0) return(fallback_format)
+  if (first) return(formats[1])
+  formats
 }
 
 # base64 encode resources in url("")
@@ -656,7 +676,6 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   # return the text or write to output file
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, output)
 }
-
 
 stop_if_not_exists = function(inputs) {
   if (!all(exist <- xfun::file_exists(inputs))) {

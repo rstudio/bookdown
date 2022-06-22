@@ -84,11 +84,13 @@ render_book = function(
   } else if (is.null(output_format) || is.character(output_format)) {
     if (is.null(output_format) || identical(output_format, 'all')) {
       # formats can safely be guess when considering index.Rmd and its expected frontmatter
-      # and not another Rmd file which has no expected YAML frontmatter
-      stop_if_not_exists("index.Rmd")
-      all_formats = rmarkdown::all_output_formats("index.Rmd")
-      # when no format provided, return name of the first resolved
-      output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
+      # As a fallback we assumes input could have the YAML, otherwise we just use gitbook();
+      # Also, when no format provided, return name of the first resolved
+      output_format = get_output_formats(
+        fallback_format = "bookdown::gitbook",
+        first = is.null(output_format),
+        fallback_index = input
+      )
     }
     if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
       xfun::Rscript_call(render_book, list(
