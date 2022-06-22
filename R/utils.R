@@ -390,6 +390,12 @@ serve_book = function(
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
 }
 
+index_files <- xfun::with_ext("index", c("Rmd", "rmd"))
+
+get_index_file <- function() {
+  xfun::existing_files(index_files, first = TRUE, error = FALSE)
+}
+
 # can only preview HTML output via servr, so look for the first HTML format
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
