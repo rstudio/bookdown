@@ -679,8 +679,10 @@ check_packages <- function(pkgs) {
 preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   old <- setwd(path)
   on.exit(setwd(old))
-
-  render_book("index.Rmd",
+  if (!nzchar(index <- get_index_file())) {
+    stop(sprintf('`index.Rmd` or `index.rmd` was not found in path = "%s".', path))
+  }
+  render_book(index,
     output_format = output,
     quiet = TRUE,
     clean = FALSE,

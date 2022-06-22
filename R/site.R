@@ -68,7 +68,9 @@ render_book_script = function(output_format = NULL, envir = globalenv(), quiet =
   } else if (file.exists('Makefile')) {
     result = system2('make')
   } else {
-    render_book('index.Rmd', output_format = output_format, envir = envir)
+    index <- get_index_file()
+    if (!nzchar(index)) stop('`index.Rmd` or `index.rmd` is expected in this project.', call. = FALSE)
+    render_book(index, output_format = output_format, envir = envir)
   }
   if (result != 0) stop('Error ', result, ' attempting to render book')
 }
@@ -86,7 +88,7 @@ find_book_name = function(config, default) {
 find_book_proj = function(input) {
   # if bookdown_site() is executed it is because site: has been set in index.Rmd
   rules = matrix(c(
-    '^index.Rmd$', '^\\s*site:\\s*["\']?bookdown::bookdown_site["\']?\\s*(?:#.*)?$'
+    '^index.[Rr]md$', '^\\s*site:\\s*["\']?bookdown::bookdown_site["\']?\\s*(?:#.*)?$'
   ), ncol = 2, byrow = TRUE, dimnames = list(NULL, c('file', 'pattern')))
   xfun::proj_root(input, rules)
 }

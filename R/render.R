@@ -67,9 +67,14 @@ render_book = function(
   if (length(input) == 1L && dir_exists(input)) {
     message(sprintf("Rendering book in directory '%s'", input))
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
-    input = "index.Rmd"
+    # if a directory is passed, we assume that index.Rmd exists
+    input = get_index_file()
+    if (!nzchar(input)) {
+      stop("Passing a directory in `input=` assumes that `index.Rmd` or `index.rmd` is inside this directory.")
+    }
   }
 
+  # check that input file exists
   stop_if_not_exists(input)
 
   format = NULL  # latex or html
@@ -205,7 +210,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   for (i in which(grepl('[.]md$', files) & files != files_md))
     file.copy(files[i], files_md[i], overwrite = TRUE)
   # if input is index.Rmd or not preview mode, compile all Rmd's
-  rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
+  rerun = !opts$get('preview') || opts$get('input_rmd') %in% index_files
   if (!rerun) rerun = files %in% opts$get('input_rmd')
   add1 = merge_chapter_script(config, 'before')
   add2 = merge_chapter_script(config, 'after')

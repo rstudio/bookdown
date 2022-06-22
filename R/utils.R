@@ -386,7 +386,11 @@ serve_book = function(
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
   }
-  rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
+  index <- get_index_file()
+  if (!nzchar(index)) {
+    stop("`serve_book()` expect `index.Rmd` or `index.rmd` in the book project.", call. = FALSE)
+  }
+  rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
 }
 
