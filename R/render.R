@@ -69,7 +69,7 @@ render_book = function(
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
     # if a directory is passed, we assume that index.Rmd exists
     input = get_index_file()
-    if (!nzchar(input)) {
+    if (is_empty(input)) {
       stop("Passing a directory in `input=` assumes that `index.Rmd` or `index.rmd` is inside this directory.")
     }
   }

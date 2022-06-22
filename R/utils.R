@@ -387,7 +387,7 @@ serve_book = function(
     }
   }
   index <- get_index_file()
-  if (!nzchar(index)) {
+  if (is_empty(index)) {
     stop("`serve_book()` expect `index.Rmd` or `index.rmd` in the book project.", call. = FALSE)
   }
   rebuild(index, preview_ = FALSE)  # build the whole book initially
@@ -411,7 +411,7 @@ get_output_formats <- function(fallback_format, filter = identity, first = FALSE
   # Use index files if one exists
   index = get_index_file()
   # Use fallback file unless no YAML
-  if (!nzchar(index)) {
+  if (is_empty(index)) {
     if (!is.null(fallback_index) &&
         xfun::file_exists(fallback_index) &&
         length(rmarkdown::yaml_front_matter(fallback_index)) != 0
@@ -681,4 +681,8 @@ stop_if_not_exists = function(inputs) {
   if (!all(exist <- xfun::file_exists(inputs))) {
     stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
   }
+}
+
+is_empty = function(x) {
+  length(x) == 0 || !nzchar(x)
 }

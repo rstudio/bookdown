@@ -69,7 +69,7 @@ render_book_script = function(output_format = NULL, envir = globalenv(), quiet =
     result = system2('make')
   } else {
     index <- get_index_file()
-    if (!nzchar(index)) stop('`index.Rmd` or `index.rmd` is expected in this project.', call. = FALSE)
+    if (is_empty(index)) stop('`index.Rmd` or `index.rmd` is expected in this project.', call. = FALSE)
     render_book(index, output_format = output_format, envir = envir)
   }
   if (result != 0) stop('Error ', result, ' attempting to render book')
