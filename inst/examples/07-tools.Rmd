@@ -79,10 +79,14 @@ The above error means you used a package that contains `titling.sty`, but it was
 LaTeX distributions and packages are also updated from time to time, and you may consider updating them especially when you run into LaTeX problems. You can find out the version of your LaTeX distribution by:
 
 ```{r include=FALSE}
-system = function(...) cat(base::system(..., intern = TRUE), sep = '\n')
+res <- base::system('pdflatex --version', intern = TRUE)
+res <- paste("## ", res)
+res <- paste0(res, collapse = "\n")
 ```
-```{r collapse=TRUE}
+
+```r
 system('pdflatex --version')
+`r res`
 ```
 
 To update TinyTeX, you may run:
