@@ -625,7 +625,7 @@ The `bs4_book()` HTML output format includes styling for selected custom blocks;
 
 Pandoc offers two methods for managing citations\index{citation} and bibliographic references in a document.
 
-1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
+1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](https://docs.citationstyles.org/en/stable/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
 
 1. Users may also choose to use either [**natbib**](https://ctan.org/pkg/natbib) (based on `bibtex`) or [**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package". In this case, the bibliographic data files need to be in the `bibtex` or `biblatex` format, and the document output format is limited to PDF. Again, various bibliographic styles are available (please consult the documentation of these packages).
 
