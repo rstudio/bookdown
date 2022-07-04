@@ -69,7 +69,6 @@ jobs:
         with:
           extra-packages: local::.
           needs: book
-          cache-version: 2
 
       - name: Install phamtomJS for webshot
         run: |
