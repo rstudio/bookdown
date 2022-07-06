@@ -2,6 +2,8 @@
 
 - Fix fontawesome 4.7 CSS that is included with `gitbook()` format styling. Now new icons (like `fa-usb`) are correctly available as expected (thanks, @snipfoo, #1353).
 
+- Fix an issue with clipboard button in `gitbook()` (thanks, @chadyuu, #1358).
+
 # CHANGES IN bookdown VERSION 0.27
 
 - Fix `fence_theorems()` so that `output` is not ignored anymore. With previous version, when `output` was different than `NULL`, the result was written to `input`, ignoring `output` value. From now on, set `input` and `output` to the same file if you want to overwrite (thanks, @Scinawa, #1342). 
