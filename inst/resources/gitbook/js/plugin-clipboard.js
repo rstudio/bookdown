@@ -8,13 +8,8 @@ gitbook.require(["gitbook", "jQuery"], function(gitbook, $) {
     if (!ClipboardJS.isSupported()) return;
 
     // the page.change event is thrown twice: before and after the page changes
-    if (clipboard) {
-      // clipboard is already defined
-      // we can deduct that we are before page changes
-      clipboard.destroy(); // destroy the previous events listeners
-      clipboard = undefined; // reset the clipboard object
-      return;
-    }
+    // avoid appending multiple event handlers 
+    if (clipboard) return;
 
     $(copyButton).prependTo("div.sourceCode");
 
