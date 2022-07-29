@@ -18,11 +18,12 @@
 #'   filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
 #'   \code{none} means do not split the HTML file (the book will be a single
 #'   HTML file); \code{chapter} means split the file by the first-level headers;
-#'   \code{section} means the second-level headers. For \code{chapter} and
-#'   \code{section}, the HTML filenames will be determined by the header ID's,
+#'   \code{section} means the second-level headers, \code{1}-\code{6} means split the file by the [1-7]-level headers (1: chapter).
+#'   For \code{chapter}, \code{section} and \code{1}-\code{6}, the HTML filenames will be determined by the header ID's,
 #'   e.g. the filename for the first chapter with a chapter title \code{#
-#'   Introduction} will be \file{introduction.html}; for \code{chapter+number}
-#'   and \code{section+number}, the chapter/section numbers will be prepended to
+#'   Introduction} will be \file{introduction.html}; for \code{chapter+number},
+#'   \code{section+number} and \code{[1-6]+number} the chapter/section
+#'   (and higher level section) numbers will be prepended to
 #'   the HTML filenames, e.g. \file{1-introduction.html} and
 #'   \file{2-1-literature.html}.
 #' @param split_bib Whether to split the bibliography onto separate pages where
@@ -54,7 +55,7 @@ html_chapters = function(
   template = bookdown_file('templates/default.html'),
   global_numbering = !number_sections, pandoc_args = NULL, ...,
   base_format = rmarkdown::html_document, split_bib = TRUE, page_builder = build_chapter,
-  split_by = c('section+number', 'section', 'chapter+number', 'chapter', 'rmd', 'none')
+  split_by = c("none", "rmd", outer(c("chapter", "section", 1:6), c("", "+number"), paste0))
 ) {
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
@@ -256,13 +257,22 @@ split_chapters = function(
   output, build = build_chapter, global_numbering, split_by, split_bib, ...
 ) {
 
-  use_rmd_names = split_by == 'rmd'
-  split_level = switch(
-    split_by, none = 0, chapter = 1, `chapter+number` = 1,
-    section = 2, `section+number` = 2, rmd = 1
-  )
+	split_by <- match.arg(split_by, choices =
+		c("none", "rmd", outer(c("chapter", "section", 1:6), c("", "+number"), paste0))
+	)
 
-  if (!(split_level %in% 0:2)) stop('split_level must be 0, 1, or 2')
+  use_rmd_names = split_by == 'rmd'
+
+  split_level <- sub("[+]number$", "", split_by)
+  split_level <- switch(split_level,
+  	none = 0,
+  	chapter = 1,
+  	section = 2,
+  	rmd = 1,
+  	if (!(split_level %in% as.character(0:6))){
+  		stop("split_level must be: 'none', 'chapter', 'section', 'rmd' or among 0:6")
+  	}else	as.numeric(split_level)
+  )
 
   x = read_utf8(output)
   x = clean_html_tags(x)
@@ -280,36 +290,53 @@ split_chapters = function(
   # restore_appendix_html erase the section ids of the hidden PART or APPENDIX
   # sections.
   if (split_level > 1) {
+
+	levelCur <- split_level-1
+	levelNext <- split_level
     body = x[(i5 + 1):(i6 - 1)]
-    h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', body) + i5
-    h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', body) + i5
-    h12 = setNames(c(h1, h2), rep(c('h1', 'h2'), c(length(h1), length(h2))))
-    if (length(h12) > 0 && h12[1] != i5 + 1) stop(
+    idxSecBody = grep(paste0('^<div (id="[^"]+" )?class="section level(',
+		paste(seq_len(split_level), collapse = "|"), ')("| )'), body)
+	names(idxSecBody) <- paste0("h",
+		sub('^<div (id="[^"]+" )?class="section level([[:digit:]])("| ).*',"\\2", body[idxSecBody])
+	)
+	idxSec <- idxSecBody + i5
+
+    if (length(idxSec) > 0 && idxSec[1] != i5 + 1) stop(
       'The document must start with a first (#) or second level (##) heading'
     )
-    h12 = sort(h12)
-    if (length(h12) > 1) {
-      n12 = names(h12)
-      # h2 that immediately follows h1
-      i = h12[n12 == 'h2' & c('h2', head(n12, -1)) == 'h1'] - 1
-      # close the h1 section early with </div>
-      # reg_chap and sec_num must take this into account so that cross reference
-      # works when split by section. (#849)
-      if (length(i)) x[i] = paste0(x[i], '\n</div>')
-      # h1 that immediately follows h2 but not the first h1
-      i = n12 == 'h1' & c('h1', head(n12, -1)) == 'h2'
-      if (any(i) && n12[1] == 'h2') i[which(n12 == 'h1')[1]] = FALSE
-      i = h12[i] - 1
-      # need to comment out the </div> corresponding to the last <h1> in the body
-      if (tail(n12, 1) == 'h2' && any(n12 == 'h1')) {
-        for (j in (i6 - 1):(tail(h12, 1))) {
-          # the line j should close h1, and j - 1 should close h2
+	idxSec = sort(idxSec)
+    if (length(idxSec) > 1) {
+
+		nNext <- paste0("h", levelNext)
+		nCur <- paste0("h", levelCur)
+      	nSec = names(idxSec)
+
+      # h[X+1] that immediately follows hX
+      i = idxSec[nSec == nNext & c(nNext, head(nSec, -1)) == nCur] - 1
+      # close the hX section early with </div>
+      if (length(i)) x[i] = paste(x[i], '\n</div>')
+
+      # hX that immediately follows h[X+1] but not the first h1
+	  iSec <- as.numeric(sub("h", "", nSec))
+	  diffSec <- diff(iSec)
+	  # in case next section is X > 1, remove multiple </div>
+	  i <- c()
+      for(d in unique(diffSec[diffSec < 0])){
+		  i <- c(i, c(sapply(which(diffSec == d), `+`, seq(1, 2+d))))
+	 }
+	  i <- setdiff(i, which(nSec == "h1")[1])
+      if (length(i) && nSec[1] == nNext) i <- setdiff(i, which(nSec == nCur)[1])
+      i = idxSec[i] - 1
+      # need to comment out the </div> corresponding to the last <h2> in the body
+      if (tail(nSec, 1) == nNext && any(nSec == nCur)) {
+        for (j in (i6 - 1):(tail(idxSec, 1))) {
+          # the line j should close h2, and j - 1 should close h1
           if (all(x[j - 0:1] == '</div>')) break
         }
         i = c(i, j)
       }
       for (j in i) {
-        # the i-th lines should be the closing </div> for h1
+        # the i-th lines should be the closing </div> for h2
         if (x[j] != '</div>') stop(
           'Something wrong with the HTML output. The line ', x[j],
           ' is supposed to be </div>'
@@ -378,15 +405,23 @@ split_chapters = function(
       idx = c(1, idx[-n])
     }
   } else {
-    h1 = grep('^<div (id="[^"]+" )?class="section level1("| )', html_body)
-    h2 = grep('^<div (id="[^"]+" )?class="section level2("| )', html_body)
-    idx2 = if (split_level == 1) h1 else if (split_level == 2) sort(c(h1, h2))
+
+	patternSec <- paste(seq_len(split_level), collapse = "")
+    idx2 = if (split_level >= 1){
+		idxSec = grep(
+			paste0('^<div (id="[^"]+" )?class="section level[', patternSec, ']("| )'),
+			html_body
+		)
+		sort(idxSec)
+	}
     n = length(idx2)
     nms_chaps = if (length(idx)) {
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
     }
     reg_id = '^<div id="([^"]+)".*$'
-    reg_num = '^(<h[12]><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[12]>).*$'
+    reg_num = paste0('^(<h[', patternSec,
+		']><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[', patternSec, ']>).*$'
+	)
     nms = vapply(idx2, character(1), FUN = function(i) {
       x1 = html_body[i]; x2 = html_body[i + 1]
       id = if (grepl(reg_id, x1)) gsub(reg_id, '\\1', x1)
@@ -838,7 +873,7 @@ restore_ref_links = function(x, regexp, tags, txts, alt = TRUE) {
 
 # add automatic identifiers to those section headings without ID's
 add_section_ids = function(content) {
-  r = '^(<div)( class="section level[1-6].+)$'
+  r = '^(<div).*(class="section level[1-6].+)$'
   for (i in grep(r, content)) {
     if (grepl('id=".+"', content[i])) next  # the id exists
     h = content[i + 1]

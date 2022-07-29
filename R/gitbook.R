@@ -25,7 +25,7 @@ gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   anchor_sections = TRUE, lib_dir = 'libs', global_numbering = !number_sections,
   pandoc_args = NULL, ..., template = 'default',
-  split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
+  split_by = c("none", "rmd", outer(c("chapter", "section", 1:6), c("", "+number"), paste0)),
   split_bib = TRUE, config = list(), table_css = TRUE
 ) {
   gb_config = config
