@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.29
+
+
 # CHANGES IN bookdown VERSION 0.28
 
 - Fix fontawesome 4.7 CSS that is included with `gitbook()` format styling. Now new icons (like `fa-usb`) are correctly available as expected (thanks, @snipfoo, #1353).
