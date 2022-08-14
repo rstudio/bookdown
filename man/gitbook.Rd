@@ -12,16 +12,18 @@ gitbook(
   lib_dir = "libs",
   global_numbering = !number_sections,
   pandoc_args = NULL,
+  extra_dependencies = list(),
   ...,
   template = "default",
   split_by = c("chapter", "chapter+number", "section", "section+number", "rmd", "none"),
   split_bib = TRUE,
   config = list(),
-  table_css = TRUE
+  table_css = TRUE,
+  code_folding = c("none", "show", "hide")
 )
 }
 \arguments{
-\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args}{...
+\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args, extra_dependencies}{...
 Arguments to be passed to \code{rmarkdown::\link{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
 
@@ -65,6 +67,13 @@ the font/theme settings.}
 \item{table_css}{\code{TRUE} to load gitbook's default CSS for tables. Choose
 \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
 the \code{css} option. Default is \code{TRUE}.}
+
+\item{code_folding}{Enable document readers to toggle the display of R code
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} to hide all R code chunks by default (users can show hidden
+code chunks either individually or document-wide). Specify \code{"show"} to
+show all R code chunks by default. If not \code{"none"}, users can
+individually toggle code chunks be shown or hidden.}
 }
 \description{
 This output format function ported a style provided by GitBook
