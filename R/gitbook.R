@@ -1,31 +1,25 @@
 #' The GitBook output format
 #'
 #' This output format function ported a style provided by GitBook
-#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this
+#' format, see:
 #' \url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
 #'
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args,extra_dependencies ...
-#'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (\code{...} not including \code{toc}, and \code{theme}).
-#' @param code_folding Enable document readers to toggle the display of R code
-#'  chunks. Specify \code{"none"} to display all code chunks. Specify
-#'  \code{"hide"} to hide all R code chunks by default (users can show hidden
-#'  code chunks either individually or document-wide). Specify \code{"show"} to
-#'  show all R code chunks by default. If not \code{"none"}, users can
-#'  individually toggle code chunks be shown or hidden.
+#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args,code_folding,extra_dependencies,...
+#' Arguments to be passed to \code{rmarkdown::\link{html_document}()}
+#' (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
 #'   to use the bookdown default template; pass a path to use a custom template.
 #'   The default template should be sufficient for most use cases. In case you
 #'   want to develop a custom template, we highly recommend to start from the
 #'   default template:
 #'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
-#'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @param table_css \code{TRUE} to load gitbook's default CSS for tables. Choose
-#' \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
-#' the \code{css} option. Default is \code{TRUE}.
+#'   \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
+#'   the \code{css} option. Default is \code{TRUE}.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
@@ -43,14 +37,14 @@ gitbook = function(
   if (identical(template, 'default')) {
     template = bookdown_file('templates', 'gitbook.html')
   }
-  lua_filters <- c()
-  code_folding <- match.arg(code_folding)
+  lua_filters = c()
+  code_folding = match.arg(code_folding)
   if (code_folding != "none") {
-    extra_dependencies <- append(extra_dependencies,
+    extra_dependencies = append(extra_dependencies,
                                  list(rmarkdown::html_dependency_codefolding_lua()))
-    pandoc_args <- c(pandoc_args,
+    pandoc_args = c(pandoc_args,
                      rmarkdown::pandoc_metadata_arg("rmd_codefolding_lua", code_folding))
-    lua_filters <- c(lua_filters, rmarkdown::pkg_file_lua("codefolding.lua"))
+    lua_filters = c(lua_filters, rmarkdown::pkg_file_lua("codefolding.lua"))
   }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
@@ -58,7 +52,7 @@ gitbook = function(
     lib_dir = lib_dir, theme = NULL,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
-  config$pandoc$lua_filters <- append(config$pandoc$lua_filters, lua_filters)
+  config$pandoc$lua_filters = append(config$pandoc$lua_filters, lua_filters)
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
