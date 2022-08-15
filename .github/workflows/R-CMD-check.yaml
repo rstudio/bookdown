@@ -33,7 +33,7 @@ jobs:
           - {os: windows-latest, pandoc: '2.14.0.3', r: 'release'} # IDE release
           - {os: macOS-latest,   pandoc: '2.16.1',   r: 'release'} # IDE daily
           - {os: macOS-latest,   pandoc: '2.14.0.3', r: 'release'} # IDE release
-          - {os: ubuntu-18.04,   pandoc: 'devel',    r: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.16.1',   r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.14.2',   r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.11.4',   r: 'release'}
