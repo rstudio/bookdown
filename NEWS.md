@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.29
 
+- The argument `code_folding` works for the `gitbook()` output format now (thanks, @atusy, #1368).
 
 # CHANGES IN bookdown VERSION 0.28
 
