@@ -19,9 +19,6 @@ template:
       creator: "@rstudio"
       card: summary
 
-development:
-  version_tooltip: "Development version"
-
 home:
   links:
   - text: Learn more about R Markdown
