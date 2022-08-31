@@ -700,7 +700,9 @@ bs4_check_dots <- function(...) {
     "anchor_sections",
     "number_sections",
     "self_contained",
-    "toc"
+    "toc",
+    "toc_depth",
+    "toc_float"
   )
   for (arg in fixed) {
     if (arg %in% dot_names) {
