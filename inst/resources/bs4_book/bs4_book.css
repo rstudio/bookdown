@@ -58,7 +58,53 @@ main {margin-top: 1rem;}
     padding-left: 1rem;
   }
   .sidebar-book {
-    margin-top: 1rem;
+    background-color: #fff;
+    padding-top: 1rem;
+    position: relative;
+    transition: .5s ease top;
+    top: -4rem;
+    transform: translateY(4rem);
+    z-index: 1
+  }
+  .sidebar-book .nav-toggle-btn {
+    height: 2.5rem;
+    /*! margin-left: 1rem; */
+  }
+  .sidebar-chapter #toc {
+    margin-top: 0;
+    transition: .5s ease margin-top;
+  }
+
+  .scrolled-to-toc .book-title {
+    width: calc(100% - 3rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+  }
+
+  .scrolled-to-toc .book-title a {
+    line-height: 2.5rem;
+  }
+
+  .scrolled-to-toc .book-title a::before {
+    display: none;
+  }
+
+  .scrolled-to-toc .sidebar-book {
+    background-color: #fff;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    left: 0;
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+    position: sticky;
+    top: 0;
+    transform: none;
+    z-index: 1
+  }
+
+  .scrolled-to-toc .sidebar-chapter #toc {
+    margin-top: 4rem;
   }
 }
 @media (min-width: 992px) {
