@@ -75,7 +75,7 @@ main {margin-top: 1rem;}
     transition: .5s ease margin-top;
   }
 
-  .scrolled-to-toc .book-title {
+  .scrolled-to-main .book-title {
     width: calc(100% - 3rem);
     white-space: nowrap;
     overflow: hidden;
@@ -83,15 +83,15 @@ main {margin-top: 1rem;}
     margin-bottom: 0;
   }
 
-  .scrolled-to-toc .book-title a {
+  .scrolled-to-main .book-title a {
     line-height: 2.5rem;
   }
 
-  .scrolled-to-toc .book-title a::before {
+  .scrolled-to-main .book-title a::before {
     display: none;
   }
 
-  .scrolled-to-toc .sidebar-book {
+  .scrolled-to-main .sidebar-book {
     background-color: #fff;
     box-shadow: 0 3px 8px rgba(0,0,0,0.3);
     left: 0;
@@ -103,7 +103,7 @@ main {margin-top: 1rem;}
     z-index: 1
   }
 
-  .scrolled-to-toc .sidebar-chapter #toc {
+  .scrolled-to-main .sidebar-chapter #toc {
     margin-top: 4rem;
   }
 }
