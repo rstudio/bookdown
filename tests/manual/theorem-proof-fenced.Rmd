@@ -122,20 +122,32 @@ Containing Markdown syntax
 :::
 ```
 
-## Support some specific content inside the environment
-
 ::: {#exr-1 .exercise}
+1)  Open RStudio.
+2)  Write `1 + 9` to console.
+:::
+
+::: {.exercise}
+
+Do this:
 
 1)  Open RStudio.
 2)  Write `1 + 9` to console.
 :::
 
-::: {.exercise #exr-2}
-
+::: {.exercise}
 ```r
 library(knitr)
 kable(mtcars)
 ```
 Copy and paste the chunk above
+:::
 
+::: {.solution #sol-2}
+Copy and paste the chunk below
+
+```r
+library(knitr)
+kable(mtcars)
+```
 :::
