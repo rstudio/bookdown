@@ -196,7 +196,7 @@ Div = function (div)
           -- add to the first block of the div, and not as first block, only if a Para
           table.insert(div.content[1].content, 1, span)
         else
-          -- Otherwise adds as its own Para
+          -- Otherwise add as its own Para
           table.insert(div.content, 1, pandoc.Para(span))
         end
     end
