@@ -188,8 +188,15 @@ Div = function (div)
                 pandoc.Attr(id, {env_type.env})
             )
         end
-        -- add to the first block of the div, and not as first block
-        table.insert(div.content[1].content, 1, span)
+        print(span)
+        if (div.content[1].t == "Para") then
+          -- add to the first block of the div, and not as first block, only if a Para
+          table.insert(div.content[1].content, 1, span)
+        else
+          -- Otherwise adds as its own Para
+          table.insert(div.content, 1, pandoc.Para(span))
+        end
+        print(div)
     end
 
     return div
