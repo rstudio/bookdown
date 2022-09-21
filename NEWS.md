@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.30
 
+- Support specific markdown content like list or code chunk inside Theorem and Proof special environments (#1371).
 
 # CHANGES IN bookdown VERSION 0.29
 
