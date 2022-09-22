@@ -147,6 +147,10 @@ Div = function (div)
             table.insert(div.content[1].content, 1, pandoc.RawInline('tex', beginEnv))
             table.insert(div.content[#div.content].content, pandoc.RawInline('tex', '\n' .. endEnv))
         else
+            if (div.content[1].t ~= "Para") then
+            -- required trick to get correct alignement
+              beginEnv = beginEnv.."\\leavevmode"
+            end
             table.insert(div.content, 1, pandoc.RawBlock('tex', beginEnv))
             table.insert(div.content, pandoc.RawBlock('tex', endEnv))
         end
@@ -188,8 +192,13 @@ Div = function (div)
                 pandoc.Attr(id, {env_type.env})
             )
         end
-        -- add to the first block of the div, and not as first block
-        table.insert(div.content[1].content, 1, span)
+        if (div.content[1].t == "Para") then
+          -- add to the first block of the div, and not as first block, only if a Para
+          table.insert(div.content[1].content, 1, span)
+        else
+          -- Otherwise add as its own Para
+          table.insert(div.content, 1, pandoc.Para(span))
+        end
     end
 
     return div
