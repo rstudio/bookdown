@@ -1,5 +1,18 @@
+# CHANGES IN bookdown VERSION 0.30
+
+- Support specific markdown content like list or code chunk inside Theorem and Proof special environments (#1371).
+
+# CHANGES IN bookdown VERSION 0.29
+
+- The argument `code_folding` works for the `gitbook()` output format now (thanks, @atusy, #1368).
+
+- Setting `toc_depth` or `toc_float` in `bs4_book()` will now throw an error like `toc` to make it clear that TOC is not an opt-out choice and can't be customize (thanks, @karlmay88, #1377).
+
 # CHANGES IN bookdown VERSION 0.28
 
+- Fix fontawesome 4.7 CSS that is included with `gitbook()` format styling. Now new icons (like `fa-usb`) are correctly available as expected (thanks, @snipfoo, #1353).
+
+- Fix an issue with clipboard button in `gitbook()` (thanks, @chadyuu, #1358).
 
 # CHANGES IN bookdown VERSION 0.27
 
