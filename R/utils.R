@@ -394,8 +394,6 @@ serve_book = function(
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
 }
 
-index_files <- xfun::with_ext("index", c("Rmd", "rmd"))
-
 get_index_file <- function() {
   index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
   if (length(index_files) == 0) return(index_files)
