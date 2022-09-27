@@ -19,3 +19,20 @@ test_that("target_formats() detects type from string", {
   expect_identical(target_format("bookdown::powerpoint_presentation2"), "pptx")
   expect_identical(target_format("bookdown::beamer_presentation2"), "latex")
 })
+
+test_that("Correctly get index file", {
+  withr::local_dir(withr::local_tempdir())
+  expect_equal(get_index_file(), character())
+  file.create(c("test.Rmd"))
+  expect_equal(get_index_file(), character())
+  file.create("index.Rmd")
+  expect_equal(get_index_file(), "index.Rmd")
+  unlink("index.Rmd");file.create("index.rmd")
+  expect_equal(get_index_file(), "index.rmd")
+  skip_if_not(xfun::is_linux())
+  file.create("index.Rmd")
+  expect_equal(
+    expect_warning(get_index_file(), "index.rmd", fixed = TRUE),
+    "index.Rmd"
+  )
+})

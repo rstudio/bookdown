@@ -388,7 +388,7 @@ serve_book = function(
   }
   index <- get_index_file()
   if (is_empty(index)) {
-    stop("`serve_book()` expect `index.Rmd` in the book project.", call. = FALSE)
+    stop("`serve_book()` expects `index.Rmd` in the book project.", call. = FALSE)
   }
   rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
@@ -397,7 +397,17 @@ serve_book = function(
 index_files <- xfun::with_ext("index", c("Rmd", "rmd"))
 
 get_index_file <- function() {
-  xfun::existing_files(index_files, first = TRUE, error = FALSE)
+  index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
+  if (length(index_files) == 0) return(index_files)
+  index <- index_files[1]
+  if (length(index_files) > 1) {
+    warning(
+      sprintf(
+        "Several index files found - only one expected. %s will be use, please check your project.",
+        sQuote(index)
+      ))
+  }
+  index
 }
 
 # can only preview HTML output via servr, so look for the first HTML format
