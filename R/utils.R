@@ -396,7 +396,7 @@ serve_book = function(
 
 get_index_file <- function() {
   index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
-  if (length(index_files) == 0) return(index_files)
+  if (length(index_files) == 0) return(character())
   index <- index_files[1]
   if (length(index_files) > 1) {
     warning(

@@ -31,8 +31,6 @@ test_that("Correctly get index file", {
   expect_equal(get_index_file(), "index.rmd")
   skip_if_not(xfun::is_linux())
   file.create("index.Rmd")
-  expect_equal(
-    expect_warning(get_index_file(), "index.rmd", fixed = TRUE),
-    "index.Rmd"
-  )
+  expect_warning(index_file <- get_index_file(), "index.rmd", fixed = TRUE)
+  expect_equal(index_file, "index.rmd")
 })
