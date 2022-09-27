@@ -680,7 +680,7 @@ preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   old <- setwd(path)
   on.exit(setwd(old))
   if (is_empty(index <- get_index_file())) {
-    stop(sprintf('`index.Rmd` or `index.rmd` was not found in path = "%s".', path))
+    stop(sprintf('`index.Rmd` was not found in path = "%s".', path))
   }
   render_book(index,
     output_format = output,

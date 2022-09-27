@@ -388,7 +388,7 @@ serve_book = function(
   }
   index <- get_index_file()
   if (is_empty(index)) {
-    stop("`serve_book()` expect `index.Rmd` or `index.rmd` in the book project.", call. = FALSE)
+    stop("`serve_book()` expect `index.Rmd` in the book project.", call. = FALSE)
   }
   rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
