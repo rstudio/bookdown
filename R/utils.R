@@ -415,7 +415,7 @@ first_html_format = function() {
   get_output_formats(fallback, html_format, first = TRUE)
 }
 
-get_output_formats <- function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
+get_output_formats = function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
   # Use index files if one exists
   index = get_index_file()
   # Use fallback file unless no YAML
