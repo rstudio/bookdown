@@ -2,6 +2,8 @@
 
 - Support specific markdown content like list or code chunk inside Theorem and Proof special environments (#1371).
 
+- Fix regression about special usage of **bookdown** project not using `index.Rmd` as main file. It is recommended to use `index.Rmd` in all projects, but workflow has been improved for other cases (thanks, @otoomet, #1349).
+
 # CHANGES IN bookdown VERSION 0.29
 
 - The argument `code_folding` works for the `gitbook()` output format now (thanks, @atusy, #1368).
