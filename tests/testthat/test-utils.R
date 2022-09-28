@@ -78,3 +78,16 @@ test_that("Correctly guess output format in various situations", {
     "bookdown::pdf_book"
   )
 })
+
+test_that("first_html_format correctly found the format", {
+  withr::local_dir(local_book())
+  expect_equal(first_html_format(), "bookdown::gitbook")
+  skip_if_not_installed("yaml")
+  yaml <- yaml::read_yaml("_output.yml")
+  yaml["bookdown::gitbook"] <- NULL
+  yaml::write_yaml(yaml, "_output.yml")
+  expect_equal(first_html_format(), "bookdown::bs4_book")
+  yaml["bookdown::bs4_book"] <- NULL
+  yaml::write_yaml(yaml, "_output.yml")
+  expect_equal(first_html_format(), "bookdown::gitbook")
+})
