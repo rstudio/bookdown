@@ -34,3 +34,47 @@ test_that("Correctly get index file", {
   expect_warning(index_file <- get_index_file())
   expect_length(index_file, 1L)
 })
+
+test_that("Correctly guess output format in various situations", {
+  book <- local_book()
+  withr::local_dir(book)
+  # With default index.Rmd
+  expect_equal(
+    get_output_formats(),
+    c("bookdown::gitbook", "bookdown::pdf_book", "bookdown::epub_book",
+      "bookdown::bs4_book")
+  )
+  expect_equal(get_output_formats(first = TRUE), "bookdown::gitbook")
+  expect_equal(
+    get_output_formats(filter = function(f) grep('bs4', f, value = TRUE)),
+    "bookdown::bs4_book"
+  )
+  # with index.rmd
+  file.rename("index.Rmd", "index.rmd")
+  expect_equal(
+    get_output_formats(),
+    c("bookdown::gitbook", "bookdown::pdf_book", "bookdown::epub_book",
+      "bookdown::bs4_book")
+  )
+  expect_equal(get_output_formats(first = TRUE), "bookdown::gitbook")
+  expect_equal(
+    get_output_formats(filter = function(f) grep('bs4', f, value = TRUE)),
+    "bookdown::bs4_book"
+  )
+  # With another Rmd file
+  file.rename("index.rmd", "main.Rmd")
+  expect_equal(
+    get_output_formats(fallback_index = "main.Rmd"),
+    c("bookdown::gitbook", "bookdown::pdf_book", "bookdown::epub_book",
+      "bookdown::bs4_book")
+  )
+  expect_equal(
+    get_output_formats(fallback_format = "bookdown::pdf_book"),
+    "bookdown::pdf_book"
+  )
+  unlink("main.Rmd")
+  expect_equal(
+    get_output_formats(fallback_format = "bookdown::pdf_book"),
+    "bookdown::pdf_book"
+  )
+})
