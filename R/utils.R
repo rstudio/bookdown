@@ -386,17 +386,55 @@ serve_book = function(
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
   }
-  rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
+  index <- get_index_file()
+  if (is_empty(index)) {
+    stop("`serve_book()` expects `index.Rmd` in the book project.", call. = FALSE)
+  }
+  rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
+}
+
+get_index_file <- function() {
+  index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
+  if (length(index_files) == 0) return(character())
+  index <- index_files[1]
+  if (length(index_files) > 1) {
+    warning(
+      sprintf(
+        "Several index files found - only one expected. %s will be use, please check your project.",
+        sQuote(index)
+      ))
+  }
+  index
 }
 
 # can only preview HTML output via servr, so look for the first HTML format
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
-  if (!file.exists('index.Rmd')) return(fallback)
-  formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
-  if (length(formats) == 0) fallback else formats[1]
+  html_format = function(f) grep('gitbook|html|bs4_book', f, value = TRUE)
+  get_output_formats(fallback, html_format, first = TRUE)
+}
+
+get_output_formats = function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
+  # Use index files if one exists
+  index = get_index_file()
+  # Use fallback file unless no YAML
+  if (is_empty(index)) {
+    if (!is.null(fallback_index) &&
+        xfun::file_exists(fallback_index) &&
+        length(rmarkdown::yaml_front_matter(fallback_index)) != 0
+    ) {
+      index = fallback_index
+    } else {
+      return(fallback_format)
+    }
+  }
+  # Retrieve output formats
+  formats = rmarkdown::all_output_formats(index)
+  formats = filter(formats)
+  if (length(formats) == 0) return(fallback_format)
+  if (first) return(formats[1])
+  formats
 }
 
 # base64 encode resources in url("")
@@ -647,9 +685,12 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, output)
 }
 
-
 stop_if_not_exists = function(inputs) {
   if (!all(exist <- xfun::file_exists(inputs))) {
     stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
   }
+}
+
+is_empty = function(x) {
+  length(x) == 0 || !nzchar(x)
 }
