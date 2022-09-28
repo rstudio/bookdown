@@ -20,7 +20,7 @@ test_that("target_formats() detects type from string", {
   expect_identical(target_format("bookdown::beamer_presentation2"), "latex")
 })
 
-test_that("Correctly get index file", {
+test_that("Correctly get index file with `get_index_file()`", {
   withr::local_dir(withr::local_tempdir())
   expect_equal(get_index_file(), character())
   file.create(c("test.Rmd"))
@@ -90,4 +90,12 @@ test_that("first_html_format correctly found the format", {
   yaml["bookdown::bs4_book"] <- NULL
   yaml::write_yaml(yaml, "_output.yml")
   expect_equal(first_html_format(), "bookdown::gitbook")
+})
+
+test_that("is_empty() helper", {
+  expect_true(is_empty(""))
+  expect_true(is_empty(NULL))
+  expect_true(is_empty(character(0)))
+  expect_false(is_empty("a"))
+  expect_false(is_empty(TRUE))
 })
