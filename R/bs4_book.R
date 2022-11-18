@@ -615,8 +615,11 @@ copy_html <- function(html) {
 }
 
 template_link_icon <- function(html, xpath, icon) {
-  icon_node <- xml2::xml_child(xml2::xml_find_first(html, xpath))
-  xml2::xml_attr(icon_node, "class") <- icon
+  icon <- xml2::xml_find_first(html, xpath)
+  if (length(icon) >= 1) {
+    icon_node <- xml2::xml_child(icon)
+    xml2::xml_attr(icon_node, "class") <- icon
+  }
 }
 
 # index -------------------------------------------------------------------
