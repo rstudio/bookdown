@@ -37,9 +37,7 @@ jobs:
           - {os: ubuntu-latest,  pandoc: '2.16.1',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.16.1',   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'oldrel'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
