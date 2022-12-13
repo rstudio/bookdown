@@ -273,7 +273,7 @@ gitbook_config = function(config = list()) {
     toc = list(collapse = 'subsection')
   )
   if (isTRUE(config$search)) config$search = NULL
-  if (xfun::isFALSE(config$search)) default$search = FALSE
+  if (isFALSE(config$search)) default$search = FALSE
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript
   config$toc$before = NULL; config$toc$after = NULL
