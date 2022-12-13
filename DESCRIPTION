@@ -58,6 +58,7 @@ Authors@R: c(
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Output formats and utilities for authoring books and technical documents with R Markdown.
 License: GPL-3
+Depends: R (>= 3.5.0)
 Imports:
     htmltools (>= 0.3.6),
     knitr (>= 1.38),
