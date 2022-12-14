@@ -1,3 +1,7 @@
+# CHANGES IN bookdown VERSION 0.32
+
+- The defunct `kindlegen()` has been removed from this package.
+
 # CHANGES IN bookdown VERSION 0.31
 
 - This package requires R >= 3.5.0 now.

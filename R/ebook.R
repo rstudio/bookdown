@@ -253,24 +253,3 @@ calibre = function(input, output, options = '') {
   if (!file.exists(output)) stop('Failed to convert ', input, ' to ', output)
   invisible(output)
 }
-
-# TODO: remove kindlegen() in the future
-
-#' A wrapper function to convert EPUB to the Mobipocket format
-#'
-#' This function has been deprecated, since Amazon no longer provides KindleGen.
-#' Please consider using \code{bookdown::\link{calibre}()} instead if you want
-#' \file{.mobi} output.
-#' @param epub The path to a \code{.epub} file (e.g. created from the
-#'   \code{\link{epub_book}()} format). If missing, it is automatically guessed
-#'   from the book configurations.
-#' @param exec The path to the executable \command{kindlegen}.
-#' @return The path of the \file{.mobi} file if the conversion is successful.
-#' @export
-#' @keywords internal
-kindlegen = function(epub, exec = Sys.which('kindlegen')) {
-  stop(
-    'Since Amazon no longer provides KindleGen, this function is no longer supported. ',
-    'Please consider using bookdonw::calibre() instead.'
-  )
-}
