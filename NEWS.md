@@ -2,6 +2,8 @@
 
 - The defunct `kindlegen()` has been removed from this package.
 
+- Theorem and Proof environments are now supported again in HTML slide format `slidy_presentation2()` (thanks, @urx449, #1398).
+
 # CHANGES IN bookdown VERSION 0.31
 
 - This package requires R >= 3.5.0 now.

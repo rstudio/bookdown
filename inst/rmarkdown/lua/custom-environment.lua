@@ -154,7 +154,7 @@ Div = function (div)
             table.insert(div.content, 1, pandoc.RawBlock('tex', beginEnv))
             table.insert(div.content, pandoc.RawBlock('tex', endEnv))
         end
-    elseif (FORMAT:match 'html') then
+    elseif (FORMAT:match 'html' or FORMAT:match 'slidy') then
         -- if div is already processed by eng_theorem, it would also modify it.
         -- we can ignore knowing how eng_theorem modifies options$html.before2
         -- It can be Plain or Para depending if a name was used or not.
@@ -205,7 +205,7 @@ Div = function (div)
 end
 
 -- only run filter for supported format
-if (FORMAT:match 'html' or FORMAT:match 'latex' or FORMAT:match 'beamer') then
+if (FORMAT:match 'html' or FORMAT:match 'slidy' or FORMAT:match 'latex' or FORMAT:match 'beamer') then
     return {{Meta = Meta}, {Div = Div}}
 else
     print_debug("Lua Filter skipped. Output format not supported:", FORMAT)
