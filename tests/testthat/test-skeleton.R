@@ -60,7 +60,7 @@ test_that("Created gitbook template works", {
   skip_if_not_pandoc()
   dir <- withr::local_tempdir()
   create_gitbook(dir)
-  expect_error(suppressMessages(render_book(dir, quiet = TRUE)), NA)
+  expect_error(.render_book_quiet(dir), NA)
 })
 
 test_that("Created bs4_book template works", {
@@ -69,6 +69,6 @@ test_that("Created bs4_book template works", {
   skip_if_bs4_book_deps_missing()
   dir <- withr::local_tempdir()
   create_bs4_book(dir)
-  res <- suppressMessages(render_book(dir, new_session = FALSE, quiet = TRUE))
+  res <- .render_book_quiet(dir, new_session = FALSE)
   expect_true(file.exists(res))
 })

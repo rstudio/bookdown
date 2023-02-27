@@ -20,13 +20,10 @@ local_bs4_book <- function(name = "book",
   path <- local_book(name = name, title = title, author = author,
     description = description, url = url, verbose = verbose, env = env)
 
-  suppressMessages(
-    render_book(
-      path,
-      output_format = "bookdown::bs4_book",
-      output_options = output_options,
-      quiet = TRUE
-    )
+  .render_book_quiet(
+    path,
+    output_format = "bookdown::bs4_book",
+    output_options = output_options,
   )
 
   return(path)

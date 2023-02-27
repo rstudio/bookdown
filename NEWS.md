@@ -1,3 +1,7 @@
+# CHANGES IN bookdown VERSION 0.33
+
+- `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
+
 # CHANGES IN bookdown VERSION 0.32
 
 - The defunct `kindlegen()` has been removed from this package.
