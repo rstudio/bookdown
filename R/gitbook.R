@@ -49,7 +49,7 @@ gitbook = function(
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, anchor_sections = anchor_sections,
-    lib_dir = lib_dir, theme = NULL,
+    lib_dir = lib_dir, theme = NULL, extra_dependencies = extra_dependencies,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   config$pandoc$lua_filters = append(config$pandoc$lua_filters, lua_filters)
