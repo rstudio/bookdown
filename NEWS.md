@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.34
+
+
 # CHANGES IN bookdown VERSION 0.33
 
 - `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
