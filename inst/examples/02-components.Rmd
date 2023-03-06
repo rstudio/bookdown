@@ -700,7 +700,7 @@ Currently the index\index{index} is only supported for LaTeX/PDF output. To prin
 \makeindex
 ```
 
-Alternatively, the **imakeidx** package can also be used:
+Alternatively, you can also use the **imakeidx** package:
 
 ```latex
 \usepackage{imakeidx}
@@ -710,23 +710,25 @@ This packages offers additional features for formatting the index. For example:
 
 ```latex
 \makeindex[intoc=true,columns=3,columnseprule=true,
-           options= -s latex/indexstyles.ist]
+           options=-s latex/indexstyles.ist]
 ```
 
-In the above example, `intoc=true` will include an entry for the index into the table of contents. `columns=3` will format the index into three columns. `columnseprule=true` will display a line between index columns. Finally, `options= -s latex/indexstyles.ist` will use additional formatting options from an index-style file located at `latex/indexstyles.ist`. Many other features are available in the `imakeidx` package; please refer to its documentation for further details.
+In the above example, `intoc=true` will include an entry for the index into the table of contents, `columns=3` will format the index into three columns, and `columnseprule=true` will display a line between index columns. Finally, `options=-s latex/indexstyles.ist` will use additional formatting options from an index-style file located at `latex/indexstyles.ist`. Many other features are available in the **imakeidx** package. Please refer to its documentation for further details.
 
 ### Inserting Entries
 
-An index entry can be created via the `\index{}` command in the book body, (e.g., `\index{Version Control}`):
+An index entry can be created via the `\index{}` command in the book body, e.g.,
 
-```
-Version Control\index{Version Control} is an important component of the SDLC...
+```latex
+Version Control\index{Version Control} is an
+important component of the SDLC.
 ```
 
 Likewise, to insert a subentry for an item:
 
 ```
-Git\index{Version Control!Git} is a popular version control system...
+Git\index{Version Control!Git} is a
+popular version control system.
 ```
 
 The above example will add a "Git" entry underneath "Version Control" in the index.
@@ -746,18 +748,14 @@ To create a "see also" entry that appears at the bottom of an item's subentries 
 
 Then, use the `\index{Main entry!zzzzz@\igobble|seealso{Other item}}` syntax in your book. As an example:
 
+```latex
+Backups\index{Version Control!zzzzz@\igobble|seealso{backups}}
+should be part of your version control system.
 ```
-Backups\index{Version Control!zzzzz@\igobble|seealso{backups}} should be part of your version control system...
-```
+
 ### Building the Index
 
-Finally, to build the index, insert `\printindex` at the end of your book through the YAML option `includes -> after_body`.
-
-With the aforementioned examples, the index entry for "Version Control" may appear as such:
-
-Version Control&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Git&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7<br />
-&nbsp;&nbsp;&nbsp;&nbsp;*see also* Backups
+To build the index, insert `\printindex` at the end of your book through the YAML option `includes -> after_body`.
 
 ## HTML widgets
 
