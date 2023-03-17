@@ -1,7 +1,7 @@
 # bookdown <a href="https://pkgs.rstudio.com/bookdown/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/rstudio/bookdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/bookdown/actions)
+[![R-CMD-check](https://github.com/rstudio/bookdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/bookdown/actions/workflows/R-CMD-check.yaml)
 [![CRAN release](https://www.r-pkg.org/badges/version/bookdown)](https://CRAN.R-project.org/package=bookdown)
 [![Codecov test coverage](https://codecov.io/gh/rstudio/bookdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rstudio/bookdown?branch=main)
 <!-- badges: end -->

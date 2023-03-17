@@ -16,3 +16,4 @@ inst/resources/gitbook/js/app.min.js.map
 ^reference$
 ^pkgdown$
 ^tests/manual$
+^codecov\.yml$
