@@ -8,8 +8,7 @@ bibentry(
   author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
   year = year,
   note = vers,
-  url = strsplit(meta$URL, ',')[[1]][1],
-  key = sprintf("%s-package", meta$Package)
+  url = strsplit(meta$URL, ',')[[1]][1]
 )
 
 bibentry(
@@ -20,6 +19,5 @@ bibentry(
   address = 'Boca Raton, Florida',
   year = '2016',
   isbn = '978-1138700109',
-  url = 'https://bookdown.org/yihui/bookdown',
-  key = sprintf("%s-book", meta$Package)
+  url = 'https://bookdown.org/yihui/bookdown'
 )
