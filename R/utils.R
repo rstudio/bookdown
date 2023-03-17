@@ -495,7 +495,7 @@ verify_rstudio_version = function() {
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable()) {
     if (!rstudioapi::isAvailable('0.99.1200')) warning(
       'Please install a newer version of the RStudio IDE: ',
-      'https://www.rstudio.com/products/rstudio/download/'
+      'https://posit.co/download/rstudio-desktop/'
     )
   } else if (!rmarkdown::pandoc_available('1.17.2')) warning(
     "Please install or upgrade Pandoc to at least version 1.17.2; ",

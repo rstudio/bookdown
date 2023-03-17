@@ -35,7 +35,7 @@ R packages are also often constantly updated on CRAN or GitHub, so you may want 
 update.packages(ask = FALSE)
 ```
 
-Although it is not required, the RStudio IDE can make a lot of things much easier when you work on R-related projects. The RStudio IDE can be downloaded from https://www.rstudio.com.
+Although it is not required, the RStudio IDE can make a lot of things much easier when you work on R-related projects. The RStudio IDE can be downloaded from https://www.posit.co
 
 ## Pandoc
 

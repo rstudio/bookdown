@@ -4,6 +4,8 @@ Title: Authoring Books and Technical Documents with R Markdown
 Version: 0.33.1
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+    person("Christophe", "Dervieux", , "cderv@posit.co", role = c("ctb"),
+           comment = c(ORCID = "0000-0003-4474-2498")),
     person("JJ", "Allaire", role = "ctb"),
     person("Albert", "Kim", role = "ctb"),
     person("Alessandro", "Samuel-Rosa", role = "ctb"),
@@ -13,7 +15,6 @@ Authors@R: c(
     person("Bastiaan", "Quast", role = "ctb"),
     person("Ben", "Marwick", role = "ctb"),
     person("Chester", "Ismay", role = "ctb"),
-    person("Christophe", "Dervieux", role = "ctb"),
     person("Clifton", "Franklund", role = "ctb"),
     person("Daniel", "Emaasit", role = "ctb"),
     person("David", "Shuman", role = "ctb"),
@@ -49,7 +50,7 @@ Authors@R: c(
     person("Vincent", "Fulco", role = "ctb"),
     person("Yixuan", "Qiu", role = "ctb"),
     person("Zhuoer", "Dong", role = "ctb"),
-    person(family = "RStudio, PBC", role = "cph"),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd")),
     person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
     person("Zeno", "Rocha", role = "cph", comment = "clipboard.js library"),
     person(family = "MathQuill contributors", role = "ctb", comment = "The MathQuill library; authors listed in inst/resources/AUTHORS"),
