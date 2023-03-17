@@ -3,21 +3,23 @@ vers = paste('R package version', meta$Version)
 if (length(year) == 0) year = format(Sys.Date(), '%Y')
 
 bibentry(
-  'manual',
+  'Manual',
   title = paste('bookdown:', meta$Title),
   author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
   year = year,
   note = vers,
-  url = strsplit(meta$URL, ',')[[1]][1]
+  url = strsplit(meta$URL, ',')[[1]][1],
+  key = sprintf("%s-package", meta$Package)
 )
 
 bibentry(
-  'book',
+  'Book',
   title = 'bookdown: Authoring Books and Technical Documents with {R} Markdown',
-  author = 'Yihui Xie',
+  author = as.person('Yihui Xie [aut]'),
   publisher = 'Chapman and Hall/CRC',
   address = 'Boca Raton, Florida',
   year = '2016',
-  note = 'ISBN 978-1138700109',
-  url = 'https://bookdown.org/yihui/bookdown'
+  isbn = '978-1138700109',
+  url = 'https://bookdown.org/yihui/bookdown',
+  key = sprintf("%s-book", meta$Package)
 )
