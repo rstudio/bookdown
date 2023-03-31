@@ -280,10 +280,6 @@ strip_search_text = function(x) {
 # manipulate internal options
 opts = knitr:::new_defaults(list(config = list()))
 
-dir_create = function(path) {
-  dir_exists(path) || dir.create(path, recursive = TRUE)
-}
-
 # a wrapper of file.path to ignore `output_dir` if it is NULL
 output_path = function(...) {
   dir = opts$get('output_dir')
