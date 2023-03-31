@@ -442,7 +442,7 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
     if (length(ps) == 0) return(ps)
     ps = gsub('^url\\("|"\\)$', '', ps)
     sprintf('url("%s")', sapply(ps, function(p) {
-      if (grepl(r, p) && file.exists(p)) knitr::image_uri(p) else p
+      if (grepl(r, p) && file.exists(p)) xfun::base64_uri(p) else p
     }))
   })
   if (overwrite) write_utf8(x, css) else x
