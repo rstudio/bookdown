@@ -30,7 +30,7 @@ You can install the package from CRAN as follows:
 install.packages("bookdown")
 ```
 
-If you want to use the development version of the **bookdown** package, you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
+If you want to use the development version of the **bookdown** package, you can install the package from GitHub via the [**pak** package](https://pak.r-lib.org):
 
 ``` r
 # install.packages("pak")
