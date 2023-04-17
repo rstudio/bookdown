@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.34
 
+- Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
 
 # CHANGES IN bookdown VERSION 0.33
 
