@@ -255,4 +255,3 @@ calibre = function(input, output, options = '') {
   if (!file.exists(output)) stop('Failed to convert ', input, ' to ', output)
   invisible(output)
 }
-
