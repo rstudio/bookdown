@@ -46,8 +46,9 @@ epub_book = function(
     if (!is.null(cover_image)) c('--epub-cover-image', cover_image),
     if (!is.null(metadata)) c('--epub-metadata', metadata),
     if (!identical(template, 'default')) c('--template', template),
+    if (rmarkdown::pandoc_available('2.19') && epub_version == 'epub3') c('--mathml'),
     if (!missing(chapter_level))
-      c(if (rmarkdown::pandoc_available("3.0")) '--split-level' else '--epub-chapter-level', chapter_level)
+      c(if (rmarkdown::pandoc_available('3.0')) '--split-level' else '--epub-chapter-level', chapter_level)
   )
   if (is.null(stylesheet)) css = NULL else {
     css = rmarkdown::pandoc_path_arg(epub_css(stylesheet))

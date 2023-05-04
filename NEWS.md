@@ -4,6 +4,8 @@
 
 - Adapt `epub_book()` internal command line argument passed to Pandoc for changes from version 3.0 and above.
 
+- Fix an issue with Pandoc 2.19 not rendering math by default in `epub3` format (#1417).
+
 # CHANGES IN bookdown VERSION 0.33
 
 - `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
