@@ -2,6 +2,8 @@
 
 - Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
 
+- Adapt `epub_book()` internal command line argument passed to Pandoc for changes from version 3.0 and above.
+
 # CHANGES IN bookdown VERSION 0.33
 
 - `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
