@@ -2,6 +2,8 @@
 
 - Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
 
+- Adapt an `epub_book()` internal command-line argument passed to Pandoc for changes from version 3.0 and above (#1425).
+
 - Fix an issue with Pandoc 2.19 not rendering math by default in `epub3` format (#1417).
 
 # CHANGES IN bookdown VERSION 0.33
