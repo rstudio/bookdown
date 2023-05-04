@@ -4,6 +4,10 @@
 
 - Fix cross referencing of figures and tables in `epub_book()` format by correctly adding an anchor id at the caption level (thanks, @muschellij2, #766, @tstratopoulos, @jasonmosborne, #1399, @N0rbert, rstudio/bookdown-demo#42).
 
+- Adapt an `epub_book()` internal command-line argument passed to Pandoc for changes from version 3.0 and above (#1425).
+
+- Fix an issue with Pandoc 2.19 not rendering math by default in `epub3` format (#1417).
+
 # CHANGES IN bookdown VERSION 0.33
 
 - `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
