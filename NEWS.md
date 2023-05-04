@@ -2,6 +2,8 @@
 
 - Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
 
+- Fix cross referencing of figures and tables in `epub_book()` format by correctly adding an anchor id at the caption level (thanks, @muschellij2, #766, @tstratopoulos, @jasonmosborne, #1399, @N0rbert, rstudio/bookdown-demo#42).
+
 # CHANGES IN bookdown VERSION 0.33
 
 - `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
