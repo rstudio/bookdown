@@ -65,7 +65,7 @@ Imports:
     knitr (>= 1.38),
     rmarkdown (>= 2.14),
     jquerylib,
-    xfun (>= 0.29),
+    xfun (>= 0.39),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
