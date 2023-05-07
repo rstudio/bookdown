@@ -621,6 +621,18 @@ lua_filter = function (filters = NULL) {
 bookdown_yml_arg = function(config = load_config(), path = tempfile()) {
   # this is supported for Pandoc >= 2.3 only
   if (!rmarkdown::pandoc_available('2.3') || length(config) == 0) return()
+  # remove functions in config values since they are meaningless to Pandoc
+  remove_func = function(x) {
+    if (is.list(x)) {
+      for (i in seq_along(x)) {
+        if (is.function(x[[i]])) x[i] = list(NULL) else {
+          if (is.list(x[[i]])) x[[i]] = remove_func(x[[i]])
+        }
+      }
+    }
+    x
+  }
+  config = remove_func(config)
   yaml::write_yaml(list(bookdown = config), path)
   c("--metadata-file", rmarkdown::pandoc_path_arg(path))
 }
@@ -686,4 +698,65 @@ stop_if_not_exists = function(inputs) {
 
 is_empty = function(x) {
   length(x) == 0 || !nzchar(x)
+}
+
+#' Customize numbering of figures and tables
+#'
+#' Figure/table numbering can be customized via functions (see
+#' \url{https://bookdown.org/yihui/bookdown/internationalization.html}). This
+#' function provides a way to customize the numbering of captions according to
+#' the ranges of caption numbers. For example, a different caption label can be
+#' used if the caption number is greater than a value.
+#' @param n A vector of breakpoints (sorted increasingly). It can be either
+#'   numeric or character. If a breakpoint contains a fraction that ends with 0,
+#'   it must be written in character, e.g., \code{"2.10"} (otherwise it will be
+#'   treated as \code{2.1}).
+#' @param labels A vector of caption labels of \code{length(n) + 1}. The first
+#'   label is used when the current caption number \code{i} is smaller than or
+#'   equal to \code{n[1]}, and the second label is used when \code{i <= n[2]},
+#'   etc.
+#' @param format A function that accepts the current label and number, and
+#'   returns a character string as the caption prefix, e.g., \samp{Figure 1:}.
+#' @param format2 A function to generate the caption prefix when the caption
+#'   number is not numeric, e.g., when the caption is in an appendix and the
+#'   number may be \samp{A.1}.
+#' @return A function that can be passed to the \code{fig} or \code{tab} fields
+#'   in \file{_bookdown.yml}.
+#' @export
+#' @examples
+#' f = bookdown::number_caption(8, c('Table', 'Supplementary table'))
+#' f(1)
+#' f(8)
+#' f(8.5)
+#' f(9.1)
+number_caption = function(
+  n, labels, format = function(label, i) sprintf('%s %s: ', label, i),
+  format2 = function(labels, i) sprintf('%s %s: ', labels[1], i)
+) {
+  if (length(n) != length(labels) - 1) stop("length(n) must be equal to length(labels) - 1")
+  # caption numbers are essentially version numbers instead of real numbers
+  # (e.g., '2.10' > '2.9', but 2.10 < 2.9)
+  n = as.numeric_version(n)
+  function(i) {
+    # use format2() when the caption number is not numeric (e.g., 'A.1' in appendix)
+    if (!grepl('^[0-9]+([.][0-9]+)?$', i)) return(format2(labels, i))
+    # i may be either integer or fractional
+    i = as.numeric_version(i)
+    k = 1
+    while (k <= length(n)) {
+      if (i <= n[k]) break
+      k = k + 1L
+    }
+    label = labels[k]
+    if (k > 1) {
+      m = unlist(n[k - 1])
+      i = unlist(i)
+      if (length(i) == 1) i = i - m[1] else {
+        if (length(m) > 1 && i[1] == m[1]) i[2] = i[2] - m[2]
+        i[1] = i[1] - m[1] + 1
+      }
+      i = paste(as.character(i), collapse = '.')
+    }
+    format(label, i)
+  }
 }
