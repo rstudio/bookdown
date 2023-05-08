@@ -120,12 +120,11 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
     for (j in ids) {
       m = sprintf('\\(\\\\#%s\\)', j)
       if (grepl(m, content[i])) {
-        id = ''; sep = ':'
         type = gsub('^([^:]+).*$', '\\1', j)
-        if (type %in% c(theorem_abbr, 'fig', 'tab')) {
-          id = sprintf('<span id="%s"></span>', j)
-          sep = ''
-        }
+        sep = if (type %in% theorem_abbr) '' else ':'
+        id = if (type %in% c(theorem_abbr, 'fig', 'tab')) {
+          sprintf('<span id="%s"></span>', j)
+        } else ''
         label = label_prefix(type, sep = sep)(ref_table[j])
         content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
