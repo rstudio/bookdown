@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.35
 
+- Search configuration in `bs4_book()` will now return more results as [Field-Length Norm](https://fusejs.io/concepts/scoring-theory.html#field-length-norm) is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
 
 # CHANGES IN bookdown VERSION 0.34
 
