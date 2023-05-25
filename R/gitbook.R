@@ -1,32 +1,32 @@
 #' The GitBook output format
 #'
 #' This output format function ported a style provided by GitBook
-#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this format, see:
+#' (\url{https://www.gitbook.com}) for R Markdown. To read more about this
+#' format, see:
 #' \url{https://bookdown.org/yihui/bookdown/html.html#gitbook-style}
 #'
 #' @inheritParams html_chapters
-#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args ...
-#'   Arguments to be passed to \code{rmarkdown::\link{html_document}()}
-#'   (\code{...} not including \code{toc}, and \code{theme}).
+#' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args,code_folding,extra_dependencies,...
+#' Arguments to be passed to \code{rmarkdown::\link{html_document}()}
+#' (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
 #'   to use the bookdown default template; pass a path to use a custom template.
 #'   The default template should be sufficient for most use cases. In case you
 #'   want to develop a custom template, we highly recommend to start from the
 #'   default template:
 #'   \url{https://github.com/rstudio/bookdown/blob/master/inst/templates/gitbook.html}.
-#'
 #' @param config A list of configuration options for the gitbook style, such as
 #'   the font/theme settings.
 #' @param table_css \code{TRUE} to load gitbook's default CSS for tables. Choose
-#' \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
-#' the \code{css} option. Default is \code{TRUE}.
+#'   \code{FALSE} to unload and use customized CSS (for example, bootstrap) via
+#'   the \code{css} option. Default is \code{TRUE}.
 #' @export
 gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   anchor_sections = TRUE, lib_dir = 'libs', global_numbering = !number_sections,
-  pandoc_args = NULL, ..., template = 'default',
+  pandoc_args = NULL, extra_dependencies = list(), ..., template = 'default',
   split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
-  split_bib = TRUE, config = list(), table_css = TRUE
+  split_bib = TRUE, config = list(), table_css = TRUE, code_folding = c("none", "show", "hide")
 ) {
   gb_config = config
   html_document2 = function(..., extra_dependencies = list()) {
@@ -37,12 +37,22 @@ gitbook = function(
   if (identical(template, 'default')) {
     template = bookdown_file('templates', 'gitbook.html')
   }
+  lua_filters = c()
+  code_folding = match.arg(code_folding)
+  if (code_folding != "none") {
+    extra_dependencies = append(extra_dependencies,
+                                 list(rmarkdown::html_dependency_codefolding_lua()))
+    pandoc_args = c(pandoc_args,
+                     rmarkdown::pandoc_metadata_arg("rmd_codefolding_lua", code_folding))
+    lua_filters = c(lua_filters, rmarkdown::pkg_file_lua("codefolding.lua"))
+  }
   config = html_document2(
     toc = TRUE, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = self_contained, anchor_sections = anchor_sections,
-    lib_dir = lib_dir, theme = NULL,
+    lib_dir = lib_dir, theme = NULL, extra_dependencies = extra_dependencies,
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
+  config$pandoc$lua_filters = append(config$pandoc$lua_filters, lua_filters)
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
@@ -192,8 +202,11 @@ gitbook_toc = function(x, cur, config) {
   if (i2 - i1 < 2) return(x)
   toc = x[(i1 + 1):(i2 - 1)]
 
+  # Remove possible empty span due to anchor section
+  toc = gsub("<span></span>(?=</[ab]>)", "", toc, perl = TRUE)
+
   # numbered sections
-  r = '^<li><a href="([^#]*)(#[^"]+)"><span class="toc-section-number">([.A-Z0-9]+)</span>(.+)(</a>.*)$'
+  r = '^<li><a href="([^#]*)(#[^"]+)"[^>]*><span class="toc-section-number">([.A-Z0-9]+)</span>(.+)(</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
     r,
@@ -203,7 +216,7 @@ gitbook_toc = function(x, cur, config) {
   toc[i] = sub(' data-path="">', paste0(' data-path="', with_ext(cur, '.html'), '">'), toc[i])
 
   # unnumbered sections
-  r = '^<li><a href="([^#]*)(#[^"]+)">([^<]+</a>.*)$'
+  r = '^<li><a href="([^#]*)(#[^"]+)"[^>]*>((.+)</a>.*)$'
   i = grep(r, toc)
   toc[i] = gsub(
     r,
@@ -260,7 +273,7 @@ gitbook_config = function(config = list()) {
     toc = list(collapse = 'subsection')
   )
   if (isTRUE(config$search)) config$search = NULL
-  if (xfun::isFALSE(config$search)) default$search = FALSE
+  if (isFALSE(config$search)) default$search = FALSE
   config = utils::modifyList(default, config, keep.null = TRUE)
   # remove these TOC config items since we don't need them in JavaScript
   config$toc$before = NULL; config$toc$after = NULL

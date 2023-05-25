@@ -64,22 +64,31 @@ render_book = function(
   verify_rstudio_version()
 
   # select and check input file(s)
-  if (length(input) == 1L && file_test("-d", input)) {
+  if (length(input) == 1L && dir_exists(input)) {
     message(sprintf("Rendering book in directory '%s'", input))
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
-    input = "index.Rmd"
-  }
-  if (!all(exist <- file_test("-f", input))) {
-    stop("Some files were not found: ",  paste(input[!exist], collapse = ' '))
+    # if a directory is passed, we assume that index.Rmd exists
+    input = get_index_file()
+    # No input file to use as fallback
+    if (is_empty(input)) input = NULL
+  } else {
+    stop_if_not_exists(input)
   }
 
   format = NULL  # latex or html
   if (is.list(output_format)) {
     format = output_format$bookdown_output_format
     if (!is.character(format) || !(format %in% c('latex', 'html'))) format = NULL
-  } else if (is.character(output_format)) {
-    if (identical(output_format, 'all')) {
-      output_format = rmarkdown::all_output_formats(input)
+  } else if (is.null(output_format) || is.character(output_format)) {
+    if (is.null(output_format) || identical(output_format, 'all')) {
+      # formats can safely be guess when considering index.Rmd and its expected frontmatter
+      # As a fallback we assumes input could have the YAML, otherwise we just use gitbook();
+      # Also, when no format provided, return name of the first resolved
+      output_format = get_output_formats(
+        fallback_format = "bookdown::gitbook",
+        first = is.null(output_format),
+        fallback_index = input
+      )
     }
     if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
       xfun::Rscript_call(render_book, list(
@@ -165,7 +174,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  if (!xfun::isFALSE(delete_main)) file.remove(main)
+  if (!isFALSE(delete_main)) file.remove(main)
   res
 }
 
@@ -201,7 +210,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   for (i in which(grepl('[.]md$', files) & files != files_md))
     file.copy(files[i], files_md[i], overwrite = TRUE)
   # if input is index.Rmd or not preview mode, compile all Rmd's
-  rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
+  rerun = !opts$get('preview') || opts$get('input_rmd') %in% get_index_file()
   if (!rerun) rerun = files %in% opts$get('input_rmd')
   add1 = merge_chapter_script(config, 'before')
   add2 = merge_chapter_script(config, 'after')

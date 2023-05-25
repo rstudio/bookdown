@@ -7,6 +7,7 @@ inst/homepage$
 inst/resources/gitbook/js/app.js
 inst/resources/gitbook/js/app.min.js.map
 ^CONTRIBUTING\.md$
+^LICENSE\.txt$
 .*/rsconnect
 ^\.github$
 ^NEWS\.md$
@@ -15,3 +16,4 @@ inst/resources/gitbook/js/app.min.js.map
 ^reference$
 ^pkgdown$
 ^tests/manual$
+^codecov\.yml$

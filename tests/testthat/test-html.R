@@ -1,3 +1,31 @@
+test_that("PART feature correctly works in HTML without anchor sections", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+  rmd <- local_rmd_file(c("---", "title: test", "---", "",
+                          "# (PART) T1 {-}", "", "# CHAP1", "",
+                          "# (PART\\*) T2 {-}", "", "# CHAP2"))
+  res <- local_render_book(rmd, output_format = gitbook(anchor_sections = FALSE))
+  content <- xml2::read_html(res)
+  TOC <- xml2::xml_find_all(content, "//div[@class='book-summary']/nav/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("part", "chapter", "part", "chapter"))
+  expect_equal(xml2::xml_text(TOC), c("I T1", "1 CHAP1", "T2", "2 CHAP2"))
+})
+
+test_that("PART feature correctly works in HTML with anchor sections", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+  rmd <- local_rmd_file(c("---", "title: test", "---", "",
+                          "# (PART) T1 {-}", "", "# CHAP1", "",
+                          "# (PART\\*) T2 {-}", "", "# CHAP2"))
+  res <- local_render_book(rmd, output_format = gitbook(anchor_sections = TRUE))
+  content <- xml2::read_html(res)
+  TOC <- xml2::xml_find_all(content, "//div[@class='book-summary']/nav/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("part", "chapter", "part", "chapter"))
+  expect_equal(xml2::xml_text(TOC), c("I T1", "1 CHAP1", "T2", "2 CHAP2"))
+})
+
 test_that("build_404 creates correct 404 page", {
   skip_on_cran()
   skip_if_not_pandoc()
@@ -47,10 +75,7 @@ test_that("add_toc_class() works for all pandoc versions", {
                             options = c("--toc", "-s", rmarkdown::pandoc_metadata_arg("title", "test")),
                             output = html)
   res <- add_toc_class(xfun::read_utf8(html))
-  xml2::write_html(xml2::xml_find_first(
-    xml2::read_html(paste(res, collapse = "\n")),
-    "//div[@id = 'TOC']"
-  ), html)
-  pandoc_version <- ifelse(rmarkdown::pandoc_available("2.8"), "post2.8", "pre2.8")
-  expect_snapshot_file(html, name = "toc-has-sub.html", variant = pandoc_version, compare = compare_file_text)
+  content <- xml2::read_html(paste(res, collapse = "\n"))
+  TOC <- xml2::xml_find_all(content, "//div[@id = 'TOC']/ul/li")
+  expect_equal(xml2::xml_attr(TOC, "class"), c("has-sub", NA, "has-sub"))
 })

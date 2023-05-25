@@ -76,6 +76,10 @@ $highlighting-css$
 </style>
 $endif$
 
+<style type="text/css">
+  $-- Taken From Pandoc 'styles.html'
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 $if(csl-css)$
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
@@ -201,7 +205,7 @@ $if(math)$
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "$if(mathjax)$$mathjax$$endif$";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

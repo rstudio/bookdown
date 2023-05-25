@@ -129,8 +129,6 @@ output_dirname = function(dir, config = load_config(), create = TRUE) {
   dir
 }
 
-dir_exists = function(x) utils::file_test('-d', x)
-
 # mark directories with trailing slashes
 mark_dirs = function(x) {
   i = dir_exists(x)
@@ -264,10 +262,7 @@ clean_meta = function(meta_file, files) {
 
 # remove HTML tags and remove extra spaces
 strip_html = function(x) {
-  x = gsub('<!--.*?-->', '', x)  # remove comments
-  x = gsub('<[^>]+>', '', x)
-  x = gsub('\\s{2,}', ' ', x)
-  x
+  gsub('\\s{2,}', ' ', xfun::strip_html(x))
 }
 
 # remove the <script><script> content and references
@@ -281,10 +276,6 @@ strip_search_text = function(x) {
 
 # manipulate internal options
 opts = knitr:::new_defaults(list(config = list()))
-
-dir_create = function(path) {
-  dir_exists(path) || dir.create(path, recursive = TRUE)
-}
 
 # a wrapper of file.path to ignore `output_dir` if it is NULL
 output_path = function(...) {
@@ -388,17 +379,55 @@ serve_book = function(
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
   }
-  rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
+  index <- get_index_file()
+  if (is_empty(index)) {
+    stop("`serve_book()` expects `index.Rmd` in the book project.", call. = FALSE)
+  }
+  rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
+}
+
+get_index_file <- function() {
+  index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
+  if (length(index_files) == 0) return(character())
+  index <- index_files[1]
+  if (length(index_files) > 1) {
+    warning(
+      sprintf(
+        "Several index files found - only one expected. %s will be use, please check your project.",
+        sQuote(index)
+      ))
+  }
+  index
 }
 
 # can only preview HTML output via servr, so look for the first HTML format
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
-  if (!file.exists('index.Rmd')) return(fallback)
-  formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
-  if (length(formats) == 0) fallback else formats[1]
+  html_format = function(f) grep('gitbook|html|bs4_book', f, value = TRUE)
+  get_output_formats(fallback, html_format, first = TRUE)
+}
+
+get_output_formats = function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
+  # Use index files if one exists
+  index = get_index_file()
+  # Use fallback file unless no YAML
+  if (is_empty(index)) {
+    if (!is.null(fallback_index) &&
+        xfun::file_exists(fallback_index) &&
+        length(rmarkdown::yaml_front_matter(fallback_index)) != 0
+    ) {
+      index = fallback_index
+    } else {
+      return(fallback_format)
+    }
+  }
+  # Retrieve output formats
+  formats = rmarkdown::all_output_formats(index)
+  formats = filter(formats)
+  if (length(formats) == 0) return(fallback_format)
+  if (first) return(formats[1])
+  formats
 }
 
 # base64 encode resources in url("")
@@ -410,7 +439,7 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
     if (length(ps) == 0) return(ps)
     ps = gsub('^url\\("|"\\)$', '', ps)
     sprintf('url("%s")', sapply(ps, function(p) {
-      if (grepl(r, p) && file.exists(p)) knitr::image_uri(p) else p
+      if (grepl(r, p) && file.exists(p)) xfun::base64_uri(p) else p
     }))
   })
   if (overwrite) write_utf8(x, css) else x
@@ -444,18 +473,22 @@ existing_r = function(base) {
 }
 
 target_format = function(format) {
-  if (grepl('(html|gitbook)', format)) return('html')
+  if (grepl('(html|gitbook|bs4)', format)) return('html')
   if (grepl('pdf', format)) return('latex')
+  if (grepl('beamer_', format)) return('latex')
   if (grepl('epub_', format)) return('epub')
   if (grepl('word_', format)) return('docx')
-  switch(format, tufte_book2 = 'latex', tufte_handout2 = 'latex')
+  if (grepl('powerpoint_', format)) return('pptx')
+  switch(format,
+         tufte_book2 = 'latex', `bookdown::tufte_book2` = 'latex',
+         tufte_handout2 = 'latex', `bookdown::tufte_handout2` = "latex")
 }
 
 verify_rstudio_version = function() {
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable()) {
     if (!rstudioapi::isAvailable('0.99.1200')) warning(
       'Please install a newer version of the RStudio IDE: ',
-      'https://www.rstudio.com/products/rstudio/download/'
+      'https://posit.co/download/rstudio-desktop/'
     )
   } else if (!rmarkdown::pandoc_available('1.17.2')) warning(
     "Please install or upgrade Pandoc to at least version 1.17.2; ",
@@ -470,37 +503,87 @@ str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
 output_md = function() getOption('bookdown.output.markdown', FALSE)
 
 # a theorem engine for knitr (can also be used for lemmas, definitions, etc)
-eng_theorem = function(options) {
-  type = options$type %n% 'theorem'
-  if (!(type %in% names(theorem_abbr))) stop(
-    "The type of theorem '", type, "' is not supported yet."
-  )
-  label = paste0('#', options$label)
-  name = sprintf('name="%s"', options$name)
-  # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
-  res = paste(c(paste0('.', type), label, name), collapse = ' ')
-  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+eng_theorem = function(type, env) {
+  function(options) {
+    v = if (knitr::pandoc_to(c('epub', 'epub2', 'epub3', 'docx', 'pptx', 'odt'))) '1' else '2'
+    i = sprintf('eng_%s%s', env, v)
+    f = eng_funcs[[i]]
+    f(type, options)
+  }
 }
-
-# a proof engine for unnumbered math environments
-eng_proof = function(options) {
-  type = options$type %n% 'proof'
-  if (!(type %in% names(label_names_math2))) stop(
-    "The type of proof '", type, "' is not supported yet."
-  )
-  name = sprintf('name="%s"', options$name)
-  # TODO: use knitr:::fenced_block()
-  res = paste(c(paste0('.', type), name), collapse = ' ')
-  paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
-}
-
-register_eng_math = function(envs, engine) {
-  knitr::knit_engines$set(setNames(lapply(envs, function(env) {
-    function(options) {
-      options$type = env
-      engine(options)
+# TODO: remove eng_theorem1(), eng_proof1(), and process_block() when
+# https://github.com/rstudio/bookdown/issues/1179 is resolved
+eng_funcs = list(
+  eng_theorem1 = function(type, options) {
+    options$type = type
+    label = paste(theorem_abbr[type], options$label, sep = ':')
+    html.before2 = sprintf('(\\#%s) ', label)
+    name = options$name; to_md = output_md()
+    if (length(name) == 1) {
+      if (to_md) {
+        html.before2 = paste(html.before2, sprintf('(%s) ', name))
+      } else {
+        options$latex.options = sprintf('[%s]', name)
+        html.before2 = paste(html.before2, sprintf('\\iffalse (%s) \\fi{} ', name))
+      }
     }
-  }), envs))
+    options$html.before2 = sprintf(
+      '<span class="%s" id="%s"><strong>%s</strong></span>', type, label, html.before2
+    )
+    process_block(options, to_md)
+  },
+  eng_theorem2 = function(type, options) {
+    label = paste0('#', options$label)
+    name = sprintf('name="%s"', options$name)
+    res = paste(c(paste0('.', type), label, name), collapse = ' ')
+    paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+  },
+  eng_proof1 = function(type, options) {
+    options$type = type
+    label = label_prefix(type, label_names_math2)()
+    name = options$name; to_md = output_md()
+    if (length(name) == 1) {
+      if (!to_md) options$latex.options = sprintf('[%s]', sub('[.]\\s*$', '', name))
+      r = '^(.+?)([[:punct:][:space:]]+)$'  # "Remark. " -> "Remark (Name). "
+      if (grepl(r, label)) {
+        label1 = gsub(r, '\\1', label)
+        label2 = paste0(' (', name, ')', gsub(r, '\\2', label))
+      } else {
+        label1 = label; label2 = ''
+      }
+      label = sprintf('<em>%s</em>%s', label1, label2)
+    } else {
+      label = sprintf('<em>%s</em>', label)
+    }
+    options$html.before2 = sprintf(
+      '<span class="%s">%s</span> ', type, label
+    )
+    if (!to_md) options$html.before2 = paste('\\iffalse{}', options$html.before2, '\\fi{}')
+    process_block(options, to_md)
+  },
+  eng_proof2 = function(type, options) {
+    name = sprintf('name="%s"', options$name)
+    res = paste(c(paste0('.', type), name), collapse = ' ')
+    paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
+  }
+)
+
+process_block = function(options, md) {
+  if (md) {
+    code = options$code
+    code = knitr:::pandoc_fragment(code)
+    r = '^<p>(.+)</p>$'
+    if (length(code) > 0 && grepl(r, code[1])) code[1] = gsub(r, '\\1', code[1])
+    options$code = code
+  }
+  knitr:::eng_block2(options)
+}
+
+register_eng_math = function() {
+  lapply(c('theorem', 'proof'), function(env) {
+    envs = names(if (env == 'theorem') theorem_abbr else label_names_math2)
+    knitr::knit_engines$set(setNames(lapply(envs, eng_theorem, env = env), envs))
+  })
 }
 
 pandoc2.0 = function() rmarkdown::pandoc_available('2.0')
@@ -592,5 +675,15 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   text[block_start] = sprintf("::: {%s}", params)
   text[block_end] = ":::"
   # return the text or write to output file
-  if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, input)
+  if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, output)
+}
+
+stop_if_not_exists = function(inputs) {
+  if (!all(exist <- xfun::file_exists(inputs))) {
+    stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
+  }
+}
+
+is_empty = function(x) {
+  length(x) == 0 || !nzchar(x)
 }

@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install R
         uses: r-lib/actions/setup-r@v2
