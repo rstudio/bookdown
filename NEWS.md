@@ -1,4 +1,51 @@
+# CHANGES IN bookdown VERSION 0.35
+
+
+# CHANGES IN bookdown VERSION 0.34
+
+- Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
+
+- Fix cross referencing of figures and tables in `epub_book()` format by correctly adding an anchor id at the caption level (thanks, @muschellij2, #766, @tstratopoulos, @jasonmosborne, #1399, @N0rbert, rstudio/bookdown-demo#42).
+
+- Adapt an `epub_book()` internal command-line argument passed to Pandoc for changes from version 3.0 and above (#1425).
+
+- Fix an issue with Pandoc 2.19 not rendering math by default in `epub3` format (#1417).
+
+# CHANGES IN bookdown VERSION 0.33
+
+- `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
+
+# CHANGES IN bookdown VERSION 0.32
+
+- The defunct `kindlegen()` has been removed from this package.
+
+- Theorem and Proof environments are now supported again in HTML slide format `slidy_presentation2()` (thanks, @urx449, #1398).
+
+# CHANGES IN bookdown VERSION 0.31
+
+- This package requires R >= 3.5.0 now.
+
+# CHANGES IN bookdown VERSION 0.30
+
+- Support specific markdown content like list or code chunk inside Theorem and Proof special environments (#1371).
+
+- Fix regression about special usage of **bookdown** project not using `index.Rmd` as main file. It is recommended to use `index.Rmd` in all projects, but workflow has been improved for other cases (thanks, @otoomet, #1349).
+
+# CHANGES IN bookdown VERSION 0.29
+
+- The argument `code_folding` works for the `gitbook()` output format now (thanks, @atusy, #1368).
+
+- Setting `toc_depth` or `toc_float` in `bs4_book()` will now throw an error like `toc` to make it clear that TOC is not an opt-out choice and can't be customize (thanks, @karlmay88, #1377).
+
+# CHANGES IN bookdown VERSION 0.28
+
+- Fix fontawesome 4.7 CSS that is included with `gitbook()` format styling. Now new icons (like `fa-usb`) are correctly available as expected (thanks, @snipfoo, #1353).
+
+- Fix an issue with clipboard button in `gitbook()` (thanks, @chadyuu, #1358).
+
 # CHANGES IN bookdown VERSION 0.27
+
+- Fix `fence_theorems()` so that `output` is not ignored anymore. With previous version, when `output` was different than `NULL`, the result was written to `input`, ignoring `output` value. From now on, set `input` and `output` to the same file if you want to overwrite (thanks, @Scinawa, #1342). 
 
 - Tweak `bs4_book()` default CSS for better support of python chunk highlighting (thanks, @briandk, #1333).
 

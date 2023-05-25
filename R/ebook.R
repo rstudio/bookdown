@@ -46,7 +46,9 @@ epub_book = function(
     if (!is.null(cover_image)) c('--epub-cover-image', cover_image),
     if (!is.null(metadata)) c('--epub-metadata', metadata),
     if (!identical(template, 'default')) c('--template', template),
-    if (!missing(chapter_level)) c('--epub-chapter-level', chapter_level)
+    if (rmarkdown::pandoc_available('2.19') && epub_version == 'epub3') c('--mathml'),
+    if (!missing(chapter_level))
+      c(if (rmarkdown::pandoc_available('3.0')) '--split-level' else '--epub-chapter-level', chapter_level)
   )
   if (is.null(stylesheet)) css = NULL else {
     css = rmarkdown::pandoc_path_arg(epub_css(stylesheet))
@@ -118,12 +120,13 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
     for (j in ids) {
       m = sprintf('\\(\\\\#%s\\)', j)
       if (grepl(m, content[i])) {
-        id = ''; sep = ':'
         type = gsub('^([^:]+).*$', '\\1', j)
-        if (type %in% theorem_abbr) {
-          id = sprintf('<span id="%s"></span>', j)
-          sep = ''
-        }
+        sep = if (type %in% theorem_abbr) '' else ':'
+        id = if (type %in% c(theorem_abbr, 'fig', 'tab')) {
+          sprintf('<span id="%s"></span>', j)
+        } else ''
+        # TODO: get rid of this hack https://github.com/davidgohel/flextable/pull/539
+        if (type == 'tab' && xfun::check_old_package('flextable', '0.9.1')) id = ''
         label = label_prefix(type, sep = sep)(ref_table[j])
         content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
@@ -252,25 +255,4 @@ calibre = function(input, output, options = '') {
   system2('ebook-convert', c(shQuote(input), shQuote(output), options))
   if (!file.exists(output)) stop('Failed to convert ', input, ' to ', output)
   invisible(output)
-}
-
-# TODO: remove kindlegen() in the future
-
-#' A wrapper function to convert EPUB to the Mobipocket format
-#'
-#' This function has been deprecated, since Amazon no longer provides KindleGen.
-#' Please consider using \code{bookdown::\link{calibre}()} instead if you want
-#' \file{.mobi} output.
-#' @param epub The path to a \code{.epub} file (e.g. created from the
-#'   \code{\link{epub_book}()} format). If missing, it is automatically guessed
-#'   from the book configurations.
-#' @param exec The path to the executable \command{kindlegen}.
-#' @return The path of the \file{.mobi} file if the conversion is successful.
-#' @export
-#' @keywords internal
-kindlegen = function(epub, exec = Sys.which('kindlegen')) {
-  stop(
-    'Since Amazon no longer provides KindleGen, this function is no longer supported. ',
-    'Please consider using bookdonw::calibre() instead.'
-  )
 }

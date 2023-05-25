@@ -37,3 +37,20 @@ test_that("gitbook_toc correctly process pandoc html with anchor section", {
   # no empty spans https://github.com/rstudio/bookdown/issues/1326
   expect_true(all(xml2::xml_find_lgl(TOC, "not(boolean(./a/span[count(node()) = 0]))")))
 })
+
+# https://github.com/rstudio/bookdown/pull/1408
+# https://github.com/rstudio/bookdown/issues/1101
+test_that("gitbook() correctly handles extra_dependency after its own", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+  book <- local_book()
+  res <- .render_book_quiet(
+    book,
+    output_format = gitbook(extra_dependencies = list(rmarkdown::html_dependency_font_awesome())),
+  )
+  content <- xml2::read_html(res)
+  gitbook_css <- xml2::xml_find_first(content, "//head/link[contains(@href, 'gitbook')][last()]")
+  extra_css <- xml2::xml_find_all(gitbook_css, "./following-sibling::link[contains(@href, 'font-awesome')]")
+  expect_gt(length(extra_css), 0L)
+})

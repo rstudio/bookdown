@@ -679,8 +679,10 @@ check_packages <- function(pkgs) {
 preview_book <- function(path = ".", output = "bookdown::bs4_book") {
   old <- setwd(path)
   on.exit(setwd(old))
-
-  render_book("index.Rmd",
+  if (is_empty(index <- get_index_file())) {
+    stop(sprintf('`index.Rmd` was not found in path = "%s".', path))
+  }
+  render_book(index,
     output_format = output,
     quiet = TRUE,
     clean = FALSE,
@@ -700,7 +702,9 @@ bs4_check_dots <- function(...) {
     "anchor_sections",
     "number_sections",
     "self_contained",
-    "toc"
+    "toc",
+    "toc_depth",
+    "toc_float"
   )
   for (arg in fixed) {
     if (arg %in% dot_names) {
