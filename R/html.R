@@ -1083,7 +1083,7 @@ move_files_html = function(output, lib_dir) {
   if (is.null(o <- opts$get('output_dir'))) return()
   x = read_utf8(output)
   # detect local resources used in HTML
-  r = '[- ](src|href)="([^"]+)"'
+  r = '[- ](src|href)\\s*=\\s*"([^"]+)"'
   m = gregexpr(r, x)
   f = unlist(lapply(regmatches(x, m), function(z) {
     if (length(z) == 0) z else gsub(r, '\\2', z)

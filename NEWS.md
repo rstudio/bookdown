@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.36
 
+- Fix an issue with parsing resources from raw HTML code (thanks, @lennylin, https://community.rstudio.com/t/bookdown-image-with-a-weblink/172542)
+
 
 # CHANGES IN bookdown VERSION 0.35
 
