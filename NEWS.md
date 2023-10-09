@@ -2,6 +2,7 @@
 
 - Fix an issue with parsing resources from raw HTML code (thanks, @lennylin, https://community.rstudio.com/t/bookdown-image-with-a-weblink/172542)
 
+- R 4.3.x would error if multiple files are passed to `render_book()` without an `output_format` specified (thanks, @slodge-work, #1442).
 
 # CHANGES IN bookdown VERSION 0.35
 

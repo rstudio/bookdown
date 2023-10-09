@@ -413,7 +413,7 @@ get_output_formats = function(fallback_format, filter = identity, first = FALSE,
   index = get_index_file()
   # Use fallback file unless no YAML
   if (is_empty(index)) {
-    if (!is.null(fallback_index) &&
+    if (length(fallback_index) == 1 &&
         xfun::file_exists(fallback_index) &&
         length(rmarkdown::yaml_front_matter(fallback_index)) != 0
     ) {
