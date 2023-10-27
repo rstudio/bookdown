@@ -2,6 +2,8 @@
 
 - Custom config files passed to the `config_file` argument of `render_book()` are no longer temporarily renamed to `_bookdown.yml` (thanks, @debruine, #1307).
 
+- Do not move all `_files` directories temporarily to the `_bookdown_files` directory when calling `render_book()` (thanks, @steeleb, #1307).
+
 # CHANGES IN bookdown VERSION 0.36
 
 - Fix an issue with parsing resources from raw HTML code (thanks, @lennylin, https://community.rstudio.com/t/bookdown-image-with-a-weblink/172542)

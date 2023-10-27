@@ -448,8 +448,11 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
 
 files_cache_dirs = function(dir = '.') {
   if (!dir_exists(dir)) return(character())
-  out = list.files(dir, '_(files|cache)$', full.names = TRUE)
+  r = '_(files|cache)$'
+  out = list.files(dir, r, full.names = TRUE)
   out = out[dir_exists(out)]
+  # only use dirs that have corresponding Rmd files
+  if (dir == '.') out = out[file.exists(sub(r, '.Rmd', out))]
   out = out[basename(out) != '_bookdown_files']
   out
 }
