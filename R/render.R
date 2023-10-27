@@ -104,17 +104,8 @@ render_book = function(
     "versions of bookdown."
   )
 
-  if (config_file != '_bookdown.yml') {
-    unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'))
-    if (file.exists('_bookdown.yml')) file.rename('_bookdown.yml', tmp_config)
-    file.rename(config_file, '_bookdown.yml')
-    on.exit({
-      file.rename('_bookdown.yml', config_file)
-      if (file.exists(tmp_config)) file.rename(tmp_config, '_bookdown.yml')
-    }, add = TRUE)
-  }
-
   on.exit(opts$restore(), add = TRUE)
+  opts$set(config_file = config_file)
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
   on.exit(xfun::del_empty_dir(output_dir), add = TRUE)

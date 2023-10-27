@@ -69,10 +69,11 @@ get_base_format = function(format, options = list()) {
   do.call(format, options)
 }
 
-load_config = function() {
-  if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
+load_config = function(config_file = '_bookdown.yml') {
+  config_file = opts$get('config_file') %n% config_file
+  if (length(opts$get('config')) == 0 && file.exists(config_file)) {
     # store the book config
-    opts$set(config = rmarkdown:::yaml_load_file('_bookdown.yml'))
+    opts$set(config = rmarkdown:::yaml_load_file(config_file))
   }
   opts$get('config')
 }
