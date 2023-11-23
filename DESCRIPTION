@@ -78,6 +78,7 @@ Suggests:
     rsconnect (>= 0.4.3),
     servr (>= 0.13),
     shiny,
+    svglite,
     tibble,
     testit (>= 0.9),
     tufte,
