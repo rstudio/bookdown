@@ -566,6 +566,7 @@ template_link <- function(html, xpath, href) {
     xml2::xml_remove(xml2::xml_parent(node))
   } else {
     xml2::xml_attr(node, "href") <- href
+    xml2::xml_attr(node, "target") <- "_blank"
   }
 }
 
