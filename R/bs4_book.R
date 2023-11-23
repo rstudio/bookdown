@@ -419,16 +419,35 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
       repo$subdir <- paste0(repo$subdir, "/")
     }
 
-    repo_edit <- paste0(repo$base, "/edit/", repo$branch, "/", repo$subdir, rmd_index[[active]])
-    repo_view <- paste0(repo$base, "/blob/", repo$branch, "/", repo$subdir, rmd_index[[active]])
+    if(grepl("dev.azure", repo$base)) {
+      repo_edit <- paste0(repo$base, "?path=/", rmd_index[[active]])
+      repo_view <- repo_edit
+    } else if(grepl("bitbucket", repo$base)){
+      repo_edit <- paste0(repo$base, "/browse/", rmd_index[[active]])
+      repo_view <- repo_edit
+    } else {
+      repo_edit <- paste0(repo$base, "/edit/", repo$branch, "/", repo$subdir, rmd_index[[active]])
+      repo_view <- paste0(repo$base, "/blob/", repo$branch, "/", repo$subdir, rmd_index[[active]])
+    }
+
   } else {
     repo_edit <- NULL
     repo_view <- NULL
   }
 
   if (!is.null(repo$base)) {
-    icon <- repo$icon %n%
-      ifelse(grepl("github\\.com", repo$base), "fab fa-github", "fab fa-gitlab")
+    icon <- repo$icon %n% {
+      if(grepl("github\\.com", repo$base)) {
+        "fab fa-github"
+      } else if (grepl("dev.azure", repo$base)) {
+        "fab fa-microsoft"
+      } else if (grepl("dev.azure", repo$base)) {
+        "fab fa-bitbucket"
+      } else {
+        "fab fa-gitlab"
+      }
+    }
+
     template_link_icon(html, ".//a[@id='book-repo']", icon)
     template_link_icon(html, ".//a[@id='book-source']", icon)
     template_link_icon(html, ".//a[@id='book-edit']", icon)
