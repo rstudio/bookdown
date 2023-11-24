@@ -78,7 +78,6 @@ Suggests:
     rsconnect (>= 0.4.3),
     servr (>= 0.13),
     shiny,
-    svglite,
     tibble,
     testit (>= 0.9),
     tufte,
@@ -91,7 +90,7 @@ BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
 RoxygenNote: 7.2.3
 Encoding: UTF-8
-Config/Needs/book: remotes, webshot
+Config/Needs/book: remotes, webshot, svglite
 Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
 Config/testthat/edition: 3
 VignetteBuilder: knitr
