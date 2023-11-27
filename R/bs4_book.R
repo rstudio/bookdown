@@ -420,11 +420,13 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
     }
 
     if(grepl("dev.azure", repo$base)) {
-      repo_edit <- paste0(repo$base, "?path=/", rmd_index[[active]])
+      repo_edit <- paste0(repo$base, "?path=/", rmd_index[[active]], "&version=GB",
+                          repo$branch)
       repo_view <- repo_edit
     } else if(grepl("bitbucket", repo$base)){
-      repo_edit <- paste0(repo$base, "/browse/", rmd_index[[active]])
-      repo_view <- repo_edit
+      repo_edit <- paste0(repo$base, "/src/", repo$branch, "/", repo$subdir, rmd_index[[active]],
+                          "?mode=edit&at=", repo$branch)
+      repo_view <- paste0(repo$base, "/src/", repo$branch, "/", repo$subdir, rmd_index[[active]])
     } else {
       repo_edit <- paste0(repo$base, "/edit/", repo$branch, "/", repo$subdir, rmd_index[[active]])
       repo_view <- paste0(repo$base, "/blob/", repo$branch, "/", repo$subdir, rmd_index[[active]])
@@ -441,7 +443,7 @@ tweak_navbar <- function(html, toc, active = "", rmd_index = NULL, repo = NULL) 
         "fab fa-github"
       } else if (grepl("dev.azure", repo$base)) {
         "fab fa-microsoft"
-      } else if (grepl("dev.azure", repo$base)) {
+      } else if (grepl("bitbucket", repo$base)) {
         "fab fa-bitbucket"
       } else {
         "fab fa-gitlab"
