@@ -125,8 +125,6 @@ resolve_refs_md = function(content, ref_table, to_md = output_md()) {
         id = if (type %in% c(theorem_abbr, 'fig', 'tab')) {
           sprintf('<span id="%s"></span>', j)
         } else ''
-        # TODO: get rid of this hack https://github.com/davidgohel/flextable/pull/539
-        if (type == 'tab' && xfun::check_old_package('flextable', '0.9.1')) id = ''
         label = label_prefix(type, sep = sep)(ref_table[j])
         content[i] = sub(m, paste0(id, label, ' '), content[i])
         break
