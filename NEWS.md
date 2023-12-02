@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.38
+
+
 # CHANGES IN bookdown VERSION 0.37
 
 - Custom config files passed to the `config_file` argument of `render_book()` are no longer temporarily renamed to `_bookdown.yml` (thanks, @debruine, #1307).
