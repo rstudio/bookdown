@@ -263,7 +263,7 @@ clean_meta = function(meta_file, files) {
 
 # remove HTML tags and remove extra spaces
 strip_html = function(x) {
-  gsub('\\s{2,}', ' ', xfun::strip_html(x))
+  gsub('\\s{2,}', ' ', xfun::strip_html(x), perl = TRUE)
 }
 
 # remove the <script><script> content and references
