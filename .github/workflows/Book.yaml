@@ -54,7 +54,7 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v2
         with:
           # install nightly when checking on gh-pages
-          pandoc-version: ${{ github.event.inputs.ghpages && 'nightly' || '2.17.1.1'}
+          pandoc-version: ${{ github.event.inputs.ghpages && 'nightly' || '2.17.1.1' }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install TinyTeX
