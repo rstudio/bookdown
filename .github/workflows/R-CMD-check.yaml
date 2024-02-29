@@ -95,6 +95,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+          install-pandoc: false
 
       - name: Pandoc and Tinytex info
         run: |
