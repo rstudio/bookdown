@@ -34,35 +34,33 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '3.1.1',    r: 'release'}
-          - {os: macOS-latest,   pandoc: '3.1.1',    r: 'release'}
-          - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
+          # testing R release with latest  pandoc version and their dev version
+          - {os: windows-latest, pandoc: 'latest',  r: 'release'}
+          - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'nightly', r: 'release'}
           # testing older pandoc versions
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.18',     r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.17.1.1', r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'release'}
           # testing other R versions
-          - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'oldrel-1'}
-          - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'oldrel-2'}
-          - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'oldrel-3'}
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'oldrel-1'}
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'oldrel-2'}
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'oldrel-3'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
-        if: matrix.config.pandoc != 'devel'
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
-
-      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
-        if: matrix.config.pandoc == 'devel'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: r-lib/actions/setup-r@v2
         with:
