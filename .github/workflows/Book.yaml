@@ -44,14 +44,11 @@ jobs:
         uses: r-lib/actions/setup-r@v2
 
       - name: Install Pandoc
-        if: ${{ ! github.event.inputs.ghpages }}
         uses: r-lib/actions/setup-pandoc@v2
         with:
-          pandoc-version: '2.17.1.1'
-
-      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
-        # install nightly when checking on gh-pages
-        if: github.event.inputs.ghpages
+          # install nightly when checking on gh-pages
+          pandoc-version: ${{ github.event.inputs.ghpages && 'nightly' || '2.17.1.1' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2
