@@ -89,8 +89,9 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: LaTeX info
+      - name: Pandoc and Tinytex info
         run: |
+          rmarkdown::find_pandoc()
           tinytex::tlmgr("--version")
           tinytex::tl_pkgs()
         shell: Rscript {0}
