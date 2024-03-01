@@ -21,6 +21,7 @@ on:
       - 'pkgdown/**'
       - '.github/workflows/pkgdown.yaml'
       - '.github/workflows/Book.yaml'
+  workflow_dispatch:
 
 name: R-CMD-check
 
