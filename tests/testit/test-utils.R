@@ -52,12 +52,12 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
       '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
 })
 
-assert('source_files() handles several configurations correcly', {
+assert('source_files() handles several configurations correctly', {
   get_files = function(files = NULL, dirs = NULL, ...) {
     source_files(config = list(rmd_files = files, rmd_subdir = dirs), ...)
   }
 
-  # create dummy projet
+  # create dummy project
   dir.create(project <- tempfile())
   old = setwd(project)
   files = c(

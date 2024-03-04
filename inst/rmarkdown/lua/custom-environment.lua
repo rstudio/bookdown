@@ -148,7 +148,7 @@ Div = function (div)
             table.insert(div.content[#div.content].content, pandoc.RawInline('tex', '\n' .. endEnv))
         else
             if (div.content[1].t ~= "Para") then
-            -- required trick to get correct alignement
+            -- required trick to get correct alignment
               beginEnv = beginEnv.."\\leavevmode"
             end
             table.insert(div.content, 1, pandoc.RawBlock('tex', beginEnv))

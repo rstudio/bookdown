@@ -704,7 +704,7 @@ parse_fig_labels = function(content, global = FALSE) {
     # there could be multiple labels on the same line, but their types must be
     # the same (https://github.com/rstudio/bookdown/issues/538)
     if (length(unique(type)) != 1) stop(
-      'There are mutiple types of labels on one line: ', paste(labs, collapse = ', ')
+      'There are multiple types of labels on one line: ', paste(labs, collapse = ', ')
     )
     type = type[1]
     num = arry[lab]

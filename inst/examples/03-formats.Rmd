@@ -317,7 +317,7 @@ description: |
 
 The `bs4_book()` format builds upon the Bootstrap CSS framework ([version 4](https://getbootstrap.com/docs/4.0/)), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the **bslib** R package.
 
-You can use the `theme` option to add a `primary` color in [hexidecimal format,](https://en.wikipedia.org/wiki/Web_colors) which will change the color of all links in your book and the background color of the footer.
+You can use the `theme` option to add a `primary` color in [hexadecimal format,](https://en.wikipedia.org/wiki/Web_colors) which will change the color of all links in your book and the background color of the footer.
 
 ```yaml
 bookdown::bs4_book:
