@@ -1,3 +1,7 @@
+# CHANGES IN bookdown VERSION 0.39
+
+
+
 # CHANGES IN bookdown VERSION 0.38
 
 - Fixed a bug that `gitbook()` may geneate an empty search index on certain platforms (thanks, @UlvHare, #1454).
