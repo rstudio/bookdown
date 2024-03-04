@@ -4,7 +4,7 @@
 
 # CHANGES IN bookdown VERSION 0.38
 
-- Fixed a bug that `gitbook()` may geneate an empty search index on certain platforms (thanks, @UlvHare, #1454).
+- Fixed a bug that `gitbook()` may generate an empty search index on certain platforms (thanks, @UlvHare, #1454).
 
 # CHANGES IN bookdown VERSION 0.37
 

@@ -13,7 +13,7 @@ assert("parse figure reference correctly", {
   (!grepl("(#tab:foo)", res$content, fixed = TRUE))
 })
 
-assert("biblio references section is correcly found", {
+assert("biblio references section is correctly found", {
   # with a csl like https://www.zotero.org/styles/nature
   # reference div have more attributes
   html = c('<div id="references" class="section level1 unnumbered">',
