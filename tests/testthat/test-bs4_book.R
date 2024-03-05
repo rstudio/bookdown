@@ -82,6 +82,36 @@ test_that("bs4_book() repo specification works - GitLab", {
   )
 })
 
+test_that("bs4_book() repo specification works - Azure Devops", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(
+    output_options = list(
+      repo = "https://dev.azure.com/elenasaletter/_git/test_book"
+    )
+  )
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
+    "fab fa-microsoft"
+  )
+})
+
+test_that("bs4_book() repo specification works - Bitbucket", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(
+    output_options = list(
+      repo = "https://bitbucket.org/test-book/test_book/src/master/"
+    )
+  )
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
+    "fab fa-bitbucket"
+  )
+})
+
 test_that("bs4_book() repo specification works - custom icon", {
   skip_if_bs4_book_deps_missing()
   book <- local_bs4_book(
@@ -106,6 +136,42 @@ test_that("bs4_book() repo specification works - custom icon GitHub", {
     output_options = list(
       repo = list(
         base = "https://github.com/hadley/ggplot2-book",
+        icon = "fas fa-air-freshener"
+      )
+    )
+  )
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
+    "fas fa-air-freshener"
+  )
+})
+
+test_that("bs4_book() repo specification works - custom icon - Azure Devops", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(
+    output_options = list(
+      repo = list(
+        base = "https://dev.azure.com/elenasaletter/_git/test_book",
+        icon = "fas fa-air-freshener"
+      )
+    )
+  )
+  html <- xml2::read_html(file.path(book, "_book", "index.html"))
+
+  expect_equal(
+    xml2::xml_attr(xml2::xml_child(xml2::xml_find_first(html, "//a[@id='book-repo']")), "class"),
+    "fas fa-air-freshener"
+  )
+})
+
+test_that("bs4_book() repo specification works - custom icon - Bitbucket", {
+  skip_if_bs4_book_deps_missing()
+  book <- local_bs4_book(
+    output_options = list(
+      repo = list(
+        base = "https://bitbucket.org/test-book/test_book/src/master/",
         icon = "fas fa-air-freshener"
       )
     )
