@@ -596,7 +596,7 @@ tweak_metadata <- function(html, path) {
   if (nzchar(text)) {
     words <- unlist(strsplit(text, " "))
     no_char <- cumsum(unlist(lapply(words, function(x) {nchar(x) + 1})))
-    max_n <- max(which(no_char<= 197))
+    max_n <- max(which(no_char <= 197), 1)
     description_string <- paste(words[1: max_n], collapse = " ")
     if (max_n != length(words)) {
       description_string <- paste0(description_string, "...")
