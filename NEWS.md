@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.40
+
+
 # CHANGES IN bookdown VERSION 0.39
 
 - Fixed a bug that `bs4_book()` errors on generating document description. The error occured when the beggining of the document is a very long sentence without spaces (> 197 characters), which typically happens in CJK languages (thanks, @atusy, #1463).
