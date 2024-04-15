@@ -54,7 +54,7 @@ Learn more about using bookdown in the [Getting started section](https://pkgs.rs
 
 There are two main places to get help:
 
-1.  The [RStudio community](https://community.rstudio.com/tags/c/R-Markdown/10/bookdown) is a friendly place to ask any questions about **bookdown**. Be sure to use the `bookdown` tag.
+1.  The [RStudio community](https://forum.posit.co/tags/c/R-Markdown/10/bookdown) is a friendly place to ask any questions about **bookdown**. Be sure to use the `bookdown` tag.
 
 2.  [Stack Overflow](https://stackoverflow.com/questions/tagged/bookdown) is a great source of answers to common **bookdown** questions. Use the tags [`[r][bookdown]`](https://stackoverflow.com/questions/tagged/bookdown+r) if you ask a question.
 
