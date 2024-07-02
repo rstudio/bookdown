@@ -49,9 +49,10 @@ Convert R Markdown files to PDF after resolving the special tokens of
 commands.
 }
 \details{
-This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
-with better default arguments. You can also change the default format to
-other LaTeX/PDF format functions using the \code{base_format} argument.
+This function is based on \code{rmarkdown::\link[rmarkdown]{pdf_document}}
+(by default) with better default arguments. You can also change the default
+format to other LaTeX/PDF format functions using the \code{base_format}
+argument.
 
 The global R option \code{bookdown.post.latex} can be set to a function to
 post-process the LaTeX output. This function takes the character vector of
