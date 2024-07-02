@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.41
+
+
 # CHANGES IN bookdown VERSION 0.40
 
 - Footnotes are not rendered correctly when `katex` is used to render LaTeX math expressions (thanks, @pbreheny, #1470).
