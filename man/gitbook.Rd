@@ -23,7 +23,7 @@ gitbook(
 )
 }
 \arguments{
-\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args, code_folding, extra_dependencies, ...}{Arguments to be passed to \code{rmarkdown::\link{html_document}()}
+\item{fig_caption, number_sections, self_contained, anchor_sections, lib_dir, pandoc_args, code_folding, extra_dependencies, ...}{Arguments to be passed to \code{rmarkdown::\link[rmarkdown]{html_document}()}
 (\code{...} not including \code{toc}, and \code{theme}).}
 
 \item{global_numbering}{If \code{TRUE}, number figures and tables globally

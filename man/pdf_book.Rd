@@ -20,8 +20,8 @@ pdf_book(
 }
 \arguments{
 \item{toc, number_sections, fig_caption, pandoc_args}{See
-\code{rmarkdown::\link{pdf_document}}, or the documentation of the
-\code{base_format} function.}
+\code{rmarkdown::\link[rmarkdown]{pdf_document}}, or the documentation of
+the \code{base_format} function.}
 
 \item{...}{Other arguments to be passed to \code{base_format}.}
 

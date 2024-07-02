@@ -14,8 +14,8 @@
 #' to be written to the \file{.tex} output file. This gives you full power to
 #' post-process the LaTeX output.
 #' @param toc,number_sections,fig_caption,pandoc_args See
-#'   \code{rmarkdown::\link{pdf_document}}, or the documentation of the
-#'   \code{base_format} function.
+#'   \code{rmarkdown::\link[rmarkdown]{pdf_document}}, or the documentation of
+#'   the \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
 #' @param base_format An output format function to be used as the base format.
 #' @param toc_unnumbered Whether to add unnumbered headers to the table of

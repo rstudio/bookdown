@@ -96,16 +96,16 @@ are not numbered.}
 }
 \value{
 An R Markdown output format object to be passed to
-  \code{rmarkdown::\link{render}()}.
+  \code{rmarkdown::\link[rmarkdown]{render}()}.
 }
 \description{
 These are simple wrappers of the output format functions like
-\code{rmarkdown::\link{html_document}()}, and they added the capability of
-numbering figures/tables/equations/theorems and cross-referencing them. See
-\sQuote{References} for the syntax. Note you can also cross-reference
-sections by their ID's using the same syntax when sections are numbered. In
-case you want to enable cross reference in other formats, use
-\code{markdown_document2} with \code{base_format} argument.
+\code{rmarkdown::\link[rmarkdown]{html_document}()}, and they added the
+capability of numbering figures/tables/equations/theorems and
+cross-referencing them. See \sQuote{References} for the syntax. Note you can
+also cross-reference sections by their ID's using the same syntax when
+sections are numbered. In case you want to enable cross reference in other
+formats, use \code{markdown_document2} with \code{base_format} argument.
 }
 \note{
 These output formats are used to generate single output files, such as

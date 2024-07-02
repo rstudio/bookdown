@@ -7,7 +7,7 @@
 #'
 #' @inheritParams html_chapters
 #' @param fig_caption,number_sections,self_contained,anchor_sections,lib_dir,pandoc_args,code_folding,extra_dependencies,...
-#' Arguments to be passed to \code{rmarkdown::\link{html_document}()}
+#' Arguments to be passed to \code{rmarkdown::\link[rmarkdown]{html_document}()}
 #' (\code{...} not including \code{toc}, and \code{theme}).
 #' @param template Pandoc template to use for rendering. Pass \code{"default"}
 #'   to use the bookdown default template; pass a path to use a custom template.

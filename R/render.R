@@ -15,8 +15,9 @@
 #'   specified in this argument are rendered, otherwise all R Markdown files
 #'   specified by the book are rendered.
 #' @param output_format,...,clean,envir Arguments to be passed to
-#'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
-#'   is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
+#'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
+#'   \code{...} is passed to \code{render_book()}. See
+#'   \code{rmarkdown::\link{render}()}
 #'   and \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the
 #'   bookdown reference book} for details on how output formatting options are
 #'   set from YAML or parameters supplied by the user when calling
