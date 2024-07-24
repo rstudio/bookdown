@@ -1,6 +1,6 @@
 # CHANGES IN bookdown VERSION 0.41
 
-- New `mathjax-config` config option to bs4_book and gitbook to control MathJax config string (thanks, @bwu62, #1472). Currently tested and supported settings:
+- New `mathjax-config` option for `bs4_book` and `gitbook` to control MathJax config string (thanks, @bwu62, #1472). The option can be set either in the YAML metadata or as a variable in `pandoc_args`. Currently tested and supported settings:
   - If empty, defaults to original `TeX-MML-AM_CHTML` which renders all equations in common HTML.
   - If set to `TeX-AMS-MML_HTMLorMML` renders equations in HTML + CSS (which may look nicer for some equations).
   - If set to `TeX-MML-AM_SVG` renders equations in SVG.
