@@ -205,7 +205,7 @@ $if(math)$
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "$if(mathjax)$$mathjax$$endif$";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=$if(mathjax-config)$$mathjax-config$$else$TeX-MML-AM_CHTML$endif$";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
