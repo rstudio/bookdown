@@ -5,6 +5,8 @@
   - If set to `TeX-AMS-MML_HTMLorMML` renders equations in HTML + CSS (which may look nicer for some equations).
   - If set to `TeX-MML-AM_SVG` renders equations in SVG.
 
+- Fixed the bug that `render_book()` fails due to `file.rename()` being unable to rename files across different disk volumes (thanks, @Giqles @katrinabrock, #804).
+
 # CHANGES IN bookdown VERSION 0.40
 
 - Footnotes are not rendered correctly when `katex` is used to render LaTeX math expressions (thanks, @pbreheny, #1470).

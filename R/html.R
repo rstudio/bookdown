@@ -534,7 +534,7 @@ clean_html_tags = function(x) {
 move_to_output_dir = function(files) {
   files2 = output_path(files)
   i = file.exists(files) & (files != files2)
-  file.rename(files[i], files2[i])
+  file_rename(files[i], files2[i])
   files2
 }
 
