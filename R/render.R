@@ -121,12 +121,12 @@ render_book = function(
   aux_diro = '_bookdown_files'
   # move _files and _cache from _bookdown_files to ./, then from ./ to _bookdown_files
   aux_dirs = files_cache_dirs(aux_diro)
-  move_dirs(aux_dirs, basename(aux_dirs))
+  file_rename(aux_dirs, basename(aux_dirs))
   on.exit({
     aux_dirs = files_cache_dirs('.')
     if (length(aux_dirs)) {
       dir_create(aux_diro)
-      move_dirs(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+      file_rename(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
     }
   }, add = TRUE)
 
@@ -215,7 +215,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   meta = clean_meta(render_meta, files)
   move = !(unlist(meta) %in% files)  # do not move input files to output dir
-  on.exit(file.rename(unlist(meta)[move], files_md[move]), add = TRUE)
+  on.exit(file_rename(unlist(meta)[move], files_md[move]), add = TRUE)
 
   merge_chapters(unlist(meta), main, orig = files)
 

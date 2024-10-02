@@ -165,27 +165,3 @@ assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
   res = fence_theorems(text = old)
   (unclass(res) %==% old)
 })
-
-assert("move_dir works", {
-  # work in temp dir
-  dir.create(tmp_dir <- tempfile())
-  owd = setwd(tmp_dir)
-
-  # empty dir is not moved but deleted
-  dir.create("dest")
-  dir.create("empty")
-  move_dir("empty", "dest")
-  (dir.exists("empty") %==% FALSE)
-
-  # files are moved correctly
-  dir.create("filled")
-  dummy_files = c("dummy1", "dummy2")
-  file.create(file.path("filled", dummy_files))
-  move_dir("filled", "dest")
-  (dir.exists("filled") %==% FALSE)
-  (list.files("dest") %==% dummy_files)
-
-  # remove temp dir
-  setwd(owd)
-  unlink(tmp_dir, recursive = TRUE)
-})

@@ -75,8 +75,8 @@ pdf_book = function(
     if (is.null(o)) return(output)
 
     output2 = file.path(o, output)
-    file.rename(output, output2)
-    if (keep_tex) file.rename(f, file.path(o, f))
+    file_rename(output, output2)
+    if (keep_tex) file_rename(f, file.path(o, f))
     output2
   }
   # always enable tables (use packages booktabs, longtable, ...)

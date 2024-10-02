@@ -457,19 +457,6 @@ files_cache_dirs = function(dir = '.') {
   out
 }
 
-# file.rename() does not work if target directory is not empty, so we just copy
-# everything from `from` to `to`, and delete `from`
-move_dir = function(from, to) {
-  if (!dir_exists(to)) return(file.rename(from, to))
-  to_copy = list.files(from, full.names = TRUE)
-  if (length(to_copy) == 0 ||
-      any(file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
-  ) unlink(from, recursive = TRUE)
-  invisible(TRUE)
-}
-
-move_dirs = function(from, to) mapply(move_dir, from, to)
-
 #' @importFrom xfun existing_files
 existing_r = function(base) {
   x = apply(expand.grid(base, c('R', 'r')), 1, paste, collapse = '.')
