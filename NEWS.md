@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.42
+
+
 # CHANGES IN bookdown VERSION 0.41
 
 - New `mathjax-config` option for `bs4_book` and `gitbook` to control MathJax config string (thanks, @bwu62, #1472). The option can be set either in the YAML metadata or as a variable in `pandoc_args`. Currently tested and supported settings:
