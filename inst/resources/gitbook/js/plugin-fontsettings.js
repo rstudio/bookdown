@@ -18,7 +18,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         "2.0":2,
         "2.5":3,
         "3.0":4,
-    }
+    };
 
     // Save current font settings
     function saveFontSettings() {
@@ -105,7 +105,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             size: config.size || 2,
             family: FAMILY[config.family || "sans"],
             theme: THEMES[config.theme || "white"],
-            spacing: SPACE[config.spacing || "1.5"] 
+            spacing: SPACE[config.spacing || "1.7"] 
         });
 
         update();
@@ -157,7 +157,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                         text: 'Night',
                         onClick: _.partial(changeColorTheme, 2)
                     }
-                ]
+                
             ],
             [
                 {
@@ -181,9 +181,10 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                     onClick: _.partial(changeSpacing, 4)
                 } 
             ]
-        });
+        ]
+    });
 
-        
+
         // Init current settings
         init(opts);
     });
