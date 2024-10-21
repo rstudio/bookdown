@@ -302,22 +302,22 @@ div.book.color-theme-2 {
   font-weight: 600;
 }
 
-.book.line-height-0 .book-body .page-inner section {
+.book.line-height-0{
   line-height: 1.0;
 }
 
-.book.line-height-1 .book-body .page-inner section {
+.book.line-height-1{
   line-height: 1.7;
 }
 
-.book.line-height-2 .book-body .page-inner section {
+.book.line-height-2{
   line-height: 2.0;
 }
 
-.book.line-height-3 .book-body .page-inner section {
+.book.line-height-3{
   line-height: 2.5;
 }
 
-.book.line-height-4 .book-body .page-inner section {
+.book.line-height-4{
   line-height: 3.0;
 }
