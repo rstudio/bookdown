@@ -90,7 +90,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
             $book.addClass("color-theme-"+fontState.theme);
         }
-        $book.css("line-height", Object.keys(SPACE)[fontState.spacing]); 
+        $book[0].className = $book[0].className.replace(/\bline-height-\S+/g, '');
+        $book.addClass("line-height-" + fontState.spacing);
     };
 
     function init(config) {
