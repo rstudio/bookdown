@@ -12,6 +12,14 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         "sans": 1
     };
 
+    var SPACE = {
+        "1.0":0,
+        "1.7":1,
+        "2.0":2,
+        "2.5":3,
+        "3.0":4,
+    }
+
     // Save current font settings
     function saveFontSettings() {
         gitbook.storage.set("fontState", fontState);
@@ -60,6 +68,14 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         saveFontSettings();
     };
 
+    //Change line spacing
+    function changeSpacing(index, e) {
+            e.preventDefault();
+
+            fontState.spacing = index;
+            saveFontSettings();
+        }
+
     function update() {
         var $book = gitbook.state.$book;
 
@@ -74,6 +90,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
             $book.addClass("color-theme-"+fontState.theme);
         }
+        $book.css("line-height", Object.keys(SPACE)[fontState.spacing]); 
     };
 
     function init(config) {
@@ -87,7 +104,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         fontState = gitbook.storage.get("fontState", {
             size: config.size || 2,
             family: FAMILY[config.family || "sans"],
-            theme: THEMES[config.theme || "white"]
+            theme: THEMES[config.theme || "white"],
+            spacing: SPACE[config.spacing || "1.5"] 
         });
 
         update();
@@ -140,10 +158,32 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                         onClick: _.partial(changeColorTheme, 2)
                     }
                 ]
+            ],
+            [
+                {
+                    text: '1.0',
+                    onClick: _.partial(changeSpacing, 0)
+                },
+                {
+                    text: '1.7',
+                    onClick: _.partial(changeSpacing, 1)
+                },
+                {
+                    text: '2.0',
+                    onClick: _.partial(changeSpacing, 2)
+                },
+                {
+                    text: '2.8',
+                    onClick: _.partial(changeSpacing, 3)
+                },
+                {
+                    text: '3.0',
+                    onClick: _.partial(changeSpacing, 4)
+                } 
             ]
         });
 
-
+        
         // Init current settings
         init(opts);
     });
