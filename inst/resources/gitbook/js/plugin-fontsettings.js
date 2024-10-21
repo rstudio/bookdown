@@ -14,10 +14,11 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 
     var SPACE = {
         "1.0":0,
-        "1.7":1,
-        "2.0":2,
-        "2.5":3,
-        "3.0":4,
+        "1.5":1,
+        "1.7":2,
+        "2.0":3,
+        "2.5":4,
+        "3.0":5,
     };
 
     // Save current font settings
@@ -90,11 +91,13 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
             $book.addClass("color-theme-"+fontState.theme);
         }
-        $book.css("line-height", Object.keys(SPACE)[fontState.spacing]); 
+        $book[0].className = $book[0].className.replace(/\bline-height-\S+/g, '');
+        $book.addClass("line-height-" + fontState.spacing);
     };
 
     function init(config) {
         var $bookBody, $book;
+
 
         //Find DOM elements.
         $book = gitbook.state.$book;
@@ -165,20 +168,24 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                     onClick: _.partial(changeSpacing, 0)
                 },
                 {
-                    text: '1.7',
+                    text: '1.5',
                     onClick: _.partial(changeSpacing, 1)
                 },
                 {
-                    text: '2.0',
+                    text: '1.7',
                     onClick: _.partial(changeSpacing, 2)
                 },
                 {
-                    text: '2.8',
+                    text: '2.0',
                     onClick: _.partial(changeSpacing, 3)
                 },
                 {
-                    text: '3.0',
+                    text: '2.5',
                     onClick: _.partial(changeSpacing, 4)
+                },
+                {
+                    text: '3.0',
+                    onClick: _.partial(changeSpacing, 5)
                 } 
             ]
         ]
