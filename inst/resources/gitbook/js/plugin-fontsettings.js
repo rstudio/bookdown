@@ -175,6 +175,8 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                     text: '1.7',
                     onClick: _.partial(changeSpacing, 2)
                 },
+            ],
+            [
                 {
                     text: '2.0',
                     onClick: _.partial(changeSpacing, 3)
