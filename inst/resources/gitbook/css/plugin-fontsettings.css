@@ -301,3 +301,23 @@ div.book.color-theme-2 {
   background: #252737;
   font-weight: 600;
 }
+
+.book.line-height-0 .book-body .page-inner section {
+  line-height: 1.0;
+}
+
+.book.line-height-1 .book-body .page-inner section {
+  line-height: 1.7;
+}
+
+.book.line-height-2 .book-body .page-inner section {
+  line-height: 2.0;
+}
+
+.book.line-height-3 .book-body .page-inner section {
+  line-height: 2.5;
+}
+
+.book.line-height-4 .book-body .page-inner section {
+  line-height: 3.0;
+}
