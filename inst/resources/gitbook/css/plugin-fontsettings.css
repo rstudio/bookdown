@@ -302,7 +302,3 @@ div.book.color-theme-2 {
   font-weight: 600;
 }
 
-/* line-height */
-.book .book-body .page-wrapper .page-inner section.normal {
-   line-height: attr(data-line-height);
-}
