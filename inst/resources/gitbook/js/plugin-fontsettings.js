@@ -12,7 +12,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         "sans": 1
     };
 
-
     // Save current font settings
     function saveFontSettings() {
         gitbook.storage.set("fontState", fontState);
