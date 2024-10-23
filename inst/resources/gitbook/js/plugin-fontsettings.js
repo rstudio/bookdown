@@ -95,6 +95,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         }
         $book[0].className = $book[0].className.replace(/\bline-height-\S+/g, '');
         $book.addClass("line-height-" + fontState.spacing);
+        
     };
 
     function init(config) {
@@ -110,7 +111,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             size: config.size || 2,
             family: FAMILY[config.family || "sans"],
             theme: THEMES[config.theme || "white"],
-            spacing: SPACE[config.spacing || "1.7"] 
+            spacing: config.spacing || 7,
         });
 
         update();
