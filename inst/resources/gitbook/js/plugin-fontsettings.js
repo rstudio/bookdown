@@ -109,7 +109,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             size: config.size || 2,
             family: FAMILY[config.family || "sans"],
             theme: THEMES[config.theme || "white"],
-            spacing: config.spacing || 7,
+            spacing: config.spacing || 17,
         });
 
         update();
