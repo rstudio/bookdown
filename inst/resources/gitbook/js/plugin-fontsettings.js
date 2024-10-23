@@ -64,8 +64,6 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
     // Increase line spacing
     function increaseSpacing(e) {
         e.preventDefault();
-        if (fontState.spacing >= 20) return;
-
         fontState.spacing++;
         saveFontSettings();
     }
