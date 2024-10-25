@@ -81,9 +81,9 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
             $book[0].className = $book[0].className.replace(/\bcolor-theme-\S+/g, '');
             $book.addClass("color-theme-"+fontState.theme);
         }
-        var lineHeight = Math.max(fontState.spacing / 10, 1);
+        var lineHeight = fontState.spacing / 10;
         $book.find('section').css('line-height', lineHeight);
-        $(".font-settings .spacing-reduce").prop('disabled', lineHeight <= 1);
+        $('.font-settings .spacing-reduce').prop('disabled', lineHeight <= 1);
     };
 
     function init(config) {
