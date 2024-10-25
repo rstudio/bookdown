@@ -83,12 +83,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
         }
         var lineHeight = Math.max(fontState.spacing / 10, 1);
         $book.find('section').css('line-height', lineHeight);
-
-        if (lineHeight <= 1) {
-            $(".font-settings .font-reduce").prop('disabled', true);
-        } else {
-            $(".font-settings .font-reduce").prop('disabled', false);
-        }
+        $(".font-settings .spacing-reduce").prop('disabled', lineHeight <= 1);
     };
 
     function init(config) {
