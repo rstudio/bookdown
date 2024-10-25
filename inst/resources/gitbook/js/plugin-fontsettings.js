@@ -155,7 +155,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
                 [
                     {
                     text: 'Spacing -',
-                    onClick: decreaseSpacing
+                    onClick: e => changeSpacing(e, false)
                     },
                     {
                     text: 'Spacing +',
