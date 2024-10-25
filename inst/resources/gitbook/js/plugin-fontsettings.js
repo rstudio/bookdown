@@ -70,7 +70,7 @@ gitbook.require(["gitbook", "lodash", "jQuery"], function(gitbook, _, $) {
 // Decrease line spacing
     function decreaseSpacing(e) {
         e.preventDefault();
-        fontState.spacing--;
+        fontState.spacing > 10 && fontState.spacing--;
         saveFontSettings();
     }
 
