@@ -489,6 +489,7 @@ verify_rstudio_version = function() {
 
 str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
 
+if (getRversion() < '4.4.0') `%||%` = function(x, y) if (is.null(x)) y else x
 output_md = function() getOption('bookdown.output.markdown', FALSE)
 
 # a theorem engine for knitr (can also be used for lemmas, definitions, etc)
