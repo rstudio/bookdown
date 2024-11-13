@@ -70,7 +70,7 @@ get_base_format = function(format, options = list()) {
 }
 
 load_config = function(config_file = '_bookdown.yml') {
-  config_file = opts$get('config_file') %n% config_file
+  config_file = opts$get('config_file') %||% config_file
   if (length(opts$get('config')) == 0 && file.exists(config_file)) {
     # store the book config
     opts$set(config = rmarkdown:::yaml_load_file(config_file))
@@ -488,8 +488,6 @@ verify_rstudio_version = function() {
 }
 
 str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
-
-`%n%` = knitr:::`%n%`
 
 output_md = function() getOption('bookdown.output.markdown', FALSE)
 

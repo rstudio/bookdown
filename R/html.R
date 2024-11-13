@@ -881,7 +881,7 @@ add_chapter_prefix = function(content) {
 add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
   config = load_config()
   field = paste0(type, '_name')
-  chapter_name = config[[field]] %n% ui_language(field)
+  chapter_name = config[[field]] %||% ui_language(field)
   if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(

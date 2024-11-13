@@ -113,7 +113,7 @@ skeleton_get_dir = function(...) {
 
 skeleton_get_files = function(subdir = NULL, relative = TRUE) {
   resources = skeleton_get_dir()
-  subdir = file.path(resources, subdir %n% "")
+  subdir = file.path(resources, subdir %||% "")
   if (!dir.exists(subdir)) return(NULL)
   files = list.files(subdir, recursive = TRUE, include.dirs = FALSE, full.names = TRUE)
   if (relative) xfun::relative_path(files, resources) else files
