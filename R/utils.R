@@ -86,7 +86,7 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
-  ext_regex <- if(isTRUE(config[['include_md']])) '[.]R?md$' else '[.]Rmd$'
+  ext_regex = if (isTRUE(config[['include_md']])) '[.]R?md$' else '[.]Rmd$'
   # a list of Rmd chapters
   files = list.files('.', ext_regex, ignore.case = TRUE)
   # content in subdir if asked
