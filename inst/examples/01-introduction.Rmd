@@ -124,7 +124,7 @@ rmd_files:
 ```
 
 Although we have been talking about R Markdown files, the chapter files do not actually have to be R Markdown. They can be plain Markdown files (`.md`), and do not have to contain R code chunks at all. You can certainly use **bookdown** to compose novels or poems!
-However, by default, `.md` files are not included in the automatic collection of files.
+However, by default, only `.Rmd` files (but not `.md` files) are included in the automatic collection of files.
 
 At the moment, the major output formats that you may use include `bookdown::pdf_book`, `bookdown::gitbook`, `bookdown::html_book`, and `bookdown::epub_book`. There is a `bookdown::render_book()`\index{bookdown::render\_book()} function similar to `rmarkdown::render()`, but it was designed to render _multiple_ Rmd documents into a book using the output format functions. You may either call this function from command line directly, or click the relevant buttons in the RStudio IDE. Here are some command-line examples:
 
