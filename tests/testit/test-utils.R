@@ -63,7 +63,7 @@ assert('source_files() handles several configurations correctly', {
   files = c(
     'index.Rmd', '_ignored.Rmd', '01-first.Rmd',
     'subdir/other.Rmd', 'subdir/_ignore.Rmd', 'subdir2/last.Rmd',
-    'abc/def.Rmd', 'abc/ghi.Rmd', 'subdir/jkl.md'
+    'abc/def.Rmd', 'abc/ghi.Rmd', 'abc/jkl.md'
   )
   lapply(unique(dirname(files)), dir.create, FALSE, recursive = TRUE)
   file.create(files)
