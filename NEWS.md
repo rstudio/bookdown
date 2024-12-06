@@ -2,6 +2,8 @@
 
 - New option in `gitbook`'s font settings menu to control line spacing (thanks, @hayden-MB, #1479).
 
+- New configuration setting `include_md` to control whether the input search includes `.md` source files in addition to `.Rmd` (thanks, @katrinabrock #1483, @kylelundstedt #956).
+
 # CHANGES IN bookdown VERSION 0.41
 
 - New `mathjax-config` option for `bs4_book` and `gitbook` to control MathJax config string (thanks, @bwu62, #1472). The option can be set either in the YAML metadata or as a variable in `pandoc_args`. Currently tested and supported settings:

@@ -53,8 +53,8 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
 })
 
 assert('source_files() handles several configurations correctly', {
-  get_files = function(files = NULL, dirs = NULL, ...) {
-    source_files(config = list(rmd_files = files, rmd_subdir = dirs), ...)
+  get_files = function(files = NULL, dirs = NULL, md = NULL, ...) {
+    source_files(config = list(rmd_files = files, rmd_subdir = dirs, include_md = md), ...)
   }
 
   # create dummy project
@@ -63,7 +63,7 @@ assert('source_files() handles several configurations correctly', {
   files = c(
     'index.Rmd', '_ignored.Rmd', '01-first.Rmd',
     'subdir/other.Rmd', 'subdir/_ignore.Rmd', 'subdir2/last.Rmd',
-    'abc/def.Rmd', 'abc/ghi.Rmd'
+    'abc/def.Rmd', 'abc/ghi.Rmd', 'abc/jkl.md'
   )
   lapply(unique(dirname(files)), dir.create, FALSE, recursive = TRUE)
   file.create(files)
@@ -79,7 +79,7 @@ assert('source_files() handles several configurations correctly', {
   (get_files(files[4:1]) %==% files[c(1, 4, 3)])
 
   # format allows to filter selected files
-  (get_files(list(html = 'index.Rmd'), NULL, 'html') %==% files[1])
+  (get_files(list(html = 'index.Rmd'), NULL, NULL, 'html') %==% files[1])
 
   # rmd_subdir allows subdir contents and root Rmds
   (get_files(, TRUE) %==% files[c(1, 3, 7:8, 4, 6)])
@@ -92,6 +92,10 @@ assert('source_files() handles several configurations correctly', {
   (get_files(files[3], TRUE) %==% files[c(3, 7:8, 4, 6)])
   (get_files(files[3], dirname(files[c(4, 6)])) %==% files[c(3, 4, 6)])
   (get_files(files[3], dirname(files[c(4, 6, 7)])) %==% files[c(3, 4, 6, 7:8)])
+
+  # include_md toggles inclusion of md files
+  (get_files(files[3], dirname(files[c(4, 6, 7)]), FALSE) %==% files[c(3, 4, 6, 7:8)])
+  (get_files(files[3], dirname(files[c(4, 6, 7)]), TRUE) %==% files[c(3, 4, 6, 7:9)])
 
   # clean tests
   unlink(project, recursive = TRUE); rm(project)
