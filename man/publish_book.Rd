@@ -22,17 +22,6 @@ published to account or any single account already associated with
 
 \item{server}{Server to publish to (by default beta.rstudioconnect.com but
 any RStudio Connect server can be published to).}
-
-\item{render}{Rendering behavior for site:
-\itemize{
-\item \code{"none"} uploads a static version of the current contents of
-the site directory.
-\item \code{"local"} renders the site locally then uploads it.
-\item \code{"server"} uploads the source of the site to render on the server.
-}
-
-Note that for \code{"none"} and \code{"local"} source files (e.g. \code{.R}, \code{.Rmd} and
-\code{.md}) will not be uploaded to the server.}
 }
 \description{
 Publish a book to the web. Note that you should be sure to render all
