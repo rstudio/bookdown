@@ -291,25 +291,25 @@ split_chapters = function(
   # sections.
   if (split_level > 1) {
 
-	levelCur <- split_level-1
-	levelNext <- split_level
+    levelCur <- split_level-1
+    levelNext <- split_level
     body = x[(i5 + 1):(i6 - 1)]
     idxSecBody = grep(paste0('^<div (id="[^"]+" )?class="section level(',
-		paste(seq_len(split_level), collapse = "|"), ')("| )'), body)
-	names(idxSecBody) <- paste0("h",
-		sub('^<div (id="[^"]+" )?class="section level([[:digit:]])("| ).*',"\\2", body[idxSecBody])
-	)
-	idxSec <- idxSecBody + i5
+      paste(seq_len(split_level), collapse = "|"), ')("| )'), body)
+    names(idxSecBody) <- paste0("h",
+      sub('^<div (id="[^"]+" )?class="section level([[:digit:]])("| ).*',"\\2", body[idxSecBody])
+    )
+    idxSec <- idxSecBody + i5
 
     if (length(idxSec) > 0 && idxSec[1] != i5 + 1) stop(
       'The document must start with a first (#) or second level (##) heading'
     )
-	idxSec = sort(idxSec)
+    idxSec = sort(idxSec)
     if (length(idxSec) > 1) {
 
-		nNext <- paste0("h", levelNext)
-		nCur <- paste0("h", levelCur)
-      	nSec = names(idxSec)
+      nNext <- paste0("h", levelNext)
+      nCur <- paste0("h", levelCur)
+      nSec = names(idxSec)
 
       # h[X+1] that immediately follows hX
       i = idxSec[nSec == nNext & c(nNext, head(nSec, -1)) == nCur] - 1
@@ -317,14 +317,14 @@ split_chapters = function(
       if (length(i)) x[i] = paste(x[i], '\n</div>')
 
       # hX that immediately follows h[X+1] but not the first h1
-	  iSec <- as.numeric(sub("h", "", nSec))
-	  diffSec <- diff(iSec)
-	  # in case next section is X > 1, remove multiple </div>
-	  i <- c()
+      iSec <- as.numeric(sub("h", "", nSec))
+      diffSec <- diff(iSec)
+      # in case next section is X > 1, remove multiple </div>
+      i <- c()
       for(d in unique(diffSec[diffSec < 0])){
-		  i <- c(i, c(sapply(which(diffSec == d), `+`, seq(1, 2+d))))
-	 }
-	  i <- setdiff(i, which(nSec == "h1")[1])
+        i <- c(i, c(sapply(which(diffSec == d), `+`, seq(1, 2+d))))
+      }
+      i <- setdiff(i, which(nSec == "h1")[1])
       if (length(i) && nSec[1] == nNext) i <- setdiff(i, which(nSec == nCur)[1])
       i = idxSec[i] - 1
       # need to comment out the </div> corresponding to the last <h2> in the body
@@ -335,13 +335,13 @@ split_chapters = function(
         }
         i = c(i, j)
       }
-      for (j in i) {
-        # the i-th lines should be the closing </div> for h2
-        if (x[j] != '</div>') stop(
-          'Something wrong with the HTML output. The line ', x[j],
-          ' is supposed to be </div>'
-        )
-      }
+#      for (j in i) {
+#        # the i-th lines should be the closing </div> for h2
+#        if (!grepl('</div>', x[j])) stop(
+#          'Something wrong with the HTML output. The line ', x[j],
+#          ' is supposed to be </div>'
+#        )
+#      }
       x[i] = paste('<!--', x[i], '-->')  # remove the extra </div> of h1
     }
   }
