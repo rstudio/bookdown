@@ -69,10 +69,11 @@ get_base_format = function(format, options = list()) {
   do.call(format, options)
 }
 
-load_config = function() {
-  if (length(opts$get('config')) == 0 && file.exists('_bookdown.yml')) {
+load_config = function(config_file = '_bookdown.yml') {
+  config_file = opts$get('config_file') %||% config_file
+  if (length(opts$get('config')) == 0 && file.exists(config_file)) {
     # store the book config
-    opts$set(config = rmarkdown:::yaml_load_file('_bookdown.yml'))
+    opts$set(config = rmarkdown:::yaml_load_file(config_file))
   }
   opts$get('config')
 }
@@ -85,12 +86,13 @@ book_filename = function(config = load_config(), fallback = TRUE) {
 
 source_files = function(format = NULL, config = load_config(), all = FALSE) {
   subdir = config[['rmd_subdir']]; subdir_yes = isTRUE(subdir) || is.character(subdir)
+  ext_regex = if (isTRUE(config[['include_md']])) '[.]R?md$' else '[.]Rmd$'
   # a list of Rmd chapters
-  files = list.files('.', '[.]Rmd$', ignore.case = TRUE)
+  files = list.files('.', ext_regex, ignore.case = TRUE)
   # content in subdir if asked
   subdir_files = unlist(mapply(
     list.files,
-    if (is.character(subdir)) subdir else '.', '[.]Rmd$', ignore.case = TRUE,
+    if (is.character(subdir)) subdir else '.', ext_regex, ignore.case = TRUE,
     recursive = subdir_yes, full.names = is.character(subdir), USE.NAMES = FALSE
   ))
   subdir_files = setdiff(subdir_files, files)
@@ -262,10 +264,7 @@ clean_meta = function(meta_file, files) {
 
 # remove HTML tags and remove extra spaces
 strip_html = function(x) {
-  x = gsub('<!--.*?-->', '', x)  # remove comments
-  x = gsub('<[^>]+>', '', x)
-  x = gsub('\\s{2,}', ' ', x)
-  x
+  gsub('\\s{2,}', ' ', xfun::strip_html(x), perl = TRUE)
 }
 
 # remove the <script><script> content and references
@@ -279,10 +278,6 @@ strip_search_text = function(x) {
 
 # manipulate internal options
 opts = knitr:::new_defaults(list(config = list()))
-
-dir_create = function(path) {
-  dir_exists(path) || dir.create(path, recursive = TRUE)
-}
 
 # a wrapper of file.path to ignore `output_dir` if it is NULL
 output_path = function(...) {
@@ -386,17 +381,55 @@ serve_book = function(
       if (Rscript(args) != 0) stop('Failed to compile ', paste(files, collapse = ' '))
     }
   }
-  rebuild('index.Rmd', preview_ = FALSE)  # build the whole book initially
+  index <- get_index_file()
+  if (is_empty(index)) {
+    stop("`serve_book()` expects `index.Rmd` in the book project.", call. = FALSE)
+  }
+  rebuild(index, preview_ = FALSE)  # build the whole book initially
   servr::httw('.', ..., site.dir = output_dir, handler = rebuild)
+}
+
+get_index_file <- function() {
+  index_files <- list.files('.', '^index[.]Rmd$', ignore.case = TRUE)
+  if (length(index_files) == 0) return(character())
+  index <- index_files[1]
+  if (length(index_files) > 1) {
+    warning(
+      sprintf(
+        "Several index files found - only one expected. %s will be use, please check your project.",
+        sQuote(index)
+      ))
+  }
+  index
 }
 
 # can only preview HTML output via servr, so look for the first HTML format
 first_html_format = function() {
   fallback = 'bookdown::gitbook'
-  if (!file.exists('index.Rmd')) return(fallback)
-  formats = rmarkdown::all_output_formats('index.Rmd')
-  formats = grep('gitbook|html|bs4_book', formats, value = TRUE)
-  if (length(formats) == 0) fallback else formats[1]
+  html_format = function(f) grep('gitbook|html|bs4_book', f, value = TRUE)
+  get_output_formats(fallback, html_format, first = TRUE)
+}
+
+get_output_formats = function(fallback_format, filter = identity, first = FALSE, fallback_index = NULL) {
+  # Use index files if one exists
+  index = get_index_file()
+  # Use fallback file unless no YAML
+  if (is_empty(index)) {
+    if (length(fallback_index) == 1 &&
+        xfun::file_exists(fallback_index) &&
+        length(rmarkdown::yaml_front_matter(fallback_index)) != 0
+    ) {
+      index = fallback_index
+    } else {
+      return(fallback_format)
+    }
+  }
+  # Retrieve output formats
+  formats = rmarkdown::all_output_formats(index)
+  formats = filter(formats)
+  if (length(formats) == 0) return(fallback_format)
+  if (first) return(formats[1])
+  formats
 }
 
 # base64 encode resources in url("")
@@ -408,7 +441,7 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
     if (length(ps) == 0) return(ps)
     ps = gsub('^url\\("|"\\)$', '', ps)
     sprintf('url("%s")', sapply(ps, function(p) {
-      if (grepl(r, p) && file.exists(p)) knitr::image_uri(p) else p
+      if (grepl(r, p) && file.exists(p)) xfun::base64_uri(p) else p
     }))
   })
   if (overwrite) write_utf8(x, css) else x
@@ -416,24 +449,14 @@ base64_css = function(css, exts = 'png', overwrite = FALSE) {
 
 files_cache_dirs = function(dir = '.') {
   if (!dir_exists(dir)) return(character())
-  out = list.files(dir, '_(files|cache)$', full.names = TRUE)
+  r = '_(files|cache)$'
+  out = list.files(dir, r, full.names = TRUE)
   out = out[dir_exists(out)]
+  # only use dirs that have corresponding Rmd files
+  if (dir == '.') out = out[file.exists(sub(r, '.Rmd', out))]
   out = out[basename(out) != '_bookdown_files']
   out
 }
-
-# file.rename() does not work if target directory is not empty, so we just copy
-# everything from `from` to `to`, and delete `from`
-move_dir = function(from, to) {
-  if (!dir_exists(to)) return(file.rename(from, to))
-  to_copy = list.files(from, full.names = TRUE)
-  if (length(to_copy) == 0 ||
-      any(file.copy(list.files(from, full.names = TRUE), to, recursive = TRUE))
-  ) unlink(from, recursive = TRUE)
-  invisible(TRUE)
-}
-
-move_dirs = function(from, to) mapply(move_dir, from, to)
 
 #' @importFrom xfun existing_files
 existing_r = function(base) {
@@ -457,7 +480,7 @@ verify_rstudio_version = function() {
   if (requireNamespace('rstudioapi', quietly = TRUE) && rstudioapi::isAvailable()) {
     if (!rstudioapi::isAvailable('0.99.1200')) warning(
       'Please install a newer version of the RStudio IDE: ',
-      'https://www.rstudio.com/products/rstudio/download/'
+      'https://posit.co/download/rstudio-desktop/'
     )
   } else if (!rmarkdown::pandoc_available('1.17.2')) warning(
     "Please install or upgrade Pandoc to at least version 1.17.2; ",
@@ -467,7 +490,7 @@ verify_rstudio_version = function() {
 
 str_trim = function(x) gsub('^\\s+|\\s+$', '', x)
 
-`%n%` = knitr:::`%n%`
+if (getRversion() < '4.4.0') `%||%` = function(x, y) if (is.null(x)) y else x
 
 output_md = function() getOption('bookdown.output.markdown', FALSE)
 
@@ -504,7 +527,6 @@ eng_funcs = list(
   eng_theorem2 = function(type, options) {
     label = paste0('#', options$label)
     name = sprintf('name="%s"', options$name)
-    # TODO: use knitr:::fenced_block(options$code, c(label, name), class = type, .char = ':')
     res = paste(c(paste0('.', type), label, name), collapse = ' ')
     paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
   },
@@ -533,7 +555,6 @@ eng_funcs = list(
   },
   eng_proof2 = function(type, options) {
     name = sprintf('name="%s"', options$name)
-    # TODO: use knitr:::fenced_block()
     res = paste(c(paste0('.', type), name), collapse = ' ')
     paste(c(sprintf('::: {%s}', res), options$code, ':::'), collapse = '\n')
   }
@@ -649,9 +670,12 @@ fence_theorems = function(input, text = xfun::read_utf8(input), output = NULL) {
   if (is.null(output)) xfun::raw_string(text) else xfun::write_utf8(text, output)
 }
 
-
 stop_if_not_exists = function(inputs) {
   if (!all(exist <- xfun::file_exists(inputs))) {
     stop("Some files were not found: ",  paste(inputs[!exist], collapse = ' '))
   }
+}
+
+is_empty = function(x) {
+  length(x) == 0 || !nzchar(x)
 }

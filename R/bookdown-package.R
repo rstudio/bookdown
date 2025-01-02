@@ -6,6 +6,6 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom xfun dir_exists
+#' @importFrom xfun dir_create dir_exists file_rename
 ## usethis namespace: end
 NULL

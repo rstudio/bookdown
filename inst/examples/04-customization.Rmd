@@ -205,6 +205,7 @@ We have mentioned `rmd_files` in Section \@ref(usage), and there are more (optio
 -  `history`: similar to `edit`, a link to the edit/commit history of the current page.
 -  `view`: similar to `edit`, a link to source code of the current page. 
 - `rmd_subdir`: whether to search for book source Rmd files in subdirectories (by default, only the root directory is searched). This may be either a boolean (e.g. `true` will search for book source Rmd files in the project directory and all subdirectories) or list of paths if you want to search for book source Rmd files in a subset of subdirectories.
+- `include_md`: include `.md` files in search for book source (by default only `.Rmd` files are included).
 - `output_dir`: the output directory of the book (`_book` by default); this setting is read and used by `render_book()`.
 - `clean`: a vector of files and directories to be cleaned by the `clean_book()` function.
 

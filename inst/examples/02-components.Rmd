@@ -8,7 +8,7 @@ In this section, we give a very brief introduction to Pandoc's Markdown\index{Ma
 
 ### Inline formatting
 
-You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `Fe^2+^` renders Fe^2+^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``.^[To include literal backticks, use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.] Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[RStudio](https://www.rstudio.com)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations).
+You can make text _italic_ by surrounding it with underscores or asterisks, e.g., `_text_` or `*text*`. For **bold** text, use two underscores (`__text__`) or asterisks (`**text**`). Text surrounded by `~` will be converted to a subscript (e.g., `H~2~SO~4~` renders H~2~SO~4~), and similarly, two carets (`^`) produce a superscript (e.g., `Fe^2+^` renders Fe^2+^). To mark text as `inline code`, use a pair of backticks, e.g., `` `code` ``.^[To include literal backticks, use more backticks outside, e.g., you can use two backticks to preserve one backtick inside: ``` `` `code` `` ```.] Small caps can be produced by the HTML tag `span`, e.g., `<span style="font-variant:small-caps;">Small Caps</span>` renders <span style="font-variant:small-caps;">Small Caps</span>. Links are created using `[text](link)`, e.g., `[Posit](https://www.posit.co)`, and the syntax for images is similar: just add an exclamation mark, e.g., `![alt text or image title](path/to/image)`. Footnotes are put inside the square brackets after a caret `^[]`, e.g., `^[This is a footnote.]`. We will talk about citations in Section \@ref(citations).
 
 ### Block-level elements
 
@@ -625,7 +625,7 @@ The `bs4_book()` HTML output format includes styling for selected custom blocks;
 
 Pandoc offers two methods for managing citations\index{citation} and bibliographic references in a document.
 
-1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](http://docs.citationstyles.org/en/1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
+1. The default method is to use a Pandoc helper program called [`pandoc-citeproc`](https://github.com/jgm/pandoc-citeproc), which follows the specifications of the [Citation Style Language (CSL)](https://docs.citationstyles.org/en/v1.0.1/specification.html) and obtains specific formatting instructions from one of the huge number of available [CSL style files.](https://www.zotero.org/styles/)
 
 1. Users may also choose to use either [**natbib**](https://ctan.org/pkg/natbib) (based on `bibtex`) or [**biblatex**](https://ctan.org/pkg/biblatex) as a "citation package". In this case, the bibliographic data files need to be in the `bibtex` or `biblatex` format, and the document output format is limited to PDF. Again, various bibliographic styles are available (please consult the documentation of these packages).
 
@@ -660,7 +660,7 @@ A BibTeX database is a plain-text file (with the conventional filename extension
 }
 ```
 
-A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on.^[The type name is case-insensitive, so it does not matter if it is `manual`, `Manual`, or `MANUAL`.] Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered as @R-base, and `[@R-base]` generates "[@R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
+A bibliography entry starts with `@type{`, where `type` may be `article`, `book`, `manual`, and so on.^[The type name is case-insensitive, so it does not matter if it is `manual`, `Manual`, or `MANUAL`.] Then there is a citation key, like `R-base` in the above example. To cite an entry, use `@key` or `[@key]` (the latter puts the citation in braces), e.g., `@R-base` is rendered as @R-base, and `[@R-base]` generates "[@R-base]". A note can be included within the square brackets, e.g., `[a note about, @R-base]` will be rendered as "[a note about, @R-base]". If you are familiar with the **natbib** package in LaTeX, `@key` is basically `\citet{key}`, and `[@key]` is equivalent to `\citep{key}`.
 
 There are a number of fields in a bibliography entry, such as `title`, `author`, and `year`, etc. You may see https://en.wikipedia.org/wiki/BibTeX for possible types of entries and fields in BibTeX.
 
@@ -700,7 +700,62 @@ Currently the index\index{index} is only supported for LaTeX/PDF output. To prin
 \makeindex
 ```
 
-Then insert `\printindex` at the end of your book through the YAML option `includes -> after_body`. An index entry can be created via the `\index{}` command in the book body, e.g., `\index{GIT}`.
+Alternatively, you can also use the **imakeidx** package:
+
+```latex
+\usepackage{imakeidx}
+```
+
+This packages offers additional features for formatting the index. For example:
+
+```latex
+\makeindex[intoc=true,columns=3,columnseprule=true,
+           options=-s latex/indexstyles.ist]
+```
+
+In the above example, `intoc=true` will include an entry for the index into the table of contents, `columns=3` will format the index into three columns, and `columnseprule=true` will display a line between index columns. Finally, `options=-s latex/indexstyles.ist` will use additional formatting options from an index-style file located at `latex/indexstyles.ist`. Many other features are available in the **imakeidx** package. Please refer to its documentation for further details.
+
+### Inserting Entries
+
+An index entry can be created via the `\index{}` command in the book body, e.g.,
+
+```latex
+Version Control\index{Version Control} is an
+important component of the SDLC.
+```
+
+Likewise, to insert a subentry for an item:
+
+```
+Git\index{Version Control!Git} is a
+popular version control system.
+```
+
+The above example will add a "Git" entry underneath "Version Control" in the index.
+
+To create a "see also" entry that appears at the bottom of an item's subentries (with no page number), first add the following beneath the call to `\makeindex` in your preamble file:
+
+```latex
+% to create a "see also" that appears at the bottom of the
+% subentries and with no page number, do the following:
+% \index{Main entry!zzzzz@\igobble|seealso{Other item}}
+
+\newcommand{\ii}[1]{{\it #1}}
+\newcommand{\nn}[1]{#1n}
+
+\def\igobble#1{}
+```
+
+Then, use the `\index{Main entry!zzzzz@\igobble|seealso{Other item}}` syntax in your book. As an example:
+
+```latex
+Backups\index{Version Control!zzzzz@\igobble|seealso{backups}}
+should be part of your version control system.
+```
+
+### Building the Index
+
+To build the index, insert `\printindex` at the end of your book through the YAML option `includes -> after_body`.
 
 ## HTML widgets
 

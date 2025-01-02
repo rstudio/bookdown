@@ -237,7 +237,7 @@
 \newdimen\tempa
 \newdimen\tempdimen
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Parameter Initializaton %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Parameter Initialization %%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \newdimen\htrim
 \newdimen\vtrimtop
@@ -1145,7 +1145,7 @@
     \else
       \@cons{\@authors}{, \last@author}\fi\fi
   \stepcounter{numauthors}%
-%%%%%%% commented and deleted below the second part to aviod inaccessible error % shashi % September-2008
+%%%%%%% commented and deleted below the second part to avoid inaccessible error % shashi % September-2008
 %%  \gdef\last@author{#1 {\rm\fontsize{9\p@}{11\p@}\selectfont #2}}
 \gdef\last@author{#1}
 }

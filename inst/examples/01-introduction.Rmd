@@ -27,7 +27,7 @@ Another goal of this project is to make it easy to produce books that look visua
 The easiest way for beginners to get started with writing a book with R Markdown and **bookdown** is through the demo `bookdown-demo` on GitHub:
 
 1. Download the GitHub repository <https://github.com/rstudio/bookdown-demo> as a [Zip file,](https://github.com/rstudio/bookdown-demo/archive/main.zip) then unzip it locally.
-1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. Please [download the latest version](https://www.rstudio.com/products/rstudio/download/) if your RStudio version is lower than 1.0.0.
+1. Install the RStudio IDE. Note that you need a version higher than 1.0.0. Please [download the latest version](https://posit.co/download/rstudio-desktop/) if your RStudio version is lower than 1.0.0.
 1. Install the R package **bookdown**:
 
     ```{r eval=FALSE}
@@ -124,6 +124,7 @@ rmd_files:
 ```
 
 Although we have been talking about R Markdown files, the chapter files do not actually have to be R Markdown. They can be plain Markdown files (`.md`), and do not have to contain R code chunks at all. You can certainly use **bookdown** to compose novels or poems!
+However, by default, only `.Rmd` files (but not `.md` files) are included in the automatic collection of files.
 
 At the moment, the major output formats that you may use include `bookdown::pdf_book`, `bookdown::gitbook`, `bookdown::html_book`, and `bookdown::epub_book`. There is a `bookdown::render_book()`\index{bookdown::render\_book()} function similar to `rmarkdown::render()`, but it was designed to render _multiple_ Rmd documents into a book using the output format functions. You may either call this function from command line directly, or click the relevant buttons in the RStudio IDE. Here are some command-line examples:
 

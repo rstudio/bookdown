@@ -23,6 +23,7 @@ Useful links:
 
 Other contributors:
 \itemize{
+  \item Christophe Dervieux \email{cderv@posit.co} (\href{https://orcid.org/0000-0003-4474-2498}{ORCID}) [contributor]
   \item JJ Allaire [contributor]
   \item Albert Kim [contributor]
   \item Alessandro Samuel-Rosa [contributor]
@@ -32,7 +33,6 @@ Other contributors:
   \item Bastiaan Quast [contributor]
   \item Ben Marwick [contributor]
   \item Chester Ismay [contributor]
-  \item Christophe Dervieux [contributor]
   \item Clifton Franklund [contributor]
   \item Daniel Emaasit [contributor]
   \item David Shuman [contributor]
@@ -68,7 +68,7 @@ Other contributors:
   \item Vincent Fulco [contributor]
   \item Yixuan Qiu [contributor]
   \item Zhuoer Dong [contributor]
-  \item  RStudio, PBC [copyright holder]
+  \item Posit Software, PBC [copyright holder, funder]
   \item Bartek Szopka (The jQuery Highlight plugin) [contributor]
   \item Zeno Rocha (clipboard.js library) [copyright holder]
   \item  MathQuill contributors (The MathQuill library; authors listed in inst/resources/AUTHORS) [contributor]

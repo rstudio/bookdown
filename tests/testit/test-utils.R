@@ -52,18 +52,18 @@ assert('prepend_chapter_title() adds the chapter title to the page title', {
       '<title>chapter one | asdf qwer</title><meta property="og:title" content="chapter one | asdf qwer" />')
 })
 
-assert('source_files() handles several configurations correcly', {
-  get_files = function(files = NULL, dirs = NULL, ...) {
-    source_files(config = list(rmd_files = files, rmd_subdir = dirs), ...)
+assert('source_files() handles several configurations correctly', {
+  get_files = function(files = NULL, dirs = NULL, md = NULL, ...) {
+    source_files(config = list(rmd_files = files, rmd_subdir = dirs, include_md = md), ...)
   }
 
-  # create dummy projet
+  # create dummy project
   dir.create(project <- tempfile())
   old = setwd(project)
   files = c(
     'index.Rmd', '_ignored.Rmd', '01-first.Rmd',
     'subdir/other.Rmd', 'subdir/_ignore.Rmd', 'subdir2/last.Rmd',
-    'abc/def.Rmd', 'abc/ghi.Rmd'
+    'abc/def.Rmd', 'abc/ghi.Rmd', 'abc/jkl.md'
   )
   lapply(unique(dirname(files)), dir.create, FALSE, recursive = TRUE)
   file.create(files)
@@ -79,7 +79,7 @@ assert('source_files() handles several configurations correcly', {
   (get_files(files[4:1]) %==% files[c(1, 4, 3)])
 
   # format allows to filter selected files
-  (get_files(list(html = 'index.Rmd'), NULL, 'html') %==% files[1])
+  (get_files(list(html = 'index.Rmd'), NULL, NULL, 'html') %==% files[1])
 
   # rmd_subdir allows subdir contents and root Rmds
   (get_files(, TRUE) %==% files[c(1, 3, 7:8, 4, 6)])
@@ -92,6 +92,10 @@ assert('source_files() handles several configurations correcly', {
   (get_files(files[3], TRUE) %==% files[c(3, 7:8, 4, 6)])
   (get_files(files[3], dirname(files[c(4, 6)])) %==% files[c(3, 4, 6)])
   (get_files(files[3], dirname(files[c(4, 6, 7)])) %==% files[c(3, 4, 6, 7:8)])
+
+  # include_md toggles inclusion of md files
+  (get_files(files[3], dirname(files[c(4, 6, 7)]), FALSE) %==% files[c(3, 4, 6, 7:8)])
+  (get_files(files[3], dirname(files[c(4, 6, 7)]), TRUE) %==% files[c(3, 4, 6, 7:9)])
 
   # clean tests
   unlink(project, recursive = TRUE); rm(project)
@@ -164,28 +168,4 @@ assert('fence_theorems() converts the knitr engine syntax to fenced Divs', {
   old = c("```{r, lab, echo=FALSE}", "1+1", "```")
   res = fence_theorems(text = old)
   (unclass(res) %==% old)
-})
-
-assert("move_dir works", {
-  # work in temp dir
-  dir.create(tmp_dir <- tempfile())
-  owd = setwd(tmp_dir)
-
-  # empty dir is not moved but deleted
-  dir.create("dest")
-  dir.create("empty")
-  move_dir("empty", "dest")
-  (dir.exists("empty") %==% FALSE)
-
-  # files are moved correctly
-  dir.create("filled")
-  dummy_files = c("dummy1", "dummy2")
-  file.create(file.path("filled", dummy_files))
-  move_dir("filled", "dest")
-  (dir.exists("filled") %==% FALSE)
-  (list.files("dest") %==% dummy_files)
-
-  # remove temp dir
-  setwd(owd)
-  unlink(tmp_dir, recursive = TRUE)
 })

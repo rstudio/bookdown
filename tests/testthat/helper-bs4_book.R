@@ -1,8 +1,6 @@
-# TODO: Replace if helper in testthat gets vectorised
-# https://github.com/r-lib/testthat/issues/1398
 skip_if_bs4_book_deps_missing <- function() {
-  check <- vapply(bs4_book_deps(), skip_if_not_installed, logical(1L), USE.NAMES = FALSE)
-  invisible(check)
+  lapply(bs4_book_deps(), skip_if_not_installed)
+  invisible(TRUE)
 }
 
 local_bs4_book <- function(name = "book",
@@ -20,13 +18,10 @@ local_bs4_book <- function(name = "book",
   path <- local_book(name = name, title = title, author = author,
     description = description, url = url, verbose = verbose, env = env)
 
-  suppressMessages(
-    render_book(
-      path,
-      output_format = "bookdown::bs4_book",
-      output_options = output_options,
-      quiet = TRUE
-    )
+  .render_book_quiet(
+    path,
+    output_format = "bookdown::bs4_book",
+    output_options = output_options,
   )
 
   return(path)

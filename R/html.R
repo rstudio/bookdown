@@ -7,7 +7,7 @@
 #' @inheritParams pdf_book
 #' @inheritParams html_document2
 #' @param toc,number_sections,fig_caption,lib_dir,template,pandoc_args See
-#'   \code{rmarkdown::\link{html_document}},
+#'   \code{rmarkdown::\link[rmarkdown]{html_document}},
 #'   \code{tufte::\link[tufte:tufte_handout]{tufte_html}}, or the documentation
 #'   of the \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}. For
@@ -98,12 +98,12 @@ tufte_html_book = function(...) {
 #' figures/tables/equations
 #'
 #' These are simple wrappers of the output format functions like
-#' \code{rmarkdown::\link{html_document}()}, and they added the capability of
-#' numbering figures/tables/equations/theorems and cross-referencing them. See
-#' \sQuote{References} for the syntax. Note you can also cross-reference
-#' sections by their ID's using the same syntax when sections are numbered. In
-#' case you want to enable cross reference in other formats, use
-#' \code{markdown_document2} with \code{base_format} argument.
+#' \code{rmarkdown::\link[rmarkdown]{html_document}()}, and they added the
+#' capability of numbering figures/tables/equations/theorems and
+#' cross-referencing them. See \sQuote{References} for the syntax. Note you can
+#' also cross-reference sections by their ID's using the same syntax when
+#' sections are numbered. In case you want to enable cross reference in other
+#' formats, use \code{markdown_document2} with \code{base_format} argument.
 #' @param ...,fig_caption,md_extensions,pandoc_args Arguments to be passed to a
 #'   specific output format function. For a function \code{foo2()}, its
 #'   arguments are passed to \code{foo()}, e.g. \code{...} of
@@ -122,7 +122,7 @@ tufte_html_book = function(...) {
 #'   are not numbered.
 #' @inheritParams pdf_book
 #' @return An R Markdown output format object to be passed to
-#'   \code{rmarkdown::\link{render}()}.
+#'   \code{rmarkdown::\link[rmarkdown]{render}()}.
 #' @note These output formats are used to generate single output files, such as
 #'   a single HTML output file (unlike \code{gitbook}, which generates multiple
 #'   HTML output files by default).
@@ -569,7 +569,7 @@ clean_html_tags = function(x) {
 move_to_output_dir = function(files) {
   files2 = output_path(files)
   i = file.exists(files) & (files != files2)
-  file.rename(files[i], files2[i])
+  file_rename(files[i], files2[i])
   files2
 }
 
@@ -739,7 +739,7 @@ parse_fig_labels = function(content, global = FALSE) {
     # there could be multiple labels on the same line, but their types must be
     # the same (https://github.com/rstudio/bookdown/issues/538)
     if (length(unique(type)) != 1) stop(
-      'There are mutiple types of labels on one line: ', paste(labs, collapse = ', ')
+      'There are multiple types of labels on one line: ', paste(labs, collapse = ', ')
     )
     type = type[1]
     num = arry[lab]
@@ -916,7 +916,7 @@ add_chapter_prefix = function(content) {
 add_chapter_prefix_one = function(content, type = c('chapter', 'appendix')) {
   config = load_config()
   field = paste0(type, '_name')
-  chapter_name = config[[field]] %n% ui_language(field)
+  chapter_name = config[[field]] %||% ui_language(field)
   if (is.null(chapter_name) || identical(chapter_name, '')) return(content)
   chapter_fun = if (is.character(chapter_name)) {
     function(i) switch(
@@ -1065,7 +1065,7 @@ parse_footnotes = function(x) {
   j = which(x == '</div>')
   j = min(j[j > i])
   n = length(x)
-  r = '<li id="fn([0-9]+)"><p>(?s).+?<a href="#fnref\\1"[^>]*?>\\X</a></p></li>'
+  r = '<li id="fn([0-9]+)"><p>(?s).+?<a href="#fnref\\1"[^>]*?>[^<]+</a></p></li>'
   s = paste(x[i:n], collapse = '\n')
   items = unlist(regmatches(s, gregexpr(r, s, perl = TRUE)))
   list(items = setNames(items, gsub(r, 'fn\\1', items, perl = TRUE)), range = i:j)
@@ -1118,7 +1118,7 @@ move_files_html = function(output, lib_dir) {
   if (is.null(o <- opts$get('output_dir'))) return()
   x = read_utf8(output)
   # detect local resources used in HTML
-  r = '[- ](src|href)="([^"]+)"'
+  r = '[- ](src|href)\\s*=\\s*"([^"]+)"'
   m = gregexpr(r, x)
   f = unlist(lapply(regmatches(x, m), function(z) {
     if (length(z) == 0) z else gsub(r, '\\2', z)

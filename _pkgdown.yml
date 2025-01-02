@@ -19,9 +19,6 @@ template:
       creator: "@rstudio"
       card: summary
 
-development:
-  version_tooltip: "Development version"
-
 home:
   links:
   - text: Learn more about R Markdown
@@ -55,11 +52,11 @@ navbar:
 news:
   releases:
   - text: "Version 0.23"
-    href: https://blog.rstudio.com/2021/08/18/announcing-bookdown-v0.23/
+    href: https://posit.co/blog/bookdown-release/
   - text: "Version 0.21"
-    href: https://blog.rstudio.com/2020/12/21/rmd-news/
+    href: https://posit.co/blog/rmd-news/
   - text: "Version 0.3"
-    href: https://blog.rstudio.com/2016/12/02/announcing-bookdown/
+    href: https://posit.co/blog/announcing-bookdown/
 
 reference:
 - title: Book output formats

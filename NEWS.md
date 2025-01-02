@@ -1,3 +1,88 @@
+# CHANGES IN bookdown VERSION 0.42
+
+- New option in `gitbook`'s font settings menu to control line spacing (thanks, @hayden-MB, #1479).
+
+- New configuration setting `include_md` to control whether the input search includes `.md` source files in addition to `.Rmd` (thanks, @katrinabrock #1483, @kylelundstedt #956).
+
+# CHANGES IN bookdown VERSION 0.41
+
+- New `mathjax-config` option for `bs4_book` and `gitbook` to control MathJax config string (thanks, @bwu62, #1472). The option can be set either in the YAML metadata or as a variable in `pandoc_args`. Currently tested and supported settings:
+  - If empty, defaults to original `TeX-MML-AM_CHTML` which renders all equations in common HTML.
+  - If set to `TeX-AMS-MML_HTMLorMML` renders equations in HTML + CSS (which may look nicer for some equations).
+  - If set to `TeX-MML-AM_SVG` renders equations in SVG.
+
+- Fixed the bug that `render_book()` fails due to `file.rename()` being unable to rename files across different disk volumes (thanks, @Giqles @katrinabrock, #804).
+
+# CHANGES IN bookdown VERSION 0.40
+
+- Footnotes are not rendered correctly when `katex` is used to render LaTeX math expressions (thanks, @pbreheny, #1470).
+
+# CHANGES IN bookdown VERSION 0.39
+
+- Fixed a bug that `bs4_book()` errors on generating document description. The error occured when the beggining of the document is a very long sentence without spaces (> 197 characters), which typically happens in CJK languages (thanks, @atusy, #1463).
+
+# CHANGES IN bookdown VERSION 0.38
+
+- Fixed a bug that `gitbook()` may generate an empty search index on certain platforms (thanks, @UlvHare, #1454).
+
+# CHANGES IN bookdown VERSION 0.37
+
+- Custom config files passed to the `config_file` argument of `render_book()` are no longer temporarily renamed to `_bookdown.yml` (thanks, @debruine, #1307).
+
+- Do not move all `_files` directories temporarily to the `_bookdown_files` directory when calling `render_book()` (thanks, @steeleb, #1307).
+
+# CHANGES IN bookdown VERSION 0.36
+
+- Fix an issue with parsing resources from raw HTML code (thanks, @lennylin, https://community.rstudio.com/t/bookdown-image-with-a-weblink/172542)
+
+- R 4.3.x would error if multiple files are passed to `render_book()` without an `output_format` specified (thanks, @slodge-work, #1442).
+
+# CHANGES IN bookdown VERSION 0.35
+
+- Search configuration in `bs4_book()` will now return more results as [Field-Length Norm](https://fusejs.io/concepts/scoring-theory.html#field-length-norm) is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
+
+# CHANGES IN bookdown VERSION 0.34
+
+- Fix an issue with CSL using hanging indent style in `gitbook()` (thanks, @pablobernabeu, #1422).
+
+- Fix cross referencing of figures and tables in `epub_book()` format by correctly adding an anchor id at the caption level (thanks, @muschellij2, #766, @tstratopoulos, @jasonmosborne, #1399, @N0rbert, rstudio/bookdown-demo#42).
+
+- Adapt an `epub_book()` internal command-line argument passed to Pandoc for changes from version 3.0 and above (#1425).
+
+- Fix an issue with Pandoc 2.19 not rendering math by default in `epub3` format (#1417).
+
+# CHANGES IN bookdown VERSION 0.33
+
+- `extra_dependencies` in `gitbook()` is now correctly working (thanks, @ThierryO, #1408).
+
+# CHANGES IN bookdown VERSION 0.32
+
+- The defunct `kindlegen()` has been removed from this package.
+
+- Theorem and Proof environments are now supported again in HTML slide format `slidy_presentation2()` (thanks, @urx449, #1398).
+
+# CHANGES IN bookdown VERSION 0.31
+
+- This package requires R >= 3.5.0 now.
+
+# CHANGES IN bookdown VERSION 0.30
+
+- Support specific markdown content like list or code chunk inside Theorem and Proof special environments (#1371).
+
+- Fix regression about special usage of **bookdown** project not using `index.Rmd` as main file. It is recommended to use `index.Rmd` in all projects, but workflow has been improved for other cases (thanks, @otoomet, #1349).
+
+# CHANGES IN bookdown VERSION 0.29
+
+- The argument `code_folding` works for the `gitbook()` output format now (thanks, @atusy, #1368).
+
+- Setting `toc_depth` or `toc_float` in `bs4_book()` will now throw an error like `toc` to make it clear that TOC is not an opt-out choice and can't be customize (thanks, @karlmay88, #1377).
+
+# CHANGES IN bookdown VERSION 0.28
+
+- Fix fontawesome 4.7 CSS that is included with `gitbook()` format styling. Now new icons (like `fa-usb`) are correctly available as expected (thanks, @snipfoo, #1353).
+
+- Fix an issue with clipboard button in `gitbook()` (thanks, @chadyuu, #1358).
+
 # CHANGES IN bookdown VERSION 0.27
 
 - Fix `fence_theorems()` so that `output` is not ignored anymore. With previous version, when `output` was different than `NULL`, the result was written to `input`, ignoring `output` value. From now on, set `input` and `output` to the same file if you want to overwrite (thanks, @Scinawa, #1342). 

@@ -20,7 +20,7 @@ bookdown_skeleton = function(path, output_format = skeleton_formats()) {
   skeleton_build_index(path, output_format)
   skeleton_build_output_yml(path, output_format)
   skeleton_build_bookdown_yml(path, output_format)
-  move_dir(file.path(path, output_format), path) # move left format files
+  file_rename(file.path(path, output_format), path) # move left format files
   skeleton_remove_blocks(path, output_format)
 
   # Get missing assets
@@ -113,7 +113,7 @@ skeleton_get_dir = function(...) {
 
 skeleton_get_files = function(subdir = NULL, relative = TRUE) {
   resources = skeleton_get_dir()
-  subdir = file.path(resources, subdir %n% "")
+  subdir = file.path(resources, subdir %||% "")
   if (!dir.exists(subdir)) return(NULL)
   files = list.files(subdir, recursive = TRUE, include.dirs = FALSE, full.names = TRUE)
   if (relative) xfun::relative_path(files, resources) else files

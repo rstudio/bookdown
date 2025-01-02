@@ -79,3 +79,7 @@ local_book <- function(name = "book",
 
   return(path)
 }
+
+.render_book_quiet <- function(...) {
+  suppressMessages(render_book(..., quiet = TRUE))
+}

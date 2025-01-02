@@ -14,7 +14,7 @@ local({
 
   out_expected = xfun::with_ext(args[1], '.md')
   if (out != out_expected) {
-    file.rename(out, out_expected)
+    xfun::file_rename(out, out_expected)
     attributes(out_expected) = attributes(out)
     out = out_expected
   }

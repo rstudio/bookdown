@@ -4,9 +4,10 @@
 #' \pkg{bookdown} (e.g., the tokens for references and labels) to native LaTeX
 #' commands.
 #'
-#' This function is based on \code{rmarkdown::\link{pdf_document}} (by default)
-#' with better default arguments. You can also change the default format to
-#' other LaTeX/PDF format functions using the \code{base_format} argument.
+#' This function is based on \code{rmarkdown::\link[rmarkdown]{pdf_document}}
+#' (by default) with better default arguments. You can also change the default
+#' format to other LaTeX/PDF format functions using the \code{base_format}
+#' argument.
 #'
 #' The global R option \code{bookdown.post.latex} can be set to a function to
 #' post-process the LaTeX output. This function takes the character vector of
@@ -14,8 +15,8 @@
 #' to be written to the \file{.tex} output file. This gives you full power to
 #' post-process the LaTeX output.
 #' @param toc,number_sections,fig_caption,pandoc_args See
-#'   \code{rmarkdown::\link{pdf_document}}, or the documentation of the
-#'   \code{base_format} function.
+#'   \code{rmarkdown::\link[rmarkdown]{pdf_document}}, or the documentation of
+#'   the \code{base_format} function.
 #' @param ... Other arguments to be passed to \code{base_format}.
 #' @param base_format An output format function to be used as the base format.
 #' @param toc_unnumbered Whether to add unnumbered headers to the table of
@@ -74,8 +75,8 @@ pdf_book = function(
     if (is.null(o)) return(output)
 
     output2 = file.path(o, output)
-    file.rename(output, output2)
-    if (keep_tex) file.rename(f, file.path(o, f))
+    file_rename(output, output2)
+    if (keep_tex) file_rename(f, file.path(o, f))
     output2
   }
   # always enable tables (use packages booktabs, longtable, ...)

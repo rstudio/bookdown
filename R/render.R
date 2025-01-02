@@ -15,8 +15,9 @@
 #'   specified in this argument are rendered, otherwise all R Markdown files
 #'   specified by the book are rendered.
 #' @param output_format,...,clean,envir Arguments to be passed to
-#'   \code{rmarkdown::\link{render}()}. For \code{preview_chapter()}, \code{...}
-#'   is passed to \code{render_book()}. See \code{rmarkdown::\link{render}()}
+#'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
+#'   \code{...} is passed to \code{render_book()}. See
+#'   \code{rmarkdown::\link[rmarkdown]{render}()}
 #'   and \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the
 #'   bookdown reference book} for details on how output formatting options are
 #'   set from YAML or parameters supplied by the user when calling
@@ -67,10 +68,13 @@ render_book = function(
   if (length(input) == 1L && dir_exists(input)) {
     message(sprintf("Rendering book in directory '%s'", input))
     owd = setwd(input); on.exit(setwd(owd), add = TRUE)
-    input = "index.Rmd"
+    # if a directory is passed, we assume that index.Rmd exists
+    input = get_index_file()
+    # No input file to use as fallback
+    if (is_empty(input)) input = NULL
+  } else {
+    stop_if_not_exists(input)
   }
-
-  stop_if_not_exists(input)
 
   format = NULL  # latex or html
   if (is.list(output_format)) {
@@ -79,11 +83,13 @@ render_book = function(
   } else if (is.null(output_format) || is.character(output_format)) {
     if (is.null(output_format) || identical(output_format, 'all')) {
       # formats can safely be guess when considering index.Rmd and its expected frontmatter
-      # and not another Rmd file which has no expected YAML frontmatter
-      stop_if_not_exists("index.Rmd")
-      all_formats = rmarkdown::all_output_formats("index.Rmd")
-      # when no format provided, return name of the first resolved
-      output_format = if (is.null(output_format)) all_formats[[1]] else all_formats
+      # As a fallback we assumes input could have the YAML, otherwise we just use gitbook();
+      # Also, when no format provided, return name of the first resolved
+      output_format = get_output_formats(
+        fallback_format = "bookdown::gitbook",
+        first = is.null(output_format),
+        fallback_index = input
+      )
     }
     if (length(output_format) > 1) return(unlist(lapply(output_format, function(fmt)
       xfun::Rscript_call(render_book, list(
@@ -99,17 +105,8 @@ render_book = function(
     "versions of bookdown."
   )
 
-  if (config_file != '_bookdown.yml') {
-    unlink(tmp_config <- tempfile('_bookdown_', '.', '.yml'))
-    if (file.exists('_bookdown.yml')) file.rename('_bookdown.yml', tmp_config)
-    file.rename(config_file, '_bookdown.yml')
-    on.exit({
-      file.rename('_bookdown.yml', config_file)
-      if (file.exists(tmp_config)) file.rename(tmp_config, '_bookdown.yml')
-    }, add = TRUE)
-  }
-
   on.exit(opts$restore(), add = TRUE)
+  opts$set(config_file = config_file)
   config = load_config()  # configurations in _bookdown.yml
   output_dir = output_dirname(output_dir, config)
   on.exit(xfun::del_empty_dir(output_dir), add = TRUE)
@@ -124,12 +121,12 @@ render_book = function(
   aux_diro = '_bookdown_files'
   # move _files and _cache from _bookdown_files to ./, then from ./ to _bookdown_files
   aux_dirs = files_cache_dirs(aux_diro)
-  move_dirs(aux_dirs, basename(aux_dirs))
+  file_rename(aux_dirs, basename(aux_dirs))
   on.exit({
     aux_dirs = files_cache_dirs('.')
     if (length(aux_dirs)) {
       dir_create(aux_diro)
-      move_dirs(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
+      file_rename(aux_dirs, file.path(aux_diro, basename(aux_dirs)))
     }
   }, add = TRUE)
 
@@ -169,7 +166,7 @@ render_book = function(
   } else {
     render_cur_session(files, main, config, output_format, clean, envir, ...)
   }
-  if (!xfun::isFALSE(delete_main)) file.remove(main)
+  if (!isFALSE(delete_main)) file.remove(main)
   res
 }
 
@@ -205,7 +202,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
   for (i in which(grepl('[.]md$', files) & files != files_md))
     file.copy(files[i], files_md[i], overwrite = TRUE)
   # if input is index.Rmd or not preview mode, compile all Rmd's
-  rerun = !opts$get('preview') || identical(opts$get('input_rmd'), 'index.Rmd')
+  rerun = !opts$get('preview') || opts$get('input_rmd') %in% get_index_file()
   if (!rerun) rerun = files %in% opts$get('input_rmd')
   add1 = merge_chapter_script(config, 'before')
   add2 = merge_chapter_script(config, 'after')
@@ -218,7 +215,7 @@ render_new_session = function(files, main, config, output_format, clean, envir, 
 
   meta = clean_meta(render_meta, files)
   move = !(unlist(meta) %in% files)  # do not move input files to output dir
-  on.exit(file.rename(unlist(meta)[move], files_md[move]), add = TRUE)
+  on.exit(file_rename(unlist(meta)[move], files_md[move]), add = TRUE)
 
   merge_chapters(unlist(meta), main, orig = files)
 

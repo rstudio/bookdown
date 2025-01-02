@@ -439,7 +439,7 @@
    * Used by `_.sortByOrder` to compare multiple properties of a value to another
    * and stable sort them.
    *
-   * If `orders` is unspecified, all valuess are sorted in ascending order. Otherwise,
+   * If `orders` is unspecified, all values are sorted in ascending order. Otherwise,
    * a value is sorted in ascending order if its corresponding order is "asc", and
    * descending if "desc".
    *
@@ -923,7 +923,7 @@
      * @private
      * @param {*} value The value to wrap.
      * @param {boolean} [chainAll] Enable chaining for all wrapper methods.
-     * @param {Array} [actions=[]] Actions to peform to resolve the unwrapped value.
+     * @param {Array} [actions=[]] Actions to perform to resolve the unwrapped value.
      */
     function LodashWrapper(value, chainAll, actions) {
       this.__wrapped__ = value;
@@ -2761,7 +2761,7 @@
      *
      * @private
      * @param {*} value The unwrapped value.
-     * @param {Array} actions Actions to peform to resolve the unwrapped value.
+     * @param {Array} actions Actions to perform to resolve the unwrapped value.
      * @returns {*} Returns the resolved value.
      */
     function baseWrapperValue(value, actions) {
@@ -5571,7 +5571,7 @@
     /**
      * Creates a duplicate-free version of an array, using
      * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
-     * for equality comparisons, in which only the first occurence of each element
+     * for equality comparisons, in which only the first occurrence of each element
      * is kept. Providing `true` for `isSorted` performs a faster search algorithm
      * for sorted arrays. If an iteratee function is provided it is invoked for
      * each element in the array to generate the criterion by which uniqueness
@@ -12448,7 +12448,7 @@
 
     /**
      * this is a mapping of keys that require shift on a US keypad
-     * back to the non shift equivelents
+     * back to the non shift equivalents
      *
      * this is so you can use keyup events with these keys
      *
@@ -12504,7 +12504,7 @@
 
     /**
      * loop through the f keys, f1 to f19 and add them to the map
-     * programatically
+     * programmatically
      */
     for (var i = 1; i < 20; ++i) {
         _MAP[111 + i] = 'f' + i;
@@ -12634,7 +12634,7 @@
     }
 
     /**
-     * stops propogation for this event
+     * stops propagation for this event
      *
      * @param {Event} e
      * @returns void
@@ -12952,7 +12952,7 @@
          * actually calls the callback function
          *
          * if your callback function returns false this will use the jquery
-         * convention - prevent default and stop propogation on the event
+         * convention - prevent default and stop propagation on the event
          *
          * @param {Function} callback
          * @param {Event} e
@@ -13669,7 +13669,7 @@ process.nextTick = function (fun) {
     }
 };
 
-// v8 likes predictible objects
+// v8 likes predictable objects
 function Item(fun, array) {
     this.fun = fun;
     this.array = array;
@@ -14671,7 +14671,7 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     if (!ipv6Hostname) {
       // IDNA Support: Returns a puny coded representation of "domain".
       // It only converts the part of the domain name that
-      // has non ASCII characters. I.e. it dosent matter if
+      // has non ASCII characters. I.e. it doesn't matter if
       // you call it with a domain that already is in ASCII.
       var domainArray = this.hostname.split('.');
       var newOut = [];
@@ -14981,8 +14981,8 @@ Url.prototype.resolveObject = function(relative) {
     // Put this after the other two cases because it simplifies the booleans
     if (psychotic) {
       result.hostname = result.host = srcPath.shift();
-      //occationaly the auth can get stuck only in host
-      //this especialy happens in cases like
+      //occasionally the auth can get stuck only in host
+      //this especially happens in cases like
       //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
       var authInHost = result.host && result.host.indexOf('@') > 0 ?
                        result.host.split('@') : false;
@@ -15063,8 +15063,8 @@ Url.prototype.resolveObject = function(relative) {
   if (psychotic) {
     result.hostname = result.host = isAbsolute ? '' :
                                     srcPath.length ? srcPath.shift() : '';
-    //occationaly the auth can get stuck only in host
-    //this especialy happens in cases like
+    //occasionally the auth can get stuck only in host
+    //this especially happens in cases like
     //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
     var authInHost = result.host && result.host.indexOf('@') > 0 ?
                      result.host.split('@') : false;
@@ -15444,7 +15444,7 @@ var platform = require('./platform');
 var state = require('./state');
 
 
-// Toggle sidebar with or withour animation
+// Toggle sidebar with or without animation
 function toggleSidebar(_state, animation) {
     if (state != null && isOpen() == _state) return;
     if (animation == null) animation = true;
