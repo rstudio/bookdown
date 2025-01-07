@@ -1,3 +1,5 @@
+# CHANGES IN bookdown VERSION 0.43
+
 # CHANGES IN bookdown VERSION 0.42
 
 - New option in `gitbook`'s font settings menu to control line spacing (thanks, @hayden-MB, #1479).
