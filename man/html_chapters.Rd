@@ -18,8 +18,8 @@ html_chapters(
   base_format = rmarkdown::html_document,
   split_bib = TRUE,
   page_builder = build_chapter,
-  split_by = c("none", "rmd", outer(c("chapter", "section", 1:6), c("", "+number"),
-    paste0))
+  split_by = c(outer(c("chapter", "section", 1:6), c("", "+number"), paste0), "rmd",
+    "none")
 )
 
 html_book(...)
