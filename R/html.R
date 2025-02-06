@@ -314,7 +314,7 @@ split_chapters = function(
       # h[X+1] that immediately follows hX
       i = idxSec[nSec == nNext & c(nNext, head(nSec, -1)) == nCur] - 1
       # close the hX section early with </div>
-      if (length(i)) x[i] = paste(x[i], '\n</div>')
+      if (length(i)) x[i] = paste0(x[i], '\n</div>')
 
       # hX that immediately follows h[X+1] but not the first h1
       iSec <- as.numeric(sub("h", "", nSec))
