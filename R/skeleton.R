@@ -87,6 +87,7 @@ skeleton_append_yml = function(main_yml, child_yml, prepend = NULL) {
   if (!file.exists(child_yml)) return(invisible(FALSE))
   yml_child = xfun::read_utf8(child_yml)
   on.exit(unlink(child_yml), add = TRUE)
+  prepend = c(prepend, yml_child)
   xfun::write_utf8(c(prepend, yml_main), main_yml)
   invisible(TRUE)
 }

@@ -1,7 +1,5 @@
 # CHANGES IN bookdown VERSION 0.43
 
-- `create_bs4_book()` and `create_gitbook()` do not create duplicate entries in `_output.yml` anymore.
-
 # CHANGES IN bookdown VERSION 0.42
 
 - New option in `gitbook`'s font settings menu to control line spacing (thanks, @hayden-MB, #1479).
