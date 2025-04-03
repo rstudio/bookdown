@@ -18,10 +18,16 @@ See chapter 2 now at \@ref(section-2)
 
 # Section 2
 
-## subsection 2 {#sub2}
+## subsection 21 {#sub2}
 
 ```{r iris-plot, fig.cap = "A plot"}
 plot(iris)
 ```
 
 See figure \@ref(fig:iris-plot)
+
+# subsection 22
+
+# Section 3
+
+## subsection 3
