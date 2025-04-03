@@ -15,8 +15,9 @@ gitbook(
   extra_dependencies = list(),
   ...,
   template = "default",
-  split_by = c(outer(c("chapter", "section", 1:6), c("", "+number"), paste0), "rmd",
-    "none"),
+  split_by = c("chapter", "section", "0", "1", "2", "3", "4", "5", "6", "chapter+number",
+    "section+number", "0+number", "1+number", "2+number", "3+number", "4+number",
+    "5+number", "6+number", "rmd", "none"),
   split_bib = TRUE,
   config = list(),
   table_css = TRUE,
@@ -44,16 +45,17 @@ default template:
 \item{split_by}{How to name the HTML output files from the book: \code{rmd}
 uses the base filenames of the input Rmd files to create the HTML
 filenames, e.g. generate \file{chapter1.html} for \file{chapter1.Rmd};
-\code{none} means do not split the HTML file (the book will be a single
-HTML file); \code{chapter} means split the file by the first-level headers;
-\code{section} means the second-level headers, \code{1}-\code{6} means split the file by the [1-7]-level headers (1: chapter).
-For \code{chapter}, \code{section} and \code{1}-\code{6}, the HTML filenames will be determined by the header ID's,
-e.g. the filename for the first chapter with a chapter title \code{#
-Introduction} will be \file{introduction.html}; for \code{chapter+number},
-\code{section+number} and \code{[1-6]+number} the chapter/section
-(and higher level section) numbers will be prepended to
-the HTML filenames, e.g. \file{1-introduction.html} and
-\file{2-1-literature.html}.}
+\code{none} or \code{"0"} means do not split the HTML file (the book will be
+a single HTML file); \code{chapter} or \code{"1"} means split the file by
+the first-level headers; \code{section} or \code{"2"} means the second-level
+headers, \code{"3"}-\code{"6"} means split the file by the [3-6]-level
+headers. For \code{chapter}, \code{section} and \code{"1"}-\code{"6"}, the
+HTML filenames will be determined by the header ID's, e.g. the filename
+for the first chapter with a chapter title \code{# Introduction} will be
+\file{introduction.html}; for \code{"chapter+number"}, \code{"section+number"}
+and \code{"[1-6]+number"} the chapter/section (and higher level section)
+numbers will be prepended to the HTML filenames, e.g.
+\file{1-introduction.html} and \file{2-1-literature.html}.}
 
 \item{split_bib}{Whether to split the bibliography onto separate pages where
 the citations are actually used.}
