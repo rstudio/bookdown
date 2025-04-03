@@ -73,6 +73,7 @@ Suggests:
     downlit (>= 0.4.0),
     htmlwidgets,
     jsonlite,
+    curl,
     rstudioapi,
     miniUI,
     rsconnect (>= 0.4.3),

@@ -1,3 +1,4 @@
+source('./testthat/helper-validate_html.R')
 # only run this when NOT_CRAN is true (e.g., on Travis CI)
 if (Sys.getenv('NOT_CRAN') == 'true') local({
   all_files = function() {
@@ -9,10 +10,21 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
   for (f in list.files('rmd', '[.]Rmd$', full.names = TRUE)) {
     rmarkdown::render(f, envir = globalenv(), quiet = TRUE)
   }
+ 
+  html_issues = simplify_html_validation(
+    validate_html(list.files("rmd", ".html$", full.names = TRUE))
+  )
+  if(nrow(html_issues) > 0)
+    stop("HTML issues detected in ", paste(html_issues$file, collapse = ', '))
 
   # split by section works correctly
   ## id is used for html file name
-  sections_files = c("section-1.html", "subsection-1.html", "section-2.html", "sub2.html")
+  sections_files = c(
+    "section-1.html", "subsection-1.html",
+    "section-2.html", "sub2.html", "subsection-22.html",
+    "section-3.html", "subsection-3.html"
+  )
+
   if (any(!file.exists(file.path("rmd", sections_files))))
     stop("Failed to generate sections files")
   ## reference is working correctly (see #787)
