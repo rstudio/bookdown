@@ -25,6 +25,9 @@ simplify_html_validation <- function(results) {
   )
   do.call(rbind, lapply(results,
     function(result) {
+      if(is.null(result)) return(
+        data.frame(file=character(0), messages=character(0))
+      )
       messages <- result$messages$message[result$messages$type == 'error']
       messages <- messages[!messages %in% expected_errors]
       data.frame(
