@@ -6,7 +6,7 @@
 # usethis::use_github_action("check-standard") will install it.
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, 'html-validation-infra']
     paths-ignore:
       - 'inst/examples/**'
       - '_pkgdown.yml'
@@ -61,11 +61,17 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      W3C_MARKUP_VALIDATOR_BASEURL: 'http://0.0.0.0:8888'
 
     permissions:
       actions: read
 
     steps:
+      - name: start HTML validation server
+        run: |
+          docker run --rm -p 8888:8888 -d ghcr.io/validator/validator:latest
+        shell: bash
+
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
