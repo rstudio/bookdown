@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.43
 
+- Support `split_by` for section level higher than `2` (i.e., `##` sections) in `gitbook` (thanks, @katrinabrock #1490, @lcougnaud #1346 #1347).
+
 # CHANGES IN bookdown VERSION 0.42
 
 - New option in `gitbook`'s font settings menu to control line spacing (thanks, @hayden-MB, #1479).
