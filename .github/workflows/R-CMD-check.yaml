@@ -6,7 +6,7 @@
 # usethis::use_github_action("check-standard") will install it.
 on:
   push:
-    branches: [main, master, 'html-validation-infra']
+    branches: [main, master]
     paths-ignore:
       - 'inst/examples/**'
       - '_pkgdown.yml'
