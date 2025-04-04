@@ -329,7 +329,14 @@ split_chapters = function(
       for (j in seq_along(d_sections)){
         if (d_sections[j] >= 0) next
         page_breakpoint = i_sections[j + 1] - 1
-        i = c(i, seq(page_breakpoint + d_sections[j], page_breakpoint))
+        # get the last instance of a level(j+1) or higher
+        # this is the area over which we need to remove div closes
+        j_prev_head = max(tail(which(l_sections[1:j]>=l_sections[j+1]), 1), 1)
+        # count how many different levels there are in that area
+        # they need to be between level(j) and level(j+1)
+        candidate_levels = unique(l_sections[j_prev_head:j+1])
+        n_div_to_delete = length(candidate_levels[candidate_levels<l_sections[j]]) - 1
+        i = c(i, seq(page_breakpoint - n_div_to_delete, page_breakpoint))
       }
       i = setdiff(i, i_sections[l_sections == 1][1])
       if (length(i) && l_sections[1] == split_level) i = setdiff(i, i_sections[which(l_sections == pre_split_level)][1])
@@ -342,6 +349,7 @@ split_chapters = function(
         }
         i = c(i, j)
       }
+     #if(!all(x[i]=='</div>')) browser()
      for (j in i) {
        # the i-th lines should be the closing </div>
        if (!grepl('</div>', x[j])) stop(

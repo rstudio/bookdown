@@ -118,6 +118,32 @@ test_that("gitbook() correctly splits with a specified level", {
 
 })
 
+test_that('try to write a temp file', {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+
+  rmd <- local_rmd_file(
+    c("---", "title: test split_by as numeric", "---", "",
+      "# CHAPTER 1", "## SECTION 1", "### SUBSECTION 1",
+      "#### SUBSUBSECTION 1",
+      "", "# CHAPTER 2", "## SECTION 2",
+      "##### LEVEL 5", "###### LEVEL 6"
+    )
+  )
+  rmd <- local_rmd_file(
+    c("---", "title: test split_by as numeric", "---", "",
+      "# CHAPTER 1", "## SECTION 1", "### SUBSECTION 1",
+      "#### SUBSUBSECTION 1",
+      "", "# CHAPTER 2", "## SECTION 2",
+      "##### LEVEL 5", "###### LEVEL 6"
+    )
+  )
+  expect_true(file.exists(rmd))
+  html_path <- local_render_book(rmd, output_format=gitbook(split_by='none'))
+  expect_true(file.exists(html_path))
+})
+
 test_that("gitbook() split_by equivalents produce equivalent output", {
 
   skip_on_cran()
@@ -125,12 +151,12 @@ test_that("gitbook() split_by equivalents produce equivalent output", {
   skip_if_not_installed("xml2")
 
   equivalents <- list(
-    #list('none', '0', 0),
+    list('none', '0', 0),
     list('chapter', '1', 1),
     list('section', '2', 2)
   )
 
-  rmd <- local_rmd_file(
+  rmd<- local_rmd_file(
     c("---", "title: test split_by section", "---", "",
       "# CHAPTER 1", "## SECTION 1", "### SUBSECTION 1",
       "# CHAPTER 2", "## SECTION 2")
