@@ -420,22 +420,21 @@ split_chapters = function(
       idx = c(1, idx[-n])
     }
   } else {
-    patternSec = paste(seq_len(split_level), collapse = '')
+    reg_level = paste(seq_len(split_level), collapse = '')
     idx2 = if (split_level >= 1) {
-  use_rmd_names = split_by == 'rmd'
-      idxSec = grep(
-        paste0('^<div (id="[^"]+" )?class="section level[', patternSec, ']("| )'),
+      use_rmd_names = split_by == 'rmd'
+      sort(grep(
+        paste0('^<div (id="[^"]+" )?class="section level[', reg_level, ']("| )'),
         html_body
-      )
-      sort(idxSec)
+      ))
     }
     n = length(idx2)
     nms_chaps = if (length(idx)) {
       vapply(idx2, character(1), FUN = function(i) head(nms[idx > i], 1))
     }
     reg_id = '^<div id="([^"]+)".*$'
-    reg_num = paste0('^(<h[', patternSec,
-      ']><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[', patternSec, ']>).*$'
+    reg_num = paste0('^(<h[', reg_level,
+      ']><span class="header-section-number">)([.A-Z0-9]+)(</span>.+</h[', reg_level, ']>).*$'
     )
     nms = vapply(idx2, character(1), FUN = function(i) {
       x1 = html_body[i]; x2 = html_body[i + 1]
