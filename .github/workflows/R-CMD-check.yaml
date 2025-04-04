@@ -61,15 +61,16 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      W3C_MARKUP_VALIDATOR_BASEURL: 'http://0.0.0.0:8888'
 
     permissions:
       actions: read
 
     steps:
-      - name: start HTML validation server
+      - name: Start HTML validation server
         run: |
-          docker run --rm -p 8888:8888 -d ghcr.io/validator/validator:latest
+          docker run --rm -p 8888:8888 -d ghcr.io/validator/validator:latest &&
+          echo "W3C_MARKUP_VALIDATOR_BASEURL=http://0.0.0.0:8888" >> "$GITHUB_ENV"
+        if: runner.os == 'Linux'
         shell: bash
 
       - uses: actions/checkout@v4
