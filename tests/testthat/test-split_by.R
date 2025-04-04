@@ -98,10 +98,7 @@ test_that("gitbook() correctly splits with a specified level", {
           output_format = gitbook(split_by = paste0(split_by, with_num), toc_depth = toc_depth)
         )
         TOC <- xml2::xml_find_all(xml2::read_html(html_path), "//div[@class='book-summary']/nav/ul//li")
-        expect_equal(
-          simplify_html_validation(validate_html(html_path))$messages,
-          character(0)
-        )
+        validate_html(html_path)
         expect_equal(
           xml2::xml_attr(TOC, "data-level"),
           intersect(
@@ -142,19 +139,17 @@ test_that("gitbook() split_by equivalents produce equivalent output", {
 
 
   for (i in seq_along(equivalents)) {
-    html_validation <- list()
     for(j in seq_along(equivalents[[i]])){
       html_path <- local_render_book(
         rmd,
         output_format = gitbook(split_by = equivalents[[i]][[j]], toc_depth = 1)
       )
-      html_validation[[(i-1)*length(equivalents) + j]] <- validate_html(html_path)[[1]]
+      validate_html(html_path)
       # using the first content as a baseline, check if each subsequent content matches it
       if(j == 1) content_baseline <- xml2::read_html(html_path) else
         expect_equal(content_baseline, xml2::read_html(html_path))
     }
   }
-  expect_equal(simplify_html_validation(html_validation)$messages, character(0))
 })
 
 test_that("non-sequential headings produces valid html", {
@@ -173,12 +168,9 @@ test_that("non-sequential headings produces valid html", {
     )
   )
   for (split_by in 0:6){
-    expect_equal(
-      simplify_html_validation(validate_html(local_render_book(
-        rmd,
-        output_format = gitbook(split_by = split_by)
-      )))$messages,
-      character(0)
-    )
+    validate_html(local_render_book(
+      rmd,
+      output_format = gitbook(split_by = split_by)
+    ))
   }
 })

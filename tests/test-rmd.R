@@ -19,6 +19,8 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
          " HTML issues detected:\n  ",
          paste(html_issues$file, html_issues$messages, sep = ': ', collapse = '\n  '))
 
+  validate_html(list.files("rmd", ".html$", full.names = TRUE))
+
   # split by section works correctly
   ## id is used for html file name
   sections_files = c(

@@ -66,6 +66,13 @@ jobs:
       actions: read
 
     steps:
+      - name: Start HTML validation server
+        run: |
+          docker run --rm -p 8888:8888 -d ghcr.io/validator/validator:latest &&
+          echo "W3C_MARKUP_VALIDATOR_BASEURL=http://0.0.0.0:8888" >> "$GITHUB_ENV"
+        if: runner.os == 'Linux'
+        shell: bash
+
       - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
