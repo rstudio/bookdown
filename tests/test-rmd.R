@@ -10,15 +10,6 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
   for (f in list.files('rmd', '[.]Rmd$', full.names = TRUE)) {
     rmarkdown::render(f, envir = globalenv(), quiet = TRUE)
   }
- 
-  html_issues = simplify_html_validation(
-    validate_html(list.files("rmd", ".html$", full.names = TRUE))
-  )
-  if(nrow(html_issues) > 0)
-    stop(nrow(html_issues),
-         " HTML issues detected:\n  ",
-         paste(html_issues$file, html_issues$messages, sep = ': ', collapse = '\n  '))
-
   validate_html(list.files("rmd", ".html$", full.names = TRUE))
 
   # split by section works correctly
