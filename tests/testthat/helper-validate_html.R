@@ -14,7 +14,7 @@ validate_html <- function(
 }
 
 simplify_html_validation <- function(results) {
-  if(is.null(results)) return(
+  if(is.null(results) || length(results) == 0) return(
     data.frame(file=character(0), messages=character(0))
   )
   expected_errors <- c(
