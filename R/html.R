@@ -301,6 +301,7 @@ split_chapters = function(
     ) + i5
 
     names(i_sections) = sub('^<div (id="[^"]+" )?class="section level([[:digit:]])("| ).*',"\\2", body[i_sections - i5])
+    # heading indices
     i_sections = sort(i_sections)
     # heading levels
     l_sections = as.numeric(names(i_sections))
@@ -312,32 +313,32 @@ split_chapters = function(
     )
 
     if (length(i_sections) > 1) {
-
       pre_split_level = split_level - 1
-
-      # h[X] that immediately follows h[X-1] (e.g. h2 that immediately follows h1)
-      i_add = i_sections[
-        l_sections == split_level &
-          c(split_level, head(l_sections, -1)) == pre_split_level] - 1
-      # close the hX section early with </div>
-      if (length(i_add)) x[i_add] = paste0(x[i_add], '\n</div>')
       # h[X-1] that immediately follows h[X] but not the first h1
       d_sections = diff(l_sections)
 
       # in case next section is X > 2, remove multiple </div>
       i = c()
+      i_add = c()
       for (j in seq_along(d_sections)){
-        if (d_sections[j] >= 0) next
-        page_breakpoint = i_sections[j + 1] - 1
-        # get the last instance of a level(j+1) or higher
-        # this is the area over which we need to remove div closes
-        j_prev_head = max(tail(which(l_sections[1:j]>=l_sections[j+1]), 1), 1)
-        # count how many different levels there are in that area
-        # they need to be between level(j) and level(j+1)
-        candidate_levels = unique(l_sections[j_prev_head:j+1])
-        n_div_to_delete = length(candidate_levels[candidate_levels<l_sections[j]]) - 1
-        i = c(i, seq(page_breakpoint - n_div_to_delete, page_breakpoint))
+        if (d_sections[j] == 0) next
+        if (d_sections[j] > 0) {
+          # </div>s to add (close at the end of the page)
+          i_add = c(i_add, i_sections[j + 1] - 1)
+        }
+        if (d_sections[j] < 0) {
+          # </div>s to delete (remove from later in the doc)
+          page_breakpoint = i_sections[j + 1] - 1
+          # get the last instance of a level(j+1) or higher
+          # this is the area over which we need to remove div closes
+          j_prev_head = max(tail(which(l_sections[1:j]>=l_sections[j+1]), 1), 1)
+          # count how many different levels are in that area
+          # this is the number of divs we need to close
+          n_div_to_delete = length(unique(l_sections[j_prev_head:j+1])) - 1
+          i = c(i, seq(page_breakpoint - n_div_to_delete, page_breakpoint))
+        }
       }
+      if (length(i_add)) x[i_add] = paste0(x[i_add], '\n</div>')
       i = setdiff(i, i_sections[l_sections == 1][1])
       if (length(i) && l_sections[1] == split_level) i = setdiff(i, i_sections[which(l_sections == pre_split_level)][1])
 
@@ -349,7 +350,6 @@ split_chapters = function(
         }
         i = c(i, j)
       }
-     #if(!all(x[i]=='</div>')) browser()
      for (j in i) {
        # the i-th lines should be the closing </div>
        if (!grepl('</div>', x[j])) stop(
