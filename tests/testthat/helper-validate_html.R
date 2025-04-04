@@ -21,7 +21,7 @@ simplify_html_validation <- function(results) {
     "Attribute “number” not allowed on element “div” at this point.",
     "CSS: “border-top”: “solid\\9” is not a “color” value.",
     "CSS: “border-bottom”: “solid\\9” is not a “color” value."
-    
+
   )
   do.call(rbind, lapply(results,
     function(result) {
