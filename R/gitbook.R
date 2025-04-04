@@ -25,7 +25,9 @@ gitbook = function(
   fig_caption = TRUE, number_sections = TRUE, self_contained = FALSE,
   anchor_sections = TRUE, lib_dir = 'libs', global_numbering = !number_sections,
   pandoc_args = NULL, extra_dependencies = list(), ..., template = 'default',
-  split_by = c('chapter', 'chapter+number', 'section', 'section+number', 'rmd', 'none'),
+  split_by = c('chapter', 'section', '0', '1', '2', '3', '4', '5', '6', 'chapter+number',
+               'section+number', '0+number', '1+number', '2+number', '3+number',
+               '4+number', '5+number', '6+number', 'rmd', 'none') ,
   split_bib = TRUE, config = list(), table_css = TRUE, code_folding = c("none", "show", "hide")
 ) {
   gb_config = config
@@ -53,6 +55,7 @@ gitbook = function(
     template = template, pandoc_args = pandoc_args2(pandoc_args), ...
   )
   config$pandoc$lua_filters = append(config$pandoc$lua_filters, lua_filters)
+  split_by = as.character(split_by)
   split_by = match.arg(split_by)
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {

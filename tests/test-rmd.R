@@ -10,7 +10,6 @@ if (Sys.getenv('NOT_CRAN') == 'true') local({
   for (f in list.files('rmd', '[.]Rmd$', full.names = TRUE)) {
     rmarkdown::render(f, envir = globalenv(), quiet = TRUE)
   }
-
   validate_html(list.files("rmd", ".html$", full.names = TRUE))
 
   # split by section works correctly
