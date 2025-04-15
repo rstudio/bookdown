@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.44
+
+
 # CHANGES IN bookdown VERSION 0.43
 
 - Support `split_by` for section level higher than `2` (i.e., `##` sections) in `gitbook` (thanks, @katrinabrock #1490, @lcougnaud #1346 #1347).
