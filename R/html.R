@@ -740,7 +740,7 @@ parse_fig_labels = function(content, global = FALSE) {
   m = gregexpr(sprintf('\\(#((%s):[-/[:alnum:]]+)\\)', reg_label_types), content)
   labs = regmatches(content, m)
   cntr = new_counters(label_types, chaps)  # chapter counters
-  figs = grep('^<div class="figure', content)
+  figs = grep('^<div class="(figure|float)', content)
   eqns = grep('<span class="math display">', content)
 
   for (i in seq_along(labs)) {
@@ -764,7 +764,7 @@ parse_fig_labels = function(content, global = FALSE) {
     arry = c(arry, setNames(num, lab))
 
     switch(type, fig = {
-      if (length(grep('^<p class="caption', content[i - 0:1])) == 0) {
+      if (length(grep('^<p class="caption|^<div class="figcaption', content[i - 0:1])) == 0) {
         # remove these labels, because there must be a caption on this or
         # previous line (possible negative case: the label appears in the alt
         # text of <img>)
