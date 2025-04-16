@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.44
 
+- Figure numbering is now correctly working in HTML with Pandoc 3, when Markdown syntax is used to include images (thanks, @N0rbert, #1467).
+
 
 # CHANGES IN bookdown VERSION 0.43
 
