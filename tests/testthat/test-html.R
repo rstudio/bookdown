@@ -97,7 +97,7 @@ test_that("Figure are numbered correctly", {
   xpath <- if (rmarkdown::pandoc_version() >= "3") {
     "//div[@class='figcaption']"
   } else {
-    "//div[@class='caption']"
+    "//p[@class='caption']"
   }
   figure <- xml2::xml_find_first(content, xpath)
   expect_match(xml2::xml_text(figure), "Figure 1.1", fixed = TRUE)
