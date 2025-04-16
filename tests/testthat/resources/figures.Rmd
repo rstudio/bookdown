@@ -1,0 +1,23 @@
+---
+title: Figure cross-reference issue in HTML
+output:
+  bookdown::html_document2: default
+---
+
+# Zero 1 {-#zero1}
+
+Some text in 1st unnumbered section.
+
+# Practically long header about some theories {#theory}
+
+## Markdown Syntax {#markdown-syntax}
+
+Content
+
+### Images {#markdown-syntax-media}
+
+First figure of first section is below, it reference is Fig. \@ref(fig:md-logo).
+
+![(\#fig:md-logo) Markdown logo](md.png)
+
+...
