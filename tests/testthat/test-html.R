@@ -79,3 +79,27 @@ test_that("add_toc_class() works for all pandoc versions", {
   TOC <- xml2::xml_find_all(content, "//div[@id = 'TOC']/ul/li")
   expect_equal(xml2::xml_attr(TOC, "class"), c("has-sub", NA, "has-sub"))
 })
+
+
+test_that("Figure are numbered correctly", {
+  skip_on_cran()
+  skip_if_not_pandoc()
+  skip_if_not_installed("xml2")
+
+  dir <- withr::local_tempdir("bookdown-test")
+  rmd_file <- "figures.Rmd"
+  file.copy(test_path("resources", rmd_file), dir)
+  file.copy(test_path("resources", "md.png"), dir)
+  withr::local_dir(dir)
+  out <- rmarkdown::render(rmd_file, output_format = "bookdown::html_document2")
+
+  content <- xml2::read_html(out)
+  xpath <- if (rmarkdown::pandoc_version() >= "3") {
+    "//div[@class='figcaption']"
+  } else {
+    "//p[@class='caption']"
+  }
+  figure <- xml2::xml_find_first(content, xpath)
+  expect_match(xml2::xml_text(figure), "Figure 1.1", fixed = TRUE)
+
+})
