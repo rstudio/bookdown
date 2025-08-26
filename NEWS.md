@@ -5,7 +5,7 @@
 
 - Figure numbering is now correctly working in HTML with Pandoc 3, when Markdown syntax is used to include images (thanks, @N0rbert, #1467).
 
-- Removed the CSS property `-webkit-touch-callout: default;` from `gitbook` (thanks, @AlbertLei, #1500).
+- Removed the CSS property `-webkit-touch-callout: none;` from `gitbook` (thanks, @AlbertLei, #1500).
 
 # CHANGES IN bookdown VERSION 0.43
 
