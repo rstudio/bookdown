@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.45
 
+- `gitbook()` TOC now works again with Pandoc 3.2.1 and above (thanks, @privefl, #1503).
+
 
 # CHANGES IN bookdown VERSION 0.44
 
