@@ -58,7 +58,7 @@ if (length(formats) > 1 && !ghpages) {
   message(">> Publishing Books")
   if (!is.na(Sys.getenv("CI", NA))) {
     # On CI connect to server, using API KEY and deploy using appId
-    rsconnect::addConnectServer('https://bookdown.org', 'bookdown.org')
+    rsconnect::addServer('https://bookdown.org', 'bookdown.org')
     rsconnect::connectApiUser(
       account = 'GHA', server = 'bookdown.org',
       apiKey = Sys.getenv('CONNECT_API_KEY')
