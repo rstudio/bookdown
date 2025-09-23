@@ -231,7 +231,7 @@ A nice effect of setting `description` and `cover-image` is that when you share 
 
 The `bs4_book()` output format is built with Bootstrap (<https://getbootstrap.com>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. On a full-size screen, the layout includes three columns of content so readers can quickly see all chapters on the left, the current chapter in the middle, and sections within the the current chapter on the right. You can read an example book here: <https://mastering-shiny.org>
 
-```{r fig.align='center', echo=FALSE, fig.link='https://mastering-shiny.org', fig.cap="Home page of a book with the three-column Bootstrap style."}
+```{r fig.align='center', echo=FALSE, fig.link='https://mastering-shiny.org', fig.cap="Home page of a book with the three-column Bootstrap style.", out.width=if(knitr::is_latex_output()) '100%'}
 knitr::include_graphics('images/bs4-book.png', dpi = NA)
 ```
 

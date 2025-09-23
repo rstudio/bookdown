@@ -772,7 +772,7 @@ The function `install_phantomjs()` works for Windows, OS X, and Linux. You may a
 
 When **knitr** detects an HTML widget object in a code chunk, it either renders the widget normally when the current output format is HTML, or saves the widget as an HTML page and calls **webshot** to capture the screen of the HTML page when the output format is not HTML. Here is an example of a table created from the **DT** package [@R-DT]:
 
-```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE, cache.extra=packageVersion('DT'), screenshot.opts=list(zoom=2)}
+```{r DT-demo, fig.cap='A table widget rendered via the DT package.', dev='png', cache=TRUE, cache.extra=packageVersion('DT'), screenshot.opts=list(zoom=2), out.width=if(knitr::is_latex_output()) '100%'}
 DT::datatable(iris)
 ```
 
@@ -797,7 +797,7 @@ A related function is `knitr::include_app()`, which is very similar to `include_
 \let\ooldhref\href
 \let\href\oldhref
 
-```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=20,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6}
+```{r miniUI, fig.cap='A Shiny app created via the miniUI package; you can see a live version at https://yihui.shinyapps.io/miniUI/.', screenshot.opts=list(delay=20,zoom=2), dev='png', cache=TRUE, fig.align='center', fig.width=8, fig.height=6, out.width=if(knitr::is_latex_output()) '100%'}
 knitr::include_app('https://yihui.shinyapps.io/miniUI/', height = '600px')
 ```
 
