@@ -41,6 +41,17 @@ lapply(names(githubs), function(pkg) {
   if (system.file(package = pkg) == '') remotes::install_github(githubs[pkg], upgrade = FALSE)
 })
 
+# latex post process
+options(bookdown.post.latex = function(x) {
+  # remove alt text inside \pandocbounded{} and this command itself
+  sub('^\\\\pandocbounded\\{(.+?)alt=\\{.+?\\}(\\]\\{.+?\\})\\}($|\\\\\\\\)', '\\1\\2\\3', x)
+})
+
+# disable alt text for latex output since there'd be a latex error and I don't know how to fix it
+if (knitr::is_latex_output()) knitr::opts_hooks$set(fig.alt = function(x) {
+  x$fig.alt = NULL
+  x
+})
 ```
 
 # Preface {-}
