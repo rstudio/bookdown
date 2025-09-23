@@ -965,7 +965,7 @@ restore_links = function(segment, full, lines, filenames) {
     if (length(x) == 0) return(x)
     links = gsub(r, '\\1', x)
     for (i in seq_along(links)) {
-      a = grep(sprintf(' id="%s"', links[i]), full, fixed = TRUE)
+      a = grep(sprintf(' id="%s"', URLdecode(links[i])), full, fixed = TRUE)
       if (length(a) == 0) next
       a = a[1]
       x[i] = sprintf(
