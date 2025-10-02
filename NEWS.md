@@ -2,7 +2,6 @@
 
 - `gitbook()` TOC now works again with Pandoc 3.2.1 and above (thanks, @privefl, #1503).
 
-
 # CHANGES IN bookdown VERSION 0.44
 
 - Figure numbering is now correctly working in HTML with Pandoc 3, when Markdown syntax is used to include images (thanks, @N0rbert, #1467).
@@ -54,7 +53,7 @@
 
 # CHANGES IN bookdown VERSION 0.35
 
-- Search configuration in `bs4_book()` will now return more results as [Field-Length Norm](https://fusejs.io/concepts/scoring-theory.html#field-length-norm) is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
+- Search configuration in `bs4_book()` will now return more results as [Field-Length Norm](https://www.fusejs.io/concepts/scoring-theory.html#field-length-norm) is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
 
 # CHANGES IN bookdown VERSION 0.34
 
