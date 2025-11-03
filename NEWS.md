@@ -1,5 +1,6 @@
 # CHANGES IN bookdown VERSION 0.46
 
+- Removed tests for `xfun::with_ext()` that don't belong to this package.
 
 # CHANGES IN bookdown VERSION 0.45
 
