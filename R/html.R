@@ -63,7 +63,7 @@ html_chapters = function(
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
     self_contained = FALSE, lib_dir = lib_dir,
-    template = template, pandoc_args = pandoc_args2(pandoc_args), ...
+    template = template, pandoc_args = pandoc_args2(pandoc_args, wrap = 'none'), ...
   ))
   split_by = as.character(split_by)
   split_by = match.arg(split_by)
@@ -82,8 +82,8 @@ html_chapters = function(
 
 # add --wrap=preserve to pandoc args for pandoc 2.0:
 # https://github.com/rstudio/bookdown/issues/504
-pandoc_args2 = function(args) {
-  if (pandoc2.0() && !length(grep('--wrap', args))) c('--wrap', 'preserve', args) else args
+pandoc_args2 = function(args, wrap = 'preserve') {
+  if (pandoc2.0() && !length(grep('--wrap', args))) c('--wrap', wrap, args) else args
 }
 
 #' @rdname html_chapters
@@ -140,7 +140,7 @@ html_document2 = function(
   pandoc_args = NULL, base_format = rmarkdown::html_document
 ) {
   config = get_base_format(base_format, list(
-    ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args)
+    ..., number_sections = number_sections, pandoc_args = pandoc_args2(pandoc_args, wrap = 'none')
   ))
   post = config$post_processor  # in case a post processor have been defined
   config$post_processor = function(metadata, input, output, clean, verbose) {
