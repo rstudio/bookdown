@@ -2,14 +2,9 @@
 % Please edit documentation in R/publish.R
 \name{publish_book}
 \alias{publish_book}
-\title{Publish a book to the web}
+\title{Publish a book to a Posit Connect server}
 \usage{
-publish_book(
-  name = NULL,
-  account = NULL,
-  server = NULL,
-  render = c("none", "local", "server")
-)
+publish_book(name = NULL, account = NULL, server = "connect.posit.cloud", ...)
 }
 \arguments{
 \item{name}{Name of the book (this will be used in the URL path of the
@@ -20,22 +15,16 @@ published book). Defaults to the \code{book_filename} in
 published to account or any single account already associated with
 \code{server}.}
 
-\item{server}{Server to publish to (by default beta.rstudioconnect.com but
-any RStudio Connect server can be published to).}
+\item{server}{Server to publish to (by default connect.posit.cloud, but any
+Posit Connect server can be published to).}
 
-\item{render}{Rendering behavior for site:
-\itemize{
-\item \code{"none"} uploads a static version of the current contents of
-the site directory.
-\item \code{"local"} renders the site locally then uploads it.
-\item \code{"server"} uploads the source of the site to render on the server.
-}
-
-Note that for \code{"none"} and \code{"local"} source files (e.g. \code{.R}, \code{.Rmd} and
-\code{.md}) will not be uploaded to the server.}
+\item{...}{Other arguments to be passed to [rsconnect::deploySite()].}
 }
 \description{
-Publish a book to the web. Note that you should be sure to render all
-versions of the book before publishing, unless you have specified
-\code{render = TRUE}.
+Publish a book to a Connect Server. By default, you should render the book
+locally before publishing.
+}
+\note{
+Previously the default server was bookdown.org, which will be sunset.
+  You are no longer recommended to publish to bookdown.org.
 }

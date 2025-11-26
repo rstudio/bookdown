@@ -1,49 +1,44 @@
-#' Publish a book to the web
+#' Publish a book to a Posit Connect server
 #'
-#' Publish a book to the web. Note that you should be sure to render all
-#' versions of the book before publishing, unless you have specified
-#' \code{render = TRUE}.
-#'
-#' @inheritParams rsconnect::deploySite
-#'
+#' Publish a book to a Connect Server. By default, you should render the book
+#' locally before publishing.
 #' @param name Name of the book (this will be used in the URL path of the
 #'   published book). Defaults to the \code{book_filename} in
 #'   \code{_bookdown.yml} if not specified.
 #' @param account Account name to publish to. Will default to any previously
 #'   published to account or any single account already associated with
 #'   \code{server}.
-#' @param server Server to publish to (by default beta.rstudioconnect.com but
-#'   any RStudio Connect server can be published to).
-#'
+#' @param server Server to publish to (by default connect.posit.cloud, but any
+#'   Posit Connect server can be published to).
+#' @param ... Other arguments to be passed to [rsconnect::deploySite()].
+#' @note Previously the default server was bookdown.org, which will be sunset.
+#'   You are no longer recommended to publish to bookdown.org.
 #' @export
-publish_book = function(
-  name = NULL, account = NULL, server = NULL, render = c("none", "local", "server")
-) {
-
-  # if there are no RS Connect accounts setup on this machine
-  # then offer to add one for bookdown.org
-  accounts <- rsconnect::accounts()
-  accounts <- subset(accounts, server != "shinyapps.io")
-  if (is.null(accounts) || nrow(accounts) == 0) {
-
-    # add the server if we need to
-    servers = rsconnect::servers()
-    if (nrow(subset(servers, name == 'bookdown.org')) == 0)
-      rsconnect::addServer("https://bookdown.org/__api__", 'bookdown.org')
-
-    # see if they want to configure an account (bail if they don't)
-    message('You do not currently have a bookdown.org publishing account ',
-            'configured on this system.')
-    result = readline('Would you like to configure one now? [Y/n]: ')
-    if (tolower(result) == 'n') return(invisible())
-
-    # configure the account
-    rsconnect::connectUser(server = 'bookdown.org')
+publish_book = function(name = NULL, account = NULL, server = "connect.posit.cloud", ...) {
+  # delete local records of bookdown.org
+  accounts = rsconnect::accounts()
+  x1 = 'bookdown.org' %in% accounts$server
+  x2 = 'bookdown.org' %in% rsconnect::servers()$name
+  if (x1 || x2) {
+    warning(
+      'bookdown.org will be sunset on January 31, 2026. Please consider ',
+      'publishing to https://connect.posit.cloud instead.'
+    )
+    if (readline('Do you want to remove the bookdown.org server now? Your book will _not_ be removed. (y/n) ') == 'y') {
+      if (x1) rsconnect::removeAccount(server = 'bookdown.org')
+      if (x2) rsconnect::removeServer('bookdown.org')
+    }
+    if (readline('Do you want to delete local records of the Connect deployment? Your book will _not_ be deleted (y/n) ') == 'y') {
+      rsconnect::forgetDeployment()
+    }
+  }
+  # if there are no Connect accounts setup on this machine, offer to add one
+  # for connect.posit.cloud
+  if (!'connect.posit.cloud' %in% accounts$server) {
+    if (readline('Do you want to connect to connect.posit.cloud? (y/n)') == 'y')
+      rsconnect::connectCloudUser()
   }
 
   # deploy the book
-  rsconnect::deploySite(
-    siteDir = getwd(), siteName = name, account = account, server = server,
-    render = render, logLevel = 'normal'
-  )
+  rsconnect::deploySite(siteDir = getwd(), siteName = name, account = account, server = server, ...)
 }
