@@ -1,5 +1,7 @@
 # CHANGES IN bookdown VERSION 0.46
 
+- `publish_book()` publishes the book to connect.posit.cloud by default now, instead of bookdown.org. The latter will be sunset soon in early 2026.
+
 - Removed tests for `xfun::with_ext()` that don't belong to this package.
 
 # CHANGES IN bookdown VERSION 0.45
