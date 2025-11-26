@@ -97,13 +97,13 @@ jobs:
         run: make -C inst/examples all
 
       - name: Deploy Gitbook to gh-pages
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' && 
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: inst/examples/_book
           clean: true
-          dry-run: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.publish) || false }}
+          dry-run: ${{ (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish == 'false' || github.event.inputs.publish == false)) || false }}
 
       - name: Upload book folder for debug
         if: failure()
