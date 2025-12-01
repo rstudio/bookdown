@@ -1,11 +1,7 @@
-#' Publish a book to the web
+#' Publish a book to a Posit Connect server
 #'
-#' Publish a book to the web. Note that you should be sure to render all
-#' versions of the book before publishing, unless you have specified
-#' \code{render = TRUE}.
-#'
-#' @inheritParams rsconnect::deploySite
-#'
+#' Publish a book to a Connect Server. By default, you should render the book
+#' locally before publishing.
 #' @param name Name of the book (this will be used in the URL path of the
 #'   published book). Defaults to the \code{book_filename} in
 #'   \code{_bookdown.yml} if not specified.
@@ -36,8 +32,5 @@ publish_book = function(
   }
 
   # deploy the book
-  rsconnect::deploySite(
-    siteDir = getwd(), siteName = name, account = account, server = server,
-    render = render, logLevel = 'normal'
-  )
+  rsconnect::deploySite(siteDir = getwd(), siteName = name, account = account, server = server, ...)
 }
