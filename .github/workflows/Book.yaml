@@ -85,15 +85,7 @@ jobs:
           key: bookdown-${{ hashFiles('inst/examples/*Rmd') }}
           restore-keys: bookdown-
 
-      - name: Test build of HTML books
-        if: github.event_name == 'pull_request'
-        run: make -C inst/examples gitbook bs4_book
-
-      - name: Build and Deploy all book
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        env:
-          CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-          CONTENT_ID: 3
+      - name: Build all book formats
         run: make -C inst/examples all
 
       - name: Deploy Gitbook to gh-pages

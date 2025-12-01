@@ -1,7 +1,6 @@
 quiet = "--quiet" %in% commandArgs(FALSE)
 formats = commandArgs(TRUE)
 
-
 src = (function() {
   attr(body(sys.function()), 'srcfile')
 })()$filename
