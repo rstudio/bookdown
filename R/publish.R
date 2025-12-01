@@ -8,7 +8,7 @@
 #' @param account Account name to publish to. Will default to any previously
 #'   published to account or any single account already associated with
 #'   \code{server}.
-#' @param server Server to publish to (by default connect.posit.cloud but
+#' @param server Server to publish to (by default connect.posit.cloud, but
 #'   any Posit Connect server can be published to).
 #'
 #' @export

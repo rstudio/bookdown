@@ -4,7 +4,12 @@
 \alias{publish_book}
 \title{Publish a book to a Posit Connect server}
 \usage{
-publish_book(name = NULL, account = NULL, server = "connect.posit.cloud", ...)
+publish_book(
+  name = NULL,
+  account = NULL,
+  server = NULL,
+  render = c("none", "local", "server")
+)
 }
 \arguments{
 \item{name}{Name of the book (this will be used in the URL path of the
@@ -15,16 +20,10 @@ published book). Defaults to the \code{book_filename} in
 published to account or any single account already associated with
 \code{server}.}
 
-\item{server}{Server to publish to (by default connect.posit.cloud, but any
-Posit Connect server can be published to).}
-
-\item{...}{Other arguments to be passed to [rsconnect::deploySite()].}
+\item{server}{Server to publish to (by default connect.posit.cloud, but
+any Posit Connect server can be published to).}
 }
 \description{
 Publish a book to a Connect Server. By default, you should render the book
 locally before publishing.
-}
-\note{
-Previously the default server was bookdown.org, which will be sunset.
-  You are no longer recommended to publish to bookdown.org.
 }
