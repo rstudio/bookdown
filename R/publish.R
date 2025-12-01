@@ -2,6 +2,9 @@
 #'
 #' Publish a book to a Connect Server. By default, you should render the book
 #' locally before publishing.
+#' 
+#' @inheritParams rsconnect::deploySite
+#' 
 #' @param name Name of the book (this will be used in the URL path of the
 #'   published book). Defaults to the \code{book_filename} in
 #'   \code{_bookdown.yml} if not specified.
