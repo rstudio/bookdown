@@ -103,6 +103,7 @@ jobs:
           branch: gh-pages
           folder: inst/examples/_book
           clean: true
+          single-commit: true
           dry-run: ${{ (github.event_name == 'workflow_dispatch' && (github.event.inputs.publish == 'false' || github.event.inputs.publish == false)) || false }}
 
       - name: Upload book folder for debug
