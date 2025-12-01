@@ -20,8 +20,8 @@ published book). Defaults to the \code{book_filename} in
 published to account or any single account already associated with
 \code{server}.}
 
-\item{server}{Server to publish to (by default beta.rstudioconnect.com but
-any RStudio Connect server can be published to).}
+\item{server}{Server to publish to (by default connect.posit.cloud but
+any Posit Connect server can be published to).}
 
 \item{render}{Rendering behavior for site:
 \itemize{
