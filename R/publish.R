@@ -32,5 +32,8 @@ publish_book = function(
   }
 
   # deploy the book
-  rsconnect::deploySite(siteDir = getwd(), siteName = name, account = account, server = server, ...)
+  rsconnect::deploySite(
+    siteDir = getwd(), siteName = name, account = account, server = server,
+    render = render, logLevel = 'normal'
+  )
 }
