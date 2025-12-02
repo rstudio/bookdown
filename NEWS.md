@@ -1,6 +1,6 @@
 # CHANGES IN bookdown VERSION 0.46
 
-- `publish_book()` publishes the book to connect.posit.cloud by default now, instead of bookdown.org. The latter will be sunset soon in early 2026.
+- `publish_book()` will prompt to delete local bookdown.org records (only local configurations, not the book itself) if the book has been published to bookdown.org before. The bookdown.org server will be sunset soon in early 2026. Now we recommend that you publish to connect.posit.cloud instead.
 
 - Removed tests for `xfun::with_ext()` that don't belong to this package.
 
