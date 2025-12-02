@@ -31,8 +31,21 @@ publish_book = function(name = NULL, ...) {
   # if no accounts other than shinyapps.io and bookdown.org have been set up on
   # this machine, offer to add one for connect.posit.cloud
   if (length(setdiff(accounts$server, c('shinyapps.io', 'bookdown.org'))) == 0) {
-    if (readline('Do you want to connect to connect.posit.cloud? (y/n)') == 'y')
+    if (readline('Do you want to connect to connect.posit.cloud? (y/n)') == 'y') {
+      # due to https://github.com/rstudio/rsconnect/pull/1266 we need to install RCurl for rsconnect <= 1.6.2
+      if (!xfun::pkg_available("rsconnect", "1.6.3") && !xfun::pkg_available("RCurl")) {
+        if (readline(
+          paste0('The rsconnect package version is below 1.6.3 and the RCurl package is not installed but is required for Connect Cloud auth flow.\n',
+            'Do you want to install RCurl now? (y/n) '
+            )) == 'y') {
+          install.packages('RCurl')
+        } else {
+          stop('The rsconnect package version is below 1.6.3 and the RCurl package is not installed but is required for Connect Cloud auth flow. Please install RCurl package first.',
+               'Then retry or run `rsconnect::connectCloudUser()`', call. = FALSE)
+        }
+      }
       rsconnect::connectCloudUser()
+    }
   }
 
   # deploy the book
