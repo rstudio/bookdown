@@ -32,9 +32,9 @@ publish_book = function(name = NULL, account = NULL, server = "connect.posit.clo
       rsconnect::forgetDeployment()
     }
   }
-  # if there are no Connect accounts setup on this machine, offer to add one
-  # for connect.posit.cloud
-  if (!'connect.posit.cloud' %in% accounts$server) {
+  # if no accounts other than shinyapps.io and bookdown.org have been set up on
+  # this machine, offer to add one for connect.posit.cloud
+  if (length(setdiff(accounts$server), c('shinyapps.io', 'bookdown.org')) == 0) {
     if (readline('Do you want to connect to connect.posit.cloud? (y/n)') == 'y')
       rsconnect::connectCloudUser()
   }
