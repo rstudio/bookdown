@@ -507,6 +507,22 @@ To take advantage of Markdown formatting _within_ the figure caption, you will n
 If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains _alphanumeric_ characters (a-z, A-Z, 0-9), slashes (/), or dashes (-).
 ```
 
+````markdown
+Look at figure \@ref(fig:pressure). Isn't it a nice figure ?
+Similarly, you can also write about the nice knitr logo (Fig. \@ref(fig:knitref)).
+
+(ref:pressurecap) This is the legend of the figure. Do not forget empty line before and after this legend text.
+
+`r ''````{r pressure, fig.cap='(ref:pressurecap)'}
+plot(pressure)
+```
+
+(ref:knitrefcap) The knitr logo referenced above.
+
+`r ''````{r knitref, fig.cap='(ref:knitrefcap)'}
+knitr::include_graphics("images/knit-logo.png")
+```
+````
 
 The chunk option `fig.asp` can be used to set the aspect ratio of plots, i.e., the ratio of figure height/width. If the figure width is 6 inches (`fig.width = 6`) and `fig.asp = 0.7`, the figure height will be automatically calculated from `fig.width * fig.asp = 6 * 0.7 = 4.2`. Figure \@ref(fig:pressure-plot) is an example using the chunk options `fig.asp = 0.7`, `fig.width = 6`, and `fig.align = 'center'`, generated from the code below:
 
