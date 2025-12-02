@@ -39,7 +39,7 @@ pdf_book = function(
 ) {
   config = get_base_format(base_format, list(
     toc = toc, number_sections = number_sections, fig_caption = fig_caption,
-    pandoc_args = pandoc_args2(pandoc_args), ...
+    pandoc_args = pandoc_args2(pandoc_args, wrap = "preserve"), ...
   ))
   config$pandoc$ext = '.tex'
   post = config$post_processor  # in case a post processor have been defined
