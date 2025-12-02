@@ -20,7 +20,40 @@ $(function () {
     sanitize: false,
   });
   $('[data-toggle="tooltip"]').tooltip();
-})
+});
+
+// Sticky Nav ------------------------------------------------------------------
+
+$(function () {
+  const main = document.getElementById('content');
+  const header = document.querySelector('.sidebar-book');
+  let dist = 0;
+
+  // calculate distance to the content so we know when to transition to sticky mode
+  const setDist = () => {
+    dist = main.getBoundingClientRect().top + window.scrollY;
+  }
+
+  const toggleStickyLayoutClass = () => {
+    if (window.innerWidth > 991) return;
+    if (dist < window.scrollY) {
+      if (!document.body.classList.contains('scrolled-to-main')) {
+        main.style.paddingTop = 
+          `${Math.round(header.getBoundingClientRect().height - 56)}px`;
+        document.body.classList.add('scrolled-to-main');
+      }
+    } else if (document.body.classList.contains('scrolled-to-main')) {
+      document.body.classList.remove('scrolled-to-main');
+      main.style.paddingTop = null;
+    }
+  };
+
+  // set initial value
+  setDist();
+
+  window.addEventListener('scroll', toggleStickyLayoutClass);
+  window.addEventListener('resize', setDist);
+});
 
 // Search ----------------------------------------------------------------------
 
