@@ -5,16 +5,11 @@
 #' @param name Name of the book (this will be used in the URL path of the
 #'   published book). Defaults to the \code{book_filename} in
 #'   \code{_bookdown.yml} if not specified.
-#' @param account Account name to publish to. Will default to any previously
-#'   published to account or any single account already associated with
-#'   \code{server}.
-#' @param server Server to publish to (by default connect.posit.cloud, but any
-#'   Posit Connect server can be published to).
 #' @param ... Other arguments to be passed to [rsconnect::deploySite()].
 #' @note Previously the default server was bookdown.org, which will be sunset.
 #'   You are no longer recommended to publish to bookdown.org.
 #' @export
-publish_book = function(name = NULL, account = NULL, server = "connect.posit.cloud", ...) {
+publish_book = function(name = NULL, ...) {
   # delete local records of bookdown.org
   accounts = rsconnect::accounts()
   x1 = 'bookdown.org' %in% accounts$server
@@ -40,5 +35,5 @@ publish_book = function(name = NULL, account = NULL, server = "connect.posit.clo
   }
 
   # deploy the book
-  rsconnect::deploySite(siteDir = getwd(), siteName = name, account = account, server = server, ...)
+  rsconnect::deploySite(siteDir = getwd(), siteName = name, ...)
 }
