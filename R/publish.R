@@ -10,6 +10,9 @@
 #'   You are no longer recommended to publish to bookdown.org.
 #' @export
 publish_book = function(name = NULL, ...) {
+  if (!xfun::pkg_available("rsconnect", "1.6.0")) {
+    stop("Please install/upgrade the 'rsconnect' package (>= 1.6.0) to use this function.")
+  }
   # delete local records of bookdown.org
   accounts = rsconnect::accounts()
   x1 = 'bookdown.org' %in% accounts$server

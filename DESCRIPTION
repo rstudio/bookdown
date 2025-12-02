@@ -76,7 +76,7 @@ Suggests:
     curl,
     rstudioapi,
     miniUI,
-    rsconnect (>= 0.4.3),
+    rsconnect (>= 1.6.0),
     servr (>= 0.13),
     shiny,
     tibble,
