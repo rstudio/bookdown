@@ -23,8 +23,9 @@ publish_book = function(name = NULL, ...) {
       if (x1) rsconnect::removeAccount(server = 'bookdown.org')
       if (x2) rsconnect::removeServer('bookdown.org')
     }
-    if (readline('Do you want to delete local records of the Connect deployment? Your book will _not_ be deleted (y/n) ') == 'y') {
-      rsconnect::forgetDeployment()
+    if (file.exists(d <- 'rsconnect/documents/index.Rmd/bookdown.org') &&
+        readline('Do you want to delete local records of the bookdown.org deployment? Your book will _not_ be deleted (y/n) ') == 'y') {
+      unlink(d, recursive = TRUE)
     }
   }
   # if no accounts other than shinyapps.io and bookdown.org have been set up on
