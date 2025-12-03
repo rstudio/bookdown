@@ -158,19 +158,23 @@ rsconnect::writeManifest(contentCategory = "site")
 
 See more details in the respective documentation:
 
--   `rsconnect::writeManifest()`: <https://rstudio.github.io/rsconnect/reference/writeManifest.html>
+-   `rsconnect::writeManifest()`
 
 -   Connect Cloud R guide: <https://docs.posit.co/connect-cloud/how-to/r/dependencies.html>
 
-With this file, you will be able to use `render = “server”`
+Then, you have two options:
 
-``` r
-bookdown::publish_book(render = 'server')
-```
+-   Consider using the Connect Cloud GitHub integration to have your source code pulled directly from your GitHub repository, either manually triggered from the Connect Cloud dashboard or automatically upon pushing to a branch. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
 
-Your book will now be rendered directly on the Connect Cloud server.
+-   Keep using the publish_book() function while setting render = “server”
 
-If you need a specific configuration for rendering your document, see Connect Cloud documentation. For example, for environment variable: <https://docs.posit.co/connect-cloud/user/publish/github.html#advanced-settings>
+    ``` R
+    bookdown::publish_book(render = 'server')
+    ```
+
+In both cases, your book will now be rendered directly on the Connect Cloud server.
+
+If you require a specific configuration for rendering your document, refer to the Connect Cloud documentation. For example, for environment variable: <https://docs.posit.co/connect-cloud/user/publish/github.html#advanced-settings>
 
 ### Q: Can I publish my bookdown project to Connect Cloud from GitHub, like with GitHub Actions?
 
@@ -210,8 +214,8 @@ This method of downloading books will no longer be available after January 31, 2
 
 ### Q: I don’t have my bookdown project sources, but I have the rendered HTML. Can I publish it?
 
-Yes. `bookdown::render_book()` has produced for you at the time a static website, and it can be hosted anywhere that supports such content.\
-\
+Yes. `bookdown::render_book()` has produced for you at the time a static website, and it can be hosted anywhere that supports such content.
+
 Connect Cloud can host static content. You can use the Connect Cloud website to configure or use the **rsconnect** package to deploy it. `bookdown::publish_book()` won’t be adapted.
 
 You could also consider Netlify, GitHub Pages, or any other static page hosting service.
@@ -238,9 +242,9 @@ To remove your content, you can follow these steps:
 
 ### Q: I still need to update my content on [bookdown.org](http://bookdown.org). Can I do that?
 
-Yes, you can still update your content until January 31, 2026. However, as mentioned in this migration guide, in version 0.46 of bookdown, `bookdown::publish_book()` won’t allow to publish to [bookdown.org](http://bookdown.org) anymore. 
+Yes, you can still update your content until January 15, 2026. However, as mentioned in this migration guide, in version 0.46 of bookdown, `bookdown::publish_book()` won’t allow publishing to [bookdown.org](http://bookdown.org) anymore. 
 
-So if you need to update your content, the easiest is to not update **bookdown** yet. Use version 0.45 or below. \
+So if you need to update your content, the easiest is to not update **bookdown** yet. Use version 0.45 or below.\
 If you need to install 0.45, you can use the packagemanager frozen repo using the following command:
 
 ``` r
@@ -258,4 +262,4 @@ rsconnect::connectUser(server = "bookdown.org")
 rsconnect::deploySite(siteDir = getwd(),server ="bookdown.org")
 ```
 
-This method of updating books will no longer be available after January 31, 2026.
+This method of updating books will no longer be available after January 15, 2026.
