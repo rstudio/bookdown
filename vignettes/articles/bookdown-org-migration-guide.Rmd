@@ -146,7 +146,7 @@ Yes, it is possible to customize the url of your content by setting a custom nam
 
 ### Q: Can I publish my bookdown project to Connect Cloud from GitHub?
 
-Yes, you can, with some adaptation to your current workflow if you were using `publish_book()`. A current limitation is that to authenticate to Connect Cloud, the workflow requires an interactive setup for the authentication flow (i.e., `rsconnect::connectCloudUser()` can only be run interactively). Connect Cloud provides a GitHub App that enables you to directly connect your repository and automatically publish on push, or manually refresh from the Connect Cloud Dashboard. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
+Yes, you can, with some adaptation to your current workflow if you were using `publish_book()`. Because `rsconnect::connectCloudUser()` can only be run interactively, you can’t use `publish_book()` to push to Connect Cloud from within a GitHub Action workflow. However, Connect Cloud provides a GitHub integration that enables you to directly connect your repository and automatically publish on push, or manually refresh from the Connect Cloud Dashboard, without the need to maintain a GitHub Actions workflow in your project that pushes to Connect Cloud. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
 
 There are several options available, depending on your desired workflow.
 
@@ -174,11 +174,7 @@ Yes, your **bookdown** project can be rendered on Connect Cloud instead of in yo
 rsconnect::writeManifest(contentCategory = "site")
 ```
 
-See more details in the respective documentation:
-
--   `rsconnect::writeManifest()`
-
--   Connect Cloud R guide: <https://docs.posit.co/connect-cloud/how-to/r/dependencies.html>
+See more details [Connect Cloud R guide](https://docs.posit.co/connect-cloud/how-to/r/dependencies.html).
 
 Once you have a `manifest.json` file, you have two options:
 
