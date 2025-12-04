@@ -2,7 +2,7 @@
 title: "Migration Guide: Publishing Your bookdown Book to Posit Connect Cloud"
 ---
 
-This guide provides step-by-step instructions for migrating your bookdown project from the retiring `bookdown.org` hosting service to [Posit Connect Cloud](https://connect.posit.cloud "Posit Connect Cloud"). Posit Connect Cloud is the recommended alternative for hosting your bookdown content, offering robust deployment, sharing, and management features.
+This guide provides step-by-step instructions for migrating your bookdown project from the retiring [bookdown.org](bookdown.org) hosting service to [Posit Connect Cloud](https://connect.posit.cloud "Posit Connect Cloud"). Posit Connect Cloud is the recommended alternative for hosting your **bookdown** content, offering robust deployment, sharing, and management features.
 
 ## Prerequisites
 
@@ -10,9 +10,7 @@ Before starting the migration, ensure you have the following:
 
 1.  **A Posit Connect Cloud Account:** Sign up or log in to your Posit Connect Cloud account.
 
-2.  **R and RStudio (or Positron):** Make sure you have the latest versions of R and RStudio installed.
-
-3.  **Required R Packages:** Ensure the bookdown and rsconnect packages are installed and up to date in your R environment. You need version bookdown 0.46 or later and rsconnect version 1.6.0 or later, both of them available from CRAN.
+2.  **R and Required Packages:** Ensure the **bookdown** and **rsconnect** packages are installed and up to date in your R environment. You need version **bookdown** 0.46 or later and **rsconnect** version 1.6.0 or later, both of them available from CRAN.
 
     ``` r
     # Install/update necessary packages
@@ -21,9 +19,9 @@ Before starting the migration, ensure you have the following:
     pak::pak(c("bookdown", "rsconnect"))
     ```
 
-4.  **Local bookdown Project:** You must have the source files for your bookdown project on your local machine. If you don’t have the source, you don’t need this guide. See the FAQ.
+3.  **Local bookdown Project:** You must have the source files for your **bookdown** project on your local machine. If you don’t have the source, you don’t need this guide. See the FAQ.
 
-This is optional, though you can also navigate Connect Cloud documentation before starting your migration to know better about this hosting service: <https://docs.posit.co/connect-cloud/>
+If you want to learn more about Connect Cloud before starting your migration, see its  [documentation](https://docs.posit.co/connect-cloud/ "Connect Cloud documentation").
 
 ## TL;DR: Run `bookdown::publish_book()`
 
@@ -37,11 +35,11 @@ bookdown::publish_book()
 
 This will
 
-1.  Remove [bookdown.org](http://bookdown.org) from know rsconnect server list (i.e. \`rsconnect::servers()\`) and from your accounts (i.e. `rsconnect::accounts()`)
+1.  Remove [bookdown.org](http://bookdown.org) from **rsconnect**'s known server list (i.e. `rsconnect::servers()`) and from your accounts (i.e. `rsconnect::accounts()`)
 2.  Prompt you to connect to <https://connect.posit.cloud> (i.e. call `rsconnect::connectCloudUser()` for you)
 3.  Deploy your bookdown book (using `rsconnect::deploySite()`)
 
-As with [bookdown.org](http://bookdown.org), only the static version of your book will be deployed, meaning the bookdown book needs to be rendered locally first, and be present in your bookdown output directory (e.g. default `_book` directory). If you have not already rendered the book, add `render = 'local'` to the command:
+As with [bookdown.org](http://bookdown.org), only the static version of your book will be deployed, meaning the bookdown book needs to be rendered locally first, and be present in your bookdown output directory (e.g. default `_book` directory). If you have not already rendered the book, add `render = 'local'` to the command, which will render it before uploading:
 
 ``` r
 bookdown::publish_book(render = 'local')
@@ -51,9 +49,9 @@ Now go to your Connect Cloud account to see your book online!
 
 ## Detailed Steps to Publish Your Bookdown Book
 
-### 1. Prepare Your Project for Connect Deployment {#prepare-project}
+### 1. Prepare Your Project for Deployment {#prepare-project}
 
-If you were publishing to [bookdown.org](http://bookdown.org), you probably added some specific YAML field in your index.Rmd like
+If you were publishing to [bookdown.org](http://bookdown.org), you probably added some specific YAML field in your `index.Rmd` like
 
 ``` yaml
 description: "This is a minimal bookdown demo. It shows the basics of ..."
@@ -65,28 +63,27 @@ Those fields were used for listing on [bookdown.org](http://bookdown.org) and ca
 
 They won’t prevent or impact deployment if they are still there.
 
-All other configurations for bookdown should stay.
+All other configurations for **bookdown** should stay.
 
 ### 2. Configure rsconnect for Posit Connect Cloud
 
-The rsconnect package manages the connection and deployment process. To add connection to <https:://connect.posit.cloud> use:
+The **rsconnect** package manages the connection and deployment process. \
+To add a connection to <https://connect.posit.cloud>, use:
 
 ``` r
 rsconnect::connectCloudUser()
 ```
 
-This needs to be run interactively as it will open a browser and prompt you to confirm a code. See `rsconnect::connectCloudUser()` doc for more information.
+This needs to be run interactively, as it will open a browser and prompt you to confirm a code.
 
-*Note: The bookdown package (version 0.46 or later) is updated so that running `bookdown::publish_book()` will prompt you to connect to Posit Connect Cloud if you don't have any existing Connect accounts configured.*
-
-*Note: See official documentation on using the **rsconnect** package in <https://docs.posit.co/connect-cloud/user/publish/ide.html#rsconnect-package>*
+*Note: The **bookdown** package (version 0.46 or later) is updated so that running `bookdown::publish_book()` will prompt you to connect to Posit Connect Cloud if you don't have any existing Connect accounts configured.*
 
 ### 3. Deploy Your Book
 
 You can deploy your book using `bookdown::publish_book()`
 
 1.  **Navigate to Project Directory:** Ensure your R session's working directory is the root of your bookdown project.
-2.  **Run Deployment Command:** Use the bookdown::publish_book() function.
+2.  **Run Deployment Command:** Use the `bookdown::publish_book()` function.
 
 ``` r
 # Renders the book locally before deployment (recommended)
@@ -95,13 +92,13 @@ bookdown::publish_book(render = "local")
 bookdown::publish_book(name = 'name of the book', render = "local")
 ```
 
-If you have only one account configured, rsconnect will deploy using that account. If you have multiple, you may be prompted to choose.
+If you have only one account configured, **rsconnect** will deploy using that account. If you have multiple, you may be prompted to choose. Or, you can specify `account` and/or `server`, which will be passed to `rsconnect::deploySite()` .
 
 ### 4. Manage Your Published Book on Connect Cloud
 
 Once deployed, your book will be accessible on Posit Connect Cloud.
 
-1.  **Access the Content:** A link to your newly published book will appear in the console or your browser.
+1.  **View the Book:** A link to your newly published book will appear in the console or your browser.
 2.  **Settings and Sharing:**
     -   Log in to Posit Connect Cloud and navigate to your book's landing page.
     -   You can manage access settings based on your [plan](https://connect.posit.cloud/plans). (e.g., public, private, specific groups).
@@ -117,7 +114,7 @@ See the [bookdown.org sunset announcement post](https://posit.co/blog/bookdown-o
 
 ### Q: What is the recommended alternative for hosting my book?
 
-The recommended alternative, especially for users who want a simple deployment experience and enterprise-grade hosting, is **Posit Connect Cloud**. Alternatives also include hosting on services like GitHub Pages or Netlify.
+The recommended alternative, especially for users who want a simple deployment experience and enterprise-grade hosting, is [Posit Connect Cloud](https://connect.posit.cloud). Alternatives also include hosting on services like GitHub Pages or Netlify.
 
 ### Q: Will my book's URL automatically redirect from bookdown.org?
 
@@ -133,24 +130,45 @@ You may download and delete your existing content until **January 15, 2026**. On
 
 ### Q: Do I need to use `bookdown::publish_book()`?
 
-No, you don’t. This function is provided for convenience for bookdown users. You can use **rsconnect** package directly, or follow one of the other publishing methods offered by Connect Cloud, like [deployment from GitHub](https://docs.posit.co/connect-cloud/user/publish/github.html) or [deployment from your IDE](https://docs.posit.co/connect-cloud/user/publish/ide.html)
+No, you don’t. This function is provided for convenience for bookdown users. You can use the **rsconnect** package directly, or follow one of the other publishing methods offered by Connect Cloud, like [deployment from GitHub](https://docs.posit.co/connect-cloud/user/publish/github.html) or [deployment from your IDE](https://docs.posit.co/connect-cloud/user/publish/ide.html)
 
 ### Q: Is Connect Cloud free like bookdown.org was?
 
-Yes. Connect Cloud has a free tier that includes an unlimited number of published documents. However, it also offers paid plans with functionality that [bookdown.org](http://bookdown.org) did not offer. See <https://connect.posit.cloud/plans> for more details.
+Yes. Connect Cloud has a free tier that includes an unlimited number of published documents. It also offers paid plans with functionality that [bookdown.org](http://bookdown.org) did not offer. See <https://connect.posit.cloud/plans> for more details.
 
 ### Q: Are books on Connect Cloud publicly available?
 
-Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to [bookdown.org](http://bookdown.org) public hosting service.\
-To disable public sharing and hide your book, or enable private sharing to share privately, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
+Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to [bookdown.org](http://bookdown.org) public hosting service. To disable public sharing, or share with selected viewers, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
 
 ### Q: Can I get a vanity url like with bookdown.org?
 
 Yes, it is possible to customize the url of your content by setting a custom name in the settings page of the content. Url would then be of the form `https://[account-name]-[custom-name].share.connect.posit.cloud`. See [Connect Cloud documentation on settings](https://docs.posit.co/connect-cloud/user/manage/content_settings.html#url)
 
+### Q: Can I publish my bookdown project to Connect Cloud from GitHub?
+
+Yes, you can, with some adaptation to your current workflow if you were using `publish_book()`. A current limitation is that to authenticate to Connect Cloud, the workflow requires an interactive setup for the authentication flow (i.e., `rsconnect::connectCloudUser()` can only be run interactively). Connect Cloud provides a GitHub App that enables you to directly connect your repository and automatically publish on push, or manually refresh from the Connect Cloud Dashboard. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
+
+There are several options available, depending on your desired workflow.
+
+-   If you commit your rendered book output on GitHub (e.g. the `_book` directory), then you can use the Static Document deployment
+
+    ![Static Deployment Icon on the Connect Cloud publish page](images/static-deploy.png)
+
+    When configuring this deployment, select the rendered index.html as the Primary file. Example:
+
+    ![Screenshot showing selection of "\_book/index.html" as Primary file for deploy on Connect Cloud](images/primary-doc.png)
+
+-   If you don’t want the rendered book in your main branch with source, you can also commit the rendered book in another branch, and select that branch in the Static Document configuration. For example:
+
+    ![Screenshot showing Source configuration for automatic deploy on Connect Cloud using gh-pages instead of main and selecting index.html as Primary file](images/source-config.png)
+
+Both of these options deploy the rendered book as Static Document deployment. This allows you to render locally, commit, and push, or have a GitHub Action build your book and do the commit.
+
+The last option is to have your book rendered on Connect Cloud. See below [Q: Can I have my book rendered on Connect Cloud?].
+
 ### Q: Can I have my book rendered on Connect Cloud? {#render-on-connect-cloud}
 
-Yes, your bookdown project can be rendered directly on Connect Cloud. For that, you will need to add a manifest.json file so that Connect Cloud can restore your R environment. For a bookdown book, use `contentCategory = ‘site’`
+Yes, your **bookdown** project can be rendered on Connect Cloud instead of in your local R environment. For that, you will need to add a manifest.json file so that Connect Cloud can restore your R environment. For a bookdown book, use `contentCategory = "site":`
 
 ``` r
 rsconnect::writeManifest(contentCategory = "site")
@@ -162,51 +180,27 @@ See more details in the respective documentation:
 
 -   Connect Cloud R guide: <https://docs.posit.co/connect-cloud/how-to/r/dependencies.html>
 
-Then, you have two options:
+Once you have a `manifest.json` file, you have two options:
 
--   Consider using the Connect Cloud GitHub integration to have your source code pulled directly from your GitHub repository, either manually triggered from the Connect Cloud dashboard or automatically upon pushing to a branch. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
+-   Use Connect Cloud’s GitHub integration to have your source code pulled directly from your GitHub repository, either manually triggered from the Connect Cloud dashboard or automatically upon pushing to a branch. For that, you need to create a new deploy and select R Markdown as your framework
 
--   Keep using the publish_book() function while setting render = “server”
+    ![](images/rmarkdown-deploy.png)
+
+    This will allow you to keep only the source of your book in GitHub, not the rendered HTML, and have it rendered on the Connect Cloud server.
+
+-   Keep using the `publish_book()` function locally while setting `render = "server"`
 
     ``` r
-    bookdown::publish_book(render = 'server')
+    bookdown::publish_book(render = "server")
     ```
 
-In both cases, your book will now be rendered directly on the Connect Cloud server.
+In both cases, your book will now be rendered on the Connect Cloud server.
 
-If you require a specific configuration for rendering your document, refer to the Connect Cloud documentation. For example, for environment variable: <https://docs.posit.co/connect-cloud/user/publish/github.html#advanced-settings>
-
-### Q: Can I publish my bookdown project to Connect Cloud from GitHub?
-
-Yes, you can, with some adaptation to your current workflow if you were using `publish_book()`. A current limitation is that to authenticate to Connect Cloud, the workflow requires an interactive setup for the authentication flow (i.e., `rsconnect::connectCloudUser()` can only be run interactively). Connect Cloud provides a GitHub App that enables you to directly connect your repository and automatically publish on push, or manually refresh from the Connect Cloud Dashboard. See <https://docs.posit.co/connect-cloud/user/publish/github.html>
-
-There are a few options, depending on your desired workflow.
-
--   If you commit your rendered book output on Github (e.g. the `_book` directory), then you can use the Static Document deployment
-
-    ![Static Deployment Icon on Connect Cloud publish page](images/static-deploy.png)
-
-    When configuring this deployment, select the rendered index.html as Primary file. Example:
-
-    ![Screenshot showing selection of "\_book/index.html" as Primary file for deploy on Connect Cloud](images/primary-doc.png)
-
--   If you don’t want the rendered book in your main branch with source, you can also commit the rendered book in another branch, and select that branch in the Static Document configuration. For example:
-
-    ![Screenshot showing Source configuration for automatic deploy on Connect Cloud using gh-pages instead of main and selecting index.html as Primary file](images/source-config.png)
-
-Both of these options deploy the rendered book as Static Document deployment. This allows you to render locally, commit, and push, or have a GitHub Action build your book and do the commit.
-
-The last option is to use R Markdown deployment on Connect Cloud.
-
-![](images/rmarkdown-deploy.png)
-
-This will allow you to keep only the source of your book in GitHub, not the rendered HTML, and have it rendered on the Connect Cloud server. This approach requires you to specify what R packages Connect Cloud needs to use, which is done with a `manifest.json` file generated by the **rsconnect** package. 
-
-See "[Q: Can I have my book rendered on Connect Cloud?]" above on how to set that up.
+If you require a specific configuration for rendering your document, such as environment variables, refer to the [Connect Cloud documentation](https://docs.posit.co/connect-cloud/user/publish/github.html#advanced-settings){.uri}.
 
 ### Q: I don’t want to migrate, but I want to download my current book hosted on bookdown.org. Can I do that?
 
-bookdown.org is based on a Connect server, and if you have published content to it, you can access your dashboard to view and download your content.
+[bookdown.org](bookdown.org) is based on a Connect server, and if you have published content to it, you can access your dashboard to view and download your content.
 
 This needs to be done before January 31, 2026, following these steps:
 
@@ -222,9 +216,9 @@ This needs to be done before January 31, 2026, following these steps:
 
     ![screenshot of source versions dialog box in bookdown.org to download source bundle](images/download-source.png){width="510"}
 
-If you prefer, you can do that programmatically, using the **connectapi** package. See `connectapi::download_bundle()`.
+If you prefer, you can do that programmatically, using the **connectapi** package. See `connectapi::download_bundle()`. An API key is required in that case - see [**connectapi**'s "Getting Started" article](https://posit-dev.github.io/connectapi/articles/getting-started.html)
 
-This method of downloading books will no longer be available after January 31, 2026.
+This method of downloading books will no longer be available **after January 31, 2026**.
 
 ### Q: I don’t have my bookdown project sources, but I have the rendered HTML. Can I publish it?
 
@@ -234,7 +228,7 @@ Connect Cloud can host static content. You can use the Connect Cloud website to 
 
 You could also consider Netlify, GitHub Pages, or any other static page hosting service.
 
-### Q: I don’t want my content being in the read-only version of [bookdown.org](http://bookdown.org) for 2026. How to delete my content currently published on [bookdown.org](http://bookdown.org) ?
+### Q: I don’t want my content to be in the read-only version of [bookdown.org](http://bookdown.org) for 2026. How do I delete my content currently published on [bookdown.org](http://bookdown.org) ?
 
 To remove your content, you can follow these steps:
 
