@@ -2,7 +2,7 @@
 title: "Migration Guide: Publishing Your bookdown Book to Posit Connect Cloud"
 ---
 
-This guide provides step-by-step instructions for migrating your bookdown project from the retiring [bookdown.org](bookdown.org) hosting service to [Posit Connect Cloud](https://connect.posit.cloud "Posit Connect Cloud"). Posit Connect Cloud is the recommended alternative for hosting your **bookdown** content, offering robust deployment, sharing, and management features.
+This guide provides step-by-step instructions for migrating your bookdown project from the retiring [bookdown.org](https://bookdown.org) hosting service to [Posit Connect Cloud](https://connect.posit.cloud "Posit Connect Cloud"). Posit Connect Cloud is the recommended alternative for hosting your **bookdown** content, offering robust deployment, sharing, and management features.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ If you want to learn more about Connect Cloud before starting your migration, se
 
 ## TL;DR: Run `bookdown::publish_book()`
 
-In **bookdown** 0.46, we updated `publish_book()` to prompt you to connect to Connect Cloud and deploy your book version, just as it was the case when deploying on [bookdown.org](http://bookdown.org)
+In **bookdown** 0.46, we updated `publish_book()` to prompt you to connect to Connect Cloud and deploy your book version, just as it was the case when deploying to bookdown.org.
 
 To switch to publishing to Connect Cloud, the only thing you have to do is
 
@@ -35,11 +35,11 @@ bookdown::publish_book()
 
 This will
 
-1.  Remove [bookdown.org](http://bookdown.org) from **rsconnect**'s known server list (i.e. `rsconnect::servers()`) and from your accounts (i.e. `rsconnect::accounts()`)
+1.  Remove bookdown.org from **rsconnect**'s known server list (i.e. `rsconnect::servers()`) and from your accounts (i.e. `rsconnect::accounts()`)
 2.  Prompt you to connect to <https://connect.posit.cloud> (i.e. call `rsconnect::connectCloudUser()` for you)
 3.  Deploy your bookdown book (using `rsconnect::deploySite()`)
 
-As with [bookdown.org](http://bookdown.org), only the static version of your book will be deployed, meaning the bookdown book needs to be rendered locally first, and be present in your bookdown output directory (e.g. default `_book` directory). If you have not already rendered the book, add `render = 'local'` to the command, which will render it before uploading:
+As with bookdown.org, only the static version of your book will be deployed, meaning the bookdown book needs to be rendered locally first, and be present in your bookdown output directory (e.g. default `_book` directory). If you have not already rendered the book, add `render = 'local'` to the command, which will render it before uploading:
 
 ``` r
 bookdown::publish_book(render = 'local')
@@ -51,7 +51,7 @@ Now go to your Connect Cloud account to see your book online!
 
 ### 1. Prepare Your Project for Deployment {#prepare-project}
 
-If you were publishing to [bookdown.org](http://bookdown.org), you probably added some specific YAML field in your `index.Rmd` like
+If you were publishing to bookdown.org, you probably added some specific YAML field in your `index.Rmd` like
 
 ``` yaml
 description: "This is a minimal bookdown demo. It shows the basics of ..."
@@ -59,7 +59,7 @@ github-repo: "rstudio/bookdown-demo"
 cover-image: "images/cover.png"
 ```
 
-Those fields were used for listing on [bookdown.org](http://bookdown.org) and can now be removed as they are no longer needed for Connect Cloud publishing, as there will be no listing.
+Those fields were used for listing on [bookdown.org](https://bookdown.org) and can now be removed as they are no longer needed for Connect Cloud publishing, as there will be no listing.
 
 They won’t prevent or impact deployment if they are still there.
 
@@ -122,7 +122,7 @@ No. Users are responsible for migrating their own content. However, Posit will o
 
 ### Q: Do I need to make any code changes to my Rmd files?
 
-Generally, no. The deployment process via bookdown::publish_book() is compatible with existing bookdown projects. As there is no listing service anymore as with [bookdown.org](http://bookdown.org), you can even remove specific YAML fields that were used for [bookdown.org](http://bookdown.org) listing. See [1. Prepare Your Project for Connect Deployment](#prepare-project)
+Generally, no. The deployment process via bookdown::publish_book() is compatible with existing bookdown projects. As there is no listing service anymore as with bookdown.org, you can even remove specific YAML fields that were used for bookdown.org listing. See [1. Prepare Your Project for Connect Deployment](#prepare-project)
 
 ### Q: What happens to my book on bookdown.org after the sunset date?
 
@@ -134,11 +134,11 @@ No, you don’t. This function is provided for convenience for bookdown users. Y
 
 ### Q: Is Connect Cloud free like bookdown.org was?
 
-Yes. Connect Cloud has a free tier that includes an unlimited number of published documents. It also offers paid plans with functionality that [bookdown.org](http://bookdown.org) did not offer. See <https://connect.posit.cloud/plans> for more details.
+Yes. Connect Cloud has a free tier that includes an unlimited number of published documents. It also offers paid plans with functionality that bookdown.org did not offer. See <https://connect.posit.cloud/plans> for more details.
 
 ### Q: Are books on Connect Cloud publicly available?
 
-Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to [bookdown.org](http://bookdown.org) public hosting service. To disable public sharing or share with selected viewers, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
+Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to bookdown.org public hosting service. To disable public sharing or share with selected viewers, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
 
 ### Q: Can I get a vanity URL like with bookdown.org?
 
@@ -200,7 +200,7 @@ If you require a specific configuration for rendering your document, such as env
 
 This needs to be done before January 31, 2026, following these steps:
 
-1.  Go to <https://bookdown.org/connect/> and click login (you may be redirected back to [bookdown.org](http://bookdown.org) - if so, follow step two)
+1.  Go to <https://bookdown.org/connect/> and click login (you may be redirected back to [bookdown.org](https://bookdown.org) - if so, follow step two)
 
 2.  Once logged in, go to <https://bookdown.org/connect/>
 
@@ -224,11 +224,11 @@ Connect Cloud can host static content. You can use the Connect Cloud website to 
 
 You could also consider Netlify, GitHub Pages, or any other static page hosting service.
 
-### Q: I don’t want my content to be in the read-only version of [bookdown.org](http://bookdown.org) for 2026. How do I delete my content currently published on [bookdown.org](http://bookdown.org) ?
+### Q: I don’t want my content to be in the read-only version of [bookdown.org](https://bookdown.org) for 2026. How do I delete my content currently published on bookdown.org?
 
 To remove your content, you can follow these steps:
 
-1.  Go to <https://bookdown.org/connect/> and click login (you may be redirected back to [bookdown.org](http://bookdown.org) - if so, follow step two)
+1.  Go to <https://bookdown.org/connect/> and click login (you may be redirected back to [bookdown.org](https://bookdown.org) - if so, follow step two)
 
 2.  Once logged in, go to <https://bookdown.org/connect/> 
 
@@ -244,9 +244,9 @@ To remove your content, you can follow these steps:
 
     ![screenshot of modal validation when deleting content on bookdown.org](images/validate-deletion.png)
 
-### Q: I still need to update my content on [bookdown.org](http://bookdown.org). Can I do that?
+### Q: I still need to update my content on bookdown.org. Can I do that?
 
-Yes, you can still update your content until January 15, 2026. However, as mentioned in this migration guide, in version 0.46 of bookdown, `bookdown::publish_book()` won’t allow publishing to [bookdown.org](http://bookdown.org) anymore. 
+Yes, you can still update your content until January 15, 2026. However, as mentioned in this migration guide, in version 0.46 of bookdown, `bookdown::publish_book()` won’t allow publishing to bookdown.org anymore. 
 
 So if you need to update your content, the easiest is not to update **bookdown** yet. Use version 0.45 or below.\
 If you need to install 0.45, you can use the [Posit Package Manager](https://packagemanager.posit.co) frozen repo using the following command:
