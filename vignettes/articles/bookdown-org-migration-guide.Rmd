@@ -21,7 +21,7 @@ Before starting the migration, ensure you have the following:
 
 3.  **Local bookdown Project:** You must have the source files for your **bookdown** project on your local machine. If you don’t have the source, you don’t need this guide. See the FAQ.
 
-If you want to learn more about Connect Cloud before starting your migration, see its  [documentation](https://docs.posit.co/connect-cloud/ "Connect Cloud documentation").
+If you want to learn more about Connect Cloud before starting your migration, see its [documentation](https://docs.posit.co/connect-cloud/ "Connect Cloud documentation").
 
 ## TL;DR: Run `bookdown::publish_book()`
 
@@ -67,7 +67,7 @@ All other configurations for **bookdown** should stay.
 
 ### 2. Configure rsconnect for Posit Connect Cloud
 
-The **rsconnect** package manages the connection and deployment process. \
+The **rsconnect** package manages the connection and deployment process.\
 To add a connection to <https://connect.posit.cloud>, use:
 
 ``` r
@@ -118,7 +118,7 @@ The recommended alternative, especially for users who want a simple deployment e
 
 ### Q: Will my book's URL automatically redirect from bookdown.org?
 
-No. Users are responsible for migrating their own content. However, Posit will offer a redirecting service upon request for a period of one year. Active bookdown.org users will receive an email with information on how to request a redirect for your book. You will need to have already migrated your book to an alternative hosting service, so that you can supply the new hosting location (e.g., your Connect Cloud URL).
+No. Users are responsible for migrating their own content. However, Posit will offer a redirecting service upon request. Active [bookdown.org](bookdown.org) users will receive an email with information on how to request a redirect for your book. You will need to have already migrated your book to an alternative hosting service, so that you can supply the new hosting location (e.g., your Connect Cloud URL).
 
 ### Q: Do I need to make any code changes to my Rmd files?
 
@@ -138,11 +138,11 @@ Yes. Connect Cloud has a free tier that includes an unlimited number of publishe
 
 ### Q: Are books on Connect Cloud publicly available?
 
-Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to [bookdown.org](http://bookdown.org) public hosting service. To disable public sharing, or share with selected viewers, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
+Yes, any content on Connect Cloud is publicly available on the Free Plan. This is similar to [bookdown.org](http://bookdown.org) public hosting service. To disable public sharing or share with selected viewers, an upgraded plan is required. See [docs.posit.co/connect-cloud/user/share](http://docs.posit.co/connect-cloud/user/share)
 
-### Q: Can I get a vanity url like with bookdown.org?
+### Q: Can I get a vanity URL like with bookdown.org?
 
-Yes, it is possible to customize the url of your content by setting a custom name in the settings page of the content. Url would then be of the form `https://[account-name]-[custom-name].share.connect.posit.cloud`. See [Connect Cloud documentation on settings](https://docs.posit.co/connect-cloud/user/manage/content_settings.html#url)
+Yes, it is possible to customize the URL of your content by setting a custom name in the settings page of the content. URL would then be of the form `https://[account-name]-[custom-name].share.connect.posit.cloud`. See [Connect Cloud documentation on settings](https://docs.posit.co/connect-cloud/user/manage/content_settings.html#url)
 
 ### Q: Can I publish my bookdown project to Connect Cloud from GitHub?
 
@@ -150,7 +150,7 @@ Yes, you can, with some adaptation to your current workflow if you were using `p
 
 There are several options available, depending on your desired workflow.
 
--   If you commit your rendered book output on GitHub (e.g. the `_book` directory), then you can use the Static Document deployment
+-   If you commit your rendered book output to GitHub (e.g., the `_book` directory), then you can use the Static Document deployment
 
     ![Static Deployment Icon on the Connect Cloud publish page](images/static-deploy.png)
 
@@ -164,7 +164,7 @@ There are several options available, depending on your desired workflow.
 
 Both of these options deploy the rendered book as Static Document deployment. This allows you to render locally, commit, and push, or have a GitHub Action build your book and do the commit.
 
-The last option is to have your book rendered on Connect Cloud. See below [Q: Can I have my book rendered on Connect Cloud?].
+The last option is to have your book rendered on Connect Cloud. See below [Q: Can I have my book rendered on Connect Cloud?](#render-on-connect-cloud).
 
 ### Q: Can I have my book rendered on Connect Cloud? {#render-on-connect-cloud}
 
@@ -248,8 +248,8 @@ To remove your content, you can follow these steps:
 
 Yes, you can still update your content until January 15, 2026. However, as mentioned in this migration guide, in version 0.46 of bookdown, `bookdown::publish_book()` won’t allow publishing to [bookdown.org](http://bookdown.org) anymore. 
 
-So if you need to update your content, the easiest is to not update **bookdown** yet. Use version 0.45 or below.\
-If you need to install 0.45, you can use the packagemanager frozen repo using the following command:
+So if you need to update your content, the easiest is not to update **bookdown** yet. Use version 0.45 or below.\
+If you need to install 0.45, you can use the [Posit Package Manager](https://packagemanager.posit.co) frozen repo using the following command:
 
 ``` r
 install.packages("bookdown", repos = "https://packagemanager.posit.co/cran/2025-12-02")
