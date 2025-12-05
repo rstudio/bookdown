@@ -1,6 +1,9 @@
+# CHANGES IN bookdown VERSION 0.47
+
+
 # CHANGES IN bookdown VERSION 0.46
 
-- `publish_book()` will prompt to delete local bookdown.org records (only local configurations, not the book itself) if the book has been published to bookdown.org before. The bookdown.org server will be sunset soon in early 2026. Now we recommend that you publish to connect.posit.cloud instead.
+- `publish_book()` will prompt to delete local bookdown.org records (only local configurations, not the book itself) if the book has been published to bookdown.org before. The bookdown.org server [will be sunset soon in early 2026](https://posit.co/blog/bookdown-org-sunset/). Now we recommend that you publish to connect.posit.cloud instead.
 
 - Removed tests for `xfun::with_ext()` that don't belong to this package.
 
