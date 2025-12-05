@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.4 Figures | bookdown: Authoring Books and Technical Documents with R Markdown</title>
+  <meta name="description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="generator" content="bookdown 0.45.4 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.4 Figures | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+  <meta property="og:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="github-repo" content="rstudio/bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.4 Figures | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  
+  <meta name="twitter:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="twitter:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+
+<meta name="author" content="Yihui Xie" />
+
+
+<meta name="date" content="2025-12-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="r-code.html"/>
+<link rel="next" href="tables.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="why-read-this-book.html"><a href="why-read-this-book.html"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="software-information-and-conventions.html"><a href="software-information-and-conventions.html"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>1.2</b> Get started</a></li>
+<li class="chapter" data-level="1.3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.3</b> Usage</a></li>
+<li class="chapter" data-level="1.4" data-path="new-session.html"><a href="new-session.html"><i class="fa fa-check"></i><b>1.4</b> Two rendering approaches</a></li>
+<li class="chapter" data-level="1.5" data-path="some-tips.html"><a href="some-tips.html"><i class="fa fa-check"></i><b>1.5</b> Some tips</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>2</b> Components</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html"><i class="fa fa-check"></i><b>2.1</b> Markdown syntax</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html#inline-formatting"><i class="fa fa-check"></i><b>2.1.1</b> Inline formatting</a></li>
+<li class="chapter" data-level="2.1.2" data-path="markdown-syntax.html"><a href="markdown-syntax.html#block-level-elements"><i class="fa fa-check"></i><b>2.1.2</b> Block-level elements</a></li>
+<li class="chapter" data-level="2.1.3" data-path="markdown-syntax.html"><a href="markdown-syntax.html#math-expressions"><i class="fa fa-check"></i><b>2.1.3</b> Math expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html"><i class="fa fa-check"></i><b>2.2</b> Markdown extensions by bookdown</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#equations"><i class="fa fa-check"></i><b>2.2.1</b> Number and reference equations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#theorems"><i class="fa fa-check"></i><b>2.2.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="2.2.3" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#special-headers"><i class="fa fa-check"></i><b>2.2.3</b> Special headers</a></li>
+<li class="chapter" data-level="2.2.4" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#text-references"><i class="fa fa-check"></i><b>2.2.4</b> Text references</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-code.html"><a href="r-code.html"><i class="fa fa-check"></i><b>2.3</b> R code</a></li>
+<li class="chapter" data-level="2.4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>2.4</b> Figures</a></li>
+<li class="chapter" data-level="2.5" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>2.5</b> Tables</a></li>
+<li class="chapter" data-level="2.6" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i><b>2.6</b> Cross-references</a></li>
+<li class="chapter" data-level="2.7" data-path="custom-blocks.html"><a href="custom-blocks.html"><i class="fa fa-check"></i><b>2.7</b> Custom blocks</a></li>
+<li class="chapter" data-level="2.8" data-path="citations.html"><a href="citations.html"><i class="fa fa-check"></i><b>2.8</b> Citations</a></li>
+<li class="chapter" data-level="2.9" data-path="latex-index.html"><a href="latex-index.html"><i class="fa fa-check"></i><b>2.9</b> Index</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="latex-index.html"><a href="latex-index.html#inserting-entries"><i class="fa fa-check"></i><b>2.9.1</b> Inserting Entries</a></li>
+<li class="chapter" data-level="2.9.2" data-path="latex-index.html"><a href="latex-index.html#building-the-index"><i class="fa fa-check"></i><b>2.9.2</b> Building the Index</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="html-widgets.html"><a href="html-widgets.html"><i class="fa fa-check"></i><b>2.10</b> HTML widgets</a></li>
+<li class="chapter" data-level="2.11" data-path="web-pages-and-shiny-apps.html"><a href="web-pages-and-shiny-apps.html"><i class="fa fa-check"></i><b>2.11</b> Web pages and Shiny apps</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="output-formats.html"><a href="output-formats.html"><i class="fa fa-check"></i><b>3</b> Output Formats</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>3.1</b> HTML</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="html.html"><a href="html.html#gitbook-style"><i class="fa fa-check"></i><b>3.1.1</b> GitBook style</a></li>
+<li class="chapter" data-level="3.1.2" data-path="html.html"><a href="html.html#bs4-book"><i class="fa fa-check"></i><b>3.1.2</b> Three-column Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.3" data-path="html.html"><a href="html.html#bootstrap-style"><i class="fa fa-check"></i><b>3.1.3</b> The default Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.4" data-path="html.html"><a href="html.html#tufte-style"><i class="fa fa-check"></i><b>3.1.4</b> Tufte style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="latexpdf.html"><a href="latexpdf.html"><i class="fa fa-check"></i><b>3.2</b> LaTeX/PDF</a></li>
+<li class="chapter" data-level="3.3" data-path="e-books.html"><a href="e-books.html"><i class="fa fa-check"></i><b>3.3</b> E-Books</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="e-books.html"><a href="e-books.html#epub"><i class="fa fa-check"></i><b>3.3.1</b> EPUB</a></li>
+<li class="chapter" data-level="3.3.2" data-path="e-books.html"><a href="e-books.html#mobi"><i class="fa fa-check"></i><b>3.3.2</b> MOBI</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="a-single-document.html"><a href="a-single-document.html"><i class="fa fa-check"></i><b>3.4</b> A single document</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="customization.html"><a href="customization.html"><i class="fa fa-check"></i><b>4</b> Customization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="yaml-options.html"><a href="yaml-options.html"><i class="fa fa-check"></i><b>4.1</b> YAML options</a></li>
+<li class="chapter" data-level="4.2" data-path="theming.html"><a href="theming.html"><i class="fa fa-check"></i><b>4.2</b> Theming</a></li>
+<li class="chapter" data-level="4.3" data-path="templates.html"><a href="templates.html"><i class="fa fa-check"></i><b>4.3</b> Templates</a></li>
+<li class="chapter" data-level="4.4" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>4.4</b> Configuration</a></li>
+<li class="chapter" data-level="4.5" data-path="internationalization.html"><a href="internationalization.html"><i class="fa fa-check"></i><b>4.5</b> Internationalization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="editing.html"><a href="editing.html"><i class="fa fa-check"></i><b>5</b> Editing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="build-the-book.html"><a href="build-the-book.html"><i class="fa fa-check"></i><b>5.1</b> Build the book</a></li>
+<li class="chapter" data-level="5.2" data-path="preview-a-chapter.html"><a href="preview-a-chapter.html"><i class="fa fa-check"></i><b>5.2</b> Preview a chapter</a></li>
+<li class="chapter" data-level="5.3" data-path="serve-the-book.html"><a href="serve-the-book.html"><i class="fa fa-check"></i><b>5.3</b> Serve the book</a></li>
+<li class="chapter" data-level="5.4" data-path="rstudio-ide.html"><a href="rstudio-ide.html"><i class="fa fa-check"></i><b>5.4</b> RStudio IDE</a></li>
+<li class="chapter" data-level="5.5" data-path="collaboration.html"><a href="collaboration.html"><i class="fa fa-check"></i><b>5.5</b> Collaboration</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="publishing.html"><a href="publishing.html"><i class="fa fa-check"></i><b>6</b> Publishing</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rstudio-connect.html"><a href="rstudio-connect.html"><i class="fa fa-check"></i><b>6.1</b> RStudio Connect</a></li>
+<li class="chapter" data-level="6.2" data-path="netlify-drop.html"><a href="netlify-drop.html"><i class="fa fa-check"></i><b>6.2</b> Netlify Drop</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="netlify-drop.html"><a href="netlify-drop.html#the-build-and-deploy-pipeline-sequence"><i class="fa fa-check"></i><b>6.2.1</b> The build-and-deploy pipeline sequence</a></li>
+<li class="chapter" data-level="6.2.2" data-path="netlify-drop.html"><a href="netlify-drop.html#before-you-begin"><i class="fa fa-check"></i><b>6.2.2</b> Before you begin</a></li>
+<li class="chapter" data-level="6.2.3" data-path="netlify-drop.html"><a href="netlify-drop.html#build-your-book"><i class="fa fa-check"></i><b>6.2.3</b> Build your book</a></li>
+<li class="chapter" data-level="6.2.4" data-path="netlify-drop.html"><a href="netlify-drop.html#deploy-your-site"><i class="fa fa-check"></i><b>6.2.4</b> Deploy your site</a></li>
+<li class="chapter" data-level="6.2.5" data-path="netlify-drop.html"><a href="netlify-drop.html#optional-update-your-site"><i class="fa fa-check"></i><b>6.2.5</b> <em>Optional: Update your site</em></a></li>
+<li class="chapter" data-level="6.2.6" data-path="netlify-drop.html"><a href="netlify-drop.html#netlify-subdomain"><i class="fa fa-check"></i><b>6.2.6</b> <em>Optional: change the default subdomain</em></a></li>
+<li class="chapter" data-level="6.2.7" data-path="netlify-drop.html"><a href="netlify-drop.html#drawbacks-and-alternatives"><i class="fa fa-check"></i><b>6.2.7</b> Drawbacks and alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>6.3</b> GitHub</a></li>
+<li class="chapter" data-level="6.4" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html"><i class="fa fa-check"></i><b>6.4</b> Features for HTML publishing</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#html-404"><i class="fa fa-check"></i><b>6.4.1</b> HTML 404 pages</a></li>
+<li class="chapter" data-level="6.4.2" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#metadata-for-sharing"><i class="fa fa-check"></i><b>6.4.2</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="publishers.html"><a href="publishers.html"><i class="fa fa-check"></i><b>6.5</b> Publishers</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="software-tools.html"><a href="software-tools.html"><i class="fa fa-check"></i><b>A</b> Software Tools</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="r-and-r-packages.html"><a href="r-and-r-packages.html"><i class="fa fa-check"></i><b>A.1</b> R and R packages</a></li>
+<li class="chapter" data-level="A.2" data-path="pandoc.html"><a href="pandoc.html"><i class="fa fa-check"></i><b>A.2</b> Pandoc</a></li>
+<li class="chapter" data-level="A.3" data-path="latex.html"><a href="latex.html"><i class="fa fa-check"></i><b>A.3</b> LaTeX</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="software-usage.html"><a href="software-usage.html"><i class="fa fa-check"></i><b>B</b> Software Usage</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="knitr.html"><a href="knitr.html"><i class="fa fa-check"></i><b>B.1</b> knitr</a></li>
+<li class="chapter" data-level="B.2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>B.2</b> R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>C</b> FAQ</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Authoring Books and Technical Documents with R Markdown</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="figures" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Figures<a href="figures.html#figures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>By default, figures have no captions in the output generated by <strong>knitr</strong>, which means they will be placed wherever they were generated in the R code. Below is such an example.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="figures.html#cb43-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb43-2"><a href="figures.html#cb43-2" tabindex="-1"></a><span class="fu">plot</span>(pressure, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown_files/figure-html/no-caption-1.svg" width="70%" /></p>
+<p>The disadvantage of typesetting figures in this way is that when there is not enough space on the current page to place a figure, it may either reach the bottom of the page (hence exceeds the page margin), or be pushed to the next page, leaving a large white margin at the bottom of the current page. That is basically why there are “floating environments” in LaTeX: elements that cannot be split over multiple pages (like figures) are put in floating environments, so they can float to a page that has enough space to hold them. There is also a disadvantage of floating things forward or backward, though. That is, readers may have to jump to a different page to find the figure mentioned on the current page. This is simply a natural consequence of having to typeset things on multiple pages of fixed sizes. This issue does not exist in HTML, however, since everything can be placed continuously on one single page (presumably with infinite height), and there is no need to split anything across multiple pages of the same page size.</p>
+<p>If we assign a figure caption to a code chunk via the chunk option <code>fig.cap</code>, R plots will be put into figure environments, which will be automatically labeled and numbered, and can also be cross-referenced. The label of a figure environment is generated from the label of the code chunk, e.g., if the chunk label is <code>foo</code>, the figure label will be <code>fig:foo</code> (the prefix <code>fig:</code> is added before <code>foo</code>). To reference a figure, use the syntax <code>\@ref(label)</code>,<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> where <code>label</code> is the figure label, e.g., <code>fig:foo</code>.</p>
+<p>To take advantage of Markdown formatting <em>within</em> the figure caption, you will need to use text references (see Section <a href="markdown-extensions-by-bookdown.html#text-references">2.2.4</a>). For example, a figure caption that contains <code>_italic text_</code> will not work when the output format is LaTeX/PDF, since the underscore is a special character in LaTeX, but if you use text references, <code>_italic text_</code> will be translated to LaTeX code when the output is LaTeX.</p>
+
+<div class="rmdimportant">
+If you want to cross-reference figures or tables generated from a code chunk, please make sure the chunk label only contains <em>alphanumeric</em> characters (a-z, A-Z, 0-9), slashes (/), or dashes (-).
+</div>
+<p>The chunk option <code>fig.asp</code> can be used to set the aspect ratio of plots, i.e., the ratio of figure height/width. If the figure width is 6 inches (<code>fig.width = 6</code>) and <code>fig.asp = 0.7</code>, the figure height will be automatically calculated from <code>fig.width * fig.asp = 6 * 0.7 = 4.2</code>. Figure <a href="figures.html#fig:pressure-plot">2.1</a> is an example using the chunk options <code>fig.asp = 0.7</code>, <code>fig.width = 6</code>, and <code>fig.align = 'center'</code>, generated from the code below:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="figures.html#cb44-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb44-2"><a href="figures.html#cb44-2" tabindex="-1"></a><span class="fu">plot</span>(pressure, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pressure-plot"></span>
+<img src="bookdown_files/figure-html/pressure-plot-1.svg" alt="A figure example with the specified aspect ratio, width, and alignment." width="90%" />
+<p class="caption">
+FIGURE 2.1: A figure example with the specified aspect ratio, width, and alignment.
+</p>
+</div>
+<p>The actual size of a plot is determined by the chunk options <code>fig.width</code> and <code>fig.height</code> (the size of the plot generated from a graphical device), and we can specify the output size of plots via the chunk options <code>out.width</code> and <code>out.height</code>. The possible value of these two options depends on the output format of the document. For example, <code>out.width = '30%'</code> is a valid value for HTML output, but not for LaTeX/PDF output. However, <strong>knitr</strong> will automatically convert a percentage value for <code>out.width</code> of the form <code>x%</code> to <code>(x / 100) \linewidth</code>, e.g., <code>out.width = '70%'</code> will be treated as <code>.7\linewidth</code> when the output format is LaTeX. This makes it possible to specify a relative width of a plot in a consistent manner. Figure <a href="figures.html#fig:cars-plot">2.2</a> is an example of <code>out.width = 70%</code>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="figures.html#cb45-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb45-2"><a href="figures.html#cb45-2" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:cars-plot"></span>
+<img src="bookdown_files/figure-html/cars-plot-1.svg" alt="A figure example with a relative width 70\%." width="70%" />
+<p class="caption">
+FIGURE 2.2: A figure example with a relative width 70%.
+</p>
+</div>
+<p>If you want to put multiple plots in one figure environment, you must use the chunk option <code>fig.show = 'hold'</code> to hold multiple plots from a code chunk and include them in one environment. You can also place plots side by side if the sum of the width of all plots is smaller than or equal to the current line width. For example, if two plots have the same width <code>50%</code>, they will be placed side by side. Similarly, you can specify <code>out.width = '33%'</code> to arrange three plots on one line. Figure <a href="figures.html#fig:multi-plots">2.3</a> is an example of two plots, each with a width of <code>50%</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="figures.html#cb46-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb46-2"><a href="figures.html#cb46-2" tabindex="-1"></a><span class="fu">plot</span>(pressure, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb46-3"><a href="figures.html#cb46-3" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:multi-plots"></span>
+<img src="bookdown_files/figure-html/multi-plots-1.svg" alt="Two plots placed side by side." width="50%" /><img src="bookdown_files/figure-html/multi-plots-2.svg" alt="Two plots placed side by side." width="50%" />
+<p class="caption">
+FIGURE 2.3: Two plots placed side by side.
+</p>
+</div>
+<p>Sometimes you may have certain images that are not generated from R code, and you can include them in R Markdown via the function <code>knitr::include_graphics()</code>. Figure <a href="figures.html#fig:knitr-logo">2.4</a> is an example of three <strong>knitr</strong> logos included in a figure environment. You may pass one or multiple image paths to the <code>include_graphics()</code> function, and all chunk options that apply to normal R plots also apply to these images, e.g., you can use <code>out.width = '33%'</code> to set the widths of these images in the output document.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="figures.html#cb47-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="fu">rep</span>(<span class="st">&quot;images/knit-logo.png&quot;</span>, <span class="dv">3</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:knitr-logo"></span>
+<img src="images/knit-logo.png" alt="Three knitr logos included in the document from an external PNG image file." width="32.8%" /><img src="images/knit-logo.png" alt="Three knitr logos included in the document from an external PNG image file." width="32.8%" /><img src="images/knit-logo.png" alt="Three knitr logos included in the document from an external PNG image file." width="32.8%" />
+<p class="caption">
+FIGURE 2.4: Three knitr logos included in the document from an external PNG image file.
+</p>
+</div>
+<p>There are a few advantages of using <code>include_graphics()</code>:</p>
+<ol style="list-style-type: decimal">
+<li>You do not need to worry about the document output format, e.g., when the output format is LaTeX, you may have to use the LaTeX command <code>\includegraphics{}</code> to include an image, and when the output format is Markdown, you have to use <code>![]()</code>. The function <code>include_graphics()</code> in <strong>knitr</strong> takes care of these details automatically.</li>
+<li>The syntax for controlling the image attributes is the same as when images are generated from R code, e.g., chunk options <code>fig.cap</code>, <code>out.width</code>, and <code>fig.show</code> still have the same meanings.</li>
+<li><code>include_graphics()</code> can be smart enough to use PDF graphics automatically when the output format is LaTeX and the PDF graphics files exist, e.g., an image path <code>foo/bar.png</code> can be automatically replaced with <code>foo/bar.pdf</code> if the latter exists. PDF images often have better qualities than raster images in LaTeX/PDF output. To make use of this feature, set the argument <code>auto_pdf = TRUE</code>, or set the global option <code>options(knitr.graphics.auto_pdf = TRUE)</code> to enable this feature globally in an R session.</li>
+<li>You can easily scale these images proportionally using the same ratio. This can be done via the <code>dpi</code> argument (dots per inch), which takes the value from the chunk option <code>dpi</code> by default. If it is a numeric value and the chunk option <code>out.width</code> is not set, the output width of an image will be its actual width (in pixels) divided by <code>dpi</code>, and the unit will be inches. For example, for an image with the size 672 x 480, its output width will be 7 inches (<code>7in</code>) when <code>dpi = 96</code>. This feature requires the package <strong>png</strong> and/or <strong>jpeg</strong> to be installed. You can always override the automatic calculation of width in inches by providing a non-NULL value to the chunk option <code>out.width</code>, or use <code>include_graphics(dpi = NA)</code>.</li>
+</ol>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>Do not forget the leading backslash! And also note the parentheses <code>()</code> after <code>ref</code>; they are not curly braces <code>{}</code>.<a href="figures.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-code.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown/edit/main/inst/examples/02-components.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "none"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

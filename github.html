@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.3 GitHub | bookdown: Authoring Books and Technical Documents with R Markdown</title>
+  <meta name="description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="generator" content="bookdown 0.45.4 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.3 GitHub | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+  <meta property="og:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="github-repo" content="rstudio/bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.3 GitHub | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  
+  <meta name="twitter:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="twitter:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+
+<meta name="author" content="Yihui Xie" />
+
+
+<meta name="date" content="2025-12-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="netlify-drop.html"/>
+<link rel="next" href="features-for-html-publishing.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="why-read-this-book.html"><a href="why-read-this-book.html"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="software-information-and-conventions.html"><a href="software-information-and-conventions.html"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>1.2</b> Get started</a></li>
+<li class="chapter" data-level="1.3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.3</b> Usage</a></li>
+<li class="chapter" data-level="1.4" data-path="new-session.html"><a href="new-session.html"><i class="fa fa-check"></i><b>1.4</b> Two rendering approaches</a></li>
+<li class="chapter" data-level="1.5" data-path="some-tips.html"><a href="some-tips.html"><i class="fa fa-check"></i><b>1.5</b> Some tips</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>2</b> Components</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html"><i class="fa fa-check"></i><b>2.1</b> Markdown syntax</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html#inline-formatting"><i class="fa fa-check"></i><b>2.1.1</b> Inline formatting</a></li>
+<li class="chapter" data-level="2.1.2" data-path="markdown-syntax.html"><a href="markdown-syntax.html#block-level-elements"><i class="fa fa-check"></i><b>2.1.2</b> Block-level elements</a></li>
+<li class="chapter" data-level="2.1.3" data-path="markdown-syntax.html"><a href="markdown-syntax.html#math-expressions"><i class="fa fa-check"></i><b>2.1.3</b> Math expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html"><i class="fa fa-check"></i><b>2.2</b> Markdown extensions by bookdown</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#equations"><i class="fa fa-check"></i><b>2.2.1</b> Number and reference equations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#theorems"><i class="fa fa-check"></i><b>2.2.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="2.2.3" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#special-headers"><i class="fa fa-check"></i><b>2.2.3</b> Special headers</a></li>
+<li class="chapter" data-level="2.2.4" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#text-references"><i class="fa fa-check"></i><b>2.2.4</b> Text references</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-code.html"><a href="r-code.html"><i class="fa fa-check"></i><b>2.3</b> R code</a></li>
+<li class="chapter" data-level="2.4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>2.4</b> Figures</a></li>
+<li class="chapter" data-level="2.5" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>2.5</b> Tables</a></li>
+<li class="chapter" data-level="2.6" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i><b>2.6</b> Cross-references</a></li>
+<li class="chapter" data-level="2.7" data-path="custom-blocks.html"><a href="custom-blocks.html"><i class="fa fa-check"></i><b>2.7</b> Custom blocks</a></li>
+<li class="chapter" data-level="2.8" data-path="citations.html"><a href="citations.html"><i class="fa fa-check"></i><b>2.8</b> Citations</a></li>
+<li class="chapter" data-level="2.9" data-path="latex-index.html"><a href="latex-index.html"><i class="fa fa-check"></i><b>2.9</b> Index</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="latex-index.html"><a href="latex-index.html#inserting-entries"><i class="fa fa-check"></i><b>2.9.1</b> Inserting Entries</a></li>
+<li class="chapter" data-level="2.9.2" data-path="latex-index.html"><a href="latex-index.html#building-the-index"><i class="fa fa-check"></i><b>2.9.2</b> Building the Index</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="html-widgets.html"><a href="html-widgets.html"><i class="fa fa-check"></i><b>2.10</b> HTML widgets</a></li>
+<li class="chapter" data-level="2.11" data-path="web-pages-and-shiny-apps.html"><a href="web-pages-and-shiny-apps.html"><i class="fa fa-check"></i><b>2.11</b> Web pages and Shiny apps</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="output-formats.html"><a href="output-formats.html"><i class="fa fa-check"></i><b>3</b> Output Formats</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>3.1</b> HTML</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="html.html"><a href="html.html#gitbook-style"><i class="fa fa-check"></i><b>3.1.1</b> GitBook style</a></li>
+<li class="chapter" data-level="3.1.2" data-path="html.html"><a href="html.html#bs4-book"><i class="fa fa-check"></i><b>3.1.2</b> Three-column Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.3" data-path="html.html"><a href="html.html#bootstrap-style"><i class="fa fa-check"></i><b>3.1.3</b> The default Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.4" data-path="html.html"><a href="html.html#tufte-style"><i class="fa fa-check"></i><b>3.1.4</b> Tufte style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="latexpdf.html"><a href="latexpdf.html"><i class="fa fa-check"></i><b>3.2</b> LaTeX/PDF</a></li>
+<li class="chapter" data-level="3.3" data-path="e-books.html"><a href="e-books.html"><i class="fa fa-check"></i><b>3.3</b> E-Books</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="e-books.html"><a href="e-books.html#epub"><i class="fa fa-check"></i><b>3.3.1</b> EPUB</a></li>
+<li class="chapter" data-level="3.3.2" data-path="e-books.html"><a href="e-books.html#mobi"><i class="fa fa-check"></i><b>3.3.2</b> MOBI</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="a-single-document.html"><a href="a-single-document.html"><i class="fa fa-check"></i><b>3.4</b> A single document</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="customization.html"><a href="customization.html"><i class="fa fa-check"></i><b>4</b> Customization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="yaml-options.html"><a href="yaml-options.html"><i class="fa fa-check"></i><b>4.1</b> YAML options</a></li>
+<li class="chapter" data-level="4.2" data-path="theming.html"><a href="theming.html"><i class="fa fa-check"></i><b>4.2</b> Theming</a></li>
+<li class="chapter" data-level="4.3" data-path="templates.html"><a href="templates.html"><i class="fa fa-check"></i><b>4.3</b> Templates</a></li>
+<li class="chapter" data-level="4.4" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>4.4</b> Configuration</a></li>
+<li class="chapter" data-level="4.5" data-path="internationalization.html"><a href="internationalization.html"><i class="fa fa-check"></i><b>4.5</b> Internationalization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="editing.html"><a href="editing.html"><i class="fa fa-check"></i><b>5</b> Editing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="build-the-book.html"><a href="build-the-book.html"><i class="fa fa-check"></i><b>5.1</b> Build the book</a></li>
+<li class="chapter" data-level="5.2" data-path="preview-a-chapter.html"><a href="preview-a-chapter.html"><i class="fa fa-check"></i><b>5.2</b> Preview a chapter</a></li>
+<li class="chapter" data-level="5.3" data-path="serve-the-book.html"><a href="serve-the-book.html"><i class="fa fa-check"></i><b>5.3</b> Serve the book</a></li>
+<li class="chapter" data-level="5.4" data-path="rstudio-ide.html"><a href="rstudio-ide.html"><i class="fa fa-check"></i><b>5.4</b> RStudio IDE</a></li>
+<li class="chapter" data-level="5.5" data-path="collaboration.html"><a href="collaboration.html"><i class="fa fa-check"></i><b>5.5</b> Collaboration</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="publishing.html"><a href="publishing.html"><i class="fa fa-check"></i><b>6</b> Publishing</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rstudio-connect.html"><a href="rstudio-connect.html"><i class="fa fa-check"></i><b>6.1</b> RStudio Connect</a></li>
+<li class="chapter" data-level="6.2" data-path="netlify-drop.html"><a href="netlify-drop.html"><i class="fa fa-check"></i><b>6.2</b> Netlify Drop</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="netlify-drop.html"><a href="netlify-drop.html#the-build-and-deploy-pipeline-sequence"><i class="fa fa-check"></i><b>6.2.1</b> The build-and-deploy pipeline sequence</a></li>
+<li class="chapter" data-level="6.2.2" data-path="netlify-drop.html"><a href="netlify-drop.html#before-you-begin"><i class="fa fa-check"></i><b>6.2.2</b> Before you begin</a></li>
+<li class="chapter" data-level="6.2.3" data-path="netlify-drop.html"><a href="netlify-drop.html#build-your-book"><i class="fa fa-check"></i><b>6.2.3</b> Build your book</a></li>
+<li class="chapter" data-level="6.2.4" data-path="netlify-drop.html"><a href="netlify-drop.html#deploy-your-site"><i class="fa fa-check"></i><b>6.2.4</b> Deploy your site</a></li>
+<li class="chapter" data-level="6.2.5" data-path="netlify-drop.html"><a href="netlify-drop.html#optional-update-your-site"><i class="fa fa-check"></i><b>6.2.5</b> <em>Optional: Update your site</em></a></li>
+<li class="chapter" data-level="6.2.6" data-path="netlify-drop.html"><a href="netlify-drop.html#netlify-subdomain"><i class="fa fa-check"></i><b>6.2.6</b> <em>Optional: change the default subdomain</em></a></li>
+<li class="chapter" data-level="6.2.7" data-path="netlify-drop.html"><a href="netlify-drop.html#drawbacks-and-alternatives"><i class="fa fa-check"></i><b>6.2.7</b> Drawbacks and alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>6.3</b> GitHub</a></li>
+<li class="chapter" data-level="6.4" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html"><i class="fa fa-check"></i><b>6.4</b> Features for HTML publishing</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#html-404"><i class="fa fa-check"></i><b>6.4.1</b> HTML 404 pages</a></li>
+<li class="chapter" data-level="6.4.2" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#metadata-for-sharing"><i class="fa fa-check"></i><b>6.4.2</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="publishers.html"><a href="publishers.html"><i class="fa fa-check"></i><b>6.5</b> Publishers</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="software-tools.html"><a href="software-tools.html"><i class="fa fa-check"></i><b>A</b> Software Tools</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="r-and-r-packages.html"><a href="r-and-r-packages.html"><i class="fa fa-check"></i><b>A.1</b> R and R packages</a></li>
+<li class="chapter" data-level="A.2" data-path="pandoc.html"><a href="pandoc.html"><i class="fa fa-check"></i><b>A.2</b> Pandoc</a></li>
+<li class="chapter" data-level="A.3" data-path="latex.html"><a href="latex.html"><i class="fa fa-check"></i><b>A.3</b> LaTeX</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="software-usage.html"><a href="software-usage.html"><i class="fa fa-check"></i><b>B</b> Software Usage</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="knitr.html"><a href="knitr.html"><i class="fa fa-check"></i><b>B.1</b> knitr</a></li>
+<li class="chapter" data-level="B.2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>B.2</b> R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>C</b> FAQ</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Authoring Books and Technical Documents with R Markdown</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="github" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> GitHub<a href="github.html#github" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can host your book on GitHub for free via GitHub Pages (<a href="https://pages.github.com" class="uri">https://pages.github.com</a>). GitHub supports Jekyll (<a href="http://jekyllrb.com" class="uri">http://jekyllrb.com</a>), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. The key is to create a hidden file <code>.nojekyll</code> that tells GitHub that your website is not to be built via Jekyll, since the <strong>bookdown</strong> HTML output is already a standalone website.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb132-1"><a href="github.html#cb132-1" tabindex="-1"></a><span class="co"># assume you have initialized the git repository,</span></span>
+<span id="cb132-2"><a href="github.html#cb132-2" tabindex="-1"></a><span class="co"># and are under the directory of the book repository now</span></span>
+<span id="cb132-3"><a href="github.html#cb132-3" tabindex="-1"></a></span>
+<span id="cb132-4"><a href="github.html#cb132-4" tabindex="-1"></a><span class="co"># create a hidden file .nojekyll</span></span>
+<span id="cb132-5"><a href="github.html#cb132-5" tabindex="-1"></a><span class="fu">touch</span> .nojekyll</span>
+<span id="cb132-6"><a href="github.html#cb132-6" tabindex="-1"></a><span class="co"># add to git here because will not show up in RStudio</span></span>
+<span id="cb132-7"><a href="github.html#cb132-7" tabindex="-1"></a><span class="fu">git</span> add .nojekyll</span></code></pre></div>
+<p>If you are on Windows, you may not have the <code>touch</code> command, and you can create the file in R using <code>file.create('.nojekyll')</code>.</p>
+<p>One approach is to publish your book as a GitHub Pages site from a <code>/docs</code> folder on your <code>master</code> branch as described in <a href="http://bit.ly/2cvloKV">GitHub Help.</a> First, set the output directory of your book to be <code>/docs</code> by adding the line <code>output_dir: "docs"</code> to the configuration file <code>_bookdown.yml</code>. Then, after pushing your changes to GitHub, go to your repository’s settings and under “GitHub Pages” change the “Source” to be “master branch /docs folder”. In this case, the <code>.nojekyll</code> file has to be in the <code>/docs</code> folder.</p>
+<p>An alternative approach is to create a <code>gh-pages</code> branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository. If your book repository does not have the <code>gh-pages</code> branch, you may use the following commands to create one:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb133-1"><a href="github.html#cb133-1" tabindex="-1"></a><span class="co"># assume you have initialized the git repository,</span></span>
+<span id="cb133-2"><a href="github.html#cb133-2" tabindex="-1"></a><span class="co"># and are under the directory of the book repository now</span></span>
+<span id="cb133-3"><a href="github.html#cb133-3" tabindex="-1"></a></span>
+<span id="cb133-4"><a href="github.html#cb133-4" tabindex="-1"></a><span class="co"># create a branch named gh-pages and clean up everything</span></span>
+<span id="cb133-5"><a href="github.html#cb133-5" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--orphan</span> gh-pages</span>
+<span id="cb133-6"><a href="github.html#cb133-6" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-rf</span> .</span>
+<span id="cb133-7"><a href="github.html#cb133-7" tabindex="-1"></a></span>
+<span id="cb133-8"><a href="github.html#cb133-8" tabindex="-1"></a><span class="co"># create a hidden file .nojekyll</span></span>
+<span id="cb133-9"><a href="github.html#cb133-9" tabindex="-1"></a><span class="fu">touch</span> .nojekyll</span>
+<span id="cb133-10"><a href="github.html#cb133-10" tabindex="-1"></a><span class="fu">git</span> add .nojekyll</span>
+<span id="cb133-11"><a href="github.html#cb133-11" tabindex="-1"></a></span>
+<span id="cb133-12"><a href="github.html#cb133-12" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span><span class="st">&quot;Initial commit&quot;</span></span>
+<span id="cb133-13"><a href="github.html#cb133-13" tabindex="-1"></a><span class="fu">git</span> push origin gh-pages</span></code></pre></div>
+<p>After you have set up GIT, the rest of work can be automated via a script (Shell, R, or Makefile, depending on your preference). Basically, you compile the book to HTML, then run git commands to push the files to GitHub, but you probably do not want to do this over and over again manually and locally. It can be very handy to automate the publishing process completely on the cloud, so once it is set up correctly, all you have to do next is write the book and push the Rmd source files to GitHub, and your book will always be automatically built and published from the server side.</p>
+<p>One service that you can utilize is Travis CI (<a href="https://travis-ci.com" class="uri">https://travis-ci.com</a>). It is free for public repositories on GitHub, and was designed for continuous integration (CI) of software packages. Travis CI can be connected to GitHub in the sense that whenever you push to GitHub, Travis can be triggered to run certain commands/scripts on the latest version of your repository.<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a> These commands are specified in a YAML file named <code>.travis.yml</code> in the root directory of your repository, and they are usually for the purpose of testing software, but in fact they are quite open-ended, meaning that you can run arbitrary commands on a Travis (virtual) machine. That means you can certainly run your own scripts to build your book on Travis. Note that Travis only supports Ubuntu and Mac OS X at the moment, so you should have some basic knowledge about Linux/Unix commands.</p>
+<p>The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done in several ways, and the easiest one to beginners may be a personal access token. Here are a few steps you may follow:</p>
+<ol style="list-style-type: decimal">
+<li>Create a <a href="http://bit.ly/2cEBYWB">personal access token</a> for your account on GitHub (make sure to enable the “repo” scope so that using this token will enable writing to your GitHub repos).</li>
+<li>Encrypt it in the environment variable <code>GITHUB_PAT</code> via command line <code>travis encrypt</code> and store it in <code>.travis.yml</code>,
+e.g <code>travis encrypt GITHUB_PAT=TOKEN</code>. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via <a href="https://travis-ci.com/user/repo/settings" class="uri">https://travis-ci.com/user/repo/settings</a> where <code>user</code> is your GitHub ID, and <code>repo</code> is the name of the repository.</li>
+<li>You can clone this <code>gh-pages</code> branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.</li>
+</ol>
+<p>Assume you are in the <code>master</code> branch right now (where you put the Rmd source files), and have compiled the book to the <code>_book</code> directory. What you can do next on Travis is:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb134-1"><a href="github.html#cb134-1" tabindex="-1"></a><span class="co"># configure your name and email if you have not done so</span></span>
+<span id="cb134-2"><a href="github.html#cb134-2" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">&quot;you@example.com&quot;</span></span>
+<span id="cb134-3"><a href="github.html#cb134-3" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">&quot;Your Name&quot;</span></span>
+<span id="cb134-4"><a href="github.html#cb134-4" tabindex="-1"></a></span>
+<span id="cb134-5"><a href="github.html#cb134-5" tabindex="-1"></a><span class="co"># clone the repository to the book-output directory</span></span>
+<span id="cb134-6"><a href="github.html#cb134-6" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">-b</span> gh-pages <span class="dt">\</span></span>
+<span id="cb134-7"><a href="github.html#cb134-7" tabindex="-1"></a>  https://<span class="va">${GITHUB_PAT}</span>@github.com/<span class="va">${TRAVIS_REPO_SLUG}</span>.git <span class="dt">\</span></span>
+<span id="cb134-8"><a href="github.html#cb134-8" tabindex="-1"></a>  book-output</span>
+<span id="cb134-9"><a href="github.html#cb134-9" tabindex="-1"></a><span class="bu">cd</span> book-output</span>
+<span id="cb134-10"><a href="github.html#cb134-10" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">-rf</span> <span class="pp">*</span></span>
+<span id="cb134-11"><a href="github.html#cb134-11" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> ../_book/<span class="pp">*</span> ./</span>
+<span id="cb134-12"><a href="github.html#cb134-12" tabindex="-1"></a><span class="fu">git</span> add <span class="at">--all</span> <span class="pp">*</span></span>
+<span id="cb134-13"><a href="github.html#cb134-13" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Update the book&quot;</span></span>
+<span id="cb134-14"><a href="github.html#cb134-14" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-q</span> origin gh-pages</span></code></pre></div>
+<p>The variable name <code>GITHUB_PAT</code> and the directory name <code>book-output</code> are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section <a href="build-the-book.html#build-the-book">5.1</a>, can be put in the <code>master</code> branch as Shell scripts, e.g., you can name them as <code>_build.sh</code> and <code>_deploy.sh</code>. Then your <code>.travis.yml</code> may look like this:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb135-1"><a href="github.html#cb135-1" tabindex="-1"></a><span class="fu">language</span><span class="kw">:</span><span class="at"> r</span></span>
+<span id="cb135-2"><a href="github.html#cb135-2" tabindex="-1"></a><span class="fu">pandoc_version</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.19.2.1</span></span>
+<span id="cb135-3"><a href="github.html#cb135-3" tabindex="-1"></a></span>
+<span id="cb135-4"><a href="github.html#cb135-4" tabindex="-1"></a><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb135-5"><a href="github.html#cb135-5" tabindex="-1"></a><span class="at">  </span><span class="fu">global</span><span class="kw">:</span></span>
+<span id="cb135-6"><a href="github.html#cb135-6" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">secure</span><span class="kw">:</span><span class="at"> A_LONG_ENCRYPTED_STRING</span></span>
+<span id="cb135-7"><a href="github.html#cb135-7" tabindex="-1"></a></span>
+<span id="cb135-8"><a href="github.html#cb135-8" tabindex="-1"></a><span class="fu">before_script</span><span class="kw">:</span></span>
+<span id="cb135-9"><a href="github.html#cb135-9" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> chmod +x ./_build.sh</span></span>
+<span id="cb135-10"><a href="github.html#cb135-10" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> chmod +x ./_deploy.sh</span></span>
+<span id="cb135-11"><a href="github.html#cb135-11" tabindex="-1"></a></span>
+<span id="cb135-12"><a href="github.html#cb135-12" tabindex="-1"></a><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb135-13"><a href="github.html#cb135-13" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ./_build.sh</span></span>
+<span id="cb135-14"><a href="github.html#cb135-14" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> ./_deploy.sh</span></span></code></pre></div>
+<p>The <code>language</code> key tells Travis to use a virtual machine that has R installed. The <code>secure</code> key is your encrypted personal access token. If you have already saved the <code>GITHUB_PAT</code> variable using the web interface on Travis instead of the command-line tool <code>travis encrypt</code>, you can leave out this key.</p>
+<p>Since this Travis service is primarily for checking R packages, you will also need a (fake) <code>DESCRIPTION</code> file as if the book repository were an R package. The only thing in this file that really matters is the specification of dependencies. All dependencies will be installed via the <strong>devtools</strong> package. If a dependency is on CRAN or BioConductor, you can simply list it in the <code>Imports</code> field of the <code>DESCRIPTION</code> file. If it is on GitHub, you may use the <code>Remotes</code> field to list its repository name. Below is an example:</p>
+<pre class="dcf"><code>Package: placeholder
+Type: Book
+Title: Does not matter.
+Version: 0.0.1
+Imports: bookdown, ggplot2
+Remotes: rstudio/bookdown</code></pre>
+<p>If you use the <a href="https://docs.travis-ci.com/user/workers/container-based-infrastructure/">container-based infrastructure</a> on Travis, you can enable caching by using <code>sudo: false</code> in <code>.travis.yml</code>. Normally you should cache at least two types of directories: the figure directory (e.g., <code>_main_files</code>) and the cache directory (e.g., <code>_main_cache</code>). These directory names may also be different if you have specified the <strong>knitr</strong> chunk options <code>fig.path</code> and <code>cache.path</code>, but I’d strongly recommend you not to change these options. The figure and cache directories are stored under the <code>_bookdown_files</code> directory of the book root directory. A <code>.travis.yml</code> file that has enabled caching of <strong>knitr</strong> figure and cache directories may have additional configurations <code>sudo</code> and <code>cache</code> like this:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb137-1"><a href="github.html#cb137-1" tabindex="-1"></a><span class="fu">sudo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb137-2"><a href="github.html#cb137-2" tabindex="-1"></a></span>
+<span id="cb137-3"><a href="github.html#cb137-3" tabindex="-1"></a><span class="fu">cache</span><span class="kw">:</span></span>
+<span id="cb137-4"><a href="github.html#cb137-4" tabindex="-1"></a><span class="at">  </span><span class="fu">packages</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb137-5"><a href="github.html#cb137-5" tabindex="-1"></a><span class="at">  </span><span class="fu">directories</span><span class="kw">:</span></span>
+<span id="cb137-6"><a href="github.html#cb137-6" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> $TRAVIS_BUILD_DIR/_bookdown_files</span></span></code></pre></div>
+<p>If your book is very time-consuming to build, you may use the above configurations on Travis to save time. Note that <code>packages: yes</code> means the R packages installed on Travis are also cached.</p>
+<p>All above scripts and configurations can be found in the <code>bookdown-demo</code> repository: <a href="https://github.com/rstudio/bookdown-demo/" class="uri">https://github.com/rstudio/bookdown-demo/</a>. If you copy them to your own repository, please remember to change the <code>secure</code> key in <code>.travis.yml</code> using your own encrypted variable <code>GITHUB_PAT</code>.</p>
+<p>GitHub and Travis CI are certainly not the only choices to build and publish your book. You are free to store and publish the book on your own server.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="13">
+<li id="fn13"><p>You need to authorize the Travis CI service for your repository on GitHub first. See <a href="https://docs.travis-ci.com/user/getting-started/" class="uri">https://docs.travis-ci.com/user/getting-started/</a> for how to get started with Travis CI.<a href="github.html#fnref13" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="netlify-drop.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="features-for-html-publishing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown/edit/main/inst/examples/06-publishing.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "none"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

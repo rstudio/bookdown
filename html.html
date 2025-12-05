@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.1 HTML | bookdown: Authoring Books and Technical Documents with R Markdown</title>
+  <meta name="description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="generator" content="bookdown 0.45.4 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.1 HTML | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+  <meta property="og:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="github-repo" content="rstudio/bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.1 HTML | bookdown: Authoring Books and Technical Documents with R Markdown" />
+  
+  <meta name="twitter:description" content="A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)." />
+  <meta name="twitter:image" content="https://bookdown.org/yihui/bookdown//images/cover.jpg" />
+
+<meta name="author" content="Yihui Xie" />
+
+
+<meta name="date" content="2025-12-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="output-formats.html"/>
+<link rel="next" href="latexpdf.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<link href="libs/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Authoring Books with R Markdown</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="why-read-this-book.html"><a href="why-read-this-book.html"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="structure-of-the-book.html"><a href="structure-of-the-book.html"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="software-information-and-conventions.html"><a href="software-information-and-conventions.html"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
+<li class="chapter" data-level="1.2" data-path="get-started.html"><a href="get-started.html"><i class="fa fa-check"></i><b>1.2</b> Get started</a></li>
+<li class="chapter" data-level="1.3" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.3</b> Usage</a></li>
+<li class="chapter" data-level="1.4" data-path="new-session.html"><a href="new-session.html"><i class="fa fa-check"></i><b>1.4</b> Two rendering approaches</a></li>
+<li class="chapter" data-level="1.5" data-path="some-tips.html"><a href="some-tips.html"><i class="fa fa-check"></i><b>1.5</b> Some tips</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="components.html"><a href="components.html"><i class="fa fa-check"></i><b>2</b> Components</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html"><i class="fa fa-check"></i><b>2.1</b> Markdown syntax</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="markdown-syntax.html"><a href="markdown-syntax.html#inline-formatting"><i class="fa fa-check"></i><b>2.1.1</b> Inline formatting</a></li>
+<li class="chapter" data-level="2.1.2" data-path="markdown-syntax.html"><a href="markdown-syntax.html#block-level-elements"><i class="fa fa-check"></i><b>2.1.2</b> Block-level elements</a></li>
+<li class="chapter" data-level="2.1.3" data-path="markdown-syntax.html"><a href="markdown-syntax.html#math-expressions"><i class="fa fa-check"></i><b>2.1.3</b> Math expressions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html"><i class="fa fa-check"></i><b>2.2</b> Markdown extensions by bookdown</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#equations"><i class="fa fa-check"></i><b>2.2.1</b> Number and reference equations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#theorems"><i class="fa fa-check"></i><b>2.2.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="2.2.3" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#special-headers"><i class="fa fa-check"></i><b>2.2.3</b> Special headers</a></li>
+<li class="chapter" data-level="2.2.4" data-path="markdown-extensions-by-bookdown.html"><a href="markdown-extensions-by-bookdown.html#text-references"><i class="fa fa-check"></i><b>2.2.4</b> Text references</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="r-code.html"><a href="r-code.html"><i class="fa fa-check"></i><b>2.3</b> R code</a></li>
+<li class="chapter" data-level="2.4" data-path="figures.html"><a href="figures.html"><i class="fa fa-check"></i><b>2.4</b> Figures</a></li>
+<li class="chapter" data-level="2.5" data-path="tables.html"><a href="tables.html"><i class="fa fa-check"></i><b>2.5</b> Tables</a></li>
+<li class="chapter" data-level="2.6" data-path="cross-references.html"><a href="cross-references.html"><i class="fa fa-check"></i><b>2.6</b> Cross-references</a></li>
+<li class="chapter" data-level="2.7" data-path="custom-blocks.html"><a href="custom-blocks.html"><i class="fa fa-check"></i><b>2.7</b> Custom blocks</a></li>
+<li class="chapter" data-level="2.8" data-path="citations.html"><a href="citations.html"><i class="fa fa-check"></i><b>2.8</b> Citations</a></li>
+<li class="chapter" data-level="2.9" data-path="latex-index.html"><a href="latex-index.html"><i class="fa fa-check"></i><b>2.9</b> Index</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="latex-index.html"><a href="latex-index.html#inserting-entries"><i class="fa fa-check"></i><b>2.9.1</b> Inserting Entries</a></li>
+<li class="chapter" data-level="2.9.2" data-path="latex-index.html"><a href="latex-index.html#building-the-index"><i class="fa fa-check"></i><b>2.9.2</b> Building the Index</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="html-widgets.html"><a href="html-widgets.html"><i class="fa fa-check"></i><b>2.10</b> HTML widgets</a></li>
+<li class="chapter" data-level="2.11" data-path="web-pages-and-shiny-apps.html"><a href="web-pages-and-shiny-apps.html"><i class="fa fa-check"></i><b>2.11</b> Web pages and Shiny apps</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="output-formats.html"><a href="output-formats.html"><i class="fa fa-check"></i><b>3</b> Output Formats</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="html.html"><a href="html.html"><i class="fa fa-check"></i><b>3.1</b> HTML</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="html.html"><a href="html.html#gitbook-style"><i class="fa fa-check"></i><b>3.1.1</b> GitBook style</a></li>
+<li class="chapter" data-level="3.1.2" data-path="html.html"><a href="html.html#bs4-book"><i class="fa fa-check"></i><b>3.1.2</b> Three-column Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.3" data-path="html.html"><a href="html.html#bootstrap-style"><i class="fa fa-check"></i><b>3.1.3</b> The default Bootstrap style</a></li>
+<li class="chapter" data-level="3.1.4" data-path="html.html"><a href="html.html#tufte-style"><i class="fa fa-check"></i><b>3.1.4</b> Tufte style</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="latexpdf.html"><a href="latexpdf.html"><i class="fa fa-check"></i><b>3.2</b> LaTeX/PDF</a></li>
+<li class="chapter" data-level="3.3" data-path="e-books.html"><a href="e-books.html"><i class="fa fa-check"></i><b>3.3</b> E-Books</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="e-books.html"><a href="e-books.html#epub"><i class="fa fa-check"></i><b>3.3.1</b> EPUB</a></li>
+<li class="chapter" data-level="3.3.2" data-path="e-books.html"><a href="e-books.html#mobi"><i class="fa fa-check"></i><b>3.3.2</b> MOBI</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="a-single-document.html"><a href="a-single-document.html"><i class="fa fa-check"></i><b>3.4</b> A single document</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="customization.html"><a href="customization.html"><i class="fa fa-check"></i><b>4</b> Customization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="yaml-options.html"><a href="yaml-options.html"><i class="fa fa-check"></i><b>4.1</b> YAML options</a></li>
+<li class="chapter" data-level="4.2" data-path="theming.html"><a href="theming.html"><i class="fa fa-check"></i><b>4.2</b> Theming</a></li>
+<li class="chapter" data-level="4.3" data-path="templates.html"><a href="templates.html"><i class="fa fa-check"></i><b>4.3</b> Templates</a></li>
+<li class="chapter" data-level="4.4" data-path="configuration.html"><a href="configuration.html"><i class="fa fa-check"></i><b>4.4</b> Configuration</a></li>
+<li class="chapter" data-level="4.5" data-path="internationalization.html"><a href="internationalization.html"><i class="fa fa-check"></i><b>4.5</b> Internationalization</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="editing.html"><a href="editing.html"><i class="fa fa-check"></i><b>5</b> Editing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="build-the-book.html"><a href="build-the-book.html"><i class="fa fa-check"></i><b>5.1</b> Build the book</a></li>
+<li class="chapter" data-level="5.2" data-path="preview-a-chapter.html"><a href="preview-a-chapter.html"><i class="fa fa-check"></i><b>5.2</b> Preview a chapter</a></li>
+<li class="chapter" data-level="5.3" data-path="serve-the-book.html"><a href="serve-the-book.html"><i class="fa fa-check"></i><b>5.3</b> Serve the book</a></li>
+<li class="chapter" data-level="5.4" data-path="rstudio-ide.html"><a href="rstudio-ide.html"><i class="fa fa-check"></i><b>5.4</b> RStudio IDE</a></li>
+<li class="chapter" data-level="5.5" data-path="collaboration.html"><a href="collaboration.html"><i class="fa fa-check"></i><b>5.5</b> Collaboration</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="publishing.html"><a href="publishing.html"><i class="fa fa-check"></i><b>6</b> Publishing</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="rstudio-connect.html"><a href="rstudio-connect.html"><i class="fa fa-check"></i><b>6.1</b> RStudio Connect</a></li>
+<li class="chapter" data-level="6.2" data-path="netlify-drop.html"><a href="netlify-drop.html"><i class="fa fa-check"></i><b>6.2</b> Netlify Drop</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="netlify-drop.html"><a href="netlify-drop.html#the-build-and-deploy-pipeline-sequence"><i class="fa fa-check"></i><b>6.2.1</b> The build-and-deploy pipeline sequence</a></li>
+<li class="chapter" data-level="6.2.2" data-path="netlify-drop.html"><a href="netlify-drop.html#before-you-begin"><i class="fa fa-check"></i><b>6.2.2</b> Before you begin</a></li>
+<li class="chapter" data-level="6.2.3" data-path="netlify-drop.html"><a href="netlify-drop.html#build-your-book"><i class="fa fa-check"></i><b>6.2.3</b> Build your book</a></li>
+<li class="chapter" data-level="6.2.4" data-path="netlify-drop.html"><a href="netlify-drop.html#deploy-your-site"><i class="fa fa-check"></i><b>6.2.4</b> Deploy your site</a></li>
+<li class="chapter" data-level="6.2.5" data-path="netlify-drop.html"><a href="netlify-drop.html#optional-update-your-site"><i class="fa fa-check"></i><b>6.2.5</b> <em>Optional: Update your site</em></a></li>
+<li class="chapter" data-level="6.2.6" data-path="netlify-drop.html"><a href="netlify-drop.html#netlify-subdomain"><i class="fa fa-check"></i><b>6.2.6</b> <em>Optional: change the default subdomain</em></a></li>
+<li class="chapter" data-level="6.2.7" data-path="netlify-drop.html"><a href="netlify-drop.html#drawbacks-and-alternatives"><i class="fa fa-check"></i><b>6.2.7</b> Drawbacks and alternatives</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="github.html"><a href="github.html"><i class="fa fa-check"></i><b>6.3</b> GitHub</a></li>
+<li class="chapter" data-level="6.4" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html"><i class="fa fa-check"></i><b>6.4</b> Features for HTML publishing</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#html-404"><i class="fa fa-check"></i><b>6.4.1</b> HTML 404 pages</a></li>
+<li class="chapter" data-level="6.4.2" data-path="features-for-html-publishing.html"><a href="features-for-html-publishing.html#metadata-for-sharing"><i class="fa fa-check"></i><b>6.4.2</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="publishers.html"><a href="publishers.html"><i class="fa fa-check"></i><b>6.5</b> Publishers</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="software-tools.html"><a href="software-tools.html"><i class="fa fa-check"></i><b>A</b> Software Tools</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="r-and-r-packages.html"><a href="r-and-r-packages.html"><i class="fa fa-check"></i><b>A.1</b> R and R packages</a></li>
+<li class="chapter" data-level="A.2" data-path="pandoc.html"><a href="pandoc.html"><i class="fa fa-check"></i><b>A.2</b> Pandoc</a></li>
+<li class="chapter" data-level="A.3" data-path="latex.html"><a href="latex.html"><i class="fa fa-check"></i><b>A.3</b> LaTeX</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="software-usage.html"><a href="software-usage.html"><i class="fa fa-check"></i><b>B</b> Software Usage</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="knitr.html"><a href="knitr.html"><i class="fa fa-check"></i><b>B.1</b> knitr</a></li>
+<li class="chapter" data-level="B.2" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>B.2</b> R Markdown</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>C</b> FAQ</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Authoring Books and Technical Documents with R Markdown</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="html" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> HTML<a href="html.html#html" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The main difference between rendering a book (using <strong>bookdown</strong>) with rendering a single R Markdown document (using <strong>rmarkdown</strong>) to HTML is that a book will generate multiple HTML pages by default—normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output:</p>
+<ul>
+<li>the GitBook style (Section <a href="html.html#gitbook-style">3.1.1</a>),</li>
+<li>the three-column Bootstrap style (Section <a href="html.html#bs4-book">3.1.2</a>),</li>
+<li>the default Bootstrap style (Section <a href="html.html#bootstrap-style">3.1.3</a>), and</li>
+<li>the Tufte style (Section <a href="html.html#tufte-style">3.1.4</a>).</li>
+</ul>
+<div id="gitbook-style" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> GitBook style<a href="html.html#gitbook-style" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The GitBook style was borrowed from GitBook, a project launched by Friendcode, Inc. (<a href="https://www.gitbook.com" class="uri">https://www.gitbook.com</a>) and dedicated to helping authors write books with Markdown. It provides a beautiful style, with a layout consisting of a sidebar showing the table of contents on the left, and the main body of a book on the right. The design is responsive to the window size, e.g., the navigation buttons are displayed on the left/right of the book body when the window is wide enough, and collapsed into the bottom when the window is narrow to give readers more horizontal space to read the book body.</p>
+<p>The easiest way to get started writing a new <code>gitbook</code> is to use the RStudio Project Wizard (<em>File &gt; New Project &gt; New Directory &gt; Book project using bookdown</em>) and select <code>gitbook</code> from the dropdown menu (see Figure <a href="html.html#fig:new-bs4-book">3.3</a>).</p>
+<p>If you do not use RStudio or prefer a function, you can create the same project template with <code>bookdown::create_gitbook()</code> from your R console. See <code>?bookdown::create_gitbook</code> for help.</p>
+<p>We have made several improvements over the original GitBook project. The most significant one is that we replaced the Markdown engine with R Markdown v2 based on Pandoc, so that there are a lot more features for you to use when writing a book:</p>
+<ul>
+<li>You can embed R code chunks and inline R expressions in Markdown, and this makes it easy to create reproducible documents and frees you from synchronizing your computation with its actual output (<strong>knitr</strong> will take care of it automatically).</li>
+<li>The Markdown syntax is much richer: you can write anything that Pandoc’s Markdown supports, such as LaTeX math expressions and citations.</li>
+<li>You can embed interactive content in the book (for HTML output only), such as HTML widgets and Shiny apps.</li>
+</ul>
+<p>We have also added some useful features in the user interface that we will introduce in detail soon. The output format function for the GitBook style in <strong>bookdown</strong> is <code>gitbook()</code>. Here are its arguments:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="html.html#cb70-1" tabindex="-1"></a><span class="fu">gitbook</span>(<span class="at">fig_caption =</span> <span class="cn">TRUE</span>, <span class="at">number_sections =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb70-2"><a href="html.html#cb70-2" tabindex="-1"></a>  <span class="at">self_contained =</span> <span class="cn">FALSE</span>, <span class="at">anchor_sections =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb70-3"><a href="html.html#cb70-3" tabindex="-1"></a>  <span class="at">lib_dir =</span> <span class="st">&quot;libs&quot;</span>, <span class="at">global_numbering =</span> <span class="sc">!</span>number_sections,</span>
+<span id="cb70-4"><a href="html.html#cb70-4" tabindex="-1"></a>  <span class="at">pandoc_args =</span> <span class="cn">NULL</span>, <span class="at">extra_dependencies =</span> <span class="fu">list</span>(),</span>
+<span id="cb70-5"><a href="html.html#cb70-5" tabindex="-1"></a>  ..., <span class="at">template =</span> <span class="st">&quot;default&quot;</span>, <span class="at">split_by =</span> <span class="fu">c</span>(<span class="st">&quot;chapter&quot;</span>,</span>
+<span id="cb70-6"><a href="html.html#cb70-6" tabindex="-1"></a>    <span class="st">&quot;section&quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>,</span>
+<span id="cb70-7"><a href="html.html#cb70-7" tabindex="-1"></a>    <span class="st">&quot;chapter+number&quot;</span>, <span class="st">&quot;section+number&quot;</span>, <span class="st">&quot;0+number&quot;</span>,</span>
+<span id="cb70-8"><a href="html.html#cb70-8" tabindex="-1"></a>    <span class="st">&quot;1+number&quot;</span>, <span class="st">&quot;2+number&quot;</span>, <span class="st">&quot;3+number&quot;</span>, <span class="st">&quot;4+number&quot;</span>,</span>
+<span id="cb70-9"><a href="html.html#cb70-9" tabindex="-1"></a>    <span class="st">&quot;5+number&quot;</span>, <span class="st">&quot;6+number&quot;</span>, <span class="st">&quot;rmd&quot;</span>, <span class="st">&quot;none&quot;</span>), <span class="at">split_bib =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb70-10"><a href="html.html#cb70-10" tabindex="-1"></a>  <span class="at">config =</span> <span class="fu">list</span>(), <span class="at">table_css =</span> <span class="cn">TRUE</span>, <span class="at">code_folding =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>,</span>
+<span id="cb70-11"><a href="html.html#cb70-11" tabindex="-1"></a>    <span class="st">&quot;show&quot;</span>, <span class="st">&quot;hide&quot;</span>))</span></code></pre></div>
+<p>Most arguments are passed to <code>rmarkdown::html_document()</code>, including <code>fig_caption</code>, <code>lib_dir</code>, and <code>...</code>. You can check out the help page of <code>rmarkdown::html_document()</code> for the full list of possible options. We strongly recommend you to use <code>fig_caption = TRUE</code> for two reasons: 1) it is important to explain your figures with captions; 2) enabling figure captions means figures will be placed in floating environments when the output is LaTeX, otherwise you may end up with a lot of white space on certain pages. The format of figure/table numbers depends on if sections are numbered or not: if <code>number_sections = TRUE</code>, these numbers will be of the format <code>X.i</code>, where <code>X</code> is the chapter number, and <code>i</code> in an incremental number; if sections are not numbered, all figures/tables will be numbered sequentially through the book from 1, 2, …, N. Note that in either case, figures and tables will be numbered independently.</p>
+<p>Among all possible arguments in <code>...</code>, you are most likely to use the <code>css</code> argument to provide one or more custom CSS files to tweak the default CSS style. There are a few arguments of <code>html_document()</code> that have been hard-coded in <code>gitbook()</code> and you cannot change them: <code>toc = TRUE</code> (there must be a table of contents), <code>theme = NULL</code> (not using any Bootstrap themes), and <code>template</code> (there exists an internal GitBook template).</p>
+<p>Please note that if you change <code>self_contained = TRUE</code> to make self-contained HTML pages, the total size of all HTML files can be significantly increased since there are many JS and CSS files that have to be embedded in every single HTML file.</p>
+<p>Besides these <code>html_document()</code> options, <code>gitbook()</code> has three other arguments: <code>split_by</code>, <code>split_bib</code>, and <code>config</code>. The <code>split_by</code> argument specifies how you want to split the HTML output into multiple pages, and its possible values are:</p>
+<ul>
+<li><code>rmd</code>: use the base filenames of the input Rmd files to create the HTML filenames, e.g., generate <code>chapter3.html</code> for <code>chapter3.Rmd</code>.</li>
+<li><code>none</code>: do not split the HTML file (the book will be a single HTML file).</li>
+<li><code>chapter</code>: split the file by the first-level headers.</li>
+<li><code>section</code>: split the file by the second-level headers.</li>
+<li><code>chapter+number</code> and <code>section+number</code>: similar to <code>chapter</code> and <code>section</code>, but the files will be numbered.</li>
+</ul>
+<p>For <code>chapter</code> and <code>section</code>, the HTML filenames will be determined by the header identifiers, e.g., the filename for the first chapter with a chapter title <code># Introduction</code> will be <code>introduction.html</code> by default. For <code>chapter+number</code> and <code>section+number</code>, the chapter/section numbers will be prepended to the HTML filenames, e.g., <code>1-introduction.html</code> and <code>2-1-literature.html</code>. The header identifier is automatically generated from the header text by default,<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> and you can manually specify an identifier using the syntax <code>{#your-custom-id}</code> after the header text, e.g.,</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb71-1"><a href="html.html#cb71-1" tabindex="-1"></a><span class="fu"># An Introduction {#introduction}</span></span>
+<span id="cb71-2"><a href="html.html#cb71-2" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="html.html#cb71-3" tabindex="-1"></a>The default identifier is <span class="in">`an-introduction`</span> but we changed</span>
+<span id="cb71-4"><a href="html.html#cb71-4" tabindex="-1"></a>it to <span class="in">`introduction`</span>.</span></code></pre></div>
+<p>By default, the bibliography is split and relevant citation items are put at the bottom of each page, so that readers do not have to navigate to a different bibliography page to see the details of citations. This feature can be disabled using <code>split_bib = FALSE</code>, in which case all citations are put on a separate page.</p>
+<p>There are several sub-options in the <code>config</code> option for you to tweak some details in the user interface. Recall that all output format options (not only for <code>bookdown::gitbook</code>) can be either passed to the format function if you use the command-line interface <code>bookdown::render_book()</code>, or written in the YAML metadata. We display the default sub-options of <code>config</code> in the <code>gitbook</code> format as YAML metadata below (note that they are indented under the <code>config</code> option):</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb72-1"><a href="html.html#cb72-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:gitbook</span><span class="kw">:</span></span>
+<span id="cb72-2"><a href="html.html#cb72-2" tabindex="-1"></a><span class="at">  </span><span class="fu">config</span><span class="kw">:</span></span>
+<span id="cb72-3"><a href="html.html#cb72-3" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span></span>
+<span id="cb72-4"><a href="html.html#cb72-4" tabindex="-1"></a><span class="at">      </span><span class="fu">collapse</span><span class="kw">:</span><span class="at"> subsection</span></span>
+<span id="cb72-5"><a href="html.html#cb72-5" tabindex="-1"></a><span class="at">      </span><span class="fu">scroll_highlight</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb72-6"><a href="html.html#cb72-6" tabindex="-1"></a><span class="at">      </span><span class="fu">before</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb72-7"><a href="html.html#cb72-7" tabindex="-1"></a><span class="at">      </span><span class="fu">after</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb72-8"><a href="html.html#cb72-8" tabindex="-1"></a><span class="at">    </span><span class="fu">toolbar</span><span class="kw">:</span></span>
+<span id="cb72-9"><a href="html.html#cb72-9" tabindex="-1"></a><span class="at">      </span><span class="fu">position</span><span class="kw">:</span><span class="at"> fixed</span></span>
+<span id="cb72-10"><a href="html.html#cb72-10" tabindex="-1"></a><span class="at">    </span><span class="fu">edit </span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb72-11"><a href="html.html#cb72-11" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb72-12"><a href="html.html#cb72-12" tabindex="-1"></a><span class="at">    </span><span class="fu">search</span><span class="kw">:</span></span>
+<span id="cb72-13"><a href="html.html#cb72-13" tabindex="-1"></a><span class="at">      </span><span class="fu">engine</span><span class="kw">:</span><span class="at"> lunr</span><span class="co"> # or fuse</span></span>
+<span id="cb72-14"><a href="html.html#cb72-14" tabindex="-1"></a><span class="co">      # options to control/tune search engine behavior (for</span></span>
+<span id="cb72-15"><a href="html.html#cb72-15" tabindex="-1"></a><span class="co">      # fuse.js, refer to https://fusejs.io/api/options.html)</span></span>
+<span id="cb72-16"><a href="html.html#cb72-16" tabindex="-1"></a><span class="at">      </span><span class="fu">options</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb72-17"><a href="html.html#cb72-17" tabindex="-1"></a><span class="at">    </span><span class="fu">fontsettings</span><span class="kw">:</span></span>
+<span id="cb72-18"><a href="html.html#cb72-18" tabindex="-1"></a><span class="at">      </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb72-19"><a href="html.html#cb72-19" tabindex="-1"></a><span class="at">      </span><span class="fu">family</span><span class="kw">:</span><span class="at"> sans</span></span>
+<span id="cb72-20"><a href="html.html#cb72-20" tabindex="-1"></a><span class="at">      </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb72-21"><a href="html.html#cb72-21" tabindex="-1"></a><span class="at">    </span><span class="fu">sharing</span><span class="kw">:</span></span>
+<span id="cb72-22"><a href="html.html#cb72-22" tabindex="-1"></a><span class="at">      </span><span class="fu">facebook</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb72-23"><a href="html.html#cb72-23" tabindex="-1"></a><span class="at">      </span><span class="fu">github</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-24"><a href="html.html#cb72-24" tabindex="-1"></a><span class="at">      </span><span class="fu">twitter</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb72-25"><a href="html.html#cb72-25" tabindex="-1"></a><span class="at">      </span><span class="fu">linkedin</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-26"><a href="html.html#cb72-26" tabindex="-1"></a><span class="at">      </span><span class="fu">weibo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-27"><a href="html.html#cb72-27" tabindex="-1"></a><span class="at">      </span><span class="fu">instapaper</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-28"><a href="html.html#cb72-28" tabindex="-1"></a><span class="at">      </span><span class="fu">vk</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-29"><a href="html.html#cb72-29" tabindex="-1"></a><span class="at">      </span><span class="fu">whatsapp</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb72-30"><a href="html.html#cb72-30" tabindex="-1"></a><span class="at">      </span><span class="fu">all</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;facebook&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;twitter&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;linkedin&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;weibo&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;instapaper&#39;</span><span class="kw">]</span></span>
+<span id="cb72-31"><a href="html.html#cb72-31" tabindex="-1"></a><span class="at">    </span><span class="fu">info</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>The <code>toc</code> option controls the behavior of the table of contents (TOC). You can collapse some items initially when a page is loaded via the <code>collapse</code> option. Its possible values are <code>subsection</code>, <code>section</code>, <code>none</code> (or <code>null</code>). This option can be helpful if your TOC is very long and has more than three levels of headings: <code>subsection</code> means collapsing all TOC items for subsections (X.X.X), <code>section</code> means those items for sections (X.X) so only the top-level headings are displayed initially, and <code>none</code> means not collapsing any items in the TOC. For those collapsed TOC items, you can toggle their visibility by clicking their parent TOC items. For example, you can click a chapter title in the TOC to show/hide its sections.</p>
+<p>The <code>scroll_highlight</code> option in <code>toc</code> indicates whether to enable highlighting of TOC items as you scroll the book body (by default this feature is enabled). Whenever a new header comes into the current viewport as you scroll down/up, the corresponding item in TOC on the left will be highlighted.</p>
+<p>Since the sidebar has a fixed width, when an item in the TOC is truncated because the heading text is too wide, you can hover the cursor over it to see a tooltip showing the full text.</p>
+<p>You may add more items before and after the TOC using the HTML tag <code>&lt;li&gt;</code>. These items will be separated from the TOC using a horizontal divider. You can use the pipe character <code>|</code> so that you do not need to escape any characters in these items following the YAML syntax, e.g.,</p>
+<pre><code>    toc:
+      before: |
+        &lt;li&gt;&lt;a href=&quot;...&quot;&gt;My Awesome Book&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;...&quot;&gt;John Smith&lt;/a&gt;&lt;/li&gt;
+      after: |
+        &lt;li&gt;&lt;a href=&quot;https://github.com/rstudio/bookdown&quot;&gt;
+        Proudly published with bookdown&lt;/a&gt;&lt;/li&gt;</code></pre>
+<p>As you navigate through different HTML pages, we will try to preserve the scroll position of the TOC. Normally you will see the scrollbar in the TOC at a fixed position even if you navigate to the next page. However, if the TOC item for the current chapter/section is not visible when the page is loaded, we will automatically scroll the TOC to make it visible to you.</p>
+<div class="figure"><span style="display:block;" id="fig:gitbook-toolbar"></span>
+<img src="images/gitbook.png" alt="The GitBook toolbar." width="100%" />
+<p class="caption">
+FIGURE 3.1: The GitBook toolbar.
+</p>
+</div>
+<p>The GitBook style has a toolbar (Figure <a href="html.html#fig:gitbook-toolbar">3.1</a>) at the top of each page that allows you to dynamically change the book settings. The <code>toolbar</code> option has a sub-option <code>position</code>, which can take values <code>fixed</code> or <code>static</code>. The default is that the toolbar will be fixed at the top of the page, so even if you scroll down the page, the toolbar is still visible there. If it is <code>static</code>, the toolbar will not scroll with the page, i.e., once you scroll away, you will no longer see it.</p>
+<p>The first button on the toolbar can toggle the visibility of the sidebar. You can also hit the <code>S</code> key on your keyboard to do the same thing. The GitBook style can remember the visibility status of the sidebar, e.g., if you closed the sidebar, it will remain closed the next time you open the book. In fact, the GitBook style remembers many other settings as well, such as the search keyword and the font settings.</p>
+<p>The second button on the toolbar is the search button. Its keyboard shortcut is <code>F</code> (Find). When the button is clicked, you will see a search box at the top of the sidebar. As you type in the box, the TOC will be filtered to display the sections that match the search keyword. Now you can use the arrow keys <code>Up</code>/<code>Down</code> to highlight the previous/next match in the search results. When you click the search button again (or hit <code>F</code> outside the search box), the search keyword will be emptied and the search box will be hidden. To disable searching, set the option <code>search: false</code> in <code>config</code>.</p>
+<p>The third button is for font/theme settings. The reader can change the font size (bigger or smaller), the font family (serif or sans serif), and the theme (<code>White</code>, <code>Sepia</code>, or <code>Night</code>). You can set the initial value of these settings via the <code>fontsettings</code> option. Font size is measured on a scale of 0-4; the initial value can be set to 1, 2 (default), 3, or 4. The button can be removed from the toolbar by setting <code>fontsettings: null</code> (or <code>no</code>).</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb74-1"><a href="html.html#cb74-1" tabindex="-1"></a><span class="co"># changing the default</span></span>
+<span id="cb74-2"><a href="html.html#cb74-2" tabindex="-1"></a><span class="at">    </span><span class="fu">fontsettings</span><span class="kw">:</span></span>
+<span id="cb74-3"><a href="html.html#cb74-3" tabindex="-1"></a><span class="at">      </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> night</span></span>
+<span id="cb74-4"><a href="html.html#cb74-4" tabindex="-1"></a><span class="at">      </span><span class="fu">family</span><span class="kw">:</span><span class="at"> serif</span></span>
+<span id="cb74-5"><a href="html.html#cb74-5" tabindex="-1"></a><span class="at">      </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span></code></pre></div>
+<p>The <code>edit</code> option is the same as the option mentioned in Section <a href="configuration.html#configuration">4.4</a>. If it is not empty, an edit button will be added to the toolbar. This was designed for potential contributors to the book to contribute by editing the book on GitHub after clicking the button and sending pull requests. The <code>history</code> and <code>view</code> options work the same
+way.</p>
+<p>If your book has other output formats for readers to download, you may provide the <code>download</code> option so that a download button can be added to the toolbar. This option takes either a character vector, or a list of character vectors with the length of each vector being 2. When it is a character vector, it should be either a vector of filenames, or filename extensions, e.g., both of the following settings are okay:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb75-1"><a href="html.html#cb75-1" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;book.pdf&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;book.epub&quot;</span><span class="kw">]</span></span>
+<span id="cb75-2"><a href="html.html#cb75-2" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;pdf&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;epub&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;mobi&quot;</span><span class="kw">]</span></span></code></pre></div>
+<p>When you only provide the filename extensions, the filename is derived from the book filename of the configuration file <code>_bookdown.yml</code> (Section <a href="configuration.html#configuration">4.4</a>). When <code>download</code> is <code>null</code>, <code>gitbook()</code> will look for PDF, EPUB, and MOBI files in the book output directory, and automatically add them to the <code>download</code> option. If you just want to suppress the download button, use <code>download: false</code>. All files for readers to download will be displayed in a drop-down menu, and the filename extensions are used as the menu text. When the only available format for readers to download is PDF, the download button will be a single PDF button instead of a drop-down menu.</p>
+<p>An alternative form for the value of the <code>download</code> option is a list of length-2 vectors, e.g.,</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb76-1"><a href="html.html#cb76-1" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span><span class="at"> </span><span class="kw">[[</span><span class="st">&quot;book.pdf&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;PDF&quot;</span><span class="kw">],</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;book.epub&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;EPUB&quot;</span><span class="kw">]]</span></span></code></pre></div>
+<p>You can also write it as:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb77-1"><a href="html.html#cb77-1" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span></span>
+<span id="cb77-2"><a href="html.html#cb77-2" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;book.pdf&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;PDF&quot;</span><span class="kw">]</span></span>
+<span id="cb77-3"><a href="html.html#cb77-3" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;book.epub&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;EPUB&quot;</span><span class="kw">]</span></span></code></pre></div>
+<p>Each vector in the list consists of the filename and the text to be displayed in the menu. Compared to the first form, this form allows you to customize the menu text, e.g., you may have two different copies of the PDF for readers to download and you will need to make the menu items different.</p>
+<p>On the right of the toolbar, there are some buttons to share the link on social network websites such as Twitter, Facebook, and Linkedin. You can use the <code>sharing</code> option to decide which buttons to enable. If you want to get rid of these buttons entirely, use <code>sharing: null</code> (or <code>no</code>).</p>
+<p>Another button shown on the toolbar is the information (‘i’) button that lists keyboard shortcuts available to navigate the document. This button can be hidden by setting <code>info: false</code>.</p>
+<p>Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:</p>
+<ul>
+<li><code>description</code>: A character string to be written to the <code>content</code> attribute of the tag <code>&lt;meta name="description" content=""&gt;</code> in the HTML head (if missing, the title of the book will be used). This can be useful for search engine optimization (SEO). Note that it should be plain text without any Markdown formatting such as <code>_italic_</code> or <code>**bold**</code>.</li>
+<li><code>url</code>: The URL of book’s website, e.g., <code>https\://bookdown.org/yihui/bookdown/</code>.<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a></li>
+<li><code>github-repo</code>: The GitHub repository of the book of the form <code>user/repo</code>.</li>
+<li><code>cover-image</code>: The path to the cover image of the book.</li>
+<li><code>apple-touch-icon</code>: A path to an icon (e.g., a PNG image). This is for iOS only: when the website is added to the Home screen, the link is represented by this icon.</li>
+<li><code>apple-touch-icon-size</code>: The size of the icon (by default, 152 x 152 pixels).</li>
+<li><code>favicon</code>: A path to the “favorite icon”. Typically this icon is displayed in the browser’s address bar, or in front of the page title on the tab if the browser support tabs.</li>
+</ul>
+<p>Below we show some sample YAML metadata (again, please note that these are <em>top-level</em> options):</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb78-1"><a href="html.html#cb78-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb78-2"><a href="html.html#cb78-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;An Awesome Book&quot;</span></span>
+<span id="cb78-3"><a href="html.html#cb78-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;John Smith&quot;</span></span>
+<span id="cb78-4"><a href="html.html#cb78-4" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;This book introduces the ABC theory, and ...&quot;</span></span>
+<span id="cb78-5"><a href="html.html#cb78-5" tabindex="-1"></a><span class="fu">url</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;https\://bookdown.org/john/awesome/&#39;</span></span>
+<span id="cb78-6"><a href="html.html#cb78-6" tabindex="-1"></a><span class="fu">github-repo</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;john/awesome&quot;</span></span>
+<span id="cb78-7"><a href="html.html#cb78-7" tabindex="-1"></a><span class="fu">cover-image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;images/cover.png&quot;</span></span>
+<span id="cb78-8"><a href="html.html#cb78-8" tabindex="-1"></a><span class="fu">apple-touch-icon</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;touch-icon.png&quot;</span></span>
+<span id="cb78-9"><a href="html.html#cb78-9" tabindex="-1"></a><span class="fu">apple-touch-icon-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">120</span></span>
+<span id="cb78-10"><a href="html.html#cb78-10" tabindex="-1"></a><span class="fu">favicon</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;favicon.ico&quot;</span></span>
+<span id="cb78-11"><a href="html.html#cb78-11" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>A nice effect of setting <code>description</code> and <code>cover-image</code> is that when you share the link of your book on some social network websites such as Twitter, the link can be automatically expanded to a card with the cover image and description of the book.</p>
+</div>
+<div id="bs4-book" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Three-column Bootstrap style<a href="html.html#bs4-book" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>bs4_book()</code> output format is built with Bootstrap (<a href="https://getbootstrap.com" class="uri">https://getbootstrap.com</a>), using carefully crafted features to provide a clean reading experience whether you are on a phone, tablet, or desktop. On a full-size screen, the layout includes three columns of content so readers can quickly see all chapters on the left, the current chapter in the middle, and sections within the the current chapter on the right. You can read an example book here: <a href="https://mastering-shiny.org" class="uri">https://mastering-shiny.org</a></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
+<a href="https://mastering-shiny.org" target="_blank"><img src="images/bs4-book.png" alt="Home page of a book with the three-column Bootstrap style."  /></a>
+<p class="caption">
+FIGURE 3.2: Home page of a book with the three-column Bootstrap style.
+</p>
+</div>
+<p>In addition to the basic <strong>bookdown</strong> components (Section <a href="components.html#components">2</a>), the main features of <code>bs4_book</code> are:</p>
+<ul>
+<li><p>Easy customization of colors and fonts with
+<a href="https://pkgs.rstudio.com/bslib/">the <strong>bslib</strong> package.</a></p></li>
+<li><p>Built-in search (broken down by section) that helps readers quickly find what
+they are looking for.</p></li>
+<li><p>A sidebar containing a within-chapter table of contents that makes
+navigation easy and helps provide context about your current position
+within the chapter.</p></li>
+<li><p>Thoughtful typography to make the contents as easy as possible to read,
+regardless of the size of your device. A sticky header gets out of your
+way when reading, but is easily accessible if you need it.</p></li>
+<li><p>In-line footnotes mean you can read asides next to the text they refer
+to. This theme is best paired with a reference style that generates
+footnotes.</p></li>
+<li><p>R syntax highlighting and autolinking by
+<a href="https://downlit.r-lib.org">the <strong>downlit</strong> package</a> is paired with an accessible
+color scheme designed by Alison Hill.</p></li>
+<li><p>Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter’s content.</p></li>
+<li><p>Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter’s source file or suggest an edit.</p></li>
+</ul>
+<p>The output format function is <a href="https://pkgs.rstudio.com/bookdown/reference/bs4_book.html"><code>bookdown::bs4_book</code>.</a> Here are its arguments:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="html.html#cb79-1" tabindex="-1"></a><span class="fu">bs4_book</span>(<span class="at">theme =</span> <span class="fu">bs4_book_theme</span>(), <span class="at">repo =</span> <span class="cn">NULL</span>, ...,</span>
+<span id="cb79-2"><a href="html.html#cb79-2" tabindex="-1"></a>  <span class="at">lib_dir =</span> <span class="st">&quot;libs&quot;</span>, <span class="at">pandoc_args =</span> <span class="cn">NULL</span>, <span class="at">extra_dependencies =</span> <span class="cn">NULL</span>,</span>
+<span id="cb79-3"><a href="html.html#cb79-3" tabindex="-1"></a>  <span class="at">template =</span> <span class="st">&quot;default&quot;</span>, <span class="at">split_bib =</span> <span class="cn">FALSE</span>, <span class="at">footnotes_inline =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="writing-a-bs4_book" class="section level4 hasAnchor" number="3.1.2.1">
+<h4><span class="header-section-number">3.1.2.1</span> Writing a <code>bs4_book</code><a href="html.html#writing-a-bs4_book" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The easiest way to get started writing a new <code>bs4_book</code> is to use the RStudio Project Wizard (<em>File &gt; New Project &gt; New Directory &gt; Book project using bookdown</em>) and select <code>bs4_book</code> from the dropdown menu (see Figure <a href="html.html#fig:new-bs4-book">3.3</a>).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:new-bs4-book"></span>
+<img src="images/new-bs4-book.png" alt="Screenshot of the RStudio Project Wizard for creating a new bookdown project."  />
+<p class="caption">
+FIGURE 3.3: Screenshot of the RStudio Project Wizard for creating a new bookdown project.
+</p>
+</div>
+<p>If you do not use RStudio or prefer a function, you can create the same project template with <code>bookdown::create_bs4_book()</code> from your R console. See <code>?bookdown::create_bs4_book</code> or <a href="https://pkgs.rstudio.com/bookdown/reference/create_book.html">the online documentation</a> for help.</p>
+<p>This style is designed for books that use one chapter per page.
+This means that each chapter is an <code>.Rmd</code> file, and each <code>.Rmd</code> file can contain one chapter.
+Each file <em>must</em> start with a first-level heading, <code># Chapter title</code>, and that must be the only first-level heading in the file.</p>
+<p>Use second-level and lower-level headings within chapters like:</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb80-1"><a href="html.html#cb80-1" tabindex="-1"></a><span class="fu">#   A chapter</span></span>
+<span id="cb80-2"><a href="html.html#cb80-2" tabindex="-1"></a></span>
+<span id="cb80-3"><a href="html.html#cb80-3" tabindex="-1"></a><span class="fu">##  A section</span></span>
+<span id="cb80-4"><a href="html.html#cb80-4" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="html.html#cb80-5" tabindex="-1"></a><span class="fu">### A subsection</span></span></code></pre></div>
+<p>The first- and second-level headings appear in the current chapter’s sidebar, which sticks to the top of the page as you scroll down. When a section is navigated to, third-level subheadings like “A subsection” will auto-expand.</p>
+<p>The <code>index.Rmd</code> file is required, and is also your first book chapter. It will be the homepage when you render the book. If you want to include content that should only be included in the HTML version of the book, you may want to include that content conditionally by combining the <strong>knitr</strong> <code>include</code> chunk option with the <code>knitr::is_html_output()</code> function. See the <a href="https://bookdown.org/yihui/rmarkdown-cookbook/latex-html.html"><em>R Markdown Cookbook</em></a> for instructions.</p>
+<p>A YAML header in <code>index.Rmd</code> for a <code>bs4_book</code> would look like this:</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb81-1"><a href="html.html#cb81-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb81-2"><a href="html.html#cb81-2" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;A Minimal Book Example&quot;</span></span>
+<span id="cb81-3"><a href="html.html#cb81-3" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Jane Doe&quot;</span></span>
+<span id="cb81-4"><a href="html.html#cb81-4" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;2025-12-05&quot;</span></span>
+<span id="cb81-5"><a href="html.html#cb81-5" tabindex="-1"></a><span class="fu">site</span><span class="kw">:</span><span class="at"> bookdown::bookdown_site</span></span>
+<span id="cb81-6"><a href="html.html#cb81-6" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> bookdown::bs4_book</span></span>
+<span id="cb81-7"><a href="html.html#cb81-7" tabindex="-1"></a><span class="fu">url</span><span class="kw">:</span><span class="at"> https://bookdown.org/janedoe/bookdown-demo</span></span>
+<span id="cb81-8"><a href="html.html#cb81-8" tabindex="-1"></a><span class="fu">cover-image</span><span class="kw">:</span><span class="at"> cover.png</span></span>
+<span id="cb81-9"><a href="html.html#cb81-9" tabindex="-1"></a><span class="fu">description</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb81-10"><a href="html.html#cb81-10" tabindex="-1"></a>  This is a minimal example of using the bookdown package to write a book.</span>
+<span id="cb81-11"><a href="html.html#cb81-11" tabindex="-1"></a>  The output format for this example is bookdown::bs4_book.</span>
+<span id="cb81-12"><a href="html.html#cb81-12" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+</div>
+<div id="styling-customization" class="section level4 hasAnchor" number="3.1.2.2">
+<h4><span class="header-section-number">3.1.2.2</span> Styling &amp; customization<a href="html.html#styling-customization" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The <code>bs4_book()</code> format builds upon the Bootstrap CSS framework (<a href="https://getbootstrap.com/docs/4.0/">version 4</a>), an open source library of reusable chunks of HTML, CSS, and JavaScript code. The Bootstrap framework allows for easy customization of colors and fonts via the <strong>bslib</strong> R package.</p>
+<p>You can use the <code>theme</code> option to add a <code>primary</code> color in <a href="https://en.wikipedia.org/wiki/Web_colors">hexadecimal format,</a> which will change the color of all links in your book and the background color of the footer.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb82-1"><a href="html.html#cb82-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb82-2"><a href="html.html#cb82-2" tabindex="-1"></a><span class="at">  </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb82-3"><a href="html.html#cb82-3" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#0d6efd&quot;</span><span class="at">   </span></span></code></pre></div>
+<p>For custom font settings, adding a <code>google:</code> keyword triggers <a href="https://rstudio.github.io/sass/reference/font_face.html"><code>sass::font_google()</code>’s</a> ability to automatically import <a href="https://fonts.google.com">Google Font files.</a> Here is an example YAML that changes the <code>base_font</code>, <code>heading_font</code>, and <code>code_font</code>:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb83-1"><a href="html.html#cb83-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb83-2"><a href="html.html#cb83-2" tabindex="-1"></a><span class="at">  </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb83-3"><a href="html.html#cb83-3" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#0d6efd&quot;</span><span class="at">   </span></span>
+<span id="cb83-4"><a href="html.html#cb83-4" tabindex="-1"></a><span class="at">    </span><span class="fu">base_font</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb83-5"><a href="html.html#cb83-5" tabindex="-1"></a><span class="at">      </span><span class="fu">google</span><span class="kw">:</span><span class="at"> Sen</span></span>
+<span id="cb83-6"><a href="html.html#cb83-6" tabindex="-1"></a><span class="at">    </span><span class="fu">heading_font</span><span class="kw">:</span></span>
+<span id="cb83-7"><a href="html.html#cb83-7" tabindex="-1"></a><span class="at">      </span><span class="fu">google</span><span class="kw">:</span></span>
+<span id="cb83-8"><a href="html.html#cb83-8" tabindex="-1"></a><span class="at">        </span><span class="fu">family</span><span class="kw">:</span><span class="at"> Bitter</span></span>
+<span id="cb83-9"><a href="html.html#cb83-9" tabindex="-1"></a><span class="at">        </span><span class="fu">wght</span><span class="kw">:</span><span class="at"> </span><span class="dv">200</span></span>
+<span id="cb83-10"><a href="html.html#cb83-10" tabindex="-1"></a><span class="at">    </span><span class="fu">code_font</span><span class="kw">:</span></span>
+<span id="cb83-11"><a href="html.html#cb83-11" tabindex="-1"></a><span class="at">      </span><span class="fu">google</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb83-12"><a href="html.html#cb83-12" tabindex="-1"></a><span class="co">        # arguments to sass::font_google() </span></span>
+<span id="cb83-13"><a href="html.html#cb83-13" tabindex="-1"></a><span class="at">        </span><span class="fu">family</span><span class="kw">:</span><span class="at"> DM Mono</span></span>
+<span id="cb83-14"><a href="html.html#cb83-14" tabindex="-1"></a><span class="at">        </span><span class="fu">local</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div>
+<p>By default, <code>google:</code> will bundle font files with your book, so it downloads, caches, and serves the relevant font file(s) locally. This means that when you share it with someone else, the fonts are guaranteed to render, even without an Internet connection (<code>local: false</code> imports files via URL instead of serving them locally).</p>
+<p>You may also use non-Google fonts that you serve locally using <a href="https://rstudio.github.io/sass/reference/font_face.html#serving-non-google-fonts-locally"><code>sass::font_face()</code>.</a></p>
+</div>
+<div id="callout-blocks" class="section level4 hasAnchor" number="3.1.2.3">
+<h4><span class="header-section-number">3.1.2.3</span> Callout blocks<a href="html.html#callout-blocks" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Callout blocks can be used to make certain portions of content stand out from the rest of your narrative. The <code>bs4_book</code> style includes special callout blocks with predefined styles for adding a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb84-1"><a href="html.html#cb84-1" tabindex="-1"></a>::: {.rmdnote}</span>
+<span id="cb84-2"><a href="html.html#cb84-2" tabindex="-1"></a>The <span class="in">`bs4_book`</span> style also includes an <span class="in">`.rmdnote`</span> callout block</span>
+<span id="cb84-3"><a href="html.html#cb84-3" tabindex="-1"></a>like this one.</span>
+<span id="cb84-4"><a href="html.html#cb84-4" tabindex="-1"></a></span>
+<span id="cb84-5"><a href="html.html#cb84-5" tabindex="-1"></a>``<span class="in">`{r collapse=TRUE}`</span></span>
+<span id="cb84-6"><a href="html.html#cb84-6" tabindex="-1"></a>head(beaver1, n = 5)</span>
+<span id="cb84-7"><a href="html.html#cb84-7" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb84-8"><a href="html.html#cb84-8" tabindex="-1"></a><span class="in">:::</span></span></code></pre></div>
+<p>You may use Markdown syntax and inline code inside a block. When knitted, the output will look like Figure <a href="html.html#fig:bs4-note">3.4</a>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:bs4-note"></span>
+<img src="images/rmd-note.png" alt="A special callout block."  />
+<p class="caption">
+FIGURE 3.4: A special callout block.
+</p>
+</div>
+<p>Available blocks are: <code>.rmdnote</code>, <code>.rmdcaution</code>, <code>.rmdimportant</code>, <code>.rmdtip</code>, and <code>.rmdwarning</code>. The colors used will be based on the default colors provided by Bootstrap, but can be also be customized in your <code>_output.yml</code> file:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb85-1"><a href="html.html#cb85-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb85-2"><a href="html.html#cb85-2" tabindex="-1"></a><span class="at">  </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb85-3"><a href="html.html#cb85-3" tabindex="-1"></a><span class="at">    </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#0d6efd&quot;</span><span class="co">   # default .rmdnote = blue</span></span>
+<span id="cb85-4"><a href="html.html#cb85-4" tabindex="-1"></a><span class="at">    </span><span class="fu">danger</span><span class="kw">:</span><span class="at">  </span><span class="st">&quot;#dc3545&quot;</span><span class="co">   # default .rmdcaution = red</span></span>
+<span id="cb85-5"><a href="html.html#cb85-5" tabindex="-1"></a><span class="at">    </span><span class="fu">success</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#198754&quot;</span><span class="co">   # default .rmdimportant = green</span></span>
+<span id="cb85-6"><a href="html.html#cb85-6" tabindex="-1"></a><span class="at">    </span><span class="fu">info</span><span class="kw">:</span><span class="at">    </span><span class="st">&quot;#0dcaf0&quot;</span><span class="co">   # default .rmdtip = cyan</span></span>
+<span id="cb85-7"><a href="html.html#cb85-7" tabindex="-1"></a><span class="at">    </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;#ffc107&quot;</span><span class="co">   # default .rmdwarning = yellow</span></span></code></pre></div>
+<p>For LaTeX output, only the content of these blocks will be shown with no colored outline as for HTML. It is up to the user to define the appearance of these blocks for LaTeX output using custom environments. See the <a href="https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html"><em>R Markdown Cookbook</em></a> for a how-to.</p>
+</div>
+<div id="html-metadata" class="section level4 hasAnchor" number="3.1.2.4">
+<h4><span class="header-section-number">3.1.2.4</span> HTML metadata<a href="html.html#html-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Bookdown will generate HTML <code>&lt;meta&gt;</code> tags based on Pandoc’s variables set in <code>index.Rmd</code>, described in <a href="features-for-html-publishing.html#metadata-for-sharing">6.4.2</a>. Additionally, <code>bs4_book()</code> will create unique chapter descriptions auto-generated from the chapter’s contents. You can have a look at <a href="https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.html">the <code>bs4_book</code> HTML
+template</a> for details on how these variables are used.</p>
+</div>
+<div id="bs4-book-footnotes" class="section level4 hasAnchor" number="3.1.2.5">
+<h4><span class="header-section-number">3.1.2.5</span> Inline Footnotes<a href="html.html#bs4-book-footnotes" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><code>bs4_book</code> makes any footnotes to show inline on hover instead of a linked item at the bottom of the page. You can set <code>footnotes_inline = FALSE</code> to opt-out this behavior and keep the footnotes at the bottom.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb86-1"><a href="html.html#cb86-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb86-2"><a href="html.html#cb86-2" tabindex="-1"></a><span class="at">  </span><span class="fu">footnotes_inline</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div>
+</div>
+<div id="referencesbibliography" class="section level4 hasAnchor" number="3.1.2.6">
+<h4><span class="header-section-number">3.1.2.6</span> References/Bibliography<a href="html.html#referencesbibliography" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Making your citations <em>footnotes</em> allows readers to read them near the text where they are used because <code>bs4_book</code> makes by default footnotes appear inline when clicked.
+To do that, download a footnote style CSL file; we recommend <a href="https://www.zotero.org/styles/" class="uri">https://www.zotero.org/styles/</a>.
+For example, you could download the <code>chicago-fullnote-bibliography.csl</code> from <a href="https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography">Zotero,</a> then
+add this to your <code>index.Rmd</code>:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb87-1"><a href="html.html#cb87-1" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> refs.bib</span></span>
+<span id="cb87-2"><a href="html.html#cb87-2" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> chicago-fullnote-bibliography.csl</span></span></code></pre></div>
+<p>Optionally, if you no longer want a reference section
+at the back of the book, add this line to your <code>index.Rmd</code>:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb88-1"><a href="html.html#cb88-1" tabindex="-1"></a><span class="fu">suppress-bibliography</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>If you would like to use a citation style that does not support footnotes, references will not be shown inline in popups. In this case, you may wish to add the <code>split_bib</code> option to your <code>_output.yml</code>:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb89-1"><a href="html.html#cb89-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb89-2"><a href="html.html#cb89-2" tabindex="-1"></a><span class="at">  </span><span class="fu">split_bib</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>Then your bibliography will be split and relevant citation items will be put at the bottom of each chapter, so that readers do not have to navigate to a different bibliography page to see the details of citations.</p>
+</div>
+<div id="specifying-the-repository" class="section level4 hasAnchor" number="3.1.2.7">
+<h4><span class="header-section-number">3.1.2.7</span> Specifying the repository<a href="html.html#specifying-the-repository" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Specify a source repository for your book to give your readers the option to easily view each chapter’s source file or suggest an edit.</p>
+<p>If your book has a default branch called “main,” you can use:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb90-1"><a href="html.html#cb90-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb90-2"><a href="html.html#cb90-2" tabindex="-1"></a><span class="at">  </span><span class="fu">repo</span><span class="kw">:</span></span>
+<span id="cb90-3"><a href="html.html#cb90-3" tabindex="-1"></a><span class="at">    </span><span class="fu">base</span><span class="kw">:</span><span class="at"> https://github.com/hadley/ggplot2-book</span></span>
+<span id="cb90-4"><a href="html.html#cb90-4" tabindex="-1"></a><span class="at">    </span><span class="fu">branch</span><span class="kw">:</span><span class="at"> main</span></span></code></pre></div>
+<p>If your book is furthermore located in a subdirectory called “book,” you can use:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb91-1"><a href="html.html#cb91-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb91-2"><a href="html.html#cb91-2" tabindex="-1"></a><span class="at">  </span><span class="fu">repo</span><span class="kw">:</span></span>
+<span id="cb91-3"><a href="html.html#cb91-3" tabindex="-1"></a><span class="at">    </span><span class="fu">base</span><span class="kw">:</span><span class="at"> https://github.com/hadley/ggplot2-book</span></span>
+<span id="cb91-4"><a href="html.html#cb91-4" tabindex="-1"></a><span class="at">    </span><span class="fu">branch</span><span class="kw">:</span><span class="at"> main</span></span>
+<span id="cb91-5"><a href="html.html#cb91-5" tabindex="-1"></a><span class="at">    </span><span class="fu">subdir</span><span class="kw">:</span><span class="at"> book</span></span></code></pre></div>
+<p>By default, if the repo URL contains “github,” it will get a GitHub <a href="https://fontawesome.com">Font Awesome</a> icon, otherwise it gets a GitLab icon.
+To use another icon, specify it with the correct prefix such as <code>fas</code>, <code>fab</code>, and so on (<a href="https://fontawesome.com/v5.0/how-to-use/on-the-web/referencing-icons/basic-use">Font Awesome 5</a>).</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb92-1"><a href="html.html#cb92-1" tabindex="-1"></a><span class="at">bookdown:</span><span class="fu">:bs4_book</span><span class="kw">:</span></span>
+<span id="cb92-2"><a href="html.html#cb92-2" tabindex="-1"></a><span class="at">  </span><span class="fu">repo</span><span class="kw">:</span></span>
+<span id="cb92-3"><a href="html.html#cb92-3" tabindex="-1"></a><span class="at">    </span><span class="fu">base</span><span class="kw">:</span><span class="at"> https://github.com/hadley/ggplot2-book</span></span>
+<span id="cb92-4"><a href="html.html#cb92-4" tabindex="-1"></a><span class="at">    </span><span class="fu">branch</span><span class="kw">:</span><span class="at"> main</span></span>
+<span id="cb92-5"><a href="html.html#cb92-5" tabindex="-1"></a><span class="at">    </span><span class="fu">subdir</span><span class="kw">:</span><span class="at"> book</span></span>
+<span id="cb92-6"><a href="html.html#cb92-6" tabindex="-1"></a><span class="at">    </span><span class="fu">icon</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;fas fa-air-freshener&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="bootstrap-style" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> The default Bootstrap style<a href="html.html#bootstrap-style" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you have used R Markdown before, you should be familiar with the Bootstrap style (<a href="https://getbootstrap.com" class="uri">https://getbootstrap.com</a>), which is the default style of the HTML output of R Markdown. The output format function in <strong>rmarkdown</strong> is <code>html_document()</code>, and we have a corresponding format <code>html_book()</code> in <strong>bookdown</strong> using <code>html_document()</code> as the base format. You can read an example <code>html_book()</code> here: <a href="https://bookdown.org/yihui/bookdown-demo2" class="uri">https://bookdown.org/yihui/bookdown-demo2</a></p>
+<p>In fact, there is a more general format <code>html_chapters()</code> in <strong>bookdown</strong> and <code>html_book()</code> is just its special case:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="html.html#cb93-1" tabindex="-1"></a><span class="fu">html_chapters</span>(<span class="at">toc =</span> <span class="cn">TRUE</span>, <span class="at">number_sections =</span> <span class="cn">TRUE</span>, <span class="at">fig_caption =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb93-2"><a href="html.html#cb93-2" tabindex="-1"></a>  <span class="at">lib_dir =</span> <span class="st">&quot;libs&quot;</span>, <span class="at">template =</span> <span class="fu">bookdown_file</span>(<span class="st">&quot;templates/default.html&quot;</span>),</span>
+<span id="cb93-3"><a href="html.html#cb93-3" tabindex="-1"></a>  <span class="at">global_numbering =</span> <span class="sc">!</span>number_sections, <span class="at">pandoc_args =</span> <span class="cn">NULL</span>,</span>
+<span id="cb93-4"><a href="html.html#cb93-4" tabindex="-1"></a>  ..., <span class="at">base_format =</span> rmarkdown<span class="sc">::</span>html_document, <span class="at">split_bib =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb93-5"><a href="html.html#cb93-5" tabindex="-1"></a>  <span class="at">page_builder =</span> build_chapter, <span class="at">split_by =</span> <span class="fu">c</span>(<span class="st">&quot;chapter&quot;</span>,</span>
+<span id="cb93-6"><a href="html.html#cb93-6" tabindex="-1"></a>    <span class="st">&quot;section&quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>, <span class="st">&quot;chapter+number&quot;</span>,</span>
+<span id="cb93-7"><a href="html.html#cb93-7" tabindex="-1"></a>    <span class="st">&quot;section+number&quot;</span>, <span class="st">&quot;0+number&quot;</span>, <span class="st">&quot;1+number&quot;</span>, <span class="st">&quot;2+number&quot;</span>,</span>
+<span id="cb93-8"><a href="html.html#cb93-8" tabindex="-1"></a>    <span class="st">&quot;3+number&quot;</span>, <span class="st">&quot;4+number&quot;</span>, <span class="st">&quot;5+number&quot;</span>, <span class="st">&quot;6+number&quot;</span>,</span>
+<span id="cb93-9"><a href="html.html#cb93-9" tabindex="-1"></a>    <span class="st">&quot;rmd&quot;</span>, <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
+<p>Note that it has a <code>base_format</code> argument that takes a base output format function, and <code>html_book()</code> is basically <code>html_chapters(base_format = rmarkdown::html_document)</code>. All arguments of <code>html_book()</code> are passed to <code>html_chapters()</code>:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="html.html#cb94-1" tabindex="-1"></a><span class="fu">html_book</span>(...)</span></code></pre></div>
+<p>That means that you can use most arguments of <code>rmarkdown::html_document</code>, such as <code>toc</code> (whether to show the table of contents), <code>number_sections</code> (whether to number section headings), and so on. Again, check the help page of <code>rmarkdown::html_document</code> to see the full list of possible options. Note that the argument <code>self_contained</code> is hard-coded to <code>FALSE</code> internally, so you cannot change the value of this argument. We have explained the argument <code>split_by</code> in the previous section.</p>
+<p>The arguments <code>template</code> and <code>page_builder</code> are for advanced users, and you do not need to understand them unless you have strong need to customize the HTML output, and those many options provided by <code>rmarkdown::html_document()</code> still do not give you what you want.</p>
+<p>If you want to pass a different HTML template to the <code>template</code> argument, the template must contain three pairs of HTML comments, and each comment must be on a separate line:</p>
+<ul>
+<li><code>&lt;!--bookdown:title:start--&gt;</code> and <code>&lt;!--bookdown:title:end--&gt;</code> to mark the title section of the book. This section will be placed only on the first page of the rendered book;</li>
+<li><code>&lt;!--bookdown:toc:start--&gt;</code> and <code>&lt;!--bookdown:toc:end--&gt;</code> to mark the table of contents section, which will be placed on all HTML pages;</li>
+<li><code>&lt;!--bookdown:body:start--&gt;</code> and <code>&lt;!--bookdown:body:end--&gt;</code> to mark the HTML body of the book, and the HTML body will be split into multiple separate pages. Recall that we merge all R Markdown or Markdown files, render them into a single HTML file, and split it.</li>
+</ul>
+<p>You may open the default HTML template to see where these comments were inserted:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="html.html#cb95-1" tabindex="-1"></a>bookdown<span class="sc">:::</span><span class="fu">bookdown_file</span>(<span class="st">&quot;templates/default.html&quot;</span>)</span>
+<span id="cb95-2"><a href="html.html#cb95-2" tabindex="-1"></a><span class="co"># you may use file.edit() to open this file</span></span></code></pre></div>
+<p>Once you know how <strong>bookdown</strong> works internally to generate multiple-page HTML output, it will be easier to understand the argument <code>page_builder</code>, which is a function to compose each individual HTML page using the HTML fragments extracted from the above comment tokens. The default value of <code>page_builder</code> is a function <code>build_chapter</code> in <strong>bookdown</strong>, and its source code is relatively simple (ignore those internal functions like <code>button_link()</code>):</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="html.html#cb96-1" tabindex="-1"></a>build_chapter <span class="ot">=</span> <span class="cf">function</span>(</span>
+<span id="cb96-2"><a href="html.html#cb96-2" tabindex="-1"></a>  head, toc, chapter, link_prev, link_next, rmd_cur, html_cur, foot</span>
+<span id="cb96-3"><a href="html.html#cb96-3" tabindex="-1"></a>) {</span>
+<span id="cb96-4"><a href="html.html#cb96-4" tabindex="-1"></a>  toc <span class="ot">=</span> <span class="fu">add_toc_class</span>(toc)</span>
+<span id="cb96-5"><a href="html.html#cb96-5" tabindex="-1"></a>  <span class="fu">paste</span>(<span class="fu">c</span>(</span>
+<span id="cb96-6"><a href="html.html#cb96-6" tabindex="-1"></a>    head,</span>
+<span id="cb96-7"><a href="html.html#cb96-7" tabindex="-1"></a>    <span class="st">&#39;&lt;div class=&quot;row&quot;&gt;&#39;</span>,</span>
+<span id="cb96-8"><a href="html.html#cb96-8" tabindex="-1"></a>    <span class="st">&#39;&lt;div class=&quot;col-sm-12&quot;&gt;&#39;</span>,</span>
+<span id="cb96-9"><a href="html.html#cb96-9" tabindex="-1"></a>    toc,</span>
+<span id="cb96-10"><a href="html.html#cb96-10" tabindex="-1"></a>    <span class="st">&#39;&lt;/div&gt;&#39;</span>,</span>
+<span id="cb96-11"><a href="html.html#cb96-11" tabindex="-1"></a>    <span class="st">&#39;&lt;/div&gt;&#39;</span>,</span>
+<span id="cb96-12"><a href="html.html#cb96-12" tabindex="-1"></a>    <span class="st">&#39;&lt;div class=&quot;row&quot;&gt;&#39;</span>,</span>
+<span id="cb96-13"><a href="html.html#cb96-13" tabindex="-1"></a>    <span class="st">&#39;&lt;div class=&quot;col-sm-12&quot;&gt;&#39;</span>,</span>
+<span id="cb96-14"><a href="html.html#cb96-14" tabindex="-1"></a>    chapter,</span>
+<span id="cb96-15"><a href="html.html#cb96-15" tabindex="-1"></a>    <span class="st">&#39;&lt;p style=&quot;text-align: center;&quot;&gt;&#39;</span>,</span>
+<span id="cb96-16"><a href="html.html#cb96-16" tabindex="-1"></a>    <span class="fu">button_link</span>(link_prev, <span class="st">&#39;Previous&#39;</span>),</span>
+<span id="cb96-17"><a href="html.html#cb96-17" tabindex="-1"></a>    <span class="fu">source_link</span>(rmd_cur, <span class="at">type =</span> <span class="st">&#39;edit&#39;</span>),</span>
+<span id="cb96-18"><a href="html.html#cb96-18" tabindex="-1"></a>    <span class="fu">source_link</span>(rmd_cur, <span class="at">type =</span> <span class="st">&#39;history&#39;</span>),</span>
+<span id="cb96-19"><a href="html.html#cb96-19" tabindex="-1"></a>    <span class="fu">source_link</span>(rmd_cur, <span class="at">type =</span> <span class="st">&#39;view&#39;</span>),</span>
+<span id="cb96-20"><a href="html.html#cb96-20" tabindex="-1"></a>    <span class="fu">button_link</span>(link_next, <span class="st">&#39;Next&#39;</span>),</span>
+<span id="cb96-21"><a href="html.html#cb96-21" tabindex="-1"></a>    <span class="st">&#39;&lt;/p&gt;&#39;</span>,</span>
+<span id="cb96-22"><a href="html.html#cb96-22" tabindex="-1"></a>    <span class="st">&#39;&lt;/div&gt;&#39;</span>,</span>
+<span id="cb96-23"><a href="html.html#cb96-23" tabindex="-1"></a>    <span class="st">&#39;&lt;/div&gt;&#39;</span>,</span>
+<span id="cb96-24"><a href="html.html#cb96-24" tabindex="-1"></a>    foot</span>
+<span id="cb96-25"><a href="html.html#cb96-25" tabindex="-1"></a>  ), <span class="at">collapse =</span> <span class="st">&#39;</span><span class="sc">\n</span><span class="st">&#39;</span>)</span>
+<span id="cb96-26"><a href="html.html#cb96-26" tabindex="-1"></a>}</span></code></pre></div>
+<p>Basically, this function takes a number of components like the HTML head, the table of contents, the chapter body, and so on, and it is expected to return a character string which is the HTML source of a complete HTML page. You may manipulate all components in this function using text-processing functions like <code>gsub()</code> and <code>paste()</code>.</p>
+<p>What the default page builder does is to put TOC in the first row, the body in the second row, navigation buttons at the bottom of the body, and concatenate them with the HTML head and foot. Here is a sketch of the HTML source code that may help you understand the output of <code>build_chapter()</code>:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb97-1"><a href="html.html#cb97-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb97-2"><a href="html.html#cb97-2" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb97-3"><a href="html.html#cb97-3" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>A Nice Book<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb97-4"><a href="html.html#cb97-4" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb97-5"><a href="html.html#cb97-5" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb97-6"><a href="html.html#cb97-6" tabindex="-1"></a>  </span>
+<span id="cb97-7"><a href="html.html#cb97-7" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="dt">&gt;</span>TOC<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb97-8"><a href="html.html#cb97-8" tabindex="-1"></a>    </span>
+<span id="cb97-9"><a href="html.html#cb97-9" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;row&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb97-10"><a href="html.html#cb97-10" tabindex="-1"></a>      CHAPTER BODY</span>
+<span id="cb97-11"><a href="html.html#cb97-11" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb97-12"><a href="html.html#cb97-12" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">button</span><span class="dt">&gt;</span>PREVIOUS<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb97-13"><a href="html.html#cb97-13" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">button</span><span class="dt">&gt;</span>NEXT<span class="dt">&lt;/</span><span class="kw">button</span><span class="dt">&gt;</span></span>
+<span id="cb97-14"><a href="html.html#cb97-14" tabindex="-1"></a>      <span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb97-15"><a href="html.html#cb97-15" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb97-16"><a href="html.html#cb97-16" tabindex="-1"></a>  </span>
+<span id="cb97-17"><a href="html.html#cb97-17" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb97-18"><a href="html.html#cb97-18" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>For all HTML pages, the main difference is the chapter body, and most of the rest of the elements are the same. The default output from <code>html_book()</code> will include the Bootstrap CSS and JavaScript files in the <code>&lt;head&gt;</code> tag.</p>
+<p>The TOC is often used for navigation purposes. In the GitBook style, the TOC is displayed in the sidebar. For the Bootstrap style, we did not apply a special style to it, so it is shown as a plain unordered list (in the HTML tag <code>&lt;ul&gt;</code>). It is easy to turn this list into a navigation bar with some CSS techniques. We have provided a CSS file <code>toc.css</code> in this package that you can use, and you can find it here: <a href="https://github.com/rstudio/bookdown/blob/master/inst/examples/css/toc.css" class="uri">https://github.com/rstudio/bookdown/blob/master/inst/examples/css/toc.css</a></p>
+<p>You may copy this file to the root directory of your book, and apply it to the HTML output via the <code>css</code> option, e.g.,</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb98-1"><a href="html.html#cb98-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb98-2"><a href="html.html#cb98-2" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb98-3"><a href="html.html#cb98-3" tabindex="-1"></a><span class="at">  bookdown:</span><span class="fu">:html_book</span><span class="kw">:</span></span>
+<span id="cb98-4"><a href="html.html#cb98-4" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb98-5"><a href="html.html#cb98-5" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> toc.css</span></span>
+<span id="cb98-6"><a href="html.html#cb98-6" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+<p>There are many possible ways to turn <code>&lt;ul&gt;</code> lists into navigation menus if you do a little bit searching on the web, and you can choose a menu style that you like. The <code>toc.css</code> we just mentioned is a style with white menu texts on a black background, and supports sub-menus (e.g., section titles are displayed as drop-down menus under chapter titles).</p>
+<p>As a matter of fact, you can get rid of the Bootstrap style in <code>html_document()</code> if you set the <code>theme</code> option to <code>null</code>, and you are free to apply arbitrary styles to the HTML output using the <code>css</code> option (and possibly the <code>includes</code> option if you want to include arbitrary content in the HTML head/foot).</p>
+</div>
+<div id="tufte-style" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Tufte style<a href="html.html#tufte-style" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Like the Bootstrap style, the Tufte style is provided by an output format <code>tufte_html_book()</code>, which is also a special case of <code>html_chapters()</code> using <code>tufte::tufte_html()</code> as the base format. Please see the <strong>tufte</strong> package <span class="citation">(<a href="#ref-R-tufte">Xie and Allaire 2025</a>)</span> if you are not familiar with the Tufte style. You can read an example <code>tufte_html_book()</code> here: <a href="https://bookdown.org/yihui/bookdown-demo3/" class="uri">https://bookdown.org/yihui/bookdown-demo3/</a></p>
+<p>Basically, it is a layout with a main column on the left and a margin column on the right. The main body is in the main column, and the margin column is used to place footnotes, margin notes, references, and margin figures, and so on.</p>
+<p>All arguments of <code>tufte_html_book()</code> have exactly the same meanings as <code>html_book()</code>, e.g., you can also customize the CSS via the <code>css</code> option. There are a few elements that are specific to the Tufte style, though, such as margin notes, margin figures, and full-width figures. These elements require special syntax to generate; please see the documentation of the <strong>tufte</strong> package. Note that you do not need to do anything special to footnotes and references (just use the normal Markdown syntax <code>^[footnote]</code> and <code>[@citation]</code>), since they will be automatically put in the margin. A brief YAML example of the <code>tufte_html_book</code> format:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb99-1"><a href="html.html#cb99-1" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb99-2"><a href="html.html#cb99-2" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb99-3"><a href="html.html#cb99-3" tabindex="-1"></a><span class="at">  bookdown:</span><span class="fu">:tufte_html_book</span><span class="kw">:</span></span>
+<span id="cb99-4"><a href="html.html#cb99-4" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb99-5"><a href="html.html#cb99-5" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> toc.css</span></span>
+<span id="cb99-6"><a href="html.html#cb99-6" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-tufte" class="csl-entry">
+Xie, Yihui, and JJ Allaire. 2025. <em>Tufte: Tufte’s Styles for r Markdown Documents</em>. <a href="https://github.com/rstudio/tufte">https://github.com/rstudio/tufte</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>To see more details on how an identifier is automatically generated, see the <code>auto_identifiers</code> extension in Pandoc’s documentation <a href="http://pandoc.org/MANUAL.html#header-identifiers" class="uri">http://pandoc.org/MANUAL.html#header-identifiers</a><a href="html.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>The backslash before <code>:</code> is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code <code>&lt;a href="..."&gt;&lt;/a&gt;</code>. More details at <a href="https://github.com/jgm/pandoc/issues/2139" class="uri">https://github.com/jgm/pandoc/issues/2139</a>.<a href="html.html#fnref10" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="output-formats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="latexpdf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": true,
+    "facebook": false,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/rstudio/bookdown/edit/main/inst/examples/03-formats.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown.pdf", "bookdown.epub", "bookdown.mobi"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "none"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
