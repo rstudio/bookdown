@@ -194,7 +194,7 @@ In both cases, your book will now be rendered on the Connect Cloud server.
 
 If you require a specific configuration for rendering your document, such as environment variables, refer to the [Connect Cloud documentation](https://docs.posit.co/connect-cloud/user/publish/github.html#advanced-settings){.uri}.
 
-### Q: I don’t want to migrate, but I want to download my current book hosted on bookdown.org. Can I do that?
+### Q: I don’t want to migrate, but I want to download my current book hosted on bookdown.org. Can I do that? {#download-bundle}
 
 [bookdown.org](bookdown.org) is based on a Connect server, and if you have published content to it, you can access your dashboard to view and download your content.
 
@@ -216,13 +216,46 @@ If you prefer, you can do that programmatically, using the **connectapi** packag
 
 This method of downloading books will no longer be available **after January 31, 2026**.
 
-### Q: I don’t have my bookdown project sources, but I have the rendered HTML. Can I publish it?
+### Q: I don't have my bookdown project sources, but I have the rendered HTML. Can I publish it?
 
-Yes. `bookdown::render_book()` has produced for you at the time a static website, and it can be hosted anywhere that supports such content.
+Yes. `bookdown::render_book()` has produced for you at the time a static website, and it can be hosted anywhere that supports such content. It can be deployed to Connect Cloud, but you could also consider Netlify, GitHub Pages, or any other static page hosting service. Below, we are guiding you to republish on Connect Cloud.
 
-Connect Cloud can host static content. You can use the Connect Cloud website to configure or use the **rsconnect** package to deploy it. `bookdown::publish_book()` won’t be adapted.
+Connect Cloud can host static content. You can use the Connect Cloud website to configure or use the **rsconnect** package to deploy it. `bookdown::publish_book()` won't be adapted.
 
-You could also consider Netlify, GitHub Pages, or any other static page hosting service.
+To deploy a folder of static HTML to Connect Cloud using **rsconnect**:
+
+``` r
+# First, authenticate with Connect Cloud (one-time setup)
+rsconnect::connectCloudUser()
+
+# Deploy your static HTML folder
+rsconnect::deployApp(
+  appDir = "path/to/your/html/folder",  # folder containing index.html
+  appName = "my-book-name",             # URL-friendly name
+  appTitle = "My Book Title",      # Optional title, otherwise appName.
+  appMode = "static",
+  contentCategory = "site",
+  server = "connect.posit.cloud" # should be the default one used.
+)
+```
+
+To download a bundle of your previously deployed book to bookdown.org, see [Q: I don’t want to migrate, but I want to download my current book hosted on bookdown.org. Can I do that?](#download-bundle)
+
+Or you can use the `connectapi` package, but it requires [getting an API key](https://docs.posit.co/connect/user/api-keys/):
+
+``` r
+# Set your bookdown.org API key (get it from https://bookdown.org/connect/)
+Sys.setenv(CONNECT_API_KEY = "your-api-key")
+
+client <- connectapi::connect(server = "https://bookdown.org")
+content <- connectapi::content_item(client, guid = "your-app-guid")
+connectapi::download_bundle(content, filename = "my-book.tar.gz")
+
+# Extract
+untar("my-book.tar.gz", exdir = "my-book")
+```
+
+Then you can use `rsconnect::deployApp()` as above.
 
 ### Q: I don’t want my content to be in the read-only version of [bookdown.org](https://bookdown.org) for 2026. How do I delete my content currently published on bookdown.org?
 
