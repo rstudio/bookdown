@@ -1,0 +1,25 @@
+---
+title: "A Book"
+author: "Frida Gomam"
+output:
+  bookdown::gitbook:
+    split_by: section
+---
+
+# Test footnote
+
+Hello world.^[Hello world footnote.]
+
+## Subsection footnotes 1
+
+```{block2, type = 'rmdtip'}
+  Another text with footnote^[second footnote]
+```
+
+A text^[with a multi line 
+footnote]
+
+## Subsection footnotes 2
+
+Something.
+

@@ -1,0 +1,134 @@
+Package: bookdown
+Type: Package
+Title: Authoring Books and Technical Documents with R Markdown
+Version: 0.46.2
+Authors@R: c(
+    person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+    person("Christophe", "Dervieux", , "cderv@posit.co", role = c("ctb"),
+           comment = c(ORCID = "0000-0003-4474-2498")),
+    person("JJ", "Allaire", role = "ctb"),
+    person("Albert", "Kim", role = "ctb"),
+    person("Alessandro", "Samuel-Rosa", role = "ctb"),
+    person("Andrzej", "Oles", role = "ctb"),
+    person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
+    person("Aust", "Frederik", role = "ctb", comment = c(ORCID = "0000-0003-4900-788X")),
+    person("Bastiaan", "Quast", role = "ctb"),
+    person("Ben", "Marwick", role = "ctb"),
+    person("Chester", "Ismay", role = "ctb"),
+    person("Clifton", "Franklund", role = "ctb"),
+    person("Daniel", "Emaasit", role = "ctb"),
+    person("David", "Shuman", role = "ctb"),
+    person("Dean", "Attali", role = "ctb"),
+    person("Drew", "Tyre", role = "ctb"),
+    person("Ellis", "Valentiner", role = "ctb"),
+    person("Frans", "van Dunne", role = "ctb"),
+    person("Hadley", "Wickham", role = "ctb"),
+    person("Jeff", "Allen", role = "ctb"),
+    person("Jennifer", "Bryan", role = "ctb"),
+    person("Jonathan", "McPhers", role = "ctb"),
+    person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Joyce", "Robbins", role = "ctb"),
+    person("Junwen", "Huang", role = "ctb"),
+    person("Kevin", "Cheung", role = "ctb"),
+    person("Kevin", "Ushey", role = "ctb"),
+    person("Kim", "Seonghyun", role = "ctb"),
+    person("Kirill", "Muller", role = "ctb"),
+    person("Luciano", "Selzer", role = "ctb"),
+    person("Matthew", "Lincoln", role = "ctb"),
+    person("Maximilian", "Held", role = "ctb"),
+    person("Michael", "Sachs", role = "ctb"),
+    person("Michal", "Bojanowski", role = "ctb"),
+    person("Nathan", "Werth", role = "ctb"),
+    person("Noam", "Ross", role = "ctb"),
+    person("Peter", "Hickey", role = "ctb"),
+    person("Pedro Rafael D.", "Marinho", role="ctb", comment = c(ORCID = "0000-0003-1591-8300")),
+    person("Romain", "Lesur", role = "ctb", comment = c(ORCID = "0000-0002-0721-5595")),
+    person("Sahir", "Bhatnagar", role = "ctb"),
+    person("Shir", "Dekel", role = "ctb", comment = c(ORCID = "0000-0003-1773-2446")),
+    person("Steve", "Simpson", role = "ctb"),
+    person("Thierry", "Onkelinx", role = "ctb", comment = c(ORCID = "0000-0001-8804-4216")),
+    person("Vincent", "Fulco", role = "ctb"),
+    person("Yixuan", "Qiu", role = "ctb"),
+    person("Zhuoer", "Dong", role = "ctb"),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd")),
+    person("Bartek", "Szopka", role = "ctb", comment = "The jQuery Highlight plugin"),
+    person("Zeno", "Rocha", role = "cph", comment = "clipboard.js library"),
+    person(family = "MathQuill contributors", role = "ctb", comment = "The MathQuill library; authors listed in inst/resources/AUTHORS"),
+    person(family = "FriendCode Inc", role = c("cph", "ctb"), comment = "The gitbook style, with modifications")
+    )
+Maintainer: Yihui Xie <xie@yihui.name>
+Description: Output formats and utilities for authoring books and technical documents with R Markdown.
+License: GPL-3
+Depends: R (>= 3.5.0)
+Imports: htmltools (>= 0.3.6), knitr (>= 1.38), rmarkdown (>= 2.14),
+        jquerylib, xfun (>= 0.48), tinytex (>= 0.12), yaml (>= 2.1.19)
+Suggests: bslib (>= 0.2.4), downlit (>= 0.4.0), htmlwidgets, jsonlite,
+        curl, rstudioapi, miniUI, rsconnect (>= 1.7.0), servr (>=
+        0.13), shiny, tibble, testit (>= 0.9), tufte, xml2, webshot,
+        testthat (>= 3.1.0), withr (>= 2.3.0)
+URL: https://github.com/rstudio/bookdown,
+        https://pkgs.rstudio.com/bookdown/
+BugReports: https://github.com/rstudio/bookdown/issues
+SystemRequirements: Pandoc (>= 1.17.2)
+RoxygenNote: 7.3.3
+Encoding: UTF-8
+Config/Needs/book: remotes, webshot, svglite
+Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2026-04-09 05:05:31 UTC; runner
+Author: Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>),
+  Christophe Dervieux [ctb] (ORCID:
+    <https://orcid.org/0000-0003-4474-2498>),
+  JJ Allaire [ctb],
+  Albert Kim [ctb],
+  Alessandro Samuel-Rosa [ctb],
+  Andrzej Oles [ctb],
+  Atsushi Yasumoto [ctb] (ORCID: <https://orcid.org/0000-0002-8335-495X>),
+  Aust Frederik [ctb] (ORCID: <https://orcid.org/0000-0003-4900-788X>),
+  Bastiaan Quast [ctb],
+  Ben Marwick [ctb],
+  Chester Ismay [ctb],
+  Clifton Franklund [ctb],
+  Daniel Emaasit [ctb],
+  David Shuman [ctb],
+  Dean Attali [ctb],
+  Drew Tyre [ctb],
+  Ellis Valentiner [ctb],
+  Frans van Dunne [ctb],
+  Hadley Wickham [ctb],
+  Jeff Allen [ctb],
+  Jennifer Bryan [ctb],
+  Jonathan McPhers [ctb],
+  JooYoung Seo [ctb] (ORCID: <https://orcid.org/0000-0002-4064-6012>),
+  Joyce Robbins [ctb],
+  Junwen Huang [ctb],
+  Kevin Cheung [ctb],
+  Kevin Ushey [ctb],
+  Kim Seonghyun [ctb],
+  Kirill Muller [ctb],
+  Luciano Selzer [ctb],
+  Matthew Lincoln [ctb],
+  Maximilian Held [ctb],
+  Michael Sachs [ctb],
+  Michal Bojanowski [ctb],
+  Nathan Werth [ctb],
+  Noam Ross [ctb],
+  Peter Hickey [ctb],
+  Pedro Rafael D. Marinho [ctb] (ORCID:
+    <https://orcid.org/0000-0003-1591-8300>),
+  Romain Lesur [ctb] (ORCID: <https://orcid.org/0000-0002-0721-5595>),
+  Sahir Bhatnagar [ctb],
+  Shir Dekel [ctb] (ORCID: <https://orcid.org/0000-0003-1773-2446>),
+  Steve Simpson [ctb],
+  Thierry Onkelinx [ctb] (ORCID: <https://orcid.org/0000-0001-8804-4216>),
+  Vincent Fulco [ctb],
+  Yixuan Qiu [ctb],
+  Zhuoer Dong [ctb],
+  Posit Software, PBC [cph, fnd],
+  Bartek Szopka [ctb] (The jQuery Highlight plugin),
+  Zeno Rocha [cph] (clipboard.js library),
+  MathQuill contributors [ctb] (The MathQuill library; authors listed in
+    inst/resources/AUTHORS),
+  FriendCode Inc [cph, ctb] (The gitbook style, with modifications)

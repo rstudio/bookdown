@@ -1,0 +1,20 @@
+bookdown_site           R Markdown site generator for bookdown
+bs4_book                HTML book built with bootstrap4
+calibre                 A wrapper function to convert e-books using
+                        Calibre
+clean_book              Clean up the output files and directories from
+                        the book
+create_book             Create a bookdown project
+epub_book               The EPUB e-book format
+fence_theorems          Convert the syntax of theorem and proof
+                        environments from code blocks to fenced Divs
+gitbook                 The GitBook output format
+html_chapters           Build book chapters into separate HTML files
+html_document2          Output formats that allow numbering and
+                        cross-referencing figures/tables/equations
+pdf_book                Convert R Markdown to a PDF book
+publish_book            Publish a book to a Posit Connect server
+render_book             Render multiple R Markdown documents into a
+                        book
+serve_book              Continuously preview the HTML output of a book
+                        using the 'servr' package

@@ -1,0 +1,20 @@
+---
+title: "A Book"
+author: "Frida Gomam"
+output:
+  bookdown::gitbook: 
+    split_by: none
+---
+
+# Test labels {-}
+
+Second equation label is not replaced with proper tag when using pandoc 2.0
+
+\begin{equation}
+x \in \mathbb{R} (\#eq:real)
+\end{equation}
+Hello
+\begin{equation}
+y \in \mathbb{Z} (\#eq:integer)
+\end{equation}
+world

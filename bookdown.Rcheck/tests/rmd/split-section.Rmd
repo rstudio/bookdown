@@ -1,0 +1,33 @@
+---
+title: "A Book"
+author: "Frida Gomam"
+output:
+  bookdown::gitbook:
+    split_by: section
+---
+
+# Section 1
+
+Some content
+
+## subsection 1
+
+Hello.
+
+See chapter 2 now at \@ref(section-2)
+
+# Section 2
+
+## subsection 21 {#sub2}
+
+```{r iris-plot, fig.cap = "A plot"}
+plot(iris)
+```
+
+See figure \@ref(fig:iris-plot)
+
+# subsection 22
+
+# Section 3
+
+## subsection 3

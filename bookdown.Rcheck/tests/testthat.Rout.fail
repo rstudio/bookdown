@@ -1,0 +1,57 @@
+
+R version 4.5.3 (2026-03-11) -- "Reassured Reassurer"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(bookdown)
+> 
+> test_check("bookdown")
+
+
+processing file: figures.Rmd
+output file: figures.knit.md
+
+/opt/hostedtoolcache/pandoc/3.1.11/x64/pandoc +RTS -K512m -RTS figures.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output figures.html --lua-filter /home/runner/work/bookdown/bookdown/bookdown.Rcheck/bookdown/rmarkdown/lua/custom-environment.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --wrap preserve --variable bs3=TRUE --section-divs --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpNlFwaq/rmarkdown-str20882f15836.html 
+
+Output created: figures.html
+curl: (6) Could not resolve host: www.zotero.org
+>>> 'chicago-fullnote-bibliography.csl' can't be downloaded. Please retrieve it manually at 'https://www.zotero.org/styles/chicago-fullnote-bibliography' or remove its usage from the template.
+CiteprocXMLError: Missing root element
+[ FAIL 1 | WARN 0 | SKIP 1 | PASS 168 ]
+
+══ Skipped tests (1) ═══════════════════════════════════════════════════════════
+• empty test (1): 'test-split_by.R:155:1'
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test-skeleton.R:72:3'): Created bs4_book template works ─────────────
+Error: pandoc document conversion failed with error 4
+Backtrace:
+     ▆
+  1. └─bookdown:::.render_book_quiet(dir, new_session = FALSE) at test-skeleton.R:72:3
+  2.   ├─base::suppressMessages(render_book(..., quiet = TRUE)) at ./helper.R:84:3
+  3.   │ └─base::withCallingHandlers(...)
+  4.   └─bookdown::render_book(..., quiet = TRUE)
+  5.     └─bookdown:::render_cur_session(...)
+  6.       └─rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
+  7.         └─rmarkdown (local) convert(output_file, run_citeproc)
+  8.           └─rmarkdown (local) convert_it(output)
+  9.             └─rmarkdown (local) convert_fun(...)
+ 10.               └─rmarkdown:::stop2(...)
+
+[ FAIL 1 | WARN 0 | SKIP 1 | PASS 168 ]
+Error:
+! Test failures.
+Execution halted
