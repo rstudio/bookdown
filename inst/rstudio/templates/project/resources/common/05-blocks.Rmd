@@ -22,7 +22,7 @@ and $a$ and $b$ denote the lengths of the **other** two sides, we have
 $$a^2 + b^2 = c^2$$
 :::
 
-Read more here <https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html>.
+Read more here <https://yihui.org/bookdown/markdown-extensions-by-bookdown.html>.
 
 ## Callout blocks
 
@@ -45,4 +45,4 @@ You may also use: `.rmdcaution`, `.rmdimportant`, `.rmdtip`, or `.rmdwarning` as
 
 <!--bs4_book:end-->
 
-The R Markdown Cookbook provides more help on how to use custom blocks to design your own callouts: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html
+The R Markdown Cookbook provides more help on how to use custom blocks to design your own callouts: https://yihui.org/rmarkdown-cookbook/custom-blocks.html

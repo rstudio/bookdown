@@ -2,7 +2,7 @@
 title: "Example books"
 ---
 
-The [bookdown contest](https://bookdown.org/home/contest/) is a great place to find a wide range of example books made with **bookdown**. 
+The [bookdown contest](https://bookdown.org/contest/) is a great place to find a wide range of example books made with **bookdown**. 
 
 See a full list of books built with bookdown here: <https://bookdown.org/>
 

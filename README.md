@@ -16,11 +16,11 @@ A open-source (GPL-3) R package to facilitate writing books and long-form articl
 -   LaTeX equations, theorems, and proofs work for all output formats
 -   Can be published to GitHub, bookdown.org, and any web servers
 -   Integrated with the RStudio IDE
--   One-click publishing to <https://bookdown.org>
+-   One-click publishing to Posit Connect
 
 ## Book
 
-<a href="https://bookdown.org/yihui/bookdown/"><img src="https://bookdown.org/yihui/bookdown/images/cover.jpg" alt="bookdown: Authoring Books and Technical Documents with R Markdown" class="book" height="400"/></a>
+<a href="https://yihui.org/bookdown/"><img src="https://yihui.org/bookdown/images/cover.jpg" alt="bookdown: Authoring Books and Technical Documents with R Markdown" class="book" height="400"/></a>
 
 ## Installation
 

@@ -8,6 +8,6 @@ This service offers:
 
 * Easy publishing of an HTML version of your book, with the help of the function `bookdown::publish_book()`.
 
-* Listing of books written using **bookdown**. Every book published into this hosting service will be listed on the [_Books_ page](https://bookdown.org/home/archive/) of the website with a description, a cover image and a link to the source repository. A book published online on another hosting service can also be listed on <https://bookdown.org>. 
+* Listing of books written using **bookdown**. Every book published into this hosting service will be listed on the [_Books_ page](https://bookdown.org/archive/) of the website with a description, a cover image and a link to the source repository. A book published online on another hosting service can also be listed on <https://bookdown.org>. 
 
-See more about how to publish a book and get a book listed with the right information on <https://bookdown.org/home/about/>.
+See more about how to publish a book and get a book listed with the right information on <https://bookdown.org/about/>.

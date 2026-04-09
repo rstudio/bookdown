@@ -8,6 +8,6 @@ The contents inside the .Rmd files provide some pointers to help you get started
 
 Additional resources:
 
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
+The **bookdown** book: https://yihui.org/bookdown/
 
 The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown

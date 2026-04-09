@@ -91,7 +91,7 @@ reference:
 
 - title: Publishing books
   desc: >
-    Publish books on <https://bookdown.org> or elsewhere.
+    Publish books to Posit Connect or elsewhere.
   contents:
   - publish_book
 

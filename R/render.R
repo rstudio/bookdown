@@ -18,7 +18,7 @@
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}. For \code{preview_chapter()},
 #'   \code{...} is passed to \code{render_book()}. See
 #'   \code{rmarkdown::\link[rmarkdown]{render}()}
-#'   and \href{https://bookdown.org/yihui/bookdown/build-the-book.html}{the
+#'   and \href{https://yihui.org/bookdown/build-the-book.html}{the
 #'   bookdown reference book} for details on how output formatting options are
 #'   set from YAML or parameters supplied by the user when calling
 #'   \code{render_book()}.
@@ -39,7 +39,7 @@
 #' @param config_file The book configuration file.
 #' @export
 #' @examples
-#' # see https://bookdown.org/yihui/bookdown for the full documentation
+#' # see https://yihui.org/bookdown for the full documentation
 #' if (file.exists('index.Rmd')) bookdown::render_book('index.Rmd')
 #' \dontrun{
 #' # will use the default format defined in index.Rmd or _output.yml

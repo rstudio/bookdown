@@ -28,7 +28,7 @@ against the background.}
 \item{repo}{Either link to repository where book is hosted, used to generate
 view source and edit buttons or a list with repository \code{base} link, default
 \code{branch}, \code{subdir} and \code{icon}
-(see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).}
+(see "Specifying the repository" in \url{https://yihui.org/bookdown/html.html#bootstrap4-style}).}
 
 \item{lib_dir, pandoc_args, extra_dependencies, split_bib, ...}{Passed on to \code{\link[rmarkdown:html_document]{rmarkdown::html_document()}}.}
 
@@ -53,5 +53,5 @@ links.}
 This output format is built with \href{https://getbootstrap.com}{Bootstrap},
 using carefully crafted features to provide a clean reading experience whether
 you are on a phone, tablet, or desktop. To read more about this format, see:
-\url{https://bookdown.org/yihui/bookdown/html.html#bs4-book}
+\url{https://yihui.org/bookdown/html.html#bs4-book}
 }

@@ -9,18 +9,18 @@
   source: https://github.com/wch/rgcookbook
   showcase: yes
 - title: 'R Markdown: The Definitive Guide'
-  img: https://bookdown.org/yihui/rmarkdown/images/cover.png
-  href: https://bookdown.org/yihui/rmarkdown/
+  img: https://yihui.org/rmarkdown/images/cover.png
+  href: https://yihui.org/rmarkdown/
   source: https://github.com/rstudio/rmarkdown-book
   showcase: no
 - title: R Markdown Cookbook
-  img: https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png
-  href: https://bookdown.org/yihui/rmarkdown-cookbook/
+  img: https://yihui.org/rmarkdown-cookbook/images/cover.png
+  href: https://yihui.org/rmarkdown-cookbook/
   source: https://github.com/yihui/rmarkdown-cookbook
   showcase: no
 - title: 'bookdown: Authoring Books and Technical Documents with R Markdown'
-  img: https://bookdown.org/yihui/bookdown/images/cover.jpg
-  href: https://bookdown.org/yihui/bookdown/
+  img: https://yihui.org/bookdown/images/cover.jpg
+  href: https://yihui.org/bookdown/
   source: https://github.com/rstudio/bookdown
   showcase: no
 - title: Text Mining with R
@@ -38,8 +38,8 @@
   href: https://rafalab.github.io/dsbook/
   showcase: no
 - title: 'blogdown: Creating Websites with R Markdown'
-  img: https://bookdown.org/yihui/blogdown/images/cover.png
-  href: https://bookdown.org/yihui/blogdown/
+  img: https://yihui.org/blogdown/images/cover.png
+  href: https://yihui.org/blogdown/
   source: https://github.com/rstudio/blogdown
   showcase: no
 - title: Efficient R programming

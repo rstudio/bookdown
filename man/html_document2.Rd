@@ -116,5 +116,5 @@ These output formats are used to generate single output files, such as
   package.
 }
 \references{
-\url{https://bookdown.org/yihui/bookdown/}
+\url{https://yihui.org/bookdown/}
 }

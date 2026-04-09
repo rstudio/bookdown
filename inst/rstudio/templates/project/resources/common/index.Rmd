@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
+# url: your book url like https://yihui.org/bookdown
 # cover-image: path to the social sharing image like images/cover.jpg
 # additional yaml goes here
 ---

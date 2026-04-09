@@ -62,7 +62,7 @@
 
 # CHANGES IN bookdown VERSION 0.35
 
-- Search configuration in `bs4_book()` will now return more results as [Field-Length Norm](https://www.fusejs.io/concepts/scoring-theory.html#field-length-norm) is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
+- Search configuration in `bs4_book()` will now return more results as Field-Length Norm is now ignored. This means the length of the search fields do not matter anymore in the scoring. Previous configuration was ignoring some search results being considered with a too low score (thanks, @jtbayly, #1431).
 
 # CHANGES IN bookdown VERSION 0.34
 
@@ -130,7 +130,7 @@
 
 ## NEW FEATURES
 
-- Set option `bookdown.theorem.enabled = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.enabled = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
+- Set option `bookdown.theorem.enabled = FALSE` to opt-out **bookdown** special Theorem and Proof environment syntax. `options(bookdown.theorem.enabled = FALSE)` must be called before the function to render the book, e.g in a project's `.Rprofile`. This can be useful for advanced users who only want PDF output and needs to handle themselves the environment using LaTeX directly, or [Custom Blocks](https://yihui.org/rmarkdown-cookbook/custom-blocks.html) syntax without **bookdown** interfering (thanks, @finkelshtein, #1285).
 
 - `bs4_book()` gains a `footnotes_inline` argument. Set to `FALSE` to opt-out the default behavior of moving footnotes inline to show on hover (thanks, @Pindar777, #1253).
 
@@ -150,7 +150,7 @@
 
 ## MAJOR CHANGES
 
-- The `theorem` and `proof` **knitr** engines no longer use the `block2` **knitr** engine to create theorem/proof environments, but write out fenced `Div`s instead, which is [the new syntax](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) for these environments. Note that this means these environments are no longer supported in EPUB output (they work only in HTML and PDF), but hopefully the support will be back in the future (thanks, @deleeuw, #1178).
+- The `theorem` and `proof` **knitr** engines no longer use the `block2` **knitr** engine to create theorem/proof environments, but write out fenced `Div`s instead, which is [the new syntax](https://yihui.org/bookdown/markdown-extensions-by-bookdown.html) for these environments. Note that this means these environments are no longer supported in EPUB output (they work only in HTML and PDF), but hopefully the support will be back in the future (thanks, @deleeuw, #1178).
 
 - The tag `<meta property="og:url">` has been removed from the default HTML template and the `gitbook` template (thanks, @jtbayly, #970).
 
@@ -221,14 +221,14 @@
 
 - `epub_version` argument in `epub_book()` can now be set to `epub2` to create EPUB book of version 2. This follows an old change for default behavior in Pandoc 2.0 where the alias `epub` defaults to `epub3` and no more `epub2` (thanks, @jtbayly, #1150).
 
-- [Theorem and Proof environment](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) can now be used with `beamer_presentation2()` using fenced Div syntax like this
+- [Theorem and Proof environment](https://yihui.org/bookdown/markdown-extensions-by-bookdown.html) can now be used with `beamer_presentation2()` using fenced Div syntax like this
   ````markdown
   ::: {.theorem #label name="My Theorem"}
   Content
   :::
   ````
   
-  However, as _beamer_ defines its own LaTeX theorem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
+  However, as _beamer_ defines its own LaTeX theorem environments, **bookdown** won't add any definition in preamble as it is doing with `pdf_book()`. This means user will have to define the ones supported by **bookdown** and not yet defined by _beamer_. Special environment from _beamer_ (like `fact`) needs to be used with usual [Custom Blocks syntax](https://yihui.org/rmarkdown-cookbook/custom-blocks.html). See related issues for examples in their discussions thread (thanks, @XiangyunHuang, #1143, #1145).
 
   This change comes with several small improvements in `custom-enviromnent.lua` for `latex` and `beamer` format, including a new option `bookdown.theorem.preamble` to opt-out **bookdown** addition of theorems and proofs definitions in LaTeX preamble. Set it to `FALSE` if you have conflict with some specific format for example (like #1001).
 
@@ -254,7 +254,7 @@
 
 - In `bs4_book()`, math in footnotes is now rendered (@mine-cetinkaya-rundel, #1026)
 
-- Fix an issue with `bs4_book()` where text written using [Line Block](https://bookdown.org/yihui/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
+- Fix an issue with `bs4_book()` where text written using [Line Block](https://yihui.org/rmarkdown-cookbook/indent-text.html) was not found in search (thanks, @dmklotz, #1141).
 
 # CHANGES IN bookdown VERSION 0.22
 
@@ -264,9 +264,9 @@
 
 - `render_book()` can now take a directory as input, i.e `render_book("book_dir")`, to render in this directory by using the `index.Rmd` file if it exists. The default is now to look for `input.Rmd` is the current working directory. Previously, filename must have been provided (`render_book()` is now equivalent to `render_book("index.Rmd")`) (#990).
 
-- `hypothesis` environment is now supported among [Theorems and Proof](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems) (thanks, @shirdekel, #1102).
+- `hypothesis` environment is now supported among [Theorems and Proof](https://yihui.org/bookdown/markdown-extensions-by-bookdown.html) (thanks, @shirdekel, #1102).
 
-- In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://bookdown.org/yihui/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
+- In `_bookdown.yaml`, `label` fields `fig`, `tab` and `eq` can now take a function as `ui` fields `chapter_name` and `appendix`. This function takes the reference number as only argument and must return a character to be used as full label. The default is a string prepended before the reference number. This new feature gives more flexibility to change the default for other language, e.g append the label name after the number. See updated doc about [Internationalization](https://yihui.org/bookdown/internationalization.html)(thanks, Tamás Ferenc, #1114)
 
 - Using the 'Knit' button now also works with a Rmd file in a sub-directory of the book project (when `rmd_subdir` is used in `_bookdown.yml`) (#1122)
 
@@ -312,7 +312,7 @@
 
 - Add the `number_sections` argument to `markdown_document2()` and its family. This allows to have now figure references numbered by chapters in these formats, like `word_document2()` or `odt_document2()` for example. This argument default to `TRUE` like `html_document2()` and  `pdf_document2()`. Set it to `number_sections = FALSE` to get the same output as previous version without numbered chapters (thanks, @atusy, #756). 
 
-- Provided an alternative way to create theorem and proof environments using Pandoc's fenced Divs. Previously, **bookdown** supports theorems and proofs in special code chunks like ```` ```{theorem}````. Now you can use the new syntax ```::: {.theorem}```. You may use the helper function `bookdown::fence_theorems()` to convert the former syntax to the latter. The main benefit of using fenced Divs is that you can write arbitrary content in a theorem environment (here "theorem" includes other environments such as lemma, corollary, and definition, etc.), such as R code chunks and inline R code, which was not possible previously. Note that this feature is only supported for LaTeX and HTML output formats at the moment. To learn more about the fenced Divs in general, you may read this section in _R Markdown Cookbook_: https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html (thanks, @tchevri #924, @cderv #940).
+- Provided an alternative way to create theorem and proof environments using Pandoc's fenced Divs. Previously, **bookdown** supports theorems and proofs in special code chunks like ```` ```{theorem}````. Now you can use the new syntax ```::: {.theorem}```. You may use the helper function `bookdown::fence_theorems()` to convert the former syntax to the latter. The main benefit of using fenced Divs is that you can write arbitrary content in a theorem environment (here "theorem" includes other environments such as lemma, corollary, and definition, etc.), such as R code chunks and inline R code, which was not possible previously. Note that this feature is only supported for LaTeX and HTML output formats at the moment. To learn more about the fenced Divs in general, you may read this section in _R Markdown Cookbook_: https://yihui.org/rmarkdown-cookbook/custom-blocks.html (thanks, @tchevri #924, @cderv #940).
 
 ## BUG FIXES
 
@@ -406,7 +406,7 @@
 
 - For `gitbook` output, the font setting button can be removed via `fontsettings: false` in the `config` option. Similarly, the info button can be removed by `info: false` in `config` (thanks, @mnazarov, #788).
 
-- It is possible to customize the prefixes of appendix titles in `gitbook` output now (the default is still `A`, `B`, `C`, ..., and now you can change them to something like `Appendix A`, `Appendix B`, ...); see the documentation at https://bookdown.org/yihui/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
+- It is possible to customize the prefixes of appendix titles in `gitbook` output now (the default is still `A`, `B`, `C`, ..., and now you can change them to something like `Appendix A`, `Appendix B`, ...); see the documentation at https://yihui.org/bookdown/internationalization.html (thanks, @WerthPADOH, #783).
 
 - Added `html_fragment2`, `html_notebook2`, `html_vignette2`, `ioslides_presentation2`, `slidy_presentation2`, and `beamer_presentation2` for cross-referencing capabilities on top of **rmarkdown** output formats (thanks, @jooyoungseo, #789 #823).
 
@@ -622,7 +622,7 @@
 
 ## NEW FEATURES
 
-- Added a Github button in the group of sharing buttons on the toolbar. By default, this button is not displayed. You have to set `github: yes` under `sharing` in the `gitbook` configurations (https://bookdown.org/yihui/bookdown/html.html) and specify your Github repo using the top-level option `github-repo` in the YAML metadata of `index.Rmd`, e.g. `github-repo: rstudio/bookdown`.
+- Added a Github button in the group of sharing buttons on the toolbar. By default, this button is not displayed. You have to set `github: yes` under `sharing` in the `gitbook` configurations (https://yihui.org/bookdown/html.html) and specify your Github repo using the top-level option `github-repo` in the YAML metadata of `index.Rmd`, e.g. `github-repo: rstudio/bookdown`.
 
 - The appendix heading will be preserved in `bookdown::html_document2` output, e.g. if you have `# (APPENDIX) Appendix {-}` in your document, you will see the heading `Appendix` in the output. Previously it was removed.
 
@@ -642,7 +642,7 @@
 
 - Added arguments `toc_unnumberred`, `toc_appendix`, `toc_bib`, and `quote_footer` to `pdf_book()`.
 
-- Added support for cross-referencing equations in multi-page HTML output and EPUB; see https://bookdown.org/yihui/bookdown/ for the syntax (thanks, @deleeuw, #85).
+- Added support for cross-referencing equations in multi-page HTML output and EPUB; see https://yihui.org/bookdown/ for the syntax (thanks, @deleeuw, #85).
 
 - Rmd files can live in subdirectories if you use the Merge-and-Knit approach (the default), and they will be found if the configuration option `rmd_subdir` is true in `_bookdown.yml` (thanks, @leobuchignani, #205).
 
@@ -654,7 +654,7 @@
 
 - The merged R Markdown file will not be deleted if rendering failed so you can debug with this file (https://stackoverflow.com/q/38883222/559676).
 
-- The configurations `edit: text` and `chapter_name` have been moved from the top-level options to the sub-options of `language: ui` in `_bookdown.yml`. See https://bookdown.org/yihui/bookdown/internationalization.html
+- The configurations `edit: text` and `chapter_name` have been moved from the top-level options to the sub-options of `language: ui` in `_bookdown.yml`. See https://yihui.org/bookdown/internationalization.html
 
 ## BUG FIXES
 

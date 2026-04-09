@@ -19,5 +19,5 @@ bibentry(
   address = 'Boca Raton, Florida',
   year = '2016',
   isbn = '978-1138700109',
-  url = 'https://bookdown.org/yihui/bookdown'
+  url = 'https://yihui.org/bookdown/'
 )

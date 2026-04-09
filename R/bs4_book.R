@@ -4,7 +4,7 @@
 #' This output format is built with [Bootstrap](https://getbootstrap.com),
 #' using carefully crafted features to provide a clean reading experience whether
 #' you are on a phone, tablet, or desktop. To read more about this format, see:
-#' \url{https://bookdown.org/yihui/bookdown/html.html#bs4-book}
+#' \url{https://yihui.org/bookdown/html.html#bs4-book}
 #'
 #' @param theme A named list or [bslib::bs_theme()] object.
 #'   The default, `bs4_book_theme()`, resets the base font size to 1rem to
@@ -13,7 +13,7 @@
 #' @param repo Either link to repository where book is hosted, used to generate
 #'   view source and edit buttons or a list with repository `base` link, default
 #'   `branch`, `subdir` and `icon`
-#'   (see "Specifying the repository" in \url{https://bookdown.org/yihui/bookdown/html.html#bootstrap4-style}).
+#'   (see "Specifying the repository" in \url{https://yihui.org/bookdown/html.html#bootstrap4-style}).
 #' @param lib_dir,pandoc_args,extra_dependencies,split_bib,... Passed on to [rmarkdown::html_document()].
 #' @param template Pandoc template to use for rendering. Pass `"default"` to use
 #'   the bookdown default template; pass a path to use a custom template. The

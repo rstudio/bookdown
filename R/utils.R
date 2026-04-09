@@ -633,9 +633,9 @@ bookdown_yml_arg = function(config = load_config(), path = tempfile()) {
 #'   you are strongly recommended to put the file under version control or make
 #'   a backup copy in advance.
 #' @references Learn more about
-#'   \href{https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
+#'   \href{https://yihui.org/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
 #'    and proofs} and
-#'   \href{https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html}{custom
+#'   \href{https://yihui.org/rmarkdown-cookbook/custom-blocks.html}{custom
 #'    blocks} in the \pkg{bookdown} book.
 #' @return If \code{output = NULL}, the converted text is returned, otherwise
 #'   the text is written to the output file.
