@@ -9,7 +9,7 @@
 * using option ‘--no-manual’
 * checking for file ‘bookdown/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘bookdown’ version ‘0.46.2’
+* this is package ‘bookdown’ version ‘0.46.3’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -54,29 +54,12 @@
 * checking files in ‘vignettes’ ... OK
 * checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... ERROR
+* checking tests ... OK
   Running ‘test-all.R’
   Running ‘test-rmd.R’
   Running ‘testthat.R’
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-    1. └─bookdown:::.render_book_quiet(dir, new_session = FALSE) at test-skeleton.R:72:3
-    2.   ├─base::suppressMessages(render_book(..., quiet = TRUE)) at ./helper.R:84:3
-    3.   │ └─base::withCallingHandlers(...)
-    4.   └─bookdown::render_book(..., quiet = TRUE)
-    5.     └─bookdown:::render_cur_session(...)
-    6.       └─rmarkdown::render(main, output_format, ..., clean = clean, envir = envir)
-    7.         └─rmarkdown (local) convert(output_file, run_citeproc)
-    8.           └─rmarkdown (local) convert_it(output)
-    9.             └─rmarkdown (local) convert_fun(...)
-   10.               └─rmarkdown:::stop2(...)
-  
-  [ FAIL 1 | WARN 0 | SKIP 1 | PASS 168 ]
-  Error:
-  ! Test failures.
-  Execution halted
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes ... OK
 * checking re-building of vignette outputs ... OK
 * DONE
-Status: 1 ERROR
+Status: OK

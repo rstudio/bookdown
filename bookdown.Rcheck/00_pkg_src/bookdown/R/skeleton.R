@@ -120,11 +120,21 @@ skeleton_get_files = function(subdir = NULL, relative = TRUE) {
 }
 
 skeleton_get_csl = function(path, csl) {
+  csl_file = xfun::with_ext(csl, "csl")
   xfun::in_dir(path, {
-    try_download_asset(
-      sprintf("https://www.zotero.org/styles/%s", csl),
-      xfun::with_ext(csl, "csl")
-    )
+    try_download_asset(sprintf("https://www.zotero.org/styles/%s", csl), csl_file)
+    # If the CSL file could not be downloaded (missing or empty due to a
+    # failed download), remove its reference from index.Rmd to prevent pandoc
+    # from failing when processing a missing or invalid file
+    if (!file.exists(csl_file) || file.size(csl_file) == 0) {
+      unlink(csl_file)
+      index_rmd = "index.Rmd"
+      if (file.exists(index_rmd)) {
+        content = xfun::read_utf8(index_rmd)
+        content = content[!grepl(sprintf("^csl:\\s*%s$", csl_file), content)]
+        xfun::write_utf8(content, index_rmd)
+      }
+    }
   })
 }
 

@@ -7,13 +7,20 @@ validate_html = function(files, server = Sys.getenv('W3C_MARKUP_VALIDATOR_BASEUR
     jsonlite::fromJSON(rawToChar(curl::curl_fetch_memory(server, h)$content))
   })
   expected_errors = c(
-    'Attribute “number” not allowed on element “div” at this point.',
-    'CSS: “border-top”: “solid\\9” is not a “color” value.',
-    'CSS: “border-bottom”: “solid\\9” is not a “color” value.'
+    'Attribute "number" not allowed on element "div" at this point.',
+    'CSS: "border-top": "solid\\9" is not a "color" value.',
+    'CSS: "border-bottom": "solid\\9" is not a "color" value.'
+  )
+  # Regex patterns for errors that are known/expected and should be ignored
+  ignore_patterns = c(
+    # W3C validator flags heading level skips as errors; these are valid in
+    # user-authored content (e.g. when testing non-sequential headings)
+    'The heading .+ follows the heading .+, skipping .+ heading levels'
   )
   res = do.call(rbind, lapply(res, function(x) {
     m <- x$messages$message[x$messages$type == 'error']
     m <- setdiff(m, expected_errors)
+    for (pat in ignore_patterns) m <- m[!grepl(pat, m)]
     if (length(m)) data.frame(file = x$url, messages = m)
   }))
   if (NROW(res) > 0) stop(
