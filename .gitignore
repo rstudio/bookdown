@@ -5,3 +5,5 @@
 .DS_Store
 **/*.min.js.map
 reference
+bookdown.Rcheck/
+*.tar.gz
