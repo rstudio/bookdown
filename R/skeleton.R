@@ -131,7 +131,7 @@ skeleton_get_csl = function(path, csl) {
       index_rmd = "index.Rmd"
       if (file.exists(index_rmd)) {
         content = xfun::read_utf8(index_rmd)
-        content = content[!grepl(sprintf("^csl:\\s*%s$", csl_file), content)]
+        content = content[trimws(content) != paste0("csl: ", csl_file)]
         xfun::write_utf8(content, index_rmd)
       }
     }
