@@ -1,5 +1,0 @@
-bookdown::bs4_book:
-  css: style.css
-  theme:
-    primary: "#096B72"
-  repo: https://github.com/rstudio/bookdown-demo

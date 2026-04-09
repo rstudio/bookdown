@@ -1,9 +1,0 @@
-Name: Preview Book
-Description: Run bookdown::serve_book() to live preview a book.
-Binding: serve_book
-Interactive: true
-
-Name: Input LaTeX Math
-Description: Input math expressions via the MathQuill library.
-Binding: mathquill
-Interactive: true
