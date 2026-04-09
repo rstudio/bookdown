@@ -1,0 +1,36 @@
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@HEAD
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@HEAD
+        with:
+          use-public-rspm: true
+
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@HEAD
+
+      - name: Install Pandoc
+        uses: r-lib/actions/setup-pandoc@HEAD
+
+      - uses: yihui/actions/setup-r-dependencies@HEAD
+        with:
+          extra-packages: Rd2roxygen
