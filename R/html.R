@@ -1226,6 +1226,7 @@ restore_math_labels = function(x) {
 prepend_chapter_title = function(head, body) {
   r1 = '(.*?<title>)(.+?)(</title>.*)'
   if (length(i <- grep(r1, head)) == 0) return(head)
+  i = i[1]
   body = paste(body, collapse = ' ')
   r2 = '.*?<h[0-6][^>]*>(.+?)</h[0-6]>.*'
   if (!grepl(r2, body)) return(head)
