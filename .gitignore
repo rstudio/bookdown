@@ -7,3 +7,4 @@
 reference
 bookdown.Rcheck/
 *.tar.gz
+.positai

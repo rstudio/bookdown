@@ -17,3 +17,5 @@ inst/resources/gitbook/js/app.min.js.map
 ^pkgdown$
 ^tests/manual$
 ^codecov\.yml$
+^\.positai$
+^\.claude$
