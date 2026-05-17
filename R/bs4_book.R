@@ -57,7 +57,7 @@ bs4_book <- function(theme = bs4_book_theme(),
     self_contained = FALSE,
     theme = NULL,
     template = template,
-    pandoc_args = pandoc_args2(pandoc_args),
+    pandoc_args = pandoc_args2(pandoc_args, wrap = 'none'),
     lib_dir = lib_dir,
     extra_dependencies = c(bs4_book_dependency(theme), extra_dependencies),
     ...
