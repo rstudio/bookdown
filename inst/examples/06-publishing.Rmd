@@ -2,11 +2,11 @@
 
 As you develop the book, you make the draft book available to the public to get early feedback from readers, e.g., publish it to a website. After you finish writing the book, you need to think about options to formally publish it as either printed copies or e-books.
 
-## RStudio Connect
+## Posit Connect Cloud {#rstudio-connect}
 
-In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to https://bookdown.org, which is a website provided by RStudio to host your books for free.\index{bookdown.org} This website is built on top of ["RStudio Connect",](https://posit.co/products/enterprise/connect/)\index{RStudio Connect} an RStudio product that allows you to deploy a variety of R-related applications to a server, including R Markdown documents, Shiny applications, R plots, and so on.
+In theory, you can render the book by yourself and publish the output anywhere you want. For example, you can host the HTML files on your own web server. We have provided a function `publish_book()` in **bookdown** to make it very simple to upload your book to [Posit Connect Cloud](https://connect.posit.cloud),\index{Posit Connect Cloud} a free hosting service for R Markdown documents, Shiny applications, and more. Posit Connect Cloud is built on top of [Posit Connect,](https://posit.co/products/enterprise/connect/)\index{Posit Connect} which is a Posit product that allows you to deploy a variety of R-related applications to a server.
 
-You do not have to know much about RStudio Connect to publish your book to bookdown.org. Basically you sign up at https://bookdown.org/connect/, and the first time you try to run `bookdown::publish_book()`\index{bookdown::publish\_book()}, you will be asked to authorize **bookdown** to publish to your bookdown.org account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
+You do not have to know much about Posit Connect to publish your book to Posit Connect Cloud. Basically you sign up at https://connect.posit.cloud, and the first time you try to run `bookdown::publish_book()`\index{bookdown::publish\_book()}, you will be asked to authorize **bookdown** to publish to your Posit Connect Cloud account. In the future, you simply call `publish_book()` again and **bookdown** will no longer ask for anything.
 
 ```{r publish-book-usage, eval=FALSE, code=formatR::usage(bookdown::publish_book, output=FALSE)}
 ```
@@ -17,7 +17,7 @@ The only argument of `publish_book()` that you may want to touch is `render`. It
 bookdown::publish_book(render = 'local')
 ```
 
-If you have set up your own RStudio Connect server, you can certainly publish the book to that server instead of bookdown.org.
+If you have set up your own Posit Connect server, you can certainly publish the book to that server instead of Posit Connect Cloud.
 
 ## Netlify Drop
 
@@ -36,7 +36,7 @@ The above is an overview---read on for step-by-step instructions.
 
 ### Before you begin
 
-Start with a local **bookdown** project. It does not need to be in GitHub or another version-controlled repository. 
+Start with a local **bookdown** project. It does not need to be in GitHub or another version-controlled repository.
 
 If you do not have an existing book, you can create a simple **bookdown** HTML book to practice with instead. See Figure \@ref(fig:new-bs4-book) for how to create a new book in RStudio, or use the function `bookdown::create_gitbook()` or `bookdown::create_bs4_book()` from your R console if you do not use RStudio.
 
@@ -60,19 +60,19 @@ After signing up for Netlify, you *can* update this kind of site, but it is a ma
 knitr::include_graphics("images/netlify-drag-drop-update.png", dpi = NA)
 ```
 
-Edit your book, build it locally again, then drag and drop the output directory here again. 
+Edit your book, build it locally again, then drag and drop the output directory here again.
 
-### *Optional: change the default subdomain* {#netlify-subdomain} 
+### *Optional: change the default subdomain* {#netlify-subdomain}
 
-Navigate to your site's landing page on Netlify.com (<https://app.netlify.com>), click on *Overview > Site Settings*. Under *Site information*, click on *Change site name* and update it to a name that you want. If you want to use your own domain instead of Netlify's subdomain, please read the documentation at https://docs.netlify.com/domains-https/custom-domains/. 
+Navigate to your site's landing page on Netlify.com (<https://app.netlify.com>), click on *Overview > Site Settings*. Under *Site information*, click on *Change site name* and update it to a name that you want. If you want to use your own domain instead of Netlify's subdomain, please read the documentation at https://docs.netlify.com/domains-https/custom-domains/.
 
 ### Drawbacks and alternatives
 
-This workflow is great to quickly share a book prototype. However, if you opt to not claim your site, the link will expire in 24 hours. Even if you do claim your site and set up a Netlify account, this workflow is not ideal for books you are actively editing or collaborating on because every time you update your local version of the book, you need to manually upload the book to Netlify. You are also not reaping the benefits of version control with this approach. 
+This workflow is great to quickly share a book prototype. However, if you opt to not claim your site, the link will expire in 24 hours. Even if you do claim your site and set up a Netlify account, this workflow is not ideal for books you are actively editing or collaborating on because every time you update your local version of the book, you need to manually upload the book to Netlify. You are also not reaping the benefits of version control with this approach.
 
 ## GitHub
 
-You can host your book on GitHub\index{GitHub} for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. The key is to create a hidden file `.nojekyll` that tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website. 
+You can host your book on GitHub\index{GitHub} for free via GitHub Pages (https://pages.github.com). GitHub supports Jekyll (http://jekyllrb.com), a static website builder, to build a website from Markdown files. That may be the more common use case of GitHub Pages, but GitHub also supports arbitrary static HTML files, so you can just host the HTML output files of your book on GitHub. The key is to create a hidden file `.nojekyll` that tells GitHub that your website is not to be built via Jekyll, since the **bookdown** HTML output is already a standalone website.
 
 ```bash
 # assume you have initialized the git repository,
@@ -86,7 +86,7 @@ git add .nojekyll
 
 If you are on Windows, you may not have the `touch` command, and you can create the file in R using `file.create('.nojekyll')`.
 
-One approach is to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help.](http://bit.ly/2cvloKV) First, set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder". In this case, the `.nojekyll` file has to be in the `/docs` folder. 
+One approach is to publish your book as a GitHub Pages site from a `/docs` folder on your `master` branch as described in [GitHub Help.](http://bit.ly/2cvloKV) First, set the output directory of your book to be `/docs` by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository's settings and under "GitHub Pages" change the "Source" to be "master branch /docs folder". In this case, the `.nojekyll` file has to be in the `/docs` folder.
 
 An alternative approach is to create a `gh-pages` branch in your repository, build the book, put the HTML output (including all external resources like images, CSS, and JavaScript files) in this branch, and push the branch to the remote repository. If your book repository does not have the `gh-pages` branch, you may use the following commands to create one:
 
@@ -108,90 +108,51 @@ git push origin gh-pages
 
 After you have set up GIT, the rest of work can be automated via a script (Shell, R, or Makefile, depending on your preference). Basically, you compile the book to HTML, then run git commands to push the files to GitHub, but you probably do not want to do this over and over again manually and locally. It can be very handy to automate the publishing process completely on the cloud, so once it is set up correctly, all you have to do next is write the book and push the Rmd source files to GitHub, and your book will always be automatically built and published from the server side.
 
-One service that you can utilize is Travis CI (https://travis-ci.com).\index{Travis CI} It is free for public repositories on GitHub, and was designed for continuous integration (CI) of software packages. Travis CI can be connected to GitHub in the sense that whenever you push to GitHub, Travis can be triggered to run certain commands/scripts on the latest version of your repository.^[You need to authorize the Travis CI service for your repository on GitHub first. See https://docs.travis-ci.com/user/getting-started/ for how to get started with Travis CI.] These commands are specified in a YAML file named `.travis.yml` in the root directory of your repository, and they are usually for the purpose of testing software, but in fact they are quite open-ended, meaning that you can run arbitrary commands on a Travis (virtual) machine. That means you can certainly run your own scripts to build your book on Travis. Note that Travis only supports Ubuntu and Mac OS X at the moment, so you should have some basic knowledge about Linux/Unix commands.
+One service that you can utilize is GitHub Actions (https://github.com/features/actions).\index{GitHub Actions} It is free for public repositories on GitHub, and allows you to run arbitrary commands whenever you push to GitHub. These commands are specified in YAML workflow files under the `.github/workflows/` directory of your repository. You can use GitHub Actions to build your book and push the output to the `gh-pages` branch automatically.
 
-The next question is, how to publish the book built on Travis to GitHub? Basically you have to grant Travis write access to your GitHub repository. This authorization can be done in several ways, and the easiest one to beginners may be a personal access token. Here are a few steps you may follow:
-
-1. Create a [personal access token](http://bit.ly/2cEBYWB) for your account on GitHub (make sure to enable the "repo" scope so that using this token will enable writing to your GitHub repos).
-1. Encrypt it in the environment variable `GITHUB_PAT` via command line `travis encrypt` and store it in `.travis.yml`, 
-e.g `travis encrypt GITHUB_PAT=TOKEN`. If you do not know how to install or use the Travis command-line tool, simply save this environment variable via https://travis-ci.com/user/repo/settings where `user` is your GitHub ID, and `repo` is the name of the repository.
-1. You can clone this `gh-pages` branch on Travis using your GitHub token, add the HTML output files from R Markdown (do not forget to add figures and CSS style files as well), and push to the remote repository.
-
-Assume you are in the `master` branch right now (where you put the Rmd source files), and have compiled the book to the `_book` directory. What you can do next on Travis is:
-
-```bash
-# configure your name and email if you have not done so
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
-
-# clone the repository to the book-output directory
-git clone -b gh-pages \
-  https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git \
-  book-output
-cd book-output
-git rm -rf *
-cp -r ../_book/* ./
-git add --all *
-git commit -m "Update the book"
-git push -q origin gh-pages
-```
-
-The variable name `GITHUB_PAT` and the directory name `book-output` are arbitrary, and you can use any names you prefer, as long as the names do not conflict with existing environment variable names or directory names. This script, together with the build script we mentioned in Section \@ref(build-the-book), can be put in the `master` branch as Shell scripts, e.g., you can name them as `_build.sh` and `_deploy.sh`. Then your `.travis.yml` may look like this:
+A minimal GitHub Actions workflow to build and deploy a **bookdown** book to GitHub Pages might look like this:
 
 ```yaml
-language: r
-pandoc_version: 1.19.2.1
+on:
+  push:
+    branches: [main]
 
-env:
-  global:
-    - secure: A_LONG_ENCRYPTED_STRING
+name: Build and deploy book
 
-before_script:
-  - chmod +x ./_build.sh
-  - chmod +x ./_deploy.sh
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-script:
-  - ./_build.sh
-  - ./_deploy.sh
+      - uses: r-lib/actions/setup-r@v2
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install dependencies
+        run: Rscript -e 'install.packages(c("bookdown"))'
+
+      - name: Build book
+        run: Rscript -e 'bookdown::render_book("index.Rmd")'
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_book
 ```
 
-The `language` key tells Travis to use a virtual machine that has R installed. The `secure` key is your encrypted personal access token. If you have already saved the `GITHUB_PAT` variable using the web interface on Travis instead of the command-line tool `travis encrypt`, you can leave out this key.
+GitHub provides a built-in `GITHUB_TOKEN` secret, so you do not need to create and encrypt a personal access token yourself. The `r-lib/actions` actions (https://github.com/r-lib/actions) provide convenient setup steps for R and Pandoc. You can find more complete examples in the `bookdown-demo` repository: https://github.com/rstudio/bookdown-demo/.
 
-Since this Travis service is primarily for checking R packages, you will also need a (fake) `DESCRIPTION` file as if the book repository were an R package. The only thing in this file that really matters is the specification of dependencies. All dependencies will be installed via the **devtools** package. If a dependency is on CRAN or BioConductor, you can simply list it in the `Imports` field of the `DESCRIPTION` file. If it is on GitHub, you may use the `Remotes` field to list its repository name. Below is an example:
-
-```dcf
-Package: placeholder
-Type: Book
-Title: Does not matter.
-Version: 0.0.1
-Imports: bookdown, ggplot2
-Remotes: rstudio/bookdown
-```
-
-If you use the [container-based infrastructure](https://docs.travis-ci.com/user/workers/container-based-infrastructure/) on Travis, you can enable caching by using `sudo: false` in `.travis.yml`. Normally you should cache at least two types of directories: the figure directory (e.g., `_main_files`) and the cache directory (e.g., `_main_cache`). These directory names may also be different if you have specified the **knitr** chunk options `fig.path` and `cache.path`, but I'd strongly recommend you not to change these options. The figure and cache directories are stored under the `_bookdown_files` directory of the book root directory. A `.travis.yml` file that has enabled caching of **knitr** figure and cache directories may have additional configurations `sudo` and `cache` like this:
-
-```yaml
-sudo: false
-
-cache:
-  packages: yes
-  directories:
-    - $TRAVIS_BUILD_DIR/_bookdown_files
-```
-
-If your book is very time-consuming to build, you may use the above configurations on Travis to save time. Note that `packages: yes` means the R packages installed on Travis are also cached.
-
-All above scripts and configurations can be found in the `bookdown-demo` repository: https://github.com/rstudio/bookdown-demo/. If you copy them to your own repository, please remember to change the `secure` key in `.travis.yml` using your own encrypted variable `GITHUB_PAT`.
-
-GitHub and Travis CI are certainly not the only choices to build and publish your book. You are free to store and publish the book on your own server.
+GitHub Actions is certainly not the only choice to build and publish your book. You are free to store and publish the book on your own server.
 
 ## Features for HTML publishing
 
 ### HTML 404 pages {#html-404}
 
-If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each web server has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it. 
+If a reader tries to access a page in your book that cannot be found, a browser will display a [404 error](https://en.wikipedia.org/wiki/HTTP_404) as it cannot find the requested web page. This 404 error is displayed on a 404 page. Each web server has a default for a 404 page. However, most web serving platforms like Netlify, Github Pages, and Gitlab Pages will use a file named `404.html` in the root of your website as a custom error page, if you provide it.
 
-For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).  
+For all HTML book formats, **bookdown** creates a custom `404.html`  in your output directory using simple content (a header, and a body of 2 paragraphs); see Figure \@ref(fig:404-page).
 
 ```{r 404-page, fig.alt="Screenshot showing an online bs4_book with the sidebar, footer, and CSS styling in place. The text reads: Page not found. The page you requested cannot be found (perhaps it was moved or renamed). You may want to try searching to find the page's new location, or use the table of contents to find the page you are looking for.", fig.align='center', echo=FALSE, fig.cap= "Screenshot of an example 404 page."}
 knitr::include_graphics('images/404.png', dpi = NA)

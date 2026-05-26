@@ -12,7 +12,7 @@ lot: yes
 lof: yes
 fontsize: 12pt
 site: bookdown::bookdown_site
-description: "A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. bookdown.org)."
+description: "A guide to authoring books with R Markdown, including how to generate figures and tables, and insert cross-references, citations, HTML widgets, and Shiny apps in R Markdown. The book can be exported to HTML, PDF, and e-books (e.g. EPUB). The book style is customizable. You can easily write and preview the book in RStudio IDE or other editors, and host the book wherever you want (e.g. connect.posit.cloud)."
 url: 'https\://bookdown.org/yihui/bookdown/'
 github-repo: rstudio/bookdown
 cover-image: images/cover.jpg
@@ -62,7 +62,7 @@ knitr::include_graphics('images/cover.jpg', dpi = NA)
 
 This short book introduces an R package, **bookdown**, to change your workflow of writing books. It should be technically easy to write a book, visually pleasant to view the book, fun to interact with the book, convenient to navigate through the book, straightforward for readers to contribute or leave feedback to the book author(s), and more importantly, authors should not always be distracted by typesetting details.
 
-The **bookdown** package is built on top of R Markdown (http://rmarkdown.rstudio.com), and inherits the simplicity of the Markdown syntax (you can learn the basics in five minutes; see Section \@ref(markdown-syntax)), as well as the possibility of multiple types of output formats (PDF/HTML/Word/...). It has also added features like multi-page HTML output, numbering and cross-referencing figures/tables/sections/equations, inserting parts/appendices, and imported the GitBook\index{GitBook} style (https://www.gitbook.com) to create elegant and appealing HTML book pages. This book itself is an example of how you can produce a book from a series of R Markdown documents, and both the printed version and the online version can look professional. You can find more examples at https://bookdown.org.
+The **bookdown** package is built on top of R Markdown (http://rmarkdown.rstudio.com), and inherits the simplicity of the Markdown syntax (you can learn the basics in five minutes; see Section \@ref(markdown-syntax)), as well as the possibility of multiple types of output formats (PDF/HTML/Word/...). It has also added features like multi-page HTML output, numbering and cross-referencing figures/tables/sections/equations, inserting parts/appendices, and imported the GitBook\index{GitBook} style (https://www.gitbook.com) to create elegant and appealing HTML book pages. This book itself is an example of how you can produce a book from a series of R Markdown documents, and both the printed version and the online version can look professional.
 
 ```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://github.com/rstudio/bookdown'}
 knitr::include_graphics('images/logo.png', dpi = NA)

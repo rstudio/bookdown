@@ -40,11 +40,11 @@ In this case, all formats should be at the top level, instead of under an `outpu
 
 ## HTML
 
-The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default---normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output: 
+The main difference between rendering a book (using **bookdown**) with rendering a single R Markdown document (using **rmarkdown**) to HTML\index{HTML} is that a book will generate multiple HTML pages by default---normally one HTML file per chapter. This makes it easier to bookmark a certain chapter or share its URL with others as you read the book, and faster to load a book into the web browser. Currently we have provided a number of different styles for HTML output:
 
-- the GitBook style (Section \@ref(gitbook-style)), 
-- the three-column Bootstrap style (Section \@ref(bs4-book)), 
-- the default Bootstrap style (Section \@ref(bootstrap-style)), and 
+- the GitBook style (Section \@ref(gitbook-style)),
+- the three-column Bootstrap style (Section \@ref(bs4-book)),
+- the default Bootstrap style (Section \@ref(bootstrap-style)), and
 - the Tufte style (Section \@ref(tufte-style)).
 
 ### GitBook style {#gitbook-style}
@@ -202,7 +202,7 @@ Another button shown on the toolbar is the information ('i') button that lists k
 Finally, there are a few more top-level options in the YAML metadata that can be passed to the GitBook HTML template via Pandoc. They may not have clear visible effects on the HTML output, but they may be useful when you deploy the HTML output as a website. These options include:
 
 - `description`: A character string to be written to the `content` attribute of the tag `<meta name="description" content="">` in the HTML head (if missing, the title of the book will be used). This can be useful for search engine optimization (SEO). Note that it should be plain text without any Markdown formatting such as `_italic_` or `**bold**`.
-- `url`: The URL of book's website, e.g., `https\://bookdown.org/yihui/bookdown/`.^[The backslash before `:` is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code `<a href="..."></a>`. More details at https://github.com/jgm/pandoc/issues/2139.]
+- `url`: The URL of book's website, e.g., `https\://example.github.io/awesome/`.^[The backslash before `:` is due to a technical issue: we want to prevent Pandoc from translating the link to HTML code `<a href="..."></a>`. More details at https://github.com/jgm/pandoc/issues/2139.]
 - `github-repo`: The GitHub repository of the book of the form `user/repo`.
 - `cover-image`: The path to the cover image of the book.
 - `apple-touch-icon`: A path to an icon (e.g., a PNG image). This is for iOS only: when the website is added to the Home screen, the link is represented by this icon.
@@ -216,7 +216,7 @@ Below we show some sample YAML metadata (again, please note that these are _top-
 title: "An Awesome Book"
 author: "John Smith"
 description: "This book introduces the ABC theory, and ..."
-url: 'https\://bookdown.org/john/awesome/'
+url: 'https\://example.github.io/awesome/'
 github-repo: "john/awesome"
 cover-image: "images/cover.png"
 apple-touch-icon: "touch-icon.png"
@@ -258,7 +258,7 @@ In addition to the basic **bookdown** components (Section \@ref(components)), th
 - R syntax highlighting and autolinking by
   [the **downlit** package](https://downlit.r-lib.org) is paired with an accessible
   color scheme designed by Alison Hill.
-  
+
 - Enhanced metadata for social sharing via platforms like Twitter, LinkedIn, and Facebook, so that each chapter shared will have a unique description, auto-generated based on that chapter's content.
 
 - Ability to configure links to a remote repository like GitHub or GitLab, allowing readers to easily view each chapter's source file or suggest an edit.
@@ -278,11 +278,11 @@ knitr::include_graphics('images/new-bs4-book.png', dpi = NA)
 
 If you do not use RStudio or prefer a function, you can create the same project template with `bookdown::create_bs4_book()` from your R console. See `?bookdown::create_bs4_book` or [the online documentation](https://pkgs.rstudio.com/bookdown/reference/create_book.html) for help.
 
-This style is designed for books that use one chapter per page. 
-This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter. 
-Each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file. 
+This style is designed for books that use one chapter per page.
+This means that each chapter is an `.Rmd` file, and each `.Rmd` file can contain one chapter.
+Each file *must* start with a first-level heading, `# Chapter title`, and that must be the only first-level heading in the file.
 
-Use second-level and lower-level headings within chapters like: 
+Use second-level and lower-level headings within chapters like:
 
 ```md
 #   A chapter
@@ -305,7 +305,7 @@ author: "Jane Doe"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
-url: https://bookdown.org/janedoe/bookdown-demo
+url: https://example.github.io/bookdown-demo
 cover-image: cover.png
 description: |
   This is a minimal example of using the bookdown package to write a book.
@@ -322,7 +322,7 @@ You can use the `theme` option to add a `primary` color in [hexadecimal format,]
 ```yaml
 bookdown::bs4_book:
   theme:
-    primary: "#0d6efd"   
+    primary: "#0d6efd"
 ```
 
 For custom font settings, adding a `google:` keyword triggers [`sass::font_google()`’s](https://rstudio.github.io/sass/reference/font_face.html) ability to automatically import [Google Font files.](https://fonts.google.com) Here is an example YAML that changes the `base_font`, `heading_font`, and `code_font`:
@@ -330,16 +330,16 @@ For custom font settings, adding a `google:` keyword triggers [`sass::font_googl
 ```yaml
 bookdown::bs4_book:
   theme:
-    primary: "#0d6efd"   
-    base_font: 
+    primary: "#0d6efd"
+    base_font:
       google: Sen
     heading_font:
       google:
         family: Bitter
         wght: 200
     code_font:
-      google: 
-        # arguments to sass::font_google() 
+      google:
+        # arguments to sass::font_google()
         family: DM Mono
         local: false
 ```
@@ -350,7 +350,7 @@ You may also use non-Google fonts that you serve locally using [`sass::font_face
 
 #### Callout blocks
 
-Callout blocks can be used to make certain portions of content stand out from the rest of your narrative. The `bs4_book` style includes special callout blocks with predefined styles for adding a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block: 
+Callout blocks can be used to make certain portions of content stand out from the rest of your narrative. The `bs4_book` style includes special callout blocks with predefined styles for adding a colored border around the text and/or code inside the callout. Use the following syntax to create a callout block:
 
 ````markdown
 ::: {.rmdnote}
@@ -390,7 +390,7 @@ template](https://github.com/rstudio/bookdown/blob/main/inst/templates/bs4_book.
 
 #### Inline Footnotes {#bs4-book-footnotes}
 
-`bs4_book` makes any footnotes to show inline on hover instead of a linked item at the bottom of the page. You can set `footnotes_inline = FALSE` to opt-out this behavior and keep the footnotes at the bottom. 
+`bs4_book` makes any footnotes to show inline on hover instead of a linked item at the bottom of the page. You can set `footnotes_inline = FALSE` to opt-out this behavior and keep the footnotes at the bottom.
 
 ```yaml
 bookdown::bs4_book:
@@ -399,7 +399,7 @@ bookdown::bs4_book:
 
 #### References/Bibliography
 
-Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes by default footnotes appear inline when clicked. 
+Making your citations _footnotes_ allows readers to read them near the text where they are used because `bs4_book` makes by default footnotes appear inline when clicked.
 To do that, download a footnote style CSL file; we recommend <https://www.zotero.org/styles/>.
 For example, you could download the `chicago-fullnote-bibliography.csl` from [Zotero,](https://www.zotero.org/styles/?q=id%3Achicago-fullnote-bibliography) then
 add this to your `index.Rmd`:
@@ -520,9 +520,9 @@ What the default page builder does is to put TOC in the first row, the body in t
     <title>A Nice Book</title>
   </head>
   <body>
-  
+
     <div class="row">TOC</div>
-    
+
     <div class="row">
       CHAPTER BODY
       <p>
@@ -530,7 +530,7 @@ What the default page builder does is to put TOC in the first row, the body in t
         <button>NEXT</button>
       </p>
     </div>
-  
+
   </body>
 </html>
 ```
