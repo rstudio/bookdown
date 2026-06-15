@@ -19,8 +19,8 @@
   source: https://github.com/yihui/rmarkdown-cookbook
   showcase: no
 - title: 'bookdown: Authoring Books and Technical Documents with R Markdown'
-  img: https://yihui.org/bookdown/images/cover.jpg
-  href: https://yihui.org/bookdown/
+  img: https://pkg.yihui.org/bookdown/images/cover.jpg
+  href: https://pkg.yihui.org/bookdown/
   source: https://github.com/rstudio/bookdown
   showcase: no
 - title: Text Mining with R

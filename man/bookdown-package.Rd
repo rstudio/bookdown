@@ -21,6 +21,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Yihui Xie \email{xie@yihui.name} (\href{https://orcid.org/0000-0003-0645-5666}{ORCID})
 
+Authors:
+\itemize{
+  \item Yihui Xie \email{xie@yihui.name} (\href{https://orcid.org/0000-0003-0645-5666}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Christophe Dervieux \email{cderv@posit.co} (\href{https://orcid.org/0000-0003-4474-2498}{ORCID}) [contributor]

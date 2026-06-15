@@ -31,8 +31,8 @@ environments.
 }
 \references{
 Learn more about
-  \href{https://yihui.org/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
+  \href{https://pkg.yihui.org/bookdown/markdown-extensions-by-bookdown.html#theorems}{theorems
    and proofs} and
-  \href{https://yihui.org/rmarkdown-cookbook/custom-blocks.html}{custom
+  \href{https://pkg.yihui.org/rmarkdown-cookbook/custom-blocks.html}{custom
    blocks} in the \pkg{bookdown} book.
 }

@@ -133,7 +133,7 @@ tufte_html_book = function(...) {
 #'
 #'   The functions \samp{tufte_*()} are wrappers of functions in the \pkg{tufte}
 #'   package.
-#' @references \url{https://yihui.org/bookdown/}
+#' @references \url{https://pkg.yihui.org/bookdown/}
 #' @export
 html_document2 = function(
   ..., number_sections = TRUE, global_numbering = !number_sections,

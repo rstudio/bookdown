@@ -89,9 +89,9 @@ Suggests:
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
-RoxygenNote: 7.3.3
 Encoding: UTF-8
 Config/Needs/book: remotes, webshot, svglite
 Config/Needs/website: pkgdown, tidyverse/tidytemplate, rstudio/quillt
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

@@ -22,7 +22,7 @@ and $a$ and $b$ denote the lengths of the **other** two sides, we have
 $$a^2 + b^2 = c^2$$
 :::
 
-Read more here <https://yihui.org/bookdown/markdown-extensions-by-bookdown.html>.
+Read more here <https://pkg.yihui.org/bookdown/markdown-extensions-by-bookdown.html>.
 
 ## Callout blocks
 
