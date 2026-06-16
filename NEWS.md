@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.48
+
+
 # CHANGES IN bookdown VERSION 0.47
 
 - Fixed the bug that `prepend_chapter_title()` errors with "the condition has length > 1" when the page `<head>` contains more than one `<title>` tag (thanks, @samperman, #1522).
