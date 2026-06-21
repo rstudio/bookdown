@@ -267,6 +267,16 @@ strip_html = function(x) {
   gsub('\\s{2,}', ' ', xfun::strip_html(x), perl = TRUE)
 }
 
+# Remove ^Z (\x1a, ASCII 26) bytes from a file using binary I/O. On Windows,
+# readLines() in text mode treats ^Z as EOF, which can truncate self-contained
+# HTML files containing embedded JavaScript (e.g., from Plotly or htmlwidgets)
+# that includes this byte, causing syntax errors (#1523).
+strip_ctrl_z = function(path) {
+  raw = xfun::read_bin(path)
+  if (any(raw == as.raw(0x1a))) writeBin(raw[raw != as.raw(0x1a)], path)
+  invisible(NULL)
+}
+
 # remove the <script><script> content and references
 strip_search_text = function(x) {
   x = gsub('<script[^>]*>(.*?)</script>', '', x)

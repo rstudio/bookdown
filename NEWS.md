@@ -1,5 +1,9 @@
 # CHANGES IN bookdown VERSION 0.48
 
+- Fixed `html_document2()` breaking Plotly (and other htmlwidgets) in self-contained
+  mode on Windows, caused by `^Z` (`\x1a`) bytes in embedded JavaScript being treated
+  as end-of-file by `readLines()` in text mode (thanks, @aomop, #1523).
+
 
 # CHANGES IN bookdown VERSION 0.47
 
