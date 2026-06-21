@@ -273,8 +273,12 @@ strip_html = function(x) {
 # that includes this byte, causing syntax errors (#1523).
 strip_ctrl_z = function(path) {
   raw = xfun::read_bin(path)
-  if (any(raw == as.raw(0x1a))) writeBin(raw[raw != as.raw(0x1a)], path)
-  invisible(NULL)
+  if (any(i <- raw == as.raw(0x1a))) writeBin(raw[!i], path)
+}
+
+read_output = function(path) {
+  if (xfun::is_windows()) strip_ctrl_z(path)
+  read_utf8(path)
 }
 
 # remove the <script><script> content and references

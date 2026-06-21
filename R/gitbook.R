@@ -64,7 +64,7 @@ gitbook = function(
 
     # a hack to remove Pandoc's margin for code blocks since gitbook has already
     # defined margin on <pre> (there would be too much bottom margin)
-    x = read_utf8(output)
+    x = read_output(output)
     x = x[x != 'div.sourceCode { margin: 1em 0; }']
     write_utf8(x, output)
 
