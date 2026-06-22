@@ -1,7 +1,7 @@
 Package: bookdown
 Type: Package
 Title: Authoring Books and Technical Documents with R Markdown
-Version: 0.47.1
+Version: 0.47.2
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Christophe", "Dervieux", , "cderv@posit.co", role = c("ctb"),
@@ -86,6 +86,8 @@ Suggests:
     webshot,
     testthat (>= 3.1.0),
     withr (>= 2.3.0)
+Remotes:
+    yihui/xfun
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
