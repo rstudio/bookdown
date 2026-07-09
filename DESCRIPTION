@@ -65,7 +65,7 @@ Imports:
     knitr (>= 1.38),
     rmarkdown (>= 2.14),
     jquerylib,
-    xfun (>= 0.48),
+    xfun (>= 0.60),
     tinytex (>= 0.12),
     yaml (>= 2.1.19)
 Suggests:
@@ -86,8 +86,6 @@ Suggests:
     webshot,
     testthat (>= 3.1.0),
     withr (>= 2.3.0)
-Remotes:
-    yihui/xfun
 URL: https://github.com/rstudio/bookdown, https://pkgs.rstudio.com/bookdown/
 BugReports: https://github.com/rstudio/bookdown/issues
 SystemRequirements: Pandoc (>= 1.17.2)
