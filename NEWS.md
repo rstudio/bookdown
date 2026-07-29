@@ -47,7 +47,7 @@
 
 # CHANGES IN bookdown VERSION 0.39
 
-- Fixed a bug that `bs4_book()` errors on generating document description. The error occured when the beggining of the document is a very long sentence without spaces (> 197 characters), which typically happens in CJK languages (thanks, @atusy, #1463).
+- Fixed a bug that `bs4_book()` errors on generating document description. The error occurred when the beginning of the document is a very long sentence without spaces (> 197 characters), which typically happens in CJK languages (thanks, @atusy, #1463).
 
 # CHANGES IN bookdown VERSION 0.38
 
@@ -597,7 +597,7 @@
 
 - The `gitbook` output format also supports `abstract` in YAML now (thanks, @maxheld83, #311).
 
-- For the `gitbook` output format, the `downloads` option in `config` supports `rmd` now (e.g. `download: ["pdf", "epub", "rmd"]`) if the edit link has been specified and is a link to Github (thanks, @coatless, #330).
+- For the `gitbook` output format, the `downloads` option in `config` supports `rmd` now (e.g. `download: ["pdf", "epub", "rmd"]`) if the edit link has been specified and is a link to GitHub (thanks, @coatless, #330).
 
 - You can set the global R option `bookdown.post.latex` via `options()` to be a function to post-process the LaTeX output of the `pdf_book` format; see `?bookdown::pdf_book` for details (thanks, @nicksolomon, #373).
 
@@ -627,7 +627,7 @@
 
 ## NEW FEATURES
 
-- Added a Github button in the group of sharing buttons on the toolbar. By default, this button is not displayed. You have to set `github: yes` under `sharing` in the `gitbook` configurations (https://pkg.yihui.org/bookdown/html.html) and specify your Github repo using the top-level option `github-repo` in the YAML metadata of `index.Rmd`, e.g. `github-repo: rstudio/bookdown`.
+- Added a GitHub button in the group of sharing buttons on the toolbar. By default, this button is not displayed. You have to set `github: yes` under `sharing` in the `gitbook` configurations (https://pkg.yihui.org/bookdown/html.html) and specify your GitHub repo using the top-level option `github-repo` in the YAML metadata of `index.Rmd`, e.g. `github-repo: rstudio/bookdown`.
 
 - The appendix heading will be preserved in `bookdown::html_document2` output, e.g. if you have `# (APPENDIX) Appendix {-}` in your document, you will see the heading `Appendix` in the output. Previously it was removed.
 
