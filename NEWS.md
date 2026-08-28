@@ -1,3 +1,6 @@
+# CHANGES IN bookdown VERSION 0.49
+
+
 # CHANGES IN bookdown VERSION 0.48
 
 - Fixed `html_document2()` breaking Plotly (and other htmlwidgets) in self-contained mode on Windows, where a `^Z` (`\x1a`) byte embedded in JavaScript string literals (e.g., the PNG signature) was treated as end-of-file by `readLines()` on a text-mode connection, truncating the output file. The output file is now read with `xfun::read_utf8(binary = TRUE)` on Windows (thanks, @dmurdoch, #1523).
