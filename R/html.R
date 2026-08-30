@@ -771,7 +771,7 @@ parse_fig_labels = function(content, global = FALSE) {
         labs[[i]] = character(length(lab))
         next
       }
-      labs[[i]] = label_prefix(type, sep = ': ')(num)
+      labs[[i]] = sprintf('<span class="fig-number">%s</span>', label_prefix(type, sep = ': ')(num))
       k = max(figs[figs <= i])
       content[k] = paste(c(content[k], sprintf('<span style="display:block;" id="%s"></span>', lab)), collapse = '')
     }, tab = {
